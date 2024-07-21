@@ -7,7 +7,34 @@ namespace SOTS.WorldgenHelpers
 {
     public static class AVHouseWorldgenHelper
     {
-        public static void GenerateHouse1(int posX, int posY)
+        public static int GenerateHouse(int posX, int posY, int forceType = -1)
+        {
+            int type = WorldGen.genRand.Next(10);
+            if (forceType != -1)
+                type = forceType;
+            if(type == 0)
+                return GenerateHouse0(posX, posY);
+            if(type == 1)
+                return GenerateHouse1(posX, posY);
+            if(type == 2)
+                return GenerateHouse2(posX, posY);
+            if (type == 3)
+                return GenerateHouse3(posX, posY);
+            if (type == 4)
+                return GenerateHouse4(posX, posY);
+            if (type == 5)
+                return GenerateHouse5(posX, posY);
+            if (type == 6)
+                return GenerateHouse6(posX, posY);
+            if (type == 7)
+                return GenerateHouse7(posX, posY);
+            if (type == 8)
+                return GenerateHouse8(posX, posY);
+            if (type == 9)
+                return GenerateHouse9(posX, posY);
+            return -1;
+        }
+        public static int GenerateHouse0(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 10, 10);
             int[,] _structure = {
@@ -35,7 +62,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<SootWallTile>();
@@ -48,15 +75,15 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             _structure = new int[,] {
-                {0,0,0,0,0,1,1,2,3,0,0,0},
-                {0,0,4,5,5,5,5,2,2,3,0,0},
-                {0,6,2,2,2,2,2,2,2,2,3,0},
+                {9,9,9,9,9,1,1,2,3,9,9,9},
+                {9,9,4,5,5,5,5,2,2,3,9,9},
+                {9,6,2,2,2,2,2,2,2,2,3,9},
                 {2,2,2,2,2,2,2,2,2,2,2,2},
-                {0,0,2,0,0,0,0,0,0,2,0,0},
-                {0,0,0,0,0,0,0,0,0,2,0,0},
-                {0,0,2,0,0,0,0,0,0,2,0,0},
-                {0,0,2,0,7,0,0,0,5,2,5,0},
-                {0,2,2,2,2,2,2,5,5,5,5,5}
+                {9,9,2,0,0,0,0,0,0,2,9,9},
+                {9,9,0,0,0,0,0,0,0,2,9,9},
+                {9,9,2,0,0,0,0,0,0,2,9,9},
+                {9,9,2,0,7,0,0,0,5,2,5,9},
+                {9,2,2,2,2,2,2,5,5,5,5,5}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
@@ -129,8 +156,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse2(int posX, int posY)
+        public static int GenerateHouse1(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 20, 10);
             int[,] _structure = {
@@ -174,7 +202,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<CharredWoodWallTile>();
@@ -187,31 +215,31 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             _structure = new int[,] {
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
-                {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
-                {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
-                {0,0,0,2,1,1,0,0,0,0,0,0,0,0,0,0,1,1,3,0,0,0,0},
-                {0,0,2,1,1,4,4,0,0,0,0,0,0,0,4,4,1,1,1,3,0,0,0},
-                {0,2,1,1,1,4,4,4,0,0,5,0,4,4,4,4,1,1,1,1,3,0,0},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
-                {0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
-                {0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
-                {0,0,4,4,0,0,0,0,1,0,6,0,0,1,0,0,0,0,0,1,0,0,0},
-                {0,0,1,4,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0},
-                {0,0,1,4,4,0,0,0,1,0,0,0,0,1,7,0,0,0,0,1,0,0,0},
-                {0,0,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,0,0},
-                {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
-                {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
-                {0,0,0,2,1,1,0,0,0,0,0,0,0,0,0,8,1,1,3,0,0,0,0},
-                {0,0,2,1,1,1,4,4,9,0,0,0,0,0,4,4,1,1,1,3,0,0,0},
-                {0,2,1,1,1,1,4,4,4,4,4,9,0,4,4,4,1,1,1,1,3,0,0},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
-                {0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0},
-                {0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,1,4,4,0,0,1,0,0,0,0,0,0,0,0,0},
-                {0,0,9,4,4,9,0,0,1,4,4,4,0,1,0,0,0,0,0,1,4,9,0},
-                {8,4,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,4,4,4}
+                {10,10,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,10,10},
+                {10,10,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,10,10},
+                {10,10,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,10,10},
+                {10,10,0,2,1,1,0,0,0,0,0,0,0,0,0,0,1,1,3,0,0,10,10},
+                {10,10,2,1,1,4,4,0,0,0,0,0,0,0,4,4,1,1,1,3,0,10,10},
+                {10, 2,1,1,1,4,4,4,0,0,5,0,4,4,4,4,1,1,1,1,3,10,10},
+                { 1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,10},
+                {10,10,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,10,10},
+                {10,10,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,10,10},
+                {10,10,4,4,0,0,0,0,1,0,6,0,0,1,0,0,0,0,0,1,0,10,10},
+                {10,10,1,4,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,10,10},
+                {10,10,1,4,4,0,0,0,1,0,0,0,0,1,7,0,0,0,0,1,0,10,10},
+                {10,10,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,10,10},
+                {10,10,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,10,10},
+                {10,10,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,10,10},
+                {10,10,0,2,1,1,0,0,0,0,0,0,0,0,0,8,1,1,3,0,0,10,10},
+                {10,10,2,1,1,1,4,4,9,0,0,0,0,0,4,4,1,1,1,3,0,10,10},
+                {10, 2,1,1,1,1,4,4,4,4,4,9,0,4,4,4,1,1,1,1,3,10,10},
+                { 1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,10},
+                {10,10,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,10,10},
+                {10,10,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,10,10},
+                {10,10,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,10,10},
+                {10,10,0,0,0,0,0,0,1,4,4,0,0,1,0,0,0,0,0,0,0,10,10},
+                {10,10,9,4,4,9,0,0,1,4,4,4,0,1,0,0,0,0,0,1,4, 9,10},
+                { 8, 4,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,1,4, 4, 4}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
@@ -302,8 +330,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse3(int posX, int posY)
+        public static int GenerateHouse2(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 15, 10);
             int[,] _structure = {
@@ -332,7 +361,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<CharredWoodWallTile>();
@@ -345,14 +374,14 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             _structure = new int[,] {
-                {0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-                {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
-                {0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-                {0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-                {0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-                {0,0,2,2,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-                {0,2,2,2,2,2,2,0,0,0,1,0,0,0,3,2,2,0},
+                {9,9,9,1,0,0,0,0,0,0,0,0,0,0,0,9,9,9},
+                {9,9,9,1,0,0,0,0,0,0,1,0,0,0,0,9,9,9},
+                {9,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,9,9},
+                {9,9,9,1,0,0,0,0,0,0,1,0,0,0,0,9,9,9},
+                {9,9,9,1,0,0,0,0,0,0,1,0,0,0,0,9,9,9},
+                {9,9,9,1,0,0,0,0,0,0,1,0,0,0,0,9,9,9},
+                {9,9,2,2,0,0,0,0,0,0,1,0,0,0,0,9,9,9},
+                {9,2,2,2,2,2,2,0,0,0,1,0,0,0,3,2,2,9},
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
@@ -399,8 +428,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse4(int posX, int posY)
+        public static int GenerateHouse3(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 15, 10);
             int[,] _structure = {
@@ -432,7 +462,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<SootWallTile>();
@@ -445,18 +475,18 @@ namespace SOTS.WorldgenHelpers
                 }
             } 
             _structure = new int[,] {
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,2,1,0,0},
-                {0,0,0,0,0,0,0,0,1,0,0,2,2,2,1,0,0},
-                {0,0,0,0,0,0,0,0,1,0,2,2,2,2,1,0,0},
-                {0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1},
-                {0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0},
-                {0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0},
-                {0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0},
-                {0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0},
-                {0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0},
-                {0,2,2,3,0,0,0,0,1,0,0,0,2,2,2,2,0},
+                {9,9,9,9,9,9,9,9,9,9,9,9,9,9,1,9,9},
+                {9,9,9,9,9,9,9,9,9,9,9,9,9,9,1,9,9},
+                {9,9,9,9,9,9,9,9,9,9,9,9,9,2,1,9,9},
+                {9,9,9,9,9,9,9,9,1,9,9,2,2,2,1,9,9},
+                {9,9,9,9,9,9,9,9,1,9,2,2,2,2,1,9,9},
+                {9,9,9,0,0,0,1,1,1,1,1,1,1,1,1,1,1},
+                {9,9,9,0,0,0,0,0,1,0,0,0,0,0,1,9,9},
+                {9,9,9,0,0,0,0,0,1,0,0,0,0,0,1,9,9},
+                {9,9,9,0,0,0,0,0,1,0,0,0,0,0,2,9,9},
+                {9,9,9,0,0,0,0,0,1,0,0,0,0,0,2,9,9},
+                {9,9,9,0,0,0,0,0,1,0,0,0,0,0,2,9,9},
+                {9,2,2,3,0,0,0,0,1,0,0,0,2,2,2,2,9},
                 {2,2,2,1,1,1,1,1,1,1,1,1,1,2,2,2,2}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
@@ -503,8 +533,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse5(int posX, int posY)
+        public static int GenerateHouse4(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 15, 10);
             int[,] _structure = {
@@ -541,7 +572,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<SootWallTile>();
@@ -554,23 +585,23 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             _structure = new int[,]  {
-                {0,0,0,0,0,0,0,0,0,1,2,2,3,0,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,1,1,2,2,3,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,1,1,2,2,2,3,0,0,0,0},
-                {0,0,0,4,2,1,1,0,0,1,1,1,2,2,2,2,3,0,0},
-                {0,0,0,2,2,2,1,0,0,0,2,2,2,2,2,2,2,0,0},
-                {0,0,0,0,0,2,0,0,0,0,0,0,0,0,2,0,0,0,0},
-                {0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {0,0,0,0,0,2,0,0,0,0,0,0,0,0,2,0,0,0,0},
-                {0,0,0,0,0,2,0,5,0,0,0,0,0,0,2,0,0,0,0},
-                {0,0,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,0},
-                {0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0},
-                {0,0,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0},
-                {0,0,6,6,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0},
-                {0,1,1,1,1,0,0,0,0,0,0,0,0,2,0,0,1,1,0},
+                {9,9,9,9,9,9,9,9,9,1,2,2,3,9,9,9,9,9,9},
+                {9,9,9,9,9,9,9,9,9,1,1,2,2,3,9,9,9,9,9},
+                {9,9,9,9,9,9,9,9,9,1,1,2,2,2,3,9,9,9,9},
+                {9,9,0,4,2,1,1,0,0,1,1,1,2,2,2,2,3,9,9},
+                {9,9,0,2,2,2,1,0,0,0,2,2,2,2,2,2,2,9,9},
+                {9,9,0,0,0,2,0,0,0,0,0,0,0,0,2,0,0,9,9},
+                {9,9,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,9,9},
+                {9,9,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,9,9},
+                {9,9,0,0,0,2,0,0,0,0,0,0,0,0,2,0,0,9,9},
+                {9,9,0,0,0,2,0,5,0,0,0,0,0,0,2,0,0,9,9},
+                {9,9,2,2,2,2,2,2,1,1,1,1,2,2,2,2,2,2,9},
+                {9,9,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,9,9},
+                {9,9,0,0,0,0,2,0,0,0,0,0,0,2,0,0,0,9,9},
+                {9,9,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,9,9},
+                {9,9,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,9,9},
+                {9,9,6,6,0,0,0,0,0,0,0,0,0,2,0,0,0,9,9},
+                {9,1,1,1,1,0,0,0,0,0,0,0,0,2,0,0,1,1,9},
                 {1,1,1,1,1,2,2,2,1,1,1,2,2,2,2,1,1,1,1}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
@@ -638,8 +669,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse6(int posX, int posY)
+        public static int GenerateHouse5(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 10, 10);
             int[,] _structure = {
@@ -671,7 +703,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<CharredWoodWallTile>();
@@ -684,19 +716,19 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             _structure = new int[,]{
-                {0,0,0,0,0,0,0,0,0,1,2,2,2,3,0,0},
-                {0,0,0,0,0,0,0,0,0,4,2,2,2,2,3,0},
-                {0,0,0,0,0,0,0,0,4,4,2,2,2,2,2,2},
-                {0,0,0,0,0,0,0,4,4,0,0,0,0,2,0,0},
-                {0,0,0,0,5,4,4,4,2,0,0,0,0,2,0,0},
-                {0,0,4,4,4,4,4,0,2,0,0,0,0,0,0,0},
-                {2,2,2,2,2,4,0,0,2,0,0,0,0,0,0,0},
-                {0,0,2,0,0,0,0,0,2,0,0,0,0,2,0,0},
-                {0,0,2,0,0,0,0,0,2,2,2,2,2,2,0,0},
-                {0,0,2,0,0,0,0,0,2,0,0,0,0,2,0,0},
-                {0,0,2,0,0,0,0,0,2,0,0,0,0,2,0,0},
-                {0,0,2,4,4,0,0,0,2,0,0,0,0,2,0,0},
-                {0,4,4,4,4,4,4,2,2,2,2,2,2,2,0,0}
+                {9,9,9,9,9,9,9,9,9,1,2,2,2,3,9,9},
+                {9,9,9,9,9,9,9,9,9,4,2,2,2,2,3,9},
+                {9,9,0,0,0,0,0,0,4,4,2,2,2,2,2,2},
+                {9,9,0,0,0,0,0,4,4,0,0,0,0,2,9,9},
+                {9,9,0,0,5,4,4,4,2,0,0,0,0,2,9,9},
+                {9,9,4,4,4,4,4,0,2,0,0,0,0,0,9,9},
+                {2,2,2,2,2,4,0,0,2,0,0,0,0,0,9,9},
+                {9,9,2,0,0,0,0,0,2,0,0,0,0,2,9,9},
+                {9,9,2,0,0,0,0,0,2,2,2,2,2,2,9,9},
+                {9,9,2,0,0,0,0,0,2,0,0,0,0,2,9,9},
+                {9,9,2,0,0,0,0,0,2,0,0,0,0,2,9,9},
+                {9,9,2,4,4,0,0,0,2,0,0,0,0,2,9,9},
+                {9,4,4,4,4,4,4,2,2,2,2,2,2,2,9,9}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
@@ -754,8 +786,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse7(int posX, int posY)
+        public static int GenerateHouse6(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 14, 10);
             int[,] _structure = {
@@ -777,7 +810,6 @@ namespace SOTS.WorldgenHelpers
             };
             int PosX = posX - 8;  //spawnX and spawnY is where you want the anchor to be when this generates
             int PosY = posY - 14;
-            //i = vertical, j = horizontal
             for (int i = 0; i < _structure.GetLength(0); i++)
             {
                 for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
@@ -790,7 +822,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<CharredWoodWallTile>();
@@ -803,20 +835,20 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             _structure = new int[,] {
-                {0,0,0,1,2,2,3,0,0,0,0,0,0,0,0,0,0,0},
-                {0,1,2,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0},
-                {2,2,2,2,2,2,2,2,2,2,4,0,0,0,0,0,0,0},
-                {0,0,2,0,0,0,0,0,2,2,2,2,4,0,0,0,0,0},
-                {0,0,5,0,0,0,0,0,2,2,2,2,2,2,4,0,0,0},
-                {0,0,5,0,0,0,0,0,5,2,2,2,2,2,2,2,2,0},
-                {0,0,5,0,0,0,0,0,5,5,2,2,2,2,2,2,0,0},
-                {0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0},
-                {0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0},
-                {0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0},
-                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,2,5,0},
-                {0,0,6,5,5,6,6,0,0,0,0,6,6,5,5,5,5,0},
+                {9,9,9,1,2,2,3,9,9,9,9,9,9,9,9,9,9,9},
+                {9,1,2,2,2,2,2,2,3,9,9,9,9,9,9,9,9,9},
+                {2,2,2,2,2,2,2,2,2,2,4,0,0,0,0,0,9,9},
+                {9,9,2,0,0,0,0,0,2,2,2,2,4,0,0,0,9,9},
+                {9,9,5,0,0,0,0,0,2,2,2,2,2,2,4,0,9,9},
+                {9,9,5,0,0,0,0,0,5,2,2,2,2,2,2,2,2,9},
+                {9,9,5,0,0,0,0,0,5,5,2,2,2,2,2,2,9,9},
+                {9,9,2,0,0,0,0,0,0,0,0,0,0,0,0,2,9,9},
+                {9,9,2,0,0,0,0,0,0,0,0,0,0,0,0,2,9,9},
+                {9,9,2,0,0,0,0,0,0,0,0,0,0,0,0,2,9,9},
+                {9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,2,9,9},
+                {9,9,0,0,0,0,0,0,0,0,0,0,0,0,0,2,9,9},
+                {9,9,0,0,0,0,0,0,0,0,0,0,0,0,5,2,5,9},
+                {9,9,6,5,5,6,6,0,0,0,0,6,6,5,5,5,5,9},
                 {5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
@@ -881,8 +913,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse8(int posX, int posY)
+        public static int GenerateHouse7(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 10, 10);
             int[,] _structure = {
@@ -919,7 +952,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<SootWallTile>();
@@ -932,24 +965,24 @@ namespace SOTS.WorldgenHelpers
                 }
             }
            _structure = new int[,] {
-                {0,0,0,0,1,1,0,0,0,0,0,0,0},
-                {0,0,2,2,2,1,1,0,0,0,0,0,0},
-                {0,0,0,0,2,1,1,1,0,0,0,0,0},
-                {0,0,0,0,2,1,1,1,0,0,0,0,0},
-                {0,2,2,2,2,1,1,0,0,0,0,0,0},
-                {0,0,0,2,0,1,1,0,0,0,2,0,0},
-                {0,0,0,2,0,0,1,0,0,0,2,0,0},
-                {0,0,0,2,0,0,0,0,1,1,2,0,0},
-                {0,0,0,2,0,3,1,1,1,1,2,0,0},
-                {0,0,0,2,1,1,1,1,1,1,2,0,0},
-                {2,2,2,2,2,2,2,2,2,2,2,2,0},
-                {0,0,2,0,0,0,0,0,0,0,0,2,0},
-                {0,0,2,0,0,0,0,0,4,0,0,2,0},
-                {0,0,2,0,0,0,0,0,0,0,0,2,0},
-                {0,0,2,0,0,0,0,0,0,0,0,0,0},
-                {0,0,2,0,0,0,0,0,0,0,0,0,0},
-                {0,0,2,0,5,0,0,0,0,0,0,0,0},
-                {0,0,2,2,2,2,2,2,2,1,1,1,1}
+                {9,9,9,9,1,1,9,9,9,9,9,9,9},
+                {9,9,2,2,2,1,1,9,9,9,9,9,9},
+                {9,9,0,0,2,1,1,1,0,0,0,9,9},
+                {9,9,0,0,2,1,1,1,0,0,0,9,9},
+                {9,2,2,2,2,1,1,0,0,0,0,9,9},
+                {9,9,0,2,0,1,1,0,0,0,2,9,9},
+                {9,9,0,2,0,0,1,0,0,0,2,9,9},
+                {9,9,0,2,0,0,0,0,1,1,2,9,9},
+                {9,9,0,2,0,3,1,1,1,1,2,9,9},
+                {9,9,0,2,1,1,1,1,1,1,2,9,9},
+                {2,2,2,2,2,2,2,2,2,2,2,2,9},
+                {9,9,2,0,0,0,0,0,0,0,0,2,9},
+                {9,9,2,0,0,0,0,0,4,0,0,2,9},
+                {9,9,2,0,0,0,0,0,0,0,0,2,9},
+                {9,9,2,0,0,0,0,0,0,0,0,9,9},
+                {9,9,2,0,0,0,0,0,0,0,0,9,9},
+                {9,9,2,0,5,0,0,0,0,0,0,9,9},
+                {9,9,2,2,2,2,2,2,2,1,1,1,1}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
@@ -1013,8 +1046,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse9(int posX, int posY)
+        public static int GenerateHouse8(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX + 1, posY, 1, 16, 10);
             int[,] _structure = {
@@ -1052,7 +1086,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<CharredWoodWallTile>();
@@ -1066,24 +1100,24 @@ namespace SOTS.WorldgenHelpers
             }
             _structure = new int[,] {
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0},
-                {1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1},
-                {1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1},
-                {1,1,0,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1},
-                {1,1,0,1,1,1,1,3,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1},
-                {1,1,0,1,1,1,3,3,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1},
+                {9,9,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,9,9},
+                {9,9,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,9,9},
+                {9,9,0,1,2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,9,9},
+                {9,9,0,1,1,1,1,3,0,1,1,1,1,1,1,1,1,1,1,1,0,9,9},
+                {9,9,0,1,1,1,3,3,0,1,1,1,1,1,1,1,1,1,1,1,0,9,9},
                 {0,0,0,0,1,1,0,0,0,0,0,0,0,3,3,3,3,3,0,0,0,0,0},
-                {1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1},
-                {1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {1,1,0,4,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-                {1,1,0,3,4,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1},
-                {1,1,0,3,3,3,5,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1},
+                {9,9,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,9,9},
+                {9,9,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,9,9},
+                {9,9,0,4,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,9,9},
+                {9,9,0,3,4,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,9,9},
+                {9,9,0,3,3,3,5,1,0,1,1,1,1,1,0,1,1,1,1,1,0,9,9},
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                {1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1},
-                {1,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,1,1},
-                {1,1,1,1,1,1,1,1,1,1,1,6,1,1,0,1,1,7,1,3,0,1,1},
-                {1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,3,0,3,1},
-                {1,1,1,1,1,8,1,1,0,1,1,1,1,1,0,1,1,1,3,3,3,3,1},
-                {1,8,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3}
+                {9,9,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1,1,1,1,0,9,9},
+                {9,9,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,9,9},
+                {9,9,1,1,1,1,1,1,1,1,1,6,1,1,0,1,1,7,1,3,0,9,9},
+                {9,9,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,3,0,3,9},
+                {9,9,1,1,1,8,1,1,0,1,1,1,1,1,0,1,1,1,3,3,3,3,9},
+                {9,8,3,3,3,3,3,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
@@ -1171,8 +1205,9 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            return _structure.GetLength(1);
         }
-        public static void GenerateHouse10(int posX, int posY)
+        public static int GenerateHouse9(int posX, int posY)
         {
             AbandonedVillageWorldgenHelper.GenHalfCircle(posX, posY, 1, 11, 10);
             int[,] _structure = {
@@ -1202,7 +1237,7 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.WallType = 0;
+                                //tile.WallType = 0;
                                 break;
                             case 1:
                                 tile.WallType = (ushort)ModContent.WallType<CharredWoodWallTile>();
@@ -1215,17 +1250,17 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             _structure = new int[,] {
-                {0,0,0,0,0,1,2,2,2,1,0,0,0,0,0},
-                {0,0,0,0,2,2,2,2,2,2,2,0,0,0,0},
-                {0,0,1,2,2,2,2,2,2,2,2,2,1,0,0},
-                {0,2,2,2,2,2,2,2,2,2,2,2,2,2,0},
+                {9,9,0,0,0,1,2,2,2,1,0,0,0,9,9},
+                {9,9,0,0,2,2,2,2,2,2,2,0,0,9,9},
+                {9,9,1,2,2,2,2,2,2,2,2,2,1,9,9},
+                {9,2,2,2,2,2,2,2,2,2,2,2,2,2,9},
                 {2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
-                {0,0,2,0,0,0,0,2,0,0,0,0,2,0,0},
-                {0,0,2,0,0,0,0,2,0,0,0,0,2,0,0},
-                {0,0,2,0,0,0,0,2,0,0,0,0,0,0,0},
-                {0,0,3,0,0,0,0,2,3,3,0,0,0,0,0},
-                {0,3,3,3,3,0,0,2,3,3,3,0,0,0,0},
-                {3,3,2,2,2,2,2,2,2,2,3,3,3,3,0}
+                {9,9,2,0,0,0,0,2,0,0,0,0,2,9,9},
+                {9,9,2,0,0,0,0,2,0,0,0,0,2,9,9},
+                {9,9,2,0,0,0,0,2,0,0,0,0,0,9,9},
+                {9,9,3,0,0,0,0,2,3,3,0,0,0,9,9},
+                {9,3,3,3,3,0,0,2,3,3,3,0,0,9,9},
+                {3,3,2,2,2,2,2,2,2,2,3,3,3,3,9}
             };
             for (int confirmPlatforms = 0; confirmPlatforms < 2; confirmPlatforms++)    //Increase the iterations on this outermost for loop if tabletop-objects are not properly spawning
             {
@@ -1271,7 +1306,7 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-
+            return _structure.GetLength(1);
         }
     }
 }

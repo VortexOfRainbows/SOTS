@@ -19,6 +19,7 @@ using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
 using Mono.Cecil;
 using Microsoft.Win32;
+using Terraria.GameContent.LootSimulation;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -100,7 +101,7 @@ namespace SOTS.WorldgenHelpers
 							Tile tUp = Framing.GetTileSafely(i, j - 1);
                             Tile tDown = Framing.GetTileSafely(i, j + 1);
                             bool sootRange = MathF.Sqrt(x * x + sootY * sootY) < radius * 0.8f;
-                            if (!t.HasTile || sootRange || (!Main.tileSolid[t.TileType] && !Main.tileAxe[t.TileType]))
+                            if ((!t.HasTile || sootRange || (!Main.tileSolid[t.TileType] && !Main.tileAxe[t.TileType])) && t.WallType != WallID.LivingWood && !Main.wallHouse[t.WallType])
 							{
                                 int type = TileID.Dirt;
                                 if (t.WallType == WallID.EbonstoneUnsafe)
@@ -444,74 +445,6 @@ namespace SOTS.WorldgenHelpers
 		{
             GenerateAbandonedMinesInsideTheCorruptionRectangle();
             return;
-			InitializeValidTileLists();
-
-            int center = Main.maxTilesX / 2;
-			int leftTiles = 0;
-			int rightTiles = 0;
-			int foundEvilBiomeLeft = 0;
-			int foundEvilBiomeRight = 0;
-			Point rightSide = new Point();
-			Point leftSide = new Point();
-
-			for (int x = center; x < Main.maxTilesX - 200; x++)
-			{
-				rightTiles++;
-				for (int y = 100; y < Main.worldSurface; y++)
-				{
-					Tile tile = Main.tile[x, y];
-					if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
-					{
-						if (ValidGrassTiles.Contains(tile.TileType) && IsLineSolid(x, y))
-						{
-							if (foundEvilBiomeRight < 30)
-							{
-								foundEvilBiomeRight++;
-							}
-							else
-							{
-								rightSide = new Point(x, y);
-								x = Main.maxTilesX;
-							}
-						}
-						break;
-					}
-				}
-			}
-			for (int x = center; x > 200; x--)
-            {
-				leftTiles++;
-				for (int y = 100; y < Main.worldSurface; y++)
-                {
-					Tile tile = Main.tile[x, y];
-					if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
-					{
-						if (ValidGrassTiles.Contains(tile.TileType) && IsLineSolid(x, y))
-						{
-							if(foundEvilBiomeLeft < 30)
-							{
-								foundEvilBiomeLeft++;
-							}
-							else
-                            {
-								leftSide = new Point(x, y);
-								x = 0;
-                            }								
-                        }
-						break;
-                    }
-                }
-            }
-			if (rightTiles > leftTiles)
-            {
-                GenerateAbandonedVillageWell(leftSide.X, leftSide.Y);
-				ContinueGeneration(leftSide.X - 30, -1);
-			}
-			else
-            {
-                GenerateAbandonedVillageWell(rightSide.X, rightSide.Y);
-				ContinueGeneration(rightSide.X + 30, 1);
-			}
 		}
 		public static void ContinueGeneration(int X, int direction = 1)
 		{
@@ -532,7 +465,7 @@ namespace SOTS.WorldgenHelpers
                         if (ValidStoneTiles.Contains(tile.TileType) && IsLineSolid(X, y))
                         {
                             tileFoundCounter++;
-                            int f = AreaFlatness(X, y);
+                            int f = AreaFlatness(X, y, 30);
                             if(bestFlatness < f)
                             {
                                 bestFlatness = f;
@@ -1215,10 +1148,10 @@ namespace SOTS.WorldgenHelpers
             avgY = avgY / 61;
             return avgY;
         }
-        public static int AreaFlatness(int x, int y)
+        public static int AreaFlatness(int x, int y, int size)
         {
             int tileThere = 0;
-            for (int i = -30; i < 30; i++)
+            for (int i = -size; i <= size; i++)
             {
                 for (int j = -3; j <= 2; j++)
                 {
@@ -2768,6 +2701,7 @@ namespace SOTS.WorldgenHelpers
             int totalHeight = 0;
             for (int i = start; i < Main.maxTilesX - 200; i++)
             {
+                int tilesDeep = 0;
                 for (int j = startDepth; j < 800; j++)
                 {
                     Tile t = Framing.GetTileSafely(i, j);
@@ -2797,13 +2731,22 @@ namespace SOTS.WorldgenHelpers
                                     startDepth = defaultDepth;
                                 }
                             }
+                            break;
                         }
                         else if (evilStart != -1 && evilEnd == -1 && !(i - evilStart - evilLength < allowance))
                         {
                             evilEnd = i;
                             evilLength = evilEnd - evilStart;
+                            break;
                         }
-                        break;
+                        if(tilesDeep > 15)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            tilesDeep++;
+                        }
                     }
                 }
                 if (evilEnd != -1)
@@ -2876,8 +2819,10 @@ namespace SOTS.WorldgenHelpers
                     Tile t = Framing.GetTileSafely(i, j);
                     int type = t.TileType;
                     bool WallToMoveDown = t.WallType == WallID.CrimstoneUnsafe || t.WallType == WallID.EbonstoneUnsafe;
-                    if ((t.HasTile && Main.tileSolid[type] && !InvalidTiles.Contains(t.TileType)) || WallToMoveDown)
+                    if ((t.HasTile && Main.tileSolid[type]) || WallToMoveDown)
                     {
+                        if (InvalidTiles.Contains(t.TileType) || t.WallType == WallID.LivingWood)
+                            break;
                         int shift = (int)Math.Abs(diff * flattenAmount * 0.9f);
                         List<Tile> tiles = new List<Tile>();
                         if(diff > 0 && shift > 0)
@@ -3339,7 +3284,7 @@ namespace SOTS.WorldgenHelpers
             DesignateAVRectangle((int)bottomOfCr.X, (int)bottomOfCr.Y, 400, 320);
 
             Point16 placement = new Point16();
-            for (int attempts = 0; attempts < 100; attempts++)
+            for (int attempts = 0; attempts < 150; attempts++)
             {
                 float aboveGroundLocation = MathHelper.Lerp(AVRect.Center.X, cR.rect.Center.X, WorldGen.genRand.NextFloat());
                 int i = (int)(aboveGroundLocation + 0.5f);
@@ -3351,7 +3296,10 @@ namespace SOTS.WorldgenHelpers
                 for(int j = cR.rect.Top; j < cR.rect.Bottom; j++)
                 {
                     Tile t = Main.tile[i, j];
+                    Tile tAbove = Main.tile[i, j - 1];
                     int type = t.TileType;
+                    if (tAbove.WallType != 0)
+                        break;
                     if (t.HasTile && Main.tileSolid[type])
                     {
                         placement = new Point16(i, j);
@@ -3366,7 +3314,54 @@ namespace SOTS.WorldgenHelpers
                     break;
             }
             GenerateNewMineEntrance(placement.X, placement.Y);
+            PlaceStructuresInAV(bestC, placement.X);
             AbandonedVillageTileCleanup(bestC);
+        }
+        public static void PlaceStructuresInAV(int evilBiome, int centerStructureX)
+        {
+            List<int> HouseTypes = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            int TotalHouseTypes = HouseTypes.Count;
+            CorruptionRectangle cR = Corruptions[evilBiome];
+            int chance = 16;
+            for (int i = cR.rect.Left + 20; i <= cR.rect.Right - 20; i++)
+            {
+                for (int j = cR.rect.Top; j <= cR.rect.Bottom; j++)
+                {
+                    Tile t = Main.tile[i, j];
+                    Tile tAbove = Main.tile[i, j - 1];
+                    int type = t.TileType;
+                    if (t.HasTile && Main.tileSolid[type] && !InvalidTiles.Contains(type))
+                    {
+                        bool isValidForPlacement = (ValidStoneTiles.Contains(type) || WorldGen.genRand.NextBool(5)) && MathF.Abs(centerStructureX - i) > 38 && tAbove.WallType == 0;
+                        if (isValidForPlacement)
+                        {
+                            if(WorldGen.genRand.NextBool(chance) && AreaFlatness(i, j, 2) > 2)
+                            {
+                                int houseType = WorldGen.genRand.Next(TotalHouseTypes);
+                                if (HouseTypes.Count > 0)
+                                {
+                                    int index = WorldGen.genRand.Next(HouseTypes.Count);
+                                    houseType = HouseTypes[index];
+                                    HouseTypes.RemoveAt(index);
+                                }
+                                int padding = (int)(12 + AVHouseWorldgenHelper.GenerateHouse(i, j, houseType) / 1.8f);
+                                i += padding;
+                                chance = 16;
+                            }
+                            else
+                            {
+                                if(chance > 3)
+                                    chance--;
+                            }    
+                        }
+                        break;
+                    }
+                    if(tAbove.WallType == WallID.EbonstoneUnsafe || tAbove.WallType == WallID.CrimstoneUnsafe)
+                    {
+                        break;
+                    }
+                }
+            }
         }
         public static void AbandonedVillageTileCleanup(int evilBiome)
         {
