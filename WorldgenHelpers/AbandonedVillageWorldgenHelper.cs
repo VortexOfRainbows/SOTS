@@ -84,37 +84,22 @@ namespace SOTS.WorldgenHelpers
 			radiusY++;
 			float scale = radiusY / (float)radius;
 			float invertScale = (float)radius / radiusY;
-			if (side == 0)
-			{
-				for (int x = -radius; x <= radius; x++)
-				{
-					for (float y = -radius - 1; y <= 0; y += invertScale)
-					{
-						int xPosition6 = spawnX + x;
-						if (Math.Sqrt(x * x + (int)y * (int)y) <= radius + 0.5)
-						{
-							WorldGen.KillTile(xPosition6, spawnY + (int)(y * scale + 0.5f), false, false, false);
-							WorldGen.KillWall(xPosition6, spawnY + (int)(y * scale + 0.5f));
-						}
-					}
-				}
-			}
-			else if (side == 1)
+            if (side == 1)
 			{
 				for (int x = -radius; x <= radius; x++)
                 {
-                    for (float y = -radius + 13; y <= 0; y += invertScale)
+                    for (float y = -radius * 0.75f; y <= 0; y += invertScale)
                     {
                         float length = MathF.Sqrt(x * x + y * y);
-                        float sootY = (radius + y - 13);
+                        float sootY = (radius + y / 0.75f);
                         if (length <= radius + 0.5)
 						{
 							int i = spawnX + x;
-							int j = spawnY + (int)(y * scale + 0.5f) + radiusY - 13;
+							int j = spawnY + (int)(y * scale + 0.5f) + (int)(radiusY * 0.75f);
 							Tile t = Framing.GetTileSafely(i, j);
 							Tile tUp = Framing.GetTileSafely(i, j - 1);
                             Tile tDown = Framing.GetTileSafely(i, j + 1);
-                            bool sootRange = MathF.Sqrt(x * x + sootY * sootY) < 39;
+                            bool sootRange = MathF.Sqrt(x * x + sootY * sootY) < radius * 0.8f;
                             if (!t.HasTile || sootRange || (!Main.tileSolid[t.TileType] && !Main.tileAxe[t.TileType]))
 							{
                                 int type = TileID.Dirt;
@@ -126,7 +111,7 @@ namespace SOTS.WorldgenHelpers
                                 {
                                     type = TileID.Crimstone;
                                 }
-                                else if(sootRange && sootY > 7)
+                                else if(sootRange && (sootY > radiusY * 0.15f || radiusY < 30))
                                 {
                                     type = ModContent.TileType<SootBlockTile>();
                                 }
@@ -1018,7 +1003,7 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 9:
                                     tile.HasTile = true;
-                                    tile.TileType = 213;
+                                    tile.TileType = TileID.Chain;
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -1686,14 +1671,14 @@ namespace SOTS.WorldgenHelpers
                         continue;
                     if (GulaLayer)
                         width -= 1;
-                    GenerateEntireShaft(startX, startY, width, mainSide, floorNum);
                     if (floorNum == 0 || WorldGen.genRand.NextBool(3))
                     {
-                        width = WorldGen.genRand.Next(3, 6);
+                        int width2 = WorldGen.genRand.Next(3, 6);
                         if (floorNum == 0)
-                            width += 1;
-                        GenerateEntireShaft(x1 - offset * mainSide, y1 + down, width, -mainSide, floorNum == 0 ? -2 : -1);
+                            width2 += 1;
+                        GenerateEntireShaft(x1 - offset * mainSide, y1 + down, width2, -mainSide, floorNum == 0 ? -2 : -1);
                     }
+                    GenerateEntireShaft(startX, startY, width, mainSide, floorNum);
                     attempts = -1;
                     break;
                 }
@@ -2912,8 +2897,8 @@ namespace SOTS.WorldgenHelpers
                                 s.IsHalfBlock = false;
                                 s.TileType = copyFrom.TileType;
                                 s.WallType = copyFrom.WallType != 0 ? copyFrom.WallType : s.WallType;
-                                if (!Main.tile[i, k - 1].HasTile || !Main.tileSolid[Main.tile[i, k - 1].TileType])
-                                    s.WallType = WallID.None;
+                                //if (!Main.tile[i, k - 1].HasTile || !Main.tileSolid[Main.tile[i, k - 1].TileType])
+                                //    s.WallType = WallID.None;
                                 n++;
                             }
                             for (int k = j; k < j + shift; k++)
@@ -3386,7 +3371,7 @@ namespace SOTS.WorldgenHelpers
         public static void AbandonedVillageTileCleanup(int evilBiome)
         {
             CorruptionRectangle cR = Corruptions[evilBiome];
-            for(int passNum = 0; passNum <= 1; passNum++)
+            for(int passNum = 0; passNum <= 2; passNum++)
             {
                 for (int i = cR.rect.Left; i <= cR.rect.Right; i++)
                 {
@@ -3400,14 +3385,26 @@ namespace SOTS.WorldgenHelpers
                             {
                                 t.ClearTile();
                             }
-                            else
-                            {
-
-                            }
                         }
                         else if(passNum == 1)
                         {
                             WorldGen.GrowTree(i, j);
+                        }
+                        else if(passNum == 2)
+                        {
+                            bool isGrass = type == TileID.CorruptGrass || type == TileID.CrimsonGrass;
+                            bool isStone = ValidStoneTiles.Contains(type) && !isGrass;
+                            if ((isGrass || (isStone && WorldGen.genRand.NextBool(50))) && t.HasTile && t.Slope == 0 && !t.IsHalfBlock && !Main.tile[i, j- 1].HasTile)
+                            {
+                                int plantType = TileID.CorruptPlants;
+                                if (type == TileID.CrimsonGrass)
+                                {
+                                    plantType = TileID.CrimsonPlants;
+                                }
+                                if (WorldGen.genRand.NextBool(50) || isStone)
+                                    plantType = TileID.MatureHerbs;
+                                WorldGen.PlaceTile(i, j - 1, plantType, false, false, -1, plantType == TileID.MatureHerbs ? 3 : 0);
+                            }
                         }
                     }
                     if (passNum == 1)

@@ -36,15 +36,16 @@ namespace SOTS.Items.Tools
 			int dir = (x % 2 * 2) -1;
 			int x2 = (int)tileLocation.X;
             int y2 = (int)tileLocation.Y;
-			AbandonedVillageWorldgenHelper.AbandonedVillageTileCleanup(0);
+			AVHouseWorldgenHelper.GenerateHouse10(x2, y2);
+            //AbandonedVillageWorldgenHelper.GenerateNewMineEntrance(x2, y2);
+            //AbandonedVillageWorldgenHelper.AbandonedVillageTileCleanup(0);
             //AbandonedVillageWorldgenHelper.DesignateAVRectangle(x2, y2, 400, 320);
-			//AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
+            //AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
 
             //AbandonedVillageWorldgenHelper.GenerateRectangle(x2, y2, 30, 30);
             //AbandonedVillageWorldgenHelper.GenerateNewRubyGemStructure(x2, y2);
             // AbandonedVillageWorldgenHelper.DesignateDesiredEvilBiome();
             //AbandonedVillageWorldgenHelper.GeneratePortalBossRoom(x2, y2);
-            //AbandonedVillageWorldgenHelper.GenerateNewMineEntrance(x2, y2);
             //AbandonedVillageWorldgenHelper.GenerateEntireShaft(x2, y2, 5, dir, 1);
             //AbandonedVillageWorldgenHelper.GenerateVaultRoomLoot2(x2, y2, 59, 1);
             //AbandonedVillageWorldgenHelper.GenerateVaultRoom(x2, y2, dir);

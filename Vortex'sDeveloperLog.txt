@@ -27,6 +27,7 @@ Update Objectives:
 	2. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 	3. Fill the Rectangle with blocks and generation that is related to the AVM instead of just being in the natural underground
 	4. Find out how to better integrate the idea of the place infected by evil (potentially change tile/wall types)
+	5. Make sure all walls are using unsafe variants
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items (pending)
 4. Starmap
@@ -80,13 +81,15 @@ N/A
 
 Daily Log:
 
-7/16/24 to 7/19/24
+7/16/24 to 7/20/24
 1. Flatten the evil biome in preparation for generation (also selector for the biome least likely to interfere with dungeon/pyramid)
 2. Dev tool that fills out the bestiary
 3. Add Keeper's Box and Soul of the Keeper, works in multiplayer
 4. Add new Ruby Gemlock structure (currently not spawning loot)
 5. WIP Abandoned village worldgen (made things more consistent and symmetric)
 6. Abandoned Mines now generates on world gen
+7. Small adjustments to Gilded Bladewings
+8. 10 Abandoned Village Surface structures (Courtesy of Taco)
 
 7/1/24 to 7/15/24
 1. Conduit buff rework

@@ -426,8 +426,8 @@ namespace SOTS.Common.PlayerDrawing
 
                     //Creative Flight
                     float sinusoid = MathF.Sin(MathHelper.ToRadians(counter * 2 + 10 * j)) * 5.5f * direction;
-                    Vector2 creativeOffset = new Vector2(-58 * direction, 0).RotatedBy(MathHelper.ToRadians(proper * 18.5f + sinusoid + 2 * direction)) * scale;
-                    float creativeRotation = -MathHelper.ToRadians(45 * direction - 21 * proper - sinusoid);
+                    Vector2 creativeOffset = new Vector2(-58 * direction, 0).RotatedBy(MathHelper.ToRadians(proper * 18.5f + sinusoid + 0.25f * direction)) * scale;
+                    float creativeRotation = -MathHelper.ToRadians(46 * direction - 21 * proper - sinusoid);
                     creativeOffset.Y += 2;
 
                     //Normal Flight
