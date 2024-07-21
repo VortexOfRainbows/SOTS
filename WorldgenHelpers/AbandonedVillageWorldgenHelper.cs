@@ -20,6 +20,8 @@ using SOTS.Items.Gems;
 using Mono.Cecil;
 using Microsoft.Win32;
 using Terraria.GameContent.LootSimulation;
+using System.Runtime.InteropServices.Marshalling;
+using SOTS.Items.Crushers;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -89,7 +91,7 @@ namespace SOTS.WorldgenHelpers
 			{
 				for (int x = -radius; x <= radius; x++)
                 {
-                    for (float y = -radius * 0.75f; y <= 0; y += invertScale)
+                    for (float y = -radius * 0.75f; y <= radius; y += invertScale)
                     {
                         float length = MathF.Sqrt(x * x + y * y);
                         float sootY = (radius + y / 0.75f);
@@ -446,48 +448,6 @@ namespace SOTS.WorldgenHelpers
             GenerateAbandonedMinesInsideTheCorruptionRectangle();
             return;
 		}
-		public static void ContinueGeneration(int X, int direction = 1)
-		{
-			bool generating = true;
-			int tileFoundCounter = 0;
-			int totalCounter = 0;
-            int bestFlatness = 0;
-            int bestLocationX = 0;
-            int bestLocationY = 0;
-            while (generating)
-			{
-				X += direction;
-                for (int y = 200; y < Main.worldSurface; y++)
-                {
-                    Tile tile = Main.tile[X, y];
-                    if (tile.HasTile && Main.tileSolid[tile.TileType] && !InvalidTiles.Contains(tile.TileType))
-                    {
-                        if (ValidStoneTiles.Contains(tile.TileType) && IsLineSolid(X, y))
-                        {
-                            tileFoundCounter++;
-                            int f = AreaFlatness(X, y, 30);
-                            if(bestFlatness < f)
-                            {
-                                bestFlatness = f;
-                                bestLocationX = X;
-                                bestLocationY = y;
-                            }
-                        }
-                        break;
-                    }
-                }
-				totalCounter++;
-				if(totalCounter > 1000 || !WorldGen.InWorld(X, 100, 50))
-                {
-					generating = false;
-                }
-            }
-
-            if(!generating && bestLocationX != 0)
-            {
-                GenerateNewMineEntrance(bestLocationX, bestLocationY + 2);
-            }
-        }
         public static bool TileIsNotContainer(Tile tile)
         {
             return tile.TileType != TileID.Containers && tile.TileType != TileID.Containers2 && tile.TileType != TileID.FakeContainers && tile.TileType != TileID.FakeContainers2;
@@ -712,7 +672,7 @@ namespace SOTS.WorldgenHelpers
 
                 Vector2 toDest = destination - new Vector2(x, y);
                 float distanceFrom = toDest.Length();
-                size = (int)Math.Min(30, Math.Max(distanceFrom - 20, 0));
+                size = (int)Math.Min(30, Math.Max(distanceFrom - 18, 0));
                 float desiredRotation = toDest.ToRotation() * 180 / MathHelper.Pi - 90;
 
                 GenerateTunnel(ref x, ref y, rotation, size: size);
@@ -972,6 +932,10 @@ namespace SOTS.WorldgenHelpers
                                     tile.IsHalfBlock = false;
                                     break;
                                 case 15:
+                                    if(tile.TileType == TileID.Crimstone || tile.TileType == TileID.Ebonstone)
+                                    {
+                                        tile.ClearTile();
+                                    }
                                     break;
                                 case 16:
                                     tile.HasTile = true;
@@ -2607,8 +2571,8 @@ namespace SOTS.WorldgenHelpers
                     random.Y *= 0.5f;
                 x = (int)(x + random.X);
                 y = (int)(y + random.Y);
-                x = Math.Clamp(x, 150 + w / 2, Main.maxTilesX - 150 - w / 2);
-                y = Math.Clamp(y, 150 + h / 2, Main.maxTilesY - 150 - h / 2);
+                x = Math.Clamp(x, 170 + w / 2, Main.maxTilesX - 170 - w / 2);
+                y = Math.Clamp(y, 170 + h / 2, Main.maxTilesY - 170 - h / 2);
                 int padding = 40;
                 OuterRect = new Rectangle(x - padding - w / 2, y - padding - h / 2, w + padding * 2, h + padding * 2);
                 AVRect = new Rectangle(x - w/2, y - h / 2, w, h);
@@ -3322,6 +3286,39 @@ namespace SOTS.WorldgenHelpers
             List<int> HouseTypes = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             int TotalHouseTypes = HouseTypes.Count;
             CorruptionRectangle cR = Corruptions[evilBiome];
+            bool rightSide = cR.rect.Center.X > Main.maxTilesX / 2;
+            int wellSpot = rightSide ? cR.rect.Left + 70 : cR.rect.Right - 70;
+            Point16 placement = new Point16(-1, -1);
+            for (int attempts = 0; attempts < 100; attempts++)
+            {
+                int i = wellSpot;
+                if (!cR.rect.Contains(i, cR.rect.Center.Y))
+                {
+                    break;
+                }
+                bool foundLocation = false;
+                for (int j = cR.rect.Top; j < cR.rect.Bottom; j++)
+                {
+                    Tile t = Main.tile[i, j];
+                    Tile tAbove = Main.tile[i, j - 1];
+                    int type = t.TileType;
+                    if (tAbove.WallType != 0)
+                        break;
+                    if (t.HasTile && Main.tileSolid[type] && MathF.Abs(centerStructureX - i) > 40)
+                    {
+                        placement = new Point16(i, j);
+                        if (ValidGrassTiles.Contains(type) || ValidStoneTiles.Contains(type))
+                        {
+                            foundLocation = true;
+                            break;
+                        }
+                    }
+                }
+                if (foundLocation)
+                    break;
+                wellSpot += rightSide ? 1 : -1;
+            }
+            GenerateAbandonedVillageWell(placement.X, placement.Y);
             int chance = 16;
             for (int i = cR.rect.Left + 20; i <= cR.rect.Right - 20; i++)
             {
@@ -3332,10 +3329,10 @@ namespace SOTS.WorldgenHelpers
                     int type = t.TileType;
                     if (t.HasTile && Main.tileSolid[type] && !InvalidTiles.Contains(type))
                     {
-                        bool isValidForPlacement = (ValidStoneTiles.Contains(type) || WorldGen.genRand.NextBool(5)) && MathF.Abs(centerStructureX - i) > 38 && tAbove.WallType == 0;
+                        bool isValidForPlacement = (ValidStoneTiles.Contains(type) || WorldGen.genRand.NextBool(5)) && MathF.Abs(centerStructureX - i) > 38 && Math.Abs(wellSpot - i) > 14 && tAbove.WallType == 0;
                         if (isValidForPlacement)
                         {
-                            if(WorldGen.genRand.NextBool(chance) && AreaFlatness(i, j, 2) > 2)
+                            if(WorldGen.genRand.NextBool(chance) && AreaFlatness(i, j, 2) > 3)
                             {
                                 int houseType = WorldGen.genRand.Next(TotalHouseTypes);
                                 if (HouseTypes.Count > 0)
@@ -3376,9 +3373,21 @@ namespace SOTS.WorldgenHelpers
                         int type = t.TileType;
                         if(passNum == 0)
                         {
-                            if (type == TileID.Trees)
+                            if(t.HasTile)
                             {
-                                t.ClearTile();
+                                if (type == TileID.Trees)
+                                {
+                                    t.ClearTile();
+                                }
+                                if (t.Slope == SlopeType.SlopeUpLeft || t.Slope == SlopeType.SlopeUpRight || t.IsHalfBlock)
+                                {
+                                    Tile down = Main.tile[i, j + 1];
+                                    if (down.HasTile && Main.tileSolid[down.TileType])
+                                    {
+                                        t.Slope = 0;
+                                        t.IsHalfBlock = false;
+                                    }
+                                }
                             }
                         }
                         else if(passNum == 1)

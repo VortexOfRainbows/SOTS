@@ -23,11 +23,11 @@ Acknowledged But Likely Delayed:
 
 Update Objectives:
 1. Ghost Town! (Next up)
-	1. Smart spawning houses and rubble	
+	1. Smart spawning rubble	
 	2. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 	3. Fill the Rectangle with blocks and generation that is related to the AVM instead of just being in the natural underground
 	4. Find out how to better integrate the idea of the place infected by evil (potentially change tile/wall types)
-	5. Make sure all walls are using unsafe variants
+	5. Make sure all walls are using unsafe variants and doesn't merge with underground
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items (pending)
 4. Starmap
@@ -81,7 +81,7 @@ N/A
 
 Daily Log:
 
-7/16/24 to 7/20/24
+7/16/24 to 7/21/24
 1. Flatten the evil biome in preparation for generation (also selector for the biome least likely to interfere with dungeon/pyramid)
 2. Dev tool that fills out the bestiary
 3. Add Keeper's Box and Soul of the Keeper, works in multiplayer
@@ -90,6 +90,7 @@ Daily Log:
 6. Abandoned Mines now generates on world gen
 7. Small adjustments to Gilded Bladewings
 8. 10 Abandoned Village Surface structures (Courtesy of Taco)
+9. Small localization changes
 
 7/1/24 to 7/15/24
 1. Conduit buff rework

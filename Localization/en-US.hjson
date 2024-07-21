@@ -267,7 +267,7 @@ Mods: {
 				DisplayName: Ancient Steel Halberd
 				Tooltip:
 					'''
-					Shatters enemies, making the next melee attack ignore defense and a guaranteed critical strike
+					Shatters enemies, making the next melee attack a guaranteed critical strike that ignores defense
 					The Halberd cannot make use of the shattered effect
 					'''
 			}
