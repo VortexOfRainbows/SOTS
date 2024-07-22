@@ -76,7 +76,7 @@ namespace SOTS.Items.Planetarium
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					Projectile.NewProjectile(Player.GetSource_OnHurt(null), Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, Player.whoAmI);
+					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:TwilightBeads"), Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, Player.whoAmI);
 				}
 			}
 		}
