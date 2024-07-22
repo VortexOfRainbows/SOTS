@@ -22,6 +22,7 @@ using Microsoft.Win32;
 using Terraria.GameContent.LootSimulation;
 using System.Runtime.InteropServices.Marshalling;
 using SOTS.Items.Crushers;
+using Terraria.GameContent.RGB;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -2773,11 +2774,11 @@ namespace SOTS.WorldgenHelpers
             //Flattens the evil biome by shifting tiles that are above the avg down and tiles below the avg up.
             CorruptionRectangle cR = Corruptions[oneToFlatten];
             int avg = cR.AverageHeight;
-            for(int i = cR.rect.Left; i <= cR.rect.Right; i++)
+            for(int i = cR.rect.Left; i < cR.rect.Right; i++)
             {
                 float percent = (i - cR.rect.Left) / (float)cR.rect.Width;
                 float flattenAmount = MathF.Pow(MathF.Abs(MathF.Sin(percent * MathHelper.Pi)), 0.25f);
-                for (int j = cR.rect.Top; j <= cR.rect.Bottom; j++)
+                for (int j = cR.rect.Top; j < cR.rect.Bottom; j++)
                 {
                     int diff = avg - j;
                     Tile t = Framing.GetTileSafely(i, j);
@@ -3320,9 +3321,9 @@ namespace SOTS.WorldgenHelpers
             }
             GenerateAbandonedVillageWell(placement.X, placement.Y);
             int chance = 16;
-            for (int i = cR.rect.Left + 20; i <= cR.rect.Right - 20; i++)
+            for (int i = cR.rect.Left + 20; i < cR.rect.Right - 20; i++)
             {
-                for (int j = cR.rect.Top; j <= cR.rect.Bottom; j++)
+                for (int j = cR.rect.Top; j < cR.rect.Bottom; j++)
                 {
                     Tile t = Main.tile[i, j];
                     Tile tAbove = Main.tile[i, j - 1];
@@ -3365,9 +3366,9 @@ namespace SOTS.WorldgenHelpers
             CorruptionRectangle cR = Corruptions[evilBiome];
             for(int passNum = 0; passNum <= 2; passNum++)
             {
-                for (int i = cR.rect.Left; i <= cR.rect.Right; i++)
+                for (int i = cR.rect.Left; i < cR.rect.Right; i++)
                 {
-                    for (int j = cR.rect.Top; j <= cR.rect.Bottom; j++)
+                    for (int j = cR.rect.Top; j < cR.rect.Bottom; j++)
                     {
                         Tile t = Main.tile[i, j];
                         int type = t.TileType;
@@ -3421,6 +3422,21 @@ namespace SOTS.WorldgenHelpers
                         {
                             i++;
                         }
+                    }
+                }
+            }
+        }
+        public static void PrepareUnderground(Rectangle rect)
+        {
+            int biomeType = !WorldGen.crimson ? BiomeConversionID.Corruption : BiomeConversionID.Crimson;
+            for(int i = rect.Left; i < rect.Right; i++)
+            {
+                for (int j = rect.Top; j < rect.Bottom; j++)
+                {
+                    Tile t = Main.tile[i, j];
+                    if(t.HasTile)
+                    {
+                        WorldGen.Convert(i, j, biomeType, 0);
                     }
                 }
             }

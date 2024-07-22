@@ -81,7 +81,7 @@ N/A
 
 Daily Log:
 
-7/16/24 to 7/21/24
+7/16/24 to 7/22/24
 1. Flatten the evil biome in preparation for generation (also selector for the biome least likely to interfere with dungeon/pyramid)
 2. Dev tool that fills out the bestiary
 3. Add Keeper's Box and Soul of the Keeper, works in multiplayer
@@ -92,6 +92,7 @@ Daily Log:
 8. 10 Abandoned Village Surface structures (Courtesy of Taco)
 9. Small localization changes
 10. Corpsebloom gore
+11. Import Noise Library (FastNoiseLite)
 
 7/1/24 to 7/15/24
 1. Conduit buff rework

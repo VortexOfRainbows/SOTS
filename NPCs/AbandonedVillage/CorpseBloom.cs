@@ -154,7 +154,6 @@ namespace SOTS.NPCs.AbandonedVillage
                 }
 			}
         }
-
 		public override void HitEffect(NPC.HitInfo hit) 
         {
 			if (NPC.life <= 0)
