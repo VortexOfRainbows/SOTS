@@ -1,19 +1,16 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.GlobalNPCs;
 using System;
-using System.Collections.Generic;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
 	public class CorpseBloom : ModNPC
 	{
+		public bool Closed => NPC.frame.Y <= 330; //This should include all of the closed frames
 		public override void SetStaticDefaults()
 		{
 			Main.npcFrameCount[NPC.type] = 19;
@@ -25,12 +22,11 @@ namespace SOTS.NPCs.AbandonedVillage
 
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 		}
-
 		public override void SetDefaults()
 		{
 			NPC.lifeMax = 50;
             NPC.damage = 35;
-            NPC.defense = 15;
+            NPC.defense = 16;
 			NPC.width = 46;
 			NPC.height = 66;
             NPC.npcSlots = 1f;
@@ -41,17 +37,26 @@ namespace SOTS.NPCs.AbandonedVillage
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.aiStyle = 0;
 		}
-
-		public override void FindFrame(int frameHeight)
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+			if(Closed)
+            {
+                modifiers.SourceDamage *= 0.5f;
+                modifiers.FinalDamage -= 2;
+            }
+        }
+        public override void FindFrame(int frameHeight)
 		{
-			NPC.frameCounter++;
-
-			if (NPC.ai[0] == 0)
+			NPC.frameCounter += 0.5f;
+			double bonusFrameCounter = Math.Sin(Math.Min(NPC.frame.Y / (float)frameHeight / 18f * MathHelper.Pi, MathHelper.Pi)); //Make the animation play faster on the middle frames and slower on outer frames to give an easing effect (not sure how noticeable this is)
+			//Main.NewText(bonusFrameCounter);
+			NPC.frameCounter += bonusFrameCounter * 0.5f;
+            if (NPC.ai[0] == 0)
 			{
 				if (NPC.frameCounter > 6)
 				{
 					NPC.frame.Y = NPC.frame.Y + frameHeight;
-					NPC.frameCounter = 0;
+					NPC.frameCounter -= 6;
 				}
 				if (NPC.frame.Y >= frameHeight * 4)
 				{
@@ -71,8 +76,8 @@ namespace SOTS.NPCs.AbandonedVillage
 					if (NPC.frameCounter > 6)
 					{
 						NPC.frame.Y = NPC.frame.Y + frameHeight;
-						NPC.frameCounter = 0;
-					}
+                        NPC.frameCounter -= 6;
+                    }
 					if (NPC.frame.Y >= frameHeight * 12)
 					{
 						NPC.frame.Y = 10 * frameHeight;
@@ -84,8 +89,8 @@ namespace SOTS.NPCs.AbandonedVillage
 					if (NPC.frameCounter > 6)
 					{
 						NPC.frame.Y = NPC.frame.Y + frameHeight;
-						NPC.frameCounter = 0;
-					}
+                        NPC.frameCounter -= 6;
+                    }
 					if (NPC.frame.Y >= frameHeight * 19)
 					{
 						NPC.frame.Y = 0 * frameHeight;
@@ -93,7 +98,6 @@ namespace SOTS.NPCs.AbandonedVillage
 				}
 			}
 		}
-
         public override void AI()
 		{
 			NPC.TargetClosest(true);
@@ -105,6 +109,8 @@ namespace SOTS.NPCs.AbandonedVillage
 			if (NPC.Distance(player.Center) <= 200f && NPC.ai[0] == 0)
 			{
 				NPC.ai[0] = 1;
+				if (Main.netMode == NetmodeID.Server)
+					NPC.netUpdate = true;
 			}
 			
 			//shot out vile spits when activated
@@ -116,21 +122,26 @@ namespace SOTS.NPCs.AbandonedVillage
 				{
 					SoundEngine.PlaySound(SoundID.NPCDeath9, NPC.Center);
 
-					Vector2 ShootPosition = new Vector2(NPC.Center.X + (NPC.direction == -1 ? -10 : 10), NPC.Center.Y - 6);
+					if(Main.netMode != NetmodeID.MultiplayerClient)
+					{
+                        Vector2 ShootPosition = new Vector2(NPC.Center.X + NPC.direction * 10, NPC.Center.Y - 6);
 
-					Vector2 ShootSpeed = player.Center - NPC.Center;
-                    ShootSpeed.Normalize();
-                    ShootSpeed.X *= Main.rand.NextFloat(5f, 8f);
-                    ShootSpeed.Y *= Main.rand.NextFloat(-2f, 3f);
+                        Vector2 ShootSpeed = player.Center - NPC.Center;
+                        ShootSpeed = ShootSpeed.SafeNormalize(Vector2.Zero);
+                        ShootSpeed.X *= Main.rand.NextFloat(5f, 8f);
+                        ShootSpeed.Y *= Main.rand.NextFloat(-2f, 3f);
 
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), ShootPosition, ShootSpeed, ModContent.ProjectileType<CorpsebloomAcid>(), NPC.damage / 4, 0, NPC.target);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), ShootPosition, ShootSpeed, ModContent.ProjectileType<CorpsebloomAcid>(), SOTSNPCs.GetBaseDamage(NPC) / 2, 0, Main.myPlayer);
+                    }
 				}
 
 				if (NPC.ai[1] > 120)
 				{
 					NPC.ai[0] = 2;
 					NPC.ai[1] = 0;
-				}
+                    if (Main.netMode == NetmodeID.Server)
+                        NPC.netUpdate = true;
+                }
 			}
 
 			if (NPC.ai[0] == 2)
@@ -138,18 +149,34 @@ namespace SOTS.NPCs.AbandonedVillage
 				if (NPC.frame.Y >= 18 * NPC.height)
 				{
 					NPC.ai[0] = 0;
-				}
+                    if (Main.netMode == NetmodeID.Server)
+                        NPC.netUpdate = true;
+                }
 			}
         }
 
-		/*
-		//spawn gores and whatnot
 		public override void HitEffect(NPC.HitInfo hit) 
         {
-			if (NPC.life <= 0) 
-            {
-            }
+			if (NPC.life <= 0)
+			{
+				if (Main.netMode != NetmodeID.Server)
+				{
+					for (int i = 1; i <= 7; i++)
+					{
+						Vector2 circular = new Vector2(14, 14).RotatedBy(MathHelper.ToRadians(-i * 60));
+						circular.X *= NPC.direction;
+						if (i == 7)
+							circular *= 0;
+                        Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular + new Vector2(10 * NPC.direction, -10) - new Vector2(9, 9), circular * 0.1f + Main.rand.NextVector2Circular(2, 2), ModGores.GoreType("Gores/CorpseBloom/CorpseBloomGore" + i), 1f);
+                    }
+                    NPC.DeathGore("Gores/CorpseBloom/CorpseBloomGore8", new Vector2(NPC.width / 2, NPC.height * 3 / 4));
+                    NPC.DeathGore("Gores/CorpseBloom/CorpseBloomGore9", new Vector2(NPC.width / 2, NPC.height * 3 / 4));
+                }
+			}
+			else
+			{
+
+			}
         }
-		*/
     }
 }

@@ -42,7 +42,7 @@ Update Objectives:
 13. Fish Bomb
 14. Fix generation bug with Infernum and Leviathan area
 15. Upgrade item to the Hydrokinetic Antennae
-16. Polish the Corpsebloom (add banner, server sync, gore, etc)
+16. Polish the Corpsebloom (add banner, server sync, etc)
 17. Fix Bundle of Snakes/Botanical Symbiote
 18. Somehow fix marble biome in vibrant geode
 19. Gula Gateway tile needs to be connectable to evil and earthen conduits
@@ -91,6 +91,7 @@ Daily Log:
 7. Small adjustments to Gilded Bladewings
 8. 10 Abandoned Village Surface structures (Courtesy of Taco)
 9. Small localization changes
+10. Corpsebloom gore
 
 7/1/24 to 7/15/24
 1. Conduit buff rework
