@@ -28,6 +28,7 @@ Update Objectives:
 	3. Fill the Rectangle with blocks and generation that is related to the AVM instead of just being in the natural underground
 	4. Find out how to better integrate the idea of the place infected by evil (potentially change tile/wall types)
 	5. Make sure all walls are using unsafe variants and doesn't merge with underground
+	6. Make sure ruby gem structure loot is still pawning (Synthetic Liver)
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items (pending)
 4. Starmap
@@ -80,6 +81,10 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+7/22/24
+1. Abandoned Village mines generates smaller in Small worlds (Medium and Large worlds use the same size)
+2. More WIP Abandoned Village gen (now generates crimson around the mines)
 
 7/16/24 to 7/22/24
 1. Flatten the evil biome in preparation for generation (also selector for the biome least likely to interfere with dungeon/pyramid)
