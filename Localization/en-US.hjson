@@ -5601,6 +5601,11 @@ Mods: {
 					Mining blocks has a chance to drop bonus resources, such as coins and silt
 					'''
 			}
+
+			PlagueSpitter: {
+				DisplayName: Plague Spitter
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7292,6 +7297,7 @@ Mods: {
 			Icebreaker.DisplayName: Icebreaker
 			IcebreakerIce.DisplayName: Icebreaker Ice
 			IcebreakerShard.DisplayName: Icebreaker Shard
+			PlagueSpitter.DisplayName: Plague Spitter
 		}
 
 		DamageClasses: {

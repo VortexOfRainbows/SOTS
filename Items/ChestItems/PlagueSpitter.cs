@@ -1,6 +1,4 @@
-using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -8,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.ChestItems
 {
-	public class Icebreaker : ModItem
+	public class PlagueSpitter : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
@@ -17,11 +15,11 @@ namespace SOTS.Items.ChestItems
 		public override void SetDefaults()
 		{
 			Item.damage = 17;
-			Item.DamageType = DamageClass.Ranged;
-			Item.width = 72;
-			Item.height = 30;
-			Item.useTime = 60;
-			Item.useAnimation = 60;
+			Item.DamageType = DamageClass.Magic;
+			Item.width = 26;
+			Item.height = 36;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
@@ -29,15 +27,15 @@ namespace SOTS.Items.ChestItems
 			Item.UseSound = null;
 			Item.autoReuse = false;
 			Item.channel = true;
-			Item.shoot = ModContent.ProjectileType<Projectiles.BiomeChest.Icebreaker>();
+			Item.shoot = ModContent.ProjectileType<Projectiles.BiomeChest.PlagueSpitter>();
 			Item.shootSpeed = 8f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-			Item.useAmmo = AmmoID.Bullet;
+			Item.mana = 10;
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.BiomeChest.Icebreaker>(), damage, knockback, player.whoAmI, -1, type);
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.BiomeChest.PlagueSpitter>(), damage, knockback, player.whoAmI, -1, -1);
 			return false;
 		}
 	}
