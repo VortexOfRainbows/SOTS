@@ -43,7 +43,7 @@ Update Objectives:
 14. Fix generation bug with Infernum and Leviathan area
 15. Upgrade item to the Hydrokinetic Antennae
 16. Polish the Corpsebloom (add banner, server sync, etc)
-17. Fix Bundle of Snakes/Botanical Symbiote
+17. Fix Bundle of Snakes/Botanical Symbiote glitches... such as them deleting projectiles or not spawning hooks appropriately
 18. Somehow fix marble biome in vibrant geode
 19. Gula Gateway tile needs to be connectable to evil and earthen conduits
 20. Update Elemental Amulet sprite to include modern genshin visions
@@ -52,7 +52,6 @@ Update Objectives:
 Abandoned village generation
 Ruby Gemlock to spawn loot
 Vault Room to spawn loot
-Plague Spitter (needs Polish Visuals (particles), Balance, Multiplayer sync)
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -61,7 +60,7 @@ Conduit powering code for the two portals
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword,
 Possibly Blade Wings, Tesseract,
-Icebreaker
+Icebreaker, Plague Spitter
 
 ---Visual Upgrade Needed---
 N/A
@@ -82,7 +81,10 @@ N/A
 
 Daily Log:
 
-7/22/24
+7/24/24
+1. Finished Plague Spitter (works in multiplayer!)
+
+7/22/24 to 7/23/24
 1. Abandoned Village mines generates smaller in Small worlds (Medium and Large worlds use the same size)
 2. More WIP Abandoned Village gen (now generates crimson around the mines)
 3. WIP Plague Spitter

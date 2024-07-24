@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Projectiles.Blades;
 using SOTS.Projectiles.Camera;
 using System;
 using Terraria;
@@ -7,6 +8,7 @@ namespace SOTS
 {
     public static class ColorHelpers
     {
+		public static Color ToothAcheLime => ToothAcheSlash.toothAcheLime;
         public static Color AcediaColor = new Color(213, 68, 255);
         public static Color DreamLampColor = DreamingFrame.Green1;
 		public static Color soulLootingColor = new Color(66, 56, 111);

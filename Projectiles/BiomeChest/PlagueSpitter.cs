@@ -8,6 +8,7 @@ using SOTS.Projectiles.Blades;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Terraria;
 using Terraria.GameContent;
@@ -18,6 +19,13 @@ namespace SOTS.Projectiles.BiomeChest
 {
     public class PlagueSpitter : ModProjectile
     {
+        public static Color SpitterColor
+        { 
+            get
+            {
+                return Color.Lerp(ColorHelpers.ToothAcheLime, ToothAcheSlash.toothAcheGreen, Main.rand.NextFloat(1f));
+            }
+        }
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(counter);
@@ -57,7 +65,7 @@ namespace SOTS.Projectiles.BiomeChest
             Vector2 drawOrigin = texture.Size() /2;
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation + MathHelper.PiOver4 * Projectile.direction * Projectile.spriteDirection, drawOrigin, Projectile.scale * 0.92f, Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-            DrawPlagueBalls(lightColor);
+            DrawPlagueBalls();
             //if(counter > Projectile.ai[0] * 2)
             //{
             //    Color color = new Color(100, 100, 100, 0);
@@ -76,7 +84,7 @@ namespace SOTS.Projectiles.BiomeChest
             //}
             return false;
         }
-        public void DrawPlagueBalls(Color lightColor)
+        public void DrawPlagueBalls()
         {
             if (Projectile.ai[2] <= 0)
                 return;
@@ -87,18 +95,12 @@ namespace SOTS.Projectiles.BiomeChest
             Vector2 center = Barrel;
             Vector2 drawPos = center - Main.screenPosition;
             Color c = new Color(100, 100, 100, 0);
-            float trailLength = 6;
-            int groups = 3;
             for (int j = 0; j < Projectile.ai[2]; j++)
             {
                 Vector2 previous = Vector2.Zero;
-                int cirNum = (j / groups);
                 for (int k = 0; k < 12; k++)
                 {
-                    int i = j;
-                    Vector2 circular = new Vector2(10 + cirNum * 5, 0).RotatedBy(MathHelper.ToRadians((SOTSWorld.GlobalCounter - k * trailLength) * 1.5f + i * (360f / groups) + cirNum * 30f));
-                    circular.Y *= 0.4f;
-                    circular = circular.RotatedBy(Projectile.rotation - MathHelper.PiOver2);
+                    Vector2 circular = PlagueBallPosition(j, k);
                     Vector2 pos = drawPos + circular;
                     float r = 0;
                     if(k == 0)
@@ -115,11 +117,16 @@ namespace SOTS.Projectiles.BiomeChest
                     previous = pos;
                 }
             }
-            //for(int i = 0; i < 3; i++)
-            //{
-            //    float rot = MathHelper.ToRadians(SOTSWorld.GlobalCounter * (1 + i * 0.5f)) * (i % 2 * 2 - 1);
-            //    Main.spriteBatch.Draw(texture, drawPos, null, Color.Lerp(c, Color.Black, 0.4f - i * 0.2f) * (1 - i * 0.15f), rot, drawOrigin, Projectile.scale * 0.75f * (1 + 0.25f * i), SpriteEffects.None, 0f);
-            //}
+        }
+        public Vector2 PlagueBallPosition(int i, int k)
+        {
+            float trailLength = 6;
+            int groups = 3;
+            int cirNum = (i / groups);
+            Vector2 circular = new Vector2(10 + cirNum * 5, 0).RotatedBy(MathHelper.ToRadians((SOTSWorld.GlobalCounter - k * trailLength) * 1.5f + i * (360f / groups) + cirNum * 30f));
+            circular.Y *= 0.4f;
+            circular = circular.RotatedBy(Projectile.rotation - MathHelper.PiOver2);
+            return circular;
         }
         private bool skipDrawingFirstFrame = true;
         private int counter = 0;
@@ -144,11 +151,17 @@ namespace SOTS.Projectiles.BiomeChest
                     Projectile.netUpdate = true;
                 }
             }
-            if ((Projectile.ai[2] > 1 || (Projectile.ai[2] == 1 && counter > Projectile.ai[0] / 1.5f)) && !player.channel)
+            bool notEnoughMana = !player.CheckMana((int)Projectile.ai[1], false, false);
+            if ((Projectile.ai[2] > 1 || (Projectile.ai[2] == 1 && counter > Projectile.ai[0] / 1.5f)) && (!player.channel || notEnoughMana))
                 ended = true;
             if (ended)
                 Projectile.direction = Projectile.oldDirection;
-            if (!ended || Main.myPlayer != Projectile.owner)
+            if(Main.myPlayer != Projectile.owner)
+            {
+                player.itemTime = 2;
+                player.itemAnimation = 2;
+            }
+            if (!ended)
             {
                 player.itemTime = 2;
                 player.itemAnimation = 2;
@@ -156,7 +169,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
-                if (player.channel || player.controlUseItem)
+                if ((player.channel || player.controlUseItem) && !notEnoughMana)
                 {
                     player.channel = true;
                     Projectile.netUpdate = true;
@@ -178,7 +191,7 @@ namespace SOTS.Projectiles.BiomeChest
                             counter++;
                             if (counter > 0)
                             {
-                                counter = -(int)(Projectile.ai[0] / 5);
+                                counter = -(int)(Projectile.ai[0] / 2);
                                 Shoot();
                             }
                         }
@@ -203,9 +216,9 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 counter++;
             }
-            recoil *= 0.966f;
-            recoil -= 0.4f;
-            recoil = MathHelper.Clamp(recoil, 0, 90);
+            recoil *= 0.96f;
+            recoil -= 0.5f;
+            recoil = MathHelper.Clamp(recoil, 0, 45f);
             if (counter <= Projectile.ai[0])
             {
                 if (!ended)
@@ -218,22 +231,37 @@ namespace SOTS.Projectiles.BiomeChest
                         Vector2 circular = new Vector2(1 + Projectile.ai[2] / 9f, 0).RotatedBy(Main.rand.NextFloat(6.28f));
                         circular.Y *= 0.5f;
                         circular = circular.RotatedBy(Projectile.rotation - MathHelper.PiOver2);
-                        Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 18, 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ToothAcheSlash.toothAcheLime);
+                        Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 18, 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, SpitterColor);
                         dust.noGravity = true;
                         dust.scale = 1.0f;
                         dust.velocity *= 0.2f;
-                        dust.velocity += Projectile.velocity * 0.075f * Main.rand.NextFloat() - circular * 1.4f;
+                        dust.velocity += Projectile.velocity * 0.075f * Main.rand.NextFloat() - circular * 1.4f + player.velocity;
                         dust.fadeIn = 9f;
                         dust.color.A = 0;
                     }
                     float windUp = (counter + 30) / (Projectile.ai[0] + 30);
-                    Vector2 shaking = Main.rand.NextVector2Circular(1, 1) * windUp * 1f;
+                    Vector2 shaking = Main.rand.NextVector2Circular(1, 1) * windUp * 0.5f;
                     offset += shaking;
                     if (windUp >= 1)
                     {
                         Projectile.netUpdate = true;
                         GatherCharge();
                         counter = 0;
+                    }
+                }
+                for (int i = 0; i < Projectile.ai[2]; i++)
+                {
+                    if (Main.rand.NextBool(30))
+                    {
+                        Vector2 away = PlagueBallPosition((int)i, 0);
+                        Vector2 ballPosition = away + Barrel;
+                        Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, SpitterColor);
+                        dust.noGravity = true;
+                        dust.scale = 1.5f;
+                        dust.velocity *= 0.2f;
+                        dust.velocity += Projectile.velocity * 0.01f * Main.rand.NextFloat() - away.SafeNormalize(Vector2.Zero) * 0.1f + player.velocity;
+                        dust.fadeIn = 10f;
+                        dust.color.A = 0;
                     }
                 }
             }
@@ -258,7 +286,19 @@ namespace SOTS.Projectiles.BiomeChest
             Player player = Main.player[Projectile.owner];
             if (Projectile.ai[2] < 30)
             {
-                SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.9f, -0.2f);
+                for (int i = 0; i < 12; i++)
+                {
+                    Vector2 away = PlagueBallPosition((int)Projectile.ai[2], i);
+                    Vector2 ballPosition = away + Barrel;
+                    Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, SpitterColor);
+                    dust.noGravity = true;
+                    dust.scale = 2f - (i != 0 ? 1f : 0);
+                    dust.velocity *= 0.0f;
+                    dust.velocity += away.SafeNormalize(Vector2.Zero) * 0.5f + player.velocity;
+                    dust.fadeIn = 7f;
+                    dust.color.A = 0;
+                }
+                SOTSUtils.PlaySound(SoundID.Item20, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1f, -0.1f);
                 player.CheckMana((int)Projectile.ai[1], true, false);
                 Projectile.ai[2]++;
                 if (Main.myPlayer == Projectile.owner)
@@ -267,24 +307,42 @@ namespace SOTS.Projectiles.BiomeChest
         }
         private void Shoot()
         {
-            SOTSUtils.PlaySound(SoundID.NPCDeath9, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, 0.1f);
+            Player player = Main.player[Projectile.owner];
+            SOTSUtils.PlaySound(SoundID.NPCDeath9, (int)player.Center.X, (int)player.Center.Y, 1f, -0.5f);
+            Vector2 includingRecoil = (Barrel - Projectile.Center).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length();
+            Vector2 ballPosition = PlagueBallPosition((int)Projectile.ai[2] - 1, 0) + Barrel;
             if (Projectile.owner == Main.myPlayer)
             {
                 int type = ModContent.ProjectileType<PlagueBeam>();
-                Vector2 includingRecoil = (Barrel - Projectile.Center).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length();
-                for (int i = 0; i < 1; i++)
-                {
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Barrel, (includingRecoil * 1.15f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-2, 2)) * i) + Main.rand.NextVector2Circular(1, 1) / (i + 1), type, Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                }
+                Vector2 velo = includingRecoil + Main.rand.NextVector2Circular(1, 1) * 0.2f;
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Barrel, velo, type, Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 Projectile.netUpdate = true;
+            }
+            for (int i = 0; i < 12; i++)
+            {
+                Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, SpitterColor);
+                dust.noGravity = true;
+                if(i < 5)
+                {
+                    dust.scale = 1.5f;
+                    dust.velocity *= 0.4f;
+                }
+                else
+                {
+                    dust.scale = 1.0f;
+                    dust.velocity *= 0.1f;
+                    dust.velocity += includingRecoil * 0.5f * Main.rand.NextFloat() + player.velocity;
+                }
+                dust.fadeIn = 12f;
+                dust.color.A = 0;
             }
             Projectile.ai[2]--;
             float percent = Projectile.ai[2] / 30f;
             float recoilBonus = MathF.Sin(percent * MathHelper.Pi);
-            recoil *= 1.3f;
-            recoil += 5 + 7 * recoilBonus;
+            recoil *= 1.16f;
+            recoil += 4 + 4 * recoilBonus;
             if (Projectile.ai[2] <= 0)
-                recoil += 20;
+                recoil += 26;
         }
     }
     public class PlagueBeam : ModProjectile
@@ -326,7 +384,7 @@ namespace SOTS.Projectiles.BiomeChest
         bool hasInit = false;
         public void InitializeLaser()
         {
-            Color color = ToothAcheSlash.toothAcheLime;
+            Color color = PlagueSpitter.SpitterColor;   
             color.A = 0;
             Vector2 startingPosition = Projectile.Center;
             Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero);
@@ -363,20 +421,26 @@ namespace SOTS.Projectiles.BiomeChest
                 {
                     Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color);
                     dust.scale = 1.0f;
-                    dust.velocity *= 0.5f;
-                    dust.velocity += Projectile.velocity * Main.rand.NextFloat(5f, 8f);
+                    dust.velocity *= 0.33f;
+                    dust.velocity += Projectile.velocity * Main.rand.NextFloat(1f, 4f);
                     dust.fadeIn = 8;
                 }
             }
-            for (int i = 3; i > 0; i--)
+            for (int i = 10; i > 0; i--)
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1f);
+                dust.noGravity = true;
+                dust.velocity = dust.velocity * Main.rand.NextFloat() * 0.5f + Projectile.velocity * Main.rand.NextFloat(0f, 8f);
+                dust.fadeIn = 8;
+                dust.scale = Main.rand.Next(5, 8) / 4f;
+            }
+            for (int i = 15; i > 0; i--)
             {
                 Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1f);
                 dust.noGravity = true;
-                dust.velocity = dust.velocity * 0.15f + Projectile.velocity * Main.rand.NextFloat(0.1f, 0.5f);
-                if (i == 2)
-                    dust.velocity += new Vector2(0, -Main.rand.NextFloat(0.1f, 0.3f));
-                dust.fadeIn = 6;
-                dust.scale = 1.0f;
+                dust.velocity = dust.velocity * Main.rand.NextFloat() + Projectile.velocity * Main.rand.NextFloat(0.0f, 4f);
+                dust.fadeIn = 4;
+                dust.scale = Main.rand.Next(4, 9) / 4f;
             }
             hasInit = true;
         }
@@ -393,7 +457,7 @@ namespace SOTS.Projectiles.BiomeChest
         {
             if (!hasInit)
                 return false;
-            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
+            Texture2D texture = TextureAssets.Projectile[Type].Value;
             Vector2 origin = new Vector2(0, 1);
             float rotation = Projectile.velocity.ToRotation();
             Vector2 start = Projectile.Center;

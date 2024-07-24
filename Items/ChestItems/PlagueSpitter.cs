@@ -14,12 +14,12 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 17;
+			Item.damage = 15;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 26;
 			Item.height = 36;
-			Item.useTime = 20;
-			Item.useAnimation = 20;
+			Item.useTime = 10;
+			Item.useAnimation = 10;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);
@@ -31,12 +31,16 @@ namespace SOTS.Items.ChestItems
 			Item.shootSpeed = 8f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-			Item.mana = 10;
+			Item.mana = 5;
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
 			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.BiomeChest.PlagueSpitter>(), damage, knockback, player.whoAmI, -1, -1);
 			return false;
 		}
-	}
+        public override void OnConsumeMana(Player player, int manaConsumed)
+        {
+			player.statMana += manaConsumed;
+        }
+    }
 }

@@ -37,7 +37,6 @@ using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.NPCs.Anomaly;
 using SOTS.Projectiles.Tide;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
-using Terraria.DataStructures;
 using SOTS.FakePlayer;
 
 namespace SOTS.Common.GlobalNPCs
@@ -87,6 +86,7 @@ namespace SOTS.Common.GlobalNPCs
         public int BleedingCurse = 0;
         public int BlazingCurse = 0;
         public int AnomalyCurse = 0;
+        public int BlightCurse = 0;
         public float VoidspaceCurse = 0;
         public int OwnerOfVoidspaceCurseDamage = -1;
         public int timeFrozen = 0;
@@ -289,6 +289,7 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write(BleedingCurse);
                 packet.Write(BlazingCurse);
                 packet.Write(AnomalyCurse);
+                packet.Write(BlightCurse);
                 packet.Write(OwnerOfVoidspaceCurseDamage);
                 packet.Send();
             }
@@ -346,6 +347,7 @@ namespace SOTS.Common.GlobalNPCs
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 0, 0), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref BleedingCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.VoidAnomaly, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.ToothAcheLime, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BlightCurse").Value, ref BlightCurse, ref height);
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
@@ -410,6 +412,12 @@ namespace SOTS.Common.GlobalNPCs
             }
             if (Main.myPlayer == player.whoAmI)
             {
+                if (projectile.type == ProjectileType<PlagueBeam>())
+                {
+                    BlightCurse++;
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        SendClientChanges(player, npc);
+                }
                 if (projectile.type == ProjectileType<SeleneSlash>() || (projectile.type == ProjectileType<SkipSlash>() && Main.rand.NextBool(5)))
                 {
                     AnomalyCurse++;
@@ -545,6 +553,10 @@ namespace SOTS.Common.GlobalNPCs
             }
             if (player.SOTSPlayer().VoidspaceFlames)
                 ApplyVoidspaceCurse(npc, player);
+            if (projectile.type == ProjectileType<PlagueBeam>())
+            {
+                modifiers.FinalDamage *= 1.0f + 0.2f * BlightCurse;
+            }
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
@@ -906,7 +918,49 @@ namespace SOTS.Common.GlobalNPCs
                 DendroDamage = 0;
             }
             npc.position -= npc.velocity * (1 - dartVeloMult * flowerVeloMult * finalSlowdown);
-            base.PostAI(npc);
+            if (BlightCurse > 0)
+            {
+                if (previousBlight < BlightCurse)
+                {
+                    if(Main.netMode != NetmodeID.Server)
+                    {
+                        for (int i = 12; i > 0; i--)
+                        {
+                            Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5, 5), npc.width, npc.height, ModContent.DustType<PixelDust>(), 0, 0, 0, PlagueSpitter.SpitterColor, 1f);
+                            dust.noGravity = true;
+                            dust.velocity = dust.velocity * Main.rand.NextFloat() + npc.velocity * Main.rand.NextFloat(0.0f, 1f);
+                            dust.fadeIn = 4;
+                            dust.scale = Main.rand.Next(4, 9) / 4f;
+                            dust.color.A = 100;
+                        }
+                    }
+                    TimeSinceHitByBlight = 0;
+                }
+                else
+                {
+                    if(Main.netMode != NetmodeID.Server)
+                    {
+                        if (Main.rand.NextBool(4))
+                        {
+                            Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5, 5), npc.width, npc.height, ModContent.DustType<PixelDust>(), 0, 0, 0, PlagueSpitter.SpitterColor, 1f);
+                            dust.noGravity = true;
+                            dust.velocity = dust.velocity * Main.rand.NextFloat() + npc.velocity * Main.rand.NextFloat(0.0f, 1f);
+                            dust.fadeIn = 4;
+                            dust.scale = Main.rand.Next(4, 9) / 4f;
+                            dust.color.A = 100;
+                        }
+                    }
+                }
+                if (TimeSinceHitByBlight >= 30)
+                {
+                    TimeSinceHitByBlight = 25;
+                    BlightCurse--;
+                }
+                TimeSinceHitByBlight++;
+            }
+            else
+                TimeSinceHitByBlight = 0;
+            previousBlight = BlightCurse;
         }
         bool isFlowered = false;
         public override void UpdateLifeRegen(NPC npc, ref int damage)
@@ -925,6 +979,11 @@ namespace SOTS.Common.GlobalNPCs
             {
                 npc.lifeRegen -= AnomalyCurse * 4;
                 damage += (AnomalyCurse + 1) / 2;
+            }
+            if (BlightCurse > 0)
+            {
+                npc.lifeRegen -= BlightCurse * 20;
+                damage += BlightCurse + 1;
             }
             if (isFlowered)
             {
@@ -1211,6 +1270,8 @@ namespace SOTS.Common.GlobalNPCs
                 DendroChainNPCOperators.HurtOtherNPCs(npc, DendroDamage);
             }
         }
+        private float previousBlight;
+        private float TimeSinceHitByBlight = 0;
         public void AddAmmoToList(Projectile projectile)
         {
             Player player = Main.player[projectile.owner];

@@ -5603,8 +5603,13 @@ Mods: {
 			}
 
 			PlagueSpitter: {
-				DisplayName: Plague Belcher
-				Tooltip: ""
+				DisplayName: Acid Belcher
+				Tooltip:
+					'''
+					Charge up to 30 high-velocity acid balls that can be fired in quick succession
+					Struck enemies are temporarily coated in acid, increasing the damage they receive from all subsequent acid balls by 20%
+					Acid-coated enemies also take 10 damage per second per stack of acid
+					'''
 			}
 		}
 
