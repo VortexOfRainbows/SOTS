@@ -10,6 +10,7 @@ Wiki has been moved to wiki.gg
 
 [b]!! This mod is in development !![/b]
 [b]!! A large world is recommended to avoid major structures overlapping !![/b]
+[b]!! Worldgen may not work on special seeds !![/b]
 
 This mod contains:
 7 entirely new bosses with unique attacks

@@ -18,8 +18,8 @@ namespace SOTS.Items.ChestItems
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 26;
 			Item.height = 36;
-			Item.useTime = 30;
-			Item.useAnimation = 30;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(0, 5, 0, 0);

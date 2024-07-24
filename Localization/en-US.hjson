@@ -7298,6 +7298,7 @@ Mods: {
 			IcebreakerIce.DisplayName: Icebreaker Ice
 			IcebreakerShard.DisplayName: Icebreaker Shard
 			PlagueSpitter.DisplayName: Plague Spitter
+			PlagueBeam.DisplayName: Plague Beam
 		}
 
 		DamageClasses: {

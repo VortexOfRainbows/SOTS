@@ -92,8 +92,10 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
-                if(recoil <= 3f)
+                if(recoil <= 2f)
                 {
+                    recoil = 0;
+                    pastRecoil = 0;
                     Projectile.Kill();
                 }
                 else
@@ -116,7 +118,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             Vector2 offset = new Vector2(0, -8 * player.gravDir * Projectile.direction).RotatedBy(Projectile.rotation);
             offset.X *= 0.5f;
-                counter++;
+            counter++;
             recoil *= 0.935f;
             recoil -= 0.06f;
             recoil = MathHelper.Clamp(recoil, 0, 45);
