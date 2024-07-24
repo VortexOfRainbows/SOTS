@@ -92,14 +92,22 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
-                recoil = 0;
-                pastRecoil = 0;
-                Projectile.Kill();
+                if(recoil <= 3f)
+                {
+                    Projectile.Kill();
+                }
+                else
+                {
+                    player.itemTime = 2;
+                    player.itemAnimation = 2;
+                    Projectile.timeLeft = 12;
+                }
+
             }
             Vector2 center = player.RotatedRelativePoint(player.MountedCenter, true);
             if (Main.myPlayer == Projectile.owner)
             {
-                float offsetDist = 8 * Projectile.scale;
+                float offsetDist = 6 * Projectile.scale;
                 Vector2 toMouse = Main.MouseWorld - center;
                 toMouse = toMouse.SafeNormalize(Vector2.Zero) * offsetDist;
                 if ((double)toMouse.X != Projectile.velocity.X || (double)toMouse.Y != Projectile.velocity.Y)
@@ -108,9 +116,9 @@ namespace SOTS.Projectiles.BiomeChest
             }
             Vector2 offset = new Vector2(0, -8 * player.gravDir * Projectile.direction).RotatedBy(Projectile.rotation);
             offset.X *= 0.5f;
-            counter++;
-            recoil *= 0.945f;
-            recoil -= 0.05f;
+                counter++;
+            recoil *= 0.935f;
+            recoil -= 0.06f;
             recoil = MathHelper.Clamp(recoil, 0, 45);
             if (counter <= Projectile.ai[0])
             {

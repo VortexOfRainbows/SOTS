@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using rail;
 using SOTS.Dusts;
+using SOTS.Items.Evil;
 using SOTS.Items.Permafrost;
+using SOTS.Projectiles.Blades;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,11 +22,13 @@ namespace SOTS.Projectiles.BiomeChest
         {
             writer.Write(counter);
             writer.Write(recoil);
+            writer.Write(ended);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             counter = reader.ReadInt32();
             recoil = reader.ReadSingle();
+            ended = reader.ReadBoolean();
         }
         public override void SetDefaults()
         {
@@ -50,6 +55,7 @@ namespace SOTS.Projectiles.BiomeChest
             Vector2 drawOrigin = texture.Size() /2;
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation + MathHelper.PiOver4 * Projectile.direction * Projectile.spriteDirection, drawOrigin, Projectile.scale * 0.92f, Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+            DrawPlagueBalls(lightColor);
             //if(counter > Projectile.ai[0] * 2)
             //{
             //    Color color = new Color(100, 100, 100, 0);
@@ -68,6 +74,51 @@ namespace SOTS.Projectiles.BiomeChest
             //}
             return false;
         }
+        public void DrawPlagueBalls(Color lightColor)
+        {
+            if (Projectile.ai[2] <= 0)
+                return;
+            Texture2D texture = ModContent.Request<Texture2D>("SOTS/Projectiles/BiomeChest/PlagueBall").Value;
+            Texture2D textureT = ModContent.Request<Texture2D>("SOTS/Projectiles/BiomeChest/PlagueBeam").Value;
+            Vector2 drawOrigin = texture.Size() / 2;
+            Vector2 drawOriginT = new Vector2(0, textureT.Height/ 2);
+            Vector2 center = Barrel;
+            Vector2 drawPos = center - Main.screenPosition;
+            Color c = new Color(100, 100, 100, 0);
+            float trailLength = 6;
+            int groups = 3;
+            for (int j = 0; j < Projectile.ai[2]; j++)
+            {
+                Vector2 previous = Vector2.Zero;
+                int cirNum = (j / groups);
+                for (int k = 0; k < 12; k++)
+                {
+                    int i = j;
+                    Vector2 circular = new Vector2(10 + cirNum * 5, 0).RotatedBy(MathHelper.ToRadians((SOTSWorld.GlobalCounter - k * trailLength) * 1.5f + i * (360f / groups) + cirNum * 30f));
+                    circular.Y *= 0.4f;
+                    circular = circular.RotatedBy(Projectile.rotation - MathHelper.PiOver2);
+                    Vector2 pos = drawPos + circular;
+                    float r = 0;
+                    if(k == 0)
+                    {
+                        Main.spriteBatch.Draw(texture, pos, null, c, r * 2f, drawOrigin, Projectile.scale * 0.45f, SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, pos, null, Color.Lerp(c, Color.White, 0.5f), r * 2f, drawOrigin, Projectile.scale * 0.3f, SpriteEffects.None, 0f);
+                    }
+                    else
+                    {
+                        Vector2 toPrev = previous - pos;
+                        float len = toPrev.Length();
+                        Main.spriteBatch.Draw(textureT, pos, null, Color.Lerp(c, Color.Black, 0.1f) * 0.75f * (1 - k / 12f), toPrev.ToRotation(), drawOriginT, new Vector2(len / textureT.Width * 1.0f, .5f - k / 24f), SpriteEffects.None, 0f);
+                    }
+                    previous = pos;
+                }
+            }
+            //for(int i = 0; i < 3; i++)
+            //{
+            //    float rot = MathHelper.ToRadians(SOTSWorld.GlobalCounter * (1 + i * 0.5f)) * (i % 2 * 2 - 1);
+            //    Main.spriteBatch.Draw(texture, drawPos, null, Color.Lerp(c, Color.Black, 0.4f - i * 0.2f) * (1 - i * 0.15f), rot, drawOrigin, Projectile.scale * 0.75f * (1 + 0.25f * i), SpriteEffects.None, 0f);
+            //}
+        }
         private bool skipDrawingFirstFrame = true;
         private int counter = 0;
         private bool ended = false;
@@ -84,12 +135,13 @@ namespace SOTS.Projectiles.BiomeChest
                     counter = -(int)(Projectile.ai[0] / 2);
                     Projectile.netUpdate = true;
                 }
-                if (Projectile.ai[1] <= -1)
+                if (Projectile.ai[1] != player.HeldItem.mana)
                 {
                     Projectile.ai[1] = (int)player.HeldItem.mana;
+                    Projectile.netUpdate = true;
                 }
             }
-            if (counter >= (int)Projectile.ai[0] && !player.channel)
+            if ((Projectile.ai[2] > 1 || (Projectile.ai[2] == 1 && counter > Projectile.ai[0] / 1.5f)) && !player.channel)
                 ended = true;
             if (!ended || Main.myPlayer != Projectile.owner)
             {
@@ -99,9 +151,18 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
-                recoil = 0;
-                pastRecoil = 0;
-                Projectile.Kill();
+                if (player.channel || player.controlUseItem)
+                {
+                    player.channel = true;
+                    Projectile.netUpdate = true;
+                    ended = false;
+                }
+                else
+                {
+                    recoil = 0;
+                    pastRecoil = 0;
+                    Projectile.Kill();
+                }
             }
             Vector2 center = player.RotatedRelativePoint(player.MountedCenter + new Vector2(4 * -player.direction, 0), true);
             if (Main.myPlayer == Projectile.owner)
@@ -120,14 +181,21 @@ namespace SOTS.Projectiles.BiomeChest
             recoil = MathHelper.Clamp(recoil, 0, 45);
             if (counter <= Projectile.ai[0])
             {
-                if(Main.rand.NextBool(3))
+                float rampRate = 1 - Projectile.ai[2] / 18f;
+                if (Projectile.ai[2] == 18)
+                    rampRate = 0;
+                if (Main.rand.NextBool(4) || (rampRate > 0 && Main.rand.NextFloat() > rampRate))
                 {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(Main.rand.NextFloat(6.28f));
-                    Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 12 + Projectile.velocity.SafeNormalize(Vector2.Zero) * 8, 0, 0, ModContent.DustType<Dusts.CopyIceDust>(), 0, 0, 0, Color.White);
+                    Vector2 circular = new Vector2(1 + Projectile.ai[2] / 9f, 0).RotatedBy(Main.rand.NextFloat(6.28f));
+                    circular.Y *= 0.5f;
+                    circular = circular.RotatedBy(Projectile.rotation - MathHelper.PiOver2);
+                    Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 18, 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ToothAcheSlash.toothAcheLime);
                     dust.noGravity = true;
-                    dust.scale = 1.2f;
+                    dust.scale = 1.0f;
                     dust.velocity *= 0.2f;
-                    dust.velocity += Projectile.velocity * 0.5f * Main.rand.NextFloat() + circular * 0.6f;
+                    dust.velocity += Projectile.velocity * 0.075f * Main.rand.NextFloat() - circular * 1.4f;
+                    dust.fadeIn = 9f;
+                    dust.color.A = 0;
                 }
                 float windUp = (counter + 30) / (Projectile.ai[0] + 30);
                 Vector2 shaking = Main.rand.NextVector2Circular(1, 1) * windUp * 2f;
@@ -135,44 +203,8 @@ namespace SOTS.Projectiles.BiomeChest
                 if (windUp >= 1)
                 {
                     Projectile.netUpdate = true;
-                    Shoot(true);
-                }
-            }
-            else
-            {
-                if(counter % (int)Projectile.ai[0] == 0)
-                {
-                    Projectile.netUpdate = true;
-                    Shoot();
-                }
-                else
-                {
-                    if(counter > Projectile.ai[0] * 4.5f)
-                    {
-                        SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f, -0.2f);
-                        counter = 0;
-                        Projectile.netUpdate = true;
-                    }
-                    if(counter > Projectile.ai[0] * 2)
-                    {
-                        if (Main.rand.NextBool(3))
-                        {
-                            Vector2 circular = new Vector2(1, 0).RotatedBy(Main.rand.NextFloat(6.28f));
-                            Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 18 + Projectile.velocity.SafeNormalize(Vector2.Zero) * 12, 0, 0, ModContent.DustType<Dusts.CopyIceDust>(), 0, 0, 0, Color.White);
-                            dust.noGravity = true;
-                            dust.scale = 1.1f;
-                            dust.velocity *= 0.2f;
-                            dust.velocity += -Projectile.velocity * 0.05f * Main.rand.NextFloat() - circular * 1.3f;
-                            dust.alpha = 150;
-                        }
-                    }
-                    if (Main.rand.NextBool(2))
-                    {
-                        Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + Projectile.velocity.SafeNormalize(Vector2.Zero) * 12, 0, 0, ModContent.DustType<Dusts.CopyIceDust>(), 0, 0, 0, Color.White);
-                        dust.scale = 0.8f;
-                        dust.velocity *= 0.1f;
-                        dust.alpha = 150;
-                    }
+                    GatherCharge();// Shoot(true);
+                    counter = 0;
                 }
             }
             Projectile.spriteDirection = (int)player.gravDir;
@@ -189,14 +221,23 @@ namespace SOTS.Projectiles.BiomeChest
             pastRecoil = recoil;
             return false;
         }
-        public Vector2 Barrel => Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(pastRecoil * Projectile.direction * Projectile.spriteDirection * -1)) * 36;
-        private void Shoot(bool ice = false)
+        public Vector2 Barrel => Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(pastRecoil * Projectile.direction * Projectile.spriteDirection * -1)) * 24;
+        private void GatherCharge()
         {
             Player player = Main.player[Projectile.owner];
-            SOTSUtils.PlaySound(SoundID.Item38, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f, -0.2f);
+            if (Projectile.ai[2] < 18)
+            {
+                SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.9f, -0.2f);
+                player.CheckMana((int)Projectile.ai[1], true, false);
+                Projectile.ai[2]++;
+                if (Main.myPlayer == Projectile.owner)
+                    Projectile.netUpdate = true;
+            }
+        }
+        private void Shoot(bool ice = false)
+        {
             if (Projectile.owner == Main.myPlayer)
             {
-                player.CheckMana((int)Projectile.ai[1], true, false);
                 int type = ModContent.ProjectileType<Pathogen>();
                 for(int i = 0; i < 1; i++)
                 {

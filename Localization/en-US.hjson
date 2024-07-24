@@ -5603,7 +5603,7 @@ Mods: {
 			}
 
 			PlagueSpitter: {
-				DisplayName: Plague Spitter
+				DisplayName: Plague Belcher
 				Tooltip: ""
 			}
 		}

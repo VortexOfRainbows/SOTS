@@ -86,6 +86,7 @@ Daily Log:
 1. Abandoned Village mines generates smaller in Small worlds (Medium and Large worlds use the same size)
 2. More WIP Abandoned Village gen (now generates crimson around the mines)
 3. WIP Plague Spitter
+4. Icebreaker modifications to make the usetime make more sense for firing once at a time
 
 7/16/24 to 7/22/24
 1. Flatten the evil biome in preparation for generation (also selector for the biome least likely to interfere with dungeon/pyramid)
