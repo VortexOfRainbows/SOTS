@@ -195,11 +195,11 @@ namespace SOTS.Projectiles.BiomeChest
                                 Shoot();
                             }
                         }
-                        player.itemTime = 2;
-                        player.itemAnimation = 2;
-                        Projectile.timeLeft = 12;
                     }
                 }
+                player.itemTime = 2;
+                player.itemAnimation = 2;
+                Projectile.timeLeft = 12;
             }
             Vector2 center = player.RotatedRelativePoint(player.MountedCenter + new Vector2(4 * -player.direction, 0), true);
             if (Main.myPlayer == Projectile.owner)

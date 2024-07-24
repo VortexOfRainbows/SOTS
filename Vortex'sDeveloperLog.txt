@@ -6,7 +6,6 @@ The following is my development plans :D
 2. Starward Sword (Upgrade to Digital Daito and Vorpal Knife)
 3. Refracting Crystal + Void Anomaly => Reflecting Crystal
 
-
 Acknowledged But Likely Delayed:
 1. Reimplement (older) Blade Items using the abstract class
 2. Earthen Plating starter house.
