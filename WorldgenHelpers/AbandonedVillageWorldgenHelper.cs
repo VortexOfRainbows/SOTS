@@ -20,6 +20,8 @@ using SOTS.Items.Gems;
 using Stubble.Core.Tokens;
 using Steamworks;
 using SOTS.Dusts;
+using SOTS.Items.Planetarium.Blocks;
+using Terraria.Enums;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -77,7 +79,17 @@ namespace SOTS.WorldgenHelpers
                 TileID.RainCloud,
                 TileID.Trees,
                 TileID.LivingWood,
-                TileID.LeafBlock
+                TileID.LeafBlock,
+                ModContent.TileType<DullPlatingTile>(),
+                ModContent.TileType<AvaritianPlatingTile>(),
+                ModContent.TileType<PortalPlatingTile>(),
+                TileID.SnowBrick,
+                TileID.IceBrick,
+                TileID.EbonstoneBrick,
+                TileID.CrimstoneBrick,
+                TileID.GoldBrick,
+                TileID.CobaltBrick,
+                TileID.Sunplate,
             };
             Mod AVALON;
             bool avalon = ModLoader.TryGetMod("Avalon", out AVALON);
@@ -1560,7 +1572,7 @@ namespace SOTS.WorldgenHelpers
                 if (floorNum == 0)
                     offset = 11;
                 int attempts = 100;
-                while(attempts > 0)
+                while(true)
                 {
                     attempts--;
                     int mainSide = WorldGen.genRand.Next(2) * 2 - 1;
@@ -1585,13 +1597,13 @@ namespace SOTS.WorldgenHelpers
                     int startX = x1 + offset * mainSide;
                     int startY = y1 + down;
 
-                    bool isMainSideWithinBounds = AVRect.Contains(startX + width * mainSide * wMultWidth, startY);
+                    bool isMainSideWithinBounds = attempts <= 0 || AVRect.Contains(startX + width * mainSide * wMultWidth, startY);
                     if(floorNum == 0)
                     {
                         int sizeOfBossRoom = 175; //Not the actual exact size
                         if (WorldGen.GetWorldSize() == 0)
                             sizeOfBossRoom = 180;
-                        isMainSideWithinBounds = OuterRect.Contains(startX + (width * wMultWidth + sizeOfBossRoom) * mainSide, startY);
+                        isMainSideWithinBounds = attempts <= 0 || OuterRect.Contains(startX + (width * wMultWidth + sizeOfBossRoom) * mainSide, startY);
                     }
                     if (!isMainSideWithinBounds)
                         continue;
