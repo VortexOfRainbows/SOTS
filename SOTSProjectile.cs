@@ -42,12 +42,12 @@ namespace SOTS
 			{
 				ModContent.ProjectileType<VisionWeapon>(),
 				ModContent.ProjectileType<ChaosThorn>(),
-				ModContent.ProjectileType<Projectiles.Blades.DigitalSlash>(),
-				ModContent.ProjectileType<Projectiles.Blades.PyrocideSlash>(),
-				ModContent.ProjectileType<Projectiles.Blades.ToothAcheSlash>(),
-				ModContent.ProjectileType<Projectiles.Blades.VertebraekerSlash>(),
+				ModContent.ProjectileType<DigitalSlash>(),
+				ModContent.ProjectileType<PyrocideSlash>(),
+				ModContent.ProjectileType<ToothAcheSlash>(),
+				ModContent.ProjectileType<VertebraekerSlash>(),
 				ModContent.ProjectileType<Projectiles.Celestial.ClairvoyanceShade>(),
-				ModContent.ProjectileType<Projectiles.Earth.PixelLaser>(),
+				ModContent.ProjectileType<PixelLaser>(),
 				ModContent.ProjectileType<PlasmaShrimp>(),
 			};
 			isChargeWeapon = new int[]
@@ -89,9 +89,13 @@ namespace SOTS
 			}
 			return true;
         }
-		public override void PostAI(Projectile projectile)
+        public override bool PreAI(Projectile projectile)
+        {
+            CoMinionUnit(projectile);
+            return true;
+        }
+        public override void PostAI(Projectile projectile)
 		{
-			NatureSlimeUnit(projectile);
 			HomingUnit(projectile);
 			counter++;
 			if (projectile.arrow || projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
@@ -540,42 +544,43 @@ namespace SOTS
 		{
 			return player.active && (projectile.minion || projectile.type == ModContent.ProjectileType<CrystalSerpentHead>()) && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) && projectile.damage > 0 && projectile.owner == Main.myPlayer;
         }
-		public void NatureSlimeUnit(Projectile projectile)
+		public void CoMinion(Projectile proj, int damage, int type, ref int minionIndexVar)
+        {
+            if (damage > 0)
+            {
+				int myIdentity = proj.identity;
+                if (minionIndexVar == -1)
+                {
+                    minionIndexVar = Projectile.NewProjectile(proj.GetSource_FromThis(), proj.Center, Vector2.Zero, type, damage, 0.4f, Main.myPlayer, myIdentity);
+					Main.projectile[minionIndexVar].timeLeft = 6;
+                }
+				else //Put an else statement so this update will only happen after the projectile has fully spawned
+                {
+                    Projectile currentCoMinion = Main.projectile[minionIndexVar];
+                    bool invalidMinion = currentCoMinion.type != type || (int)(currentCoMinion.ai[0] + 0.5f) != myIdentity;
+                    if (currentCoMinion.active && !invalidMinion)
+                    {
+                        currentCoMinion.timeLeft = 6;
+                    }
+                    else
+                    {
+                        minionIndexVar = -1;
+                    }
+                }
+            }
+            else
+			{
+                minionIndexVar = -1;
+            }
+        }
+		public void CoMinionUnit(Projectile projectile)
 		{
 			Player player = Main.player[projectile.owner];
 			if (IsValidForCoMinions(player, projectile))
 			{
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-				if (modPlayer.symbioteDamage > 0)
-				{
-					if (bloomingHookAssignment == -1)
-					{
-						bloomingHookAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, projectile.identity);
-					}
-					Projectile hook = Main.projectile[bloomingHookAssignment];
-					if (!hook.active || hook.type != ModContent.ProjectileType<BloomingHookMinion>())
-					{
-						bloomingHookAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BloomingHookMinion>(), modPlayer.symbioteDamage, 0.4f, Main.myPlayer, projectile.identity);
-					}
-					hook.timeLeft = 6;
-				}
-				else
-					bloomingHookAssignment = -1;
-                if (modPlayer.BundleSnakeDamage > 0)
-				{
-					if (SnakeAssignment == -1)
-					{
-						SnakeAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BundleSnakeMinion>(), modPlayer.BundleSnakeDamage, 1f, Main.myPlayer, projectile.identity);
-					}
-					Projectile hook = Main.projectile[SnakeAssignment];
-					if (!hook.active || hook.type != ModContent.ProjectileType<BundleSnakeMinion>())
-					{
-						SnakeAssignment = Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<BundleSnakeMinion>(), modPlayer.BundleSnakeDamage, 1f, Main.myPlayer, projectile.identity);
-					}
-					hook.timeLeft = 6;
-				}
-				else
-					SnakeAssignment = -1;
+				CoMinion(projectile, modPlayer.symbioteDamage, ModContent.ProjectileType<BloomingHookMinion>(), ref bloomingHookAssignment);
+                CoMinion(projectile, modPlayer.BundleSnakeDamage, ModContent.ProjectileType<BundleSnakeMinion>(), ref SnakeAssignment);
             }
         }
         public override void OnKill(Projectile projectile, int timeLeft)

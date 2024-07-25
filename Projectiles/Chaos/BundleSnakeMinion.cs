@@ -2,12 +2,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Projectiles.BiomeChest;
+using SOTS.Void;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 
 namespace SOTS.Projectiles.Chaos
 {
@@ -93,7 +93,9 @@ namespace SOTS.Projectiles.Chaos
 				return parent;
 			}
 			else
-				parent = null;
+            {
+                parent = null;
+            }
 			for (short i = 0; i < Main.maxProjectiles; i++)
 			{
 				Projectile proj = Main.projectile[i];
@@ -104,7 +106,7 @@ namespace SOTS.Projectiles.Chaos
 				}
 			}
 			pastParent = parent;
-			return parent;
+            return parent;
 		}
 		public Vector2 FindTarget(Vector2 Center)
 		{
@@ -165,7 +167,7 @@ namespace SOTS.Projectiles.Chaos
             {
                 Projectile.velocity.Y += MathF.Sin(MathHelper.ToRadians(counter * 3)) * 0.2f;
                 Vector2 combinedVelo = player.velocity;
-                if(combinedVelo.LengthSquared() > 1)
+                if(combinedVelo.Length() > 1)
                     toTarget = combinedVelo.SafeNormalize(Vector2.Zero);
                 Projectile.velocity *= 0.95f;
             }
@@ -198,14 +200,18 @@ namespace SOTS.Projectiles.Chaos
             {
                 Projectile.velocity *= 0.985f;
                 Projectile.velocity = Vector2.Lerp(Projectile.velocity, toTarget.SafeNormalize(Vector2.Zero) * 9, 0.02f);
-			}
-			Projectile.Center += (owner.position - lastOwnerPosition);
+            }
+            if(lastOwnerPosition == Vector2.Zero)
+            {
+                lastOwnerPosition = owner.position;
+            }
+            Projectile.Center += (owner.position - lastOwnerPosition);
             lastOwnerPosition = owner.position;
-            if (Projectile.velocity.LengthSquared() > 256)
+            if (Projectile.velocity.Length() > 16)
 			{
 				Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 16f;
-			}
-			aiCounter2++;
+            }
+            aiCounter2++;
             if (aiCounter2 >= 0)
             {
 				Projectile.friendly = false;

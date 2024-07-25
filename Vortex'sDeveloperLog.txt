@@ -42,10 +42,9 @@ Update Objectives:
 14. Fix generation bug with Infernum and Leviathan area
 15. Upgrade item to the Hydrokinetic Antennae
 16. Polish the Corpsebloom (add banner, server sync, etc)
-17. Fix Bundle of Snakes/Botanical Symbiote glitches... such as them deleting projectiles or not spawning hooks appropriately
-18. Somehow fix marble biome in vibrant geode
-19. Gula Gateway tile needs to be connectable to evil and earthen conduits
-20. Update Elemental Amulet sprite to include modern genshin visions
+17. Somehow fix marble biome in vibrant geode
+18. Gula Gateway tile needs to be connectable to evil and earthen conduits
+19. Update Elemental Amulet sprite to include modern genshin visions
 
 ---WIP List---
 Abandoned village generation
@@ -82,6 +81,9 @@ Daily Log:
 
 7/24/24
 1. Finished Plague Spitter (works in multiplayer!)
+2. Adjustments to Botanical Symbiote and Bundle of Snakes code that should make them less buggy.
+	1. Bundle of Snakes should no longer be unable to spawn when the player is anywhere but the top-left-half of the world
+	2. Bundle of Snakes should no longer delete random projectiles when unable to spawn snakes
 
 7/22/24 to 7/23/24
 1. Abandoned Village mines generates smaller in Small worlds (Medium and Large worlds use the same size)
