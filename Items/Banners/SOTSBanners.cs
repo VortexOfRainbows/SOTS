@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs;
+using SOTS.NPCs.AbandonedVillage;
 using SOTS.NPCs.Anomaly;
 using SOTS.NPCs.Chaos;
 using SOTS.NPCs.Inferno;
@@ -28,7 +29,8 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
-			TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.DrawYOffset = -2;
+            TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 111;
 			TileObjectData.addTile(Type);
@@ -391,13 +393,14 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
-			TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.DrawYOffset = -2;
+            TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 1;
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(13, 88, 130), name);
-		}
+        }
         public override bool CreateDust(int i, int j, ref int type)
         {
             return false;
@@ -424,8 +427,9 @@ namespace SOTS.Items.Banners
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
-			}
-			for (int k = 0; k < 6; k++)
+            }
+            zero.Y -= 2;
+            for (int k = 0; k < 6; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.05f;
 				float y = Main.rand.Next(-10, 11) * 0.05f;
@@ -457,13 +461,14 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
-			TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.DrawYOffset = -2;
+            TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 1;
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(13, 88, 130), name);
-		}
+        }
         public override bool CreateDust(int i, int j, ref int type)
         {
             return false;
@@ -490,8 +495,9 @@ namespace SOTS.Items.Banners
 			if (Main.drawToScreen)
 			{
 				zero = Vector2.Zero;
-			}
-			for (int k = 0; k < 6; k++)
+            }
+            zero.Y -= 2;
+            for (int k = 0; k < 6; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.05f;
 				float y = Main.rand.Next(-10, 11) * 0.05f;
@@ -523,7 +529,8 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
-			TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.DrawYOffset = -2;
+            TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 1;
 			TileObjectData.addTile(Type);
@@ -556,6 +563,7 @@ namespace SOTS.Items.Banners
 			{
 				zero = Vector2.Zero;
 			}
+			zero.Y -= 2;
 			for (int k = 0; k < 6; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.05f;
@@ -586,8 +594,8 @@ namespace SOTS.Items.Banners
 			{
 				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
-		}
-	}
+        }
+    }
 	public class SOTSBanners2 : ModTile
 	{
 		public override void SetStaticDefaults()
@@ -598,13 +606,14 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.Height = 3;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16 };
+			TileObjectData.newTile.DrawYOffset = -2;
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.SolidBottom, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.StyleWrapLimit = 111;
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(13, 88, 130), name);
-		}
+        }
         public override bool CreateDust(int i, int j, ref int type)
         {
             return false;
@@ -677,6 +686,9 @@ namespace SOTS.Items.Banners
                     case 18:
                         type = NPCType<Chimera>();
                         break;
+					case 19:
+						type = NPCType<CorpseBloom>();
+						break;
                     default:
 						return;
 				}
@@ -843,6 +855,14 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners2>();
             Item.placeStyle = 18;
+        }
+    }
+    public class CorpsebloomBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 19;
         }
     }
 }

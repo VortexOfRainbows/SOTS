@@ -5611,6 +5611,11 @@ Mods: {
 					Acid-coated enemies also take 10 damage per second per stack of acid
 					'''
 			}
+
+			CorpsebloomBanner: {
+				DisplayName: Corpsebloom Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6476,7 +6481,7 @@ Mods: {
 			NewPolaris.DisplayName: Polaris
 			Chimera.DisplayName: Chimera
 			ChimeraSnake.DisplayName: Chimera Snake
-			CorpseBloom.DisplayName: Corpse Bloom
+			CorpseBloom.DisplayName: Corpsebloom
 		}
 
 		Bestiary: {

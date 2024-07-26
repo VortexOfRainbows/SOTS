@@ -41,7 +41,7 @@ Update Objectives:
 13. Fish Bomb
 14. Fix generation bug with Infernum and Leviathan area
 15. Upgrade item to the Hydrokinetic Antennae
-16. Polish the Corpsebloom (add banner, server sync, etc)
+16. Polish the Corpsebloom (server sync, visuals, etc)
 17. Somehow fix marble biome in vibrant geode
 18. Gula Gateway tile needs to be connectable to evil and earthen conduits
 19. Update Elemental Amulet sprite to include modern genshin visions
@@ -85,6 +85,8 @@ Daily Log:
 	1. Bundle of Snakes should no longer be unable to spawn when the player is anywhere but the top-left-half of the world
 	2. Bundle of Snakes should no longer delete random projectiles when unable to spawn snakes
 3. Some more AV Mines WG
+4. SOTS banners now draw two units higher, which makes them align better with vanilla banners
+5. Corpsebloom banner + Corpsebloom sprite fixes from Kekcroc
 
 7/22/24 to 7/23/24
 1. Abandoned Village mines generates smaller in Small worlds (Medium and Large worlds use the same size)

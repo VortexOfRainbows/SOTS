@@ -5,6 +5,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using SOTS.Common.GlobalNPCs;
 using System;
+using SOTS.Items.Banners;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
@@ -35,8 +36,10 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.noGravity = false;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.aiStyle = 0;
-		}
+			NPC.aiStyle = 0; 
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CorpsebloomBanner>();
+        }
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
 			if(Closed)
