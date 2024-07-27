@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Common.GlobalNPCs;
 using System;
 using SOTS.Items.Banners;
+using SOTS.Projectiles.AbandonedVillage;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
@@ -123,11 +124,11 @@ namespace SOTS.NPCs.AbandonedVillage
 
 				if (NPC.ai[1] > 30 && NPC.ai[1] < 120 && NPC.ai[1] % 10 == 0)
 				{
-					SoundEngine.PlaySound(SoundID.NPCDeath9, NPC.Center);
+					SOTSUtils.PlaySound(SoundID.NPCDeath9, NPC.Center, 1.2f, -0.1f);
 
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
-                        Vector2 ShootPosition = new Vector2(NPC.Center.X + NPC.direction * 10, NPC.Center.Y - 6);
+                        Vector2 ShootPosition = new Vector2(NPC.Center.X + NPC.direction * 11, NPC.Center.Y - 5);
 
                         Vector2 ShootSpeed = player.Center - NPC.Center;
                         ShootSpeed = ShootSpeed.SafeNormalize(Vector2.Zero);
