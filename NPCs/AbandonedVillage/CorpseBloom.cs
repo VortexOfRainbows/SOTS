@@ -7,6 +7,9 @@ using SOTS.Common.GlobalNPCs;
 using System;
 using SOTS.Items.Banners;
 using SOTS.Projectiles.AbandonedVillage;
+using SOTS.Items.Pyramid;
+using Terraria.GameContent.ItemDropRules;
+using SOTS.Items.Fragments;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
@@ -45,8 +48,8 @@ namespace SOTS.NPCs.AbandonedVillage
         {
 			if(Closed)
             {
-                modifiers.SourceDamage *= 0.5f;
-                modifiers.FinalDamage -= 2;
+                modifiers.SourceDamage *= 0.4f;
+                modifiers.FlatBonusDamage += -12;
             }
         }
         public override void FindFrame(int frameHeight)
@@ -107,31 +110,33 @@ namespace SOTS.NPCs.AbandonedVillage
             //NPC is not awakened
             if (NPC.ai[0] != 1 && Closed)
 			{
-                NPC.TargetClosest(true);
-                NPC.spriteDirection = NPC.direction;
-                Vector2 target = new Vector2(NPC.ai[2], NPC.ai[3]);
-                if (target.X <= 0 || target.Y <= 0)
+				if (NPC.ai[1] > -30)
                 {
-                    target = Main.player[NPC.target].Center;
-                    NPC.ai[2] = target.X;
-                    NPC.ai[3] = target.Y;
-                }
+                    NPC.TargetClosest(true);
+                    NPC.spriteDirection = NPC.direction;
+                    Vector2 target = Main.player[NPC.target].Center;
+					NPC.ai[2] = target.X;
+					NPC.ai[3] = target.Y;
+				}
             }
             Player player = Main.player[NPC.target];
 
 			//awaken if the player gets close enough
-			if (NPC.Distance(player.Center) <= 200f && NPC.ai[0] == 0)
+			if (NPC.Distance(player.Center) <= 240f && Collision.CanHitLine(player.Center - new Vector2(8, 8), 16, 16, NPC.position, NPC.width, NPC.height) && NPC.ai[0] == 0)
 			{
-				NPC.ai[0] = 1;
-				if (Main.netMode == NetmodeID.Server)
-					NPC.netUpdate = true;
-			}
-			
-			//shot out vile spits when activated
-			if (NPC.ai[0] == 1)
-			{
-				NPC.ai[1]++;
+				if (NPC.ai[1] > 0)
+				{
+					NPC.ai[0] = 1;
+					NPC.ai[1] = 0;
+					if (Main.netMode == NetmodeID.Server)
+						NPC.netUpdate = true;
+				}
+            }
 
+            //shot out vile spits when activated
+            NPC.ai[1]++;
+            if (NPC.ai[0] == 1)
+			{
 				if (NPC.ai[1] > 30 && NPC.ai[1] < 120 && NPC.ai[1] % 10 == 0)
 				{
 					SOTSUtils.PlaySound(SoundID.NPCDeath9, NPC.Center, 1.2f, -0.1f);
@@ -142,9 +147,9 @@ namespace SOTS.NPCs.AbandonedVillage
 						Vector2 target = new Vector2(NPC.ai[2], NPC.ai[3]);
                         Vector2 toPlayer = target - NPC.Center;
                         toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
-                        toPlayer.X *= Main.rand.NextFloat(7f, 11f);
-                        toPlayer.Y *= Main.rand.NextFloat(-2f, 4f);
-						toPlayer.Y -= 1f;
+                        toPlayer.X *= Main.rand.NextFloat(5f, 10f);
+                        toPlayer.Y *= Main.rand.NextFloat(-3f, 5f);
+						toPlayer.Y -= Main.rand.NextFloat();
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), ShootPosition, toPlayer, ModContent.ProjectileType<CorpsebloomAcid>(), SOTSNPCs.GetBaseDamage(NPC) / 2, 0, Main.myPlayer);
                     }
 				}
@@ -164,7 +169,8 @@ namespace SOTS.NPCs.AbandonedVillage
 			{
 				if (NPC.frame.Y >= 18 * NPC.height)
 				{
-					NPC.ai[0] = 0;
+					NPC.ai[1] = -60;
+                    NPC.ai[0] = 0;
                     if (Main.netMode == NetmodeID.Server)
                         NPC.netUpdate = true;
                 }
@@ -192,6 +198,11 @@ namespace SOTS.NPCs.AbandonedVillage
 			{
 
 			}
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<FragmentOfEvil>(), ModContent.ItemType<FragmentOfEarth>()));
+            npcLoot.Add(ItemDropRule.OneFromOptions(5, ItemID.Deathweed, ItemID.DeathweedSeeds));
         }
     }
 }

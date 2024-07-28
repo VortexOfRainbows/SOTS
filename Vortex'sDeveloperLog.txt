@@ -41,10 +41,9 @@ Update Objectives:
 13. Fish Bomb
 14. Fix generation bug with Infernum and Leviathan area
 15. Upgrade item to the Hydrokinetic Antennae
-16. Polish the Corpsebloom (server sync, visuals, etc)
-17. Somehow fix marble biome in vibrant geode
-18. Gula Gateway tile needs to be connectable to evil and earthen conduits
-19. Update Elemental Amulet sprite to include modern genshin visions
+16. Somehow fix marble biome in vibrant geode
+17. Gula Gateway tile needs to be connectable to evil and earthen conduits
+18. Update Elemental Amulet sprite to include modern genshin visions
 
 ---WIP List---
 Abandoned village generation
@@ -64,7 +63,7 @@ Icebreaker, Plague Spitter
 N/A
 
 ---Multiplayer Fixes/Testing Needed---
-N/A
+Corpsebloom
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
