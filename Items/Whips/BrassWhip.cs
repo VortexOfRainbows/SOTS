@@ -41,10 +41,6 @@ namespace SOTS.Items.Whips
 		{
 			return true;
 		}
-        public override void AddRecipes()
-        {
-            CreateRecipe(1).AddRecipeGroup("SOTS:SilverBar", 12).AddIngredient<GlowNylon>(30).AddTile(TileID.Anvils).Register();
-        }
     }
 	public class BrassWhipProjectile : ModProjectile
 	{
