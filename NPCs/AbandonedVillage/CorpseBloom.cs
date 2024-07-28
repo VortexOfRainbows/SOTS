@@ -37,7 +37,7 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.noGravity = false;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			NPC.aiStyle = 0; 
+			NPC.aiStyle = -1; 
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CorpsebloomBanner>();
         }
@@ -103,11 +103,21 @@ namespace SOTS.NPCs.AbandonedVillage
 			}
 		}
         public override void AI()
-		{
-			NPC.TargetClosest(true);
+        {
+            //NPC is not awakened
+            if (NPC.ai[0] != 1 && Closed)
+			{
+                NPC.TargetClosest(true);
+                NPC.spriteDirection = NPC.direction;
+                Vector2 target = new Vector2(NPC.ai[2], NPC.ai[3]);
+                if (target.X <= 0 || target.Y <= 0)
+                {
+                    target = Main.player[NPC.target].Center;
+                    NPC.ai[2] = target.X;
+                    NPC.ai[3] = target.Y;
+                }
+            }
             Player player = Main.player[NPC.target];
-
-            NPC.spriteDirection = NPC.direction;
 
 			//awaken if the player gets close enough
 			if (NPC.Distance(player.Center) <= 200f && NPC.ai[0] == 0)
@@ -128,14 +138,14 @@ namespace SOTS.NPCs.AbandonedVillage
 
 					if(Main.netMode != NetmodeID.MultiplayerClient)
 					{
-                        Vector2 ShootPosition = new Vector2(NPC.Center.X + NPC.direction * 11, NPC.Center.Y - 5);
-
-                        Vector2 ShootSpeed = player.Center - NPC.Center;
-                        ShootSpeed = ShootSpeed.SafeNormalize(Vector2.Zero);
-                        ShootSpeed.X *= Main.rand.NextFloat(5f, 8f);
-                        ShootSpeed.Y *= Main.rand.NextFloat(-2f, 3f);
-
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), ShootPosition, ShootSpeed, ModContent.ProjectileType<CorpsebloomAcid>(), SOTSNPCs.GetBaseDamage(NPC) / 2, 0, Main.myPlayer);
+                        Vector2 ShootPosition = new Vector2(NPC.Center.X + NPC.direction * 16, NPC.Center.Y - 5);
+						Vector2 target = new Vector2(NPC.ai[2], NPC.ai[3]);
+                        Vector2 toPlayer = target - NPC.Center;
+                        toPlayer = toPlayer.SafeNormalize(Vector2.Zero);
+                        toPlayer.X *= Main.rand.NextFloat(7f, 11f);
+                        toPlayer.Y *= Main.rand.NextFloat(-2f, 4f);
+						toPlayer.Y -= 1f;
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), ShootPosition, toPlayer, ModContent.ProjectileType<CorpsebloomAcid>(), SOTSNPCs.GetBaseDamage(NPC) / 2, 0, Main.myPlayer);
                     }
 				}
 
@@ -143,11 +153,13 @@ namespace SOTS.NPCs.AbandonedVillage
 				{
 					NPC.ai[0] = 2;
 					NPC.ai[1] = 0;
+					NPC.ai[2] = -1;
+                    NPC.ai[3] = -1;
                     if (Main.netMode == NetmodeID.Server)
                         NPC.netUpdate = true;
                 }
 			}
-
+			//NPC is not awakened
 			if (NPC.ai[0] == 2)
 			{
 				if (NPC.frame.Y >= 18 * NPC.height)

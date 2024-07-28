@@ -27,6 +27,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Projectile.penetrate = -1;
             Projectile.extraUpdates = 1;
             Projectile.aiStyle = 0;
+            Projectile.alpha = 255;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
@@ -45,6 +46,23 @@ namespace SOTS.Projectiles.AbandonedVillage
             {
                 RunOnce = false;
                 Projectile.velocity *= 0.5f;
+                float r = Projectile.velocity.ToRotation();
+                float total = 20f;
+                for (int i = 0; i < total; i++)
+                {
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(i / total * MathHelper.TwoPi);
+                    circular.X *= 0.5f;
+                    circular = circular.RotatedBy(r);
+                    Vector2 drawPos = Projectile.Center;
+                    Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelpers.ToothAcheLime);
+                    dust.noGravity = true;
+                    dust.scale = 1.5f;
+                    dust.velocity *= 0.05f;
+                    dust.velocity += Projectile.velocity * 1.2f + circular * 2.2f;
+                    dust.fadeIn = 6f;
+                    dust.color.A = 0;
+                    dust.alpha = 120;
+                }
             }
             return base.PreAI();
         }
@@ -52,15 +70,40 @@ namespace SOTS.Projectiles.AbandonedVillage
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
             Projectile.rotation += 0f * (float)Projectile.direction;
-
+            Projectile.alpha -= 20;
+            if (Projectile.alpha < 0)
+                Projectile.alpha = 0;
             Projectile.velocity.Y += 0.02f;
+            if (Main.rand.NextBool(4))
+            {
+                int i = Main.rand.Next(Projectile.oldPos.Length);
+                float scale = (Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length;
+                Vector2 drawPos = Projectile.oldPos[i] + Projectile.Size / 2;
+                Dust dust = Dust.NewDustDirect(drawPos - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelpers.ToothAcheLime * scale);
+                dust.noGravity = true;
+                dust.scale = 1.5f * scale;
+                dust.velocity *= Main.rand.NextFloat(0.2f);
+                dust.velocity += Projectile.oldVelocity * Main.rand.NextFloat(0.3f);
+                dust.fadeIn = 0.1f;
+                dust.color.A = 0;
+                dust.alpha = Projectile.alpha;
+            }
+            else if(Main.rand.NextBool(4))
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelpers.ToothAcheLime, 1f);
+                dust.noGravity = true;
+                dust.velocity = dust.velocity * Main.rand.NextFloat(0.2f) + Projectile.velocity * Main.rand.NextFloat(.3f);
+                dust.fadeIn = 7;
+                dust.scale = Main.rand.Next(4, 7) / 4f;
+                dust.color.A = 0;
+                dust.alpha = Projectile.alpha;
+            }
         }
-
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
             Texture2D textureT = ModContent.Request<Texture2D>("SOTS/Projectiles/BiomeChest/PlagueBeam").Value;
-            Color color = ColorHelpers.ToothAcheLime;
+            Color color = Projectile.GetAlpha(ColorHelpers.ToothAcheLime);
             color.A = 0;
             SpriteEffects effects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 drawOrigin = new Vector2(Projectile.width * 0.5f, Projectile.height * 0.5f);
@@ -78,7 +121,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     oldPos = Projectile.oldPos[i] + Projectile.Size / 2;
                 }
             }
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Color.Lerp(ColorHelpers.ToothAcheLime, Color.Black, 0.5f), Projectile.rotation, drawOrigin, 0.75f, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.Lerp(ColorHelpers.ToothAcheLime, Color.Black, 0.5f)), Projectile.rotation, drawOrigin, 0.75f, effects, 0);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, color * 0.75f, Projectile.rotation, drawOrigin, 1f, effects, 0);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, color * 0.5f, Projectile.rotation, drawOrigin, 0.75f, effects, 0);
             return false;
@@ -103,7 +146,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelpers.ToothAcheLime, 1f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * Main.rand.NextFloat(0.75f) + Projectile.velocity * Main.rand.NextFloat(1f);
-                dust.fadeIn = 5;
+                dust.fadeIn = 4;
                 dust.scale = Main.rand.Next(4, 9) / 4f;
                 dust.color.A = 0;
             }
