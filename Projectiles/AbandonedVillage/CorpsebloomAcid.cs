@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     dust.noGravity = true;
                     dust.scale = 1.5f;
                     dust.velocity *= 0.05f;
-                    dust.velocity += Projectile.velocity * 1.2f + circular * 2.2f;
+                    dust.velocity += Projectile.velocity * 1.2f + circular * 2.3f;
                     dust.fadeIn = 6f;
                     dust.color.A = 0;
                     dust.alpha = 120;

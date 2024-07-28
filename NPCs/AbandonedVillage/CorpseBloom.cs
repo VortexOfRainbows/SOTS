@@ -108,7 +108,7 @@ namespace SOTS.NPCs.AbandonedVillage
         public override void AI()
         {
             //NPC is not awakened
-            if (NPC.ai[0] != 1 && Closed)
+            if (NPC.ai[0] != 1 && NPC.ai[0] != 2)
 			{
 				if (NPC.ai[1] > -30)
                 {
@@ -150,7 +150,7 @@ namespace SOTS.NPCs.AbandonedVillage
                         toPlayer.X *= Main.rand.NextFloat(5f, 10f);
                         toPlayer.Y *= Main.rand.NextFloat(-3f, 5f);
 						toPlayer.Y -= Main.rand.NextFloat();
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), ShootPosition, toPlayer, ModContent.ProjectileType<CorpsebloomAcid>(), SOTSNPCs.GetBaseDamage(NPC) / 2, 0, Main.myPlayer);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), ShootPosition, toPlayer, ModContent.ProjectileType<CorpsebloomAcid>(), SOTSNPCs.GetBaseDamage(NPC) / 2, 0, Main.myPlayer);
                     }
 				}
 
@@ -164,10 +164,10 @@ namespace SOTS.NPCs.AbandonedVillage
                         NPC.netUpdate = true;
                 }
 			}
-			//NPC is not awakened
+			//NPC is returning to closed state
 			if (NPC.ai[0] == 2)
 			{
-				if (NPC.frame.Y >= 18 * NPC.height)
+				if (NPC.ai[1] >= 60) //This is approximately how long it takes (52 frames) for the flower to re-enter the default animation
 				{
 					NPC.ai[1] = -60;
                     NPC.ai[0] = 0;
