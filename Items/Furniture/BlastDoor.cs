@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Localization;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Furniture
 {
@@ -92,7 +93,11 @@ namespace SOTS.Items.Furniture
 			player.cursorItemIconEnabled = true;
 			player.cursorItemIconID = DoorItemID;
 		}
-	}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(DoorItemID);
+        }
+    }
 	public abstract class BlastDoorOpen : ModTile //<TDrop, TClosed> : ModTile where TDrop : ModItem where TClosed : ModTile
 	{
 		public virtual int DoorItemID => ModContent.ItemType<Nature.NaturePlatingBlastDoor>();
@@ -169,6 +174,10 @@ namespace SOTS.Items.Furniture
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
 			player.cursorItemIconID = DoorItemID;
-		}
-	}
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(DoorItemID);
+        }
+    }
 }

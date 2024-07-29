@@ -10,6 +10,7 @@ namespace SOTS
     {
 		public static Color ToothAcheLime => ToothAcheSlash.toothAcheLime;
         public static Color AcediaColor = new Color(213, 68, 255);
+        public static Color GulaColor = new Color(255, 143, 128);
         public static Color DreamLampColor = DreamingFrame.Green1;
 		public static Color soulLootingColor = new Color(66, 56, 111);
 		public static Color destabilizeColor = new Color(80, 190, 80);

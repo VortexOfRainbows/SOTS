@@ -42,8 +42,7 @@ Update Objectives:
 14. Fix generation bug with Infernum and Leviathan area
 15. Upgrade item to the Hydrokinetic Antennae
 16. Somehow fix marble biome in vibrant geode
-17. Gula Gateway tile needs to be connectable to evil and earthen conduits
-18. Update Elemental Amulet sprite to include modern genshin visions
+17. Update Elemental Amulet sprite to include modern genshin visions
 
 ---WIP List---
 Abandoned village generation
@@ -78,6 +77,11 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+7/28/24
+1. Fix blast door and other SOTS doors not dropping their item when broken
+2. Chains from sky chain now go under actuated blocks
+3. Gula Gateway connects to the appropriate conduits
 
 7/24/24 to 7/27/24
 1. Finished Plague Spitter (works in multiplayer!)

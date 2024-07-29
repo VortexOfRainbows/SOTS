@@ -101,7 +101,7 @@ namespace SOTS.Items.Planetarium.Furniture
 			for(int j2 = 1; j2 < maxLength; j2++)
 			{
 				Tile tile2 = Framing.GetTileSafely(i, j - j2);
-				if ((tile2.HasTile && Main.tileSolid[tile2.TileType] && !Main.tileSolidTop[tile2.TileType]) || !WorldGen.InWorld(i, j - j2, 27))
+				if ((tile2.HasTile && Main.tileSolid[tile2.TileType] && !Main.tileSolidTop[tile2.TileType] && !tile2.IsActuated) || !WorldGen.InWorld(i, j - j2, 27))
 				{
 					maxLength = j2;
 					break;

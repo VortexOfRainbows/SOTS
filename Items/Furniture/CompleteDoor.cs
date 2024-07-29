@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -81,6 +82,10 @@ namespace SOTS.Items.Furniture
                 player.cursorItemIconEnabled = true;
                 player.cursorItemIconID = ModContent.ItemType<TDrop>();
             }
+            public override IEnumerable<Item> GetItemDrops(int i, int j)
+            {
+                yield return new Item(ModContent.ItemType<TDrop>());
+            }
         }
         public override void SetStaticDefaults()
         {
@@ -129,6 +134,10 @@ namespace SOTS.Items.Furniture
             player.noThrow = 2;
             player.cursorItemIconEnabled = true;
             player.cursorItemIconID = ModContent.ItemType<TDrop>();
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<TDrop>());
         }
     }
 }
