@@ -20,6 +20,7 @@ Acknowledged But Likely Delayed:
 10. Tesseract Servants over-sends packets when over 10 total tesseracts (Currently not possible in regular play).
 11. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 12. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
+13. Scroll wheel with challenger's ring
 
 Update Objectives:
 1. Ghost Town! (Next up)
@@ -47,7 +48,7 @@ Update Objectives:
 18. Void Meter save when you exit the world
 
 ---WIP List---
-Abandoned village generation
+Abandoned village generation (make corruption take up more of the above ground area)
 Ruby Gemlock to spawn loot
 Vault Room to spawn loot
 Make enemies spawn in the AV and Mines
@@ -80,11 +81,12 @@ N/A
 
 Daily Log:
 
-7/28/24 to 7/30/24
+7/28/24 to 7/31/24
 1. Fix blast door and other SOTS doors not dropping their item when broken
 2. Chains from sky chain now go under actuated blocks
 3. Gula Gateway connects to the appropriate conduits
-4. WIP Abandoned Village pots
+4. WIP Abandoned Village pots (sounds, dusts, gores done)
+	1. Needs: Loot tables, spawning correctly on worldgen
 
 7/24/24 to 7/27/24
 1. Finished Plague Spitter (works in multiplayer!)

@@ -15,7 +15,7 @@ namespace SOTS.Items.AbandonedVillage
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
 			//Main.tileBlendAll[Type] = true;
-			DustType = 122; //boreal wood
+			DustType = DustID.BorealWood; //boreal wood
 			AddMapEntry(new Color(105, 82, 61));
 		}
 	}

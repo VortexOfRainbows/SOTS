@@ -32,11 +32,30 @@ namespace SOTS.Items.AbandonedVillage
 			TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
             AddMapEntry(new Color(112, 90, 86), name);
-            DustType = 32;
+            DustType = DustID.Iron;
+        }
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            int potType = Main.tile[i, j].TileFrameY / 36; //0, 1, 2
+            if(potType == 0)
+            {
+                type = DustID.Iron;
+            }
+            if(potType == 1)
+            {
+                type = DustID.Titanium;
+            }
+            if(potType == 2)
+            {
+                type = DustID.BorealWood;
+                if (Main.rand.NextBool(3))
+                    type = DustType<SootDust>();
+            }
+            return base.CreateDust(i, j, ref type);
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
-            num = 8;
+            num = 7;
         }
         public override bool CanDrop(int i, int j)
         {
@@ -95,8 +114,8 @@ namespace SOTS.Items.AbandonedVillage
             }
             if (type == 7)
             {
-                ValidGoreTypes = new int[] { 27, 29, 28, 25, 26, 32 };
-                ValidGoreChances = new int[] { 2, 2, 2, 5, 5, 5 };
+                ValidGoreTypes = new int[] { 27, 27, 27, 29, 28, 25, 26, 32 };
+                ValidGoreChances = new int[] { 2, 4, 4, 2, 2, 5, 5, 5 };
             }
             if (type == 8)
             {
@@ -120,10 +139,17 @@ namespace SOTS.Items.AbandonedVillage
         public void PotDrops(int i, int j, int frameX, int frameY)
         {
             SOTSTile.TryDroppingSwallowedPenny(i, j, Type);
-            SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i, j) * 16);
 
             int goreType = frameX / 36 + frameY / 36 * 3;
             DoGore(i, j, goreType);
+            if(goreType == 6 || goreType == 7 || goreType == 8)
+            {
+                SOTSUtils.PlaySound(new SoundStyle("SOTS/Sounds/Tiles/WoodBreaking"), new Vector2(i, j) * 16, 0.7f, -0.2f, 0.1f);
+            }
+            else
+            {
+                SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i, j) * 16);
+            }
 
             int chanceForPortal = 700;
             if (Main.rand.NextBool(chanceForPortal))
