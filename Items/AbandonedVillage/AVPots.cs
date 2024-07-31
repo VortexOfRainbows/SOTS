@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
-namespace SOTS.Items.Pyramid
+namespace SOTS.Items.AbandonedVillage
 {
 	internal class AVPots : ModTile
 	{
