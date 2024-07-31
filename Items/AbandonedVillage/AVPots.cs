@@ -107,10 +107,10 @@ namespace SOTS.Items.AbandonedVillage
             {
                 int gType = ValidGoreTypes[k];
                 int gChance = ValidGoreChances[k];
-                if(Main.rand.NextBool(gChance))
+                if(Main.rand.NextBool(gChance) || Main.rand.NextBool(8))
                 {
                     Gore.NewGore(GetSource(), spawnPos + new Vector2(Main.rand.NextFloat(16), Main.rand.NextFloat(16)), default, ModGores.GoreType("Gores/Pots/AVPotGore" + gType), 1f);
-                    if (gChance >= 5)
+                    if (gChance >= 5 && Main.rand.NextBool(4))
                     {
                         break;
                     }
@@ -121,91 +121,15 @@ namespace SOTS.Items.AbandonedVillage
         {
             SOTSTile.TryDroppingSwallowedPenny(i, j, Type);
             SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i, j) * 16);
-            int num = 0;
-            if (frameY < 36)
-            {
-                num = 1; //gold
-            }
-            else if (frameY < 72)
-            {
-                num = 2; //mixed Pots
-                if (frameX < 36)
-                {
-                    num = 3; //mostly gold
-                }
-            }
-            else
-            {
-                num = 1; //gold
-                if (frameX < 72)
-                {
-                    num = 4; //sandstone
-                }
-            }
-            if(num == 1) //gold
-            {
-            }
-            if (num == 2) //mixed Pots
-            {
-                if (Main.rand.NextBool(3))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore14"), 1f);
-                if (Main.rand.NextBool(3))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore15"), 1f);
-                if (Main.rand.NextBool(4))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore16"), 1f);
-                if (Main.rand.NextBool(10))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore3"), 1f);
-                else if (Main.rand.NextBool(10))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore5"), 1f);
-                if (Main.rand.NextBool(4))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore11"), 1f);
-                else if (Main.rand.NextBool(3))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore10"), 1f);
-            }
-            if (num == 3) //mostly gold
-            {
-                if (Main.rand.NextBool(3))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore12"), 1f);
-                else if (Main.rand.NextBool(4))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore13"), 1f);
-                if (Main.rand.NextBool(3))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore14"), 1f);
-                if (Main.rand.NextBool(8))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore1"), 1f);
-                else if (Main.rand.NextBool(8))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore2"), 1f);
-                if (Main.rand.NextBool(5))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore11"), 1f);
-                if (Main.rand.NextBool(5))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore10"), 1f);
-            }
-            if (num == 4) //sandstone
-            {
-                if (Main.rand.NextBool(3))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore8"), 1f);
-                if (Main.rand.NextBool(3))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore9"), 1f);
-                else if (Main.rand.NextBool(3))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore10"), 1f);
-                if (Main.rand.NextBool(4))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore11"), 1f);
-                if (Main.rand.NextBool(6))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore14"), 1f);
-                else if (Main.rand.NextBool(5))
-                    Gore.NewGore(new EntitySource_TileBreak(i, j), new Vector2((float)(i * 16), (float)(j * 16)), default, ModGores.GoreType("Gores/Pots/PyramidPotGore16"), 1f);
-            }
 
-            int chanceForPortal = 1000;
-            if(num == 1)
-                chanceForPortal = 100;
-            else if(num == 2)
-                chanceForPortal = 150;
-            else if(num == 3)
-                chanceForPortal = 250;
+            int goreType = frameX / 36 + frameY / 36 * 3;
+            DoGore(i, j, goreType);
+
+            int chanceForPortal = 700;
             if (Main.rand.NextBool(chanceForPortal))
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Projectile.NewProjectile(new EntitySource_TileBreak(i, j), (float)(i * 16 + 16), (float)(j * 16 + 16), 0.0f, -12f, ProjectileID.CoinPortal, 0, 0.0f, Main.myPlayer, 0.0f, 0.0f);
+                    Projectile.NewProjectile(new EntitySource_TileBreak(i, j), (i * 16 + 16), (j * 16 + 16), 0.0f, -12f, ProjectileID.CoinPortal, 0, 0.0f, Main.myPlayer, 0.0f, 0.0f);
             }
             else if (WorldGen.genRand.NextBool(40) && Main.wallDungeon[(int)Main.tile[i, j].WallType])
                 Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.GoldenKey, 1, false, 0, false, false);

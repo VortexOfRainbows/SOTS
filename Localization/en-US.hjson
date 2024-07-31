@@ -5616,6 +5616,11 @@ Mods: {
 				DisplayName: Corpsebloom Banner
 				Tooltip: ""
 			}
+
+			AVPot: {
+				DisplayName: AV Pot
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6269,6 +6274,7 @@ Mods: {
 			PermafrostConduitTile.MapEntry: Permafrost Conduit Tile
 			TidalConduitTile.MapEntry: Tidal Conduit Tile
 			GulaGatewayTile.MapEntry: Gula Gateway Tile
+			AVPots.MapEntry: A V Pots
 		}
 
 		WorldGeneration: {

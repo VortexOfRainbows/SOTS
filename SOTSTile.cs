@@ -566,12 +566,13 @@ namespace SOTS
         }
         public static void TryDroppingSwallowedPenny(int i, int j, int type)
         {
-            if (type == TileID.Pots || type == TileType<PyramidPots>() || type == TileType<SkyPots>())
+            if (type == TileID.Pots || type == TileType<PyramidPots>() || type == TileType<SkyPots>() || type == TileType<AVPots>())
             {
                 bool PyramidPot = type == TileType<PyramidPots>();
+                bool AbandonedPot = type == TileType<AVPots>();
                 bool SkyPot = type == TileType<SkyPots>();
                 int chanceToDrop = 1000;
-                if (SkyPot)
+                if (SkyPot || AbandonedPot)
                 {
                     chanceToDrop = 900;
                 }
