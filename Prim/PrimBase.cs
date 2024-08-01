@@ -5,6 +5,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Steamworks;
 
 namespace SOTS.Prim
 {
@@ -114,8 +115,10 @@ namespace SOTS.Prim
 
 		public void UpdateTrails()
 		{
-			foreach (PrimTrail trail in _trails.ToArray()) 
-				trail.Update();
+			foreach (PrimTrail trail in _trails.ToArray())
+            {
+                trail.Update();
+            }
 		}
 
 		public void CreateTrail(PrimTrail trail)

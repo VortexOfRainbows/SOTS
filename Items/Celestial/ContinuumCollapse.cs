@@ -35,7 +35,7 @@ namespace SOTS.Items.Celestial
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 		}
-		public override bool BeforeDrainMana(Player player)
+		public override bool BeforeDrainVoid(Player player)
 		{
 			return false;
 		}

@@ -37,7 +37,7 @@ namespace SOTS.Items.Crushers
 		{
 			return true; // player.ownedProjectileCounts[Item.shoot] <= 0;
 		}
-		public override bool BeforeDrainMana(Player player)
+		public override bool BeforeDrainVoid(Player player)
 		{
 			return false;
 		}

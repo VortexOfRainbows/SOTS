@@ -39,7 +39,7 @@ namespace SOTS.Items.Chaos
 			Item.noUseGraphic = true;
 			Item.useAmmo = AmmoID.Arrow;
 		}
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
         {
             return false;
         }

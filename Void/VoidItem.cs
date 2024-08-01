@@ -181,7 +181,7 @@ namespace SOTS.Void
 				return false;
 			int currentVoid = voidPlayer.voidMeterMax2 - voidPlayer.lootingSouls - voidPlayer.VoidMinionConsumption;
 			int finalCost = VoidCost(player);
-			bool canDrainMana = BeforeDrainMana(player);
+			bool canDrainMana = BeforeDrainVoid(player);
 			if ((voidPlayer.safetySwitch && canDrainMana) && voidPlayer.voidMeter < finalCost && !Item.CountsAsClass(DamageClass.Summon) && !voidPlayer.frozenVoid)
 			{
 				return false;
@@ -204,14 +204,14 @@ namespace SOTS.Void
 			{
 				return base.UseItem(player);
 			}
-			if (Item.useAmmo != 0 && BeforeDrainMana(player) && !Item.CountsAsClass(DamageClass.Summon))
+			if (Item.useAmmo != 0 && BeforeDrainVoid(player) && !Item.CountsAsClass(DamageClass.Summon))
 				DrainMana(player);
 			return true;
         }
         ///<summary>
         /// return false to not consume void
         ///</summary>
-        public virtual bool BeforeDrainMana(Player player)
+        public virtual bool BeforeDrainVoid(Player player)
 		{
 			return true;
 		}

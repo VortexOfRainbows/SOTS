@@ -43,7 +43,7 @@ namespace SOTS.Items.Pyramid
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, Main.MouseWorld.X, Main.MouseWorld.Y);
             return false;
         }
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
 		{
 			return true;
 		}

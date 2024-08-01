@@ -72,7 +72,7 @@ namespace SOTS.Items.Planetarium.FromChests
 			}
 			return false;
         }
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			return modPlayer.skywardBlades <= 0;

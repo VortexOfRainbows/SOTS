@@ -5621,6 +5621,11 @@ Mods: {
 				DisplayName: AV Pot
 				Tooltip: ""
 			}
+
+			TesseractSword: {
+				DisplayName: Tesseract Sword
+				Tooltip: Stop snooping around!
+			}
 		}
 
 		ItemTooltip: {
@@ -7315,6 +7320,7 @@ Mods: {
 			IcebreakerShard.DisplayName: Icebreaker Shard
 			PlagueSpitter.DisplayName: Plague Spitter
 			PlagueBeam.DisplayName: Plague Beam
+			TesseractSlash.DisplayName: Tesseract Slash
 		}
 
 		DamageClasses: {

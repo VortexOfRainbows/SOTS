@@ -61,7 +61,7 @@ namespace SOTS.Items.AbandonedVillage
 		{
 			return 20;
 		}
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
         {
             return false;
         }

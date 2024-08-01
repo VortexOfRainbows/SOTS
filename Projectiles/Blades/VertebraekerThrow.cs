@@ -93,7 +93,8 @@ namespace SOTS.Projectiles.Blades
 				initialCenter = player.Center;
 				Projectile.ai[0] = -180 * initialDirection;
 				Projectile.scale = 1.5f;
-				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: initialDirection, VertebraekerSlash.vertebraekerRed.ToVector4(), VertebraekerSlash.vertebraekerOrange.ToVector4(), 36, 2));
+				FireTrail myTrail = new FireTrail(Projectile, clockWise: initialDirection, VertebraekerSlash.vertebraekerRed.ToVector4(), VertebraekerSlash.vertebraekerOrange.ToVector4(), 36, 2);
+                SOTS.primitives.CreateTrail(myTrail);
 			}
 			else if(Projectile.timeLeft % 18 == 0)
 				SOTSUtils.PlaySound(SoundID.DD2_MonkStaffSwing, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.2f);

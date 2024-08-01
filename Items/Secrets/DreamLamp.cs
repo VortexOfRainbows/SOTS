@@ -212,7 +212,7 @@ namespace SOTS.Items.Secrets
         {
 			return Item.timeSinceItemSpawned > 100;
 		}
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
 		{
 			if (Item.createTile >= 0)
 				return false;
@@ -220,7 +220,7 @@ namespace SOTS.Items.Secrets
             {
 				return false;
             }
-            return base.BeforeDrainMana(player);
+            return base.BeforeDrainVoid(player);
         }
         public override bool? PrefixChance(int pre, UnifiedRandom rand)
         {

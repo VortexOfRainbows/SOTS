@@ -153,7 +153,25 @@ namespace SOTS.Projectiles.Blades
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(player.gravDir * toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (GravDirection * FetchDirection == -1 ? -ArmAngleOffset : ArmAngleOffset))));
 			}
 			Projectile.hide = false;
-		}
+			if(Main.netMode != NetmodeID.Server)
+            {
+				Vector2 startingPos = Projectile.Center;
+				int currentUpdate = Projectile.numUpdates + 1;
+                if (currentUpdate > 0)
+				{
+                    if (myTrail.Entity is Projectile proj && proj.whoAmI == Projectile.whoAmI && proj.type == Projectile.type)
+                    {
+                        myTrail.Update();
+                    }
+                }
+                Projectile.Center = startingPos;
+            }
+            player.Center += player.velocity / (1 + Projectile.extraUpdates);
+			if(Projectile.numUpdates == -1)
+			{
+				player.Center -= player.velocity;
+            }
+        }
 		public Vector2 dustAway = Vector2.Zero;
 		public Vector2 cursorArea = Vector2.Zero;
 		public Vector2 toCursor = Vector2.Zero;
@@ -182,12 +200,21 @@ namespace SOTS.Projectiles.Blades
 		public virtual float MinSwipeDistance => 80;
 		public virtual float MaxSwipeDistance => 92;
 		public virtual float ArcStartDegrees => 270 - 60f / speedModifier;
+		protected FireTrail myTrail;
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
 			if (runOnce)
 			{
-				SOTS.primitives.CreateTrail(new FireTrail(Projectile, FetchDirection, color1.ToVector4(), color2.ToVector4(), 20, 1));
+				int trailType = 1;
+				int trailLength = 20;
+				if(Type == ModContent.ProjectileType<TesseractSlash>())
+				{
+					trailType = 3;
+					trailLength = 120;
+                }
+				myTrail = new FireTrail(Projectile, FetchDirection, color1.ToVector4(), color2.ToVector4(), trailLength, trailType);
+                SOTS.primitives.CreateTrail(myTrail);
 				SwingSound(player);
 				if (Main.myPlayer == Projectile.owner)
 				{
@@ -256,7 +283,7 @@ namespace SOTS.Projectiles.Blades
 				ovalArea2 = ovalArea2.RotatedBy(toCursor.ToRotation());
 				ovalArea.X += ovalArea2.X;
 				ovalArea.Y += ovalArea2.Y;
-				Projectile.position = player.Center + ovalArea - new Vector2(Projectile.width/2, Projectile.height/2); 
+				Projectile.Center = player.Center + ovalArea; 
 				dustAway = ovalArea;
 				Projectile.rotation = dustAway.ToRotation();
 			}
@@ -292,7 +319,7 @@ namespace SOTS.Projectiles.Blades
 				}
 			}
 		}
-		public virtual void SlashPattern(Player player, int slashNumber)
+        public virtual void SlashPattern(Player player, int slashNumber)
         {
 			float speedBonus = 0.2f;
 			int damage = Projectile.damage;

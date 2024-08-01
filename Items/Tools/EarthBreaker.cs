@@ -81,7 +81,7 @@ namespace SOTS.Items.Tools
         {
             return 10;
         }
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
         {
             return player.altFunctionUse == 2;
         }

@@ -36,7 +36,7 @@ namespace SOTS.Items.Invidia
 			Item.shootSpeed = 12;
 			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
 		}
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
         {
 			Item.useTime = Item.useAnimation;
             return true;

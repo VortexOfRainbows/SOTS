@@ -3,7 +3,7 @@ The following is my development plans :D
 1. After Void Anomaly is extracted through the tainted keystone, the other portal now leads to a secret area containing the Superbia Portal Base and the Suspicious Stopwatch. The room cannot be entered until it is unlocked from the inside. It is unlocked by breaking the suspicious stopwatch, which can only happen if the Void Anomaly is equipped. The blocks comprising the room appear invisible, similar to Phase Ore. It appears in the Top Right of the sky, opposite the diamond structure, and is not visited by the Archaeologist.
 1a. Suspicious Stopwatch can be powered by the Chaos Conduit, breaking into Time Shards and a Broken Watch; these can be used with the Voidmage Incubator to craft a Timekeeper's Stopwatch 
 1b. Hands of Time melee weapon can be found inside the structure, which freezes enemies when they are struck, including bosses (?)
-2. Starward Sword (Upgrade to Digital Daito, Vorpal Knife, Abyssal Fury, Reality Shatter)
+2. Stellar Tempest (Upgrade to Digital Daito, Vorpal Knife, Abyssal Fury, Reality Shatter)
 3. Refracting Crystal + Void Anomaly => Reflecting Crystal
 4. Give Tesseract the ability to do a "manual mode", where tesseracts attack only when you attack, and at your cursor.
 
@@ -21,6 +21,7 @@ Acknowledged But Likely Delayed:
 11. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 12. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
 13. Scroll wheel with challenger's ring
+14. SOTS Blades prim trails use the Size of the swing to determine the size of the visual, whereas the swords themselves use length and handle size. These should be standardized... In general, this class needs some recleaning and reworking.
 
 Update Objectives:
 1. Ghost Town! (Next up)
@@ -47,6 +48,7 @@ Update Objectives:
 17. Update Elemental Amulet sprite to include modern genshin visions
 18. Void Meter save when you exit the world
 19. Fix shimmer trident infinite gold exploit. Shimmer Electromagnetic Lure into the Deterrent
+20. Add Wishing Star accessory
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -81,6 +83,12 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+8/1/24
+1. WIP Blade Class reworks...
+	1. Needs: an overhaul. Standardization of older blades. Make it require less parameters for things like determining the size of the trail/handle (there are a lot of weird variable/method names)
+	2. Needs: prim trails to be updated by the swords manually, including with a proj.extraUpdates rate, to make the swings more smooth
+	3. Needs: Take into account player velocity before calculations are done
 
 7/28/24 to 8/1/24
 1. Fix blast door and other SOTS doors not dropping their item when broken

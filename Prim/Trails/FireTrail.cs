@@ -12,7 +12,7 @@ using SOTS.FakePlayer;
 
 namespace SOTS.Prim.Trails
 {
-	class FireTrail : PrimTrail
+	public class FireTrail : PrimTrail
 	{
 		public int ClockWiseOrCounterClockwise;
 		public Vector4 Color1;
@@ -92,19 +92,18 @@ namespace SOTS.Prim.Trails
 		public List<Vector2> toOwner = new List<Vector2>();
 		public override void OnUpdate()
 		{
-			Counter++;
 			if (Entity is Projectile proj && !Destroyed)
 			{
-				Player projOwner = Main.player[proj.owner];
+				Player player = Main.player[proj.owner];
 				FakePlayerProjectile fPP;
 				bool hasModProj = proj.TryGetGlobalProjectile(out fPP);
-				Vector2 savePlayerPosition = projOwner.Center;
+				Vector2 savePlayerPosition = player.Center;
                 if (hasModProj)
 				{
 					if(fPP.FakeOwnerIdentity != -1)
 					{
 						FakePlayerPossessingProjectile FPPP = fPP.WhoOwnsMe(proj);
-						projOwner.Center = FPPP.Projectile.Center;
+						player.Center = FPPP.Projectile.Center;
 					}
 				}
 				PointCount = Points.Count() * 6;
@@ -117,7 +116,7 @@ namespace SOTS.Prim.Trails
 				if (proj.ModProjectile is PyrocideSlash pyro && Entity.active && Entity != null)
 				{
 					WidthList.Add(pyro.GetArcLength() * 0.5f + 16);
-					ownerCenter = projOwner.Center;
+					ownerCenter = player.Center;
 					toOwner.Add(ownerCenter - proj.Center);
 					if (pyro.FetchDirection != ClockWiseOrCounterClockwise)
 						Destroyed = true;
@@ -126,7 +125,7 @@ namespace SOTS.Prim.Trails
 				else if (proj.ModProjectile is ToothAcheSlash ache && Entity.active && Entity != null)
 				{
 					WidthList.Add(ache.GetArcLength() * 0.5f + 6);
-					ownerCenter = projOwner.Center;
+					ownerCenter = player.Center;
 					toOwner.Add(ownerCenter - proj.Center);
 					if (ache.FetchDirection != ClockWiseOrCounterClockwise)
 						Destroyed = true;
@@ -135,7 +134,7 @@ namespace SOTS.Prim.Trails
 				else if (proj.ModProjectile is VertebraekerSlash vert && Entity.active && Entity != null)
 				{
 					WidthList.Add(vert.GetArcLength() * 0.5f + 16);
-					ownerCenter = projOwner.Center;
+					ownerCenter = player.Center;
 					toOwner.Add(ownerCenter - proj.Center);
 					if (vert.FetchDirection != ClockWiseOrCounterClockwise)
 						Destroyed = true;
@@ -143,8 +142,11 @@ namespace SOTS.Prim.Trails
 				}
 				else if (proj.ModProjectile is SOTSBlade sBlade && Entity.active && Entity != null)
 				{
-					WidthList.Add(sBlade.GetArcLength() * 0.5f + sBlade.AddedTrailLength);
-					ownerCenter = projOwner.Center;
+					float bonus = sBlade.handleSize;
+					if (sBlade is not TesseractSlash)
+						bonus = 0;
+					WidthList.Add((sBlade.GetArcLength() - bonus) * 0.5f + sBlade.AddedTrailLength);
+					ownerCenter = player.Center;
 					toOwner.Add(ownerCenter - proj.Center);
 					if (sBlade.FetchDirection != ClockWiseOrCounterClockwise)
 						Destroyed = true;
@@ -179,22 +181,27 @@ namespace SOTS.Prim.Trails
 				}
 				else
 					OnDestroy();
-				projOwner.Center = savePlayerPosition;
+				player.Center = savePlayerPosition;
+            Counter++;
             }
-			else
+            else
 			{
 				OnDestroy();
-			}
-		}
+            }
+        }
 		public override void OnDestroy()
 		{
 			Destroyed = true;
 			int repeats = 1;
-			if (EntityType == ModContent.ProjectileType<ToothAcheThrow>() || EntityType == ModContent.ProjectileType<VertebraekerThrow>() || EntityType == ModContent.ProjectileType<VorpalThrow>())
+			if (EntityType == ModContent.ProjectileType<ToothAcheThrow>() ||
+				EntityType == ModContent.ProjectileType<VertebraekerThrow>() ||
+				EntityType == ModContent.ProjectileType<VorpalThrow>())
 			{
 				repeats = 3;
 			}
-			for (int i = 0; i < repeats; i++)
+			if(EntityType == ModContent.ProjectileType<TesseractSlash>())
+                repeats = 5;
+            for (int i = 0; i < repeats; i++)
 			{
 				if (Points.Count > 0)
 				{

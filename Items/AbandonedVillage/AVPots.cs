@@ -288,18 +288,18 @@ namespace SOTS.Items.AbandonedVillage
                 }
                 else
                 {
-                    float num11 = (float)(240 + WorldGen.genRand.Next(-100, 101));
-                    float num12 = num11 * (float)(1.0 + (double)Main.rand.Next(-20, 21) * 0.01);
+                    float num11 = 240 + WorldGen.genRand.Next(-100, 101);
+                    float num12 = num11 * (float)(1.0 + Main.rand.Next(-20, 21) * 0.01);
                     if (Main.rand.NextBool(4))
-                        num12 *= (float)(1.0 + (double)Main.rand.Next(5, 11) * 0.01);
+                        num12 *= (float)(1.0 + Main.rand.Next(5, 11) * 0.01);
                     if (Main.rand.NextBool(8))
-                        num12 *= (float)(1.0 + (double)Main.rand.Next(10, 21) * 0.01);
+                        num12 *= (float)(1.0 + Main.rand.Next(10, 21) * 0.01);
                     if (Main.rand.NextBool(12))
-                        num12 *= (float)(1.0 + (double)Main.rand.Next(20, 41) * 0.01);
+                        num12 *= (float)(1.0 + Main.rand.Next(20, 41) * 0.01);
                     if (Main.rand.NextBool(16))
-                        num12 *= (float)(1.0 + (double)Main.rand.Next(40, 81) * 0.01);
+                        num12 *= (float)(1.0 + Main.rand.Next(40, 81) * 0.01);
                     if (Main.rand.NextBool(20))
-                        num12 *= (float)(1.0 + (double)Main.rand.Next(50, 101) * 0.01);
+                        num12 *= (float)(1.0 + Main.rand.Next(50, 101) * 0.01);
                     if (Main.expertMode)
                         num12 *= 2.5f;
                     if (Main.expertMode && Main.rand.NextBool(2))

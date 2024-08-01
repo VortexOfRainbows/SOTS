@@ -47,7 +47,7 @@ namespace SOTS.Items.Permafrost
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 0, modPlayer.frigidJavelinNoCost ? -1 : 0);
             return false;
         }
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
 		{
 			return true;
 		}

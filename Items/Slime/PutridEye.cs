@@ -93,7 +93,7 @@ namespace SOTS.Items.Slime
 			Item.channel = true;
 			Item.expert = true;
 		}
-		public override bool BeforeDrainMana(Player player)
+		public override bool BeforeDrainVoid(Player player)
 		{
 			return false;
 		}

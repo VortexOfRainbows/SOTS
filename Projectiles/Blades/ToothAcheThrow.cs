@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Void;
-using SOTS.Common.GlobalNPCs;
 using System.IO;
 using SOTS.Prim.Trails;
 using SOTS.Prim;
@@ -106,7 +103,8 @@ namespace SOTS.Projectiles.Blades
 				initialCenter = player.Center;
 				Projectile.ai[0] = -180 * initialDirection;
 				Projectile.scale = 1.65f;
-				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: initialDirection, ToothAcheSlash.toothAcheLime.ToVector4(), ToothAcheSlash.toothAcheGreen.ToVector4(), 36, 2));
+				FireTrail myTrail = new FireTrail(Projectile, clockWise: initialDirection, ToothAcheSlash.toothAcheLime.ToVector4(), ToothAcheSlash.toothAcheGreen.ToVector4(), 36, 2);
+                SOTS.primitives.CreateTrail(myTrail);
 			}
 			else if(Projectile.timeLeft % 20 == 0)
 				SOTSUtils.PlaySound(SoundID.DD2_MonkStaffSwing, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.1f);
@@ -175,16 +173,20 @@ namespace SOTS.Projectiles.Blades
 				Projectile.Center += Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
 			else
 				Projectile.Center += Projectile.velocity;
-			foreach (PrimTrail trail in SOTS.primitives._trails.ToArray())
-			{
-				if (trail is FireTrail fireTrail)
-				{
-					if (trail.Entity is Projectile proj && proj.whoAmI == Projectile.whoAmI && proj.type == Projectile.type && initialDirection == fireTrail.ClockWiseOrCounterClockwise)
-					{
-						trail.Update();
-					}
-				}
-			}
+
+			if(Main.netMode != NetmodeID.Server)
+            {
+                foreach (PrimTrail trail in SOTS.primitives._trails.ToArray())
+                {
+                    if (trail is FireTrail fireTrail)
+                    {
+                        if (trail.Entity is Projectile proj && proj.whoAmI == Projectile.whoAmI && proj.type == Projectile.type && initialDirection == fireTrail.ClockWiseOrCounterClockwise)
+                        {
+                            trail.Update();
+                        }
+                    }
+                }
+            }
 		}
         public override bool ShouldUpdatePosition()
         {

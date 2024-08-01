@@ -53,7 +53,7 @@ namespace SOTS.Items.Tide
             }
             return false;
         }
-        public override bool BeforeDrainMana(Player player)
+        public override bool BeforeDrainVoid(Player player)
 		{
 			return true;
 		}
