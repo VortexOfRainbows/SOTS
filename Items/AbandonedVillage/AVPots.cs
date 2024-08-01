@@ -2,9 +2,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Furniture.AncientGold;
+using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Potions;
 using SOTS.Items.Pyramid;
+using SOTS.Items.Slime;
 using SOTS.NPCs;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -17,8 +20,30 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.Items.AbandonedVillage
 {
 	internal class AVPots : ModTile
-	{
-		public override void SetStaticDefaults()
+    {
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
+            Tile tile = Main.tile[i, j];
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Items/AbandonedVillage/AVPotsGlow").Value;
+            Rectangle frame = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
+            Color color;
+            color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
+            color.A = 0;
+            float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+            Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+            {
+                zero = Vector2.Zero;
+            }
+            for (int k = 0; k < 3; k++)
+            {
+                Vector2 pos = new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero;
+                Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.15f * k;
+                Main.spriteBatch.Draw(texture, pos + offset, frame, color * alphaMult * 0.75f, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
+        }
+        public override void SetStaticDefaults()
 		{
 			Main.tileSpelunker[Type] = true;
 			Main.tileFrameImportant[Type] = true;
@@ -142,7 +167,10 @@ namespace SOTS.Items.AbandonedVillage
 
             int goreType = frameX / 36 + frameY / 36 * 3;
             DoGore(i, j, goreType);
-            if(goreType == 6 || goreType == 7 || goreType == 8)
+            bool earth = goreType == 0 || goreType == 1 || goreType == 2;
+            bool steel = goreType == 3 || goreType == 4 || goreType == 5;
+            bool wooden = goreType == 6 || goreType == 7 || goreType == 8;
+            if (wooden)
             {
                 SOTSUtils.PlaySound(new SoundStyle("SOTS/Sounds/Tiles/WoodBreaking"), new Vector2(i, j) * 16, 0.7f, -0.2f, 0.1f);
             }
@@ -151,31 +179,29 @@ namespace SOTS.Items.AbandonedVillage
                 SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i, j) * 16);
             }
 
-            int chanceForPortal = 700;
+            int chanceForPortal = 750;
             if (Main.rand.NextBool(chanceForPortal))
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                     Projectile.NewProjectile(new EntitySource_TileBreak(i, j), (i * 16 + 16), (j * 16 + 16), 0.0f, -12f, ProjectileID.CoinPortal, 0, 0.0f, Main.myPlayer, 0.0f, 0.0f);
             }
-            else if (WorldGen.genRand.NextBool(40) && Main.wallDungeon[(int)Main.tile[i, j].WallType])
-                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.GoldenKey, 1, false, 0, false, false);
             else if (WorldGen.genRand.NextBool(18) || (Main.rand.NextBool(35) && Main.expertMode))
             {
                 int type2 = WorldGen.genRand.Next(13);
                 if (type2 == 0)
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.TrapsightPotion, 1, false, 0, false, false);
                 if (type2 == 1)
-                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.SummoningPotion, 1, false, 0, false, false);
+                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.IronskinPotion, 1, false, 0, false, false);
                 if (type2 == 2)
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.HunterPotion, 1, false, 0, false, false);
                 if (type2 == 3)
-                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.WrathPotion, 1, false, 0, false, false);
+                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.GillsPotion, 1, false, 0, false, false);
                 if (type2 == 4)
-                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.RagePotion, 1, false, 0, false, false);
+                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.SpelunkerPotion, 1, false, 0, false, false);
                 if (type2 == 5)
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.ThornsPotion, 1, false, 0, false, false);
                 if (type2 == 6)
-                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.BattlePotion, 1, false, 0, false, false);
+                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.EndurancePotion, 1, false, 0, false, false);
                 if (type2 == 7)
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.RegenerationPotion, 1, false, 0, false, false);
                 if (type2 == 8)
@@ -185,9 +211,9 @@ namespace SOTS.Items.AbandonedVillage
                 if (type2 == 10)
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.BuilderPotion, 1, false, 0, false, false);
                 if (type2 == 11)
-                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<RoughskinPotion>(), 1, false, 0, false, false);
+                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.SwiftnessPotion, 1, false, 0, false, false);
                 if (type2 == 12)
-                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<SoulAccessPotion>(), 1, false, 0, false, false);
+                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<NightmarePotion>(), 1, false, 0, false, false);
             }
             else if (Main.netMode == NetmodeID.Server && Main.rand.NextBool(30))
             {
@@ -213,25 +239,26 @@ namespace SOTS.Items.AbandonedVillage
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Star, 1, false, 0, false, false);
                 else if (num3 == 2)
                 {
+                    int torchType = !wooden ? ItemType<EarthenPlatingTorch>() : (WorldGen.crimson ? ItemID.CrimsonTorch : ItemID.CorruptTorch);
                     int Stack = Main.rand.Next(2, 6);
                     if (Main.expertMode)
                         Stack += Main.rand.Next(1, 7);
                     if ((int)Main.tile[i, j].LiquidAmount > 0)
                         Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Glowstick, Stack, false, 0, false, false);
                     else
-                        Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<AncientGoldTorch>(), Stack, false, 0, false, false);
+                        Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, torchType, Stack, false, 0, false, false);
                 }
                 else if (num3 == 3)
                 {
                     int Stack = Main.rand.Next(20, 31);
                     int Type = ItemID.MusketBall;
                     if (Main.hardMode)
-                        Type = ItemID.GoldenBullet;
+                        Type = ItemID.ExplodingBullet;
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, Type, Stack, false, 0, false, false);
                 }
                 else if (num3 == 4)
                 {
-                    int Type = ItemID.HealingPotion;
+                    int Type = ItemID.RestorationPotion;
                     int Stack = 1;
                     if (Main.expertMode && !Main.rand.NextBool(3))
                         ++Stack;
@@ -251,13 +278,13 @@ namespace SOTS.Items.AbandonedVillage
                 else if (num3 == 5)
                 {
                     int Stack = Main.rand.Next(20, 31);
-                    int Type = ItemID.FlamingArrow;
+                    int Type = ItemID.UnholyArrow;
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, Type, Stack, false, 0, false, false);
                 }
                 else if (num3 == 6 && Main.rand.NextBool(5))
                 {
-                    int Stack = Main.rand.Next(20, 41);
-                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.SilkRope, Stack, false, 0, false, false);
+                    int Stack = Main.rand.Next(5, 11);
+                    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemID.Chain, Stack, false, 0, false, false);
                 }
                 else
                 {
@@ -353,27 +380,18 @@ namespace SOTS.Items.AbandonedVillage
                     }
                 }
             }
-            //if(snakePot && Main.rand.NextBool(4))
-            //{
-            //    if(Main.netMode != NetmodeID.MultiplayerClient)
-            //    {
-            //        for (int amount = 2 + Main.rand.Next(3); amount > 0; amount--)
-            //        {
-            //            int npcSpawn = NPC.NewNPC(new EntitySource_TileBreak(i, j), i * 16 + 16, j * 16 + 16, NPCType<Snake>());
-            //            Main.npc[npcSpawn].velocity.X += Main.rand.NextFloat(-1.6f, 1.6f);
-            //            Main.npc[npcSpawn].velocity.Y -= Main.rand.NextFloat(5.25f, 7.5f);
-            //            Main.npc[npcSpawn].netUpdate = true;
-            //        }
-            //    }
-            //}
-            //else if(snakePot)
-            //{
-            //    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<Snakeskin>(), Main.rand.Next(2) + 1, false, 0, false, false);
-            //}
-            //else if(Main.rand.NextBool(40))
-            //{
-            //    Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<JuryRiggedDrill>(), Main.rand.Next(4) + 4, false, 0, false, false);
-            //}
+            if(Main.rand.NextBool(40))
+            {
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<OldKey>(), 1, false, 0, false, false);
+            }
+            else if(Main.rand.NextBool(40))
+            {
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<AncientSteelBar>(), Main.rand.Next(3, 6), false, 0, false, false);
+            }
+            else if (Main.rand.NextBool(20))
+            {
+                Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, ItemType<Peanut>(), Main.rand.Next(3, 6), false, 0, false, false);
+            }
         }
     }
     internal class AVPot : ModItem

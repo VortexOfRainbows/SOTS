@@ -85,8 +85,8 @@ Daily Log:
 1. Fix blast door and other SOTS doors not dropping their item when broken
 2. Chains from sky chain now go under actuated blocks
 3. Gula Gateway connects to the appropriate conduits
-4. WIP Abandoned Village pots (sounds, dusts, gores done)
-	1. Needs: Loot tables, spawning correctly on worldgen
+4. Added Abandoned Village pots (sounds, dusts, gores, worldgen, loot done)!
+5. Abandoned Village crimson is now bigger on the surface
 
 7/24/24 to 7/27/24
 1. Finished Plague Spitter (works in multiplayer!)

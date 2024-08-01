@@ -17,11 +17,7 @@ using Terraria.WorldBuilding;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
-using Stubble.Core.Tokens;
-using Steamworks;
-using SOTS.Dusts;
 using SOTS.Items.Planetarium.Blocks;
-using Terraria.Enums;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -90,6 +86,9 @@ namespace SOTS.WorldgenHelpers
                 TileID.GoldBrick,
                 TileID.CobaltBrick,
                 TileID.Sunplate,
+                TileID.BlueDungeonBrick,
+                TileID.GreenDungeonBrick,
+                TileID.PinkDungeonBrick,
             };
             Mod AVALON;
             bool avalon = ModLoader.TryGetMod("Avalon", out AVALON);
@@ -2632,7 +2631,7 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             AVSweepRect = new Rectangle(OuterRect.X - 70, OuterRect.Y - 40, OuterRect.Width + 140, OuterRect.Height + 70);
-            PrepareUnderground(AVSweepRect, 50);
+            PrepareUnderground(AVSweepRect, 50, 0.2f);
             GenerateUndergoundEntrance(x, y - h / 2 + 10);
         }
         public static bool ValidLocation(Rectangle rect, int attempts)
@@ -3292,7 +3291,7 @@ namespace SOTS.WorldgenHelpers
             if (WorldGen.GetWorldSize() == 0)
                 size = 240;
 
-
+            PrepareUnderground(cR.rect, 60, 0.15f);
             DesignateAVRectangle((int)bottomOfCr.X, (int)bottomOfCr.Y, size + 80, size);
 
             Point16 placement = new Point16();
@@ -3325,7 +3324,6 @@ namespace SOTS.WorldgenHelpers
                 if (foundLocation)
                     break;
             }
-
 
             GenerateNewMineEntrance(placement.X, placement.Y);
             PlaceStructuresInAV(bestC, placement.X);
@@ -3419,8 +3417,9 @@ namespace SOTS.WorldgenHelpers
         }
         public static void AbandonedVillageTileCleanup(int evilBiome)
         {
+            //int biomeType = !WorldGen.crimson ? BiomeConversionID.Corruption : BiomeConversionID.Crimson;
             CorruptionRectangle cR = Corruptions[evilBiome];
-            for(int passNum = 0; passNum <= 2; passNum++)
+            for (int passNum = 0; passNum <= 3; passNum++)
             {
                 for (int i = cR.rect.Left; i < cR.rect.Right; i++)
                 {
@@ -3428,11 +3427,11 @@ namespace SOTS.WorldgenHelpers
                     {
                         Tile t = Main.tile[i, j];
                         int type = t.TileType;
-                        if(passNum == 0)
+                        if (passNum == 0)
                         {
-                            if(t.HasTile)
+                            if (t.HasTile)
                             {
-                                if (type == TileID.Trees)
+                                if (type == TileID.Trees || type == TileID.Pots || type == ModContent.TileType<AVPots>())
                                 {
                                     t.ClearTile();
                                 }
@@ -3447,24 +3446,47 @@ namespace SOTS.WorldgenHelpers
                                 }
                             }
                         }
-                        else if(passNum == 1)
+                        else if (passNum == 1)
                         {
                             WorldGen.GrowTree(i, j);
                         }
-                        else if(passNum == 2)
+                        else if (passNum == 2)
+                        {
+                            TryPlacingAmbientTiles(i, j);
+                        }
+                        else if (passNum == 3)
                         {
                             bool isGrass = type == TileID.CorruptGrass || type == TileID.CrimsonGrass;
                             bool isStone = ValidStoneTiles.Contains(type) && !isGrass;
-                            if ((isGrass || (isStone && WorldGen.genRand.NextBool(50))) && t.HasTile && t.Slope == 0 && !t.IsHalfBlock && !Main.tile[i, j- 1].HasTile)
+                            if ((isGrass || (isStone && WorldGen.genRand.NextBool(20))) && t.HasTile && t.Slope == 0 && !t.IsHalfBlock && !Main.tile[i, j - 1].HasTile)
                             {
                                 int plantType = TileID.CorruptPlants;
                                 if (type == TileID.CrimsonGrass)
                                 {
                                     plantType = TileID.CrimsonPlants;
                                 }
-                                if (WorldGen.genRand.NextBool(50) || isStone)
+                                if (WorldGen.genRand.NextBool(20) || isStone)
+                                {
                                     plantType = TileID.MatureHerbs;
-                                WorldGen.PlaceTile(i, j - 1, plantType, false, false, -1, plantType == TileID.MatureHerbs ? 3 : 0);
+                                    if (WorldGen.genRand.NextBool(2) && !isStone)
+                                    {
+                                        plantType = ModContent.TileType<PeanutBushTile>();
+                                    }
+                                }
+                                if (plantType == ModContent.TileType<PeanutBushTile>())
+                                {
+                                    Framing.GetTileSafely(i, j - 1).HasTile = false;
+                                    WorldGen.PlaceTile(i, j - 1, plantType, false, true, -1, WorldGen.genRand.Next(3));
+                                    if (Main.tile[i, j - 1].TileType == ModContent.TileType<PeanutBushTile>())
+                                        for (int attempts = 0; attempts < 25; attempts++)
+                                        {
+                                            PeanutBushTile.AttemptToGrowPeanuts(i, j - 1);
+                                        }
+                                }
+                                else
+                                {
+                                    WorldGen.PlaceTile(i, j - 1, plantType, false, false, -1, plantType == TileID.MatureHerbs ? 3 : 0);
+                                }
                             }
                         }
                     }
@@ -3481,8 +3503,63 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+
+            Rectangle rect = AVSweepRect;
+            for (int i = rect.Left; i < rect.Right; i++)
+            {
+                for (int j = rect.Top; j < rect.Bottom; j++)
+                {
+                    TryPlacingAmbientTiles(i, j);
+                }
+            }
         }
-        public static void PrepareUnderground(Rectangle rect, float paddingZone = 50)
+        public static void TryPlacingAmbientTiles(int i, int j)
+        {
+            Tile tile = Framing.GetTileSafely(i, j);
+            Tile tileLeft = Framing.GetTileSafely(i + 1, j);
+            int firstType = tile.TileType;
+            int secondType = tileLeft.TileType;
+            if ((firstType == TileID.Ebonstone || secondType == TileID.Crimstone) && !Main.rand.NextBool(4))
+                return;
+            if (WorldGen.genRand.NextBool(4) && !Main.tile[i, j - 1].HasTile && !Main.tile[i + 1, j - 1].HasTile && !Main.tile[i, j - 2].HasTile && !Main.tile[i + 1, j - 2].HasTile)
+            {
+                Tile tileBottom = Framing.GetTileSafely(i, j + 1);
+                Tile tileBottomLeft = Framing.GetTileSafely(i + 1, j + 1);
+                Main.tile[i, j - 1].ClearTile();
+                Main.tile[i + 1, j - 1].ClearTile();
+                Main.tile[i, j - 2].ClearTile();
+                Main.tile[i + 1, j - 2].ClearTile();
+                List<int> validPotTypes = new List<int>();
+                if (tileBottom.TileType == ModContent.TileType<GulaPlatingTile>() || tileBottomLeft.TileType == ModContent.TileType<GulaPlatingTile>())
+                {
+                    validPotTypes.Add(3);
+                    validPotTypes.Add(4);
+                    validPotTypes.Add(5);
+                }
+                else
+                {
+                    if (firstType == ModContent.TileType<EarthenPlatingTile>() || secondType == ModContent.TileType<EarthenPlatingTile>() ||
+                        firstType == ModContent.TileType<EarthenPlatingPlatformTile>() || secondType == ModContent.TileType<EarthenPlatingPlatformTile>())
+                    {
+                        validPotTypes.Add(0);
+                        validPotTypes.Add(1);
+                        validPotTypes.Add(2);
+                    }
+                }
+                if (firstType == ModContent.TileType<SootBlockTile>() || firstType == ModContent.TileType<CharredWoodTile>()
+                     || secondType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<CharredWoodTile>() || validPotTypes.Count <= 0)
+                {
+                    validPotTypes.Add(6);
+                    validPotTypes.Add(7);
+                    validPotTypes.Add(8);
+                }
+                if (validPotTypes.Count > 0)
+                {
+                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVPots>(), true, true, -1, validPotTypes[Main.rand.Next(validPotTypes.Count)]); //pots
+                }
+            }
+        }
+        public static void PrepareUnderground(Rectangle rect, float paddingZone = 50, float noiseWormMult = 0.2f)
         {
             SetNoise();
             int biomeType = !WorldGen.crimson ? BiomeConversionID.Corruption : BiomeConversionID.Crimson;
@@ -3505,7 +3582,7 @@ namespace SOTS.WorldgenHelpers
                     Tile t = Main.tile[i, j];
                     bool validForSootConversion = t.TileType == TileID.Dirt || t.TileType == TileID.Stone || t.TileType == TileID.Mud || t.TileType == TileID.MushroomGrass
                         || t.TileType == TileID.Sand || t.TileType == TileID.HardenedSand || t.TileType == TileID.Sandstone || t.TileType == TileID.IceBlock || t.TileType == TileID.SnowBlock;
-                    bool noiseWorm = noise > -0.2f * percent && noise < 0.2f * percent;
+                    bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
                     if (validForSootConversion && noiseWorm && t.HasTile)
                     {
                         t.TileType = (ushort)ModContent.TileType<SootBlockTile>();
