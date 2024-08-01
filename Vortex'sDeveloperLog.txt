@@ -46,6 +46,7 @@ Update Objectives:
 16. Somehow fix marble biome in vibrant geode
 17. Update Elemental Amulet sprite to include modern genshin visions
 18. Void Meter save when you exit the world
+19. Fix shimmer trident infinite gold exploit. Shimmer Electromagnetic Lure into the Deterrent
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -81,12 +82,13 @@ N/A
 
 Daily Log:
 
-7/28/24 to 7/31/24
+7/28/24 to 8/1/24
 1. Fix blast door and other SOTS doors not dropping their item when broken
 2. Chains from sky chain now go under actuated blocks
 3. Gula Gateway connects to the appropriate conduits
 4. Added Abandoned Village pots (sounds, dusts, gores, worldgen, loot done)!
 5. Abandoned Village crimson is now bigger on the surface
+6. Some AV generation adjustments
 
 7/24/24 to 7/27/24
 1. Finished Plague Spitter (works in multiplayer!)

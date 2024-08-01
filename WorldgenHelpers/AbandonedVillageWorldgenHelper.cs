@@ -2618,8 +2618,8 @@ namespace SOTS.WorldgenHelpers
                     random.Y *= 0.5f;
                 x = (int)(x + random.X);
                 y = (int)(y + random.Y);
-                x = Math.Clamp(x, 200 + w / 2, Main.maxTilesX - 200 - w / 2);
-                y = Math.Clamp(y, 200 + h / 2, Main.maxTilesY - 200 - h / 2);
+                x = Math.Clamp(x, 240 + w / 2, Main.maxTilesX - 240 - w / 2);
+                y = Math.Clamp(y, 240 + h / 2, Main.maxTilesY - 240 - h / 2);
                 int padding = 40;
                 OuterRect = new Rectangle(x - padding - w / 2, y - padding - h / 2, w + padding * 2, h + padding * 2);
                 AVRect = new Rectangle(x - w/2, y - h / 2, w, h);
@@ -3418,12 +3418,13 @@ namespace SOTS.WorldgenHelpers
         public static void AbandonedVillageTileCleanup(int evilBiome)
         {
             //int biomeType = !WorldGen.crimson ? BiomeConversionID.Corruption : BiomeConversionID.Crimson;
+            int extraVerticalRangeToRemoveTrees = 10;
             CorruptionRectangle cR = Corruptions[evilBiome];
             for (int passNum = 0; passNum <= 3; passNum++)
             {
                 for (int i = cR.rect.Left; i < cR.rect.Right; i++)
                 {
-                    for (int j = cR.rect.Top; j < cR.rect.Bottom; j++)
+                    for (int j = cR.rect.Top - extraVerticalRangeToRemoveTrees; j < cR.rect.Bottom; j++)
                     {
                         Tile t = Main.tile[i, j];
                         int type = t.TileType;
@@ -3520,6 +3521,8 @@ namespace SOTS.WorldgenHelpers
             int firstType = tile.TileType;
             int secondType = tileLeft.TileType;
             if ((firstType == TileID.Ebonstone || secondType == TileID.Crimstone) && !Main.rand.NextBool(4))
+                return;
+            if (firstType == ModContent.TileType<GulaPortalPlatingTile>() || secondType == ModContent.TileType<GulaPortalPlatingTile>())
                 return;
             if (WorldGen.genRand.NextBool(4) && !Main.tile[i, j - 1].HasTile && !Main.tile[i + 1, j - 1].HasTile && !Main.tile[i, j - 2].HasTile && !Main.tile[i + 1, j - 2].HasTile)
             {

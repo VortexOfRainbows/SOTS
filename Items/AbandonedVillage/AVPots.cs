@@ -56,7 +56,7 @@ namespace SOTS.Items.AbandonedVillage
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(112, 90, 86), name);
+            AddMapEntry(new Color(158, 130, 116), name);
             DustType = DustID.Iron;
         }
         public override bool CreateDust(int i, int j, ref int type)
