@@ -25,8 +25,8 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float HitboxWidth => 24;
 		public override float AdditionalTipLength => 32;
-		public override float handleOffset => 18;
-		public override float handleSize => 18;
+		//public override float handleOffset => 18;
+		public override float HeldDistFromPlayer => 18;
 		public override Vector2 drawOrigin => new Vector2(10, 38);
 		public override void SwingSound(Player player)
 		{
@@ -108,8 +108,8 @@ namespace SOTS.Projectiles.Blades
 					dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
 		}
-		public override float TrailDistanceFromHandle => 40f;
-		public override float AddedTrailLength => 4f;
+		public override float TrailLengthMultiplier => 40f;
+		public override float TrailOffsetFromTip => 4f;
 		int counter = 0;
         public override void PostAI()
         {

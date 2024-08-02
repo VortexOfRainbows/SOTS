@@ -107,5 +107,14 @@ namespace SOTS
             list[index] = list[list.Count - 1];
             list.RemoveAt(list.Count - 1);
         }
+		/// <summary>
+		/// Shorthand for Vector2.SafeNormalize(Vector2.Zero)
+		/// </summary>
+		/// <param name="vector"></param>
+		/// <returns></returns>
+		public static Vector2 SNormalize(this Vector2 vector)
+		{
+			return vector.SafeNormalize(Vector2.Zero);
+		}
     }
 }

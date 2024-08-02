@@ -24,8 +24,8 @@ namespace SOTS.Projectiles.Blades
         }
         public override float HitboxWidth => 80;
 		public override float AdditionalTipLength => 32;
-		public override float handleOffset => 24;
-		public override float handleSize => 40;
+		//public override float handleOffset => 24;
+		public override float HeldDistFromPlayer => 24;
 		public override Vector2 drawOrigin => new Vector2(9, 102);
         public override void SwingSound(Player player)
 		{
@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Blades
 		public override float speedModifier => Projectile.ai[1];
 		public override float GetBaseSpeed(float swordLength)
 		{
-			return (1f + (1f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)) + (thisSlashNumber == 1 ? 1.0f : -0.5f)) * 0.5f;
+			return (1f + (1f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)) + (thisSlashNumber == 1 ? 1.0f : -0.5f)) * 0.3f;
 		}
 		public override float MeleeSpeedMultiplier => 0.5f; //melee speed only has 80% effectiveness on this weapon
 		public override float OverAllSpeedMultiplier => thisSlashNumber == 1 ? 6f : thisSlashNumber == 2 ? 4.5f : 5f;
@@ -125,8 +125,8 @@ namespace SOTS.Projectiles.Blades
 				dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
 		}
-        public override float TrailDistanceFromHandle => 180f;
-		public override float AddedTrailLength => 0f;
+        public override float TrailLengthMultiplier => 0.75f;
+		public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
     }
 }
 		

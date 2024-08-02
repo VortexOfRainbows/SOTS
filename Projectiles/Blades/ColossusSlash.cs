@@ -1,14 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.IO;
-using SOTS.Utilities;
-using SOTS.Void;
-using SOTS.Prim.Trails;
-using SOTS.Projectiles.Earth;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -35,8 +29,8 @@ namespace SOTS.Projectiles.Blades
         }
         public override float HitboxWidth => 80;
 		public override float AdditionalTipLength => 22;
-		public override float handleOffset => 16;
-		public override float handleSize => 16;
+		//public override float handleOffset => 16;
+		public override float HeldDistFromPlayer => 16;
 		public override Vector2 drawOrigin => new Vector2(9, 69);
         public override void SwingSound(Player player)
 		{
@@ -143,8 +137,8 @@ namespace SOTS.Projectiles.Blades
 				dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
 		}
-        public override float TrailDistanceFromHandle => 24f;
-		public override float AddedTrailLength => 8f;
+        public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
+		public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
     }
 }
 		

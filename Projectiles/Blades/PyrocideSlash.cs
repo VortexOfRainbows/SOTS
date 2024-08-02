@@ -159,7 +159,7 @@ namespace SOTS.Projectiles.Blades
 			float randMod = Projectile.ai[1];
 			if (runOnce)
 			{
-				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: FetchDirection));
+				SOTS.primitives.CreateTrail(new BladeTrail(Projectile, clockWise: FetchDirection));
 				SOTSUtils.PlaySound(SoundID.Item74, (int)player.Center.X, (int)player.Center.Y, 0.6f, 0.7f * randMod);
 				if (Main.myPlayer == Projectile.owner)
 				{

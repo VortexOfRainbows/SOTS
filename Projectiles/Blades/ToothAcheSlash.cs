@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Blades
 			int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
 			if (runOnce)
 			{
-				SOTS.primitives.CreateTrail(new FireTrail(Projectile, clockWise: FetchDirection, toothAcheLime.ToVector4(), toothAcheGreen.ToVector4(), 20, 1));
+				SOTS.primitives.CreateTrail(new BladeTrail(Projectile, clockWise: FetchDirection, toothAcheLime.ToVector4(), toothAcheGreen.ToVector4(), 20, 1));
 				SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.75f * randMod);
 				if (Main.myPlayer == Projectile.owner)
 				{

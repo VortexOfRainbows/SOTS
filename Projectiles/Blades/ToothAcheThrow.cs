@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Blades
 				initialCenter = player.Center;
 				Projectile.ai[0] = -180 * initialDirection;
 				Projectile.scale = 1.65f;
-				FireTrail myTrail = new FireTrail(Projectile, clockWise: initialDirection, ToothAcheSlash.toothAcheLime.ToVector4(), ToothAcheSlash.toothAcheGreen.ToVector4(), 36, 2);
+				BladeTrail myTrail = new BladeTrail(Projectile, clockWise: initialDirection, ToothAcheSlash.toothAcheLime.ToVector4(), ToothAcheSlash.toothAcheGreen.ToVector4(), 36, 2);
                 SOTS.primitives.CreateTrail(myTrail);
 			}
 			else if(Projectile.timeLeft % 20 == 0)
@@ -178,7 +178,7 @@ namespace SOTS.Projectiles.Blades
             {
                 foreach (PrimTrail trail in SOTS.primitives._trails.ToArray())
                 {
-                    if (trail is FireTrail fireTrail)
+                    if (trail is BladeTrail fireTrail)
                     {
                         if (trail.Entity is Projectile proj && proj.whoAmI == Projectile.whoAmI && proj.type == Projectile.type && initialDirection == fireTrail.ClockWiseOrCounterClockwise)
                         {

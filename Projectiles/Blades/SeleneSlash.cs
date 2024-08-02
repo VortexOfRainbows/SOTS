@@ -24,8 +24,8 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float HitboxWidth => 80;
 		public override float AdditionalTipLength => -52;
-		public override float handleOffset => 20;
-		public override float handleSize => -34;
+		//public override float handleOffset => 20;
+		public override float HeldDistFromPlayer => -34;
 		public override Vector2 drawOrigin => new Vector2(48, 152);
 		public override bool isDiagonalSprite => false;
 		public override float OffsetAngleIfNotDiagonal => -2;
@@ -140,8 +140,8 @@ namespace SOTS.Projectiles.Blades
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         { 
         }
-        public override float TrailDistanceFromHandle => GetArcLength() * 0.576f;
-		public override float AddedTrailLength => -GetArcLength() * 0.5f + 20;
+        public override float TrailLengthMultiplier => GetArcLength() * 0.576f;
+		public override float TrailOffsetFromTip => -GetArcLength() * 0.5f + 20;
     }
 }
 		

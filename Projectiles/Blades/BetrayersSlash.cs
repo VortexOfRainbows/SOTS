@@ -22,8 +22,8 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float HitboxWidth => 22;
 		public override float AdditionalTipLength => 34;
-		public override float handleOffset => 16;
-		public override float handleSize => 16;
+		//public override float handleOffset => 16;
+		public override float HeldDistFromPlayer => 16;
 		public override Vector2 drawOrigin => new Vector2(7, 55);
 		public override bool isDiagonalSprite => false;
         public override void SwingSound(Player player)
@@ -123,8 +123,8 @@ namespace SOTS.Projectiles.Blades
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, direction, ModContent.ProjectileType<BloodSplatter>(), 0, 0, Main.myPlayer);
             }
         }
-        public override float TrailDistanceFromHandle => 38f;
-		public override float AddedTrailLength => 0f;
+        public override float TrailLengthMultiplier => 38f;
+		public override float TrailOffsetFromTip => 0f;
     }
 }
 		

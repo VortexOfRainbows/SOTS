@@ -4,21 +4,19 @@ using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using System;
-using SOTS.Projectiles.Temple;
 using System.Collections.Generic;
-using SOTS.Projectiles.Evil;
 using SOTS.Projectiles.Blades;
 using SOTS.FakePlayer;
 
 namespace SOTS.Prim.Trails
 {
-	public class FireTrail : PrimTrail
+	public class BladeTrail : PrimTrail
 	{
 		public int ClockWiseOrCounterClockwise;
 		public Vector4 Color1;
 		public Vector4 Color2;
 		public int TextureType;
-		public FireTrail(Projectile projectile, int clockWise = 1, int maxTrailLength = 24, int textureType = 0)
+		public BladeTrail(Projectile projectile, int clockWise = 1, int maxTrailLength = 24, int textureType = 0)
 		{
 			Entity = projectile;
 			EntityType = projectile.type;
@@ -30,7 +28,7 @@ namespace SOTS.Prim.Trails
 			Color2 = new Vector4(0.9f, 0, 0, 0);
 			TextureType = textureType;
 		}
-		public FireTrail(Projectile projectile, int clockWise, Vector4 firstColor, Vector4 secondColor, int maxTrailLength = 24, int textureType = 0)
+		public BladeTrail(Projectile projectile, int clockWise, Vector4 firstColor, Vector4 secondColor, int maxTrailLength = 24, int textureType = 0)
 		{
 			Entity = projectile;
 			EntityType = projectile.type;
@@ -141,16 +139,17 @@ namespace SOTS.Prim.Trails
 					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 38, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
 				}
 				else if (proj.ModProjectile is SOTSBlade sBlade && Entity.active && Entity != null)
-				{
-					float bonus = sBlade.handleSize;
-					if (sBlade is not TesseractSlash)
-						bonus = 0;
-					WidthList.Add((sBlade.GetArcLength() - bonus) * 0.5f + sBlade.AddedTrailLength);
-					ownerCenter = player.Center;
-					toOwner.Add(ownerCenter - proj.Center);
-					if (sBlade.FetchDirection != ClockWiseOrCounterClockwise)
-						Destroyed = true;
-					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * sBlade.TrailDistanceFromHandle, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
+                {
+                    if (sBlade.FetchDirection != ClockWiseOrCounterClockwise)
+                    {
+                        Destroyed = true;
+                    }
+                    float sizeMult = sBlade.TrailLengthMultiplier;
+                    ownerCenter = sBlade.PlayerCenter();
+                    float width = sBlade.GetArcLength() * sizeMult * 0.5f;
+                    WidthList.Add(width);
+					toOwner.Add((ownerCenter - proj.Center).SafeNormalize(Vector2.Zero));
+					Points.Add(Entity.Center + toOwner.Last() * (width + sBlade.TrailOffsetFromTip));
 				}
 				else if (proj.ModProjectile is ToothAcheThrow throwSword && Entity.active && Entity != null)
 				{
@@ -200,7 +199,7 @@ namespace SOTS.Prim.Trails
 				repeats = 3;
 			}
 			if(EntityType == ModContent.ProjectileType<TesseractSlash>())
-                repeats = 5;
+                repeats = 2;
             for (int i = 0; i < repeats; i++)
 			{
 				if (Points.Count > 0)
