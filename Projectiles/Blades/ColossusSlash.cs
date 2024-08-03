@@ -28,7 +28,7 @@ namespace SOTS.Projectiles.Blades
             }
         }
         public override float HitboxWidth => 80;
-		public override float AdditionalTipLength => 22;
+		public override float AdditionalTipLength => -20;
 		//public override float handleOffset => 16;
 		public override float HeldDistFromPlayer => 16;
 		public override Vector2 drawOrigin => new Vector2(9, 69);
@@ -43,8 +43,8 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float MeleeSpeedMultiplier => 0.8f; //melee speed only has 80% effectiveness on this weapon
 		public override float OverAllSpeedMultiplier => thisSlashNumber == 1 ? 6f : thisSlashNumber == 2 ? 4.5f : 5f;
-		public override float MinSwipeDistance => 200;
-		public override float MaxSwipeDistance => 200;
+		public override float MinSwipeDistance => 222;
+		public override float MaxSwipeDistance => 222;
 		public override float ArcStartDegrees => thisSlashNumber == 1 ? 190 : 150;
 		public override float swipeDegreesTotal => (thisSlashNumber == 1 ? 227.5f : 265f) + (1800f / distance / speedModifier);
 		public override float swingSizeMult => 1.0f;
@@ -95,12 +95,7 @@ namespace SOTS.Projectiles.Blades
 				{
 					if (slashNumber == 1)
 					{
-						v.distance = 180;
-						v.delayDeathTime = 12;
-					}
-					if (slashNumber == 1)
-					{
-						v.distance = 230;
+						v.distance = 252;
 						v.delayDeathTime = 20;
 					}
 				}
@@ -138,7 +133,7 @@ namespace SOTS.Projectiles.Blades
 			}
 		}
         public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
-		public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
+		public override float TrailOffsetFromTip => 0.9f;
     }
 }
 		

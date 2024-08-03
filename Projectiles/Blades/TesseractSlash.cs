@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Blades
 		public override float speedModifier => Projectile.ai[1];
 		public override float GetBaseSpeed(float swordLength)
 		{
-			return (1f + (1f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)) + (thisSlashNumber == 1 ? 1.0f : -0.5f)) * 0.3f;
+			return (1f + (1f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)) + (thisSlashNumber == 1 ? 1.0f : -0.5f)) * 1f;
 		}
 		public override float MeleeSpeedMultiplier => 0.5f; //melee speed only has 80% effectiveness on this weapon
 		public override float OverAllSpeedMultiplier => thisSlashNumber == 1 ? 6f : thisSlashNumber == 2 ? 4.5f : 5f;

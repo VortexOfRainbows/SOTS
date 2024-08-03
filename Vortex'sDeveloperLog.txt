@@ -84,11 +84,12 @@ N/A
 
 Daily Log:
 
-8/1/24
+8/1/24 to 8/2/24
 1. WIP Blade Class reworks...
 	1. Needs: an overhaul. Standardization of older blades. Make it require less parameters for things like determining the size of the trail/handle (there are a lot of weird variable/method names)
 	2. Needs: prim trails to be updated by the swords manually, including with a proj.extraUpdates rate, to make the swings more smooth
 	3. Needs: Take into account player velocity before calculations are done
+2. Modify blades to work with the new system (except digital daito). Some values have been changed, which should mostly be equivalent to size buffs for most of the blades.
 
 7/28/24 to 8/1/24
 1. Fix blast door and other SOTS doors not dropping their item when broken

@@ -19,9 +19,8 @@ namespace SOTS.Projectiles.Blades
 			delayDeathTime = 12;
 		}
 		public override float HitboxWidth => 18;
-		public override float AdditionalTipLength => 18;
-		//public override float handleOffset => 8;
-		public override float HeldDistFromPlayer => 8;
+		public override float AdditionalTipLength => 0;
+		public override float HeldDistFromPlayer => 10;
 		public override Vector2 drawOrigin => new Vector2(6, 41);
         public override void SwingSound(Player player)
 		{
@@ -34,8 +33,8 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float MeleeSpeedMultiplier => 0.5f; //melee speed only has 50% effectiveness on this weapon
 		public override float OverAllSpeedMultiplier => 5f;
-		public override float MinSwipeDistance => 90;
-		public override float MaxSwipeDistance => 90;
+		public override float MinSwipeDistance => 120;
+		public override float MaxSwipeDistance => 120;
 		public override float ArcStartDegrees => thisSlashNumber == 1 ? 215 : 200;
 		public override float swipeDegreesTotal => (thisSlashNumber == 1 ? 215f : 242.5f) + (1800f / distance / speedModifier);
 		public override float swingSizeMult => 1.0f;
@@ -60,8 +59,8 @@ namespace SOTS.Projectiles.Blades
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
 		{
 			if (original.Y * Projectile.ai[0] > 0)
-				yDistanceCompression += 0.2f;
-			original.Y *= (swingNumber == 1 ? 0.4f : 0.75f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
+				yDistanceCompression += 0.1f;
+			original.Y *= (swingNumber == 1 ? 0.5f : 0.775f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
 			return original;
 		}
 		public override void SlashPattern(Player player, int slashNumber)
@@ -74,13 +73,13 @@ namespace SOTS.Projectiles.Blades
 				{
 					if (slashNumber == 1)
 					{
-						v.distance = 128;
+						v.distance = 148;
 						v.delayDeathTime = 8;
 					}
 				}
 			}
 		}
-		public override float ArmAngleOffset => 18; //hold it with a backwards grip because thats funny
+		public override float ArmAngleOffset => -5;
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
 		{
 			float amt = Main.rand.NextFloat(0.5f, 1.2f);
@@ -114,7 +113,7 @@ namespace SOTS.Projectiles.Blades
 			}
         }
         public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
-        public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
+        public override float TrailOffsetFromTip => 0.88f;
     }
 }
 		

@@ -9,8 +9,10 @@ namespace SOTS.Projectiles.Blades
 {    
     public class VertebraekerSlash : SOTSBlade
     {
-		public override Color color1 => new Color(255, 185, 81);
-		public override Color color2 => new Color(209, 117, 61);
+        public static Color vertebraekerRed = new Color(255, 185, 81);
+        public static Color vertebraekerOrange = new Color(209, 117, 61);
+        public override Color color1 => vertebraekerRed;
+		public override Color color2 => vertebraekerOrange;
 		public override void SafeSetDefaults()
         {
             Projectile.timeLeft = 7200;
@@ -26,8 +28,8 @@ namespace SOTS.Projectiles.Blades
         public override float AdditionalTipLength => base.AdditionalTipLength;
         public override Vector2 drawOrigin => new Vector2(12, 52);
         public override float ArmAngleOffset => 15;
-        public override float MaxSwipeDistance => 92;
-        public override float MinSwipeDistance => 92;
+        public override float MaxSwipeDistance => 112;
+        public override float MinSwipeDistance => 112;
         public override float GetBaseSpeed(float swordLength)
         {
             return (2.5f + (1.0f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)));
@@ -52,7 +54,7 @@ namespace SOTS.Projectiles.Blades
                 Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, Type, damage, Projectile.knockBack, player.whoAmI, -FetchDirection * slashNumber, Projectile.ai[1] + speedBonus);
                 if (proj.ModProjectile is VertebraekerSlash a)
                 {
-                    a.distance = distance * 0.9f + 8;
+                    a.distance = distance * 0.91f + 10;
                 }
             }
         }
@@ -99,6 +101,7 @@ namespace SOTS.Projectiles.Blades
                 }
             }
         }
+        //public override float TrailOffsetFromTip => 0.9f;
     }
 }
 		

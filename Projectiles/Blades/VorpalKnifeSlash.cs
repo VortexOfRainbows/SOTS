@@ -20,7 +20,7 @@ namespace SOTS.Projectiles.Blades
 			Projectile.localNPCHitCooldown = 5;
 		}
 		public override float HitboxWidth => 24;
-		public override float AdditionalTipLength => 32;
+		public override float AdditionalTipLength => 0;
 		public override float HeldDistFromPlayer => 18;
 		public override Vector2 drawOrigin => new Vector2(10, 38);
 		public override void SwingSound(Player player)
@@ -36,8 +36,8 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float MeleeSpeedMultiplier => 0.2f; //melee speed only has 20% effectiveness on this weapon
 		public override float OverAllSpeedMultiplier => 5f;
-		public override float MinSwipeDistance => 96;
-		public override float MaxSwipeDistance => 96;
+		public override float MinSwipeDistance => 128;
+		public override float MaxSwipeDistance => 128;
 		public override float ArcStartDegrees => thisSlashNumber == 1 ? 270 : 270 - 60f / speedModifier;
 		public override float swipeDegreesTotal => (thisSlashNumber == 1 ? 830f : 262.5f) + (1800f / distance / speedModifier);
 		public override float swingSizeMult => 1.0f;
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Blades
 			}
         }
         public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
-        public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
+        public override float TrailOffsetFromTip => 0.95f;
         int localCounter = 0;
         public override void PostAI()
         {

@@ -22,8 +22,8 @@ namespace SOTS.Projectiles.Blades
             Projectile.friendly = true;
 		}
 		public override float HitboxWidth => 24;
-		public override float AdditionalTipLength => 16;
-		public override float HeldDistFromPlayer => base.HeldDistFromPlayer;
+		public override float AdditionalTipLength => 0;
+		public override float HeldDistFromPlayer => 11;
 		public override Vector2 drawOrigin => new Vector2(6, 52);
         public override void SwingSound(Player player)
         {
@@ -42,11 +42,11 @@ namespace SOTS.Projectiles.Blades
                 timeLeft = 0;
 			return (thisSlashNumber == 1 ? 0.4f : 0.3f) + (float)Math.Pow(1.6f * (timeLeft / swipeDegreesTotal), (thisSlashNumber == 1 ? 1.5f : 2)) * Projectile.ai[1];
         }
-        public override float MinSwipeDistance => 130;
-		public override float MaxSwipeDistance => 130;
+        public override float MinSwipeDistance => 150;
+		public override float MaxSwipeDistance => 150;
 		public override float ArcStartDegrees => 190;
 		public override float swipeDegreesTotal => thisSlashNumber == 1 || thisSlashNumber == 2 ? 200f : 170f;
-        public override float swingSizeMult => thisSlashNumber == 1 ? 1.1f : thisSlashNumber == 2 ? 0.8f : 1.0f;
+        public override float swingSizeMult => thisSlashNumber == 1 ? 1.2f : thisSlashNumber == 2 ? 0.8f : 1.0f;
 		public override float ArcOffsetFromPlayer => 0.3f;
 		public override float delayDeathSlowdownAmount => thisSlashNumber == 1 ? 0.75f : 0.7f;
 		public override Color? DrawColor => null;
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Blades
                         for(int i = -1; i <= 1; i++)
                         {
                             Vector2 awayVector = dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(15f * i));
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - dustAway.SafeNormalize(Vector2.Zero) * 48 + awayVector * 32, awayVector * 12, ModContent.ProjectileType<GuardianGreatswordBeam>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 0, -2);
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - dustAway.SafeNormalize(Vector2.Zero) * 72 + awayVector * 32, awayVector * 12, ModContent.ProjectileType<GuardianGreatswordBeam>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 0, -2);
                         }
                     }
                 }
@@ -88,7 +88,7 @@ namespace SOTS.Projectiles.Blades
 		{
             if(swingNumber == 2 && original.Y * Projectile.ai[0] > 0)
                 yDistanceCompression += 0.1f;
-            original.Y *= (swingNumber == 1 ? 1f : swingNumber == 2 ? 1.1f : 0.8f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
+            original.Y *= (swingNumber == 1 ? 1f : swingNumber == 2 ? 1.2f : 0.75f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
 			return original;
 		}
 		public override float TimeLeftIterator(float incrementAmount)
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Blades
             }
 		}
         public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
-		public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
+		public override float TrailOffsetFromTip => 0.81f;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 

@@ -9,9 +9,13 @@ namespace SOTS.Projectiles.Blades
 {    
     public class ToothAcheSlash : SOTSBlade
     {
-		public override Color color1 => new Color(174, 213, 56);
-		public override Color color2 => new Color(110, 132, 22);
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+
+        public static Color toothAcheLime = new Color(174, 213, 56);
+        public static Color toothAcheGreen = new Color(110, 132, 22);
+        public override Color color1 => toothAcheLime;
+        public override Color color2 => toothAcheGreen;
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			target.AddBuff(BuffID.Poisoned, 180);
         }
@@ -27,11 +31,11 @@ namespace SOTS.Projectiles.Blades
             SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, 0.75f * Projectile.ai[1]);
         }
         public override float AdditionalTipLength => base.AdditionalTipLength;
-        public override float HitboxWidth => 40f;
+        public override float HitboxWidth => 44f;
         public override Vector2 drawOrigin => new Vector2(12, 60);
         public override float ArmAngleOffset => 12;
-        public override float MaxSwipeDistance => 124;
-        public override float MinSwipeDistance => 124;
+        public override float MaxSwipeDistance => 160;
+        public override float MinSwipeDistance => 160;
         public override float MeleeSpeedMultiplier => 0.3f;
         public override float GetBaseSpeed(float swordLength)
         {
@@ -80,9 +84,9 @@ namespace SOTS.Projectiles.Blades
         {
             original.Y *= 0.85f / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
             if (swingNumber == 3)
-                original.Y *= 0.4f;
+                original.Y *= 0.45f;
             if (swingNumber == 2)
-                original.Y *= 0.8f;
+                original.Y *= 0.75f;
             return original;
         }
         public override float swingSizeMult => 0.7f + 0.3f * Projectile.ai[1];
@@ -128,6 +132,7 @@ namespace SOTS.Projectiles.Blades
                 }
             }
         }
+        //public override float TrailOffsetFromTip => 0.9f;
     }
 }
 		

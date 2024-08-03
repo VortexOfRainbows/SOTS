@@ -111,7 +111,7 @@ namespace SOTS.Prim.Trails
 					WidthList.RemoveAt(0);
 					toOwner.RemoveAt(0);
 				}
-				else if (proj.ModProjectile is SOTSBlade sBlade && Entity.active && Entity != null)
+				if (proj.ModProjectile is SOTSBlade sBlade && Entity.active && Entity != null)
                 {
                     if (sBlade.FetchDirection != ClockWiseOrCounterClockwise)
                     {
@@ -122,7 +122,7 @@ namespace SOTS.Prim.Trails
                     float width = sBlade.GetArcLength() * sizeMult * 0.5f;
                     WidthList.Add(width);
 					toOwner.Add((ownerCenter - proj.Center).SafeNormalize(Vector2.Zero));
-					Points.Add(Entity.Center + toOwner.Last() * (width + sBlade.TrailOffsetFromTip));
+					Points.Add(Entity.Center + toOwner.Last() * width * (1 + 1 - sBlade.TrailOffsetFromTip));
 				}
 				else if (proj.ModProjectile is ToothAcheThrow throwSword && Entity.active && Entity != null)
 				{
@@ -172,7 +172,7 @@ namespace SOTS.Prim.Trails
 				repeats = 3;
 			}
 			if(EntityType == ModContent.ProjectileType<TesseractSlash>())
-                repeats = 2;
+                repeats = 5;
             for (int i = 0; i < repeats; i++)
 			{
 				if (Points.Count > 0)

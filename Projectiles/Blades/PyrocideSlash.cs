@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Blades
         {
             SOTSUtils.PlaySound(SoundID.Item74, (int)player.Center.X, (int)player.Center.Y, 0.6f, 0.7f * speedModifier);
         }
-        public override float AdditionalTipLength => base.AdditionalTipLength;
+        public override float AdditionalTipLength => 40;
         public override float HitboxWidth => 48;
         public override float ArmAngleOffset => 15;
         public override void Draw(SpriteBatch spriteBatch, ref Color lightColor)
@@ -35,9 +35,9 @@ namespace SOTS.Projectiles.Blades
 			Player player = Main.player[Projectile.owner];
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Blades/PyrocideScale");
-			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
-			int length = (int)toProjectile.Length();
-			Vector2 rotateToPosition = relativePoint(toProjectile);
+            Vector2 playerToProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
+            Vector2 rotateToPosition = playerToProjectile.SNormalize() * HeldDistFromPlayer;
+            int length = (int)playerToProjectile.Length();
 			Vector2 drawPos = player.Center + rotateToPosition - Main.screenPosition;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 originFlame = new Vector2(texture2.Width / 2, texture2.Height / 2);
@@ -50,7 +50,7 @@ namespace SOTS.Projectiles.Blades
 			}
 			else
 				direction *= (int)FetchDirection;
-			float rotation = toProjectile.ToRotation();
+			float rotation = playerToProjectile.ToRotation();
 			Color baseColor = new Color(90, 80, 70, 0);
 			int segmentHeight = 24;
 			int totalSegments = length / segmentHeight;
@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Blades
 					spriteBatch.Draw(texture2, player.Center + toProj2 - Main.screenPosition + random, null, color2, rotation + MathHelper.Pi, originFlame, new Vector2(1.5f, scale), direction == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
 				}
 			}
-			rotation = toProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
+			rotation = playerToProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
 			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, Projectile.scale * 1.4f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
         public override float MaxSwipeDistance => 480;
@@ -110,10 +110,8 @@ namespace SOTS.Projectiles.Blades
                     a.distance = distance * 1.10f + 8;
                 else if (slashNumber == 2)
                     a.distance = distance * 0.90f + 16;
-                if (slashNumber == 1)
-                {
+                else if(slashNumber == 1)
                     a.distance = distance * 1.2f + 220;
-                }
             }
         }
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
@@ -165,6 +163,7 @@ namespace SOTS.Projectiles.Blades
                 }
             }
         }
+        //public override float TrailOffsetFromTip => 1.2f;
     }
 }
 		

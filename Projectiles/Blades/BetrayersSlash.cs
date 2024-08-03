@@ -16,8 +16,8 @@ namespace SOTS.Projectiles.Blades
 			Projectile.DamageType = DamageClass.Melee;
 			delayDeathTime = 8;
 		}
-		public override float HitboxWidth => 22;
-		public override float AdditionalTipLength => 34;
+		public override float HitboxWidth => 24;
+		public override float AdditionalTipLength => 4;
 		public override float HeldDistFromPlayer => 16;
 		public override Vector2 drawOrigin => new Vector2(7, 55);
 		public override bool isDiagonalSprite => false;
@@ -32,8 +32,8 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float MeleeSpeedMultiplier => 0.5f; //melee speed only has 50% effectiveness on this weapon
 		public override float OverAllSpeedMultiplier => 4f;
-		public override float MinSwipeDistance => 100;
-		public override float MaxSwipeDistance => 100;
+		public override float MinSwipeDistance => 130;
+		public override float MaxSwipeDistance => 130;
 		public override float ArcStartDegrees => thisSlashNumber == 1 ? 215 : 240;
 		public override float swipeDegreesTotal => (thisSlashNumber == 1 ? 205f : 202.5f) + (1800f / distance / speedModifier);
 		public override float swingSizeMult => 1.0f;
@@ -43,8 +43,8 @@ namespace SOTS.Projectiles.Blades
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
 		{
 			if (original.Y * Projectile.ai[0] > 0)
-				yDistanceCompression += 0.77f;
-			original.Y *= (swingNumber == 1 ? 1.16f : 0.5f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
+				yDistanceCompression += 0.6f;
+			original.Y *= (swingNumber == 1 ? 1.15f : 0.55f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
 			return original;
 		}
 		public override void SlashPattern(Player player, int slashNumber)
@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Blades
 				{
 					if (slashNumber == 1)
 					{
-						v.distance = distance * 0.64f;
+						v.distance = distance * 0.72f;
 						v.delayDeathTime = 16;
 					}
 				}
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Blades
             }
         }
         public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
-        public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
+        public override float TrailOffsetFromTip => 0.875f;
     }
 }
 		

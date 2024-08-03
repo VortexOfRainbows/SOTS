@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Blades
 		public virtual Color color1 => new Color(255, 185, 81);
 		public virtual Color color2 => new Color(209, 117, 61);
         public virtual float HitboxWidth => 30;
-        public virtual float AdditionalTipLength => 30;
+        public virtual float AdditionalTipLength => 0;
         public virtual float HeldDistFromPlayer => 24; 
         public virtual Vector2 drawOrigin => new Vector2(10, 52);
         public virtual bool isDiagonalSprite => true;
@@ -139,7 +139,7 @@ namespace SOTS.Projectiles.Blades
         public virtual float MinSwipeDistance => 80;
         public virtual float MaxSwipeDistance => 92;
         public virtual float ArcStartDegrees => 270 - 60f / speedModifier;
-        public virtual float TrailOffsetFromTip => 0f;
+        public virtual float TrailOffsetFromTip => 1f;
         public virtual float TrailLengthMultiplier => 1f;
         public virtual float swipeDegreesTotal => 262.5f + (1800f / distance / speedModifier);
         public virtual float swingSizeMult => 0.7f + 0.3f * speedModifier;
@@ -159,7 +159,7 @@ namespace SOTS.Projectiles.Blades
         protected BladeTrail myTrail;
         public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 0;  
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        
 		public sealed override void SetDefaults()
@@ -406,7 +406,10 @@ namespace SOTS.Projectiles.Blades
             {
                 int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
                 AbsAI0--;
-                SlashPattern(player, AbsAI0);
+                if (AbsAI0 > 0)
+                {
+                    SlashPattern(player, AbsAI0);
+                }
             }
         }
     }
