@@ -15,17 +15,12 @@ namespace SOTS.Projectiles.Blades
 	{
 		public override Color color1 => VorpalThrow.VorpalColor1;
 		public override Color color2 => VorpalThrow.VorpalColor2;
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Vorpal Slash");
-		}
 		public override void SafeSetDefaults()
 		{
 			Projectile.localNPCHitCooldown = 5;
 		}
 		public override float HitboxWidth => 24;
 		public override float AdditionalTipLength => 32;
-		//public override float handleOffset => 18;
 		public override float HeldDistFromPlayer => 18;
 		public override Vector2 drawOrigin => new Vector2(10, 38);
 		public override void SwingSound(Player player)
@@ -107,10 +102,10 @@ namespace SOTS.Projectiles.Blades
 				if (type == ModContent.DustType<Dusts.CopyDust4>())
 					dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
-		}
-		public override float TrailLengthMultiplier => 40f;
-		public override float TrailOffsetFromTip => 4f;
-		int counter = 0;
+        }
+        public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
+        public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
+        int localCounter = 0;
         public override void PostAI()
         {
 			base.PostAI();
@@ -119,8 +114,8 @@ namespace SOTS.Projectiles.Blades
 				Projectile.localNPCHitCooldown = 3;
 				distance *= 0.97f;
 			}
-			counter++;
-			if(counter % 22 == 0)
+			localCounter++;
+			if(localCounter % 22 == 0)
 				SOTSUtils.PlaySound(SoundID.DD2_MonkStaffSwing, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, -0.2f);
 		}
     }

@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Items.Tools;
+using System.Windows.Markup;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -15,14 +17,13 @@ namespace SOTS.Projectiles.Blades
         {
             Projectile.timeLeft = 7200;
             Projectile.localNPCHitCooldown = 15;
-			Projectile.DamageType = DamageClass.Melee;
+            Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
             delayDeathTime = 12;
             Projectile.friendly = true;
 		}
 		public override float HitboxWidth => 24;
 		public override float AdditionalTipLength => 16;
-		//public override float handleOffset => 4;
-		public override float HeldDistFromPlayer => 20;
+		public override float HeldDistFromPlayer => base.HeldDistFromPlayer;
 		public override Vector2 drawOrigin => new Vector2(6, 52);
         public override void SwingSound(Player player)
         {
@@ -123,8 +124,8 @@ namespace SOTS.Projectiles.Blades
                 dust.color.A = 0;
             }
 		}
-        public override float TrailLengthMultiplier => 27f;
-		public override float TrailOffsetFromTip => 0f;
+        public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
+		public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 

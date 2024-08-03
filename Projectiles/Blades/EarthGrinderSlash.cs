@@ -143,9 +143,9 @@ namespace SOTS.Projectiles.Blades
 			dust.scale += 1.3f * rand;
 			dust.fadeIn = 0.1f;
 			dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f)) * 0.5f;
-		}
-        public override float TrailLengthMultiplier => 52f;
-		public override float TrailOffsetFromTip => 0f;
+        }
+        public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
+        public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			if(thisSlashNumber == 1)

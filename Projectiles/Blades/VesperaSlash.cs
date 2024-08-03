@@ -112,9 +112,9 @@ namespace SOTS.Projectiles.Blades
 				dust.fadeIn = 0.1f;
 				dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
-		}
-        public override float TrailLengthMultiplier => 16f;
-		public override float TrailOffsetFromTip => 0f;
+        }
+        public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
+        public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
     }
 }
 		

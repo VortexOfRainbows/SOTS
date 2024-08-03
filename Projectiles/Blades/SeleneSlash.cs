@@ -138,10 +138,10 @@ namespace SOTS.Projectiles.Blades
 			}
 		}
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        { 
+        {
         }
-        public override float TrailLengthMultiplier => GetArcLength() * 0.576f;
-		public override float TrailOffsetFromTip => -GetArcLength() * 0.5f + 20;
+        public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
+        public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
     }
 }
 		

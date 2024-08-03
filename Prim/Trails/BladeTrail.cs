@@ -111,33 +111,6 @@ namespace SOTS.Prim.Trails
 					WidthList.RemoveAt(0);
 					toOwner.RemoveAt(0);
 				}
-				if (proj.ModProjectile is PyrocideSlash pyro && Entity.active && Entity != null)
-				{
-					WidthList.Add(pyro.GetArcLength() * 0.5f + 16);
-					ownerCenter = player.Center;
-					toOwner.Add(ownerCenter - proj.Center);
-					if (pyro.FetchDirection != ClockWiseOrCounterClockwise)
-						Destroyed = true;
-					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 32, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
-				}
-				else if (proj.ModProjectile is ToothAcheSlash ache && Entity.active && Entity != null)
-				{
-					WidthList.Add(ache.GetArcLength() * 0.5f + 6);
-					ownerCenter = player.Center;
-					toOwner.Add(ownerCenter - proj.Center);
-					if (ache.FetchDirection != ClockWiseOrCounterClockwise)
-						Destroyed = true;
-					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 38, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
-				}
-				else if (proj.ModProjectile is VertebraekerSlash vert && Entity.active && Entity != null)
-				{
-					WidthList.Add(vert.GetArcLength() * 0.5f + 16);
-					ownerCenter = player.Center;
-					toOwner.Add(ownerCenter - proj.Center);
-					if (vert.FetchDirection != ClockWiseOrCounterClockwise)
-						Destroyed = true;
-					Points.Add(Vector2.Lerp(ownerCenter - toOwner[toOwner.Count - 1].SafeNormalize(Vector2.Zero) * 38, Entity.Center, 0.5f)); // - new Vector2(Width / 2, Width / 2));
-				}
 				else if (proj.ModProjectile is SOTSBlade sBlade && Entity.active && Entity != null)
                 {
                     if (sBlade.FetchDirection != ClockWiseOrCounterClockwise)

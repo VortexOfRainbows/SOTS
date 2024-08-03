@@ -10,10 +10,6 @@ namespace SOTS.Projectiles.Blades
 	{
 		public override Color color1 => new Color(189, 6, 26);
 		public override Color color2 => new Color(151, 176, 218);
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Betrayer's Slash");
-		}
 		public override void SafeSetDefaults()
 		{
 			Projectile.localNPCHitCooldown = 20;
@@ -22,7 +18,6 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float HitboxWidth => 22;
 		public override float AdditionalTipLength => 34;
-		//public override float handleOffset => 16;
 		public override float HeldDistFromPlayer => 16;
 		public override Vector2 drawOrigin => new Vector2(7, 55);
 		public override bool isDiagonalSprite => false;
@@ -123,8 +118,8 @@ namespace SOTS.Projectiles.Blades
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), target.Center, direction, ModContent.ProjectileType<BloodSplatter>(), 0, 0, Main.myPlayer);
             }
         }
-        public override float TrailLengthMultiplier => 38f;
-		public override float TrailOffsetFromTip => 0f;
+        public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
+        public override float TrailOffsetFromTip => base.TrailOffsetFromTip;
     }
 }
 		

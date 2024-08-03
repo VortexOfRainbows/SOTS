@@ -7,7 +7,6 @@ using Terraria.ID;
 using System.IO;
 using SOTS.Void;
 using SOTS.Prim.Trails;
-using Mono.CompilerServices.SymbolWriter;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -38,18 +37,30 @@ namespace SOTS.Projectiles.Blades
             Draw(Main.spriteBatch, ref lightColor);
             return false;
         }
-        private float prevGfxOffY = 0;
         public Vector2 PlayerCenter()
         {
             Player player = Main.player[Projectile.owner];
             int totalUpdates = Projectile.extraUpdates + 1;
             int currentUpdate = Projectile.numUpdates + 1;
             float mult = 1 - (float)currentUpdate / totalUpdates;
-            //1f + Math.Abs(velocity.X) / 3f; //Rate of change for player gfxOffY
-            //It might make it smoother to take this into account
-            return player.RotatedRelativePoint(Vector2.Lerp(player.oldPosition, player.position, mult) + player.Size / 2, false, true);
+            float roc = 1f + Math.Abs(player.velocity.X) / 3f; //Rate of change for player gfxOffY
+            float g = player.gfxOffY;
+            if(g > 0)
+            {
+                g -= mult * roc / totalUpdates;
+                if (g < 0)
+                    g = 0;
+            }
+            else
+            {
+                g += mult * roc / totalUpdates;
+                if (g > 0)
+                    g = 0;
+            }
+            Vector2 gfx = new Vector2(0, g);
+            return player.RotatedRelativePoint(Vector2.Lerp(player.oldPosition, player.position, mult) + player.Size / 2, false, false) + gfx * (1 - mult);
         }
-        public void Draw(SpriteBatch spriteBatch, ref Color lightColor)
+        public virtual void Draw(SpriteBatch spriteBatch, ref Color lightColor)
         {
             Player player = Main.player[Projectile.owner];
             if (DrawColor != null)
@@ -148,7 +159,7 @@ namespace SOTS.Projectiles.Blades
         protected BladeTrail myTrail;
         public override void SetStaticDefaults()
 		{
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 0;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;    
 		}        
 		public sealed override void SetDefaults()
@@ -228,7 +239,10 @@ namespace SOTS.Projectiles.Blades
                     trailType = 3;
                     trailLength = 120;
                 }
-                myTrail = new BladeTrail(Projectile, FetchDirection, color1.ToVector4(), color2.ToVector4(), trailLength, trailType);
+                if (Type == ModContent.ProjectileType<PyrocideSlash>())
+                    myTrail = new BladeTrail(Projectile, clockWise: FetchDirection);
+                else
+                    myTrail = new BladeTrail(Projectile, FetchDirection, color1.ToVector4(), color2.ToVector4(), trailLength, trailType);
                 SOTS.primitives.CreateTrail(myTrail);
                 SwingSound(player);
                 if (Main.myPlayer == Projectile.owner)
