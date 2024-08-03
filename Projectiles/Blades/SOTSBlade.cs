@@ -157,6 +157,7 @@ namespace SOTS.Projectiles.Blades
         public float counterOffset;
         public float timeLeftCounter = 0;
         protected BladeTrail myTrail;
+        private float trueDelayDeathSlowdownAmount;
         public override void SetStaticDefaults()
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
@@ -232,15 +233,16 @@ namespace SOTS.Projectiles.Blades
             Player player = Main.player[Projectile.owner];
             if (runOnce)
             {
+                delayDeathTime *= (1 + Projectile.extraUpdates);
+                trueDelayDeathSlowdownAmount = delayDeathSlowdownAmount + (Projectile.extraUpdates) * (1f - delayDeathSlowdownAmount) / (Projectile.extraUpdates + 1f);
                 int trailType = 1;
-                int trailLength = 20;
+                int trailLength = 20 * (1 + Projectile.extraUpdates);
                 if (Type == ModContent.ProjectileType<TesseractSlash>())
-                {
                     trailType = 3;
-                    trailLength = 120;
-                }
                 if (Type == ModContent.ProjectileType<PyrocideSlash>())
+                {
                     myTrail = new BladeTrail(Projectile, clockWise: FetchDirection);
+                }
                 else
                     myTrail = new BladeTrail(Projectile, FetchDirection, color1.ToVector4(), color2.ToVector4(), trailLength, trailType);
                 SOTS.primitives.CreateTrail(myTrail);
@@ -258,7 +260,7 @@ namespace SOTS.Projectiles.Blades
                             distance = MaxSwipeDistance;
                     }
                     toCursor = cursorArea - PlayerCenter();
-                    spinSpeed = GetBaseSpeed(distance) * speedModifier * OverAllSpeedMultiplier * ((1 - MeleeSpeedMultiplier) + MeleeSpeedMultiplier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee))); //add virtual/abstract variables for this
+                    spinSpeed = GetBaseSpeed(distance) * speedModifier * OverAllSpeedMultiplier * ((1 - MeleeSpeedMultiplier) + MeleeSpeedMultiplier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee))) / (1 + Projectile.extraUpdates); //add virtual/abstract variables for this
                 }
                 counterOffset = ArcStartDegrees; //add virtual/abstract variables for this
                 float slashOffset = counterOffset * FetchDirection;
@@ -295,7 +297,7 @@ namespace SOTS.Projectiles.Blades
 				if (delayDeathTime > 0)
 				{
 					delayDeathTime--;
-					delayDeathSlowdown *= delayDeathSlowdownAmount;
+                    delayDeathSlowdown *= trueDelayDeathSlowdownAmount;
 					incrementAmount *= delayDeathSlowdown;
 				}
 			}
@@ -402,14 +404,18 @@ namespace SOTS.Projectiles.Blades
         public override void OnKill(int timeLeft)
         {
             Player player = Main.player[Projectile.owner];
-            if (Projectile.owner == Main.myPlayer && !player.dead)
+            int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
+            AbsAI0--;
+            if (AbsAI0 > 0)
             {
-                int AbsAI0 = (int)Math.Abs(Projectile.ai[0]);
-                AbsAI0--;
-                if (AbsAI0 > 0)
+                if (Projectile.owner == Main.myPlayer && !player.dead)
                 {
                     SlashPattern(player, AbsAI0);
                 }
+            }
+            else
+            {
+                player.itemTime = player.itemAnimation = 0;
             }
         }
     }

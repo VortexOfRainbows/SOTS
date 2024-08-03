@@ -16,10 +16,11 @@ namespace SOTS.Projectiles.Blades
 		public override void SafeSetDefaults()
         {
             Projectile.timeLeft = 7200;
-            Projectile.localNPCHitCooldown = 15;
+            Projectile.localNPCHitCooldown = 45;
             Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
             delayDeathTime = 12;
             Projectile.friendly = true;
+            Projectile.extraUpdates = 2;
 		}
 		public override float HitboxWidth => 24;
 		public override float AdditionalTipLength => 0;
@@ -40,7 +41,7 @@ namespace SOTS.Projectiles.Blades
             float timeLeft = timeLeftCounter;
             if (timeLeft < 0)
                 timeLeft = 0;
-			return (thisSlashNumber == 1 ? 0.4f : 0.3f) + (float)Math.Pow(1.6f * (timeLeft / swipeDegreesTotal), (thisSlashNumber == 1 ? 1.5f : 2)) * Projectile.ai[1];
+			return (thisSlashNumber == 1 ? 0.4f : 0.3f) + (float)Math.Pow(1.25f * (timeLeft / swipeDegreesTotal), (thisSlashNumber == 1 ? 1.5f : 2)) * Projectile.ai[1];
         }
         public override float MinSwipeDistance => 150;
 		public override float MaxSwipeDistance => 150;
@@ -68,7 +69,7 @@ namespace SOTS.Projectiles.Blades
             {
                 int slashCount = 20;
                 int slashDelay = 9;
-                if (timeLeftCounter > 90 && timeLeftCounter > slashDelay * nextProj && nextProj <= slashCount && timeLeftCounter < 270)
+                if (timeLeftCounter > 154 && timeLeftCounter > slashDelay * nextProj && nextProj <= slashCount && timeLeftCounter < 300)
                 {
                     if(nextProj % 2 == 0) 
                         SOTSUtils.PlaySound(SoundID.Item60, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.5f, 0.25f);
@@ -108,22 +109,19 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float ArmAngleOffset => 5; 
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
-		{
-            for(int i = 0; i < 2; i++)
-            {
-                float rand = Main.rand.NextFloat(0.6f, 0.7f);
-                int type = ModContent.DustType<Dusts.PixelDust>();
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5) + bladeDirection.SafeNormalize(Vector2.Zero) * 8, 2, 2, type);
-                dust.velocity *= 0.25f;
-                dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
-                dust.noGravity = true;
-                dust.scale *= 0.5f * rand;
-                dust.scale += 1.2f * rand;
-                dust.fadeIn = 6f;
-                dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
-                dust.color.A = 0;
-            }
-		}
+        {
+            float rand = Main.rand.NextFloat(0.6f, 0.7f);
+            int type = ModContent.DustType<Dusts.PixelDust>();
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5) - bladeDirection.SafeNormalize(Vector2.Zero) * 8, 2, 2, type);
+            dust.velocity *= 0.25f;
+            dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
+            dust.noGravity = true;
+            dust.scale *= 0.5f * rand;
+            dust.scale += 1.2f * rand;
+            dust.fadeIn = 6f;
+            dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+            dust.color.A = 0;
+        }
         public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
 		public override float TrailOffsetFromTip => 0.81f;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

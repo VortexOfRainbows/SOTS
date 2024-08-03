@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.Utilities.Terraria.Utilities;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -12,13 +13,13 @@ namespace SOTS.Projectiles.Blades
 		public override Color color2 => new Color(51, 71, 3);
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Colossus Slash");
 		}
 		public override void SafeSetDefaults()
-		{
-			Projectile.localNPCHitCooldown = 30;
+        {
+            Projectile.localNPCHitCooldown = 60;
 			Projectile.DamageType = DamageClass.Melee;
 			delayDeathTime = 16;
+			Projectile.extraUpdates = 1;
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
@@ -103,33 +104,38 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float ArmAngleOffset => 14;
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
-		{
-			float amt = Main.rand.NextFloat(1.3f, 1.4f);
-			float dustScale = 1.1f;
-			float rand = Main.rand.NextFloat(1f, 1.3f);
-			int type = ModContent.DustType<Dusts.AlphaDrainDust>();
-			Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + bladeDirection.SafeNormalize(Vector2.Zero) * 24, 16, 16, type);
-			dust.velocity *= 0.65f;
-			dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.5f, 2.4f) * rand;
-			dust.noGravity = true;
-			dust.scale *= 0.2f * rand;
-			dust.scale += 1.1f * rand * dustScale;
-			dust.fadeIn = 0.1f;
-			dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
-
-			Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
-			for (int i = 0; i < amt; i++) //generates dust throughout the length of the blade
-			{
-				rand = Main.rand.NextFloat(1.0f, 1.2f);
-				type = ModContent.DustType<Dusts.AlphaDrainDust>();
-				dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 24 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
-				dust.velocity *= 0.2f;
-				dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.3f, 0.5f) * rand;
-				dust.noGravity = true;
-				dust.scale *= 0.1f;
-				dust.scale += rand;
-				dust.fadeIn = 0.1f;
-				dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+        {
+            if (Main.rand.NextBool(1 + Projectile.extraUpdates))
+            {
+                float dustScale = 1.1f;
+                float rand = Main.rand.NextFloat(1f, 1.3f);
+                int type = ModContent.DustType<Dusts.AlphaDrainDust>();
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - bladeDirection.SafeNormalize(Vector2.Zero) * 8, 16, 16, type);
+                dust.velocity *= 0.65f;
+                dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.5f, 2.4f) * rand;
+                dust.noGravity = true;
+                dust.scale *= 0.2f * rand;
+                dust.scale += 1.1f * rand * dustScale;
+                dust.fadeIn = 0.1f;
+                dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+            }
+			if (Main.rand.NextBool(1 + Projectile.extraUpdates))
+            {
+                float amt = Main.rand.NextFloat(1.3f, 1.4f);
+                Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
+				for (int i = 0; i < amt; i++) //generates dust throughout the length of the blade
+				{
+                    float rand = Main.rand.NextFloat(1.0f, 1.2f);
+					int type = ModContent.DustType<Dusts.AlphaDrainDust>();
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - (toProjectile.SafeNormalize(Vector2.Zero)) * 8 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
+					dust.velocity *= 0.2f;
+					dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.3f, 0.5f) * rand;
+					dust.noGravity = true;
+					dust.scale *= 0.1f;
+					dust.scale += rand;
+					dust.fadeIn = 0.1f;
+					dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+				}
 			}
 		}
         public override float TrailLengthMultiplier => base.TrailLengthMultiplier;

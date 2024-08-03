@@ -19,15 +19,16 @@ namespace SOTS.Projectiles.Blades
         public override void SafeSetDefaults()
         {
             Projectile.timeLeft = 7200;
-            Projectile.localNPCHitCooldown = 4;
+            Projectile.localNPCHitCooldown = 8;
             Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
             Projectile.friendly = true;
+            Projectile.extraUpdates = 1;
         }
         public override void SwingSound(Player player)
         {
             SOTSUtils.PlaySound(SoundID.Item74, (int)player.Center.X, (int)player.Center.Y, 0.6f, 0.7f * speedModifier);
         }
-        public override float AdditionalTipLength => 40;
+        public override float AdditionalTipLength => 8;
         public override float HitboxWidth => 48;
         public override float ArmAngleOffset => 15;
         public override void Draw(SpriteBatch spriteBatch, ref Color lightColor)
@@ -37,8 +38,8 @@ namespace SOTS.Projectiles.Blades
 			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Blades/PyrocideScale");
             Vector2 playerToProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
             Vector2 rotateToPosition = playerToProjectile.SNormalize() * HeldDistFromPlayer;
-            int length = (int)playerToProjectile.Length();
-			Vector2 drawPos = player.Center + rotateToPosition - Main.screenPosition;
+            float length = playerToProjectile.Length() - HeldDistFromPlayer;
+            Vector2 drawPos = player.Center + rotateToPosition - Main.screenPosition;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 originFlame = new Vector2(texture2.Width / 2, texture2.Height / 2);
 
@@ -53,7 +54,7 @@ namespace SOTS.Projectiles.Blades
 			float rotation = playerToProjectile.ToRotation();
 			Color baseColor = new Color(90, 80, 70, 0);
 			int segmentHeight = 24;
-			int totalSegments = length / segmentHeight;
+            int totalSegments = (int)(length / segmentHeight);
 			for (int i = 1; i < totalSegments + 1; i++)
 			{
 				float scale = MathHelper.Lerp(1.0f, 0.65f, (float)Math.Pow(i / (float)(totalSegments + 1), 2));
@@ -72,8 +73,8 @@ namespace SOTS.Projectiles.Blades
 			rotation = playerToProjectile.ToRotation() + MathHelper.ToRadians(direction == -1 ? -225 : 45);
 			spriteBatch.Draw(texture, drawPos, null, Color.White, rotation, origin, Projectile.scale * 1.4f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 		}
-        public override float MaxSwipeDistance => 480;
-        public override float MinSwipeDistance => 300;
+        public override float MaxSwipeDistance => 520;
+        public override float MinSwipeDistance => 340;
         public override float ArcStartDegrees => 235 + 15f / speedModifier;
         public override float GetBaseSpeed(float swordLength)
         {
@@ -124,7 +125,7 @@ namespace SOTS.Projectiles.Blades
         public override float swipeDegreesTotal => 235.0f + (5400f / distance);
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
         {
-            if (dustAway != Vector2.Zero)
+            if (dustAway != Vector2.Zero && Projectile.numUpdates == -1)
             {
                 float amt = Main.rand.NextFloat(1.4f, 2.4f) * distance / 480f;
                 for (int i = 0; i < amt; i++) //generates dust at the end of the blade
@@ -134,7 +135,7 @@ namespace SOTS.Projectiles.Blades
                     int type = ModContent.DustType<Dusts.CopyDust4>();
                     if (Main.rand.NextBool(5))
                         type = DustID.SolarFlare;
-                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + dustAway.SafeNormalize(Vector2.Zero) * 24, 16, 16, type);
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + dustAway.SafeNormalize(Vector2.Zero) * 8, 16, 16, type);
                     dust.velocity *= 0.8f / rand;
                     dust.velocity += dustAway.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
                     dust.noGravity = true;
@@ -151,7 +152,7 @@ namespace SOTS.Projectiles.Blades
                     int type = ModContent.DustType<Dusts.CopyDust4>();
                     if (Main.rand.NextBool(3))
                         type = DustID.SolarFlare;
-                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 24 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 8 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
                     dust.velocity *= 0.1f / rand;
                     dust.velocity += dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.4f, 0.9f) * rand;
                     dust.noGravity = true;
@@ -163,7 +164,7 @@ namespace SOTS.Projectiles.Blades
                 }
             }
         }
-        //public override float TrailOffsetFromTip => 1.2f;
+        public override float TrailOffsetFromTip => 1.0f;
     }
 }
 		

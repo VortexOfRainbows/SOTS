@@ -21,10 +21,11 @@ namespace SOTS.Projectiles.Blades
 		public override void SafeSetDefaults()
         {
             Projectile.timeLeft = 7200;
-            Projectile.localNPCHitCooldown = 20;
+            Projectile.localNPCHitCooldown = 60;
 			Projectile.DamageType = DamageClass.Melee;
 			delayDeathTime = 16;
 			Projectile.friendly = false;
+            Projectile.extraUpdates = 2;
 		}
 		public override float HitboxWidth => 24;
 		public override float AdditionalTipLength => -9;
@@ -45,7 +46,7 @@ namespace SOTS.Projectiles.Blades
             float timeLeft = timeLeftCounter;
             if (timeLeft < 0)
                 timeLeft = 0;
-			return 0.2f + (float)Math.Pow(1.8f * (timeLeft / swipeDegreesTotal), thisSlashNumber == 2 ? 2 : 1) * Projectile.ai[1];
+			return 0.2f + (float)Math.Pow(1.34f * (timeLeft / swipeDegreesTotal), thisSlashNumber == 2 ? 2 : 1) * Projectile.ai[1];
         }
         public override float MinSwipeDistance => 134;
 		public override float MaxSwipeDistance => 134;
@@ -77,7 +78,7 @@ namespace SOTS.Projectiles.Blades
                 else if (thisSlashNumber == 1)
                 {
                     SOTSUtils.PlaySound(SoundID.Item23, Projectile.Center, 1f, -0.3f);
-                    Projectile.localNPCHitCooldown = 3;
+                    Projectile.localNPCHitCooldown = 9;
                 }
             }
             if (thisSlashNumber == 1)
@@ -101,8 +102,8 @@ namespace SOTS.Projectiles.Blades
                 if (Projectile.ai[1] < 1)
                 {
                     if (Projectile.ai[1] > 0)
-                        Projectile.ai[1] *= 1.1f;
-                    Projectile.ai[1] += 0.1f;
+                        Projectile.ai[1] *= 1.04f;
+                    Projectile.ai[1] += 0.03f;
                 }
                 Projectile.ai[1] = MathHelper.Clamp(Projectile.ai[1], -0.5f, 1.0f);
             }
@@ -132,6 +133,8 @@ namespace SOTS.Projectiles.Blades
 		public override float ArmAngleOffset => 5;
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
 		{
+            if (Main.rand.NextBool())
+                return;
 			float rand = Main.rand.NextFloat(0.6f, 0.7f);
 			int type = ModContent.DustType<Dusts.CopyDust4>();
 			Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 16, Projectile.Center.Y - 16) - bladeDirection.SafeNormalize(Vector2.Zero) * 16, 24, 24, type);
@@ -151,7 +154,7 @@ namespace SOTS.Projectiles.Blades
             {
                 Projectile.netUpdate = true;
                 Projectile.ai[1] = -0.5f;
-                Projectile.localNPCHitCooldown++;
+                Projectile.localNPCHitCooldown += 3;
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

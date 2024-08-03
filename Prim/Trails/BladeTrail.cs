@@ -22,7 +22,7 @@ namespace SOTS.Prim.Trails
 			EntityType = projectile.type;
 			DrawType = PrimTrailManager.DrawProjectile;
 			Color1 = new Color(255, 190, 0, 0).ToVector4();
-			Cap = maxTrailLength;
+			Cap = maxTrailLength * 2;
 			Pixellated = false;
 			ClockWiseOrCounterClockwise = clockWise;
 			Color2 = new Vector4(0.9f, 0, 0, 0);
@@ -103,8 +103,9 @@ namespace SOTS.Prim.Trails
 						FakePlayerPossessingProjectile FPPP = fPP.WhoOwnsMe(proj);
 						player.Center = FPPP.Projectile.Center;
 					}
-				}
-				PointCount = Points.Count() * 6;
+                }
+                repeatCount = proj.extraUpdates + 1;
+                PointCount = Points.Count() * 6;
 				if (Cap < PointCount / 6)
 				{
 					Points.RemoveAt(0);
@@ -161,18 +162,11 @@ namespace SOTS.Prim.Trails
 				OnDestroy();
             }
         }
+		private int repeatCount = 0;
 		public override void OnDestroy()
 		{
 			Destroyed = true;
-			int repeats = 1;
-			if (EntityType == ModContent.ProjectileType<ToothAcheThrow>() ||
-				EntityType == ModContent.ProjectileType<VertebraekerThrow>() ||
-				EntityType == ModContent.ProjectileType<VorpalThrow>())
-			{
-				repeats = 3;
-			}
-			if(EntityType == ModContent.ProjectileType<TesseractSlash>())
-                repeats = 5;
+			int repeats = repeatCount;
             for (int i = 0; i < repeats; i++)
 			{
 				if (Points.Count > 0)

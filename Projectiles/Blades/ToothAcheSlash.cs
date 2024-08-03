@@ -22,9 +22,10 @@ namespace SOTS.Projectiles.Blades
         public override void SafeSetDefaults()
         {
             Projectile.timeLeft = 7200;
-            Projectile.localNPCHitCooldown = 4;
             Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
             Projectile.friendly = true;
+            Projectile.localNPCHitCooldown = 12;
+            Projectile.extraUpdates = 2;
         }
         public override void SwingSound(Player player)
         {
@@ -93,9 +94,9 @@ namespace SOTS.Projectiles.Blades
         public override float swipeDegreesTotal => 270.0f + (1800f / distance) + ((int)Math.Abs(Projectile.ai[0]) == 3 ? 10 : 0);
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
         {
-            if (dustAway != Vector2.Zero)
+            if (dustAway != Vector2.Zero && Main.rand.NextBool(1 + Projectile.extraUpdates))
             {
-                float amt = Main.rand.NextFloat(1.0f, 1.4f) * distance / 180f;
+                float amt = Main.rand.NextFloat(0.5f, 1.3f) * distance / 180f;
                 for (int i = 0; i < amt * 0.6f; i++) //generates dust at the end of the blade
                 {
                     float dustScale = 1f;
@@ -103,7 +104,7 @@ namespace SOTS.Projectiles.Blades
                     int type = ModContent.DustType<Dusts.CopyDust4>();
                     if (Main.rand.NextBool(5))
                         type = DustID.JungleSpore;
-                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + dustAway.SafeNormalize(Vector2.Zero) * 24, 16, 16, type);
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - dustAway.SafeNormalize(Vector2.Zero) * 4, 16, 16, type);
                     dust.velocity *= 0.8f / rand;
                     dust.velocity += dustAway.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
                     dust.noGravity = true;
@@ -120,7 +121,7 @@ namespace SOTS.Projectiles.Blades
                     int type = ModContent.DustType<Dusts.CopyDust4>();
                     if (Main.rand.NextBool(3))
                         type = DustID.JungleSpore;
-                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + (toProjectile.SafeNormalize(Vector2.Zero)) * 24 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - (toProjectile.SafeNormalize(Vector2.Zero)) * 4 - toProjectile * Main.rand.NextFloat(0.95f), 16, 16, type);
                     dust.velocity *= 0.1f / rand;
                     dust.velocity += dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.4f, 0.9f) * rand;
                     dust.noGravity = true;
@@ -132,7 +133,7 @@ namespace SOTS.Projectiles.Blades
                 }
             }
         }
-        //public override float TrailOffsetFromTip => 0.9f;
+        public override float TrailOffsetFromTip => 0.8f;
     }
 }
 		
