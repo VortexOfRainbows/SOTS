@@ -145,12 +145,12 @@ namespace SOTS.Prim.Trails
 				}
 				else if (proj.ModProjectile is VorpalThrow throwSword3 && Entity.active && Entity != null)
 				{
-					WidthList.Add(22);
+					WidthList.Add(18);
 					//ownerCenter = projOwner.Center;
 					toOwner.Add(new Vector2(1, -1).RotatedBy(proj.rotation));
 					if (throwSword3.initialDirection != -ClockWiseOrCounterClockwise)
 						Destroyed = true;
-					Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 14); // - new Vector2(Width / 2, Width / 2));
+					Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 15); // - new Vector2(Width / 2, Width / 2));
 				}
 				else
 					OnDestroy();

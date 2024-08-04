@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Blades
 			Projectile.localNPCHitCooldown = 30;
 			Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
 			delayDeathTime = 0;
-			Projectile.extraUpdates = 4;
+			Projectile.extraUpdates = 8;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Blades
 			return 10f;
 		}
 		public override float MeleeSpeedMultiplier => 0.5f; //melee speed only has 80% effectiveness on this weapon
-		public override float OverAllSpeedMultiplier => 4f;
+		public override float OverAllSpeedMultiplier => 6f;
 		public override float MinSwipeDistance => 320;
 		public override float MaxSwipeDistance => 320;
 		public override float ArcStartDegrees => 150;

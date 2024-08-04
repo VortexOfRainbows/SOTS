@@ -16,10 +16,10 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override void SafeSetDefaults()
         {
-            Projectile.localNPCHitCooldown = 60;
+            Projectile.localNPCHitCooldown = 90;
 			Projectile.DamageType = DamageClass.Melee;
 			delayDeathTime = 16;
-			Projectile.extraUpdates = 1;
+			Projectile.extraUpdates = 2;
 		}
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {

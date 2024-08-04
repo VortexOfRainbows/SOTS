@@ -238,7 +238,7 @@ namespace SOTS.Projectiles.Blades
                 int trailType = 1;
                 int trailLength = 20 * (1 + Projectile.extraUpdates);
                 if (Type == ModContent.ProjectileType<TesseractSlash>())
-                    trailType = 3;
+                    trailType = 1;
                 if (Type == ModContent.ProjectileType<PyrocideSlash>())
                 {
                     myTrail = new BladeTrail(Projectile, clockWise: FetchDirection);

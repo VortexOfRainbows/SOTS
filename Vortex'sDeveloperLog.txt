@@ -82,13 +82,12 @@ N/A
 
 Daily Log:
 
-8/1/24 to 8/2/24
+8/1/24 to 8/3/24
 1. Blade Class reworked!
 2. Modify blades to work with the new system (except digital daito). Some values have been changed, which should mostly be equivalent to size buffs for most of the blades.
 3. Blades no longer come with a minimum 3 frame delay to swing again. Effectively, most blades now allow other actions to take place faster after being used.
-4. Blades trails should now be smoother in general.
+4. Blades trails should now be smoother and have more consistent visuals in general.
 5. Notable Winners: Vorpal Knife Slashes now are now bigger. Vertebraeker has noticeably better looking slashes.
-6. Needs: Blade Class needs to work with fake players. Right now, they are really choppy with the blades.
 
 7/28/24 to 8/1/24
 1. Fix blast door and other SOTS doors not dropping their item when broken
