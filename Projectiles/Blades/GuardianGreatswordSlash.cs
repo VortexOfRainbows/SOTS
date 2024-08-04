@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Items.Tools;
+using System.Windows.Markup;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -14,15 +16,15 @@ namespace SOTS.Projectiles.Blades
 		public override void SafeSetDefaults()
         {
             Projectile.timeLeft = 7200;
-            Projectile.localNPCHitCooldown = 15;
-			Projectile.DamageType = DamageClass.Melee;
+            Projectile.localNPCHitCooldown = 45;
+            Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
             delayDeathTime = 12;
             Projectile.friendly = true;
+            Projectile.extraUpdates = 2;
 		}
 		public override float HitboxWidth => 24;
-		public override float AdditionalTipLength => 16;
-		public override float handleOffset => 4;
-		public override float handleSize => 20;
+		public override float AdditionalTipLength => 0;
+		public override float HeldDistFromPlayer => 11;
 		public override Vector2 drawOrigin => new Vector2(6, 52);
         public override void SwingSound(Player player)
         {
@@ -39,13 +41,13 @@ namespace SOTS.Projectiles.Blades
             float timeLeft = timeLeftCounter;
             if (timeLeft < 0)
                 timeLeft = 0;
-			return (thisSlashNumber == 1 ? 0.4f : 0.3f) + (float)Math.Pow(1.6f * (timeLeft / swipeDegreesTotal), (thisSlashNumber == 1 ? 1.5f : 2)) * Projectile.ai[1];
+			return (thisSlashNumber == 1 ? 0.4f : 0.3f) + (float)Math.Pow(1.25f * (timeLeft / swipeDegreesTotal), (thisSlashNumber == 1 ? 1.5f : 2)) * Projectile.ai[1];
         }
-        public override float MinSwipeDistance => 130;
-		public override float MaxSwipeDistance => 130;
+        public override float MinSwipeDistance => 150;
+		public override float MaxSwipeDistance => 150;
 		public override float ArcStartDegrees => 190;
 		public override float swipeDegreesTotal => thisSlashNumber == 1 || thisSlashNumber == 2 ? 200f : 170f;
-        public override float swingSizeMult => thisSlashNumber == 1 ? 1.1f : thisSlashNumber == 2 ? 0.8f : 1.0f;
+        public override float swingSizeMult => thisSlashNumber == 1 ? 1.2f : thisSlashNumber == 2 ? 0.8f : 1.0f;
 		public override float ArcOffsetFromPlayer => 0.3f;
 		public override float delayDeathSlowdownAmount => thisSlashNumber == 1 ? 0.75f : 0.7f;
 		public override Color? DrawColor => null;
@@ -67,7 +69,7 @@ namespace SOTS.Projectiles.Blades
             {
                 int slashCount = 20;
                 int slashDelay = 9;
-                if (timeLeftCounter > 90 && timeLeftCounter > slashDelay * nextProj && nextProj <= slashCount && timeLeftCounter < 270)
+                if (timeLeftCounter > 154 && timeLeftCounter > slashDelay * nextProj && nextProj <= slashCount && timeLeftCounter < 300)
                 {
                     if(nextProj % 2 == 0) 
                         SOTSUtils.PlaySound(SoundID.Item60, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.5f, 0.25f);
@@ -77,7 +79,7 @@ namespace SOTS.Projectiles.Blades
                         for(int i = -1; i <= 1; i++)
                         {
                             Vector2 awayVector = dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(15f * i));
-                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - dustAway.SafeNormalize(Vector2.Zero) * 48 + awayVector * 32, awayVector * 12, ModContent.ProjectileType<GuardianGreatswordBeam>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 0, -2);
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - dustAway.SafeNormalize(Vector2.Zero) * 72 + awayVector * 32, awayVector * 12, ModContent.ProjectileType<GuardianGreatswordBeam>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 0, -2);
                         }
                     }
                 }
@@ -87,7 +89,7 @@ namespace SOTS.Projectiles.Blades
 		{
             if(swingNumber == 2 && original.Y * Projectile.ai[0] > 0)
                 yDistanceCompression += 0.1f;
-            original.Y *= (swingNumber == 1 ? 1f : swingNumber == 2 ? 1.1f : 0.8f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
+            original.Y *= (swingNumber == 1 ? 1f : swingNumber == 2 ? 1.2f : 0.75f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
 			return original;
 		}
 		public override float TimeLeftIterator(float incrementAmount)
@@ -107,24 +109,21 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float ArmAngleOffset => 5; 
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
-		{
-            for(int i = 0; i < 2; i++)
-            {
-                float rand = Main.rand.NextFloat(0.6f, 0.7f);
-                int type = ModContent.DustType<Dusts.PixelDust>();
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5) + bladeDirection.SafeNormalize(Vector2.Zero) * 8, 2, 2, type);
-                dust.velocity *= 0.25f;
-                dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
-                dust.noGravity = true;
-                dust.scale *= 0.5f * rand;
-                dust.scale += 1.2f * rand;
-                dust.fadeIn = 6f;
-                dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
-                dust.color.A = 0;
-            }
-		}
-        public override float TrailDistanceFromHandle => 27f;
-		public override float AddedTrailLength => 0f;
+        {
+            float rand = Main.rand.NextFloat(0.6f, 0.7f);
+            int type = ModContent.DustType<Dusts.PixelDust>();
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5) - bladeDirection.SafeNormalize(Vector2.Zero) * 8, 2, 2, type);
+            dust.velocity *= 0.25f;
+            dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
+            dust.noGravity = true;
+            dust.scale *= 0.5f * rand;
+            dust.scale += 1.2f * rand;
+            dust.fadeIn = 6f;
+            dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+            dust.color.A = 0;
+        }
+        public override float TrailLengthMultiplier => base.TrailLengthMultiplier;
+		public override float TrailOffsetFromTip => 0.81f;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 

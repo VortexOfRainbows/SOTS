@@ -21,15 +21,15 @@ namespace SOTS.Projectiles.Blades
 		public override void SafeSetDefaults()
         {
             Projectile.timeLeft = 7200;
-            Projectile.localNPCHitCooldown = 20;
+            Projectile.localNPCHitCooldown = 60;
 			Projectile.DamageType = DamageClass.Melee;
 			delayDeathTime = 16;
 			Projectile.friendly = false;
+            Projectile.extraUpdates = 2;
 		}
-		public override float HitboxWidth => 32;
-		public override float AdditionalTipLength => 36;
-		public override float handleOffset => 8;
-		public override float handleSize => 44;
+		public override float HitboxWidth => 24;
+		public override float AdditionalTipLength => -9;
+		public override float HeldDistFromPlayer => 10;
 		public override Vector2 drawOrigin => new Vector2(5, 64);
         public override void SwingSound(Player player)
 		{
@@ -46,10 +46,10 @@ namespace SOTS.Projectiles.Blades
             float timeLeft = timeLeftCounter;
             if (timeLeft < 0)
                 timeLeft = 0;
-			return 0.2f + (float)Math.Pow(1.8f * (timeLeft / swipeDegreesTotal), thisSlashNumber == 2 ? 2 : 1) * Projectile.ai[1];
+			return 0.2f + (float)Math.Pow(1.34f * (timeLeft / swipeDegreesTotal), thisSlashNumber == 2 ? 2 : 1) * Projectile.ai[1];
         }
-        public override float MinSwipeDistance => 80;
-		public override float MaxSwipeDistance => 80;
+        public override float MinSwipeDistance => 134;
+		public override float MaxSwipeDistance => 134;
 		public override float ArcStartDegrees => thisSlashNumber == 1 ? 215 : 180;
 		public override float swipeDegreesTotal => thisSlashNumber == 1 ? 215f : 185f;
 		public override float swingSizeMult => 1.0f;
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Blades
                 else if (thisSlashNumber == 1)
                 {
                     SOTSUtils.PlaySound(SoundID.Item23, Projectile.Center, 1f, -0.3f);
-                    Projectile.localNPCHitCooldown = 3;
+                    Projectile.localNPCHitCooldown = 9;
                 }
             }
             if (thisSlashNumber == 1)
@@ -90,7 +90,7 @@ namespace SOTS.Projectiles.Blades
                     {
                         float rand = Main.rand.NextFloat(0.7f, 0.9f);
                         int type = ModContent.DustType<Dusts.CopyDust4>();
-                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) + dustAway.SafeNormalize(Vector2.Zero) * 16 + dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * 32 * FetchDirection, 16, 16, type);
+                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - dustAway.SafeNormalize(Vector2.Zero) * 32 + dustAway.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * 28 * FetchDirection, 16, 16, type);
                         dust.velocity *= 1.4f;
                         dust.noGravity = true;
                         dust.scale *= 0.5f * rand;
@@ -102,8 +102,8 @@ namespace SOTS.Projectiles.Blades
                 if (Projectile.ai[1] < 1)
                 {
                     if (Projectile.ai[1] > 0)
-                        Projectile.ai[1] *= 1.1f;
-                    Projectile.ai[1] += 0.1f;
+                        Projectile.ai[1] *= 1.04f;
+                    Projectile.ai[1] += 0.03f;
                 }
                 Projectile.ai[1] = MathHelper.Clamp(Projectile.ai[1], -0.5f, 1.0f);
             }
@@ -111,8 +111,8 @@ namespace SOTS.Projectiles.Blades
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
 		{
 			if (original.Y * Projectile.ai[0] > 0)
-				yDistanceCompression += 0.2f;
-			original.Y *= (swingNumber == 1 ? 0.65f : 0.75f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
+				yDistanceCompression += 0.3f;
+			original.Y *= (swingNumber == 1 ? 0.7f : 0.8f) / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
 			return original;
 		}
 		public override float TimeLeftIterator(float incrementAmount)
@@ -133,9 +133,11 @@ namespace SOTS.Projectiles.Blades
 		public override float ArmAngleOffset => 5;
         public override void SpawnDustDuringSwing(Player player, float bladeLength, Vector2 bladeDirection)
 		{
+            if (Main.rand.NextBool())
+                return;
 			float rand = Main.rand.NextFloat(0.6f, 0.7f);
 			int type = ModContent.DustType<Dusts.CopyDust4>();
-			Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 16, Projectile.Center.Y - 16) + bladeDirection.SafeNormalize(Vector2.Zero) * 16, 24, 24, type);
+			Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 16, Projectile.Center.Y - 16) - bladeDirection.SafeNormalize(Vector2.Zero) * 16, 24, 24, type);
 			dust.velocity *= 0.45f;
 			dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
 			dust.noGravity = true;
@@ -143,16 +145,16 @@ namespace SOTS.Projectiles.Blades
 			dust.scale += 1.3f * rand;
 			dust.fadeIn = 0.1f;
 			dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f)) * 0.5f;
-		}
-        public override float TrailDistanceFromHandle => 52f;
-		public override float AddedTrailLength => 0f;
+        }
+        public override float TrailLengthMultiplier => 0.5f;
+        public override float TrailOffsetFromTip => 0.2f;
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
 			if(thisSlashNumber == 1)
             {
                 Projectile.netUpdate = true;
                 Projectile.ai[1] = -0.5f;
-                Projectile.localNPCHitCooldown++;
+                Projectile.localNPCHitCooldown += 3;
             }
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)

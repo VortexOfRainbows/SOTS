@@ -1,13 +1,8 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.IO;
-using SOTS.Utilities;
-using SOTS.Void;
-using SOTS.Prim.Trails;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -23,9 +18,9 @@ namespace SOTS.Projectiles.Blades
 			Projectile.extraUpdates++;
 		}
 		public override float HitboxWidth => 80;
-		public override float AdditionalTipLength => -52;
-		public override float handleOffset => 20;
-		public override float handleSize => -34;
+		public override float AdditionalTipLength => 0;
+		//public override float handleOffset => 20;
+		public override float HeldDistFromPlayer => 20;
 		public override Vector2 drawOrigin => new Vector2(48, 152);
 		public override bool isDiagonalSprite => false;
 		public override float OffsetAngleIfNotDiagonal => -2;
@@ -39,14 +34,14 @@ namespace SOTS.Projectiles.Blades
 			return 3f + (1.0f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f)) + (thisSlashNumber == 1 ? 2.4f : -0.6f);
 		}
 		public override float MeleeSpeedMultiplier => 0.75f; //melee speed only has 50% effectiveness on this weapon
-		public override float OverAllSpeedMultiplier => 2f;
+		public override float OverAllSpeedMultiplier => 4f;
 		public override float MinSwipeDistance => 360;
 		public override float MaxSwipeDistance => 360;
 		public override float ArcStartDegrees => 200;
 		public override float swipeDegreesTotal => thisSlashNumber == 1 ? 230f : 330f;
 		public override float swingSizeMult => 1.0f;
 		public override float ArcOffsetFromPlayer => 0.25f;
-		public override float delayDeathSlowdownAmount => 0.85f;
+		public override float delayDeathSlowdownAmount => 0.7f;
 		public override Color? DrawColor => null;
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
 		{
@@ -99,7 +94,7 @@ namespace SOTS.Projectiles.Blades
 				type = ModContent.DustType<Dusts.PixelDust>();
 			for(int i = 0; i < 1 + amt / 2.0f; i++)
 			{
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - bladeDirection.SafeNormalize(Vector2.Zero) * 32, 16, 16, type);
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - bladeDirection.SafeNormalize(Vector2.Zero) * 4, 16, 16, type);
 				dust.velocity *= 0.55f;
 				dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.2f, 2.0f) * rand;
 				dust.noGravity = true;
@@ -120,7 +115,7 @@ namespace SOTS.Projectiles.Blades
 				if(Main.rand.NextBool(5))
 				{
 					rand = Main.rand.NextFloat(1.0f, 2.0f);
-					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - toProjectile.SafeNormalize(Vector2.Zero) * 24 - toProjectile * Main.rand.NextFloat(0.4f), 16, 16, type);
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - toProjectile.SafeNormalize(Vector2.Zero) * 4 - toProjectile * Main.rand.NextFloat(0.4f), 16, 16, type);
 					dust.velocity *= 0.1f;
 					dust.velocity += bladeDirection.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(90 * FetchDirection)) * Main.rand.NextFloat(0.3f, 0.4f) * rand;
 					dust.noGravity = true;
@@ -138,10 +133,10 @@ namespace SOTS.Projectiles.Blades
 			}
 		}
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        { 
+        {
         }
-        public override float TrailDistanceFromHandle => GetArcLength() * 0.576f;
-		public override float AddedTrailLength => -GetArcLength() * 0.5f + 20;
+        public override float TrailLengthMultiplier => 0.12f;
+        public override float TrailOffsetFromTip => 2f;
     }
 }
 		

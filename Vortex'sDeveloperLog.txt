@@ -8,20 +8,18 @@ The following is my development plans :D
 4. Give Tesseract the ability to do a "manual mode", where tesseracts attack only when you attack, and at your cursor.
 
 Acknowledged But Likely Delayed:
-1. Reimplement (older) Blade Items using the abstract class
-2. Earthen Plating starter house.
-3. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
-4. Smart cursor doesn't work with dressers.
-5. Most Void Minions do not work with whip debuffs
-6. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
-7. Boss Trophies
-8. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
-9. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
-10. Tesseract Servants over-sends packets when over 10 total tesseracts (Currently not possible in regular play).
-11. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
-12. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
-13. Scroll wheel with challenger's ring
-14. SOTS Blades prim trails use the Size of the swing to determine the size of the visual, whereas the swords themselves use length and handle size. These should be standardized... In general, this class needs some recleaning and reworking.
+1. Earthen Plating starter house.
+2. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
+3. Smart cursor doesn't work with dressers.
+4. Most Void Minions do not work with whip debuffs
+5. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
+6. Boss Trophies
+7. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
+8. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
+9. Tesseract Servants over-sends packets when over 10 total tesseracts (Currently not possible in regular play).
+10. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
+11. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
+12. Scroll wheel with challenger's ring
 
 Update Objectives:
 1. Ghost Town! (Next up)
@@ -84,11 +82,12 @@ N/A
 
 Daily Log:
 
-8/1/24
-1. WIP Blade Class reworks...
-	1. Needs: an overhaul. Standardization of older blades. Make it require less parameters for things like determining the size of the trail/handle (there are a lot of weird variable/method names)
-	2. Needs: prim trails to be updated by the swords manually, including with a proj.extraUpdates rate, to make the swings more smooth
-	3. Needs: Take into account player velocity before calculations are done
+8/1/24 to 8/3/24
+1. Blade Class reworked!
+2. Modify blades to work with the new system (except digital daito). Some values have been changed, which should mostly be equivalent to size buffs for most of the blades.
+3. Blades no longer come with a minimum 3 frame delay to swing again. Effectively, most blades now allow other actions to take place faster after being used.
+4. Blades trails should now be smoother and have more consistent visuals in general.
+5. Notable Winners: Vorpal Knife Slashes now are now bigger. Vertebraeker has noticeably better looking slashes.
 
 7/28/24 to 8/1/24
 1. Fix blast door and other SOTS doors not dropping their item when broken

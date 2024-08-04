@@ -511,8 +511,8 @@ namespace SOTS.FakePlayer
             {
                 SOTS.SendTesseractDataPacket(player.whoAmI, UniqueUsageSlot); //This sends additional packets when tesseract goes over 10 minions. Since this is not currently possible without cheating, this fix will be delayed...
             }
-            player.oldPosition = Position;
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
+            player.oldPosition = Position; //This should happen after the projectile update so the old position is correct for the projectiles that rely on it.
             SetupBodyFrame(player); //run code to get frame after
             player.controlUseItem = false;
             player.controlUseTile = false;

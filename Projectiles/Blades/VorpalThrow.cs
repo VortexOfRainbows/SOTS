@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Blades
 				initialCenter = player.Center;
 				Projectile.ai[0] = -180 * initialDirection;
 				Projectile.scale = 1.2f;
-                FireTrail myTrail = new FireTrail(Projectile, clockWise: -initialDirection, VorpalColor1.ToVector4(), VorpalColor2.ToVector4(), 36, 2);
+                BladeTrail myTrail = new BladeTrail(Projectile, clockWise: -initialDirection, VorpalColor1.ToVector4(), VorpalColor2.ToVector4(), 108, 2);
                 SOTS.primitives.CreateTrail(myTrail);
 			}
 			else if(soundCounter % 21 == 0)
@@ -218,9 +218,9 @@ namespace SOTS.Projectiles.Blades
 				Projectile.Center += Projectile.velocity;
 			foreach (PrimTrail trail in SOTS.primitives._trails.ToArray())
 			{
-				if (trail is FireTrail fireTrail)
+				if (trail is BladeTrail fireTrail)
 				{
-					if (trail.Entity is Projectile proj && proj.whoAmI == Projectile.whoAmI && proj.type == Projectile.type && initialDirection == fireTrail.ClockWiseOrCounterClockwise)
+					if (trail.Entity is Projectile proj && proj.whoAmI == Projectile.whoAmI && proj.type == Projectile.type && initialDirection != fireTrail.ClockWiseOrCounterClockwise)
 					{
 						trail.Update();
 					}
@@ -273,7 +273,7 @@ namespace SOTS.Projectiles.Blades
 					Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), player.Center, Projectile.velocity, ModContent.ProjectileType<VorpalKnifeSlash>(), Projectile.damage * 2, Projectile.knockBack * 1.5f, player.whoAmI, 1 * player.direction * player.gravDir, 0.8f);
 					if (proj.ModProjectile is VorpalKnifeSlash v)
 					{
-						v.distance = 160;
+						v.distance = 190;
 					}
 				}
 				player.velocity.X *= 0.12f;
