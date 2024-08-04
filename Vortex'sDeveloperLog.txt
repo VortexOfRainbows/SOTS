@@ -82,6 +82,11 @@ N/A
 
 Daily Log:
 
+8/4/24
+1. Patchleather Armor set bonus should now be less jank under water
+2. Framework for more easily implementing ambient tiles.
+3. WIP ambient tiles for the abandoned village
+
 8/1/24 to 8/3/24
 1. Blade Class reworked!
 2. Modify blades to work with the new system (except digital daito). Some values have been changed, which should mostly be equivalent to size buffs for most of the blades.

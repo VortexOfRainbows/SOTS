@@ -5626,6 +5626,11 @@ Mods: {
 				DisplayName: Tesseract Sword
 				Tooltip: Stop snooping around!
 			}
+
+			AVAmbient: {
+				DisplayName: AV Ambient
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

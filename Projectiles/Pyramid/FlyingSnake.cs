@@ -26,6 +26,7 @@ namespace SOTS.Projectiles.Pyramid
             Projectile.minionSlots = 0f;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 40;
+			Projectile.ignoreWater = true;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
