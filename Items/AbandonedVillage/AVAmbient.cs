@@ -33,10 +33,18 @@ namespace SOTS.Items.AbandonedVillage
 		int type = 0;
         public override bool? UseItem(Player player)
         {
-			int modU = type % 2;
+			int modU = type % 6;
             Item.createTile = ModContent.TileType<AVAmbientTile1x1>();
             if(modU == 1)
                 Item.createTile = ModContent.TileType<AVAmbientTile2x1>();
+            if (modU == 2)
+                Item.createTile = ModContent.TileType<AVAmbientTile3x1>();
+            if (modU == 3)
+                Item.createTile = ModContent.TileType<AVAmbientTile2x2>();
+            if (modU == 4)
+                Item.createTile = ModContent.TileType<AVAmbientTile1x2>();
+            if (modU == 5)
+                Item.createTile = ModContent.TileType<AVAmbientTile3x2>();
             type++;
 			return base.UseItem(player);
         }
@@ -55,7 +63,7 @@ namespace SOTS.Items.AbandonedVillage
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             SafeSetDefaults(TileObjectData.newTile, ref frameOffX, ref frameOffY);
-            TileObjectData.newTile.DrawYOffset = -2;
+            TileObjectData.newTile.DrawYOffset -= 2;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
@@ -85,19 +93,19 @@ namespace SOTS.Items.AbandonedVillage
             int TileFrameY = tile.TileFrameY + frameOffY;
             Vector2 location = new Vector2(i * 16, j * 16);
             Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
-            Vector2 offsets = -Main.screenPosition + zero + new Vector2(0, -2);
+            Vector2 offsets = -Main.screenPosition + zero + new Vector2(0, tile.TileType == ModContent.TileType<AVAmbientTile2x2>() ? -4 : -2);
             Vector2 drawCoordinates = location + offsets;
             Main.spriteBatch.Draw(ModContent.Request<Texture2D>("SOTS/Items/AbandonedVillage/AVAmbientTileGlow").Value, drawCoordinates, new Rectangle(TileFrameX, TileFrameY, 16, 20), color * alphaMult, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
         public override bool CreateDust(int i, int j, ref int type)
         {
             int style = Main.tile[i, j].TileFrameX / 18;
-            int verticalStyle = Main.tile[i, j].TileFrameY / 22;
-            DustStyle(new Vector2(i * 16 + 8, j * 16 + 8), style, verticalStyle, ref type);
-            return base.CreateDust(i, j, ref type);
+            DustStyle(new Vector2(i * 16, j * 16), style, ref type);
+            return true;
         }
-        public virtual void DustStyle(Vector2 centerPos, int style, int verticalStyle, ref int type)
+        public virtual void DustStyle(Vector2 pos, int style, ref int type)
         {
+
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -141,7 +149,7 @@ namespace SOTS.Items.AbandonedVillage
 			d.CoordinateHeights = new[] { 20 };
 			d.RandomStyleRange = TileObjectData.newTile.StyleWrapLimit = 13;
 		}
-        public override void DustStyle(Vector2 centerPos, int style, int verticalStyle, ref int type)
+        public override void DustStyle(Vector2 centerPos, int style, ref int type)
         {
             if (style == 0 || style == 1)
             {
@@ -153,26 +161,37 @@ namespace SOTS.Items.AbandonedVillage
             {
                 type = ModContent.DustType<SootDust>();
                 if (Main.rand.NextBool(3))
-                    type = 24; //Corrupt thorns dust
+                    type = DustID.CorruptionThorns;
             }
             if (style == 4 || style == 5 || style == 10)
             {
-                type = DustID.TintableDust; //Will need to color this to flesh color
-                //also spawn pixel dust here with green color
+                type = DustID.CorruptionThorns;
+                if (!Main.rand.NextBool(3))
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.CursedTorch);
             }
             if (style == 6)
             {
-                //Combination of 4,5,7,8
+                type = Main.rand.NextBool() ? type = DustID.CrimsonPlants : DustID.CorruptionThorns;
+                if (Main.rand.NextBool(2))
+                {
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.IchorTorch);
+                }
+                if (Main.rand.NextBool(2))
+                {
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.CursedTorch);
+                }
             }
             if (style == 7 || style == 8 || style == 9)
             {
                 type = DustID.CrimsonPlants;
-                //spawn ichor dust here for styles 7 and 8
+                if(!Main.rand.NextBool(3))
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.IchorTorch);
             }
             if (style == 11 || style == 12)
             {
                 type = ModContent.DustType<SootDust>();
-                //Spawn ash dust here (pixel dust with certain presets)
+                if (!Main.rand.NextBool(3))
+                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
             }
         }
     }
@@ -185,9 +204,102 @@ namespace SOTS.Items.AbandonedVillage
             d.RandomStyleRange = TileObjectData.newTile.StyleWrapLimit = 4;
             StartingY = 22;
         }
-        public override void DustStyle(Vector2 centerPos, int style, int verticalStyle, ref int type)
+        public override void DustStyle(Vector2 centerPos, int style, ref int type)
         {
-            base.DustStyle(centerPos, style, verticalStyle, ref type);
+            if(style < 4)
+            {
+                type = ModContent.DustType<SootDust>();
+                if (!Main.rand.NextBool(3))
+                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
+            }
+            else
+            {
+                type = ModContent.DustType<SootDust>();
+                if (!Main.rand.NextBool(3))
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.Bone);
+            }
+        }
+    }
+    public class AVAmbientTile3x1 : AVAmbientTile
+    {
+        public override void SafeSetDefaults(TileObjectData d, ref short StartingX, ref short StartingY)
+        {
+            d.CopyFrom(TileObjectData.Style2x1);
+            d.Width = 3;
+            d.CoordinateHeights = new[] { 20 };
+            d.RandomStyleRange = TileObjectData.newTile.StyleWrapLimit = 2;
+            StartingY = 22;
+            StartingX = 144;
+        }
+        public override void DustStyle(Vector2 centerPos, int style,ref int type)
+        {
+            if (style >= 3)
+            {
+                type = ModContent.DustType<SootDust>();
+                if (!Main.rand.NextBool(3))
+                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
+            }
+            else
+            {
+                type = ModContent.DustType<SootDust>();
+                if (!Main.rand.NextBool(3))
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.Bone);
+            }
+        }
+    }
+    public class AVAmbientTile3x2 : AVAmbientTile
+    {
+        public override void SafeSetDefaults(TileObjectData d, ref short StartingX, ref short StartingY)
+        {
+            d.CopyFrom(TileObjectData.Style3x2);
+            d.CoordinateHeights = new[] { 16, 20 };
+            d.RandomStyleRange = TileObjectData.newTile.StyleWrapLimit = 4;
+            StartingY = 44;
+            StartingX = 0;
+        }
+        public override void DustStyle(Vector2 centerPos, int style, ref int type)
+        {
+
+        }
+    }
+    public class AVAmbientTile2x2 : AVAmbientTile
+    {
+        public override void SafeSetDefaults(TileObjectData d, ref short StartingX, ref short StartingY)
+        {
+            d.CopyFrom(TileObjectData.Style2x2);
+            d.CoordinateHeights = new[] { 16, 22 };
+            d.RandomStyleRange = TileObjectData.newTile.StyleWrapLimit = 4;
+            d.DrawYOffset -= 2;
+            StartingY = 84;
+            StartingX = 0;
+        }
+        public override void DustStyle(Vector2 centerPos, int style, ref int type)
+        {
+            if(style < 4)
+            {
+                type = DustID.CorruptionThorns;
+            }
+            else
+            {
+                type = DustID.CrimsonPlants;
+                //also spawn some crimson glow dust here
+            }
+        }
+    }
+    public class AVAmbientTile1x2 : AVAmbientTile
+    {
+        public override void SafeSetDefaults(TileObjectData d, ref short StartingX, ref short StartingY)
+        {
+            d.CopyFrom(TileObjectData.Style1x2);
+            d.CoordinateHeights = new[] { 16, 22 };
+            d.RandomStyleRange = TileObjectData.newTile.StyleWrapLimit = 4;
+            d.DrawYOffset -= 2;
+            StartingY = 84;
+            StartingX = 144;
+        }
+        public override void DustStyle(Vector2 centerPos, int style, ref int type)
+        {
+            type = DustID.BorealWood;
         }
     }
 }

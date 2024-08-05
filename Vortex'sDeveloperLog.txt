@@ -20,6 +20,7 @@ Acknowledged But Likely Delayed:
 10. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 11. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
 12. Scroll wheel with challenger's ring
+13. Banners to work on platforms (should be fairly easy)
 
 Update Objectives:
 1. Ghost Town! (Next up)
@@ -40,7 +41,7 @@ Update Objectives:
 11. Shimmer Item that upgrades the store for Archaeologist
 12. Sculpting Table item that allows crafting Statues
 13. Fish Bomb
-14. Fix generation bug with Infernum and Leviathan area
+14. Fix generation bug with Infernum and Leviathan area, potentially fix remnants compatability
 15. Upgrade item to the Hydrokinetic Antennae
 16. Somehow fix marble biome in vibrant geode
 17. Update Elemental Amulet sprite to include modern genshin visions

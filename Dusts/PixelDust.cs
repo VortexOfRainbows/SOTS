@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Buffs;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -6,6 +7,14 @@ namespace SOTS.Dusts
 {
 	public class PixelDust : ModDust
     {
+		public static Dust Spawn(Vector2 pos, int w, int h, Vector2 velo, Color c, int decaySpeed = 5)
+		{
+			Dust d = Dust.NewDustDirect(pos - new Vector2(5, 5), w, h, ModContent.DustType<PixelDust>());
+			d.velocity = velo;
+			d.fadeIn = decaySpeed;
+			d.color = c;
+			return d;
+		}
         public override void OnSpawn(Dust dust)
         {
             dust.frame = new Rectangle(0, Main.rand.Next(3) * 10, 8, 8);
