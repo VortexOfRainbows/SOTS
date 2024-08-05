@@ -9,7 +9,9 @@ namespace SOTS
     public static class ColorHelpers
     {
 		public static Color AVDustColor => new Color(117, 120, 132, 200);
-		public static Color ToothAcheLime => ToothAcheSlash.toothAcheLime;
+        public static Color ToothAcheLime => ToothAcheSlash.toothAcheLime;
+        public static Vector3 AVIchorLight = new Vector3(0.85f, 0.81f, .22f);
+        public static Vector3 AVCursedLight = new Vector3(1.28f, 0.93f, .4f);
         public static Color AcediaColor = new Color(213, 68, 255);
         public static Color GulaColor = new Color(255, 143, 128);
         public static Color DreamLampColor = DreamingFrame.Green1;

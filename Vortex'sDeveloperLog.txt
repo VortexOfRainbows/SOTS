@@ -83,10 +83,11 @@ N/A
 
 Daily Log:
 
-8/4/24
+8/4/24 to 8/5/24
 1. Patchleather Armor set bonus should now be less jank under water
 2. Framework for more easily implementing ambient tiles.
-3. WIP ambient tiles for the abandoned village
+3. AV Ambient tiles. Has dusts, glowmasks, appropriate glows
+4. WIP Ambient tile spawning
 
 8/1/24 to 8/3/24
 1. Blade Class reworked!

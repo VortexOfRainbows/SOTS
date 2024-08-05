@@ -67,7 +67,7 @@ namespace SOTS.Items.AbandonedVillage
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
-            AddMapEntry(new Color(52, 36, 29));
+            AddMapEntry(new Color(98, 79, 68));
             DustType = ModContent.DustType<SootDust>();
             HitSound = SoundID.Dig;
             MineResist = 0.1f;
@@ -119,26 +119,21 @@ namespace SOTS.Items.AbandonedVillage
         {
             return null;
         }
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        public sealed override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
+            float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
+            float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
             int style = Main.tile[i, j].TileFrameX / 18;
-            int verticalStyle = Main.tile[i, j].TileFrameY / 22;
-            if (verticalStyle == 0)
-            {
-                if (style == 4)
-                {
-                    //corruption light here
-                }
-                if (style == 6)
-                {
-                    //combiend light here
-                }
-                if (style == 7 || style == 8)
-                {
-                    //crimson light here
-                }
-            }
-            //for taller tiles, only the bottom should be lighted
+            Vector3 c = new Vector3(0, 0, 0);
+            ModifyLight2(style, Main.tile[i, j].TileFrameY, ref c);
+            c *= alphaMult * 0.2f;
+            r = c.X;
+            g = c.Y;
+            b = c.Z;
+        }
+        public virtual void ModifyLight2(int style, int frameY, ref Vector3 color)
+        {
+
         }
     }
 	public class AVAmbientTile1x1 : AVAmbientTile
@@ -171,7 +166,7 @@ namespace SOTS.Items.AbandonedVillage
             }
             if (style == 6)
             {
-                type = Main.rand.NextBool() ? type = DustID.CrimsonPlants : DustID.CorruptionThorns;
+                type = Main.rand.NextBool() ? DustID.CrimsonPlants : DustID.CorruptionThorns;
                 if (Main.rand.NextBool(2))
                 {
                     Dust.NewDustDirect(centerPos, 16, 16, DustID.IchorTorch);
@@ -193,6 +188,13 @@ namespace SOTS.Items.AbandonedVillage
                 if (!Main.rand.NextBool(3))
                     PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
             }
+        }
+        public override void ModifyLight2(int style, int frameY, ref Vector3 color)
+        {
+            if (style == 4 || style == 5 || style == 6)
+                color += ColorHelpers.AVCursedLight;
+            if (style == 7 || style == 8 || style == 9 || style == 6)
+                color += ColorHelpers.AVIchorLight;
         }
     }
     public class AVAmbientTile2x1 : AVAmbientTile
@@ -259,7 +261,33 @@ namespace SOTS.Items.AbandonedVillage
         }
         public override void DustStyle(Vector2 centerPos, int style, ref int type)
         {
-
+            if(style < 9)
+            {
+                if (Main.rand.NextBool(4))
+                    type = DustID.Bone;
+                else
+                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
+            }
+            else
+            {
+                type = Main.rand.NextBool() ? DustID.CrimsonPlants : DustID.CorruptionThorns;
+                if (Main.rand.NextBool(3))
+                {
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.IchorTorch);
+                }
+                if (Main.rand.NextBool(3))
+                {
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.CursedTorch);
+                }
+            }
+        }
+        public override void ModifyLight2(int style, int frameY, ref Vector3 color)
+        {
+            if (style >= 9)
+            {
+                color += ColorHelpers.AVCursedLight;
+                color += ColorHelpers.AVIchorLight;
+            }
         }
     }
     public class AVAmbientTile2x2 : AVAmbientTile
@@ -278,12 +306,26 @@ namespace SOTS.Items.AbandonedVillage
             if(style < 4)
             {
                 type = DustID.CorruptionThorns;
+                if (Main.rand.NextBool(3))
+                {
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.CursedTorch);
+                }
             }
             else
             {
                 type = DustID.CrimsonPlants;
-                //also spawn some crimson glow dust here
+                if (Main.rand.NextBool(3))
+                {
+                    Dust.NewDustDirect(centerPos, 16, 16, DustID.IchorTorch);
+                }
             }
+        }
+        public override void ModifyLight2(int style, int frameY, ref Vector3 color)
+        {
+            if (style < 4)
+                color += ColorHelpers.AVCursedLight;
+            else
+                color += ColorHelpers.AVIchorLight;
         }
     }
     public class AVAmbientTile1x2 : AVAmbientTile
@@ -299,7 +341,7 @@ namespace SOTS.Items.AbandonedVillage
         }
         public override void DustStyle(Vector2 centerPos, int style, ref int type)
         {
-            type = DustID.BorealWood;
+            type = ModContent.DustType<CharredWoodDust>();
         }
     }
 }

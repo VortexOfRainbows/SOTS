@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Dusts;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,9 +15,9 @@ namespace SOTS.Items.AbandonedVillage
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
-			//Main.tileBlendAll[Type] = true;
-			DustType = DustID.BorealWood; //boreal wood
-			AddMapEntry(new Color(105, 82, 61));
+            //Main.tileBlendAll[Type] = true;
+            DustType = ModContent.DustType<CharredWoodDust>();
+            AddMapEntry(new Color(105, 82, 61));
 		}
 	}
 	public class CharredWood : ModItem
@@ -38,7 +39,7 @@ namespace SOTS.Items.AbandonedVillage
 		public override void SetStaticDefaults()
 		{
 			Main.wallHouse[Type] = true;
-			DustType = 122;
+			DustType = ModContent.DustType<CharredWoodDust>();
 			////ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<CharredWoodWall>();
 			AddMapEntry(new Color(67, 49, 34));
 		}
