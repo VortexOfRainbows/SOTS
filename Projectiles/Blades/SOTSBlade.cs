@@ -7,6 +7,7 @@ using Terraria.ID;
 using System.IO;
 using SOTS.Void;
 using SOTS.Prim.Trails;
+using Terraria.Enums;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -417,6 +418,19 @@ namespace SOTS.Projectiles.Blades
             {
                 player.itemTime = player.itemAnimation = 0;
             }
+        }
+        public override void CutTiles()
+        {
+            DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+            Utils.TileActionAttempt cut = new Utils.TileActionAttempt(DelegateMethods.CutTiles);
+            Vector2 beamStartPos = Projectile.Center;
+            Vector2 beamEndPos = PlayerCenter();
+            beamStartPos += (beamStartPos - beamEndPos).SNormalize() * AdditionalTipLength;
+            Utils.PlotTileLine(beamStartPos, beamEndPos, HitboxWidth, cut);
+        }
+        public override bool? CanCutTiles()
+        {
+            return true;
         }
     }
 }

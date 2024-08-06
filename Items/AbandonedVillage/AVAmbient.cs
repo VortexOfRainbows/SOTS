@@ -343,5 +343,13 @@ namespace SOTS.Items.AbandonedVillage
         {
             type = ModContent.DustType<CharredWoodDust>();
         }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<CharredWood>(), Main.rand.Next(1, 4));
+        }
+        public override bool CanDrop(int i, int j)
+        {
+            return true;
+        }
     }
 }

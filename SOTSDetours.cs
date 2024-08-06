@@ -12,6 +12,7 @@ using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
 using SOTS.Items.Pyramid.PyramidWalls;
 using SOTS.NPCs.Town;
+using SOTS.Projectiles.Blades;
 using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
@@ -115,6 +116,9 @@ namespace SOTS
 			On_Player.SmartSelectLookup += On_Player_SmartSelectLookup;
 
 			On_Player.DropCoins += On_Player_DropCoins;
+
+			//Prevent certain projectiles from cutting tiles when they aren't supposed to, but allow cutting tiles where they are supposed to
+			On_Projectile.CutTilesAt += On_Projectile_CutTilesAt;
 
             if (!Main.dedServ)
 				ResizeTargets();
@@ -1048,6 +1052,22 @@ namespace SOTS
                 return 0;
             }
 			return orig(self);
+		}
+		private static void On_Projectile_CutTilesAt(On_Projectile.orig_CutTilesAt orig, Projectile self, Vector2 boxPosition, int boxWidth, int boxHeight)
+		{
+			bool valid = true;
+			if(self.ModProjectile != null && (self.ModProjectile is SOTSBlade || self.ModProjectile is DigitalSlash))
+            {
+				valid = false;
+            }
+			if(!valid)
+            {
+                ProjectileLoader.CutTiles(self);
+            }
+			else
+            {
+                orig(self, boxPosition, boxWidth, boxWidth);
+            }
 		}
     }
 }

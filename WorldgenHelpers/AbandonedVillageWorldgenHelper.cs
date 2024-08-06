@@ -3454,7 +3454,7 @@ namespace SOTS.WorldgenHelpers
                         }
                         else if (passNum == 2)
                         {
-                            TryPlacingAmbientTiles(i, j);
+                            TryPlacingAmbientTiles(i, j, false);
                         }
                         else if (passNum == 3)
                         {
@@ -3511,11 +3511,11 @@ namespace SOTS.WorldgenHelpers
             {
                 for (int j = rect.Top; j < rect.Bottom; j++)
                 {
-                    TryPlacingAmbientTiles(i, j);
+                    TryPlacingAmbientTiles(i, j, true);
                 }
             }
         }
-        public static void TryPlacingAmbientTiles(int i, int j)
+        public static void TryPlacingAmbientTiles(int i, int j, bool underground)
         {
             Tile tile = Framing.GetTileSafely(i, j);
             Tile tileRight = Framing.GetTileSafely(i + 1, j);
@@ -3574,9 +3574,14 @@ namespace SOTS.WorldgenHelpers
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile1x2>(), true, true, -1, WorldGen.genRand.Next(4));
                         hasPlaced = true;
                     }
-                    else if ((ValidGrassTiles.Contains(firstType) && !WorldGen.genRand.NextBool(5)) || WorldGen.genRand.NextBool(20) || (ValidStoneTiles.Contains(firstType) && WorldGen.genRand.NextBool(4)))
+                    else if ((ValidGrassTiles.Contains(firstType) && !WorldGen.genRand.NextBool(6)) || WorldGen.genRand.NextBool(15) || (ValidStoneTiles.Contains(firstType) && WorldGen.genRand.NextBool(4)))
                     {
-                        WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile1x1>(), true, true, -1, WorldGen.genRand.NextFromList(4, 5, 6, 7, 8, 9, 10));
+                        if(underground)
+                            WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile1x1>(), true, true, -1, WorldGen.genRand.NextFromList(4, 5, 6, 7, 8, 9, 10));
+                        else if(WorldGen.crimson)
+                            WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile1x1>(), true, true, -1, WorldGen.genRand.NextFromList(7, 8, 9));
+                        else
+                            WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile1x1>(), true, true, -1, WorldGen.genRand.NextFromList(4, 5, 10));
                         hasPlaced = true;
                     }
                     else if (firstType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(9) || (firstType == ModContent.TileType<CharredWoodTile>() && WorldGen.genRand.NextBool(3))
@@ -3596,7 +3601,7 @@ namespace SOTS.WorldgenHelpers
                         bool tryingToDoTall = WorldGen.genRand.NextBool(3);
                         bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || third.TileType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(25) ||
                             ((tryingToDoTall || WorldGen.genRand.NextBool(5)) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>() && third.TileType == ModContent.TileType<EarthenPlatingTile>());
-                        if (correctTile)
+                        if (correctTile && !WorldGen.genRand.NextBool(7))
                         {
                             if (tryingToDoTall)
                             {
@@ -3609,10 +3614,10 @@ namespace SOTS.WorldgenHelpers
                                 hasPlaced = true;
                             }
                         }
-                        if(!hasPlaced)
+                        if(!hasPlaced && underground)
                         {
                             if(ValidGrassTiles.Contains(firstType) || ValidGrassTiles.Contains(secondType) || ValidGrassTiles.Contains(third.TileType)
-                                || WorldGen.genRand.NextBool(40))
+                                || WorldGen.genRand.NextBool(10))
                             {
                                 WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile3x2>(), true, true, -1, 3);
                                 hasPlaced = true;
@@ -3621,8 +3626,8 @@ namespace SOTS.WorldgenHelpers
                     }
                     if (tileRight.HasTile && !hasPlaced)
                     {
-                        bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(15) ||
-                            (WorldGen.genRand.NextBool(5) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>());
+                        bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(14) ||
+                            (WorldGen.genRand.NextBool(4) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>());
                         if (correctTile)
                         {
                             WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x1>(), true, true, -1, WorldGen.genRand.Next(4));
@@ -3635,7 +3640,7 @@ namespace SOTS.WorldgenHelpers
                     if (tileRight.HasTile)
                     {
                         bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(15) ||
-                            (WorldGen.genRand.NextBool(5) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>());
+                            (WorldGen.genRand.NextBool(4) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>());
                         if (correctTile)
                         {
                             WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x1>(), true, true, -1, WorldGen.genRand.Next(4));
@@ -3643,10 +3648,15 @@ namespace SOTS.WorldgenHelpers
                         }
                         else
                         {
-                            if (ValidGrassTiles.Contains(firstType) || ValidGrassTiles.Contains(secondType) || ((ValidStoneTiles.Contains(firstType) || ValidStoneTiles.Contains(secondType)) && WorldGen.genRand.NextBool(30))
-                                || WorldGen.genRand.NextBool(36))
+                            if (ValidGrassTiles.Contains(firstType) || ValidGrassTiles.Contains(secondType) || ((ValidStoneTiles.Contains(firstType) || ValidStoneTiles.Contains(secondType)) && WorldGen.genRand.NextBool(20))
+                                || WorldGen.genRand.NextBool(30))
                             {
-                                WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x2>(), true, true, -1, WorldGen.genRand.Next(4));
+                                if(underground)
+                                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x2>(), true, true, -1, WorldGen.genRand.Next(4));
+                                else if(WorldGen.crimson)
+                                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x2>(), true, true, -1, WorldGen.genRand.Next(2, 4));
+                                else
+                                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x2>(), true, true, -1, WorldGen.genRand.Next(2));
                                 hasPlaced = true;
                             }
                         }

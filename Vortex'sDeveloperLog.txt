@@ -48,6 +48,7 @@ Update Objectives:
 18. Void Meter save when you exit the world
 19. Fix shimmer trident infinite gold exploit. Shimmer Electromagnetic Lure into the Deterrent
 20. Add Wishing Star accessory
+21. Add withered peanut bush
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -83,11 +84,14 @@ N/A
 
 Daily Log:
 
-8/4/24 to 8/5/24
+8/4/24 to 8/6/24
 1. Patchleather Armor set bonus should now be less jank under water
 2. Framework for more easily implementing ambient tiles.
 3. AV Ambient tiles. Has dusts, glowmasks, appropriate glows
 4. WIP Ambient tile spawning
+5. Opposite Evil biome ambient tiles will only spawn in the underground.
+6. Ambient tile wood drops charred wood
+7. SOTS blades now have a more appropriate tile cut style (grass/pots broken more correctly)
 
 8/1/24 to 8/3/24
 1. Blade Class reworked!
