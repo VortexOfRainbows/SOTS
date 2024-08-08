@@ -1,21 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Dusts;
-using SOTS.Items.Fragments;
-using SOTS.Items.Planetarium.FromChests;
-using SOTS.Items.Planetarium.Furniture;
 using SOTS.Void;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
 using Terraria.Localization;
 using SOTS.Items.Chaos;
 using System;
-using Microsoft.Xna.Framework.Input;
 
 namespace SOTS.Items.Wings
 {

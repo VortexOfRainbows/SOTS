@@ -63,8 +63,9 @@ namespace SOTS.Items.Tide
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Trident, 1).AddIngredient(ModContent.ItemType<Fragments.FragmentOfTide>(), 10).AddTile(TileID.Anvils).Register();
-			Recipe.Create(ItemID.Trident).AddIngredient(ItemID.Spear, 1).AddIngredient(ItemID.GoldBar, 8).AddTile(TileID.Anvils).Register();
-			Recipe.Create(ItemID.Trident).AddIngredient(ItemID.Spear, 1).AddIngredient(ItemID.PlatinumBar, 8).AddTile(TileID.Anvils).Register();
+			//Recipe removed due to vanilla adding its own trident recipe with SHIMMER
+			///Recipe.Create(ItemID.Trident).AddIngredient(ItemID.Spear, 1).AddIngredient(ItemID.GoldBar, 8).AddTile(TileID.Anvils).Register();
+			///Recipe.Create(ItemID.Trident).AddIngredient(ItemID.Spear, 1).AddIngredient(ItemID.PlatinumBar, 8).AddTile(TileID.Anvils).Register();
 		}
 		public override bool CanUseItem(Player player)
 		{

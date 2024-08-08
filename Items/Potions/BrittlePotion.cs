@@ -19,8 +19,8 @@ namespace SOTS.Items.Potions
 			Item.maxStack = 9999;
             Item.buffType = Mod.Find<ModBuff>("Brittle").Type;   
             Item.buffTime = 3600 * 4 + 300;  
-            Item.UseSound = SoundID.Item3;            
-            Item.useStyle = ItemUseStyleID.EatFood;      
+            Item.UseSound = SoundID.Item3;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;

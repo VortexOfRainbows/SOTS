@@ -51,7 +51,7 @@ namespace SOTS.Items.Potions
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 9999;
             Item.UseSound = SoundID.Item3;            
-            Item.useStyle = ItemUseStyleID.EatFood;      
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;      
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;

@@ -46,7 +46,6 @@ Update Objectives:
 16. Somehow fix marble biome in vibrant geode
 17. Update Elemental Amulet sprite to include modern genshin visions
 18. Void Meter save when you exit the world
-19. Fix shimmer trident infinite gold exploit. Shimmer Electromagnetic Lure into the Deterrent
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -85,6 +84,9 @@ Daily Log:
 8/7/24
 1. Added withered peanut bushes to the abandoned village
 2. Added Wishing Star (works in MP)
+3. Potions now use the appropriate use animation
+4. Trident may no longer be crafted with gold/platinum, as Vanilla has its own trident recipe using Shimmer
+5. Electromagnetic Lure now shimmers into the D.E.F.E
 
 8/4/24 to 8/6/24
 1. Patchleather Armor set bonus should now be less jank under water

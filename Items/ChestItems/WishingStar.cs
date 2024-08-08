@@ -11,8 +11,6 @@ namespace SOTS.Items.ChestItems
     {
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            Player player = Main.LocalPlayer;
-            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/ChestItems/WishingStarGlow");
             for (int i = 0; i < 8; i++)
             {
@@ -25,8 +23,6 @@ namespace SOTS.Items.ChestItems
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
-            Player player = Main.LocalPlayer;
-            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/ChestItems/WishingStarGlow");
             Vector2 origin = Item.Size / 2;
             for (int i = 0; i < 8; i++)

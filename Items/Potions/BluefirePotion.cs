@@ -22,8 +22,8 @@ namespace SOTS.Items.Potions
 			Item.maxStack = 9999;
             Item.buffType = ModContent.BuffType<Bluefire>();   
             Item.buffTime = 14700;  
-            Item.UseSound = SoundID.Item3;            
-            Item.useStyle = ItemUseStyleID.EatFood;        
+            Item.UseSound = SoundID.Item3;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;

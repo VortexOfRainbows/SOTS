@@ -18,6 +18,7 @@ namespace SOTS.Items
 		{
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(4, 6));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ElectromagneticDeterrent>();
 			this.SetResearchCost(1);
 		}
         public override void ModifyTooltips(List<TooltipLine> tooltips)

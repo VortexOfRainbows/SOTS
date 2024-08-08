@@ -21,12 +21,12 @@ namespace SOTS.Items.Potions
 			Item.maxStack = 9999;
             Item.buffType = ModContent.BuffType<GoodVibes>();   
             Item.buffTime = 21630; //around 6 minutes
-            Item.UseSound = SoundID.Item3;            
-            Item.useStyle = ItemUseStyleID.EatFood;        
+            Item.UseSound = SoundID.Item3;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;
-            Item.consumable = true;       
+            Item.consumable = true;      
 		}
 		public override void AddRecipes()
 		{

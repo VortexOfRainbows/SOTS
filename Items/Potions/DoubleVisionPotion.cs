@@ -22,8 +22,8 @@ namespace SOTS.Items.Potions
             Item.buffType = ModContent.BuffType<Buffs.DoubleVision>();   
 			int minute = 3600;
             Item.buffTime = minute * 6;
-            Item.UseSound = SoundID.Item3;            
-            Item.useStyle = ItemUseStyleID.EatFood;      
+            Item.UseSound = SoundID.Item3;
+            Item.useStyle = ItemUseStyleID.DrinkLiquid;
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;
