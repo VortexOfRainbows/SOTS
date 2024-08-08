@@ -1933,7 +1933,7 @@ namespace SOTS
         }
 		public static void GrantRandomWishingStarBuff(Player player, int duration)
         {
-			player.AddBuff(Main.rand.NextFromList(BuffID.Swiftness, BuffID.Regeneration, BuffID.Wrath,
+			player.AddBuff(Main.rand.NextFromList(BuffID.Swiftness, BuffID.Wrath,
 				BuffID.Rage, BuffID.ManaRegeneration, BuffID.MagicPower), duration * 60 + 50, false);
         }
 		public static bool ZoneForest(Player player)
@@ -1983,6 +1983,7 @@ namespace SOTS
 			}
             return base.CanAutoReuseItem(item);
         }
+		public int ManaSpentCounter = 0;
         public override void OnConsumeMana(Item item, int manaConsumed)
         {
 			if(Player.whoAmI == Main.myPlayer)
@@ -1993,7 +1994,12 @@ namespace SOTS
                 }
 				if(WishingStar)
 				{
-					CastWishingStar(Player, Main.MouseWorld, item.damage);
+					ManaSpentCounter += manaConsumed;
+					if(ManaSpentCounter >= 100)
+					{
+						ManaSpentCounter -= 100;
+                        CastWishingStar(Player, Main.MouseWorld, 100);
+                    }
 				}
             }
         }
@@ -2001,7 +2007,10 @@ namespace SOTS
 		{
 			if (player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(player.GetSource_Misc("SOTS:WishingStar"), position, Vector2.Zero, ModContent.ProjectileType<WishingStarProj>(), damage, 1f, Main.myPlayer);
+				int direction = player.Center.X < position.X ? 1 : -1;
+				Vector2 spawnPos = new Vector2(MathHelper.Lerp(player.Center.X - Main.rand.NextFloat(1250, 1450) * direction, position.X, 0.4f), MathHelper.Lerp(player.Center.Y, position.Y, 0.25f) - Main.rand.NextFloat(750, 950));
+
+                Projectile.NewProjectile(player.GetSource_Misc("SOTS:WishingStar"), spawnPos, Main.rand.NextVector2Circular(32, 32), ModContent.ProjectileType<WishingStarProj>(), damage, 1f, Main.myPlayer, position.X, position.Y);
 			}
 		}
     }

@@ -5634,7 +5634,11 @@ Mods: {
 
 			WishingStar: {
 				DisplayName: Wishing Star
-				Tooltip: 10% chance to gain a random buff whenever mana is used
+				Tooltip:
+					'''
+					10% chance to gain a random buff whenever mana is used
+					'Wish upon a shooting star'
+					'''
 			}
 		}
 

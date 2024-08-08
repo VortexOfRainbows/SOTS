@@ -47,7 +47,6 @@ Update Objectives:
 17. Update Elemental Amulet sprite to include modern genshin visions
 18. Void Meter save when you exit the world
 19. Fix shimmer trident infinite gold exploit. Shimmer Electromagnetic Lure into the Deterrent
-20. Add Wishing Star accessory
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -62,10 +61,10 @@ Conduit powering code for the two portals
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword,
 Possibly Blade Wings, Tesseract,
-Icebreaker, Plague Spitter
+Icebreaker, Plague Spitter, Wishing Star
 
 ---Visual Upgrade Needed---
-N/A
+Wishing Star
 
 ---Multiplayer Fixes/Testing Needed---
 N/A
@@ -85,7 +84,7 @@ Daily Log:
 
 8/7/24
 1. Added withered peanut bushes to the abandoned village
-2. WIP Wishing Star
+2. Added Wishing Star (works in MP)
 
 8/4/24 to 8/6/24
 1. Patchleather Armor set bonus should now be less jank under water
