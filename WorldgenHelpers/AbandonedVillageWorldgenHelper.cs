@@ -3460,14 +3460,14 @@ namespace SOTS.WorldgenHelpers
                         {
                             bool isGrass = type == TileID.CorruptGrass || type == TileID.CrimsonGrass;
                             bool isStone = ValidStoneTiles.Contains(type) && !isGrass;
-                            if ((isGrass || (isStone && WorldGen.genRand.NextBool(20))) && t.HasTile && t.Slope == 0 && !t.IsHalfBlock && !Main.tile[i, j - 1].HasTile)
+                            if ((isGrass || (isStone && WorldGen.genRand.NextBool(18))) && t.HasTile && t.Slope == 0 && !t.IsHalfBlock && !Main.tile[i, j - 1].HasTile)
                             {
                                 int plantType = TileID.CorruptPlants;
                                 if (type == TileID.CrimsonGrass)
                                 {
                                     plantType = TileID.CrimsonPlants;
                                 }
-                                if (WorldGen.genRand.NextBool(20) || isStone)
+                                if (WorldGen.genRand.NextBool(9) || isStone)
                                 {
                                     plantType = TileID.MatureHerbs;
                                     if (WorldGen.genRand.NextBool(2) && !isStone)
@@ -3478,12 +3478,10 @@ namespace SOTS.WorldgenHelpers
                                 if (plantType == ModContent.TileType<PeanutBushTile>())
                                 {
                                     Framing.GetTileSafely(i, j - 1).HasTile = false;
-                                    WorldGen.PlaceTile(i, j - 1, plantType, false, true, -1, WorldGen.genRand.Next(3));
+                                    WorldGen.PlaceTile(i, j - 1, plantType, false, true, -1, WorldGen.genRand.NextFromList(3, 4, 5));
                                     if (Main.tile[i, j - 1].TileType == ModContent.TileType<PeanutBushTile>())
-                                        for (int attempts = 0; attempts < 25; attempts++)
-                                        {
+                                        for (int attempts = 0; attempts < 15; attempts++)
                                             PeanutBushTile.AttemptToGrowPeanuts(i, j - 1);
-                                        }
                                 }
                                 else
                                 {
@@ -3574,7 +3572,7 @@ namespace SOTS.WorldgenHelpers
                         WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile1x2>(), true, true, -1, WorldGen.genRand.Next(4));
                         hasPlaced = true;
                     }
-                    else if ((ValidGrassTiles.Contains(firstType) && !WorldGen.genRand.NextBool(6)) || WorldGen.genRand.NextBool(15) || (ValidStoneTiles.Contains(firstType) && WorldGen.genRand.NextBool(4)))
+                    else if ((ValidGrassTiles.Contains(firstType) && !WorldGen.genRand.NextBool(7)) || WorldGen.genRand.NextBool(12) || (ValidStoneTiles.Contains(firstType) && WorldGen.genRand.NextBool(3)))
                     {
                         if(underground)
                             WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile1x1>(), true, true, -1, WorldGen.genRand.NextFromList(4, 5, 6, 7, 8, 9, 10));
@@ -3626,8 +3624,8 @@ namespace SOTS.WorldgenHelpers
                     }
                     if (tileRight.HasTile && !hasPlaced)
                     {
-                        bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(14) ||
-                            (WorldGen.genRand.NextBool(4) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>());
+                        bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(15) ||
+                            (WorldGen.genRand.NextBool(5) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>());
                         if (correctTile)
                         {
                             WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x1>(), true, true, -1, WorldGen.genRand.Next(4));

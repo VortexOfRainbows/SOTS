@@ -332,6 +332,7 @@ namespace SOTS
 		public float DamageGenerateMoney = 0;
 		public bool KeepersBox = false;
         public bool PrevKeepersBox = false;
+		public bool WishingStar = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -964,7 +965,7 @@ namespace SOTS
 			{
 				return;
 			}
-			BlazingQuiver = false;
+			BlazingQuiver = WishingStar = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
 			if(VMincubator)
@@ -1925,20 +1926,15 @@ namespace SOTS
 		}
 		public static void GrantRandomRingBuff(Player player)
         {
-			List<int> possibleBuffs = new List<int>()
-			{
-				BuffID.Swiftness,
-				BuffID.Regeneration,
-				BuffID.Ironskin,
-				BuffID.Wrath,
-				BuffID.Rage,
-				ModContent.BuffType<SoulAccess>(),
-				ModContent.BuffType<Roughskin>(),
-				BuffID.Thorns,
-				BuffID.ManaRegeneration,
-				ModContent.BuffType<DiamondSkin>()
-			};
-			player.AddBuff(possibleBuffs[Main.rand.Next(possibleBuffs.Count)], 1800, false);
+			player.AddBuff(Main.rand.NextFromList(BuffID.Swiftness,
+				BuffID.Regeneration, BuffID.Ironskin, BuffID.Wrath,
+				BuffID.Rage, ModContent.BuffType<SoulAccess>(), ModContent.BuffType<Roughskin>(),
+				BuffID.Thorns, BuffID.ManaRegeneration, ModContent.BuffType<DiamondSkin>()), 1800, false);
+        }
+		public static void GrantRandomWishingStarBuff(Player player, int duration)
+        {
+			player.AddBuff(Main.rand.NextFromList(BuffID.Swiftness, BuffID.Regeneration, BuffID.Wrath,
+				BuffID.Rage, BuffID.ManaRegeneration, BuffID.MagicPower), duration * 60 + 50, false);
         }
 		public static bool ZoneForest(Player player)
 		{
@@ -1987,6 +1983,27 @@ namespace SOTS
 			}
             return base.CanAutoReuseItem(item);
         }
+        public override void OnConsumeMana(Item item, int manaConsumed)
+        {
+			if(Player.whoAmI == Main.myPlayer)
+            {
+                if (manaConsumed > 0 && WishingStar && Main.rand.NextBool(10))
+                {
+                    GrantRandomWishingStarBuff(Player, manaConsumed);
+                }
+				if(WishingStar)
+				{
+					CastWishingStar(Player, Main.MouseWorld, item.damage);
+				}
+            }
+        }
+		public static void CastWishingStar(Player player, Vector2 position, int damage)
+		{
+			if (player.whoAmI == Main.myPlayer)
+			{
+				Projectile.NewProjectile(player.GetSource_Misc("SOTS:WishingStar"), position, Vector2.Zero, ModContent.ProjectileType<WishingStarProj>(), damage, 1f, Main.myPlayer);
+			}
+		}
     }
 }
 

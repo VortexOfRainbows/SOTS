@@ -1,16 +1,10 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Items.Slime;
-using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.Enums;
-using Terraria.GameContent;
-using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -51,7 +45,7 @@ namespace SOTS.Items
 			TileObjectData.newTile.CoordinateHeights = new int[1] { 40 };
 			TileObjectData.newTile.DrawYOffset = -22;
 			TileObjectData.newTile.DrawFlipHorizontal = false;
-			TileObjectData.newTile.RandomStyleRange = 3;
+			TileObjectData.newTile.RandomStyleRange = TileObjectData.newTile.StyleWrapLimit = 3;
 			TileObjectData.addTile(Type);
 			DustType = DustID.WoodFurniture;
 			LocalizedText name = CreateMapEntryName();
@@ -74,6 +68,11 @@ namespace SOTS.Items
         }
         public override bool CreateDust(int i, int j, ref int type)
         {
+			if (Main.tile[i, j].TileFrameY > 0)
+			{
+				type = Main.rand.NextBool(3) ? ModContent.DustType<SootDust>() : ModContent.DustType<CharredWoodDust>();
+				return true;
+			}
 			if (Main.rand.NextBool(3))
 				type = DustID.Grass;
             return true;
@@ -84,48 +83,49 @@ namespace SOTS.Items
 		}
         public override void RandomUpdate(int i, int j)
         {
-			if(WorldGen.InWorld(i, j, 20))
+			if (WorldGen.InWorld(i, j, 20) && Main.tile[i, j].TileFrameY <= 0)
 				AttemptToGrowPeanuts(i, j);
         }
 		public static void AttemptToGrowPeanuts(int i, int j)
-		{
-			for (int y = 2; y <= 7; y++)
-			{
-				for (int x = -3; x <= 3; x++)
-				{
-					Tile tileToConvert = Main.tile[i + x, j + y];
-					if(tileToConvert.HasTile && (Main.tile[i + x, j + y - 1].TileType != ModContent.TileType<PeanutBushTile>() || !Main.tile[i + x, j + y - 1].HasTile))
-					{
-						bool PeanutAdjecent = (y == 2 && x == 0)
-							|| (Main.tile[i + x - 1, j + y].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x - 1, j + y].HasTile)
-							|| (Main.tile[i + x + 1, j + y].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x + 1, j + y].HasTile)
-							|| (Main.tile[i + x, j + y - 1].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x, j + y - 1].HasTile)
-							|| (Main.tile[i + x, j + y + 1].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x, j + y + 1].HasTile);
-						int fartherAway = 2;
-						if (x == -3 || x == 3)
-						{
-							fartherAway += 2;
-						}
-						if (y >= 6)
-							fartherAway += 2;
-						if ((PeanutAdjecent || WorldGen.genRand.NextBool(50)) && (tileToConvert.TileType == TileID.Dirt || (tileToConvert.TileType == TileID.Grass && Main.tile[i + x, j + y - 1].HasTile && WorldGen.genRand.NextBool(2))))
-						{
-							if (WorldGen.genRand.NextBool(y * 2 + Math.Abs(x) * 2 + fartherAway))
-							{
-								tileToConvert.TileType = (ushort)ModContent.TileType<PeanutOreTile>();
-								WorldGen.SquareTileFrame(i + x, j + y);
-								if (Main.netMode != NetmodeID.SinglePlayer)
-									NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
-								return;
-							}
-						}
-					}
-				}
-			}
-		}
+        {
+            for (int y = 2; y <= 7; y++)
+            {
+                for (int x = -3; x <= 3; x++)
+                {
+                    Tile tileToConvert = Main.tile[i + x, j + y];
+                    if (tileToConvert.HasTile && (Main.tile[i + x, j + y - 1].TileType != ModContent.TileType<PeanutBushTile>() || !Main.tile[i + x, j + y - 1].HasTile))
+                    {
+                        bool PeanutAdjecent = (y == 2 && x == 0)
+                            || (Main.tile[i + x - 1, j + y].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x - 1, j + y].HasTile)
+                            || (Main.tile[i + x + 1, j + y].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x + 1, j + y].HasTile)
+                            || (Main.tile[i + x, j + y - 1].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x, j + y - 1].HasTile)
+                            || (Main.tile[i + x, j + y + 1].TileType == ModContent.TileType<PeanutOreTile>() && Main.tile[i + x, j + y + 1].HasTile);
+                        int fartherAway = 2;
+                        if (x == -3 || x == 3)
+                        {
+                            fartherAway += 2;
+                        }
+                        if (y >= 6)
+                            fartherAway += 2;
+                        if ((PeanutAdjecent || WorldGen.genRand.NextBool(50)) && (tileToConvert.TileType == TileID.Dirt || (tileToConvert.TileType == TileID.Grass && Main.tile[i + x, j + y - 1].HasTile && WorldGen.genRand.NextBool(2))))
+                        {
+                            if (WorldGen.genRand.NextBool(y * 2 + Math.Abs(x) * 2 + fartherAway))
+                            {
+                                tileToConvert.TileType = (ushort)ModContent.TileType<PeanutOreTile>();
+                                WorldGen.SquareTileFrame(i + x, j + y);
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                    NetMessage.SendTileSquare(-1, i + x, j + y, 3, TileChangeType.None);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-			yield return new Item(ModContent.ItemType<PeanutBush>());
+			if (Main.tile[i,j].TileFrameY <= 0)
+				yield return new Item(ModContent.ItemType<PeanutBush>());
         }
     }
 }

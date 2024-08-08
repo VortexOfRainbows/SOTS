@@ -5631,6 +5631,11 @@ Mods: {
 				DisplayName: AV Ambient
 				Tooltip: ""
 			}
+
+			WishingStar: {
+				DisplayName: Wishing Star
+				Tooltip: 10% chance to gain a random buff whenever mana is used
+			}
 		}
 
 		ItemTooltip: {
@@ -7326,6 +7331,7 @@ Mods: {
 			PlagueSpitter.DisplayName: Plague Spitter
 			PlagueBeam.DisplayName: Plague Beam
 			TesseractSlash.DisplayName: Tesseract Slash
+			WishingStarProj.DisplayName: Wishing Star Proj
 		}
 
 		DamageClasses: {
