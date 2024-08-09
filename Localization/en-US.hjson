@@ -5640,6 +5640,11 @@ Mods: {
 					'Wish upon a shooting star'
 					'''
 			}
+
+			JarOfPineapple: {
+				DisplayName: Jar of Pineapple
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6073,6 +6078,11 @@ Mods: {
 					Increases max life by 100
 					Increases max void by 100
 					'''
+			}
+
+			FreshGreenyBuff: {
+				DisplayName: Fresh Greeny
+				Description: "'Putrid Pinky's worst nightmare'"
 			}
 		}
 
@@ -7335,7 +7345,8 @@ Mods: {
 			PlagueSpitter.DisplayName: Plague Spitter
 			PlagueBeam.DisplayName: Plague Beam
 			TesseractSlash.DisplayName: Tesseract Slash
-			WishingStarProj.DisplayName: Wishing Star Proj
+			WishingStarProj.DisplayName: Wishing Star
+			FreshGreeny.DisplayName: Fresh Greeny
 		}
 
 		DamageClasses: {
