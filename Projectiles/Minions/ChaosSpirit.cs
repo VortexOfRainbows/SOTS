@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using System.IO;
-using SOTS.Void;
 using Terraria.ModLoader;
 using SOTS.Buffs.MinionBuffs;
 
@@ -26,7 +25,6 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Chaos Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;

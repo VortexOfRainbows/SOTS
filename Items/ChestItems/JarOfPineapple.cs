@@ -19,7 +19,7 @@ namespace SOTS.Items.ChestItems
 		public override void SetDefaults() 
 		{
 			Item.damage = 20;
-			Item.knockBack = 1f;
+			Item.knockBack = 2f;
 			Item.width = 18;
 			Item.height = 24;
 			Item.useTime = 36;

@@ -46,6 +46,7 @@ Update Objectives:
 16. Somehow fix marble biome in vibrant geode
 17. Update Elemental Amulet sprite to include modern genshin visions
 18. Void Meter save when you exit the world
+19. Fix Wishing Star not working with certain charge items
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)

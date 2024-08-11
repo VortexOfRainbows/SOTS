@@ -5643,7 +5643,7 @@ Mods: {
 
 			JarOfPineapple: {
 				DisplayName: Jar of Pineapple
-				Tooltip: ""
+				Tooltip: Summons a Nature Slime to fight for you
 			}
 		}
 
