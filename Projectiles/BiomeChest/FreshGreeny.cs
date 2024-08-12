@@ -5,10 +5,9 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
-using System.IO.Pipelines;
-using Terraria.GameContent.LootSimulation;
 using System.Collections.Generic;
-using System.Text.Json.Serialization.Metadata;
+using SOTS.Buffs.MinionBuffs;
+using Terraria.GameContent.Animations;
 
 namespace SOTS.Projectiles.BiomeChest
 {
@@ -17,10 +16,10 @@ namespace SOTS.Projectiles.BiomeChest
 		public override void SetStaticDefaults()
 		{
 			Main.projFrames[Projectile.type] = 5;
-			Main.projPet[Projectile.type] = true;
+            Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-            ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
-			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+            ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
             ProjectileID.Sets.TrailingMode[Type] = 2;
             ProjectileID.Sets.TrailCacheLength[Type] = 10;
 		}
@@ -52,13 +51,14 @@ namespace SOTS.Projectiles.BiomeChest
         }
         public sealed override void SetDefaults()
 		{
+            SetStaticDefaults();
 			Projectile.width = 36;
 			Projectile.height = 34;
 			Projectile.tileCollide = true;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
+			Projectile.minionSlots = 0f;
 			Projectile.penetrate = -1;
             Projectile.localNPCHitCooldown = 40;
             Projectile.usesLocalNPCImmunity = true;
@@ -94,13 +94,13 @@ namespace SOTS.Projectiles.BiomeChest
         {
             if(RunOnce)
             {
-                Stabbies = [Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero];
+                Stabbies = new List<Vector2>();
                 RunOnce = false;
             }
             Player player = Main.player[Projectile.owner];
             if (player.dead || !player.active)
-                player.ClearBuff(ModContent.BuffType<Buffs.MinionBuffs.FreshGreenyBuff>());
-            if (player.HasBuff(ModContent.BuffType<Buffs.MinionBuffs.FreshGreenyBuff>()))
+                player.ClearBuff(ModContent.BuffType<FreshGreenyBuff>());
+            if (player.HasBuff(ModContent.BuffType<FreshGreenyBuff>()))
                 Projectile.timeLeft = 2;
             SlimeAI();
             FrameUpdate();
@@ -111,8 +111,22 @@ namespace SOTS.Projectiles.BiomeChest
             Projectile.ai[2] += 1 + FoundTargetCounter / 90f;
             Projectile.tileCollide = Projectile.ai[1] != 1; //If not flying
 		}	
+        private void AddStabbies()
+        {
+            Player player = Main.player[Projectile.owner];
+            int ownedCount = player.ownedProjectileCounts[ModContent.ProjectileType<FreshGreenyCounter>()] + 1;
+            while (Stabbies.Count < ownedCount)
+            {
+                Stabbies.Add(Vector2.Zero);
+            }
+            while (Stabbies.Count > ownedCount)
+            {
+                Stabbies.RemoveAt(Stabbies.Count - 1);
+            }
+        }
         private void UpdateStabbies(Vector2 Target)
         {
+            AddStabbies();
             float c = Stabbies.Count;
             if (c < 1)
                 return;
@@ -275,7 +289,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
-                FoundTargetCounter--;
+                FoundTargetCounter -= 2;
             }
             FoundTargetCounter = Math.Clamp(FoundTargetCounter, 0, 90);
             UpdateStabbies(targetPos);
@@ -308,5 +322,58 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			return false;
 		}
-	}
+    }
+    public class FreshGreenyCounter : ModProjectile
+    {
+        public override string Texture => "SOTS/Projectiles/BiomeChest/FreshGreeny";
+        public override void SetStaticDefaults()
+        {
+            Main.projPet[Projectile.type] = true;
+            ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
+            ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+            ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+        }
+        public sealed override void SetDefaults()
+        {
+            Projectile.width = 8;
+            Projectile.height = 8;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 120;
+            Projectile.alpha = 255;
+            Projectile.minionSlots = 1f;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.friendly = false;
+            Projectile.tileCollide = false;
+            Projectile.minion = true;
+            Projectile.ignoreWater = true;
+            Projectile.netImportant = true;
+            Projectile.hide = true;
+        }
+        public bool runOnce = true;
+        public sealed override void AI()
+        {
+            if(runOnce)
+            {
+                runOnce = false;
+                return;
+            }
+            Player player = Main.player[Projectile.owner];
+            int type = ModContent.ProjectileType<FreshGreeny>();
+            int ownedCount = player.ownedProjectileCounts[type];
+            if (ownedCount < 1 && player.whoAmI == Main.myPlayer)
+            {
+                player.SpawnMinionOnCursor(Projectile.GetSource_FromThis(), player.whoAmI, type, Projectile.originalDamage, Projectile.knockBack);
+                player.ownedProjectileCounts[type] = ++ownedCount;
+            }
+            Projectile.Center = player.Center;
+            if ((player.HasBuff(ModContent.BuffType<FreshGreenyBuff>()) || Main.myPlayer != Projectile.owner) && player.active)
+            {
+                Projectile.timeLeft = 2;
+            }
+        }
+        public override bool ShouldUpdatePosition()
+        {
+            return false;
+        }
+    }
 }

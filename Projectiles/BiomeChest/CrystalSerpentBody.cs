@@ -38,10 +38,9 @@ namespace SOTS.Projectiles.BiomeChest
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.active && proj.owner == player.whoAmI)
+                if (proj.active && proj.owner == player.whoAmI && proj.type == ModContent.ProjectileType<CrystalSerpentHead>() && proj.whoAmI != Projectile.whoAmI)
                 {
-                    if (proj.type == ModContent.ProjectileType<CrystalSerpentHead>() && proj.whoAmI != Projectile.whoAmI)
-                        ownedCounter++;
+                    ownedCounter++;
                 }
             }
             if (ownedCounter != 1)

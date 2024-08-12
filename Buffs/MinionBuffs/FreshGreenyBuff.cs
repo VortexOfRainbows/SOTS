@@ -13,7 +13,7 @@ namespace SOTS.Buffs.MinionBuffs
 		}
 		public override void Update(Player player, ref int buffIndex) 
 		{
-			if (player.ownedProjectileCounts[ModContent.ProjectileType<FreshGreeny>()] > 0) 
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<FreshGreenyCounter>()] > 0) 
 			{
 				player.buffTime[buffIndex] = 18000;
 			}

@@ -7347,6 +7347,7 @@ Mods: {
 			TesseractSlash.DisplayName: Tesseract Slash
 			WishingStarProj.DisplayName: Wishing Star
 			FreshGreeny.DisplayName: Fresh Greeny
+			FreshGreenyCounter.DisplayName: Fresh Greeny Counter
 		}
 
 		DamageClasses: {

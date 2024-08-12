@@ -31,7 +31,7 @@ namespace SOTS.Items.ChestItems
 			Item.noMelee = true;
 			Item.DamageType = DamageClass.Summon;
 			Item.buffType = ModContent.BuffType<FreshGreenyBuff>();
-			Item.shoot = ModContent.ProjectileType<FreshGreeny>();
+			Item.shoot = ModContent.ProjectileType<FreshGreenyCounter>();
             Item.mana = 10;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

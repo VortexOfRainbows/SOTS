@@ -38,9 +38,7 @@ namespace SOTS.Projectiles.BiomeChest
         }
         public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Crystal Serpent");
 			Main.projPet[Projectile.type] = true;
-            //ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 		}
         public const float BaseAttackRate = 54;
