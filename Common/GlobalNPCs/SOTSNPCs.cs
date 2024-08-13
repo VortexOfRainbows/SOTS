@@ -64,7 +64,25 @@ namespace SOTS.Common.GlobalNPCs
 		{
 			return FindTarget_Basic(center, out float _, minDistance, attacker, needsLOS);
 		}
-		public static int FindTarget_Basic(Vector2 center, out float dist, float minDistance = 2000f, object attacker = null, bool needsLOS = false)
+		public static int FindTarget_WithLos(Vector2 center, out float dist, int LosWidth = 16, float minDistance = 2000f, object attacker = null)
+        {
+            int target = -1;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                if (Main.npc[i].CanBeChasedBy(attacker))
+                {
+                    float distance = (center - Main.npc[i].Center).Length();
+                    if (distance < minDistance && Collision.CanHitLine(center - new Vector2(LosWidth, LosWidth), LosWidth * 2, LosWidth * 2, Main.npc[i].position, Main.npc[i].width, Main.npc[i].height))
+                    {
+                        target = i;
+                        minDistance = distance;
+                    }
+                }
+            }
+            dist = minDistance;
+            return target;
+        }
+        public static int FindTarget_Basic(Vector2 center, out float dist, float minDistance = 2000f, object attacker = null, bool needsLOS = false)
 		{
 			int target = -1;
 			for (int i = 0; i < Main.maxNPCs; i++)

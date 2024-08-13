@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using System.Collections.Generic;
 using SOTS.Buffs.MinionBuffs;
-using Terraria.GameContent.Animations;
 
 namespace SOTS.Projectiles.BiomeChest
 {
@@ -30,7 +29,7 @@ namespace SOTS.Projectiles.BiomeChest
             Texture2D leaf = ModContent.Request<Texture2D>("SOTS/Projectiles/BiomeChest/FreshGreenyLeaf").Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 5 * 0.75f - 4);
             Vector2 stabOrigin = new Vector2(stabby.Width / 2, stabby.Height);
-            Vector2 leafOrigin = new Vector2(0, leaf.Height / 2);
+            Vector2 leafOrigin = new Vector2(leaf.Width / 2, leaf.Height / 2);
             Color color = lightColor;
 			Rectangle frame = new Rectangle(0, texture.Height / 5 * Projectile.frame, texture.Width, texture.Height / 5);
             for (int i = 0; i < Projectile.oldPos.Length; i++)
@@ -41,10 +40,31 @@ namespace SOTS.Projectiles.BiomeChest
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
                 Main.spriteBatch.Draw(texture, center - Main.screenPosition, frame, new Color(30, 40, 35, 0) * perc * perc, Projectile.oldRot[i], drawOrigin, Projectile.scale, Projectile.oldSpriteDirection[i] == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
-            foreach(Vector2 s in Stabbies)
+            if(Stabbies != null)
             {
-                Main.spriteBatch.Draw(leaf, Projectile.Center - Main.screenPosition, null, color * 0.3f, s.ToRotation(), leafOrigin, new Vector2(s.Length() / leaf.Width, 1), 0, 0f);
-                Main.spriteBatch.Draw(stabby, Projectile.Center + s - Main.screenPosition, null, color, s.ToRotation() + MathHelper.PiOver2, stabOrigin, Projectile.scale, 0, 0f);
+                foreach (Vector2 s in Stabbies)
+                {
+                    float len = s.Length();
+                    float rot = s.ToRotation();
+                    int totalLeaves = 2 + (int)(len / leaf.Width) * 2;
+                    Vector2 prev = Vector2.Zero;
+                    for(int i = -1; i <= totalLeaves; i++)
+                    {
+                        float totalScale = len / leaf.Width / totalLeaves * 2;
+                        float perc = i / (float)totalLeaves;
+                        float sinScale = MathF.Sin(perc * MathHelper.Pi);
+                        if (i == -1)
+                        {
+                            sinScale = 1;
+                            totalScale *= 0.7f;
+                        }
+                        Vector2 sinPos = new Vector2(0, sinScale * 4 * MathF.Sin(MathHelper.ToRadians(Projectile.ai[2] * 2f + i * 45f))).RotatedBy(rot);
+                        Vector2 pos = s * perc + sinPos;
+                        Main.spriteBatch.Draw(leaf, Projectile.Center + pos - Main.screenPosition, null, color * (0.5f - sinScale * 0.3f), (prev - pos).ToRotation(), leafOrigin, new Vector2(totalScale, 0.7f + 0.3f * sinScale), 0, 0f);
+                        prev = pos;
+                    }
+                    Main.spriteBatch.Draw(stabby, Projectile.Center + s - Main.screenPosition, null, color, s.ToRotation() + MathHelper.PiOver2, stabOrigin, Projectile.scale, 0, 0f);
+                }
             }
             Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             return false;
@@ -67,7 +87,10 @@ namespace SOTS.Projectiles.BiomeChest
 		public override bool MinionContactDamage() => true;
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
+            int c = Stabbies.Count;
             modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
+            modifiers.ArmorPenetration += c * 4;
+            modifiers.SourceDamage.Base += (c - 2) * 2;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -77,7 +100,7 @@ namespace SOTS.Projectiles.BiomeChest
         {
             foreach (Vector2 s in Stabbies)
             {
-                Rectangle stabbyHB = new Rectangle((int)(Projectile.Center.X + s.X - 8), (int)(Projectile.Center.Y + s.Y - 16), 16, 16);
+                Rectangle stabbyHB = new Rectangle((int)(Projectile.Center.X + s.X - 12), (int)(Projectile.Center.Y + s.Y - 12), 24, 24);
                 if(targetHitbox.Intersects(stabbyHB))
                 {
                     return true;
@@ -89,7 +112,7 @@ namespace SOTS.Projectiles.BiomeChest
         private int frame = 0;
         private bool RunOnce = true;
         private List<Vector2> Stabbies;
-        private float FoundTargetCounter = 0;
+        private float FoundTargetCounter = 0; //Might need to be synced, but is mostly visual and deterministic, so probably does not need to be server-synced
         public override void AI()
         {
             if(RunOnce)
@@ -130,15 +153,15 @@ namespace SOTS.Projectiles.BiomeChest
             float c = Stabbies.Count;
             if (c < 1)
                 return;
-            float varianceFlower = Math.Clamp(c - 1, 1, 4);
+            float varianceFlower = Math.Clamp(c - 1, 1, 5);
             float radians = MathHelper.ToRadians(90 + c * 2);
             float attackSpeed = 30f / c; // This number will have to change for balancing
             Projectile.localNPCHitCooldown = (int)attackSpeed;
             //float bonusAttackSpeed = attackSpeed - (int)attackSpeed; 
             //Main.NewText(bonusAttackSpeed);
-            float lerpSpeed = 0.0525f;
+            float lerpSpeed = 0.053f;
             if (Target != Vector2.Zero)
-                lerpSpeed += 0.0155f + 0.01f * MathF.Sqrt(c) * FoundTargetCounter / 70f;
+                lerpSpeed += 0.016f + 0.011f * MathF.Sqrt(c) * FoundTargetCounter / 70f;
             float stabCompression = (5 + c) / (10 + c);
             for (int i = 0; i < c; i++)
             {
@@ -153,8 +176,8 @@ namespace SOTS.Projectiles.BiomeChest
                 else
                 {
                     float l = Target.Length();
-                    Vector2 between = Target * 0.5f;
-                    Vector2 cycle = new Vector2(l * 0.55f + variance, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[2] / 2f * (6 + MathF.Sqrt(c)) * Projectile.spriteDirection) + MathHelper.TwoPi * percent);
+                    Vector2 between = Target * 0.3f;
+                    Vector2 cycle = new Vector2(l * 0.725f + variance, 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[2] / 2f * (6 + MathF.Sqrt(c)) * Projectile.spriteDirection) + MathHelper.TwoPi * percent);
                     cycle.Y *= stabCompression;
                     cycle = cycle.RotatedBy(Target.ToRotation());
                     idlePos = between + cycle;
@@ -166,7 +189,7 @@ namespace SOTS.Projectiles.BiomeChest
 		public void SlimeAI()
         {
             Player player = Main.player[Projectile.owner];
-            Vector2 idlePos = player.Center - new Vector2(60 * (Projectile.minionPos + 1) * player.direction, 0); //Maybe don't use minionPos
+            Vector2 idlePos = player.Center - new Vector2(70 * player.direction, 0); //Maybe don't use minionPos
             int PursuitWindow = 32; //The distance at which it is considered close enough to not pursue further.
             float seekEnemyRange = 1280;
             bool flying = Projectile.ai[1] == 1;
@@ -187,11 +210,18 @@ namespace SOTS.Projectiles.BiomeChest
                 }
                 if (target == -1)
                 {
-                    target = SOTSNPCs.FindTarget_Basic(Projectile.Center, seekEnemyRange, this, true);
+                    target = SOTSNPCs.FindTarget_WithLos(Projectile.Center, out float _, 8, seekEnemyRange, this);
+                    if(target != -1)
+                    {
+                        if (Main.npc[target].Distance(player.Center) > 2000)
+                        {
+                            target = -1;
+                        }
+                    }
                 }
                 if (target == -1)
                 {
-                    target = SOTSNPCs.FindTarget_Basic(player.Center, seekEnemyRange, this, true);
+                    target = SOTSNPCs.FindTarget_WithLos(player.Center, out float _, 8, seekEnemyRange, this);
                 }
                 if (target != -1)
                 {
@@ -204,7 +234,7 @@ namespace SOTS.Projectiles.BiomeChest
 
             if(!flying)
                 Projectile.velocity.Y += 0.4f; //Gravity is normally 0.09f, but this should make it slightly snappier
-            bool touchingGround = Collision.SolidTiles(Projectile.position, Projectile.width, Projectile.height + 2) ||
+            bool touchingGround = Collision.SolidTiles(Projectile.position, Projectile.width, Projectile.height + 2, false) ||
                 Projectile.velocity.Y != Collision.TileCollision(Projectile.position + new Vector2(8, 0), new Vector2(0, Projectile.velocity.Y), Projectile.width - 16, Projectile.height).Y;
             if(touchingGround)
             {
@@ -244,28 +274,29 @@ namespace SOTS.Projectiles.BiomeChest
             }
 
             bool FlyDueToDistance = toIdleLen > 1200;
-            if (toIdlePos.Y < -128 || FlyDueToDistance) //8 blocks up vertically
+            if (toIdlePos.Y < -160 || FlyDueToDistance) //8 blocks up vertically
             {
-                if(FlyDueToDistance || !Collision.SolidTiles(idlePos - new Vector2(48, 0), 96, 96))
+                if(FlyDueToDistance || !Collision.SolidTiles(idlePos - new Vector2(48, 0), 96, 96, true))
                     Projectile.ai[1] = 1;
             }
             else
             {
-                bool hasTiles = Collision.SolidTiles(Projectile.Center - new Vector2(32, 0), 48, 28);
-                if (hasTiles || touchingGround)
+                bool stuckInTiles = Collision.SolidTiles(Projectile.position, Projectile.width, Projectile.height - 4, true);
+                bool hasTiles = Collision.SolidTiles(Projectile.Center - new Vector2(32, 0), 48, 28, true);
+                if (!stuckInTiles && (hasTiles || touchingGround))
                     Projectile.ai[1] = 0;
             }
             if (flying)
             {
-                Projectile.velocity += new Vector2(0, MathF.Sin(MathHelper.ToRadians(Projectile.ai[2] * 3))) / 120f;
+                Projectile.velocity += new Vector2(0, MathF.Sin(MathHelper.ToRadians(Projectile.ai[2] * 3))) / 110f;
                 if (toIdleLen > PursuitWindow)
                 {
-                    Projectile.velocity *= 0.93f;
-                    Projectile.velocity += toIdleNorm * 0.4f + toIdlePos * 0.003f;
+                    Projectile.velocity *= 0.92f;
+                    Projectile.velocity += toIdleNorm * 0.36f + toIdlePos * 0.0015f;
                 }
                 else
-                    Projectile.velocity *= 0.9775f;
-                Projectile.rotation = Projectile.velocity.X * 0.04f;
+                    Projectile.velocity *= 0.975f;
+                Projectile.rotation = Projectile.velocity.X * 0.05f;
             }
             else
             {
@@ -363,7 +394,7 @@ namespace SOTS.Projectiles.BiomeChest
             if (ownedCount < 1 && player.whoAmI == Main.myPlayer)
             {
                 player.SpawnMinionOnCursor(Projectile.GetSource_FromThis(), player.whoAmI, type, Projectile.originalDamage, Projectile.knockBack);
-                player.ownedProjectileCounts[type] = ++ownedCount;
+                player.ownedProjectileCounts[type] = 1;
             }
             Projectile.Center = player.Center;
             if ((player.HasBuff(ModContent.BuffType<FreshGreenyBuff>()) || Main.myPlayer != Projectile.owner) && player.active)

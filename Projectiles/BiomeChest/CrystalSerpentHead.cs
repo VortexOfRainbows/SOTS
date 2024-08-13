@@ -40,7 +40,8 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			Main.projPet[Projectile.type] = true;
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-		}
+            ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;
+        }
         public const float BaseAttackRate = 54;
         public const float framePerAttack = 11f;
         public void UpdateCounter(Vector2 toCenter, float numberOfSegments = 1)
@@ -75,7 +76,7 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.height = 30;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft *= 5;
-			//Projectile.minion = true;
+			Projectile.minion = true;
 			Projectile.friendly = true;
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;

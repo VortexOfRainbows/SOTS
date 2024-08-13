@@ -542,7 +542,9 @@ namespace SOTS
 		}
 		public static bool IsValidForCoMinions(Player player, Projectile projectile)
 		{
-			return player.active && (projectile.minion || projectile.type == ModContent.ProjectileType<CrystalSerpentHead>()) && projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) && projectile.damage > 0 && projectile.owner == Main.myPlayer;
+			return player.active && (projectile.minion || projectile.type == ModContent.ProjectileType<CrystalSerpentHead>()) 
+				&& projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) 
+				&& projectile.damage > 0 && projectile.owner == Main.myPlayer;
         }
 		public void CoMinion(Projectile proj, int damage, int type, ref int minionIndexVar)
         {

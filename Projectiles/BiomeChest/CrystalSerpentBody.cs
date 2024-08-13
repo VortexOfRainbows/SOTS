@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Buffs.MinionBuffs;
+using SOTS.Items.ChestItems;
 
 namespace SOTS.Projectiles.BiomeChest
 {
@@ -34,33 +35,23 @@ namespace SOTS.Projectiles.BiomeChest
         public sealed override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            int ownedCounter = 0;
-            for (int i = 0; i < Main.projectile.Length; i++)
+            if (runOnce)
             {
-                Projectile proj = Main.projectile[i];
-                if (proj.active && proj.owner == player.whoAmI && proj.type == ModContent.ProjectileType<CrystalSerpentHead>() && proj.whoAmI != Projectile.whoAmI)
-                {
-                    ownedCounter++;
-                }
+                runOnce = false;
+                return;
             }
-            if (ownedCounter != 1)
+            int type = ModContent.ProjectileType<CrystalSerpentHead>();
+            int ownedCount = player.ownedProjectileCounts[type];
+            if (ownedCount < 1 && player.whoAmI == Main.myPlayer)
             {
-                if (player.whoAmI == Main.myPlayer)
-                {
-                    player.SpawnMinionOnCursor(Projectile.GetSource_FromThis(), player.whoAmI, ModContent.ProjectileType<CrystalSerpentHead>(), Projectile.originalDamage, Projectile.knockBack);
-                }
+                player.SpawnMinionOnCursor(Projectile.GetSource_FromThis(), player.whoAmI, type, Projectile.originalDamage, Projectile.knockBack);
+                player.ownedProjectileCounts[type] = 1;
             }
             Projectile.Center = player.Center;
-            if (!player.active && ownedCounter != 1)
-            {
-                Projectile.active = false;
-            }
-            if (player.HasBuff(ModContent.BuffType<StarlightSerpent>()))
+            if ((player.HasBuff(ModContent.BuffType<StarlightSerpent>()) || Main.myPlayer != Projectile.owner) && player.active)
             {
                 Projectile.timeLeft = 2;
             }
-            else if(Main.myPlayer == Projectile.owner)
-                Projectile.Kill();
         }
         public override bool ShouldUpdatePosition()
         {
