@@ -45,8 +45,7 @@ Update Objectives:
 15. Upgrade item to the Hydrokinetic Antennae
 16. Somehow fix marble biome in vibrant geode
 17. Update Elemental Amulet sprite to include modern genshin visions
-18. Void Meter save when you exit the world
-19. Fix Wishing Star not working with certain charge items
+18. Fix Wishing Star not working with certain charge items
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -82,10 +81,11 @@ N/A
 
 Daily Log:
 
-8/11/24 to 8/12/24
+8/11/24 to 8/13/24
 1. Added Fresh Greeny (Jar of Pineapple), Seems to work Great in Multiplayer!
 2. Fix bug where Starcaller Staff was completely unaffected by damage modifiers
 3. Attempted fix on Creative Shock (should no longer randomly appear in Multiplayer)
+4. Fixed bug where Void Meter didn't properly save upon relog. (Now, if you leave with a max meter, you should have a max meter upon rejoining)
 
 8/7/24 to 8/8/24
 1. Added withered peanut bushes to the abandoned village

@@ -77,7 +77,7 @@ namespace SOTS.Void
 				voidBarOffset.X = tag.GetFloat("voidBarPosX3");
 			if (tag.ContainsKey("voidBarPosY3"))
 				voidBarOffset.Y = tag.GetFloat("voidBarPosY3");
-		}
+        }
         public bool netUpdate = false;
         public override void CopyClientState(ModPlayer clientClone)/* tModPorter Suggestion: Replace Item.Clone usages with Item.CopyNetStateTo */
 		{
@@ -569,6 +569,7 @@ namespace SOTS.Void
 			base.PostUpdateEquips();
         }
 		bool isFull = false;
+		private int DelayVoidReset = 0;
         private void ResetVariables()
 		{
 			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
@@ -665,7 +666,7 @@ namespace SOTS.Void
 
 			frozenMaxDuration = 0;
 			frozenMinTimer = 3600;
-			if (voidMeter >= voidMeterMax2)
+			if (voidMeter >= voidMeterMax2 && DelayVoidReset >= 2)
 			{
 				//make sure meter doesn't go above max
 				voidMeter = voidMeterMax2; 
@@ -683,8 +684,9 @@ namespace SOTS.Void
                 {
 					voidMeter = frozenVoidCount;
 				}
-				isFull = false;
-			}
+				isFull = false; 
+				DelayVoidReset++; //This will allow void meter to return to what is was before joining the world.
+            }
 			UpdateVoidRegen();
 			voidMeterMax2 = voidMeterMax;
 			ApplyVoidMeterMax2Bonuses();
