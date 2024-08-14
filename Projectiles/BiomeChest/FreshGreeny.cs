@@ -122,7 +122,11 @@ namespace SOTS.Projectiles.BiomeChest
             }
             Player player = Main.player[Projectile.owner];
             if (player.dead || !player.active)
+            {
+                if(Projectile.timeLeft > 2)
+                    Projectile.timeLeft = 2;
                 player.ClearBuff(ModContent.BuffType<FreshGreenyBuff>());
+            }
             if (player.HasBuff(ModContent.BuffType<FreshGreenyBuff>()))
                 Projectile.timeLeft = 2;
             SlimeAI();

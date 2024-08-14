@@ -124,7 +124,7 @@ namespace SOTS.Items.AbandonedVillage
         }
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
-			tileFrameX += (short)(i % 3 * 288);
+			tileFrameX += (short)((i + j) % 3 * 288);
 			tileFrameY += (short)(j % 2 * 270);
         }
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -170,7 +170,7 @@ namespace SOTS.Items.AbandonedVillage
             {
                 DustType = ModContent.DustType<SootDust>();
                 HitSound = SoundID.Tink;
-                AddMapEntry(new Color(84, 45, 31));
+                AddMapEntry(new Color(123, 77, 77));
             }
             public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
             {

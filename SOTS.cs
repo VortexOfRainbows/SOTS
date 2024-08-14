@@ -47,6 +47,7 @@ using Terraria.UI.Chat;
 using Terraria.Chat;
 using SOTS.Common.ModPlayers;
 using Terraria.Map;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS
 {
@@ -789,16 +790,19 @@ namespace SOTS
 			Merge
 		}
 		public static Similarity GetSimilarity(Tile check, int myType, int mergeType)
-		{
+        {
+			bool bonusMerge = false;
+			if (mergeType == ModContent.TileType<SootBlockTile>())
+				bonusMerge = check.TileType == ModContent.TileType<SootSlabTile>();
 			if (check == null || !check.HasTile)
 			{
 				return Similarity.None;
 			}
-			if (check.TileType == myType || Main.tileMerge[myType][check.TileType] || (Main.tileBrick[check.TileType] && check.TileType != mergeType))
+			if (check.TileType == myType || Main.tileMerge[myType][check.TileType] || (Main.tileBrick[check.TileType] && check.TileType != mergeType && !bonusMerge))
 			{
 				return Similarity.Same;
 			}
-			if (check.TileType == mergeType)
+			if (check.TileType == mergeType || bonusMerge)
 			{
 				return Similarity.Merge;
 			}
@@ -829,6 +833,10 @@ namespace SOTS
 				return;
 			}
 			Main.tileMerge[myType][mergeType] = false;
+			if(mergeType == ModContent.TileType<SootBlockTile>())
+            {
+                Main.tileMerge[myType][ModContent.TileType<SootSlabTile>()] = false;
+            }
 			Tile tileLeft = Main.tile[x - 1, y];
 			Tile tileRight = Main.tile[x + 1, y];
 			Tile tileUp = Main.tile[x, y - 1];

@@ -23,12 +23,11 @@ Acknowledged But Likely Delayed:
 13. Banners to work on platforms (should be fairly easy)
 
 Update Objectives:
-1. Ghost Town! (Next up)
-	1. Smart spawning rubble	
-	2. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
-	3. Fill the Rectangle with blocks and generation that is related to the AVM instead of just being in the natural underground
-	4. Find out how to better integrate the idea of the place infected by evil (potentially change tile/wall types)
-	5. Make sure all walls are using unsafe variants and doesn't merge with underground
+1. Ghost Town! (Next up)	
+	1. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
+	2. Fill the Rectangle with blocks and generation that is related to the AVM instead of just being in the natural underground
+	3. Find out how to better integrate the idea of the place infected by evil (potentially change tile/wall types)
+	4. Make sure all walls are using unsafe variants and doesn't merge with underground
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items (pending)
 4. Starmap
@@ -81,9 +80,9 @@ N/A
 
 Daily Log:
 
-8/13/24
-1. Added Dylan's Cool Tiles. Right now, the soot merge sprite is kinda ugly...
-	1. Needs: fix the soot merge sprites (make them darker probably)
+8/13/24 to 8/14/24
+1. Added Dylan's Cool Tiles
+2. Gave Dylan's Cool tiles a soot merge (epic)
 
 8/11/24 to 8/13/24
 1. Added Fresh Greeny (Jar of Pineapple), Seems to work Great in Multiplayer!
