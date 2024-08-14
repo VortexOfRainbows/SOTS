@@ -81,6 +81,10 @@ N/A
 
 Daily Log:
 
+8/13/24
+1. Added Dylan's Cool Tiles. Right now, the soot merge sprite is kinda ugly...
+	1. Needs: fix the soot merge sprites (make them darker probably)
+
 8/11/24 to 8/13/24
 1. Added Fresh Greeny (Jar of Pineapple), Seems to work Great in Multiplayer!
 2. Fix bug where Starcaller Staff was completely unaffected by damage modifiers

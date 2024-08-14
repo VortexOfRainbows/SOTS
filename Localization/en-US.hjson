@@ -5645,6 +5645,21 @@ Mods: {
 				DisplayName: Jar of Pineapple
 				Tooltip: Summons a Nature Slime to fight for you
 			}
+
+			SootSlab: {
+				DisplayName: Soot Slab
+				Tooltip: ""
+			}
+
+			CorruptionSoot: {
+				DisplayName: Corruption Soot
+				Tooltip: ""
+			}
+
+			CrimsonSoot: {
+				DisplayName: Crimson Soot
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
