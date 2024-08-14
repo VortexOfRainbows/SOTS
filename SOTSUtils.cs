@@ -116,5 +116,17 @@ namespace SOTS
 		{
 			return vector.SafeNormalize(Vector2.Zero);
 		}
+		/// <summary>
+		/// Same as Math.Sign(float), but returns 1 instead of 0
+		/// </summary>
+		/// <param name="num"></param>
+		/// <returns></returns>
+		public static int SignNoZero(float num)
+		{
+			int sign = Math.Sign(num);
+			if (sign == 0)
+				sign = 1;
+            return sign;
+		}
     }
 }

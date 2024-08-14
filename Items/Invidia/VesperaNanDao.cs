@@ -41,7 +41,7 @@ namespace SOTS.Items.Invidia
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 2 * Math.Sign(velocity.X) * player.gravDir, 1);
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 2 * SOTSUtils.SignNoZero(velocity.X) * player.gravDir, 1);
 			return false;
         }
         public override void AddRecipes()

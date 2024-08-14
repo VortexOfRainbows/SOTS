@@ -5660,6 +5660,11 @@ Mods: {
 				DisplayName: Crimson Soot
 				Tooltip: ""
 			}
+
+			StarshardSaber: {
+				DisplayName: Starshard Saber
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7363,6 +7368,7 @@ Mods: {
 			WishingStarProj.DisplayName: Wishing Star
 			FreshGreeny.DisplayName: Fresh Greeny
 			FreshGreenyCounter.DisplayName: Fresh Greeny Counter
+			StarshardSlash.DisplayName: Starshard Slash
 		}
 
 		DamageClasses: {

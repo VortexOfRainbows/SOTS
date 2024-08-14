@@ -7,41 +7,37 @@ using Terraria.DataStructures;
 using System;
 using SOTS.Projectiles.Blades;
 
-namespace SOTS.Items.AbandonedVillage
+namespace SOTS.Items.ChestItems
 {
-	public class GuardianGreatsword : VoidItem
+	public class StarshardSaber : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
 		}
-		public override void SafeSetDefaults()
+		public override void SetDefaults()
 		{
-            Item.damage = 30;
+            Item.damage = 25;
             Item.DamageType = DamageClass.Melee;  
-            Item.width = 58;
-            Item.height = 58;  
-            Item.useTime = 30; 
-            Item.useAnimation = 30;
+            Item.width = 52;
+            Item.height = 50;  
+            Item.useTime = 24; 
+            Item.useAnimation = 24;
             Item.useStyle = ItemUseStyleID.Shoot;		
-            Item.knockBack = 3.6f;
-            Item.value = Item.sellPrice(0, 2, 0, 0);
-            Item.rare = ItemRarityID.Green;
+            Item.knockBack = 1.5f;
+            Item.value = Item.sellPrice(0, 5, 0, 0);
+            Item.rare = ItemRarityID.Orange;
             Item.UseSound = null;
             Item.autoReuse = true;
-            Item.shoot = ModContent.ProjectileType<GuardianGreatswordSlash>(); 
+            Item.shoot = ModContent.ProjectileType<StarshardSlash>(); 
             Item.shootSpeed = 16f;
             Item.noUseGraphic = true; 
             Item.noMelee = true;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 3 * SOTSUtils.SignNoZero(velocity.X) * player.gravDir, 1f);
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 4 * SOTSUtils.SignNoZero(velocity.X) * -player.gravDir, 1);
 			return false;
 		}
-        public override int GetVoid(Player player)
-        {
-            return 10;
-        }
     }
 }
