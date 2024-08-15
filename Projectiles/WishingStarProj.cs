@@ -224,7 +224,7 @@ namespace SOTS.Projectiles
                     break;
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
-                d = Dust.NewDustDirect(center, 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelpers.VibrantColorAttempt(i * 2, false) * perc);
+                d = Dust.NewDustDirect(center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelpers.VibrantColorAttempt(i * 2, false) * perc);
                 d.velocity *= 0.75f * perc;
                 d.velocity += Projectile.oldVelocity * 0.4f;
                 d.noGravity = true;

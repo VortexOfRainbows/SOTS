@@ -5668,7 +5668,11 @@ Mods: {
 
 			FizzleStar: {
 				DisplayName: Fizzle Star
-				Tooltip: ""
+				Tooltip:
+					'''
+					Eject a fragile star that explodes into sparks
+					Has a chance of malfunctioning, launching just sparks for 200% damage or ejecting additional stars
+					'''
 			}
 		}
 

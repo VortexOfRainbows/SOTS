@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.FakePlayer;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS.Common.PlayerDrawing
 {
@@ -43,8 +44,12 @@ namespace SOTS.Common.PlayerDrawing
 				if (item.type == ModContent.ItemType<StormSpell>())
 				{
 					texture = ModContent.Request<Texture2D>("SOTS/Items/Permafrost/StormSpellAnim").Value;
-				}
-				if (item.type == ModContent.ItemType<DreamLamp>())
+                }
+                if (item.type == ModContent.ItemType<FizzleStar>())
+                {
+					glowColor *= 0.5f;
+                }
+                if (item.type == ModContent.ItemType<DreamLamp>())
 				{
 					glowColor = Lighting.GetColor(drawPlayer.itemLocation.ToTileCoordinates());
 					if (drawPlayer.altFunctionUse != 0 || drawPlayer.ownedProjectileCounts[ModContent.ProjectileType<Projectiles.Camera.DreamLamp>()] > 0 || SOTSWorld.DreamLampSolved)

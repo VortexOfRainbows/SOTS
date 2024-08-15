@@ -57,15 +57,16 @@ If any other issues come up with Gilded Blade Wings trail interfering with how o
 Conduit powering code for the two portals
 
 ---Balance Needed List---
-Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword,
-Possibly Blade Wings, Tesseract,
+Possibly Blade Wings, Tesseract, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag
+
+Soot Spewer, Earth Grinder, Guardian Greatsword, Fizzle Star
 Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star, Fresh Greeny/Jar of Pineapple, 
 
 ---Visual Upgrade Needed---
 Wishing Star
 
 ---Multiplayer Fixes/Testing Needed---
-N/A
+Fizzle Star
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -85,7 +86,7 @@ Daily Log:
 2. Gave Dylan's Cool tiles a soot merge (epic)
 3. New Tesseract Slot sprites for upcoming changes
 4. WIP Starshard Saber
-5. WIP Fizzle Star
+5. WIP Fizzle Star, needs: MP Syncing
 6. Fix bugs where using the blades straight vertically would cause them to freeze
 
 8/11/24 to 8/13/24
