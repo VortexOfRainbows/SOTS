@@ -17,7 +17,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 25;
+            Item.damage = 22;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 52;
             Item.height = 50;  

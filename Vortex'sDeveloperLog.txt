@@ -59,7 +59,7 @@ Conduit powering code for the two portals
 ---Balance Needed List---
 Soot Spewer, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag, Earth Grinder, Guardian Greatsword,
 Possibly Blade Wings, Tesseract,
-Icebreaker, Plague Spitter, Wishing Star, Fresh Greeny/Jar of Pineapple, 
+Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star, Fresh Greeny/Jar of Pineapple, 
 
 ---Visual Upgrade Needed---
 Wishing Star
@@ -85,7 +85,8 @@ Daily Log:
 2. Gave Dylan's Cool tiles a soot merge (epic)
 3. New Tesseract Slot sprites for upcoming changes
 4. WIP Starshard Saber
-5. Fix bugs where using the blades straight vertically would cause them to freeze
+5. WIP Fizzle Star
+6. Fix bugs where using the blades straight vertically would cause them to freeze
 
 8/11/24 to 8/13/24
 1. Added Fresh Greeny (Jar of Pineapple), Seems to work Great in Multiplayer!

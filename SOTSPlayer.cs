@@ -1994,11 +1994,11 @@ namespace SOTS
                 }
 				if(WishingStar)
                 {
-                    CastWishingStar(Player, Main.MouseWorld, 100);
                     ManaSpentCounter += manaConsumed;
 					if(ManaSpentCounter >= 100)
-					{
-						ManaSpentCounter -= 100;
+                    {
+                        CastWishingStar(Player, Main.MouseWorld, 100);
+                        ManaSpentCounter -= 100;
                     }
 				}
             }
