@@ -55,6 +55,7 @@ Make enemies spawn in the AV and Mines
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
 Conduit powering code for the two portals
+Overhaul the Stackable Debuff code to use a method for adding debuffs (that way, they can be more easily affected by accessories)
 
 ---Balance Needed List---
 Possibly Blade Wings, Tesseract, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag
@@ -66,7 +67,7 @@ Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star, Fresh Greeny/
 Wishing Star
 
 ---Multiplayer Fixes/Testing Needed---
-N/A
+Overkill Injection and Stackable Debuffs after the rework
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -88,7 +89,8 @@ Daily Log:
 4. WIP Starshard Saber
 5. Added Fizzle Star!
 6. Fix bugs where using the blades straight vertically would cause them to freeze
-7. WIP Acidic Injection
+7. Overkill Injection Added
+8. Slightly reworked stackable debuff code to be better
 
 8/11/24 to 8/13/24
 1. Added Fresh Greeny (Jar of Pineapple), Seems to work Great in Multiplayer!

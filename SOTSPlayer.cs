@@ -967,7 +967,7 @@ namespace SOTS
 			{
 				return;
 			}
-			BlazingQuiver = WishingStar = false;
+			BlazingQuiver = WishingStar = AcidInject = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
 			if(VMincubator)

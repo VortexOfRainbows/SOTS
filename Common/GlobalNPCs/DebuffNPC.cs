@@ -362,6 +362,17 @@ namespace SOTS.Common.GlobalNPCs
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.ToothAcheLime, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BlightCurse").Value, ref BlightCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(222, 73, 170), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref PinkyCurse, ref height);
         }
+        public void StackDebuff(NPC npc, Player player, ref int Debuff, int amount = 1, int netType = 0)
+        {
+            if(player.SOTSPlayer().AcidInject)
+            {
+                if (Debuff <= 0)
+                    Debuff += amount;
+            }
+            Debuff += amount;
+            if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                SendClientChanges(player, npc, netType);
+        }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             lastHitWasCrit = hit.Crit;
@@ -374,11 +385,7 @@ namespace SOTS.Common.GlobalNPCs
                 if (Main.myPlayer == player.whoAmI && SOTSPlayer.ModPlayer(player).SerpentSpine)
                 {
                     if (Main.rand.NextFloat(1) < 1f / ((BlazingCurse + 2f) * (BlazingCurse + 2f)))
-                        BlazingCurse++;
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                    {
-                        SendClientChanges(player, npc);
-                    }
+                        StackDebuff(npc, player, ref BlazingCurse, 1, 0);
                 }
             }
             if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>() || item.type == ItemType<AncientSteelGreatHamaxe>()) && hit.Crit)
@@ -392,9 +399,7 @@ namespace SOTS.Common.GlobalNPCs
                     baseChance = 0.1f;
                 }
                 if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse * 0.7f)) //1 in 1, drops lower ever time
-                    BleedingCurse++;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                    SendClientChanges(player, npc);
+                    StackDebuff(npc, player, ref BleedingCurse, 1, 0);
             }
         }
         public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone)
@@ -413,10 +418,8 @@ namespace SOTS.Common.GlobalNPCs
                         var combatText = Main.combatText[index];
                         NetMessage.SendData(MessageID.CombatTextInt, -1, -1, null, (int)combatText.color.PackedValue, combatText.position.X, combatText.position.Y, (float)-amt, 0, 0, 0);
                     }
-                    HarvestCurse++;
+                    StackDebuff(npc, player, ref HarvestCurse, 1, 0);
                     voidPlayer.lootingSouls -= amt;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                        SendClientChanges(player, npc);
                 }
             }
             if (npc.immortal)
@@ -427,34 +430,23 @@ namespace SOTS.Common.GlobalNPCs
             {
                 if (projectile.type == ProjectileType<PlagueBeam>())
                 {
-                    BlightCurse++;
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        SendClientChanges(player, npc);
+                    StackDebuff(npc, player, ref BlightCurse, 1, 0);
                 }
                 if (projectile.type == ProjectileType<SeleneSlash>() || (projectile.type == ProjectileType<SkipSlash>() && Main.rand.NextBool(5)))
                 {
-                    AnomalyCurse++;
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        SendClientChanges(player, npc);
+                    StackDebuff(npc, player, ref AnomalyCurse, 1, 0);
                 }
             }
             if (projectile.type == ProjectileType<Projectiles.Temple.Helios>())
             {
-                if(BlazingCurse < 5)
-                    BlazingCurse++;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                    SendClientChanges(player, npc);
+                StackDebuff(npc, player, ref BlazingCurse, 1, 0);
             }
             if(projectile.CountsAsClass(DamageClass.SummonMeleeSpeed) || projectile.CountsAsClass(DamageClass.Melee))
             {
                 if (Main.myPlayer == player.whoAmI && SOTSPlayer.ModPlayer(player).SerpentSpine)
                 {
                     if (Main.rand.NextFloat(1) < 1f / ((BlazingCurse + 2f) * (BlazingCurse + 2f)))
-                        BlazingCurse++;
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                    {
-                        SendClientChanges(player, npc);
-                    }
+                        StackDebuff(npc, player, ref BlazingCurse, 1, 0);
                 }
             }
             if (projectile.type == ProjectileType<DeathSpiralProj>() || (projectile.type == ProjectileType<BloodSpark>() && hit.Crit))
@@ -468,9 +460,7 @@ namespace SOTS.Common.GlobalNPCs
                     baseChance = 0.1f;
                 }
                 if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse)) //1 in 10, drops lower ever time
-                    BleedingCurse++;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                    SendClientChanges(player, npc);
+                    StackDebuff(npc, player, ref BleedingCurse, 1, 0);
             }
         }
         bool hitByRay = false;
@@ -501,40 +491,30 @@ namespace SOTS.Common.GlobalNPCs
                 if(projectile.type == ProjectileType<CodeVolley>())
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.7f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
-                        DestableCurse++;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                        SendClientChanges(player, npc);
+                        StackDebuff(npc, player, ref DestableCurse, 1, 0);
                 }
                 if (projectile.type == ProjectileType<CodeBurst>() && projectile.ai[1] != -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.3f, 1 + DestableCurse * 0.45f) && DestableCurse < 20)
-                        DestableCurse++;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                        SendClientChanges(player, npc);
+                        StackDebuff(npc, player, ref DestableCurse, 1, 0);
                 }
 
                 if (projectile.type == ProjectileType<CodeBurst>() && projectile.ai[1] == -1)
                 {
                     if (Main.rand.NextFloat(100f) < 100 * Math.Pow(0.25f, 1 + DestableCurse * 0.5f) && DestableCurse < 20)
-                        DestableCurse++;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                        SendClientChanges(player, npc);
+                        StackDebuff(npc, player, ref DestableCurse, 1, 0);
                 }
             }
             if (projectile.type == ProjectileType<DestabilizingBeam>() && !hitByRay)
             {
                 hitByRay = true;
-                DestableCurse += 4;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                    SendClientChanges(player, npc);
+                StackDebuff(npc, player, ref DestableCurse, 4, 0);
             }
             if(projectile.type == ProjectileType<BetrayersSlash>())
             {
                 if(BleedingCurse < 1)
                 {
-                    BleedingCurse++;
-                    if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                        SendClientChanges(player, npc);
+                    StackDebuff(npc, player, ref BleedingCurse, 1, 0);
                 }
             }
             if (nerfBeeProj.Contains(projectile.type))
@@ -594,9 +574,7 @@ namespace SOTS.Common.GlobalNPCs
             if (item.type == ItemType<PlatinumScythe>() || item.type == ItemType<SectionChiefsScythe>())
             {
                 if (PlatinumCurse < 10)
-                    PlatinumCurse++;
-                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
-                    SendClientChanges(player, npc);
+                    StackDebuff(npc, player, ref PlatinumCurse, 1, 0);
             }
             if (BlazingCurse > 0 || AnomalyCurse > 0)
             {
@@ -800,6 +778,7 @@ namespace SOTS.Common.GlobalNPCs
                     if ((int)proj.ai[0] == npc.whoAmI)
                     {
                         Player player = Main.player[proj.owner];
+                        StackDebuff(npc, player, ref BleedingCurse, 1, 0);
                         if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                             SendClientChanges(player, npc);
                         BleedingCurse++;

@@ -5674,6 +5674,11 @@ Mods: {
 					Has a chance of malfunctioning, launching just sparks for 200% damage or ejecting additional stars
 					'''
 			}
+
+			AcidicInjection: {
+				DisplayName: Overkill Injection
+				Tooltip: "The first application of any stackable debuff is doubled"
+			}
 		}
 
 		ItemTooltip: {
