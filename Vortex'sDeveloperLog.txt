@@ -44,7 +44,8 @@ Update Objectives:
 15. Upgrade item to the Hydrokinetic Antennae
 16. Somehow fix marble biome in vibrant geode
 17. Update Elemental Amulet sprite to include modern genshin visions
-18. Fix Wishing Star not working with certain charge items
+18. Wishing Star variant
+19. Add the Earthen Gizmo (will spawn in AV Mines)
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -67,7 +68,7 @@ Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star, Fresh Greeny/
 Wishing Star
 
 ---Multiplayer Fixes/Testing Needed---
-Overkill Injection and Stackable Debuffs after the rework
+N/A
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -89,8 +90,8 @@ Daily Log:
 4. WIP Starshard Saber
 5. Added Fizzle Star!
 6. Fix bugs where using the blades straight vertically would cause them to freeze
-7. Overkill Injection Added
-8. Slightly reworked stackable debuff code to be better
+7. Overkill Injection Added (works in MP)
+8. Slightly reworked stackable debuff code to be better (works in MP)
 
 8/11/24 to 8/13/24
 1. Added Fresh Greeny (Jar of Pineapple), Seems to work Great in Multiplayer!

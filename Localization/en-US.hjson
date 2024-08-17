@@ -5677,7 +5677,7 @@ Mods: {
 
 			AcidicInjection: {
 				DisplayName: Overkill Injection
-				Tooltip: "The first application of any stackable debuff is doubled"
+				Tooltip: The first application of any stackable debuff is doubled
 			}
 		}
 
