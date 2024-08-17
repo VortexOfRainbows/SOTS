@@ -81,13 +81,14 @@ N/A
 
 Daily Log:
 
-8/13/24 to 8/14/24
+8/13/24 to 8/16/24
 1. Added Dylan's Cool Tiles
 2. Gave Dylan's Cool tiles a soot merge (epic)
 3. New Tesseract Slot sprites for upcoming changes
 4. WIP Starshard Saber
 5. Added Fizzle Star!
 6. Fix bugs where using the blades straight vertically would cause them to freeze
+7. WIP Acidic Injection
 
 8/11/24 to 8/13/24
 1. Added Fresh Greeny (Jar of Pineapple), Seems to work Great in Multiplayer!

@@ -243,8 +243,9 @@ namespace SOTS
 			SyncHasTeleported,
 			SyncTesseractData,
 			SyncConduitPlayer,
-			SyncConduitPlayerAll
-		}
+			SyncConduitPlayerAll,
+            SyncGlobalNPC2
+        }
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
 			int msgType = reader.ReadByte();
@@ -477,7 +478,22 @@ namespace SOTS
 						packet.Send(-1, playernumber2);
 					}
 					break;
-			}
+                case (int)SOTSMessageType.SyncGlobalNPC2:
+                    playernumber = reader.ReadByte();
+					npcNumber = reader.ReadInt32();
+					debuffNPC = Main.npc[npcNumber].GetGlobalNPC<DebuffNPC>();
+                    debuffNPC.PinkyCurse = reader.ReadInt32();
+                    if (Main.netMode == NetmodeID.Server)
+                    {
+                        var packet = GetPacket();
+                        packet.Write((byte)SOTSMessageType.SyncGlobalNPC2);
+                        packet.Write(playernumber);
+                        packet.Write(npcNumber);
+                        packet.Write(debuffNPC.PinkyCurse);
+                        packet.Send(-1, playernumber);
+                    }
+                    break;
+            }
 			if(msgType == (int)SOTSMessageType.SyncHasTeleported)
             {
 				int whoAmItemOrNpc = reader.ReadInt32();

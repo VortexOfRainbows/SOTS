@@ -59,6 +59,7 @@ using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.Buffs.ConduitBoosts;
 using SOTS.Items.Chaos;
 using SOTS.Buffs.Debuffs;
+using System.Security.Permissions;
 
 namespace SOTS
 {
@@ -333,6 +334,7 @@ namespace SOTS
 		public bool KeepersBox = false;
         public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
+		public bool AcidInject = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();

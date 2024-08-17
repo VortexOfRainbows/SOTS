@@ -38,6 +38,7 @@ using SOTS.NPCs.Anomaly;
 using SOTS.Projectiles.Tide;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.FakePlayer;
+using SOTS.Projectiles;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -87,6 +88,7 @@ namespace SOTS.Common.GlobalNPCs
         public int BlazingCurse = 0;
         public int AnomalyCurse = 0;
         public int BlightCurse = 0;
+        public int PinkyCurse = 0;
         public float VoidspaceCurse = 0;
         public int OwnerOfVoidspaceCurseDamage = -1;
         public int timeFrozen = 0;
@@ -304,6 +306,16 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write(frozen);
                 packet.Send();
             }
+            else if(type == 2)
+            {
+                byte playerWhoAmI = (byte)player.whoAmI;
+                var packet = Mod.GetPacket();
+                packet.Write((byte)SOTSMessageType.SyncGlobalNPC2);
+                packet.Write(playerWhoAmI);
+                packet.Write(npc.whoAmI);
+                packet.Write(PinkyCurse);
+                packet.Send();
+            }
         }
         public void DrawTimeFreeze(NPC npc, SpriteBatch spriteBatch)
         {
@@ -348,6 +360,7 @@ namespace SOTS.Common.GlobalNPCs
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.VoidAnomaly, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.ToothAcheLime, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BlightCurse").Value, ref BlightCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(222, 73, 170), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref PinkyCurse, ref height);
         }
         public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
