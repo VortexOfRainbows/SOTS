@@ -66,7 +66,7 @@ Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star, Fresh Greeny/
 Wishing Star
 
 ---Multiplayer Fixes/Testing Needed---
-Fizzle Star
+N/A
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -86,7 +86,7 @@ Daily Log:
 2. Gave Dylan's Cool tiles a soot merge (epic)
 3. New Tesseract Slot sprites for upcoming changes
 4. WIP Starshard Saber
-5. WIP Fizzle Star, needs: MP Syncing
+5. Added Fizzle Star!
 6. Fix bugs where using the blades straight vertically would cause them to freeze
 
 8/11/24 to 8/13/24

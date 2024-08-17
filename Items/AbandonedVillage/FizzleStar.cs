@@ -39,6 +39,7 @@ namespace SOTS.Items.AbandonedVillage
             Item.shoot = ModContent.ProjectileType<Projectiles.AbandonedVillage.FizzleStar>(); 
             Item.shootSpeed = 10f;
 			Item.mana = 6;
+            Item.autoReuse = true;
             if (!Main.dedServ)
             {
                 Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/AbandonedVillage/FizzleStarGlow").Value;
