@@ -13,8 +13,12 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.NPCs
 {
 	public class SittingMushroom : ModNPC
-	{
-		public override void SetDefaults()
+    {
+        public override void SetStaticDefaults()
+        {
+			Main.npcFrameCount[NPC.type] = 8;  
+        }
+        public override void SetDefaults()
 		{
             NPC.aiStyle =0; 
             NPC.lifeMax = 40;   
@@ -23,7 +27,6 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0.1f;
             NPC.width = 30;
             NPC.height = 30;
-			Main.npcFrameCount[NPC.type] = 8;  
             NPC.value = 125;
             NPC.npcSlots = 1f;
             NPC.HitSound = SoundID.NPCHit1;
