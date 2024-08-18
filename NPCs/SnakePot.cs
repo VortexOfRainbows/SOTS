@@ -107,18 +107,18 @@ namespace SOTS.NPCs
         }
         public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Snake");
-		}
+            // DisplayName.SetDefault("Snake");
+            Main.npcFrameCount[NPC.type] = 5;
+        }
 		public override void SetDefaults()
 		{
-			NPC.aiStyle =3;
+			NPC.aiStyle = 3;
 			NPC.lifeMax = 40;  
 			NPC.damage = 35; 
 			NPC.defense = 4;  
 			NPC.knockBackResist = 0.5f;
 			NPC.width = 32;
 			NPC.height = 32;
-			Main.npcFrameCount[NPC.type] = 5;  
 			NPC.value = 60;
 			NPC.npcSlots = .2f;
 			NPC.boss = false;

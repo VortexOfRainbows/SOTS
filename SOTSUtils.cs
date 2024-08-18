@@ -128,5 +128,25 @@ namespace SOTS
 				sign = 1;
             return sign;
 		}
+		/// <summary>
+		/// Linearly interpolates an angle, taking the shortest path, where a normal lerp would not suffice. For example, lerping (-160, 150) degrees would take a route from -160 to -210 or 200 to 150, instead of -160 to 150.
+		/// </summary>
+		/// <returns></returns>
+		public static float AngularLerp(float angle1, float angle2, float amount)
+		{
+			angle1 = MathHelper.WrapAngle(angle1);
+			angle2 = MathHelper.WrapAngle(angle2);
+			bool doNormalRoute = MathF.Abs(angle1 - angle2) < MathHelper.Pi;
+			if(doNormalRoute)
+			{
+                return MathHelper.WrapAngle(MathHelper.Lerp(angle1, angle2, amount));
+            }
+            else //Doing the backward route
+            {
+                float SameSignAngle1 = (angle1 + 360f) % MathHelper.TwoPi;
+                float SameSignAngle2 = (angle2 + 360f) % MathHelper.TwoPi;
+                return MathHelper.WrapAngle(MathHelper.Lerp(angle1, angle2, amount));
+            }
+		}
     }
 }
