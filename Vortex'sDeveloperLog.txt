@@ -9,7 +9,7 @@ The following is my development plans :D
 
 Acknowledged But Likely Delayed:
 1. Earthen Plating starter house.
-2. Need a mechanic for spawning a portal once the Acedia Gateway is fully powered.
+2. Need a mechanic for spawning a portal once a Gateway is fully powered.
 3. Smart cursor doesn't work with dressers.
 4. Most Void Minions do not work with whip debuffs
 5. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
