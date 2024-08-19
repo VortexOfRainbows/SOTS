@@ -21,6 +21,7 @@ Acknowledged But Likely Delayed:
 11. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
 12. Scroll wheel with challenger's ring
 13. Banners to work on platforms (should be fairly easy)
+14. Somehow fix marble biome in vibrant geode
 
 Update Objectives:
 1. Ghost Town! (Next up)	
@@ -31,20 +32,18 @@ Update Objectives:
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items (pending)
 4. Starmap
-5. Pitati Longbow Upgrade..? Maybe also use spore sprayer
+5. Pitati Longbow, Spore sprayer, Vespera, and Ancient Steel bow upgrade (Polaris Bow)
 6. Torch Bomb Upgrade Item
 7. House Cube Accessory that can generate a temporary house
-8. Accessory that uses void instead of mana when low on mana
+8. Accessory that uses void instead of mana when low on mana (Wishing Star variant)
 9. Upgrade to Code Corruptor: Binary Blaster (?)
 10. Post LUX technical structure (like Hydroponics/Mineralarium) which injects additional buff duration into you after it charges up
 11. Shimmer Item that upgrades the store for Archaeologist
-12. Sculpting Table item that allows crafting Statues
-13. Fish Bomb
-14. Fix generation bug with Infernum and Leviathan area, potentially fix remnants compatability
-15. Upgrade item to the Hydrokinetic Antennae
-16. Somehow fix marble biome in vibrant geode
-17. Update Elemental Amulet sprite to include modern genshin visions
-18. Wishing Star variant
+12. Fish Bomb
+13. Fix generation bug with Infernum and Leviathan area, potentially fix remnants compatability
+14. Upgrade item to the Hydrokinetic Antennae
+15. Update Elemental Amulet sprite to include modern genshin visions
+16. Wishing Star variant
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
