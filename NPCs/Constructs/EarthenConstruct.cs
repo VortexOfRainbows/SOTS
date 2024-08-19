@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Dusts;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Earth;
 using SOTS.WorldgenHelpers;

@@ -9,6 +9,7 @@ using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.ModPlayers;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace SOTS
 {
@@ -143,8 +144,14 @@ namespace SOTS
             }
             else //Doing the backward route
             {
-                float SameSignAngle1 = (angle1 + 360f) % MathHelper.TwoPi;
-                float SameSignAngle2 = (angle2 + 360f) % MathHelper.TwoPi;
+				if (angle1 > angle2)
+                {
+                    angle2 += MathHelper.TwoPi;
+                }
+                else
+                {
+                    angle1 += MathHelper.TwoPi;
+                }
                 return MathHelper.WrapAngle(MathHelper.Lerp(angle1, angle2, amount));
             }
 		}

@@ -1,15 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoMod.Core.Utils;
 using SOTS.Dusts;
-using SOTS.Items.CritBonus;
+using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
-using Stubble.Core.Tokens;
 using System;
-using System.CodeDom;
+using System.IO;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,6 +14,16 @@ namespace SOTS.NPCs.Gizmos
 {
 	public class EarthenGizmo : ModNPC
 	{
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(AIMode);
+            writer.Write(AI2);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            AIMode = reader.ReadInt32();
+            AI2 = reader.ReadInt32();
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
@@ -38,7 +45,7 @@ namespace SOTS.NPCs.Gizmos
             NPC.knockBackResist = .6f;
             NPC.width = 32; //Has to be smaller than the sprite size to allow jumping over blocks properly
             NPC.height = 40; //Has to be shorter than the sprite height to prevent falling through platforms erroneously 
-            NPC.value = 500;
+            NPC.value = 1200;
             NPC.npcSlots = 0.5f;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
@@ -71,6 +78,11 @@ namespace SOTS.NPCs.Gizmos
 				if(AIMode < 1)
                 {
                     AIMode++;
+                    if (AIMode == 1)
+                    {
+                        AIMode = 10;
+                        NPC.netUpdate = true;
+                    }
                 } 
             }
             if (AIMode >= 1) //Drill mode
@@ -90,20 +102,23 @@ namespace SOTS.NPCs.Gizmos
                             }
                             AI2++;
                         }
-                        if(Main.rand.NextBool(3))
+                        for(float i = 0; i < 1f; i += 0.5f)
                         {
-                            Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) + NPC.velocity.SNormalize() * 16, 4, 4, ModContent.DustType<CopyDust4>());
-                            dust.color = new Color(255, 191, 0);
-                            dust.noGravity = true;
-                            dust.fadeIn = 0.1f;
-                            dust.scale *= 1.3f;
-                            dust.velocity *= 0.3f;
-                            dust.alpha = 100;
-                            dust.velocity += NPC.velocity * 0.2f;
-                        }
-                        else
-                        {
-                            PixelDust.Spawn(NPC.Center - new Vector2(5, 5) + NPC.velocity.SNormalize() * 16, 0, 0, NPC.velocity * 0.2f + Main.rand.NextVector2Circular(1, 1), new Color(255, 191, 0) * 0.6f, 8);
+                            if (Main.rand.NextBool(3))
+                            {
+                                Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) + NPC.velocity.SNormalize() * 16 + NPC.velocity * i, 4, 4, ModContent.DustType<CopyDust4>());
+                                dust.color = new Color(255, 191, 0);
+                                dust.noGravity = true;
+                                dust.fadeIn = 0.1f;
+                                dust.scale *= 1.3f;
+                                dust.velocity *= 0.3f;
+                                dust.alpha = 100;
+                                dust.velocity += NPC.velocity * 0.2f;
+                            }
+                            else
+                            {
+                                PixelDust.Spawn(NPC.Center - new Vector2(5, 5) + NPC.velocity.SNormalize() * 16 + NPC.velocity * i, 0, 0, NPC.velocity * 0.2f + Main.rand.NextVector2Circular(1, 1), new Color(255, 191, 0) * 0.6f, 8);
+                            }
                         }
                         int minTilePosX = (int)(NPC.position.X / 16.0) - 1;
                         int maxTilePosX = (int)((NPC.position.X + NPC.width) / 16.0) + 2;
@@ -141,14 +156,37 @@ namespace SOTS.NPCs.Gizmos
                 if (AIMode < 70)
 				{
 					AIMode++;
-					NPC.velocity.X *= 0.98f;
+					NPC.velocity.X *= 0.985f;
                     if (AIMode == 70 || insideBlock)
-					{
-                        AIMode = 70;
-                        if(!insideBlock)
-                            NPC.velocity.Y -= 12.5f;
+                    {
+                        NPC.netUpdate = true;
+                        if (!insideBlock)
+                            NPC.velocity.Y -= 13.5f;
                         else
                             NPC.velocity.Y -= 2f;
+                        if (AIMode == 70)
+                        {
+                            SOTSUtils.PlaySound(SoundID.Item53, NPC.Center, 1.0f, -0.5f);
+                            for (int i = 0; i < 30; i++)
+                            {
+                                if (Main.rand.NextBool(3))
+                                {
+                                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) - NPC.velocity.SNormalize() * 16, 4, 4, ModContent.DustType<CopyDust4>());
+                                    dust.color = new Color(255, 191, 0);
+                                    dust.noGravity = true;
+                                    dust.fadeIn = 0.1f;
+                                    dust.scale *= 1.5f;
+                                    dust.velocity *= -2f * Main.rand.NextFloat();
+                                    dust.alpha = 100;
+                                    dust.velocity += NPC.velocity * 0.5f * Main.rand.NextFloat();
+                                }
+                                else
+                                {
+                                    PixelDust.Spawn(NPC.Center - new Vector2(5, 5) - NPC.velocity.SNormalize() * 16, 0, 0, NPC.velocity * -0.5f * Main.rand.NextFloat() + Main.rand.NextVector2Circular(5, 5), new Color(255, 191, 0) * 0.7f, 7).scale = 1.5f;
+                                }
+                            }
+                        }
+                        AIMode = 70;
                     }
 				}
 				else
@@ -158,6 +196,7 @@ namespace SOTS.NPCs.Gizmos
                     float bestExitDist = toPlayerLen + 64;
                     Vector2 bestExit = NPC.Center;
 
+                    Vector2 paddVelocity = Vector2.Zero; //This value will help prevent the drill from drilling too close to being out of tiles
 					for(int j = 0; j < 16; j++)
                     {
                         bool lastHadNoTile = false;
@@ -172,6 +211,10 @@ namespace SOTS.NPCs.Gizmos
                             float currentDistToPlayer = TrackPlayerPositon.Distance(myPos);
                             if (noTilesToDig)
                             {
+                                if(i < 3 && j % 2 == 0)
+                                {
+                                    paddVelocity -= direction;
+                                }
                                 currentDistToPlayer += 32;
                             }
                             if (currentDistToPlayer < currentBest)
@@ -182,7 +225,7 @@ namespace SOTS.NPCs.Gizmos
                             {
                                 if(noTilesToDig)
                                 {
-                                    currentBest += (bestDistToPlayer - currentBest) * 0.75f + 48;
+                                    currentBest += (bestDistToPlayer - currentBest) * 0.5f + 32;
                                 }
                                 if (currentBest < bestDistToPlayer)
                                 {
@@ -199,6 +242,10 @@ namespace SOTS.NPCs.Gizmos
                                     else
                                     {
                                         currentExit += i * 8;
+                                        if(MathF.Abs(toPlayer.X) < 160)
+                                        {
+                                            currentExit -= 32;
+                                        }
                                     }
                                     if (currentExit < bestExitDist && noTilesToDig)
                                     {
@@ -218,17 +265,19 @@ namespace SOTS.NPCs.Gizmos
                         falseExit = true;
                     }
 					Vector2 toDest = destination - NPC.Center;
-                    if(AIMode < 80)
+                    if(AIMode < 80 && AIMode >= 73)
                     {
-					    NPC.velocity += toDest.SNormalize() * (0.42f + toPlayerLen / 2000f);
+					    NPC.velocity += toDest.SNormalize() * (3f + toPlayerLen / 480f) + paddVelocity * 0.65f;
                     }
                     Vector2 horizontalBiasedToPlayer = toPlayer;
                     horizontalBiasedToPlayer.Y *= 2f;
                     float hDist = horizontalBiasedToPlayer.Length();
                     float RemainingTravelableDistance = toPlayerLen - bestDistToPlayer;
-                    bool readyToExit = (RemainingTravelableDistance < 16 && destination != NPC.Center && AIMode >= 73) || (hDist < 240 && AIMode >= 79);
+                    //Main.NewText(RemainingTravelableDistance);
+                    bool readyToExit = (RemainingTravelableDistance < 16 && AIMode >= 73 && (RemainingTravelableDistance != 0 || !centerInsideBlock || AIMode >= 79)) || (hDist < 240 && AIMode >= 79);
                     if (readyToExit && AIMode < 80)
                     {
+                        NPC.netUpdate = true;
                         SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Enemies/EarthenElementalDig"), NPC.Center, 0.8f, -0.1f);
                         AIMode = 80;
                     }
@@ -245,13 +294,19 @@ namespace SOTS.NPCs.Gizmos
                         }
                         else
                         {
+                            if (AI2 != 0)
+                            {
+                                SOTSUtils.PlaySound(SoundID.Item53, NPC.Center, 1.0f, -0.5f); //Play a biong sound after exiting the ground
+                                NPC.netUpdate = true;
+                                AI2 = 0;
+                            }
                             if (cantSeeAtAll)
                             {
                                 NPC.velocity *= 0.95f;
                                 NPC.velocity += toExit.SNormalize() * 1.56f;
                             }
                         }
-                        if(!centerInsideBlock || Main.rand.NextBool(3))
+                        if (!centerInsideBlock || Main.rand.NextBool(3))
                         {
                             for (int i = 0; i < 2; i++)
                             {
@@ -279,25 +334,38 @@ namespace SOTS.NPCs.Gizmos
                                 AIMode = -1;
                             else
                                 AIMode = -60;
+                            NPC.netUpdate = true;
                         }
                     }
                     else
                     {
                         if (!insideBlock && AIMode < 73)
                         {
-                            NPC.velocity.Y += 1f;
+                            NPC.velocity.Y += 0.7f;
+                            NPC.netUpdate = true;
                         }
                         else
                         {
                             if((AIMode < 79 && centerInsideBlock) || (insideBlock && AIMode < 73))
+                            {
+                                if(AIMode == 70)
+                                {
+                                    SOTSUtils.PlaySound(SoundID.Item52, NPC.Center, 1.0f, -0.5f);
+                                }
                                 AIMode++;
+                            }
                         }
                     }
                     if(AIMode < 80)
-                        NPC.velocity *= 0.85f;
+                    {
+                        if (AIMode < 71)
+                            NPC.velocity *= 0.825f;
+                        else
+                            NPC.velocity *= 0.5f;
+                    }
                     else
                         NPC.velocity *= 0.925f;
-                    NPC.rotation = SOTSUtils.AngularLerp(NPC.rotation, NPC.velocity.ToRotation() + MathHelper.PiOver2, 0.2f);
+                    NPC.rotation = SOTSUtils.AngularLerp(NPC.rotation, NPC.velocity.ToRotation() + MathHelper.PiOver2, 0.175f);
                 }
             }
 			else //Walking mode (fighter AI)
@@ -306,7 +374,7 @@ namespace SOTS.NPCs.Gizmos
                 NPC.noTileCollide = false;
                 NPC.behindTiles = false;
 				NPC.noGravity = false;
-				NPC.velocity.X += MathF.Sign(toPlayer.X) * 0.066f;
+				NPC.velocity.X += MathF.Sign(toPlayer.X) * 0.07f;
 				if (Math.Abs(toPlayer.X) > 32)
 					NPC.velocity.X *= 0.94f;
 				NPC.velocity.Y += 0.05f; //Add additional gravity
@@ -317,7 +385,7 @@ namespace SOTS.NPCs.Gizmos
                 NPC.rotation = SOTSUtils.AngularLerp(NPC.rotation, 0, 0.25f);
             NPC.spriteDirection = NPC.direction;
 		}
-		int frame = 0;
+		private int frame = 0;
 		public override void FindFrame(int frameHeight)
         {
             float frameSpeed = 10f;
@@ -340,13 +408,13 @@ namespace SOTS.NPCs.Gizmos
 		}
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-			//npcLoot.Add(ItemDropRule.Common(ItemType<SporeSprayer>(), 100));
-			//npcLoot.Add(ItemDropRule.NormalvsExpert(ItemType<FragmentOfEarth>(), 2, 1));
-			//LeadingConditionRule onFire = new LeadingConditionRule(new Common.ItemDropConditions.OnFireCondition());
-			//onFire.OnSuccess(ItemDropRule.Common(ItemType<CookedMushroom>(), 1, 3, 4));
-			//onFire.OnFailedConditions(ItemDropRule.Common(ItemType<CookedMushroom>(), 10, 3, 4)
-			//	.OnFailedRoll(ItemDropRule.Common(ItemID.GlowingMushroom, 1, 7, 12)));
-		}
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 5, 10));
+            //LeadingConditionRule onFire = new LeadingConditionRule(new Common.ItemDropConditions.OnFireCondition());
+            //onFire.OnSuccess(ItemDropRule.Common(ItemType<CookedMushroom>(), 1, 3, 4));
+            //onFire.OnFailedConditions(ItemDropRule.Common(ItemType<CookedMushroom>(), 10, 3, 4)
+            //	.OnFailedRoll(ItemDropRule.Common(ItemID.GlowingMushroom, 1, 7, 12)));
+        }
         public override void OnKill()
 		{
 			//for (int k = 0; k < 7; k++)
@@ -361,24 +429,23 @@ namespace SOTS.NPCs.Gizmos
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
-			//if (NPC.life > 0)
-			//{
-			//	int num = 0;
-			//	while ((double)num < hit.Damage / (double)NPC.lifeMax * 20.0)
-			//	{
-			//		Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GlowingMushroom, (float)(2 * hit.HitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
-			//		num++;
-			//	}
-			//}
-			//else
-			//{
-			//	for (int k = 0; k < 10; k++)
-			//	{
-			//		Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GlowingMushroom, (float)(2 * hit.HitDirection), -2f, 250, new Color(100, 100, 100, 250), 0.8f);
-			//	}
-			//	SOTSUtils.PlaySound(SoundID.Item34, NPC.Center);
-			//	Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SittingMushroomGore1"), 1f);
-			//}
-		}
+			if (NPC.life > 0)
+			{
+				int num = 0;
+				while (num < hit.Damage / (double)NPC.lifeMax * 50.0)
+				{
+					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2 * hit.HitDirection, -2f, Scale: 0.8f);
+					num++;
+				}
+			}
+            else
+            {
+            	for (int k = 0; k < 20; k++)
+            	{
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2 * hit.HitDirection, -2f, Scale: 0.9f);
+            	}
+            	//Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SittingMushroomGore1"), 1f);
+            }
+        }
 	}
 }

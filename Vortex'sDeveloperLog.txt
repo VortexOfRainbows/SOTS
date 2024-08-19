@@ -45,7 +45,6 @@ Update Objectives:
 16. Somehow fix marble biome in vibrant geode
 17. Update Elemental Amulet sprite to include modern genshin visions
 18. Wishing Star variant
-19. Add the Earthen Gizmo (will spawn in AV Mines)
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -82,7 +81,11 @@ N/A
 
 Daily Log:
 
-8/13/24 to 8/18/24
+8/19/24
+1. Added Earthen Gizmo. Seems to work fine in multiplayer!
+	1. Needs: Gore, Banner, Loot
+
+8/13/24 to 8/19/24
 1. Added Dylan's Cool Tiles
 2. Gave Dylan's Cool tiles a soot merge (epic)
 3. New Tesseract Slot sprites for upcoming changes
