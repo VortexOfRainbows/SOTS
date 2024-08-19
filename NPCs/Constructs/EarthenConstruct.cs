@@ -75,7 +75,7 @@ namespace SOTS.NPCs.Constructs
                         vector2.Y = (float)(j * 16);
                         if (NPC.position.X + NPC.width > vector2.X && NPC.position.X < vector2.X + 16.0 && (NPC.position.Y + NPC.height > (double)vector2.Y && NPC.position.Y < vector2.Y + 16.0))
                         {
-                            if (Main.rand.NextBool(100)&& Main.tile[i, j].HasUnactuatedTile)
+                            if (Main.rand.NextBool(100) && Main.tile[i, j].HasUnactuatedTile)
                                 WorldGen.KillTile(i, j, true, true, false);
                         }
                     }

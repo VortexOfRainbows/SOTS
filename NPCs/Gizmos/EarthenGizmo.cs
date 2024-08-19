@@ -1,11 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Core.Utils;
+using SOTS.Dusts;
 using SOTS.Items.CritBonus;
+using SOTS.WorldgenHelpers;
 using Stubble.Core.Tokens;
 using System;
 using System.CodeDom;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -42,12 +46,16 @@ namespace SOTS.NPCs.Gizmos
 			//Banner = NPC.type;
 			//BannerItem = ItemType<SittingMushroomBanner>();
 		}
+        private Vector2 TrackPlayerPositon = Vector2.Zero;
 		public int AIMode = 0;
+        private int AI2 = 0;
 		public override void AI()
 		{
 			NPC.TargetClosest(true);
 			Player player = Main.player[NPC.target];
-			Vector2 toPlayer = player.Center - NPC.Center - new Vector2(0, 32);
+            if (AIMode < 80 || TrackPlayerPositon == Vector2.Zero)
+                TrackPlayerPositon = player.Center;
+            Vector2 toPlayer = TrackPlayerPositon - NPC.Center;
 			float toPlayerLen = toPlayer.Length();
 			if(toPlayerLen < 2400) //150 blocks radius
             {
@@ -55,71 +63,241 @@ namespace SOTS.NPCs.Gizmos
             }
             bool canSeePlayerShort = Collision.CanHitLine(NPC.Center + new Vector2(0, 18), 0, 0, player.Center + new Vector2(0, 18), 0, 0);
             bool canSeePlayerTall = Collision.CanHitLine(NPC.Center - new Vector2(0, 40), 0, 0, player.Center - new Vector2(0, 40), 0, 0);
-			if(!canSeePlayerShort && !canSeePlayerTall)
+            bool canSeePlayerLeft = Collision.CanHitLine(NPC.Center - new Vector2(20, 0), 0, 0, player.Center + new Vector2(20, 0), 0, 0);
+            bool canSeePlayerRight = Collision.CanHitLine(NPC.Center + new Vector2(20, 0), 0, 0, player.Center - new Vector2(20, 0), 0, 0);
+            bool cantSeeAtAll = !canSeePlayerLeft && !canSeePlayerRight && !canSeePlayerShort && !canSeePlayerTall;
+            if (cantSeeAtAll)
             {
 				if(AIMode < 1)
                 {
                     AIMode++;
-                } //Not using NPC.ai array because it is used by the vanilla AI in this case.
+                } 
             }
-			if(canSeePlayerShort)
-            {
-                if (AIMode > 0)
-                    AIMode = -30;
-            }
-            NPC.ai[2] = 100; // This should prevent the fighter AI from despawning this enemy during day
             if (AIMode >= 1) //Drill mode
             {
+                bool insideBlock = Collision.SolidTiles(NPC.Center - new Vector2(4, 8 + NPC.height / 2), 8, 4);
+                bool centerInsideBlock = Collision.SolidTiles(NPC.Center - new Vector2(8, 8), 16, 16);
                 NPC.aiStyle = -1;
-                //NPC.behindTiles = true;
                 if (AIMode > 65)
                 {
+                    if (centerInsideBlock)
+                    {
+                        if(centerInsideBlock && AIMode > 70 && AIMode < 80)
+                        {
+                            if (AI2 % 36 == 0)
+                            {
+                                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Enemies/EarthenElementalDig"), NPC.Center, 0.7f, -0.2f);
+                            }
+                            AI2++;
+                        }
+                        if(Main.rand.NextBool(3))
+                        {
+                            Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) + NPC.velocity.SNormalize() * 16, 4, 4, ModContent.DustType<CopyDust4>());
+                            dust.color = new Color(255, 191, 0);
+                            dust.noGravity = true;
+                            dust.fadeIn = 0.1f;
+                            dust.scale *= 1.3f;
+                            dust.velocity *= 0.3f;
+                            dust.alpha = 100;
+                            dust.velocity += NPC.velocity * 0.2f;
+                        }
+                        else
+                        {
+                            PixelDust.Spawn(NPC.Center - new Vector2(5, 5) + NPC.velocity.SNormalize() * 16, 0, 0, NPC.velocity * 0.2f + Main.rand.NextVector2Circular(1, 1), new Color(255, 191, 0) * 0.6f, 8);
+                        }
+                        int minTilePosX = (int)(NPC.position.X / 16.0) - 1;
+                        int maxTilePosX = (int)((NPC.position.X + NPC.width) / 16.0) + 2;
+                        int minTilePosY = (int)(NPC.position.Y / 16.0) - 1;
+                        int maxTilePosY = (int)((NPC.position.Y + NPC.height) / 16.0) + 2;
+                        if (minTilePosX < 0)
+                            minTilePosX = 0;
+                        if (maxTilePosX > Main.maxTilesX)
+                            maxTilePosX = Main.maxTilesX;
+                        if (minTilePosY < 0)
+                            minTilePosY = 0;
+                        if (maxTilePosY > Main.maxTilesY)
+                            maxTilePosY = Main.maxTilesY;
+                        for (int i = minTilePosX; i < maxTilePosX; ++i)
+                        {
+                            for (int j = minTilePosY; j < maxTilePosY; ++j)
+                            {
+                                if (SOTSWorldgenHelper.TrueTileSolid(i, j))
+                                {
+                                    Vector2 vector2 = new Vector2(i * 16, j * 16);
+                                    if (Main.rand.NextBool(80 - (AI2 % 36)) && NPC.position.X + NPC.width > vector2.X && NPC.position.X < vector2.X + 16.0 && NPC.position.Y + NPC.height > vector2.Y && NPC.position.Y < vector2.Y + 16.0)
+                                    {
+                                        WorldGen.KillTile(i, j, true, true, false);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    NPC.behindTiles = true;
                     NPC.noTileCollide = true;
                     NPC.noGravity = true;
                 }
+                else
+                    AI2 = 0;
                 if (AIMode < 70)
 				{
 					AIMode++;
 					NPC.velocity.X *= 0.98f;
-                    if (AIMode == 70)
+                    if (AIMode == 70 || insideBlock)
 					{
-						NPC.velocity.Y -= 12.5f;
-					}
+                        AIMode = 70;
+                        if(!insideBlock)
+                            NPC.velocity.Y -= 12.5f;
+                        else
+                            NPC.velocity.Y -= 2f;
+                    }
 				}
-				else 
+				else
                 {
-                    //This behavior needs A LOT more work... Basically, the NPC should stay in the ground longer, instead of trending towards the surface. Until it is close to the player.
-                    //A good way to pathfind through blocks might be to try making it so the drill checks blocks in several cardinal directions out from it, finding the line that is the combination of the longest and closest and puts it closest to the player.
-                    //--Check cardinals out 20 blocks. If there are no blocks in that direction, consider that the check position. Now go in the direction that brings you closest to the player.
-                    //Another things is that this needs to be able to reach the player from below, meaning it might need to jump higher up or be able to drill better when going up.
-                    bool closePlayerX = Math.Abs(toPlayer.X) < 160; //20 blocks left/rigth
-                    bool insideBlock = Collision.SolidTiles(NPC.Center - new Vector2(4, 8 + NPC.height / 2), 8, 15);
-                    bool outsideBlock = !Collision.SolidTiles(NPC.Center + new Vector2(-14, -8), 28, 32);
-                    float tooClose = Math.Clamp(MathF.Sqrt(Math.Abs(toPlayer.X) / 480f), 0, 1.5f);
-                    float cAI = AIMode - 70f;
-                    float progression = cAI / 120f;
-					if(insideBlock || cAI > 20)
-						AIMode++;
-                    if (closePlayerX && insideBlock)
-						AIMode++;
-                    Vector2 toPlayerN = toPlayer.SNormalize();
-					float dipWhenFarAway = Math.Clamp((toPlayer.Y - 320 * toPlayerN.Y) * 0.005f, -1, 1) * progression * 0.15f;
-					float bonusVelo = Math.Clamp(2 - Math.Abs(toPlayer.X) / 160f, 1, 2);
-					NPC.velocity.Y += toPlayerN.Y * (0.3f * bonusVelo * progression + 0.05f * (cAI > 0 ? 1 : 0)) + dipWhenFarAway;
-					if(cAI > 20)
-						NPC.velocity.X += MathF.Sqrt(MathF.Abs(toPlayerN.X)) * MathF.Sign(toPlayerN.X) * 0.5f * tooClose;
-                    NPC.velocity *= 0.875f;
-                   
-					if(!insideBlock || (cAI < 20 && toPlayerN.Y > 0))
-					{
-						NPC.velocity.Y += 0.5f * Math.Clamp(1 - progression, 0, 1);
-                    }
-                    if (outsideBlock && cAI > 60)
-                    {
-                        AIMode = -120;
-                    }
+                    float bestDistToPlayer = toPlayerLen + 64;
+                    Vector2 destination = NPC.Center;
+                    float bestExitDist = toPlayerLen + 64;
+                    Vector2 bestExit = NPC.Center;
 
-                    NPC.rotation = SOTSUtils.AngularLerp(NPC.rotation, NPC.velocity.ToRotation() + MathHelper.PiOver2, 0.25f);
+					for(int j = 0; j < 16; j++)
+                    {
+                        bool lastHadNoTile = false;
+                        float currentBest = toPlayerLen;
+                        Vector2 myPos = NPC.Center;
+                        for (int i = 0; i <= 11; i++)
+                        {
+                            Vector2 direction = new Vector2(-1, 0).RotatedBy(j * MathHelper.PiOver4 / 2f);
+                            myPos += direction * 16;
+                            bool newPosHasTile = SOTSWorldgenHelper.TrueTileSolid((int)myPos.X / 16, (int)myPos.Y / 16, false);
+                            bool noTilesToDig = !newPosHasTile && lastHadNoTile;
+                            float currentDistToPlayer = TrackPlayerPositon.Distance(myPos);
+                            if (noTilesToDig)
+                            {
+                                currentDistToPlayer += 32;
+                            }
+                            if (currentDistToPlayer < currentBest)
+                            {
+                                currentBest = currentDistToPlayer;
+                            }
+                            if (noTilesToDig || i >= 11)
+                            {
+                                if(noTilesToDig)
+                                {
+                                    currentBest += (bestDistToPlayer - currentBest) * 0.75f + 48;
+                                }
+                                if (currentBest < bestDistToPlayer)
+                                {
+                                    bestDistToPlayer = currentBest;
+                                    destination = myPos;
+                                }
+                                if (j % 4 == 0)
+                                {
+                                    float currentExit = TrackPlayerPositon.Distance(myPos);
+                                    if(j == 0 || j == 8)
+                                    {
+                                        currentExit += i * 16;
+                                    }
+                                    else
+                                    {
+                                        currentExit += i * 8;
+                                    }
+                                    if (currentExit < bestExitDist && noTilesToDig)
+                                    {
+                                        bestExitDist = currentExit;
+                                        bestExit = myPos;
+                                    }
+                                }
+                                break;
+                            }
+                            lastHadNoTile = !newPosHasTile;
+                        }
+                    }
+                    bool falseExit = false;
+                    if(bestExit == NPC.Center)
+                    {
+                        bestExit = player.Center;
+                        falseExit = true;
+                    }
+					Vector2 toDest = destination - NPC.Center;
+                    if(AIMode < 80)
+                    {
+					    NPC.velocity += toDest.SNormalize() * (0.42f + toPlayerLen / 2000f);
+                    }
+                    Vector2 horizontalBiasedToPlayer = toPlayer;
+                    horizontalBiasedToPlayer.Y *= 2f;
+                    float hDist = horizontalBiasedToPlayer.Length();
+                    float RemainingTravelableDistance = toPlayerLen - bestDistToPlayer;
+                    bool readyToExit = (RemainingTravelableDistance < 16 && destination != NPC.Center && AIMode >= 73) || (hDist < 240 && AIMode >= 79);
+                    if (readyToExit && AIMode < 80)
+                    {
+                        SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Enemies/EarthenElementalDig"), NPC.Center, 0.8f, -0.1f);
+                        AIMode = 80;
+                    }
+                    if(AIMode >= 80)
+                    {
+                        Vector2 toExit = bestExit - NPC.Center;
+                        if (falseExit)
+                            toExit.X *= 0.5f;
+                        //Main.NewText(toExit);
+                        if (centerInsideBlock)
+                        {
+                            NPC.velocity *= 0.825f;
+                            NPC.velocity += toExit.SNormalize() * 1.56f;
+                        }
+                        else
+                        {
+                            if (cantSeeAtAll)
+                            {
+                                NPC.velocity *= 0.95f;
+                                NPC.velocity += toExit.SNormalize() * 1.56f;
+                            }
+                        }
+                        if(!centerInsideBlock || Main.rand.NextBool(3))
+                        {
+                            for (int i = 0; i < 2; i++)
+                            {
+                                if (Main.rand.NextBool(3))
+                                {
+                                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) + NPC.velocity.SNormalize() * 16, 4, 4, ModContent.DustType<CopyDust4>());
+                                    dust.color = new Color(255, 191, 0);
+                                    dust.noGravity = true;
+                                    dust.fadeIn = 0.1f;
+                                    dust.scale *= 1.5f;
+                                    dust.velocity *= 2f * Main.rand.NextFloat();
+                                    dust.alpha = 100;
+                                    dust.velocity += NPC.velocity * 0.5f * Main.rand.NextFloat();
+                                }
+                                else
+                                {
+                                    PixelDust.Spawn(NPC.Center - new Vector2(5, 5) + NPC.velocity.SNormalize() * 16, 0, 0, NPC.velocity * 0.5f * Main.rand.NextFloat() + Main.rand.NextVector2Circular(5, 5), new Color(255, 191, 0) * 0.7f, 7).scale = 1.5f;
+                                }
+                            }
+                        }
+                        AIMode++;
+                        if(AIMode >= 110)
+                        {
+                            if (cantSeeAtAll)
+                                AIMode = -1;
+                            else
+                                AIMode = -60;
+                        }
+                    }
+                    else
+                    {
+                        if (!insideBlock && AIMode < 73)
+                        {
+                            NPC.velocity.Y += 1f;
+                        }
+                        else
+                        {
+                            if((AIMode < 79 && centerInsideBlock) || (insideBlock && AIMode < 73))
+                                AIMode++;
+                        }
+                    }
+                    if(AIMode < 80)
+                        NPC.velocity *= 0.85f;
+                    else
+                        NPC.velocity *= 0.925f;
+                    NPC.rotation = SOTSUtils.AngularLerp(NPC.rotation, NPC.velocity.ToRotation() + MathHelper.PiOver2, 0.2f);
                 }
             }
 			else //Walking mode (fighter AI)
@@ -134,19 +312,20 @@ namespace SOTS.NPCs.Gizmos
 				NPC.velocity.Y += 0.05f; //Add additional gravity
 				if (NPC.velocity.Y < 0)
 					NPC.velocity.Y *= 0.99f;
-				NPC.rotation = 0;
-			}
-			NPC.spriteDirection = NPC.direction;
+            }
+            if (NPC.velocity.Y < 3 && AIMode < 70)
+                NPC.rotation = SOTSUtils.AngularLerp(NPC.rotation, 0, 0.25f);
+            NPC.spriteDirection = NPC.direction;
 		}
 		int frame = 0;
 		public override void FindFrame(int frameHeight)
         {
             float frameSpeed = 10f;
             frame = frameHeight;
-			float baseSpeed = 0.5f * Math.Clamp(1f - AIMode / 70f, 0, 1);
-			if(AIMode > 150)
+			float baseSpeed = 0.5f;
+			if(AIMode >= 70)
 			{
-				baseSpeed += 2.2f;
+				baseSpeed += 2.5f;
 			}
 			NPC.frameCounter += baseSpeed + MathF.Sqrt(MathF.Abs(NPC.velocity.X));
 			if (NPC.frameCounter >= frameSpeed) 

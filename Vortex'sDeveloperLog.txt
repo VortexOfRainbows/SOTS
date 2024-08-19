@@ -82,7 +82,7 @@ N/A
 
 Daily Log:
 
-8/13/24 to 8/17/24
+8/13/24 to 8/18/24
 1. Added Dylan's Cool Tiles
 2. Gave Dylan's Cool tiles a soot merge (epic)
 3. New Tesseract Slot sprites for upcoming changes
@@ -92,6 +92,7 @@ Daily Log:
 7. Overkill Injection Added (works in MP)
 8. Slightly reworked stackable debuff code to be better (works in MP)
 9. WIP Earthen Gizmo
+10. Delete unused sounds to make mod smaller
 
 8/11/24 to 8/13/24
 1. Added Fresh Greeny (Jar of Pineapple), Seems to work Great in Multiplayer!
