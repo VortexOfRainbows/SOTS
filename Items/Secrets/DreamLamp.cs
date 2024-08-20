@@ -5,11 +5,9 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using SOTS.Void;
 using System;
-using SOTS.Projectiles.Inferno;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles.Camera;
 using System.Collections.Generic;
-using Terraria.Localization;
 using Terraria.Utilities;
 
 namespace SOTS.Items.Secrets

@@ -1990,19 +1990,32 @@ namespace SOTS
         {
 			if(Player.whoAmI == Main.myPlayer)
             {
-                if (manaConsumed > 0 && WishingStar && Main.rand.NextBool(10))
-                {
-                    GrantRandomWishingStarBuff(Player, manaConsumed);
-                }
-				if(WishingStar)
-                {
-                    ManaSpentCounter += manaConsumed;
-					if(ManaSpentCounter >= 100)
-                    {
-                        CastWishingStar(Player, Main.MouseWorld, 100);
-                        ManaSpentCounter -= 100;
-                    }
+				if (WishingStar)
+				{
+					if (!Items.ChestItems.WishingStar.IsAlternate)
+					{
+						if (manaConsumed > 0 && Main.rand.NextBool(10))
+						{
+							GrantRandomWishingStarBuff(Player, manaConsumed);
+						}
+						ManaSpentCounter += manaConsumed;
+						if (ManaSpentCounter >= 100)
+						{
+							CastWishingStar(Player, Main.MouseWorld, 100);
+							ManaSpentCounter -= 100;
+						}
+					}
+					else
+					{
+						CastWishingStar(Player, Main.MouseWorld, item.damage);
+						//Need to consume void here
+						//
+						//
+						//
+					}
 				}
+				else
+					ManaSpentCounter = 0;
             }
         }
 		public static void CastWishingStar(Player player, Vector2 position, int damage)
@@ -2012,7 +2025,7 @@ namespace SOTS
 				int direction = player.Center.X < position.X ? 1 : -1;
 				Vector2 spawnPos = new Vector2(MathHelper.Lerp(player.Center.X - Main.rand.NextFloat(1250, 1450) * direction, position.X, 0.4f), MathHelper.Lerp(player.Center.Y, position.Y, 0.25f) - Main.rand.NextFloat(750, 950));
 
-                Projectile.NewProjectile(player.GetSource_Misc("SOTS:WishingStar"), spawnPos, Main.rand.NextVector2Circular(32, 32), ModContent.ProjectileType<WishingStarProj>(), damage, 1f, Main.myPlayer, position.X, position.Y);
+                Projectile.NewProjectile(player.GetSource_Misc("SOTS:WishingStar"), spawnPos, Main.rand.NextVector2Circular(32, 32), ModContent.ProjectileType<WishingStarProj>(), damage, 1f, Main.myPlayer, position.X, position.Y, Items.ChestItems.WishingStar.IsAlternate ? -1 : 0);
 			}
 		}
     }

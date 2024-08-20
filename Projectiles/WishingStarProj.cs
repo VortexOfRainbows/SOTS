@@ -39,15 +39,20 @@ namespace SOTS.Projectiles
         }
         public Color BandColor(int i)
         {
+            if (Projectile.ai[2] == -1)
+            {
+                return Color.Black;
+            }
+            Color c = new Color(185, 39, 23);
             if (i == 0)
-                return new Color(122, 243, 305);
+                c = new Color(122, 243, 305);
             if (i == 1)
-                return new Color(305, 170, 0);
+                c = new Color(305, 170, 0);
             if (i == 2)
-                return new Color(167, 150, 300);
+                c = new Color(167, 150, 300);
             if (i == 3)
-                return new Color(110, 304, 130);
-            return new Color(185, 39, 23);
+                c = new Color(110, 304, 130);
+            return c;
         }
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -73,6 +78,8 @@ namespace SOTS.Projectiles
 		public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            if (Projectile.ai[2] == -1)
+                texture = ModContent.Request<Texture2D>("SOTS/Projectiles/ShatteredDreamsProj").Value;
             Texture2D pixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
             Color color = Color.White;
 			Vector2 drawOrigin = new Vector2(texture.Width / 2, 14);
@@ -81,10 +88,11 @@ namespace SOTS.Projectiles
             {
                 if (Projectile.oldPos[i] == Vector2.Zero)
                     break;
-                Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
+                Color c = Projectile.ai[2] == -1 ? Color.Black : ColorHelpers.VibrantColorAttempt(i * 2, false);
+                Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 Vector2 toPrev = previous - center;
-                Main.spriteBatch.Draw(pixel, center - Main.screenPosition, null, ColorHelpers.VibrantColorAttempt(i * 2, false) * perc, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 6f * perc), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(pixel, center - Main.screenPosition, null, c * perc, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 6f * perc), SpriteEffects.None, 0f);
                 previous = center;
             }
             Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, new Color(100, 100, 100, 0), Projectile.rotation * 0.5f, drawOrigin, 2f, SpriteEffects.None, 0f);

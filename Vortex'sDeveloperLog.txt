@@ -3,7 +3,7 @@ The following is my development plans :D
 1. After Void Anomaly is extracted through the tainted keystone, the other portal now leads to a secret area containing the Superbia Portal Base and the Suspicious Stopwatch. The room cannot be entered until it is unlocked from the inside. It is unlocked by breaking the suspicious stopwatch, which can only happen if the Void Anomaly is equipped. The blocks comprising the room appear invisible, similar to Phase Ore. It appears in the Top Right of the sky, opposite the diamond structure, and is not visited by the Archaeologist.
 1a. Suspicious Stopwatch can be powered by the Chaos Conduit, breaking into Time Shards and a Broken Watch; these can be used with the Voidmage Incubator to craft a Timekeeper's Stopwatch 
 1b. Hands of Time melee weapon can be found inside the structure, which freezes enemies when they are struck, including bosses (?)
-2. Stellar Tempest (Upgrade to Digital Daito, Vorpal Knife, Abyssal Fury, Reality Shatter)
+2. Stellar Tempest (Tesseract Swird) (Upgrade to Digital Daito, Vorpal Knife, Abyssal Fury, Reality Shatter)
 3. Refracting Crystal + Void Anomaly => Reflecting Crystal
 4. Give Tesseract the ability to do a "manual mode", where tesseracts attack only when you attack, and at your cursor.
 
@@ -81,8 +81,9 @@ N/A
 
 Daily Log:
 
-8/19/24
+8/19/24 to 8/20/24
 1. Finished Earthen Gizmo. Seems to work fine in multiplayer!
+2. WIP Shattered Dreams
 
 8/13/24 to 8/19/24
 1. Added Dylan's Cool Tiles

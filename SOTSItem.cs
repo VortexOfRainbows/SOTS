@@ -38,6 +38,7 @@ using System.Drawing.Printing;
 using SOTS.Items.Void;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Permafrost;
+using SOTS.Buffs;
 
 namespace SOTS
 {
@@ -483,6 +484,17 @@ namespace SOTS
                 int outSnip;
                 ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
                 return false;
+            }
+			if(item.type == ModContent.ItemType<WishingStar>() && line.Name == "ItemName" && WishingStar.IsAlternate)
+            {
+                Color outer = line.OverrideColor ?? line.Color;
+                Color inner = Color.Black;
+                TextSnippet[] snippets = ChatManager.ParseMessage(line.Text, inner).ToArray();
+                ChatManager.ConvertNormalSnippets(snippets);
+                ChatManager.DrawColorCodedStringShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y), outer, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+                int outSnip;
+                ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
+				return false;
             }
             return true;
         }
