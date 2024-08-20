@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
 using System;
@@ -50,8 +51,8 @@ namespace SOTS.NPCs.Gizmos
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
             NPC.netAlways = true;
-			//Banner = NPC.type;
-			//BannerItem = ItemType<SittingMushroomBanner>();
+			Banner = NPC.type;
+			BannerItem = ModContent.ItemType<EarthenGizmoBanner>();
 		}
         private Vector2 TrackPlayerPositon = Vector2.Zero;
 		public int AIMode = 0;

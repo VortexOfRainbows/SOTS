@@ -20,7 +20,7 @@ Acknowledged But Likely Delayed:
 10. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 11. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
 12. Scroll wheel with challenger's ring
-13. Banners to work on platforms (should be fairly easy)
+13. Banners to work on platforms (should be fairly easy), and to have proper tooltip text
 14. Somehow fix marble biome in vibrant geode
 
 Update Objectives:
@@ -82,7 +82,7 @@ Daily Log:
 
 8/19/24
 1. Added Earthen Gizmo. Seems to work fine in multiplayer!
-	1. Needs: Gore, Banner, Loot
+	1. Needs: Gore, Loot
 
 8/13/24 to 8/19/24
 1. Added Dylan's Cool Tiles

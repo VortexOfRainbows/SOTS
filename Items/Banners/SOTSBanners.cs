@@ -4,6 +4,7 @@ using SOTS.NPCs;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.NPCs.Anomaly;
 using SOTS.NPCs.Chaos;
+using SOTS.NPCs.Gizmos;
 using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Phase;
 using SOTS.NPCs.Tide;
@@ -688,7 +689,10 @@ namespace SOTS.Items.Banners
                         break;
 					case 19:
 						type = NPCType<CorpseBloom>();
-						break;
+                        break;
+                    case 20:
+                        type = NPCType<EarthenGizmo>();
+                        break;
                     default:
 						return;
 				}
@@ -863,6 +867,14 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners2>();
             Item.placeStyle = 19;
+        }
+    }
+    public class EarthenGizmoBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 20;
         }
     }
 }
