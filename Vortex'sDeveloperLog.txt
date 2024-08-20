@@ -44,6 +44,7 @@ Update Objectives:
 14. Upgrade item to the Hydrokinetic Antennae
 15. Update Elemental Amulet sprite to include modern genshin visions
 16. Wishing Star variant
+17. Earthdrive item
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -81,8 +82,7 @@ N/A
 Daily Log:
 
 8/19/24
-1. Added Earthen Gizmo. Seems to work fine in multiplayer!
-	1. Needs: Gore, Loot
+1. Finished Earthen Gizmo. Seems to work fine in multiplayer!
 
 8/13/24 to 8/19/24
 1. Added Dylan's Cool Tiles

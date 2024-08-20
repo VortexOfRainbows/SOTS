@@ -416,16 +416,16 @@ namespace SOTS.NPCs.Gizmos
             //onFire.OnFailedConditions(ItemDropRule.Common(ItemType<CookedMushroom>(), 10, 3, 4)
             //	.OnFailedRoll(ItemDropRule.Common(ItemID.GlowingMushroom, 1, 7, 12)));
         }
-        public override void OnKill()
-		{
-			//for (int k = 0; k < 7; k++)
-			//{
-			//	Vector2 circularLocation = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-			//	int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
-			//	if (Main.netMode != NetmodeID.MultiplayerClient)
-			//		Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center.X, NPC.Center.Y, circularLocation.X, circularLocation.Y, ProjectileType<Projectiles.SporeCloud>(), damage2, 2f, Main.myPlayer);
-			//}
-        }
+  //      public override void OnKill()
+		//{
+		//	//for (int k = 0; k < 7; k++)
+		//	//{
+		//	//	Vector2 circularLocation = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
+		//	//	int damage2 = SOTSNPCs.GetBaseDamage(NPC) / 2;
+		//	//	if (Main.netMode != NetmodeID.MultiplayerClient)
+		//	//		Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center.X, NPC.Center.Y, circularLocation.X, circularLocation.Y, ProjectileType<Projectiles.SporeCloud>(), damage2, 2f, Main.myPlayer);
+		//	//}
+  //      }
         public override void HitEffect(NPC.HitInfo hit)
 		{
 			if (Main.netMode == NetmodeID.Server)
@@ -444,8 +444,15 @@ namespace SOTS.NPCs.Gizmos
             	for (int k = 0; k < 20; k++)
             	{
                     Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2 * hit.HitDirection, -2f, Scale: 0.9f);
-            	}
-            	//Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SittingMushroomGore1"), 1f);
+                }
+                for (int i = 0; i < 3; i++)
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, NPC.height / 2), NPC.velocity, ModGores.GoreType("Gores/Gizmos/EarthenGizmoGore1"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Gizmos/EarthenGizmoGore2"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width / 6, NPC.height / 2), NPC.velocity, ModGores.GoreType("Gores/Gizmos/EarthenGizmoGore3"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(2 * NPC.width / 6, NPC.height / 2), NPC.velocity, ModGores.GoreType("Gores/Gizmos/EarthenGizmoGore4"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(3 * NPC.width / 6, NPC.height / 2), NPC.velocity, ModGores.GoreType("Gores/Gizmos/EarthenGizmoGore3"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(4 * NPC.width / 6, NPC.height / 2), NPC.velocity, ModGores.GoreType("Gores/Gizmos/EarthenGizmoGore4"), 1f);
             }
         }
 	}
