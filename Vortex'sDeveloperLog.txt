@@ -84,11 +84,12 @@ Daily Log:
 
 8/19/24 to 8/21/24
 1. Finished Earthen Gizmo. Seems to work fine in multiplayer!
-2. Added Shattered Dreams. Wishing Star projectile now cuts damage in half after piercing (WOrks in multiplayer)
+2. Added Shattered Dreams. Wishing Star projectile now cuts damage in half after piercing (Works in multiplayer)
 	1. Can be tossed into a wormhole to change randomize player internal vision number (Works in multiplayer)
 3. Bag of Charms / Icosahedrons now use static immunity frames, meaning they should no longer interfere with damage from other sources
 	1. Should mean these items now properly increase dps, rather than sometimes reducing it
 4. Fix bug where picking up an offscreen teleported (wormholed) item would cause the spiral visual to appear for other players where the item had previously been picked up, but no longer exists
+5. More WIP Starshard Saber
 
 8/13/24 to 8/19/24
 1. Added Dylan's Cool Tiles

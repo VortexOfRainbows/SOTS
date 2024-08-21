@@ -88,7 +88,7 @@ namespace SOTS.Common.GlobalNPCs
         public int BlazingCurse = 0;
         public int AnomalyCurse = 0;
         public int BlightCurse = 0;
-        public int PinkyCurse = 0;
+        public int CrystalCurse = 0;
         public float VoidspaceCurse = 0;
         public int OwnerOfVoidspaceCurseDamage = -1;
         public int timeFrozen = 0;
@@ -313,7 +313,7 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write((byte)SOTSMessageType.SyncGlobalNPC2);
                 packet.Write(playerWhoAmI);
                 packet.Write(npc.whoAmI);
-                packet.Write(PinkyCurse);
+                packet.Write(CrystalCurse);
                 packet.Send();
             }
         }
@@ -360,7 +360,7 @@ namespace SOTS.Common.GlobalNPCs
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.VoidAnomaly, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.ToothAcheLime, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BlightCurse").Value, ref BlightCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(222, 73, 170), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref PinkyCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/CrystalCurse").Value, ref CrystalCurse, ref height);
         }
         public void StackDebuff(NPC npc, Player player, ref int Debuff, int amount = 1, int netType = 0)
         {
@@ -421,6 +421,10 @@ namespace SOTS.Common.GlobalNPCs
                     StackDebuff(npc, player, ref HarvestCurse, 1, 0);
                     voidPlayer.lootingSouls -= amt;
                 }
+            }
+            if (projectile.type == ProjectileType<StarShard>())
+            {
+                StackDebuff(npc, player, ref CrystalCurse, 1, 2);
             }
             if (npc.immortal)
             {

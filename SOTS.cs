@@ -482,14 +482,14 @@ namespace SOTS
                     playernumber = reader.ReadByte();
 					npcNumber = reader.ReadInt32();
 					debuffNPC = Main.npc[npcNumber].GetGlobalNPC<DebuffNPC>();
-                    debuffNPC.PinkyCurse = reader.ReadInt32();
+                    debuffNPC.CrystalCurse = reader.ReadInt32();
                     if (Main.netMode == NetmodeID.Server)
                     {
                         var packet = GetPacket();
                         packet.Write((byte)SOTSMessageType.SyncGlobalNPC2);
                         packet.Write(playernumber);
                         packet.Write(npcNumber);
-                        packet.Write(debuffNPC.PinkyCurse);
+                        packet.Write(debuffNPC.CrystalCurse);
                         packet.Send(-1, playernumber);
                     }
                     break;

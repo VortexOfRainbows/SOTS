@@ -5674,7 +5674,12 @@ Mods: {
 
 			StarshardSaber: {
 				DisplayName: Starshard Saber
-				Tooltip: ""
+				Tooltip:
+					'''
+					Strike with 4 slashes that launch Starshards for 10% damage
+					Starshards apply a stacking, permanent curse
+					Right click to strike with a large slash that detonates the curse, dealing more damage the more stacks applied
+					'''
 			}
 
 			FizzleStar: {
@@ -7401,6 +7406,7 @@ Mods: {
 			FreshGreenyCounter.DisplayName: Fresh Greeny Counter
 			StarshardSlash.DisplayName: Starshard Slash
 			FizzleStar.DisplayName: Fizzle Star
+			StarShard.DisplayName: Starshard
 		}
 
 		DamageClasses: {
