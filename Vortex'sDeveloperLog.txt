@@ -44,6 +44,11 @@ Update Objectives:
 14. Upgrade item to the Hydrokinetic Antennae
 15. Update Elemental Amulet sprite to include modern genshin visions
 16. Earthdrive item
+17. Polaris Nerfs and Reworks... 
+	1. Make bullets accelerate slower
+	2. Make lasers accelerates lower
+	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
+	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
