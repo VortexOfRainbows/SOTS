@@ -40,6 +40,8 @@ using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Permafrost;
 using SOTS.Buffs;
 using Mono.CompilerServices.SymbolWriter;
+using Terraria.Chat;
+using Terraria.Map;
 
 namespace SOTS
 {
@@ -1043,10 +1045,16 @@ namespace SOTS
                     if (item.type == ItemType<WishingStar>() && item.ModItem is WishingStar star)
                     {
 						if(star.MyPlayer != -1)
-						{
-							Player p = Main.player[star.MyPlayer];
+                        {
+                            //if (Main.netMode != NetmodeID.Server)
+                            //    Main.NewText("I am here", Color.Gray);
+                            //else
+                            //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("I am here"), Color.Orange);
+							
+							/// The server reaches this exclusively in multiplayer...
+                            Player p = Main.player[star.MyPlayer];
 							if(p.SOTSPlayer().UniqueVisionNumber % 8 != 7)
-								p.SOTSPlayer().ResetVisionID();
+								p.SOTSPlayer().ResetVisionID(true);
 						}
                     }
                 }

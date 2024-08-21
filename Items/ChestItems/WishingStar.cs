@@ -8,21 +8,46 @@ using System.Collections.Generic;
 using SOTS.Void;
 using Terraria.Localization;
 using static System.Net.Mime.MediaTypeNames;
+using Terraria.Chat;
+using System.IO;
 
 namespace SOTS.Items.ChestItems
 {
 	public class WishingStar : ModItem
     {
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.Write(MyPlayer);
+        }
+        public override void NetReceive(BinaryReader reader)
+        {
+            MyPlayer = reader.ReadInt32();
+        }
+        public override ModItem Clone(Item newEntity)
+        {
+            var clone = base.Clone(newEntity);
+            if (clone is WishingStar star)
+                star.MyPlayer = MyPlayer;
+            return clone;
+        }
         public int MyPlayer = -1;
         public static bool IsAlternate => Main.LocalPlayer.SOTSPlayer().UniqueVisionNumber % 8 == 7; //Basically checking for the nameless vision
         public string appropriateNameRightNow => IsAlternate ? this.GetLocalizedValue("AltDisplayName") : this.GetLocalizedValue("DisplayName");
         public override void UpdateInventory(Player player)
         {
             MyPlayer = player.whoAmI;
+            //if (Main.netMode != NetmodeID.Server)
+            //    Main.NewText(MyPlayer, Color.Gray);
+            //else
+            //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(MyPlayer.ToString()), Color.Orange);
             SetOverridenName();
         }
         public override void PostUpdate()
         {
+            //if(Main.netMode != NetmodeID.Server)
+            //    Main.NewText(MyPlayer);
+            //else
+            //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(MyPlayer.ToString()), Color.Red);
             SetOverridenName();
         }
         public void SetOverridenName()

@@ -149,7 +149,7 @@ namespace SOTS.Common
     {
         public void DrawInWorld(Item item, SpriteBatch spriteBatch)
         {
-            if(RecentlyTeleported)
+            if(RecentlyTeleported && item.active)
             {
                 float multiplier = TeleportCounter / 60f;
                 if(multiplier > 1)

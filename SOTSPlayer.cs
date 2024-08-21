@@ -60,6 +60,7 @@ using SOTS.Buffs.ConduitBoosts;
 using SOTS.Items.Chaos;
 using SOTS.Buffs.Debuffs;
 using System.Security.Permissions;
+using Terraria.Chat;
 
 namespace SOTS
 {
@@ -397,10 +398,9 @@ namespace SOTS
 					packet.Write(cursorRadians);
 					packet.Send();
 				}
-				if (clone.UniqueVisionNumber != UniqueVisionNumber)
-				{
-					// Send a Mod Packet with the changes.
-					var packet = Mod.GetPacket();
+                if (clone.UniqueVisionNumber != UniqueVisionNumber)
+                {
+                    var packet = Mod.GetPacket();
 					packet.Write((byte)SOTSMessageType.SyncVisionNumber);
 					packet.Write((byte)Player.whoAmI);
 					packet.Write(UniqueVisionNumber);
@@ -711,10 +711,17 @@ namespace SOTS
             }
             return base.CanHitNPCWithItem(item, target);
         }
-		public void ResetVisionID()
+		public void ResetVisionID(bool serverCommand = false)
         {
 			UniqueVisionNumber = Main.rand.Next(40);
-			netUpdate = true;
+			if(NetmodeID.Server == Main.netMode && serverCommand)
+			{
+                var packet = Mod.GetPacket();
+                packet.Write((byte)SOTSMessageType.SyncVisionNumber);
+                packet.Write((byte)Player.whoAmI);
+                packet.Write(UniqueVisionNumber);
+                packet.Send(-1, -1);
+            }
         }
 		public override void PreUpdate()
 		{
@@ -723,7 +730,7 @@ namespace SOTS
 				return;
 			}
 			if (UniqueVisionNumber == -1)
-				ResetVisionID();
+				ResetVisionID(false);
 			base.PreUpdate();
 		}
 		public static int ApplyDamageClassModWithGeneric(Player player, DamageClass damageClass, int startingDamage)
