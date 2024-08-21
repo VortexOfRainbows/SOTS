@@ -1,10 +1,4 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
@@ -15,14 +9,13 @@ namespace SOTS.Projectiles.Permafrost
     {
 		bool runOnce = true;
 		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Ice Pulse");
-		}
+        {
+            Main.projFrames[Projectile.type] = 4;
+        }
         public override void SetDefaults()
         {
 			Projectile.height = 40;
 			Projectile.width = 40;
-            Main.projFrames[Projectile.type] = 4;
 			Projectile.penetrate = -1;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.friendly = true;
@@ -30,7 +23,9 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
 			Projectile.alpha = 0;
-		}
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 10;
+        }
 		public override void AI()
         {
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f, (255 - Projectile.alpha) * 1.5f / 255f);

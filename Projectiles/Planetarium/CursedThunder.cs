@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.IO;
 
 namespace SOTS.Projectiles.Planetarium
 {
@@ -24,7 +23,9 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.penetrate = -1;
 			Projectile.extraUpdates = 5;
 			Projectile.scale = 0.75f;
-		}
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 10;
+        }
 		Vector2[] trailPos = new Vector2[6];
 		public override bool PreDraw(ref Color lightColor)
 		{

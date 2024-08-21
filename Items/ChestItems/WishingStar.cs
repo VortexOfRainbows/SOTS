@@ -7,15 +7,18 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using SOTS.Void;
 using Terraria.Localization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SOTS.Items.ChestItems
 {
 	public class WishingStar : ModItem
     {
+        public int MyPlayer = -1;
         public static bool IsAlternate => Main.LocalPlayer.SOTSPlayer().UniqueVisionNumber % 8 == 7; //Basically checking for the nameless vision
         public string appropriateNameRightNow => IsAlternate ? this.GetLocalizedValue("AltDisplayName") : this.GetLocalizedValue("DisplayName");
         public override void UpdateInventory(Player player)
         {
+            MyPlayer = player.whoAmI;
             SetOverridenName();
         }
         public override void PostUpdate()
@@ -39,6 +42,12 @@ namespace SOTS.Items.ChestItems
                             line.Text = Language.GetTextValue("Mods.SOTS.Items.WishingStar.DefaultTooltip");
                         else
                             line.Text = Language.GetTextValue("Mods.SOTS.Items.WishingStar.AltTooltip");
+                    }
+                    else if(line.Name == "Tooltip1")
+                    {
+                        int num = Main.LocalPlayer.SOTSPlayer().UniqueVisionNumber % 8;
+                        line.Text = Language.GetTextValue($"Mods.SOTS.Items.WishingStar.Flavor{num}");
+                        line.OverrideColor = SOTSPlayer.VisionColor(Main.LocalPlayer);
                     }
                     else if(line.Name == "ItemName")
                     {

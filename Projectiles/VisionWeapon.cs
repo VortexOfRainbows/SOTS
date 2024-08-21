@@ -153,34 +153,7 @@ namespace SOTS.Projectiles
 		public Color GetColor()
 		{
 			Player player = Main.player[Projectile.owner];
-			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			Color DestinationColor = Color.DarkGray;
-			int uniqueGem = modPlayer.UniqueVisionNumber % 8;
-			switch (uniqueGem)
-			{
-				case 0: //geo
-					DestinationColor = Color.Orange;
-					break;
-				case 1: //electro
-					DestinationColor = Color.BlueViolet;
-					break;
-				case 2: //anemo
-					DestinationColor = Color.Turquoise;
-					break;
-				case 3: //cyro
-					DestinationColor = Color.LightSkyBlue;
-					break;
-				case 4: //pyro
-					DestinationColor = Color.OrangeRed;
-					break;
-				case 5: //hydro
-					DestinationColor = Color.DodgerBlue;
-					break;
-				case 6: //dendro
-					DestinationColor = Color.Green;
-					break;
-			}
-			return DestinationColor;
+			return SOTSPlayer.VisionColor(player);
         }
 		int lastItem = -1;
 		float itemAlpha = 0;

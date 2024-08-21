@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -30,6 +31,10 @@ namespace SOTS.Projectiles
             Projectile.localNPCHitCooldown = 20;
             Projectile.usesLocalNPCImmunity = true;
 		}
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.damage = Math.Max(Projectile.damage / 2, 1);
+        }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
             hitbox.X -= 16;
@@ -39,10 +44,6 @@ namespace SOTS.Projectiles
         }
         public Color BandColor(int i)
         {
-            if (Projectile.ai[2] == -1)
-            {
-                return Color.Black;
-            }
             Color c = new Color(185, 39, 23);
             if (i == 0)
                 c = new Color(122, 243, 305);
@@ -89,7 +90,7 @@ namespace SOTS.Projectiles
                 if (Projectile.oldPos[i] == Vector2.Zero)
                     break;
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
-                Color c = Projectile.ai[2] == -1 ? Color.Black : ColorHelpers.VibrantColorAttempt(i * 2, false);
+                Color c = ColorHelpers.VibrantColorAttempt(i * 2, false);
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 Vector2 toPrev = previous - center;
                 Main.spriteBatch.Draw(pixel, center - Main.screenPosition, null, c * perc, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 6f * perc), SpriteEffects.None, 0f);

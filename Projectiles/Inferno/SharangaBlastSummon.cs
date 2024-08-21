@@ -6,16 +6,16 @@ using Terraria.ID;
 namespace SOTS.Projectiles.Inferno
 {    
     public class SharangaBlastSummon : ModProjectile 
-    {	int expand = -1;
+    {	
+		int expand = -1;
 		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Sharanga Crush");
-		}
+        {
+            Main.projFrames[Projectile.type] = 4;
+        }
         public override void SetDefaults()
         {
 			Projectile.height = 40;
 			Projectile.width = 40;
-            Main.projFrames[Projectile.type] = 4;
 			Projectile.penetrate = -1;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.friendly = true;
@@ -23,6 +23,8 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
 			Projectile.alpha = 0;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 		}
 		public override void AI()
         {

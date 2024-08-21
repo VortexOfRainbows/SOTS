@@ -39,6 +39,7 @@ using SOTS.Items.Void;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Permafrost;
 using SOTS.Buffs;
+using Mono.CompilerServices.SymbolWriter;
 
 namespace SOTS
 {
@@ -485,7 +486,7 @@ namespace SOTS
                 ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
                 return false;
             }
-			if(item.type == ModContent.ItemType<WishingStar>() && line.Name == "ItemName" && WishingStar.IsAlternate)
+			if(item.type == ModContent.ItemType<WishingStar>() && (line.Name == "ItemName" || line.Name == "Tooltip1") && WishingStar.IsAlternate)
             {
                 Color outer = line.OverrideColor ?? line.Color;
                 Color inner = Color.Black;
@@ -680,14 +681,14 @@ namespace SOTS
 				if (!SOTSPlayer.ModPlayer(player).ConduitBelt)
 					return false;
 			}
-			if(player.SOTSPlayer().PlasmaShrimp)
+			if(modPlayer.PlasmaShrimp)
 			{
 				if (Main.myPlayer == player.whoAmI && player.statMana > player.statManaMax2 * 0.4f && item.CountsAsClass(DamageClass.Magic))
 				{
 					for (int i = 0; i < 1000; i++)
 					{
 						Projectile shrimp = Main.projectile[i];
-						if (shrimp.type == ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>() && shrimp.active && shrimp.owner == player.whoAmI)
+						if (shrimp.type == ProjectileType<Projectiles.Tide.PlasmaShrimp>() && shrimp.active && shrimp.owner == player.whoAmI)
 						{
 							Projectiles.Tide.PlasmaShrimp pShrimp = shrimp.ModProjectile as Projectiles.Tide.PlasmaShrimp;
 							pShrimp.FireTowards(Main.MouseWorld, (int)(item.damage * 0.5f) + 1);
@@ -696,6 +697,20 @@ namespace SOTS
 					}
 				}
 			}
+			if(modPlayer.WishingStar && WishingStar.IsAlternate)
+			{
+				if (player.whoAmI == Main.myPlayer && item.CountsAsClass(DamageClass.Magic) && !item.CountsAsClass(GetInstance<VoidGeneric>()))
+				{
+					VoidPlayer vPlayer = player.VoidPlayer();
+					float cost = item.mana / 10f * vPlayer.voidCost;
+					bool hasEnoughVoid = !vPlayer.safetySwitch || vPlayer.voidMeter >= cost;
+					if (hasEnoughVoid)
+                    {
+                        SOTSPlayer.CastWishingStar(player, Main.MouseWorld, item.damage);
+						VoidItem.DrainMana(player, cost);
+                    }
+                }
+            }
 			return base.CanUseItem(item, player);
         }
         public override bool? UseItem(Item item, Player player)
@@ -1006,6 +1021,7 @@ namespace SOTS
                 new WormholeRecipe(ItemType<Riptide>(), ItemType<Atlantis>()),
                 new WormholeRecipe(ItemType<BagOfAmmoGathering>(), ItemType<InfinityPouch>()),
                 new WormholeRecipe(ItemType<AlmondMilk>(), ItemType<Taco>()),
+				new WormholeRecipe(ItemType<WishingStar>(), ItemType<WishingStar>())
             };
 		}
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
@@ -1020,10 +1036,19 @@ namespace SOTS
 					gen.TeleportCounter = 1;
 					item.active = false;
 					if (Main.netMode == NetmodeID.Server)
-					{
-						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, whoAmI);
+                    {
+                        NetMessage.SendData(MessageID.SyncItem, -1, -1, null, whoAmI);
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, newWhoAmI); //The new item should be shared anyway, but this should help it sync the global param
-					}
+                    }
+                    if (item.type == ItemType<WishingStar>() && item.ModItem is WishingStar star)
+                    {
+						if(star.MyPlayer != -1)
+						{
+							Player p = Main.player[star.MyPlayer];
+							if(p.SOTSPlayer().UniqueVisionNumber % 8 != 7)
+								p.SOTSPlayer().ResetVisionID();
+						}
+                    }
                 }
             }
         }

@@ -120,10 +120,10 @@ namespace SOTS
 			harmonyWhitelist = new int[] { BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge };
 		}
 		public int UniqueVisionNumber = -1;
-		public static Color VoidMageColor(Player player)
+		public static Color VoidMageColor(Player player, bool sourceTimeFreeze = true)
         {
 			SOTSPlayer sPlayer = ModPlayer(player);
-			if(SOTS.Config.coloredTimeFreeze)
+			if(SOTS.Config.coloredTimeFreeze || !sourceTimeFreeze)
 			{
 				switch (sPlayer.UniqueVisionNumber % 8)
 				{
@@ -147,7 +147,38 @@ namespace SOTS
 			}
 			return Color.White;
         }
-		public override void SaveData(TagCompound tag)
+        public static Color VisionColor(Player player)
+        {
+            SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
+            Color DestinationColor = Color.DarkGray;
+            int uniqueGem = modPlayer.UniqueVisionNumber % 8;
+            switch (uniqueGem)
+            {
+                case 0: //geo
+                    DestinationColor = Color.Orange;
+                    break;
+                case 1: //electro
+                    DestinationColor = Color.BlueViolet;
+                    break;
+                case 2: //anemo
+                    DestinationColor = Color.Turquoise;
+                    break;
+                case 3: //cyro
+                    DestinationColor = Color.LightSkyBlue;
+                    break;
+                case 4: //pyro
+                    DestinationColor = Color.OrangeRed;
+                    break;
+                case 5: //hydro
+                    DestinationColor = Color.DodgerBlue;
+                    break;
+                case 6: //dendro
+                    DestinationColor = Color.Green;
+                    break;
+            }
+            return DestinationColor;
+        }
+        public override void SaveData(TagCompound tag)
 		{
 			tag["UniqueVisionNumber"] = UniqueVisionNumber;
         }
@@ -683,6 +714,7 @@ namespace SOTS
 		public void ResetVisionID()
         {
 			UniqueVisionNumber = Main.rand.Next(40);
+			netUpdate = true;
         }
 		public override void PreUpdate()
 		{
@@ -1988,30 +2020,19 @@ namespace SOTS
 		public int ManaSpentCounter = 0;
         public override void OnConsumeMana(Item item, int manaConsumed)
         {
-			if(Player.whoAmI == Main.myPlayer)
+			if(Player.whoAmI == Main.myPlayer && item.CountsAsClass(DamageClass.Magic))
             {
 				if (WishingStar)
 				{
 					if (!Items.ChestItems.WishingStar.IsAlternate)
 					{
-						if (manaConsumed > 0 && Main.rand.NextBool(10))
-						{
-							GrantRandomWishingStarBuff(Player, manaConsumed);
-						}
 						ManaSpentCounter += manaConsumed;
 						if (ManaSpentCounter >= 100)
-						{
-							CastWishingStar(Player, Main.MouseWorld, 100);
+                        {
+                            GrantRandomWishingStarBuff(Player, ManaSpentCounter);
+                            CastWishingStar(Player, Main.MouseWorld, 100);
 							ManaSpentCounter -= 100;
 						}
-					}
-					else
-					{
-						CastWishingStar(Player, Main.MouseWorld, item.damage);
-						//Need to consume void here
-						//
-						//
-						//
 					}
 				}
 				else

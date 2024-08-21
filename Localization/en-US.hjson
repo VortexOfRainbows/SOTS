@@ -5635,18 +5635,21 @@ Mods: {
 			WishingStar: {
 				DisplayName: Wishing Star
 				AltDisplayName: Shattered Dreams
-				Tooltip: Temp
-				DefaultTooltip:
+				Tooltip:
 					'''
-					10% chance to gain a random buff whenever mana is used
-					Every 100 mana consumed unleashes a star that deals 100 damage 
-					'Wish upon a shooting star'
+					Temp1
+					Temp2
 					'''
-				AltTooltip:
-					'''
-					When using mana, additionally consume 10% of it as void, then unleash a star for 100% damage
-					'Face reality'
-					'''
+				DefaultTooltip: Unleash a 100 damage star and gain a random buff every 100 mana consumed with magic weapons
+				AltTooltip: Magic weapons unleash a star for 100% damage but consume void equal to 10% of their mana cost
+				Flavor0: "'Stay determined'"
+				Flavor1: "'Remain firm in your aspirations'"
+				Flavor2: "'Wish upon a shooting star'"
+				Flavor3: "'You will find what you seek'"
+				Flavor4: "'Control your fate'"
+				Flavor5: "'The world is your stage'"
+				Flavor6: "'Reap the fruits of knowledge'"
+				Flavor7: "'Endure suffering'"
 			}
 
 			JarOfPineapple: {

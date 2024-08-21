@@ -16,6 +16,7 @@ using SOTS.Items.Tide;
 using SOTS.Items;
 using System.Diagnostics;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Biomes;
 
 namespace SOTS.Void
 {
@@ -226,26 +227,29 @@ namespace SOTS.Void
 		{
 			return true;
 		}
-		private float StoredLifeHeals = 0f;
 		public void DrainMana(Player player)
-		{
-			VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
-			int finalCost = VoidCost(player);
-			if (finalCost > 0)
-			{
-				if(player.whoAmI == Main.myPlayer)
-					vPlayer.voidMeter -= finalCost;
-			}
-			if(vPlayer.GainHealthOnVoidUse > 0)
-			{
-				float healAmount = finalCost * vPlayer.GainHealthOnVoidUse + StoredLifeHeals;
-				if(healAmount >= 1)
+        {
+			DrainMana(player, VoidCost(player));
+        }
+		public static void DrainMana(Player player, float cost)
+        {
+            VoidPlayer vPlayer = VoidPlayer.ModPlayer(player);
+            float finalCost = cost;
+            if (finalCost > 0)
+            {
+                if (player.whoAmI == Main.myPlayer)
+                    vPlayer.voidMeter -= finalCost;
+            }
+            if (vPlayer.GainHealthOnVoidUse > 0)
+            {
+                float healAmount = finalCost * vPlayer.GainHealthOnVoidUse + vPlayer.StoredLifeHeals;
+                if (healAmount >= 1)
                 {
                     player.statLife += (int)healAmount;
                     player.HealEffect((int)healAmount);
                 }
-				StoredLifeHeals = healAmount % 1f;
-			}
-		}
+                vPlayer.StoredLifeHeals = healAmount % 1f;
+            }
+        }
 	}
 }

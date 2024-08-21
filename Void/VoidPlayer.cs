@@ -47,7 +47,8 @@ namespace SOTS.Void
 		public float VoidGenerateMoney = 0;
 		public float GainHealthOnVoidUse = 0f;
 		public float GainVoidOnHurt = 0f;
-		public static string GetVoidDeathMessage(int num)
+        public float StoredLifeHeals = 0f;
+        public static string GetVoidDeathMessage(int num)
         {
 			return Language.GetTextValue(("Mods.SOTS.DeathMessage.VD" + num));
 		}
@@ -860,19 +861,19 @@ namespace SOTS.Void
 			voidSoul = 0;
 			voidMeterMax = 100;
         }
-		private float StoredLifeHeals = 0f;
+		private float StoredVoidHeals = 0f;
 		public override void OnHurt(Player.HurtInfo info)
 		{
             if (GainVoidOnHurt > 0)
             {
 				int damage = info.Damage;
-                float healAmount = damage * GainVoidOnHurt + StoredLifeHeals;
+                float healAmount = damage * GainVoidOnHurt + StoredVoidHeals;
                 if (healAmount >= 1)
                 {
                     voidMeter += (int)healAmount;
                     VoidEffect(Player, (int)healAmount);
                 }
-                StoredLifeHeals = healAmount % 1f;
+                StoredVoidHeals = healAmount % 1f;
             }
         }
 		public static void SpawnCoins(Player player, float generateMoneyValue)

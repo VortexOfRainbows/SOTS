@@ -3,9 +3,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using SOTS.Void;
-using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Conduit
 {
