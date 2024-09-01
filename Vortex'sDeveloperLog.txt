@@ -49,6 +49,7 @@ Update Objectives:
 	2. Make lasers accelerates lower
 	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
 	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
+18. Nerf Earthen Construct spawn Threshold
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -57,16 +58,18 @@ Vault Room to spawn loot
 Vibrant Geode to spawn Wishing Star/ Shattered Dreams
 Make enemies spawn in the AV and Mines
 Should Wishing Star only change the gem color, or also the border?
+Fix Archaeologist Shop!
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
 Conduit powering code for the two portals
 
 ---Balance Needed List---
-Possibly Blade Wings, Tesseract, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag
-
-Soot Spewer, Earth Grinder, Guardian Greatsword, Fizzle Star
+Possibly Blade Wings, Tesseract, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag,
+Earthdrive,
+Soot Spewer, Earth Grinder, Guardian Greatsword, Fizzle Star,
 Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star/Shattered Dreams, Fresh Greeny/Jar of Pineapple, 
+Earthen Gizmo, Corpsebloom
 
 ---Visual Upgrade Needed---
 N/A
@@ -86,6 +89,10 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+9/1/24
+1. Added Earthdrive
+2. Fixed bug where Rock Candy was erroneously decreasing mining speed
 
 8/19/24 to 8/21/24
 1. Finished Earthen Gizmo. Seems to work fine in multiplayer!

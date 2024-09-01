@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
@@ -411,10 +412,7 @@ namespace SOTS.NPCs.Gizmos
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 5, 10));
-            //LeadingConditionRule onFire = new LeadingConditionRule(new Common.ItemDropConditions.OnFireCondition());
-            //onFire.OnSuccess(ItemDropRule.Common(ItemType<CookedMushroom>(), 1, 3, 4));
-            //onFire.OnFailedConditions(ItemDropRule.Common(ItemType<CookedMushroom>(), 10, 3, 4)
-            //	.OnFailedRoll(ItemDropRule.Common(ItemID.GlowingMushroom, 1, 7, 12)));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarthDrive>(), 100));
         }
   //      public override void OnKill()
 		//{

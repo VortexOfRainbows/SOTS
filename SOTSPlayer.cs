@@ -366,7 +366,7 @@ namespace SOTS
 		public bool KeepersBox = false;
         public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
-		public bool AcidInject = false;
+		public bool AcidInject = false, Earthdrive = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -516,9 +516,9 @@ namespace SOTS
         public int artifactProbeNum = 0;
 		public int tPlanetNum = 0;
 		public int tPlanetDamage = -1;
-        int lastAqueductMax = 0;
-        int lastPlanetMax = 0;
-		int lastArtifactMax = 0;
+        private int lastAqueductMax = 0;
+        private int lastPlanetMax = 0;
+		private int lastArtifactMax = 0;
         public void runPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false, float ai0 = 0f, float ai1 = 0f)
 		{
 			if (Main.myPlayer == Player.whoAmI)
@@ -998,7 +998,17 @@ namespace SOTS
                     Player.GetDamage(DamageClass.Summon).Base -= summonBaseBonus;
                 }
             }
-            StatShareMeleeAndSummon = StatShareMeleeAndMagic = StatShareAll = false;
+			if(Earthdrive)
+			{
+				float meleeSpeed = Player.GetAttackSpeed(DamageClass.Melee) - 1;
+                float miningSpeed = 1 - Player.pickSpeed;
+				if (meleeSpeed > 0)
+					Player.pickSpeed -= meleeSpeed;
+				//Main.NewText(Player.pickSpeed);
+				if (miningSpeed > 0)
+					Player.GetAttackSpeed(DamageClass.Melee) += miningSpeed;
+            }
+            StatShareMeleeAndSummon = StatShareMeleeAndMagic = StatShareAll = Earthdrive = false;
         }
 		public override void ResetEffects()
 		{

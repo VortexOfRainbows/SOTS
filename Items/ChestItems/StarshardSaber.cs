@@ -34,9 +34,18 @@ namespace SOTS.Items.ChestItems
             Item.noUseGraphic = true; 
             Item.noMelee = true;
         }
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 4 * SOTSUtils.SignNoZero(velocity.X) * -player.gravDir, 1);
+            int count = 4;
+            if(player.altFunctionUse == 2)
+            {
+                count = 10;
+            }
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, count * SOTSUtils.SignNoZero(velocity.X) * -player.gravDir, 1);
 			return false;
 		}
     }

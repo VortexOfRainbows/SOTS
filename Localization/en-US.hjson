@@ -5700,6 +5700,15 @@ Mods: {
 				DisplayName: Earthen Gizmo Banner
 				Tooltip: ""
 			}
+
+			EarthDrive: {
+				DisplayName: Earthdrive
+				Tooltip:
+					'''
+					Increases melee speed by 100% of the increases received to mining speed from other sources
+					Increases mining speed by 100% of the increases received to melee speed from other sources
+					'''
+			}
 		}
 
 		ItemTooltip: {

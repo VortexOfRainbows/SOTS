@@ -527,7 +527,7 @@ namespace SOTS.Common.GlobalNPCs
                 npcLoot.Add(ItemDropRule.Common(ItemID.LifeCrystal, 5));
                 npcLoot.Add(ItemDropRule.Common(ItemID.OceanCrateHard, 5));
             }
-		}
+        }
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
 		{
 			if (player.GetModPlayer<SOTSPlayer>().PhaseBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
