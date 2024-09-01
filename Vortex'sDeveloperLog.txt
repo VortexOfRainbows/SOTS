@@ -43,13 +43,12 @@ Update Objectives:
 13. Fix generation bug with Infernum and Leviathan area, potentially fix remnants compatability
 14. Upgrade item to the Hydrokinetic Antennae
 15. Update Elemental Amulet sprite to include modern genshin visions
-16. Earthdrive item
-17. Polaris Nerfs and Reworks... 
+16. Polaris Nerfs and Reworks... 
 	1. Make bullets accelerate slower
 	2. Make lasers accelerates lower
 	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
 	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
-18. Nerf Earthen Construct spawn Threshold
+17. Nerf Earthen Construct spawn Threshold
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -93,6 +92,9 @@ Daily Log:
 9/1/24
 1. Added Earthdrive
 2. Fixed bug where Rock Candy was erroneously decreasing mining speed
+3. More WIP Starshard Saber
+4. Blades animations should now be more appropriately effected by melee speed
+5. Blade delay animations are now effected by melee speed, making melee speed more impactful on blades
 
 8/19/24 to 8/21/24
 1. Finished Earthen Gizmo. Seems to work fine in multiplayer!

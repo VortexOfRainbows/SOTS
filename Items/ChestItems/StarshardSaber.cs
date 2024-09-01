@@ -43,7 +43,7 @@ namespace SOTS.Items.ChestItems
             int count = 4;
             if(player.altFunctionUse == 2)
             {
-                count = 10;
+                count = -5;
             }
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, count * SOTSUtils.SignNoZero(velocity.X) * -player.gravDir, 1);
 			return false;

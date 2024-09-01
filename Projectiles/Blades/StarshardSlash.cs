@@ -33,11 +33,13 @@ namespace SOTS.Projectiles.Blades
 		public override float HeldDistFromPlayer => 12;
 		public override Vector2 drawOrigin => new Vector2(7, 43);
         public override void SwingSound(Player player)
-		{
-			if(thisSlashNumber == 4)
-				SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, -0.2f);
+        {
+            if (thisSlashNumber == 5)
+                SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.4f);
+            else if (thisSlashNumber == 4)
+				SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f);
             else
-                SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.75f, -0.2f + (4 - thisSlashNumber) * 0.1f);
+                SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f + (4 - thisSlashNumber) * 0.1f);
         }
 		public override float speedModifier => Projectile.ai[1];
 		public override float GetBaseSpeed(float swordLength)
@@ -59,7 +61,7 @@ namespace SOTS.Projectiles.Blades
         public override void PostAI()
         {
             base.PostAI();
-            if (timeLeftCounter > nextIntervalForRocks) // && thisSlashNumber == 1)
+            if (timeLeftCounter > nextIntervalForRocks && thisSlashNumber != 5)
             {
                 if (Main.myPlayer == Projectile.owner)
                 {
@@ -82,7 +84,7 @@ namespace SOTS.Projectiles.Blades
 		public override void SlashPattern(Player player, int slashNumber)
 		{
 			int damage = Projectile.damage;
-			if (slashNumber > 0)
+			if (slashNumber > 0 && slashNumber != 4)
 			{
 				float knockBackMult = 1;
 				if (slashNumber == 1)
@@ -163,7 +165,7 @@ namespace SOTS.Projectiles.Blades
         {
             if(runOnce)
             {
-                SOTSUtils.PlaySound(SoundID.Item39, Projectile.Center);
+                SOTSUtils.PlaySound(SoundID.Item39, Projectile.Center, 1.2f, -0.1f);
                 runOnce = false;
             }
             Vector2 trueVelocity = Projectile.velocity * (1 + Projectile.ai[1] * Projectile.ai[1] / 2400f);

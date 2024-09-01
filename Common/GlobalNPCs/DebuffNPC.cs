@@ -39,6 +39,8 @@ using SOTS.Projectiles.Tide;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.FakePlayer;
 using SOTS.Projectiles;
+using Terraria.GameContent;
+using System.Drawing.Drawing2D;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -91,6 +93,8 @@ namespace SOTS.Common.GlobalNPCs
         public int CrystalCurse = 0;
         public float VoidspaceCurse = 0;
         public int OwnerOfVoidspaceCurseDamage = -1;
+        public bool TriggeredCrystalCurse = false;
+        private int CrystalCurseTimer = 0;
         public int timeFrozen = 0;
         public bool netUpdateTime = false;
         public bool frozen = false;
@@ -314,6 +318,7 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write(playerWhoAmI);
                 packet.Write(npc.whoAmI);
                 packet.Write(CrystalCurse);
+                packet.Write(TriggeredCrystalCurse);
                 packet.Send();
             }
         }
@@ -425,6 +430,12 @@ namespace SOTS.Common.GlobalNPCs
             if (projectile.type == ProjectileType<StarShard>())
             {
                 StackDebuff(npc, player, ref CrystalCurse, 1, 2);
+            }
+            if (projectile.type == ProjectileType<StarshardSlash>())
+            {
+                TriggeredCrystalCurse = true;
+                if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
+                    SendClientChanges(player, npc, 2);
             }
             if (npc.immortal)
             {
@@ -956,6 +967,28 @@ namespace SOTS.Common.GlobalNPCs
             }
             else
                 TimeSinceHitByBlight = 0;
+            if (CrystalCurse > 0)
+            {
+                if(TriggeredCrystalCurse)
+                {
+                    if(CrystalCurseTimer <= 0)
+                    {
+                        CrystalCurse--;
+
+                        //Spawn explosions here
+                        //
+                        //
+
+                        CrystalCurseTimer = 4;
+                    }
+                    CrystalCurseTimer--;
+                }
+            }
+            else
+            {
+                TriggeredCrystalCurse = false;
+                CrystalCurseTimer = 0;
+            }
             previousBlight = BlightCurse;
         }
         bool isFlowered = false;

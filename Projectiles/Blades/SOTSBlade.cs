@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Blades
         public int FetchDirection => Math.Sign(Projectile.ai[0]);
         protected float counter = 225;
         protected float spinSpeed = 0;
-        public int delayDeathTime = 0;
+        public float delayDeathTime = 0;
         private float delayDeathSlowdown = 1f;
         public Vector2 dustAway = Vector2.Zero;
         public Vector2 cursorArea = Vector2.Zero;
@@ -229,6 +229,14 @@ namespace SOTS.Projectiles.Blades
 		{
 			return (float)Math.Abs(incrementAmount);
         }
+        public float MeleeSpeedModifier
+        {
+            get
+            {
+                Player player = Main.player[Projectile.owner];
+                return 1 - MeleeSpeedMultiplier + MeleeSpeedMultiplier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee));
+            }
+        }
         public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
@@ -261,7 +269,7 @@ namespace SOTS.Projectiles.Blades
                             distance = MaxSwipeDistance;
                     }
                     toCursor = cursorArea - PlayerCenter();
-                    spinSpeed = GetBaseSpeed(distance) * speedModifier * OverAllSpeedMultiplier * ((1 - MeleeSpeedMultiplier) + MeleeSpeedMultiplier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee))) / (1 + Projectile.extraUpdates); //add virtual/abstract variables for this
+                    spinSpeed = GetBaseSpeed(distance) * speedModifier * OverAllSpeedMultiplier * MeleeSpeedModifier / (1 + Projectile.extraUpdates); //add virtual/abstract variables for this
                 }
                 counterOffset = ArcStartDegrees; //add virtual/abstract variables for this
                 float slashOffset = counterOffset * FetchDirection;
@@ -297,7 +305,7 @@ namespace SOTS.Projectiles.Blades
 			{
 				if (delayDeathTime > 0)
 				{
-					delayDeathTime--;
+					delayDeathTime -= 1 * MeleeSpeedModifier;
                     delayDeathSlowdown *= trueDelayDeathSlowdownAmount;
 					incrementAmount *= delayDeathSlowdown;
 				}
