@@ -5709,6 +5709,11 @@ Mods: {
 					Increases mining speed by 100% of the increases received to melee speed from other sources
 					'''
 			}
+
+			SandstormPouch: {
+				DisplayName: Sandstorm Pouch
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7416,6 +7421,8 @@ Mods: {
 			StarshardSlash.DisplayName: Starshard Slash
 			FizzleStar.DisplayName: Fizzle Star
 			StarShard.DisplayName: Starshard
+			SandstormPouch.DisplayName: Sandstorm Pouch
+			SandstormPuff.DisplayName: Sandstorm Puff
 		}
 
 		DamageClasses: {
