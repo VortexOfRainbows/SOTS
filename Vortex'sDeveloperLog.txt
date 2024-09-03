@@ -88,13 +88,13 @@ N/A
 
 Daily Log:
 
-9/1/24
+9/1/24 to 9/2/24
 1. Added Earthdrive
 2. Fixed bug where Rock Candy was erroneously decreasing mining speed
 3. More WIP Starshard Saber
 4. Blades animations should now be more appropriately effected by melee speed
 5. Blade delay animations are now effected by melee speed, making melee speed more impactful on blades
-6. SUPER WIP Sandstorm Pouch
+6. WIP Sandstorm Pouch
 
 8/19/24 to 8/21/24
 1. Finished Earthen Gizmo. Seems to work fine in multiplayer!

@@ -22,7 +22,7 @@ namespace SOTS.Items.ChestItems
             Item.useTime = 50; 
             Item.useAnimation = 50;
             Item.useStyle = ItemUseStyleID.Shoot;    
-            Item.knockBack = 6f;  
+            Item.knockBack = 2f;  
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.Orange;
             //Item.UseSound = SoundID.Item61;
@@ -43,5 +43,9 @@ namespace SOTS.Items.ChestItems
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, -2f);
 			return false; 
 		}
-	}
+        public override bool BeforeDrainVoid(Player player)
+        {
+            return false;
+        }
+    }
 }

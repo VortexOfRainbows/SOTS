@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Void;
 using System;
 using System.IO;
 using Terraria;
@@ -76,7 +77,7 @@ namespace SOTS.Projectiles.BiomeChest
                 if (Projectile.ai[0] <= -1)
                 {
                     Projectile.ai[0] = (int)player.itemTime;
-                    counter = -(int)(Projectile.ai[0] / 2);
+                    counter = 0;
                     Projectile.netUpdate = true;
                 }
             }
@@ -90,7 +91,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
-                if(recoil <= 2f)
+                if(recoil <= 0.1f)
                 {
                     recoil = 0;
                     pastRecoil = 0;
@@ -130,7 +131,7 @@ namespace SOTS.Projectiles.BiomeChest
                 dust.velocity *= 0.2f;
                 dust.velocity += Projectile.velocity * 0.5f * Main.rand.NextFloat() + circular * 0.6f;
             }
-            float windUp = (counter + 30) / (Projectile.ai[0] + 30);
+            float windUp = counter / Projectile.ai[0];
             if (windUp > 1)
                 windUp = 1;
             Vector2 shaking = Main.rand.NextVector2Circular(1, 1) * windUp * 1f;
@@ -139,6 +140,8 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 Projectile.netUpdate = true;
                 Shoot();
+                if(player.HeldItem.ModItem is VoidItem v)
+                    v.DrainMana(player);
             }
 
             Projectile.spriteDirection = (int)player.gravDir;
@@ -162,10 +165,8 @@ namespace SOTS.Projectiles.BiomeChest
             if (Projectile.owner == Main.myPlayer)
             {
                 int type = ModContent.ProjectileType<SandstormPuff>();
-                for(int i = 0; i < 4; i++)
-                {
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Barrel, (Projectile.velocity * 0.5f).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-2, 2)) * i) + Main.rand.NextVector2Circular(1, 1) / (i + 1), type, Projectile.damage, Projectile.knockBack, Main.myPlayer);
-                }
+                for(int i = 0; i < 5; i++)
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Barrel, Projectile.velocity * 0.8f, type, Projectile.damage, Projectile.knockBack, Main.myPlayer, i * 72f);
             }
             if(!ended)
                 recoil += 10;
