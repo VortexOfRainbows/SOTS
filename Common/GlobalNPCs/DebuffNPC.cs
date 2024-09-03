@@ -632,7 +632,29 @@ namespace SOTS.Common.GlobalNPCs
         bool shattered = false;
         public override void PostAI(NPC npc)
         {
-            if(npc.immortal)
+            if (CrystalCurse > 0)
+            {
+                if (TriggeredCrystalCurse)
+                {
+                    if (CrystalCurseTimer <= 0)
+                    {
+                        CrystalCurse--;
+
+                        //Spawn explosions here
+                        //
+                        //
+
+                        CrystalCurseTimer = 4;
+                    }
+                    CrystalCurseTimer--;
+                }
+            }
+            else
+            {
+                TriggeredCrystalCurse = false;
+                CrystalCurseTimer = 0;
+            }
+            if (npc.immortal)
             {
                 return;
             }
@@ -967,28 +989,6 @@ namespace SOTS.Common.GlobalNPCs
             }
             else
                 TimeSinceHitByBlight = 0;
-            if (CrystalCurse > 0)
-            {
-                if(TriggeredCrystalCurse)
-                {
-                    if(CrystalCurseTimer <= 0)
-                    {
-                        CrystalCurse--;
-
-                        //Spawn explosions here
-                        //
-                        //
-
-                        CrystalCurseTimer = 4;
-                    }
-                    CrystalCurseTimer--;
-                }
-            }
-            else
-            {
-                TriggeredCrystalCurse = false;
-                CrystalCurseTimer = 0;
-            }
             previousBlight = BlightCurse;
         }
         bool isFlowered = false;

@@ -65,7 +65,7 @@ Conduit powering code for the two portals
 ---Balance Needed List---
 Possibly Blade Wings, Tesseract, Voidspace Ranger's Armor, Elemental Armor, Infinity Pouch + AmmoRegatherBag,
 Earthdrive,
-Soot Spewer, Earth Grinder, Guardian Greatsword, Fizzle Star,
+Soot Spewer, Earth Grinder, Guardian Greatsword, Fizzle Star, Sandstorm Pouch
 Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star/Shattered Dreams, Fresh Greeny/Jar of Pineapple, 
 Earthen Gizmo, Corpsebloom
 
@@ -94,7 +94,8 @@ Daily Log:
 3. More WIP Starshard Saber
 4. Blades animations should now be more appropriately effected by melee speed
 5. Blade delay animations are now effected by melee speed, making melee speed more impactful on blades
-6. WIP Sandstorm Pouch
+6. Added Sandstorm Pouch, Works in Multiplayer!
+	1. It's very powerful in group situations, but not the most void efficient for single-target purposes. Thus, I think it may be balanced?
 
 8/19/24 to 8/21/24
 1. Finished Earthen Gizmo. Seems to work fine in multiplayer!

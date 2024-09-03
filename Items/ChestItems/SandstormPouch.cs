@@ -15,24 +15,24 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 20;
+            Item.damage = 21;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 28;
             Item.height = 40;
-            Item.useTime = 50; 
-            Item.useAnimation = 50;
+            Item.useTime = 30; 
+            Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 2f;  
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.Orange;
-            //Item.UseSound = SoundID.Item61;
+            Item.UseSound = SoundID.Item15;
             Item.shoot = ModContent.ProjectileType<Projectiles.BiomeChest.SandstormPouch>(); 
-            Item.shootSpeed = 9.5f;
+            Item.shootSpeed = 11.5f;
             Item.noMelee = Item.channel = Item.noUseGraphic = true;
         }
 		public override int GetVoid(Player player)
 		{
-			return 10;
+			return 3;
 		}
 		public override Vector2? HoldoutOffset()
 		{

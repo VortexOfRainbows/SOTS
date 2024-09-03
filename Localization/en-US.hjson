@@ -5712,7 +5712,7 @@ Mods: {
 
 			SandstormPouch: {
 				DisplayName: Sandstorm Pouch
-				Tooltip: ""
+				Tooltip: Unleash a devastating sandstorm with unlimited pierce
 			}
 		}
 

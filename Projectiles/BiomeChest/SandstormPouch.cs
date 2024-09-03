@@ -26,7 +26,7 @@ namespace SOTS.Projectiles.BiomeChest
         public override void SetDefaults()
         {
             Projectile.width = 28;
-            Projectile.height = 30;
+            Projectile.height = 36;
             Projectile.aiStyle = 20;
             Projectile.friendly = false;
             Projectile.penetrate = -1;
@@ -41,28 +41,19 @@ namespace SOTS.Projectiles.BiomeChest
             if (Projectile.hide)
                 return false;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            //Texture2D textureIceOnly = ModContent.Request<Texture2D>("SOTS/Projectiles/BiomeChest/IcebreakerIceOnly").Value;
-            //if (counter >= Projectile.ai[0])
-            //    texture = ModContent.Request<Texture2D>("SOTS/Projectiles/BiomeChest/IcebreakerNoIce").Value;
+            Texture2D textureGlow = ModContent.Request<Texture2D>("SOTS/Projectiles/BiomeChest/SandstormPouchGlow").Value;
             Vector2 drawOrigin = new Vector2(4, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-            //if(counter > Projectile.ai[0] * 2)
-            //{
-            //    Color color = new Color(100, 100, 100, 0);
-            //    float percent = (counter - (Projectile.ai[0] * 2)) / Projectile.ai[0] / 2.5f;
-            //    percent = Math.Clamp(percent, 0, 1);
-            //    for(int i = 0; i < 6; i++)
-            //    {
-            //        Vector2 c = new Vector2(24 * (1 - percent), 0).RotatedBy(MathHelper.TwoPi / 6f * i + MathHelper.ToRadians(SOTSWorld.GlobalCounter));
-            //        Main.spriteBatch.Draw(textureIceOnly, drawPos + c, null, color * MathF.Sin(percent * MathHelper.Pi) * 0.175f, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-            //    }
-            //    if(counter > Projectile.ai[0] * 3.5f)
-            //    {
-            //        percent = (counter - (Projectile.ai[0] * 3.5f)) / Projectile.ai[0];
-            //        Main.spriteBatch.Draw(textureIceOnly, drawPos, null, lightColor * percent * 1f, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-            //    }
-            //}
+           
+            Color color = new Color(100, 100, 100, 0);
+            float percent = 0.5f;
+            percent = Math.Clamp(percent, 0, 1);
+            for (int i = 0; i < 6; i++)
+            {
+                Vector2 c = new Vector2(1.0f + recoil * 0.4f, 0).RotatedBy(MathHelper.TwoPi / 6f * i + MathHelper.ToRadians(SOTSWorld.GlobalCounter));
+                Main.spriteBatch.Draw(textureGlow, drawPos + c, null, color, Projectile.rotation, drawOrigin, (Projectile.scale + recoil * 0.02f) * new Vector2(1 + recoil * 0.02f, 1 - recoil * 0.02f), Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+            }
             return false;
         }
         private int counter = 0;
@@ -91,7 +82,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             else
             {
-                if(recoil <= 0.1f)
+                if(recoil <= 1f)
                 {
                     recoil = 0;
                     pastRecoil = 0;
@@ -103,7 +94,6 @@ namespace SOTS.Projectiles.BiomeChest
                     player.itemAnimation = 2;
                     Projectile.timeLeft = 12;
                 }
-
             }
             Vector2 center = player.RotatedRelativePoint(player.MountedCenter, true);
             if (Main.myPlayer == Projectile.owner)
@@ -118,30 +108,34 @@ namespace SOTS.Projectiles.BiomeChest
             Vector2 offset = new Vector2(0, -4 * player.gravDir * Projectile.direction).RotatedBy(Projectile.rotation);
             offset.X *= 0.5f;
             counter++;
-            recoil *= 0.925f;
-            recoil -= 0.05f;
+            recoil *= 0.9f;
+            recoil -= 0.1f;
             recoil = MathHelper.Clamp(recoil, 0, 30);
 
-            if (Main.rand.NextBool(3))
+            if (!Projectile.hide && counter > 0)
             {
-                Vector2 circular = new Vector2(1, 0).RotatedBy(Main.rand.NextFloat(6.28f));
-                Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 12 + Projectile.velocity.SafeNormalize(Vector2.Zero) * 8, 0, 0, ModContent.DustType<Dusts.ModSandDust>(), 0, 0, 0, Color.White);
-                dust.noGravity = true;
-                dust.scale = 1.2f;
-                dust.velocity *= 0.2f;
-                dust.velocity += Projectile.velocity * 0.5f * Main.rand.NextFloat() + circular * 0.6f;
+                float windUp = MathF.Min(1, counter / Projectile.ai[0]);
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector2 circular = new Vector2(0, 1).RotatedBy(i * MathF.PI + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 6));
+                    circular.X *= 0.5f;
+                    circular = circular.RotatedBy(Projectile.velocity.ToRotation());
+                    Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 24 * windUp, 0, 0, ModContent.DustType<Dusts.ModSandDust>(), 0, 0, 0, ColorHelpers.SandstormPouchColor * 0.5f);
+                    dust.noGravity = true;
+                    dust.scale = 1.0f;
+                    dust.velocity *= 0.02f + recoil * 0.1f;
+                    dust.velocity += player.velocity * 1.15f;
+                }
             }
-            float windUp = counter / Projectile.ai[0];
-            if (windUp > 1)
-                windUp = 1;
-            Vector2 shaking = Main.rand.NextVector2Circular(1, 1) * windUp * 1f;
-            offset += shaking;
-            if (windUp >= 1 && (counter % (int)Projectile.ai[0] == 0 && counter > 0))
+
+            if (counter == (int)Projectile.ai[0] || counter > Projectile.ai[0] * 1.5f)
             {
                 Projectile.netUpdate = true;
                 Shoot();
                 if(player.HeldItem.ModItem is VoidItem v)
                     v.DrainMana(player);
+                if (counter > Projectile.ai[0] * 1.5f)
+                    counter -= (int)(Projectile.ai[0] * 0.5f);
             }
 
             Projectile.spriteDirection = (int)player.gravDir;
@@ -158,7 +152,7 @@ namespace SOTS.Projectiles.BiomeChest
             pastRecoil = recoil;
             return false;
         }
-        public Vector2 Barrel => Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(pastRecoil * Projectile.direction * Projectile.spriteDirection * -1)) * 36;
+        public Vector2 Barrel => Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(pastRecoil * Projectile.direction * Projectile.spriteDirection * -1)) * 32;
         private void Shoot()
         {
             SOTSUtils.PlaySound(SoundID.Item34, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.0f, 0.1f);
@@ -166,10 +160,10 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 int type = ModContent.ProjectileType<SandstormPuff>();
                 for(int i = 0; i < 5; i++)
-                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Barrel, Projectile.velocity * 0.8f, type, Projectile.damage, Projectile.knockBack, Main.myPlayer, i * 72f);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Barrel, Projectile.velocity * Main.rand.NextFloat(0.8f, 1.2f), type, Projectile.damage, Projectile.knockBack, Main.myPlayer, i * 72f, Main.rand.NextFloat(0.8f, 1.2f));
             }
             if(!ended)
-                recoil += 10;
+                recoil += 5;
             Projectile.netUpdate = true;
         }
     }
