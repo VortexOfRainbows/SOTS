@@ -5714,6 +5714,11 @@ Mods: {
 				DisplayName: Sandstorm Pouch
 				Tooltip: Unleash a devastating sandstorm with unlimited pierce
 			}
+
+			PBow: {
+				DisplayName: Compound Bow
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7423,6 +7428,8 @@ Mods: {
 			StarShard.DisplayName: Starshard
 			SandstormPouch.DisplayName: Sandstorm Pouch
 			SandstormPuff.DisplayName: Sandstorm Puff
+			PBow.DisplayName: Compound Bow
+			PBowArrow.DisplayName: Compound Arrow
 		}
 
 		DamageClasses: {
