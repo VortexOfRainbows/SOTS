@@ -14,7 +14,6 @@ namespace SOTS.Projectiles.Pyramid
 		int bounceCount = -1;
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Emerald Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
 		}

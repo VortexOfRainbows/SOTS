@@ -7430,6 +7430,7 @@ Mods: {
 			SandstormPuff.DisplayName: Sandstorm Puff
 			PBow.DisplayName: Compound Bow
 			PBowArrow.DisplayName: Compound Arrow
+			PBolt.DisplayName: Energy Bolt
 		}
 
 		DamageClasses: {
