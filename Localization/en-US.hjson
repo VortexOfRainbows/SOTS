@@ -5717,7 +5717,7 @@ Mods: {
 
 			PBow: {
 				DisplayName: Compound Bow
-				Tooltip: ""
+				Tooltip: Fire a Compound Arrow that splits into bouncing Energy Bolts and other arrows
 			}
 		}
 

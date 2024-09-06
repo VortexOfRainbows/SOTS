@@ -1,4 +1,7 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Earth;
+using SOTS.Items.Pyramid;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -14,12 +17,12 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 100;
+			Item.damage = 44;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 36;
 			Item.height = 114;
-			Item.useTime = 30;
-			Item.useAnimation = 30;
+			Item.useTime = 41;
+			Item.useAnimation = 41;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5f;
             Item.value = Item.sellPrice(0, 10, 0, 0);
@@ -28,7 +31,7 @@ namespace SOTS.Items.Permafrost
 			Item.autoReuse = false;
 			Item.channel = true;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Permafrost.PBow>();
-			Item.shootSpeed = 16f;
+			Item.shootSpeed = 15f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.useAmmo = AmmoID.Arrow;
@@ -38,9 +41,9 @@ namespace SOTS.Items.Permafrost
 			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.Permafrost.PBow>(), damage, knockback, player.whoAmI, -2f, type);
 			return false;
 		}
-		//public override void AddRecipes()
-		//{
-		//	CreateRecipe(1).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 12).AddRecipeGroup(RecipeGroupID.Wood, 20).AddTile(TileID.Anvils).Register();
-		//}
+		public override void AddRecipes()
+		{
+			CreateRecipe(1).AddIngredient<PitatiLongbow>().AddIngredient<AncientSteelLongbow>().AddIngredient<SporeSprayer>().AddIngredient<AbsoluteBar>(12).AddTile(TileID.MythrilAnvil).Register();
+		}
 	}
 }

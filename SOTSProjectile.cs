@@ -626,6 +626,7 @@ namespace SOTS
 						velo = Main.rand.NextVector2CircularEdge(24, 24);
                     }
 					int type = ModContent.ProjectileType<SteelShrapnel>();
+					int rand = 3;
 					int baseSpread = 5;
 					float dmgMult = 1.0f;
 					if(affixID == 5)
@@ -635,11 +636,12 @@ namespace SOTS
 						baseSpread = 12;
 						dmgMult = 0.7f;
 						AffixAI0 = 1;
-					}
+                        rand = 60;
+                    }
 					for (int i = 0; i < 3; i++)
 					{
 						float randAmt = baseSpread + 12 * i;
-						Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), type, (int)(projectile.damage * dmgMult), projectile.knockBack, Main.myPlayer, Main.rand.Next(60));
+						Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), type, (int)(projectile.damage * dmgMult), projectile.knockBack, Main.myPlayer, Main.rand.Next(rand));
 					}
 				}
 			}

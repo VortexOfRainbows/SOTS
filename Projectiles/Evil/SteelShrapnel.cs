@@ -10,7 +10,6 @@ namespace SOTS.Projectiles.Evil
     {	
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Steel Shrapnel");
 			Main.projFrames[Projectile.type] = 3;
 		}
         public override void SetDefaults()
