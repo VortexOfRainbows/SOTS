@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -21,6 +22,10 @@ namespace SOTS.Dusts
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor)
 		{
+			if(dust.fadeIn < 0)
+            {
+                return lightColor.MultiplyRGBA(dust.color * ((255 - dust.alpha) / 255f));
+            }
 			return dust.color * ((255 - dust.alpha) / 255f);
 		}
 		public override bool MidUpdate(Dust dust)
@@ -30,9 +35,10 @@ namespace SOTS.Dusts
 		public override bool Update(Dust dust)
 		{
 			dust.position += dust.velocity;
-			dust.velocity *= 0.96f - dust.fadeIn * 0.01f;
+			float abs = MathF.Abs(dust.fadeIn);
+			dust.velocity *= 0.96f - abs * 0.01f;
 			dust.rotation = 0;
-			dust.alpha += (int)dust.fadeIn;
+			dust.alpha += (int)abs;
 			Lighting.AddLight(dust.position, GetAlpha(dust, Color.Transparent).Value.ToVector3() * 0.2f);
 			if (dust.scale <= 0.1f || dust.alpha >= 255)
 			{

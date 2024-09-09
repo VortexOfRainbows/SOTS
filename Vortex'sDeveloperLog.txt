@@ -85,6 +85,12 @@ N/A
 
 Daily Log:
 
+9/8/24
+1. WIP Throe
+	1. Needs: Aggressive AI patterns, Better dust visuals, better gore visuals (use a projectile to do a death effect of it with clones spinning and disappearing), and ThroeFaces to have their own frame counter (improve visuals)
+	2. Needs: Banner, Drops, and Server syncing
+2. Adjustments to pixel dust to allow it the capacity to interact with lighting
+
 9/5/24 to 9/6/24
 1. Added Compound Bow, an upgrade to Pitati Longbow, Ancient Steel Bow, and Spore Sprayer... Works in Multiplayer!
 	1. It is worse in single target situations than other on tier weapons, but it is powerful if you can use it at the correct range against groups

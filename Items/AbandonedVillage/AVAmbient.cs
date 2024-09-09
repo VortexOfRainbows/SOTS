@@ -186,7 +186,7 @@ namespace SOTS.Items.AbandonedVillage
             {
                 type = ModContent.DustType<SootDust>();
                 if (!Main.rand.NextBool(3))
-                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
+                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, -2).scale = Main.rand.NextFloat(1f, 2f);
             }
         }
         public override void ModifyLight2(int style, int frameY, ref Vector3 color)
@@ -212,7 +212,7 @@ namespace SOTS.Items.AbandonedVillage
             {
                 type = ModContent.DustType<SootDust>();
                 if (!Main.rand.NextBool(3))
-                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
+                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, -2).scale = Main.rand.NextFloat(1f, 2f);
             }
             else
             {
@@ -239,7 +239,7 @@ namespace SOTS.Items.AbandonedVillage
             {
                 type = ModContent.DustType<SootDust>();
                 if (!Main.rand.NextBool(3))
-                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
+                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, -2).scale = Main.rand.NextFloat(1f, 2f);
             }
             else
             {
@@ -266,7 +266,7 @@ namespace SOTS.Items.AbandonedVillage
                 if (Main.rand.NextBool(4))
                     type = DustID.Bone;
                 else
-                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, 2).scale = Main.rand.NextFloat(1f, 2f);
+                    PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, -2).scale = Main.rand.NextFloat(1f, 2f);
             }
             else
             {
