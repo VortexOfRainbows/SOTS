@@ -7432,6 +7432,7 @@ Mods: {
 			PBow.DisplayName: Compound Bow
 			PBowArrow.DisplayName: Compound Arrow
 			PBolt.DisplayName: Energy Bolt
+			ThroeProj.DisplayName: Throe Proj
 		}
 
 		DamageClasses: {

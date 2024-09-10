@@ -8,7 +8,7 @@ namespace SOTS
 {
     public static class ColorHelpers
     {
-		public static Color AVDustColor => new Color(117, 120, 132, 200);
+		public static Color AVDustColor => new Color(117, 120, 132);
 		public static Color SandstormPouchColor => new Color(179, 143, 97);
         public static Color ToothAcheLime => ToothAcheSlash.toothAcheLime;
         public static Vector3 AVIchorLight = new Vector3(0.85f, 0.81f, .22f);

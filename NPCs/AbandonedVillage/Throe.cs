@@ -20,12 +20,14 @@ namespace SOTS.NPCs.AbandonedVillage
         public class ThroeFace //These will be used purely for visual purposes, so it doesnt need to be synced on the server
         {
             public int AI;
+            public int FrameCounter;
             public List<Vector2> oldPos;
             public Vector2 position;
             public Vector2 velocity;
             public Vector2 target;
             public void Update()
             {
+                FrameCounter++;
                 AI--;
                 if (AI > 0)
                 {
@@ -51,6 +53,7 @@ namespace SOTS.NPCs.AbandonedVillage
             }
             public ThroeFace()
             {
+                FrameCounter = Main.rand.Next(25);
                 AI = Main.rand.Next(90);
                 position = Vector2.Zero;
                 velocity = Vector2.Zero;
@@ -67,28 +70,28 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         public override void SetDefaults()
         {
-            NPCID.Sets.TrailingMode[Type] = 0;
             NPC.aiStyle = -1;
             NPC.lifeMax = 25;
             NPC.damage = 30; 
-            NPC.defense = 6;	
-            NPC.knockBackResist = 0.5f;
+            NPC.defense = 0;	
+            NPC.knockBackResist = 0.3f;
             NPC.width = 32;
             NPC.height = 54;
             NPC.value = 250;
             NPC.boss = NPC.lavaImmune = false;
-            NPC.noGravity = NPC.noTileCollide = NPC.netAlways = true;
-            NPC.HitSound = SoundID.NPCHit54;
+            NPC.noGravity = NPC.noTileCollide = NPC.netAlways = NPC.dontTakeDamage = true;
+            NPC.HitSound = SoundID.NPCHit37;
             NPC.DeathSound = SoundID.NPCDeath6;
-			NPC.DeathSound = null;
             NPC.alpha = 150;
+            NPC.scale = 0.9f;
 			//Banner = NPC.type;
 			//BannerItem = ItemType<LostSoulBanner>();
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return NPC.life < NPC.lifeMax;
+            return Aggressive;
         }
+        public bool Aggressive => NPC.life < NPC.lifeMax || NPC.ai[3] < 0;
         public override void AI()
         {
             if (NPC.ai[3] >= 0)
@@ -108,20 +111,43 @@ namespace SOTS.NPCs.AbandonedVillage
             }
             NPC.TargetClosest(false);
             Player player = Main.player[NPC.target];
-			Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelpers.AVDustColor, -5);
-			dust.velocity += (dust.position - new Vector2(5, 5) - NPC.Center).SNormalize() * 0.5f;
-            dust.alpha = NPC.alpha;
-			dust.scale = Main.rand.NextFloat(1, 2);
+
+            if(Main.rand.NextBool(2))
+            {
+                Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelpers.AVDustColor, -5);
+                dust.velocity += (dust.position - new Vector2(5, 5) - NPC.Center).SNormalize() * 0.5f;
+                dust.alpha = NPC.alpha;
+                dust.scale = Main.rand.NextFloat(1, 2);
+            }
+            if (faces != null && NPC.ai[3] >= 0)
+            {
+                int i = 0;
+                foreach (ThroeFace tF in faces)
+                {
+                    if (Main.rand.NextBool(2))
+                    {
+                        float circular = MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.5f + 90 * i);
+                        Vector2 cloneLocation = NPC.Center + tF.position.RotatedBy(circular);
+                        Dust dust = PixelDust.Spawn(cloneLocation - new Vector2(NPC.width / 2, NPC.height / 2), NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelpers.AVDustColor, -5);
+                        dust.velocity += (dust.position - new Vector2(5, 5) - cloneLocation).SNormalize() * 0.5f;
+                        dust.alpha = 150 - (int)(MathF.Sin(MathHelper.ToRadians(tF.AI * 4)) * 50);
+                        dust.scale = Main.rand.NextFloat(1, 2);
+                    }
+                    i++;
+                }
+            }
+
             NPC.gfxOffY = -4;
 
             if (NPC.ai[3] == -1)
             {
-                NPC.velocity += Main.rand.NextVector2Circular(4, 4);
+                NPC.velocity += Main.rand.NextVector2Circular(5, 5);
                 NPC.ai[3] = -2;
-                NPC.life = NPC.lifeMax / 2;
+                NPC.life = (int)NPC.ai[2];
+                NPC.ai[2] = 0;
             }
-            bool aggressive = NPC.life < NPC.lifeMax;
-            if (aggressive)
+
+            if (Aggressive)
             {
                 //Split into multiple aggressive throes
                 //TODO!
@@ -131,32 +157,43 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     NPC.netUpdate = true;
                     NPC.ai[3] = -2;
+                    NPC.ai[2] = 0;
                     NPC.ai[1] = 1;
                     if(Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         for (int i = 0; i < 4; i++)
                         {
-                            NPC.NewNPCDirect(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.position.Y + NPC.height), Type, 0, Main.rand.Next(90), 0.875f, 0, -1);
+                            NPC.NewNPCDirect(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.position.Y + NPC.height), Type, 0, Main.rand.Next(90), 0.875f, NPC.life, -1);
                         }
+                        //This one can be spawned server side since the position for the visual should be synced among all clients
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.75f, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0, 56);
                     }
                     if(Main.netMode != NetmodeID.Server)
                     {
-                        if (faces == null)
+                        if (faces != null)
                         {
+                            int i = 0;
                             foreach (ThroeFace tF in faces)
                             {
-                                //Spawn dust where each face used to be
-                                //TODO!
+                                //Deliberately setting the Main.myPlayer (owner) parameter to 0 in order to make the spawning of the projectile client sided, as this is a projectile spawned for visual effect, and the visual for Throes is not synced.
+                                float circular = MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.5f + 90 * i++);
+                                Vector2 cloneLocation = NPC.Center + tF.position.RotatedBy(circular);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), cloneLocation, (NPC.velocity + tF.velocity) * 0.26f, ProjectileType<ThroeProj>(), 0, 0, -1, tF.FrameCounter, 0.5f, 28);
                             }
                         }
-                        //Spawn dust in an explosion. Make sound effects!
-                        //TODO!
+                        SOTSUtils.PlaySound(SoundID.DD2_GhastlyGlaiveImpactGhost, NPC.Center, 1.2f, -0.3f);
                     }
+                }
+                else
+                {
+                    NPC.ai[2]++;
+                    NPC.dontTakeDamage = NPC.ai[2] < 30;
                 }
                 NPC.scale = NPC.ai[1];
             }
             else
             {
+                NPC.dontTakeDamage = false;
                 //Wander around in a small area
                 NPC.ai[0]--;
                 if (NPC.ai[0] > 0)
@@ -204,21 +241,22 @@ namespace SOTS.NPCs.AbandonedVillage
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 10);
             Vector2 drawPos = NPC.Center - screenPos;
-            Rectangle frame = new Rectangle(0, NPC.frame.Y, texture.Width, texture.Height / 5);
+            Rectangle frame2 = new Rectangle(0, NPC.frame.Y, texture.Width, texture.Height / 5);
             if (faces != null && NPC.ai[3] >= 0)
             {
                 int i = 0;
                 foreach(ThroeFace tF in faces)
                 {
+                    Rectangle frame = new Rectangle(0, tF.FrameCounter / 5 % 5 * texture.Height / 5, texture.Width, texture.Height / 5);
                     float circular = MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.5f + 90 * i++);
                     Vector2 cloneLocation = drawPos + tF.position.RotatedBy(circular);
                     float sinusoid = MathF.Sin(MathHelper.ToRadians(tF.AI * 4));
                     for (int j = 0; j < tF.oldPos.Count; j++)
                     {
                         float perc = 1 - j / (float)NPC.oldPos.Length;
-                        Main.spriteBatch.Draw(texture, drawPos + tF.oldPos[j].RotatedBy(circular - MathHelper.ToRadians(1.5f * j + 1)), frame, drawColor * perc * 0.5f * (0.5882f + sinusoid * 0.196f), NPC.rotation, drawOrigin, perc * (0.875f - sinusoid * 0.05f), SpriteEffects.None, 0f);
+                        Main.spriteBatch.Draw(texture, drawPos + tF.oldPos[j].RotatedBy(circular - MathHelper.ToRadians(1.5f * j + 1)), frame, drawColor * perc * 0.5f * (0.5882f + sinusoid * 0.196f), NPC.rotation, drawOrigin, NPC.scale * perc * (0.875f - sinusoid * 0.05f), SpriteEffects.None, 0f);
                     }
-                    spriteBatch.Draw(texture, cloneLocation, frame, drawColor * (0.5882f + sinusoid * 0.196f), NPC.rotation, drawOrigin, 0.875f - sinusoid * 0.05f, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(texture, cloneLocation, frame, drawColor * (0.5882f + sinusoid * 0.196f), NPC.rotation, drawOrigin, NPC.scale * 0.875f - sinusoid * 0.05f, SpriteEffects.None, 0f);
                 }
             }
             float sin = MathF.Sin(MathHelper.ToRadians(NPC.ai[0] * 4));
@@ -230,10 +268,10 @@ namespace SOTS.NPCs.AbandonedVillage
                     break;
                 float perc = 1 - i / (float)NPC.oldPos.Length;
                 Vector2 center = NPC.oldPos[i] + NPC.Size / 2;
-                Main.spriteBatch.Draw(texture, center - Main.screenPosition, frame, drawColor * perc * 0.5f, NPC.rotation, drawOrigin, perc * (NPC.scale + 0.05f * sin), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, center - Main.screenPosition, frame2, drawColor * perc * 0.5f, NPC.rotation, drawOrigin, perc * (NPC.scale + 0.05f * sin), SpriteEffects.None, 0f);
             }
 
-            spriteBatch.Draw(texture, drawPos, frame, drawColor, NPC.rotation, drawOrigin, NPC.scale + 0.05f * sin, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, drawPos, frame2, drawColor, NPC.rotation, drawOrigin, NPC.scale + 0.05f * sin, SpriteEffects.None, 0f);
             //texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/BleedingGhastGlow");
             //spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 48, 56), Color.White, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
             return false;
@@ -244,10 +282,12 @@ namespace SOTS.NPCs.AbandonedVillage
 		}
 		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
 		{
-            if (NPC.life >= NPC.lifeMax)
+            if (!Aggressive || NPC.ai[3] >= 0)
             {
                 modifiers.SourceDamage *= 0.5f;
-                modifiers.SetMaxDamage(NPC.lifeMax / 2);
+                modifiers.SetMaxDamage(Math.Max(NPC.life - NPC.lifeMax / 2, 1));
+                modifiers.DisableCrit();
+                modifiers.DisableKnockback();
             }
 		}
         public override void HitEffect(NPC.HitInfo hit)
@@ -298,5 +338,67 @@ namespace SOTS.NPCs.AbandonedVillage
 			npcLoot.Add(ItemDropRule.Common(ItemType<SootBlock>(), 1, 1, 2));
             npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEarth>(), 5, 1, 1));
         }
-	}
+        public override void OnKill()
+        {
+            if(Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0, 64);
+            }
+        }
+    }
+    public class ThroeProj : ModProjectile
+    {
+        public override string Texture => "SOTS/NPCs/AbandonedVillage/Throe";
+        public override bool PreDraw(ref Color lightColor)
+        {
+            int frame = (int)(Projectile.ai[0] / 5) % 5;
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 10);
+            Vector2 drawPos = Projectile.Center - Main.screenPosition;
+            Rectangle frameRect = new Rectangle(0, frame * texture.Height / 5, texture.Width, texture.Height / 5);
+            float perc = (Projectile.timeLeft / 60f);
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 circular = new Vector2(Projectile.ai[2] * (1 - perc), 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 2 + SOTSWorld.GlobalCounter + i * 90));
+                Main.spriteBatch.Draw(texture, circular + drawPos, frameRect, lightColor * 0.325f * perc * (1 - Projectile.ai[1]), Projectile.rotation, drawOrigin, Projectile.scale * (0.9f + 0.2f * (1 - perc)), SpriteEffects.None, 0f);
+            }
+            return false;
+        }
+        public override void SetStaticDefaults()
+        {
+
+        }
+        public override void SetDefaults()
+        {
+            Projectile.height = 80;
+            Projectile.width = 80;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.tileCollide = false;
+            Projectile.hostile = false;
+            Projectile.alpha = 255;
+            Projectile.timeLeft = 60;
+        }
+        public override bool? CanHitNPC(NPC target)
+        {
+            return target.whoAmI != Projectile.ai[0];
+        }
+        bool runOnce = true;
+        public override void AI()
+        {
+            if(runOnce)
+            {
+                for (int k = 0; k < 30; k++)
+                {
+                    Dust dust = PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, Main.rand.NextVector2CircularEdge(2, 3), ColorHelpers.AVDustColor, -2);
+                    dust.velocity += (dust.position - new Vector2(5, 5) - Projectile.Center).SNormalize() * 0.1f;
+                    dust.alpha = 125;
+                    dust.scale = Main.rand.NextFloat(1, 2);
+                }
+                runOnce = false;
+            }
+            Projectile.ai[0]++;
+            Projectile.velocity *= 0.93f;
+        }
+    }
 }
