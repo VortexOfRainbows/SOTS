@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using rail;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO.Pipelines;
@@ -74,7 +76,7 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.lifeMax = 25;
             NPC.damage = 30; 
             NPC.defense = 0;	
-            NPC.knockBackResist = 0.3f;
+            NPC.knockBackResist = 0.25f;
             NPC.width = 32;
             NPC.height = 54;
             NPC.value = 250;
@@ -89,7 +91,7 @@ namespace SOTS.NPCs.AbandonedVillage
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return Aggressive;
+            return Aggressive && !NPC.dontTakeDamage;
         }
         public bool Aggressive => NPC.life < NPC.lifeMax || NPC.ai[3] < 0;
         public override void AI()
@@ -149,8 +151,10 @@ namespace SOTS.NPCs.AbandonedVillage
 
             if (Aggressive)
             {
+               int invis = 0;
                 //Split into multiple aggressive throes
                 //TODO!
+                NPC.knockBackResist = 0.5f;
                 NPC.velocity *= 0.971f;
                 NPC.ai[0]++;
                 if (NPC.ai[3] >= 0)
@@ -186,10 +190,39 @@ namespace SOTS.NPCs.AbandonedVillage
                 }
                 else
                 {
-                    NPC.ai[2]++;
+                    float percent = MathHelper.Clamp(NPC.ai[2] / 30f, 0, 1);
+                    float distToPlayer = player.Distance(NPC.Center);
                     NPC.dontTakeDamage = NPC.ai[2] < 30;
+                    if (NPC.ai[2] < 0)
+                    {
+                        float inverPercent = MathF.Sin(-NPC.ai[2] / 40f * MathF.PI);
+                        invis = (int)(155 * inverPercent);
+                        if ((int)NPC.ai[2] == -20)
+                        {
+                            NPC.Center = player.Center + new Vector2(distToPlayer * 0.8f + 96, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * 4));
+                            NPC.netUpdate = true;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0, -32);
+                        }
+                        if ((int)NPC.ai[2] == -40)
+                        {
+                            NPC.netUpdate = true;
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0.8f, 32);
+                        }
+                    }
+
+
+                    Vector2 target = player.Center + new Vector2(distToPlayer * 0.5f * percent + 8, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * 4));
+
+                    Vector2 toTarget = target - NPC.Center;
+                    NPC.velocity *= MathHelper.Lerp(1, 0.945f, percent);
+                    NPC.velocity += toTarget.SNormalize() * 0.3f * percent * percent;
                 }
                 NPC.scale = NPC.ai[1];
+                invis = Math.Clamp(invis, 0, 155);
+                NPC.alpha = Math.Min(255, 150 + (int)(MathF.Sin(MathHelper.ToRadians(NPC.ai[0] * 4)) * 50) + invis);
+                NPC.ai[2]++;
             }
             else
             {
@@ -203,7 +236,6 @@ namespace SOTS.NPCs.AbandonedVillage
                     Vector2 toTarget = target - NPC.Center;
                     Vector2 toPlayer = player.Center - NPC.Center;
                     float dist = toPlayer.Length();
-                    //NPC.Center = Vector2.Lerp(NPC.Center, target, 0.01f);
                     NPC.velocity *= 0.971f;
                     NPC.velocity += toTarget.SNormalize() * 0.033f;
                     if (dist < 160)
@@ -292,12 +324,17 @@ namespace SOTS.NPCs.AbandonedVillage
 		}
         public override void HitEffect(NPC.HitInfo hit)
         {
+            if(Aggressive)
+            {
+                NPC.ai[2] = -40;
+                NPC.netUpdate = true;
+            }
             if (Main.netMode == NetmodeID.Server)
                 return;
             if (NPC.life > 0)
             {
                 int num = 0;
-                while (num < hit.Damage / NPC.lifeMax * 50.0)
+                while (num < hit.Damage / NPC.lifeMax * 80.0)
                 {
                     Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelpers.AVDustColor, -2);
                     dust.velocity += (dust.position - new Vector2(5, 5) - NPC.Center).SNormalize() * 0.5f;
@@ -351,16 +388,19 @@ namespace SOTS.NPCs.AbandonedVillage
         public override string Texture => "SOTS/NPCs/AbandonedVillage/Throe";
         public override bool PreDraw(ref Color lightColor)
         {
+            int dir = SOTSUtils.SignNoZero(Projectile.ai[2]);
             int frame = (int)(Projectile.ai[0] / 5) % 5;
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 10);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Rectangle frameRect = new Rectangle(0, frame * texture.Height / 5, texture.Width, texture.Height / 5);
             float perc = (Projectile.timeLeft / 60f);
+            float reverse = dir == -1 ? perc : (1 - perc);
+            float normal = dir == 1 ? perc : perc * (1 - perc);
             for (int i = 0; i < 4; i++)
             {
-                Vector2 circular = new Vector2(Projectile.ai[2] * (1 - perc), 0).RotatedBy(MathHelper.ToRadians(Projectile.ai[0] * 2 + SOTSWorld.GlobalCounter + i * 90));
-                Main.spriteBatch.Draw(texture, circular + drawPos, frameRect, lightColor * 0.325f * perc * (1 - Projectile.ai[1]), Projectile.rotation, drawOrigin, Projectile.scale * (0.9f + 0.2f * (1 - perc)), SpriteEffects.None, 0f);
+                Vector2 circular = new Vector2(Projectile.ai[2] * reverse, 0).RotatedBy(dir * MathHelper.ToRadians(Projectile.ai[0] * 2 + SOTSWorld.GlobalCounter + i * 90));
+                Main.spriteBatch.Draw(texture, circular + drawPos, frameRect, lightColor * 0.325f * normal * (1 - Projectile.ai[1]), Projectile.rotation, drawOrigin, Projectile.scale * (0.9f + 0.2f * reverse), SpriteEffects.None, 0f);
             }
             return false;
         }
@@ -388,12 +428,16 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             if(runOnce)
             {
-                for (int k = 0; k < 30; k++)
+                int particleCount = Projectile.ai[2] != 32 ? 30 : 10;
+                if (Projectile.ai[2] > 0)
                 {
-                    Dust dust = PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, Main.rand.NextVector2CircularEdge(2, 3), ColorHelpers.AVDustColor, -2);
-                    dust.velocity += (dust.position - new Vector2(5, 5) - Projectile.Center).SNormalize() * 0.1f;
-                    dust.alpha = 125;
-                    dust.scale = Main.rand.NextFloat(1, 2);
+                    for (int k = 0; k < particleCount; k++)
+                    {
+                        Dust dust = PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, Main.rand.NextVector2CircularEdge(2, 3), ColorHelpers.AVDustColor, -2);
+                        dust.velocity += (dust.position - new Vector2(5, 5) - Projectile.Center).SNormalize() * 0.1f;
+                        dust.alpha = 100;
+                        dust.scale = Main.rand.NextFloat(1, 2);
+                    }
                 }
                 runOnce = false;
             }
