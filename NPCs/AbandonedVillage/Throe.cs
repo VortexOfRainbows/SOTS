@@ -8,6 +8,7 @@ using SOTS.WorldgenHelpers;
 using Steamworks;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Pipelines;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -19,6 +20,14 @@ namespace SOTS.NPCs.AbandonedVillage
 {
 	public class Throe : ModNPC
     {
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+
+        }
         public class ThroeFace //These will be used purely for visual purposes, so it doesnt need to be synced on the server
         {
             public int AI;
@@ -74,7 +83,7 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             NPC.aiStyle = -1;
             NPC.lifeMax = 25;
-            NPC.damage = 30; 
+            NPC.damage = 25; 
             NPC.defense = 0;	
             NPC.knockBackResist = 0.25f;
             NPC.width = 32;
@@ -208,7 +217,7 @@ namespace SOTS.NPCs.AbandonedVillage
                         {
                             NPC.netUpdate = true;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0.8f, 32);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0.75f, 32);
                         }
                     }
 
@@ -217,7 +226,7 @@ namespace SOTS.NPCs.AbandonedVillage
 
                     Vector2 toTarget = target - NPC.Center;
                     NPC.velocity *= MathHelper.Lerp(1, 0.945f, percent);
-                    NPC.velocity += toTarget.SNormalize() * 0.3f * percent * percent;
+                    NPC.velocity += toTarget.SNormalize() * 0.275f * percent * percent;
                 }
                 NPC.scale = NPC.ai[1];
                 invis = Math.Clamp(invis, 0, 155);
