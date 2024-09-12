@@ -1,15 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
-using Steamworks;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.IO.Pipelines;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -20,14 +16,6 @@ namespace SOTS.NPCs.AbandonedVillage
 {
 	public class Throe : ModNPC
     {
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-
-        }
         public class ThroeFace //These will be used purely for visual purposes, so it doesnt need to be synced on the server
         {
             public int AI;
@@ -156,6 +144,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 NPC.ai[3] = -2;
                 NPC.life = (int)NPC.ai[2];
                 NPC.ai[2] = 0;
+                NPC.localAI[1] = -1;
             }
 
             if (Aggressive)
@@ -166,13 +155,14 @@ namespace SOTS.NPCs.AbandonedVillage
                 NPC.knockBackResist = 0.5f;
                 NPC.velocity *= 0.971f;
                 NPC.ai[0]++;
-                if (NPC.ai[3] >= 0)
+                if (NPC.ai[3] >= 0 || NPC.localAI[1] >= 0)
                 {
                     NPC.netUpdate = true;
                     NPC.ai[3] = -2;
                     NPC.ai[2] = 0;
                     NPC.ai[1] = 1;
-                    if(Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.localAI[1] = -1; //This is to help multiplayer clients create a visual effect, since this variable is not synced in multiplayer
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         for (int i = 0; i < 4; i++)
                         {
@@ -235,6 +225,7 @@ namespace SOTS.NPCs.AbandonedVillage
             }
             else
             {
+                NPC.localAI[1] = 1;
                 NPC.dontTakeDamage = false;
                 //Wander around in a small area
                 NPC.ai[0]--;
@@ -412,10 +403,6 @@ namespace SOTS.NPCs.AbandonedVillage
                 Main.spriteBatch.Draw(texture, circular + drawPos, frameRect, lightColor * 0.325f * normal * (1 - Projectile.ai[1]), Projectile.rotation, drawOrigin, Projectile.scale * (0.9f + 0.2f * reverse), SpriteEffects.None, 0f);
             }
             return false;
-        }
-        public override void SetStaticDefaults()
-        {
-
         }
         public override void SetDefaults()
         {

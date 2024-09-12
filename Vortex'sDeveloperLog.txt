@@ -86,8 +86,8 @@ N/A
 Daily Log:
 
 9/8/24 and 9/10/24 to 9/11/24
-1. WIP Throe
-	1. Needs: Banner, Drops, and Server syncing
+1. Added Throe, works in Multiplayer!
+	1. Needs: Banner, Drops
 2. Adjustments to pixel dust to allow it the capacity to interact with lighting
 3. Adjustments to dust spawned by AV Ambient tiles when broken
 
