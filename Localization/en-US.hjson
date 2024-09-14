@@ -5676,9 +5676,10 @@ Mods: {
 				DisplayName: Starshard Saber
 				Tooltip:
 					'''
-					Strike with 4 slashes that launch Starshards for 10% damage
+					Strike with 4 slashes that launch Starshards for 20% damage
 					Starshards apply a stacking, permanent curse
-					Right click to strike with a large slash that detonates the curse, dealing more damage the more stacks applied
+					Right click to strike with a 150% damage slash that detonates the curse, dealing more damage the more stacks applied
+					Enemies with at least 4 stacks of the curse will end the detonation more violently
 					'''
 			}
 
@@ -7433,6 +7434,8 @@ Mods: {
 			PBowArrow.DisplayName: Compound Arrow
 			PBolt.DisplayName: Energy Bolt
 			ThroeProj.DisplayName: Throe Proj
+			CrystalExplosionBig.DisplayName: Crystal Explosion Big
+			CrystalExplosionSmall.DisplayName: Crystal Explosion Small
 		}
 
 		DamageClasses: {

@@ -1,83 +1,111 @@
-using System;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using SOTS.Void;
 using SOTS.Dusts;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
-using SOTS.Projectiles.Earth;
+using System;
 
 namespace SOTS.Projectiles.Blades
-{    
+{
     public class StarshardSlash : SOTSBlade
-	{
+    {
         public override string Texture => "SOTS/Items/ChestItems/StarshardSaber";
         public override Color color1 => new Color(123, 214, 248);
-		public override Color color2 => new Color(209, 132, 255);
-		public override void SafeSetDefaults()
-		{
-			Projectile.localNPCHitCooldown = 30;
-			Projectile.DamageType = DamageClass.Melee;
-			delayDeathTime = 8;
-			Projectile.extraUpdates = 3;
-		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        public override Color color2 => new Color(209, 132, 255);
+        public override void SafeSetDefaults()
         {
-
+            Projectile.localNPCHitCooldown = 30;
+            Projectile.DamageType = DamageClass.Melee;
+            delayDeathTime = 8;
+            Projectile.extraUpdates = 3;
+        }
+        public override float ActiveSpeedMultiplier()
+        {
+            float timeLeft = timeLeftCounter;
+            if (timeLeft < 0)
+                timeLeft = 0;
+            return thisSlashNumber != 5 ? 1f : 0.15f + Math.Min((float)Math.Pow(2f * (timeLeft / swipeDegreesTotal), 2f), 1.5f);
         }
         public override float HitboxWidth => 40;
-		public override float AdditionalTipLength => 0;
-		//public override float handleOffset => 24;
-		public override float HeldDistFromPlayer => 12;
-		public override Vector2 drawOrigin => new Vector2(7, 43);
+        public override float AdditionalTipLength => 0;
+        //public override float handleOffset => 24;
+        public override float HeldDistFromPlayer => 12;
+        public override Vector2 drawOrigin => new Vector2(7, 43);
         public override void SwingSound(Player player)
         {
             if (thisSlashNumber == 5)
-                SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.4f);
+                SOTSUtils.PlaySound(SoundID.Item1, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.5f);
             else if (thisSlashNumber == 4)
-				SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f);
+                SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f);
             else
                 SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f + (4 - thisSlashNumber) * 0.1f);
         }
-		public override float speedModifier => Projectile.ai[1];
-		public override float GetBaseSpeed(float swordLength)
-		{
-			return 3f + (4 - thisSlashNumber) * 0.65f;
-		}
-		public override float MeleeSpeedMultiplier => 0.6f;
-		public override float OverAllSpeedMultiplier => 6f;
-		public override float MinSwipeDistance => 110;
-		public override float MaxSwipeDistance => 110;
-		public override float ArcStartDegrees => thisSlashNumber != 4 ? 174 + (12 * thisSlashNumber) : 190;
-		public override float swipeDegreesTotal => thisSlashNumber != 4 ? 164 + (12 * thisSlashNumber) : 230;
-		public override float swingSizeMult => thisSlashNumber != 4 ? 0.9f + (3 - thisSlashNumber) * 0.1f : 1.0f;
-		public override float ArcOffsetFromPlayer => 0.35f;
-		public override float delayDeathSlowdownAmount => 0.9f;
+        public override float speedModifier => Projectile.ai[1];
+        public override float GetBaseSpeed(float swordLength)
+        {
+            return 3f + (4 - thisSlashNumber) * 0.65f;
+        }
+        public override float MeleeSpeedMultiplier => 0.6f;
+        public override float OverAllSpeedMultiplier => 6f;
+        public override float MinSwipeDistance => 110;
+        public override float MaxSwipeDistance => 110;
+        public override float ArcStartDegrees => thisSlashNumber == 5 ? 180 : thisSlashNumber != 4 ? 174 + (12 * thisSlashNumber) : 190;
+        public override float swipeDegreesTotal => thisSlashNumber == 5 ? 180 : thisSlashNumber != 4 ? 164 + (12 * thisSlashNumber) : 230;
+        public override float swingSizeMult
+        {
+            get
+            {
+                if (thisSlashNumber == 5)
+                    return 1.25f;
+                return thisSlashNumber != 4 ? 0.9f + (3 - thisSlashNumber) * 0.1f : 1.0f;
+            }
+        }
+		public override float ArcOffsetFromPlayer => thisSlashNumber == 5 ? 0.25f : 0.35f;
+		public override float delayDeathSlowdownAmount => thisSlashNumber == 5 ? 0.87f : 0.9f;
 		public override Color? DrawColor => null;
 		private bool RunOnce = true;
+        private bool BonusSound = false;
         private float nextIntervalForRocks = 170;
         public override void PostAI()
         {
             base.PostAI();
+            if (thisSlashNumber == 5 && RunOnce)
+            {
+                delayDeathTime = 48;
+                RunOnce = false;
+            }
+            if (!BonusSound && ActiveSpeedMultiplier() > 0.5f && thisSlashNumber == 5)
+            {
+                Projectile.friendly = true;
+                BonusSound = true;
+                if (thisSlashNumber == 5)
+                {
+                    SOTSUtils.PlaySound(SoundID.Item71, Projectile.Center, 0.6f, -0.5f);
+                }
+            }
             if (timeLeftCounter > nextIntervalForRocks && thisSlashNumber != 5)
             {
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Vector2 velo = dustAway.SNormalize();
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), PlayerCenter() + velo * 44, velo * 7 + new Vector2(0, -1), ModContent.ProjectileType<StarShard>(), (int)(Projectile.damage * 0.1f + 1), Projectile.knockBack, Main.myPlayer, 0, 0, Main.rand.Next(3));
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), PlayerCenter() + velo * 44, velo * 7 + new Vector2(0, -1), ModContent.ProjectileType<StarShard>(), (int)(Projectile.damage * 0.2f + 1), Projectile.knockBack, Main.myPlayer, 0, 0, Main.rand.Next(3));
                 }
                 nextIntervalForRocks = 10000;
             }
         }
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
 		{
-			if(thisSlashNumber == 4)
+            if(thisSlashNumber == 5)
+            {
+                original.Y *= 0.9f;
+            }
+			else if(thisSlashNumber == 4)
 				original.Y *= 1 / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
             else if(original.Y * FetchDirection > 0)
             {
-                original.Y *= 0.65f / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
+                original.Y *= 0.666f / speedModifier * yDistanceCompression; //turn circle into an oval by compressing the y value
             }
             return original;
 		}
@@ -242,6 +270,7 @@ namespace SOTS.Projectiles.Blades
         {
             Projectile.ai[0] = -1;
             Projectile.netUpdate = true;
+            Projectile.velocity = oldVelocity;
             return false;
         }
         public override bool PreDraw(ref Color lightColor)
@@ -272,6 +301,213 @@ namespace SOTS.Projectiles.Blades
                 Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, frame, Color.White, Projectile.rotation + MathHelper.PiOver2, drawOrigin, Projectile.scale * 1f, SpriteEffects.None, 0f);
             }
             return false;
+        }
+    }
+    public class CrystalExplosionBig : ModProjectile 
+    {
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return base.PreDraw(ref lightColor);
+        }
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+            int size = 150;
+            hitbox = new Rectangle((int)Projectile.Center.X - size / 2, (int)Projectile.Center.Y - size / 2, size, size);
+        }
+        public override void SetStaticDefaults()
+        {
+            Main.projFrames[Type] = 18;
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 70;
+            Projectile.height = 62;
+			Projectile.penetrate = -1;
+			Projectile.friendly = false;
+			Projectile.DamageType = DamageClass.Melee;
+			Projectile.timeLeft = 600;
+			Projectile.tileCollide = false;
+			Projectile.hostile = false;
+			Projectile.alpha = 0;
+            Projectile.localNPCHitCooldown = 100;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+		bool runOnce = true;
+        public override bool ShouldUpdatePosition()
+        {
+			return false;
+        }
+        private Vector2 RelativeToNPC;
+        public override void AI()
+        {
+            int target = (int)Projectile.ai[1];
+            NPC npc = Main.npc[target];
+            if(npc.CanBeChasedBy())
+            {
+                if(RelativeToNPC == Vector2.Zero)
+                {
+                    RelativeToNPC = Projectile.Center - npc.Center;
+                }
+                Projectile.Center = RelativeToNPC + npc.Center;
+                if(!Projectile.friendly)
+                    npc.velocity *= 0.945f;
+                else
+                    npc.velocity *= 0.985f;
+            }
+			Lighting.AddLight(Projectile.Center, new Vector3(1, 1, 1));
+			if(runOnce)
+            {
+                for (int i = 0; i < 360; i += 12)
+                {
+                    Vector2 circularLocation = new Vector2(90, 0).RotatedBy(MathHelper.ToRadians(i + Main.rand.NextFloat(-4f, 4f))) * Main.rand.NextFloat();
+                    circularLocation = circularLocation.RotatedBy(Projectile.rotation);
+                    Dust dust = PixelDust.Spawn(Projectile.Center + circularLocation, 0, 0, -circularLocation * 0.1f, Color.Lerp(StarShard.color1, StarShard.color2, Main.rand.NextFloat(1)), 8);
+                    dust.scale = Main.rand.NextFloat(1, 2);
+                    dust.alpha = 50;
+                    dust.color.A = 0;
+                }
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/CrystalExplosionBig"), Projectile.Center, 1.0f, 0f);
+                runOnce = false;
+			}
+            Projectile.ai[0]++;
+            if (Projectile.ai[0] >= 4.5f)
+            {
+                Projectile.ai[0] -= 4.5f;
+                Projectile.frame++;
+            }
+            if(Projectile.frame > 9)
+            {
+                if(!Projectile.friendly)
+                {
+                    for (int i = 0; i < 360; i += 10)
+                    {
+                        Vector2 circularLocation = new Vector2(9, 0).RotatedBy(MathHelper.ToRadians(i));
+                        circularLocation = circularLocation.RotatedBy(Projectile.rotation);
+                        Dust dust = PixelDust.Spawn(Projectile.Center, 0, 0, circularLocation * Main.rand.NextFloat() + Main.rand.NextVector2Circular(0.5f, 0.5f), Color.Lerp(StarShard.color1, StarShard.color2, Main.rand.NextFloat(1)), 5);
+                        dust.scale = Main.rand.NextFloat(1, 2);
+                        dust.alpha = 50;
+                        dust.color.A = 0;
+
+                        dust = PixelDust.Spawn(Projectile.Center, 0, 0, circularLocation * Main.rand.NextFloat(0.95f, 1.05f) + Main.rand.NextVector2Circular(0.5f, 0.5f), Color.Lerp(StarShard.color1, StarShard.color2, Main.rand.NextFloat(1)), 5);
+                        dust.scale = 1;
+                        dust.alpha = 50;
+                        dust.color.A = 0;
+                    }
+                    int dustDivisor = SOTS.Config.lowFidelityMode ? 2 : 1;
+                    SOTSProjectile.DustStar(Projectile.Center, Vector2.Zero, Color.Lerp(StarShard.color1, StarShard.color2, 0.25f) * 0.5f, Main.rand.NextFloat(6.28f), 36 / dustDivisor, 0, 4, 6, 7, 1f, .75f, 0.16f);
+                    SOTSProjectile.DustStar(Projectile.Center, Vector2.Zero, Color.Lerp(StarShard.color1, StarShard.color2, 0.5f) * 0.5f, Main.rand.NextFloat(6.28f), 54 / dustDivisor, 0, 4, 6, 8, 1f, .75f, 0.32f);
+                    SOTSProjectile.DustStar(Projectile.Center, Vector2.Zero, Color.Lerp(StarShard.color1, StarShard.color2, 0.75f) * 0.5f, Main.rand.NextFloat(6.28f), 72 / dustDivisor, 0, 4, 6, 9, 1f, .75f, 0.48f);
+                    Projectile.friendly = true;
+                }
+            }
+            if (Projectile.frame >= Main.projFrames[Type])
+            {
+                Projectile.hide = true;
+                Projectile.Kill();
+            }
+            else
+            {
+                Projectile.timeLeft = 2;
+            }
+        }
+    }
+    public class CrystalExplosionSmall : ModProjectile
+    {
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return base.PreDraw(ref lightColor);
+        }
+        public override void SetStaticDefaults()
+        {
+            Main.projFrames[Type] = 7;
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 38;
+            Projectile.height = 38;
+            Projectile.penetrate = -1;
+            Projectile.friendly = false;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.timeLeft = 600;
+            Projectile.tileCollide = false;
+            Projectile.hostile = false;
+            Projectile.alpha = 0;
+            Projectile.scale = 1f;
+            Projectile.localNPCHitCooldown = 100;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+        bool runOnce = true;
+        public override bool ShouldUpdatePosition()
+        {
+            return false;
+        }
+        private Vector2 RelativeToNPC;
+        public override void AI()
+        {
+            int target = (int)Projectile.ai[1];
+            NPC npc = Main.npc[target];
+            if (npc.CanBeChasedBy())
+            {
+                if (RelativeToNPC == Vector2.Zero)
+                {
+                    RelativeToNPC = Projectile.Center - npc.Center;
+                }
+                Projectile.Center = RelativeToNPC + npc.Center;
+            }
+            Lighting.AddLight(Projectile.Center, new Vector3(1, 1, 1));
+            if (runOnce)
+            {
+                for (int i = 0; i < 360; i += 24)
+                {
+                    Vector2 circularLocation = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians(i + Main.rand.NextFloat(-4f, 4f))) * Main.rand.NextFloat();
+                    circularLocation = circularLocation.RotatedBy(Projectile.rotation);
+                    Dust dust = PixelDust.Spawn(Projectile.Center + circularLocation, 0, 0, -circularLocation * 0.22f, Color.Lerp(StarShard.color1, StarShard.color2, Main.rand.NextFloat(1)), 13);
+                    dust.scale = 1;
+                    dust.alpha = 50;
+                    dust.color.A = 0;
+                }
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/CrystalExplosionSmall"), Projectile.Center, 1.0f, 0f);
+                runOnce = false;
+            }
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 4)
+            {
+                Projectile.frameCounter = 0;
+                Projectile.frame++;
+            }
+            if (Projectile.frame > 2)
+            {
+                if (!Projectile.friendly)
+                {
+                    for (int i = 0; i < 360; i += 30)
+                    {
+                        Vector2 circularLocation = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(i));
+                        circularLocation = circularLocation.RotatedBy(Projectile.rotation);
+                        Dust dust = PixelDust.Spawn(Projectile.Center, 0, 0, circularLocation * Main.rand.NextFloat() + Main.rand.NextVector2Circular(0.1f, 0.1f), Color.Lerp(StarShard.color1, StarShard.color2, Main.rand.NextFloat(1)), 10);
+                        dust.scale = 1;
+                        dust.alpha = 50;
+                        dust.color.A = 0;
+                    }
+                    Projectile.friendly = true;
+                }
+            }
+            if (Projectile.frame >= Main.projFrames[Type])
+            {
+                Projectile.hide = true;
+                Projectile.Kill();
+            }
+            else
+            {
+                Projectile.timeLeft = 2;
+            }
         }
     }
 }

@@ -13,11 +13,12 @@ namespace SOTS.Items.ChestItems
 	{
 		public override void SetStaticDefaults()
 		{
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 22;
+            Item.damage = 18;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 52;
             Item.height = 50;  
@@ -41,8 +42,9 @@ namespace SOTS.Items.ChestItems
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             int count = 4;
-            if(player.altFunctionUse == 2)
+            if (player.altFunctionUse == 2)
             {
+                damage = (int)(damage * 1.5f);
                 count = -5;
             }
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, count * SOTSUtils.SignNoZero(velocity.X) * -player.gravDir, 1);

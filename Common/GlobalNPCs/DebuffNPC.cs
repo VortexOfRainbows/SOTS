@@ -95,6 +95,7 @@ namespace SOTS.Common.GlobalNPCs
         public int OwnerOfVoidspaceCurseDamage = -1;
         public bool TriggeredCrystalCurse = false;
         private int CrystalCurseTimer = 0;
+        private int HighestCrystalCurseNumber = -1;
         public int timeFrozen = 0;
         public bool netUpdateTime = false;
         public bool frozen = false;
@@ -431,7 +432,8 @@ namespace SOTS.Common.GlobalNPCs
             {
                 StackDebuff(npc, player, ref CrystalCurse, 1, 2);
             }
-            if (projectile.type == ProjectileType<StarshardSlash>())
+            if ((projectile.type == ProjectileType<StarshardSlash>() && projectile.ModProjectile is StarshardSlash s && s.thisSlashNumber == 5)
+                || ((projectile.type == ProjectileType<CrystalExplosionBig>() || projectile.type == ProjectileType<CrystalExplosionSmall>()) && (int)projectile.ai[1] != npc.whoAmI))
             {
                 TriggeredCrystalCurse = true;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
@@ -634,23 +636,34 @@ namespace SOTS.Common.GlobalNPCs
         {
             if (CrystalCurse > 0)
             {
+                HighestCrystalCurseNumber = Math.Max(HighestCrystalCurseNumber, CrystalCurse);
                 if (TriggeredCrystalCurse)
                 {
                     if (CrystalCurseTimer <= 0)
                     {
                         CrystalCurse--;
 
-                        //Spawn explosions here
-                        //
-                        //
+                        if(Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            if (CrystalCurse > 0 || HighestCrystalCurseNumber < 4)
+                            {
+                                Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height)), -npc.velocity, ProjectileType<CrystalExplosionSmall>(), 18, 2f, Main.myPlayer, 0, npc.whoAmI);
+                            }
+                            else
+                            {
+                                Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center, -npc.velocity, ProjectileType<CrystalExplosionBig>(), 12 * (HighestCrystalCurseNumber + 1), 3f, Main.myPlayer, 0, npc.whoAmI);
+                            }
+                        }
+                        npc.velocity *= 0.9f; //Each explosion will drastically slow down the enemy
 
-                        CrystalCurseTimer = 4;
+                        CrystalCurseTimer = 5;
                     }
                     CrystalCurseTimer--;
                 }
             }
             else
             {
+                HighestCrystalCurseNumber = -1;
                 TriggeredCrystalCurse = false;
                 CrystalCurseTimer = 0;
             }

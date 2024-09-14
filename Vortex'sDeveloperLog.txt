@@ -46,6 +46,7 @@ Update Objectives:
 	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
 	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
 14. Nerf Earthen Construct spawn Threshold
+14. Hydro Servant is not using right click properly...
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -64,7 +65,7 @@ Conduit powering code for the two portals
 5. Possibly Blade Wings, Voidspace Ranger's Armor, Elemental Armor, Earthdrive, Sandstorm Pouch, Compound Bow
 4. Soot Spewer, Earth Grinder, Guardian Greatsword, Fizzle Star,
 3. Earthen Gizmo, Corpsebloom,
-2. Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star/Shattered Dreams, Fresh Greeny/Jar of Pineapple, 
+2. Soot Extractinator loot, Icebreaker, Plague Spitter, Wishing Star/Shattered Dreams, Fresh Greeny/Jar of Pineapple, Starshard Saber
 1. Tesseract, Infinity Pouch + AmmoRegatherBag,
 
 ---Visual Upgrade Needed---
@@ -85,11 +86,13 @@ N/A
 
 Daily Log:
 
-9/8/24 and 9/10/24 to 9/11/24
+9/8/24 and 9/10/24 to 9/11/24 and 9/13/24 to 9/14/24
 1. Added Throe, works in Multiplayer!
 	1. Needs: Banner, Drops
 2. Adjustments to pixel dust to allow it the capacity to interact with lighting
 3. Adjustments to dust spawned by AV Ambient tiles when broken
+4. WIP Starshard Saber
+	1. Needs: Multiplayer syncing, balancing, make the final explosion guaranteed on enemy death
 
 9/5/24 to 9/6/24
 1. Added Compound Bow, an upgrade to Pitati Longbow, Ancient Steel Bow, and Spore Sprayer... Works in Multiplayer!
