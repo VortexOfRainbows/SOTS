@@ -745,20 +745,18 @@ namespace SOTS.Common.GlobalNPCs
 			{
 				if (player.ZoneDesert || player.ZoneUndergroundDesert || (player.ZoneRockLayerHeight && !player.ZoneDungeon && !player.ZoneJungle && !player.ZoneSnow))
 				{
-					if(player.statLifeMax2 >= 120)
+					if(player.statLifeMax2 >= 160 || NPC.downedSlimeKing || NPC.downedBoss1 || SOTSWorld.downedGlowmoth)
                     {
 						if (player.ZoneCorrupt || player.ZoneHallow || player.ZoneCrimson)
 						{
-							if (player.statLifeMax2 >= 140)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.001f * constructRateMultiplier);
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.001f * constructRateMultiplier);
 						}
 						else if (player.ZoneRockLayerHeight && !player.ZoneUndergroundDesert)
 						{
-							if(player.statLifeMax2 >= 140)
-								pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.002f * constructRateMultiplier);
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.002f * constructRateMultiplier);
 						}
 						else if(player.ZoneDesert && !player.ZoneUndergroundDesert)
-							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f * constructRateMultiplier); //this is desert spawn so it shouldn't require additional healthgating
+							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f * constructRateMultiplier);
 						else if(player.ZoneUndergroundDesert)
 							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.002f * constructRateMultiplier);
 

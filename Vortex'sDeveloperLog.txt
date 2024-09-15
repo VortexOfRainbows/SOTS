@@ -24,7 +24,7 @@ Acknowledged But Likely Delayed:
 14. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 
 Update Objectives:
-1. Ghost Town! (Next up)	
+1. Ghost Town! (In Progress)	
 	1. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 	2. Fill the Rectangle with blocks and generation that is related to the AVM instead of just being in the natural underground
 	3. Find out how to better integrate the idea of the place infected by evil (potentially change tile/wall types)
@@ -34,7 +34,7 @@ Update Objectives:
 4. Starmap
 5. Torch Bomb Upgrade Item
 6. House Cube Accessory that can generate a temporary house
-7. Upgrade to Code Corruptor: Binary Blaster (?)
+7. Upgrade to Code Corruptor: Dolphin Blaster (?)
 8. Shimmer Item that upgrades the store for Archaeologist
 9. Fish Bomb
 10. Fix generation bug with Infernum and Leviathan area, potentially fix remnants compatability
@@ -45,7 +45,7 @@ Update Objectives:
 	2. Make lasers accelerates lower
 	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
 	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
-14. Nerf Earthen Construct spawn Threshold
+14. Throe Banner and visual Variants (use whoAmI values for the secondary spawns so these will sync in MP)
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -89,11 +89,11 @@ Daily Log:
 1. Tesseract should no longer oversend packets in multiplayer when above a count of 10 (works in MP, duh)
 2. Fix issues where Fake Players would fail to use right click items if the player was also using a right click item or if the servant was a Hydrokinetic Antennae servant. Seems to work in Multiplayer...
 3. Fix some issues where blade prims were erroneously attempting to initialize on servers
+4. Earthen constructs now only spawn when player is 160 max life or more, instead of 120 in the desert and 140 in the underground
+	1. Or after Slime king, EoC, or Glowmoth have been defeated
 
 9/8/24 and 9/10/24 to 9/11/24 and 9/13/24 to 9/14/24
-1. Added Throe, works in Multiplayer!
-	1. Needs: Banner, Drops
-2. Adjustments to pixel dust to allow it the capacity to interact with lighting
+1. Added Throe, works in Multiplayer!2. Adjustments to pixel dust to allow it the capacity to interact with lighting
 3. Adjustments to dust spawned by AV Ambient tiles when broken
 4. Added Starshard Saber, works in Multiplayer! :)
 5. Nerfs to Fresh Greeny/Jar of Pineapple damage scaling, armor pen scaling, attack rate, and attack rate scaling.
