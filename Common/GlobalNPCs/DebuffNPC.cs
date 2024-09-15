@@ -428,6 +428,10 @@ namespace SOTS.Common.GlobalNPCs
                     voidPlayer.lootingSouls -= amt;
                 }
             }
+            if (npc.immortal)
+            {
+                return;
+            }
             if (projectile.type == ProjectileType<StarShard>())
             {
                 StackDebuff(npc, player, ref CrystalCurse, 1, 2);
@@ -436,12 +440,19 @@ namespace SOTS.Common.GlobalNPCs
                 || ((projectile.type == ProjectileType<CrystalExplosionBig>() || projectile.type == ProjectileType<CrystalExplosionSmall>()) && (int)projectile.ai[1] != npc.whoAmI))
             {
                 TriggeredCrystalCurse = true;
+                if (Main.netMode != NetmodeID.MultiplayerClient && npc.life < 0)
+                {
+                    if (HighestCrystalCurseNumber < 4)
+                    {
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height)), -npc.velocity, ProjectileType<CrystalExplosionSmall>(), 18, 2f, Main.myPlayer, 0, npc.whoAmI);
+                    }
+                    else
+                    {
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center, -npc.velocity, ProjectileType<CrystalExplosionBig>(), 12 * (HighestCrystalCurseNumber + 1), 3f, Main.myPlayer, 0, npc.whoAmI);
+                    }
+                }
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
                     SendClientChanges(player, npc, 2);
-            }
-            if (npc.immortal)
-            {
-                return;
             }
             if (Main.myPlayer == player.whoAmI)
             {
@@ -1181,6 +1192,17 @@ namespace SOTS.Common.GlobalNPCs
             }
             if(npc.life <= 0)
             {
+                if (Main.netMode != NetmodeID.MultiplayerClient && TriggeredCrystalCurse)
+                {
+                    if (HighestCrystalCurseNumber < 4)
+                    {
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height)), -npc.velocity, ProjectileType<CrystalExplosionSmall>(), 18, 2f, Main.myPlayer, 0, npc.whoAmI);
+                    }
+                    else
+                    {
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center, -npc.velocity, ProjectileType<CrystalExplosionBig>(), 12 * (HighestCrystalCurseNumber + 1), 3f, Main.myPlayer, 0, npc.whoAmI);
+                    }
+                }
                 if (Main.netMode == NetmodeID.Server)
                     return;
                 if (shattered)

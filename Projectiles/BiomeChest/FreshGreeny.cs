@@ -89,8 +89,8 @@ namespace SOTS.Projectiles.BiomeChest
         {
             int c = Stabbies.Count;
             modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
-            modifiers.ArmorPenetration += c * 4;
-            modifiers.SourceDamage.Base += (c - 2) * 2;
+            modifiers.ArmorPenetration += c * 3;
+            modifiers.SourceDamage.Base += (c - 2) * 1.5f;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -159,8 +159,8 @@ namespace SOTS.Projectiles.BiomeChest
                 return;
             float varianceFlower = Math.Clamp(c - 1, 1, 5);
             float radians = MathHelper.ToRadians(90 + c * 2);
-            float attackSpeed = 30f / c; // This number will have to change for balancing
-            Projectile.localNPCHitCooldown = (int)attackSpeed;
+            float attackSpeed = 32f / c; // This number will have to change for balancing
+            Projectile.localNPCHitCooldown = (int)Math.Round(attackSpeed);
             //float bonusAttackSpeed = attackSpeed - (int)attackSpeed; 
             //Main.NewText(bonusAttackSpeed);
             float lerpSpeed = 0.053f;

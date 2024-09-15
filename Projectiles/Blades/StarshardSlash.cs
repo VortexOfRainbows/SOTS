@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Blades
         public override Color color2 => new Color(209, 132, 255);
         public override void SafeSetDefaults()
         {
-            Projectile.localNPCHitCooldown = 30;
+            Projectile.localNPCHitCooldown = 80;
             Projectile.DamageType = DamageClass.Melee;
             delayDeathTime = 8;
             Projectile.extraUpdates = 3;
@@ -370,7 +370,7 @@ namespace SOTS.Projectiles.Blades
                     dust.alpha = 50;
                     dust.color.A = 0;
                 }
-                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/CrystalExplosionBig"), Projectile.Center, 1.0f, 0f);
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/CrystalExplosionBigStart"), Projectile.Center, 1.1f, 0f);
                 runOnce = false;
 			}
             Projectile.ai[0]++;
@@ -378,6 +378,10 @@ namespace SOTS.Projectiles.Blades
             {
                 Projectile.ai[0] -= 4.5f;
                 Projectile.frame++;
+                if(Projectile.frame == 8)
+                {
+                    SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/CrystalExplosionBigEnd"), Projectile.Center, 1.1f, 0f);
+                }
             }
             if(Projectile.frame > 9)
             {
@@ -413,6 +417,10 @@ namespace SOTS.Projectiles.Blades
             {
                 Projectile.timeLeft = 2;
             }
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.DisableCrit();
         }
     }
     public class CrystalExplosionSmall : ModProjectile
@@ -474,7 +482,7 @@ namespace SOTS.Projectiles.Blades
                     dust.alpha = 50;
                     dust.color.A = 0;
                 }
-                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/CrystalExplosionSmall"), Projectile.Center, 1.0f, 0f);
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/CrystalExplosionSmall"), Projectile.Center, 1.1f, 0f);
                 runOnce = false;
             }
             Projectile.frameCounter++;
@@ -508,6 +516,10 @@ namespace SOTS.Projectiles.Blades
             {
                 Projectile.timeLeft = 2;
             }
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.DisableCrit();
         }
     }
 }
