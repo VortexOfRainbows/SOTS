@@ -46,7 +46,7 @@ Update Objectives:
 	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
 	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
 14. Nerf Earthen Construct spawn Threshold
-14. Hydro Servant is not using right click properly...
+15. Hydro Servant is not using right click properly...
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -91,8 +91,7 @@ Daily Log:
 	1. Needs: Banner, Drops
 2. Adjustments to pixel dust to allow it the capacity to interact with lighting
 3. Adjustments to dust spawned by AV Ambient tiles when broken
-4. WIP Starshard Saber
-	1. Needs: Multiplayer syncing
+4. Added Starshard Saber, works in Multiplayer! :)
 5. Nerfs to Fresh Greeny/Jar of Pineapple damage scaling, armor pen scaling, attack rate, and attack rate scaling.
 	1. Although still probably overtuned, it is now noticeable weaker...
 

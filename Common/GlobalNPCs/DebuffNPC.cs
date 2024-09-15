@@ -440,7 +440,7 @@ namespace SOTS.Common.GlobalNPCs
                 || ((projectile.type == ProjectileType<CrystalExplosionBig>() || projectile.type == ProjectileType<CrystalExplosionSmall>()) && (int)projectile.ai[1] != npc.whoAmI))
             {
                 TriggeredCrystalCurse = true;
-                if (Main.netMode != NetmodeID.MultiplayerClient && npc.life < 0)
+                if (Main.myPlayer == projectile.owner && npc.life < 0)
                 {
                     if (HighestCrystalCurseNumber < 4)
                     {
