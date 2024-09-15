@@ -16,12 +16,12 @@ Acknowledged But Likely Delayed:
 6. Boss Trophies
 7. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
 8. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
-9. Tesseract Servants over-sends packets when over 10 total tesseracts (Currently not possible in regular play).
-10. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
-11. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
-12. Scroll wheel with challenger's ring
-13. Banners to work on platforms (should be fairly easy), and to have proper tooltip text
-14. Somehow fix marble biome in vibrant geode
+9. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
+10. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
+11. Scroll wheel with challenger's ring
+12. Banners to work on platforms (should be fairly easy), and to have proper tooltip text
+13. Somehow fix marble biome in vibrant geode
+14. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 
 Update Objectives:
 1. Ghost Town! (Next up)	
@@ -46,7 +46,6 @@ Update Objectives:
 	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
 	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
 14. Nerf Earthen Construct spawn Threshold
-15. Hydro Servant is not using right click properly...
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -85,6 +84,11 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+9/14/24 to 9/15/24
+1. Tesseract should no longer oversend packets in multiplayer when above a count of 10 (works in MP, duh)
+2. Fix issues where Fake Players would fail to use right click items if the player was also using a right click item or if the servant was a Hydrokinetic Antennae servant. Seems to work in Multiplayer...
+3. Fix some issues where blade prims were erroneously attempting to initialize on servers
 
 9/8/24 and 9/10/24 to 9/11/24 and 9/13/24 to 9/14/24
 1. Added Throe, works in Multiplayer!

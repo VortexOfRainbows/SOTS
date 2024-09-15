@@ -48,6 +48,7 @@ namespace SOTS.FakePlayer
         public static bool SupressSound = false;
 
         public int OverrideUseSlot = -1;
+        public float TesseractNumber = -1;
         public int UniqueMouseX = -1;
         public int UniqueMouseY = -1;
         public bool ForceItemUse = false;
@@ -460,10 +461,20 @@ namespace SOTS.FakePlayer
                 {
                     if (!player.controlUseItem)
                         player.controlUseItem = ownersControlUseItem;
-                    player.controlUseTile = ownersControlUseTile;
+                    if (!player.controlUseTile)
+                        player.controlUseTile = ownersControlUseTile;
                 }
                 if (Main.myPlayer == player.whoAmI)
                 {
+                    if (player.controlUseTile && !Main.mouseLeft) //This seems to fix consistency issues with right clicking with fake players...
+                    {
+                        //The ways these variables are adjusted by Tmodloader in newer versions causes some breakage for right click based items
+                        //Thus they must be set by me before the fake player handles the item check
+                        //However, Im not sure if this heavy handed way of changing them if a right click is detected is appropriate.
+                        player.releaseUseItem = true; 
+                        player.controlUseItem = false;
+                    }
+                    //Main.NewText(player.selectedItem != 58 && player.controlUseTile && Main.myPlayer == whoAmI && !player.tileInteractionHappened && player.releaseUseItem && !player.controlUseItem && !player.mouseInterface && !CaptureManager.Instance.Active && !Main.HoveringOverAnNPC && !Main.SmartInteractShowingGenuine);
                     player.ItemCheck_ManageRightClickFeatures(); //Manages the right click functionality of the weapons
                 }
                 if (canUseItem || player.channel) //Check again because these values could have changed
@@ -471,7 +482,7 @@ namespace SOTS.FakePlayer
                     if (!player.HeldItem.IsAir && (player.ItemAnimationJustStarted || !player.ItemAnimationActive))
                         player.StartChanneling(player.HeldItem); //This is a double check in case channeling fails for certain modded items //This is to make sure channel is set to TRUE for those items in multiplayer clients
                     player.ItemCheck(); //Run the actual item use code
-
+                    //ain.NewText(player.altFunctionUse + ", " + player.controlUseItem + ", " + releaseUseItem) ;
                     if(FakePlayerType == FakePlayerTypeID.Tesseract)
                     {
                         if (player.controlUseItem || player.altFunctionUse == 2)
@@ -507,9 +518,10 @@ namespace SOTS.FakePlayer
                 }
                 ChargeDuration = 0;
             }
-            if (Main.myPlayer == player.whoAmI && SOTSWorld.GlobalCounter % 10 == UniqueUsageSlot)
+            if (Main.myPlayer == player.whoAmI && SOTSWorld.GlobalCounter % 10 == UniqueUsageSlot && TesseractNumber < 10)
             {
-                SOTS.SendTesseractDataPacket(player.whoAmI, UniqueUsageSlot); //This sends additional packets when tesseract goes over 10 minions. Since this is not currently possible without cheating, this fix will be delayed...
+                SOTS.SendTesseractDataPacket(player.whoAmI, UniqueUsageSlot);
+                //Main.NewText("I sent a packet: " + UniqueUsageSlot + ", " + TesseractNumber);
             }
             UpdateMyProjectiles(player); //Projectile updates usually happen after player updates anyway, so this shouldm ake sense in the order of operations (after item check)
             player.oldPosition = Position; //This should happen after the projectile update so the old position is correct for the projectiles that rely on it.

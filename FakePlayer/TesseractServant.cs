@@ -66,6 +66,7 @@ namespace SOTS.FakePlayer
 				FakePlayer = new FakePlayer(FakePlayerTypeID.Tesseract, Projectile.identity);
             int useItemSlot = 40 + MyUniqueID;
             FakePlayer.OverrideUseSlot = useItemSlot;
+            FakePlayer.TesseractNumber = Projectile.ai[1];
             if (!player.HasBuff<TesseractBuff>())
             {
                 Projectile.Kill();

@@ -103,6 +103,10 @@ namespace SOTS.FakePlayer
             }
             return true;
         }
+        public override bool PreItemCheck()
+        {
+            return base.PreItemCheck();
+        }
         public override bool? CanMeleeAttackCollideWithNPC(Item item, Rectangle meleeAttackHitbox, NPC target)
         {
             if (hasHydroFakePlayer && FakePlayerProjectile.OwnerOfThisUpdateCycle == -1)

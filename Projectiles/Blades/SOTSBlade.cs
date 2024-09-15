@@ -244,17 +244,20 @@ namespace SOTS.Projectiles.Blades
             {
                 delayDeathTime *= (1 + Projectile.extraUpdates);
                 trueDelayDeathSlowdownAmount = delayDeathSlowdownAmount + (Projectile.extraUpdates) * (1f - delayDeathSlowdownAmount) / (Projectile.extraUpdates + 1f);
-                int trailType = 1;
-                int trailLength = 20 * (1 + Projectile.extraUpdates);
-                if (Type == ModContent.ProjectileType<TesseractSlash>())
-                    trailType = 1;
-                if (Type == ModContent.ProjectileType<PyrocideSlash>())
+                if(Main.netMode != NetmodeID.Server)
                 {
-                    myTrail = new BladeTrail(Projectile, clockWise: FetchDirection);
+                    int trailType = 1;
+                    int trailLength = 20 * (1 + Projectile.extraUpdates);
+                    if (Type == ModContent.ProjectileType<TesseractSlash>())
+                        trailType = 1;
+                    if (Type == ModContent.ProjectileType<PyrocideSlash>())
+                    {
+                        myTrail = new BladeTrail(Projectile, clockWise: FetchDirection);
+                    }
+                    else
+                        myTrail = new BladeTrail(Projectile, FetchDirection, color1.ToVector4(), color2.ToVector4(), trailLength, trailType);
+                    SOTS.primitives.CreateTrail(myTrail);
                 }
-                else
-                    myTrail = new BladeTrail(Projectile, FetchDirection, color1.ToVector4(), color2.ToVector4(), trailLength, trailType);
-                SOTS.primitives.CreateTrail(myTrail);
                 SwingSound(player);
                 if (Main.myPlayer == Projectile.owner)
                 {
