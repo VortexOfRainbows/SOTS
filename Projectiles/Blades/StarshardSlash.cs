@@ -36,11 +36,19 @@ namespace SOTS.Projectiles.Blades
         public override void SwingSound(Player player)
         {
             if (thisSlashNumber == 5)
+            {
                 SOTSUtils.PlaySound(SoundID.Item1, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.5f);
+            }
             else if (thisSlashNumber == 4)
-                SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f);
+            {
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/StarshardSaberSwing" + Main.rand.Next(1, 3)), Projectile.Center, 1.5f, 0.4f);
+                //SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f);
+            }
             else
-                SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f + (4 - thisSlashNumber) * 0.1f);
+            {
+                SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/StarshardSaberSwing" + Main.rand.Next(1, 3)), Projectile.Center, 1.5f, 0.4f + (4 - thisSlashNumber) * 0.125f);
+                //SOTSUtils.PlaySound(SoundID.Item71, (int)player.Center.X, (int)player.Center.Y, 0.6f, -0.2f + (4 - thisSlashNumber) * 0.1f);
+            }
         }
         public override float speedModifier => Projectile.ai[1];
         public override float GetBaseSpeed(float swordLength)
@@ -76,13 +84,14 @@ namespace SOTS.Projectiles.Blades
                 delayDeathTime = 48;
                 RunOnce = false;
             }
-            if (!BonusSound && ActiveSpeedMultiplier() > 0.5f && thisSlashNumber == 5)
+            if (!BonusSound && ActiveSpeedMultiplier() > 0.4f && thisSlashNumber == 5)
             {
                 Projectile.friendly = true;
                 BonusSound = true;
                 if (thisSlashNumber == 5)
                 {
-                    SOTSUtils.PlaySound(SoundID.Item71, Projectile.Center, 0.6f, -0.5f);
+                    SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/StarshardSaberSwing" + Main.rand.Next(1, 3)), Projectile.Center, 1.6f, 0.2f);
+                    //SOTSUtils.PlaySound(SoundID.Item71, Projectile.Center, 0.6f, -0.5f);
                 }
             }
             if (timeLeftCounter > nextIntervalForRocks && thisSlashNumber != 5)
