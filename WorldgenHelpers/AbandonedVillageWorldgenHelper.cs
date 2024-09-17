@@ -18,7 +18,6 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
 using SOTS.Items.Planetarium.Blocks;
-using Terraria.GameContent.Generation;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -38,6 +37,7 @@ namespace SOTS.WorldgenHelpers
 		private static HashSet<int> ValidGrassTiles = null;
         private static HashSet<int> ValidStoneTiles = null;
         private static HashSet<int> InvalidTiles = null;
+        private static List<Point16> StairDecorPoints = new List<Point16>();
         public static void SetNoise()
         {
             if (genNoise == null)
@@ -684,37 +684,44 @@ namespace SOTS.WorldgenHelpers
         }
 		public static void GenerateDownwardPath(int x, int y)
 		{
-            int total = 0;
-            int size;
-            Vector2 destination = AVRect.Top();
-			float rotation = 0;
-            bool HitDesiredLocation = false;
-			while(!HitDesiredLocation)
+            try
             {
-                int previousX = x;
-                int previousY = y;
-
-                Vector2 toDest = destination - new Vector2(x, y);
-                float distanceFrom = toDest.Length();
-                size = (int)Math.Min(30, Math.Max(distanceFrom - 18, 0));
-                float desiredRotation = toDest.ToRotation() * 180 / MathHelper.Pi - 90;
-
-                GenerateTunnel(ref x, ref y, rotation, size: size);
-                if (total != 0)
-                    GenerateCaveCircle(previousX, previousY, 1, 1, 12, 5.5f, 2);
-
-                float percent = MathF.Max(1 - (total * size / distanceFrom) * 1.25f, 0);
-                rotation = desiredRotation + WorldGen.genRand.NextFloat(-50, 50) * percent;
-
-                if (size <= 5 || total > 100)
+                int total = 0;
+                int size;
+                Vector2 destination = AVRect.Top();
+                float rotation = 0;
+                bool HitDesiredLocation = false;
+                while (!HitDesiredLocation)
                 {
-                    HitDesiredLocation = true;
+                    int previousX = x;
+                    int previousY = y;
+
+                    Vector2 toDest = destination - new Vector2(x, y);
+                    float distanceFrom = toDest.Length();
+                    size = (int)Math.Min(30, Math.Max(distanceFrom - 18, 0));
+                    float desiredRotation = toDest.ToRotation() * 180 / MathHelper.Pi - 90;
+
+                    GenerateTunnel(ref x, ref y, rotation, size: size);
+                    if (total != 0)
+                        GenerateCaveCircle(previousX, previousY, 1, 1, 12, 5.5f, 2);
+
+                    float percent = MathF.Max(1 - (total * size / distanceFrom) * 1.3f, 0);
+                    rotation = desiredRotation + WorldGen.genRand.NextFloat(-45, 45) * percent;
+
+                    if (size <= 5 || total > 100)
+                    {
+                        HitDesiredLocation = true;
+                    }
+                    if (size > 6 || (Main.rockLayer < y && size > 3))
+                    {
+                        //PrepareUnderground(new Rectangle(x - 35, y - 45, 70, 90), 15);
+                    }
+                    total++;
                 }
-                if(size > 6 || (Main.rockLayer < y && size > 3))
-                {
-                    //PrepareUnderground(new Rectangle(x - 35, y - 45, 70, 90), 15);
-                }
-                total++;
+            }
+            catch
+            {
+
             }
         }
 		public static void GenerateNewMineEntrance(int x, int y)
@@ -1306,10 +1313,16 @@ namespace SOTS.WorldgenHelpers
             int w = WorldGen.genRand.Next(3, 6);
             int startPos = platW - w - 1 - WorldGen.genRand.Next(3);
             GenerateWalls(posX + startPos, posY - 1, w, WorldGen.genRand.Next(1, 4), height);
-            //foreach(Point16 pt in edges)
-            //{
-            //    Main.tile[pt.X, pt.Y].WallType = WallID.AdamantiteBeam;
-            //}
+            Vector2 center = Vector2.Zero;
+            foreach(Point16 pt in edges)
+            {
+                center.X += pt.X;
+                center.Y += pt.Y;
+            }
+            center /= 4f;
+            if (StairDecorPoints == null)
+                StairDecorPoints = new List<Point16>();
+            StairDecorPoints.Add(center.ToPoint16());
             return edges;
         }
         public static void ClearLine(Point16 start, Point16 end, int dir = 1)
@@ -2805,7 +2818,8 @@ namespace SOTS.WorldgenHelpers
                 float toDung = Vector2.Distance(dungeon, c);
                 float toPyra = Vector2.Distance(pyramid, c);
                 float toShimmer = MathF.Abs((float)GenVars.shimmerPosition.X - c.X);
-                float farthestWins = Math.Min(Math.Min(toDung, toPyra), toShimmer);
+                float toOcean = Math.Min(Corruptions[i].rect.Left, Main.maxTilesX - Corruptions[i].rect.Right);
+                float farthestWins = Math.Min(Math.Min(toDung, toPyra), Math.Min(toShimmer, toOcean));
                 if(farthestWins > bestL)
                 {
                     bestL = farthestWins;
@@ -3504,12 +3518,49 @@ namespace SOTS.WorldgenHelpers
                 }
             }
 
-            Rectangle rect = AVSweepRect;
-            for (int i = rect.Left; i < rect.Right; i++)
+            foreach (Point16 stair in StairDecorPoints)
             {
-                for (int j = rect.Top; j < rect.Bottom; j++)
+                if (!WorldGen.genRand.NextBool(3))
                 {
-                    TryPlacingAmbientTiles(i, j, true);
+                    for(int attempts = 8; attempts > 0; attempts--)
+                    {
+                        int i = stair.X + WorldGen.genRand.Next(-8, 9);
+                        int j = stair.Y + WorldGen.genRand.Next(-6, 7);
+                        int size = Math.Max(WorldGen.genRand.Next(7, 15), WorldGen.genRand.Next(5, 20));
+                        int i2 = i + size / 2;
+                        int t = Framing.GetTileSafely(i2, j).WallType;
+                        bool tunnelWallType = t == ModContent.WallType<EarthenPlatingBeamWall>() || t == ModContent.WallType<EarthenPlatingWallWall>() || t == ModContent.WallType<EarthenPlatingPanelWallWall>() || t == ModContent.WallType<GulaPlatingWallWall>();
+                        if (tunnelWallType)
+                        {
+                            if (!Framing.GetTileSafely(i2, j - 3).HasTile
+                                && !Framing.GetTileSafely(i2, j - 2).HasTile
+                                && !Framing.GetTileSafely(i2, j - 1).HasTile
+                                && !Framing.GetTileSafely(i2, j).HasTile
+                                && !Framing.GetTileSafely(i2, j + 1).HasTile
+                                && !Framing.GetTileSafely(i2, j + 2).HasTile
+                                && (!Framing.GetTileSafely(i2, j - 4).HasTile || WorldGen.genRand.NextBool(2)))
+                            {
+                                PlaceStairDecor(i, j, size);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            StairDecorPoints = null;
+
+            Rectangle rect = AVSweepRect;
+            for(int passNum = 0; passNum <= 0; passNum++)
+            {
+                for (int i = rect.Left; i < rect.Right; i++)
+                {
+                    for (int j = rect.Top; j < rect.Bottom; j++)
+                    {
+                        if (passNum == 0)
+                        {
+                            TryPlacingAmbientTiles(i, j, true);
+                        }
+                    }
                 }
             }
         }
@@ -3694,6 +3745,123 @@ namespace SOTS.WorldgenHelpers
                     else if (noise >= -percent && noise <= percent)
                     {
                         WorldGen.Convert(i, j, biomeType, 0);
+                    }
+                }
+            }
+        }
+        public static void PlaceStairDecor(int i, int j, int Size = -1)
+        {
+            int plateauSize = Size == -1 ? Math.Max(WorldGen.genRand.Next(7, 15), WorldGen.genRand.Next(5, 20)) : Size;
+            int sizeL = -1;
+            int sizeR = -1;
+            for (int y = 0; y < 50; y++)
+            {
+                int iL = i - y;
+                int iR = i + y + plateauSize;
+                int j2 = j + y;
+                Tile tL = Main.tile[iL, j2];
+                Tile tR = Main.tile[iR, j2];
+                if (tL.HasTile && Main.tileSolid[tL.TileType] && sizeL < 0)
+                {
+                    sizeL = y;
+                }
+                if (tR.HasTile && Main.tileSolid[tR.TileType] && sizeR < 0)
+                {
+                    sizeR = y;
+                }
+                if (sizeR > 0 && sizeL > 0)
+                    break;
+            }
+            if (sizeR < 0 || sizeL < 0 || (sizeR < 3 && sizeL < 3))
+                return;
+            for(int x = -sizeL; x <= sizeR + plateauSize; x++)
+            {
+                int i2 = i + x;
+                int j2 = j;
+                bool notPlateau = x <= 0 || x >= plateauSize;
+                bool offshootPlatform = false;
+                int size = Math.Abs(x);
+                if (notPlateau)
+                {
+                    if(x >= plateauSize)
+                    {
+                        size -= plateauSize;
+                    }
+                    j2 += size;
+                    if(size % 3 == 0 && size > 1 && !Framing.GetTileSafely(i2, j2 + 1).HasTile)
+                    {
+                        if (!WorldGen.genRand.NextBool(3))
+                            offshootPlatform = true;
+                    }
+                }
+                if(Framing.GetTileSafely(i2, j2).TileType == ModContent.TileType<EarthenPlatingTorchTile>())
+                {
+                    Main.tile[i2, j2].ClearTile();
+                }
+                WorldGen.PlaceTile(i2, j2, ModContent.TileType<EarthenPlatingPlatformTile>());
+                Tile t = Main.tile[i2, j2];
+                if(t.TileType == ModContent.TileType<EarthenPlatingPlatformTile>())
+                {
+                    if(t.Slope == SlopeType.Solid)
+                        t.Slope = !notPlateau ? SlopeType.Solid : x <= 0 ? SlopeType.SlopeDownRight : SlopeType.SlopeDownLeft;
+                    WorldGen.SquareTileFrame(i2, j2, true);
+                }
+                if(offshootPlatform)
+                {
+                    int dir = WorldGen.genRand.NextFromList(-1, 1);
+                    int bonusSize = dir != SOTSUtils.SignNoZero(x) ? (int)(size * 1.5f) : (int)Math.Sqrt(size);
+                    int offshootSize = Math.Max(Main.rand.Next(2, 4 + bonusSize), Main.rand.Next(3, 5 + bonusSize));
+                    bool failOffshot = false;
+                    for(int check = 0; check <=1; check++)
+                    {
+                        for (int x2 = 1; x2 <= offshootSize; x2++)
+                        {
+                            int i3 = i2 + x2 * dir;
+                            if (check == 1)
+                            {
+                                WorldGen.PlaceTile(i3, j2, ModContent.TileType<EarthenPlatingPlatformTile>());
+                                t = Main.tile[i3, j2];
+                                if (t.TileType == ModContent.TileType<EarthenPlatingPlatformTile>())
+                                {
+                                    if (t.Slope == SlopeType.Solid)
+                                        t.Slope = SlopeType.Solid;
+                                    WorldGen.SquareTileFrame(i3, j2, true);
+                                }
+                            }
+                            else if(check == 0)
+                            {
+                                if(Framing.GetTileSafely(i3, j2 + 1).HasTile)
+                                {
+                                    failOffshot = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (failOffshot)
+                            break;
+                    }
+                    if(!failOffshot)
+                    {
+                        bool doStairs = WorldGen.genRand.NextBool(3) && offshootSize > 4;
+                        if (doStairs)
+                        {
+                            int remainingSize = sizeR - size;
+                            for (int x3 = 1; x3 <= remainingSize + 5; x3++)
+                            {
+                                int i3 = i2 + (x3 + offshootSize) * dir;
+                                int j3 = j2 + x3 - 1;
+                                if (Framing.GetTileSafely(i3, j3).HasTile)
+                                    break;
+                                WorldGen.PlaceTile(i3, j3, ModContent.TileType<EarthenPlatingPlatformTile>());
+                                t = Main.tile[i3, j3];
+                                if (t.TileType == ModContent.TileType<EarthenPlatingPlatformTile>())
+                                {
+                                    if (t.Slope == SlopeType.Solid)
+                                        t.Slope = dir == -1 ? SlopeType.SlopeDownRight : SlopeType.SlopeDownLeft;
+                                    WorldGen.SquareTileFrame(i3, j3, true);
+                                }
+                            }
+                        }
                     }
                 }
             }

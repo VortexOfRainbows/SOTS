@@ -693,6 +693,9 @@ namespace SOTS.Items.Banners
                     case 20:
                         type = NPCType<EarthenGizmo>();
                         break;
+                    case 21:
+                        type = NPCType<Throe>();
+                        break;
                     default:
 						return;
 				}
@@ -875,6 +878,14 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners2>();
             Item.placeStyle = 20;
+        }
+    }
+    public class ThroeBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 21;
         }
     }
 }

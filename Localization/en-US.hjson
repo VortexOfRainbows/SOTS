@@ -5720,6 +5720,11 @@ Mods: {
 				DisplayName: Compound Bow
 				Tooltip: Fire a Compound Arrow that splits into bouncing Energy Bolts and other arrows
 			}
+
+			ThroeBanner: {
+				DisplayName: Throe Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

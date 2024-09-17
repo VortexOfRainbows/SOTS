@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
 using System;
@@ -83,8 +84,8 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.alpha = 150;
             NPC.scale = 0.9f;
-			//Banner = NPC.type;
-			//BannerItem = ItemType<LostSoulBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<ThroeBanner>();
 		}
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
