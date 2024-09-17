@@ -18,6 +18,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
 using SOTS.Items.Planetarium.Blocks;
+using System.Composition.Convention;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -3314,22 +3315,23 @@ namespace SOTS.WorldgenHelpers
             {
                 float aboveGroundLocation = MathHelper.Lerp(AVRect.Center.X, cR.rect.Center.X, WorldGen.genRand.NextFloat());
                 int i = (int)(aboveGroundLocation + 0.5f);
-                if(!cR.rect.Contains(i, cR.rect.Center.Y))
+                if(!cR.rect.Contains(i, cR.rect.Center.Y) && attempts < 50)
                 {
-                    break;
+                    continue;
                 }
                 bool foundLocation = false;
-                for(int j = cR.rect.Top; j < cR.rect.Bottom; j++)
+                for(int j = Math.Max(cR.rect.Top, 100); j < cR.rect.Bottom; j++)
                 {
                     Tile t = Main.tile[i, j];
                     Tile tAbove = Main.tile[i, j - 1];
                     int type = t.TileType;
-                    if (tAbove.WallType != 0)
+                    bool validWall = t.WallType == WallID.CrimstoneUnsafe || t.WallType == WallID.EbonstoneUnsafe;
+                    if (tAbove.WallType != 0 && attempts < 50 && !validWall)
                         break;
-                    if (t.HasTile && Main.tileSolid[type])
+                    if ((t.HasTile && Main.tileSolid[type]) || validWall)
                     {
                         placement = new Point16(i, j);
-                        if (ValidGrassTiles.Contains(type) || ValidStoneTiles.Contains(type))
+                        if (ValidGrassTiles.Contains(type) || ValidStoneTiles.Contains(type) || validWall)
                         {
                             foundLocation = true;
                             break;

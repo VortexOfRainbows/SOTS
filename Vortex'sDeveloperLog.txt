@@ -46,7 +46,6 @@ Update Objectives:
 	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
 	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
 14. Throe visual Variants (use whoAmI values for the secondary spawns so these will sync in MP)
-15. Fix issue where Abandoned Village center sometimes generates in the top left of the world (idk why)
 
 ---WIP List---
 Abandoned village generation (make corruption take up more of the above ground area)
@@ -89,6 +88,7 @@ Daily Log:
 9/16/24
 1. Added cool scaffold generation to the abandoned village and adjusted generation
 2. Throe Banner
+3. Fixed issue with finding a Mine Entrance in the AV that should reduce AV worldgen crash likelihood
 
 9/14/24 to 9/15/24
 1. Tesseract should no longer oversend packets in multiplayer when above a count of 10 (works in MP, duh)
