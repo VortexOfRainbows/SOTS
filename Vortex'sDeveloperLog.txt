@@ -85,6 +85,9 @@ N/A
 
 Daily Log:
 
+9/18/24
+1. Fixed some tile framing inconsistencies with sots tiles that had unique tile merges
+
 9/16/24 to 9/18/24
 1. Added cool scaffold generation to the abandoned village and adjusted generation
 2. Throe Banner

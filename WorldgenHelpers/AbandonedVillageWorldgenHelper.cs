@@ -532,7 +532,7 @@ namespace SOTS.WorldgenHelpers
                                 if (generateSides)
                                 {
                                     ushort type = StoneBrickBlock;
-                                    if (WorldGen.genRand.NextBool(2))
+                                    if (!WorldGen.genRand.NextBool(3))
                                     {
                                         type = StoneBlock;
                                     }
@@ -651,8 +651,7 @@ namespace SOTS.WorldgenHelpers
 						bool open = t.WallType == WallID.RocksUnsafe1 || t.WallType == WallID.GrayBrick || t.WallType == WallID.StoneSlab
                             || t.WallType == ModContent.WallType<EarthenPlatingBeamWall>() || t.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>() || t.WallType == ModContent.WallType<EarthenPlatingWallWall>() 
                             || t.WallType == ModContent.WallType<UnsafeGulaPlatingWall>() || t.WallType == ModContent.WallType<GulaPlatingWallWall>();
-						bool isStone = t.HasTile && (t.TileType == StoneBlock || 
-                            t.TileType == StoneBrickBlock || 
+						bool isStone = t.HasTile && (t.TileType == StoneBlock || t.TileType == StoneBrickBlock || 
                             t.TileType == ModContent.TileType<GulaPlatingTile>());
                         if (!generateStone && !open && !isStone && t.TileType != ModContent.TileType<EarthenPlatingTile>() && t.TileType != ModContent.TileType<EarthenPlatingPlatformTile>())
                         {
@@ -663,7 +662,7 @@ namespace SOTS.WorldgenHelpers
 						else if(generateStone && !open)
                         {
                             ushort type = StoneBrickBlock;
-                            if (WorldGen.genRand.NextBool(2))
+                            if (!WorldGen.genRand.NextBool(3))
                             {
                                 type = StoneBlock;
                             }
@@ -1997,7 +1996,7 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 18:
                                     ushort type = StoneBrickBlock;
-                                    if (WorldGen.genRand.NextBool(2))
+                                    if (!WorldGen.genRand.NextBool(3))
                                     {
                                         type = StoneBlock;
                                     }

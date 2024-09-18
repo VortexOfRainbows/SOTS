@@ -49,6 +49,7 @@ using SOTS.Common.ModPlayers;
 using Terraria.Map;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Earth;
+using SOTS.Items.Inferno;
 
 namespace SOTS
 {
@@ -810,7 +811,7 @@ namespace SOTS
 		}
 		public static Similarity GetSimilarity(Tile check, int myType, int mergeType)
         {
-			bool bonusMerge = false;
+            bool bonusMerge = false;
 			if (mergeType == ModContent.TileType<SootBlockTile>())
 				bonusMerge = check.TileType == ModContent.TileType<SootSlabTile>();
             if (mergeType == TileID.Marble)
@@ -853,7 +854,18 @@ namespace SOTS
 				mergedUp = mergedLeft = mergedRight = mergedDown = false;
 				return;
 			}
-			Main.tileMerge[myType][mergeType] = false;
+			bool forceNoneLeft = false, forceNoneRight = false, forceNoneUp = false, forceNoneDown = false;
+			if (Main.tile[x, y].Slope != SlopeType.Solid || Main.tile[x, y].IsHalfBlock)
+            {
+                forceNoneDown = Main.tile[x, y].BottomSlope;
+                forceNoneLeft = Main.tile[x, y].LeftSlope;
+                forceNoneUp = Main.tile[x, y].TopSlope;
+                forceNoneRight = Main.tile[x, y].RightSlope;
+                if (Main.tile[x, y].IsHalfBlock)
+					forceNoneUp = true;
+				forceSameLeft = forceSameRight = forceSameUp = forceSameDown = true;
+            }
+            Main.tileMerge[myType][mergeType] = false;
 			if(mergeType == ModContent.TileType<SootBlockTile>())
             {
                 Main.tileMerge[myType][ModContent.TileType<SootSlabTile>()] = false;
@@ -870,10 +882,18 @@ namespace SOTS
 			Tile tileTopRight = Main.tile[x + 1, y - 1];
 			Tile tileBottomLeft = Main.tile[x - 1, y + 1];
 			Tile check = Main.tile[x + 1, y + 1];
-			Similarity leftSim = ((!forceSameLeft) ? GetSimilarity(tileLeft, myType, mergeType) : Similarity.Same);
-			Similarity rightSim = ((!forceSameRight) ? GetSimilarity(tileRight, myType, mergeType) : Similarity.Same);
-			Similarity upSim = ((!forceSameUp) ? GetSimilarity(tileUp, myType, mergeType) : Similarity.Same);
-			Similarity downSim = ((!forceSameDown) ? GetSimilarity(tileDown, myType, mergeType) : Similarity.Same);
+            if (tileDown.IsHalfBlock || tileDown.TopSlope)
+                forceNoneDown = true;
+			if (tileUp.BottomSlope)
+				forceNoneUp = true;
+            if (tileLeft.RightSlope)
+                forceNoneLeft = true;
+            if (tileRight.LeftSlope)
+                forceNoneRight = true;
+            Similarity leftSim = forceNoneLeft ? Similarity.None : (!forceSameLeft) ? GetSimilarity(tileLeft, myType, mergeType) : Similarity.Same;
+			Similarity rightSim = forceNoneRight ? Similarity.None : (!forceSameRight) ? GetSimilarity(tileRight, myType, mergeType) : Similarity.Same;
+			Similarity upSim = forceNoneUp ? Similarity.None : (!forceSameUp) ? GetSimilarity(tileUp, myType, mergeType) : Similarity.Same;
+			Similarity downSim = forceNoneDown ? Similarity.None : (!forceSameDown) ? GetSimilarity(tileDown, myType, mergeType) : Similarity.Same;
 			Similarity topLeftSim = GetSimilarity(tileTopLeft, myType, mergeType);
 			Similarity topRightSim = GetSimilarity(tileTopRight, myType, mergeType);
 			Similarity bottomLeftSim = GetSimilarity(tileBottomLeft, myType, mergeType);

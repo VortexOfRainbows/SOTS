@@ -36,6 +36,7 @@ namespace SOTS.Common.GlobalTiles
                 //Main.tileMergeDirt[Type] = true;
                 Main.tileBlockLight[Type] = true;
                 Main.tileLighted[Type] = false;
+
                 SafeSetStaticDefaults();
             }
             public virtual void SafeSetStaticDefaults()

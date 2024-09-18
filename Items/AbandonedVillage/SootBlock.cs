@@ -21,6 +21,7 @@ namespace SOTS.Items.AbandonedVillage
 			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = false;
+
 			DustType = ModContent.DustType<SootDust>(); 
 			AddMapEntry(new Color(57, 50, 44));
 		}
