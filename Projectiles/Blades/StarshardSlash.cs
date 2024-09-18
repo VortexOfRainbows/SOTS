@@ -345,18 +345,21 @@ namespace SOTS.Projectiles.Blades
         public override void AI()
         {
             int target = (int)Projectile.ai[1];
-            NPC npc = Main.npc[target];
-            if(npc.CanBeChasedBy())
+            if(target >= 0)
             {
-                if(RelativeToNPC == Vector2.Zero)
+                NPC npc = Main.npc[target];
+                if (npc.CanBeChasedBy())
                 {
-                    RelativeToNPC = Projectile.Center - npc.Center;
+                    if (RelativeToNPC == Vector2.Zero)
+                    {
+                        RelativeToNPC = Projectile.Center - npc.Center;
+                    }
+                    Projectile.Center = RelativeToNPC + npc.Center;
+                    if (!Projectile.friendly)
+                        npc.velocity *= 0.945f;
+                    else
+                        npc.velocity *= 0.985f;
                 }
-                Projectile.Center = RelativeToNPC + npc.Center;
-                if(!Projectile.friendly)
-                    npc.velocity *= 0.945f;
-                else
-                    npc.velocity *= 0.985f;
             }
 			Lighting.AddLight(Projectile.Center, new Vector3(1, 1, 1));
 			if(runOnce)
@@ -461,14 +464,17 @@ namespace SOTS.Projectiles.Blades
         public override void AI()
         {
             int target = (int)Projectile.ai[1];
-            NPC npc = Main.npc[target];
-            if (npc.CanBeChasedBy())
+            if (target >= 0)
             {
-                if (RelativeToNPC == Vector2.Zero)
+                NPC npc = Main.npc[target];
+                if (npc.CanBeChasedBy())
                 {
-                    RelativeToNPC = Projectile.Center - npc.Center;
+                    if (RelativeToNPC == Vector2.Zero)
+                    {
+                        RelativeToNPC = Projectile.Center - npc.Center;
+                    }
+                    Projectile.Center = RelativeToNPC + npc.Center;
                 }
-                Projectile.Center = RelativeToNPC + npc.Center;
             }
             Lighting.AddLight(Projectile.Center, new Vector3(1, 1, 1));
             if (runOnce)

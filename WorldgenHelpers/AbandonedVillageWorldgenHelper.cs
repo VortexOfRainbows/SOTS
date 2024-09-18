@@ -676,7 +676,8 @@ namespace SOTS.WorldgenHelpers
             SOTSWorldgenHelper.SmoothRegion(x, y, (int)((outlineSize * 2 + 1) * xMult), (int)((outlineSize * 2 + 1) * yMult));
         }
 		public static void GenerateDownwardPath(int x, int y)
-		{
+        {
+            CorruptPathRects = new List<Rectangle>();
             try
             {
                 int total = 0;
@@ -707,10 +708,9 @@ namespace SOTS.WorldgenHelpers
                     }
                     if (size > 6 || (Main.rockLayer < y && size > 3))
                     {
-                        if (CorruptPathRects == null)
-                            CorruptPathRects = new List<Rectangle>();
-                        int rectSize = 90;
-                        CorruptPathRects.Add(new Rectangle(x - rectSize / 2, y - rectSize / 2, rectSize, rectSize));
+                        int rectSizeW = 120;
+                        int rectSizeH = 60;
+                        CorruptPathRects.Add(new Rectangle(x - rectSizeW / 2, y - rectSizeH / 2, rectSizeW, rectSizeH));
                     }
                     total++;
                 }
@@ -1316,8 +1316,6 @@ namespace SOTS.WorldgenHelpers
                 center.Y += pt.Y;
             }
             center /= 4f;
-            if (StairDecorPoints == null)
-                StairDecorPoints = new List<Point16>();
             StairDecorPoints.Add(center.ToPoint16());
             return edges;
         }
@@ -2637,6 +2635,7 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             AVSweepRect = new Rectangle(OuterRect.X - 70, OuterRect.Y - 40, OuterRect.Width + 140, OuterRect.Height + 70);
+            StairDecorPoints = new List<Point16>();
             PrepareUnderground(AVSweepRect, 50, 0.2f);
             GenerateUndergoundEntrance(x, y - h / 2 + 10);
         }
@@ -3338,7 +3337,6 @@ namespace SOTS.WorldgenHelpers
             {
                 PrepareUnderground(rect, 20, 0.15f);
             }
-            CorruptPathRects = null;
 
             PlaceStructuresInAV(bestC, placement.X);
             AbandonedVillageTileCleanup(bestC);
@@ -3436,9 +3434,9 @@ namespace SOTS.WorldgenHelpers
             CorruptionRectangle cR = Corruptions[evilBiome];
             for (int passNum = 0; passNum <= 3; passNum++)
             {
-                for (int i = cR.rect.Left; i < cR.rect.Right; i++)
+                for (int i = cR.rect.Left; i <= cR.rect.Right; i++)
                 {
-                    for (int j = cR.rect.Top - extraVerticalRangeToRemoveTrees; j < cR.rect.Bottom; j++)
+                    for (int j = cR.rect.Top - extraVerticalRangeToRemoveTrees; j <= cR.rect.Bottom; j++)
                     {
                         Tile t = Main.tile[i, j];
                         int type = t.TileType;
@@ -3551,9 +3549,9 @@ namespace SOTS.WorldgenHelpers
             Rectangle rect = AVSweepRect;
             for(int passNum = 0; passNum <= 0; passNum++)
             {
-                for (int i = rect.Left; i < rect.Right; i++)
+                for (int i = rect.Left; i <= rect.Right; i++)
                 {
-                    for (int j = rect.Top; j < rect.Bottom; j++)
+                    for (int j = rect.Top; j <= rect.Bottom; j++)
                     {
                         if (passNum == 0)
                         {
@@ -3562,6 +3560,18 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            
+            foreach (Rectangle rect2 in CorruptPathRects)
+            {
+                for (int i = rect2.Left; i <= rect2.Right; i++)
+                {
+                    for (int j = rect2.Top; j <= rect2.Bottom; j++)
+                    {
+                        TryPlacingAmbientTiles(i, j, true);
+                    }
+                }
+            }
+            CorruptPathRects = null;
         }
         public static void TryPlacingAmbientTiles(int i, int j, bool underground)
         {

@@ -444,11 +444,11 @@ namespace SOTS.Common.GlobalNPCs
                 {
                     if (HighestCrystalCurseNumber < 4)
                     {
-                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height)), -npc.velocity, ProjectileType<CrystalExplosionSmall>(), 18, 2f, Main.myPlayer, 0, npc.whoAmI);
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height)), -npc.velocity, ProjectileType<CrystalExplosionSmall>(), 18, 2f, Main.myPlayer, 0, -1);
                     }
                     else
                     {
-                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center, -npc.velocity, ProjectileType<CrystalExplosionBig>(), 12 * (HighestCrystalCurseNumber + 1), 3f, Main.myPlayer, 0, npc.whoAmI);
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center, -npc.velocity, ProjectileType<CrystalExplosionBig>(), 12 * (HighestCrystalCurseNumber + 1), 3f, Main.myPlayer, 0, -1);
                     }
                 }
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
@@ -1196,11 +1196,11 @@ namespace SOTS.Common.GlobalNPCs
                 {
                     if (HighestCrystalCurseNumber < 4)
                     {
-                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height)), -npc.velocity, ProjectileType<CrystalExplosionSmall>(), 18, 2f, Main.myPlayer, 0, npc.whoAmI);
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.position + new Vector2(Main.rand.NextFloat(npc.width), Main.rand.NextFloat(npc.height)), -npc.velocity, ProjectileType<CrystalExplosionSmall>(), 18, 2f, Main.myPlayer, 0, -1);
                     }
                     else
                     {
-                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center, -npc.velocity, ProjectileType<CrystalExplosionBig>(), 12 * (HighestCrystalCurseNumber + 1), 3f, Main.myPlayer, 0, npc.whoAmI);
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center, -npc.velocity, ProjectileType<CrystalExplosionBig>(), 12 * (HighestCrystalCurseNumber + 1), 3f, Main.myPlayer, 0, -1);
                     }
                 }
                 if (Main.netMode == NetmodeID.Server)
