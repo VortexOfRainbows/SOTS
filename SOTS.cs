@@ -48,6 +48,7 @@ using Terraria.Chat;
 using SOTS.Common.ModPlayers;
 using Terraria.Map;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Earth;
 
 namespace SOTS
 {
@@ -812,7 +813,9 @@ namespace SOTS
 			bool bonusMerge = false;
 			if (mergeType == ModContent.TileType<SootBlockTile>())
 				bonusMerge = check.TileType == ModContent.TileType<SootSlabTile>();
-			if (check == null || !check.HasTile)
+            if (mergeType == TileID.Marble)
+                bonusMerge = check.TileType == ModContent.TileType<FakeMarble>();
+            if (check == null || !check.HasTile)
 			{
 				return Similarity.None;
 			}
@@ -847,7 +850,7 @@ namespace SOTS
 		{
 			if (Main.tile[x, y] == null || x < 0 || x >= Main.maxTilesX || y < 0 || y >= Main.maxTilesY)
 			{
-				mergedUp = (mergedLeft = (mergedRight = (mergedDown = false)));
+				mergedUp = mergedLeft = mergedRight = mergedDown = false;
 				return;
 			}
 			Main.tileMerge[myType][mergeType] = false;
@@ -855,7 +858,11 @@ namespace SOTS
             {
                 Main.tileMerge[myType][ModContent.TileType<SootSlabTile>()] = false;
             }
-			Tile tileLeft = Main.tile[x - 1, y];
+            if (mergeType == TileID.MarbleBlock)
+            {
+                Main.tileMerge[myType][ModContent.TileType<FakeMarble>()] = false;
+            }
+            Tile tileLeft = Main.tile[x - 1, y];
 			Tile tileRight = Main.tile[x + 1, y];
 			Tile tileUp = Main.tile[x, y - 1];
 			Tile tileDown = Main.tile[x, y + 1];

@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using System;
 using SOTS.WorldgenHelpers;
 using SOTS.Items.Earth.Glowmoth;
+using SOTS.Items.Earth;
+using SOTS.Items.Invidia;
 
 namespace SOTS.Items.Tools
 {
@@ -36,12 +38,14 @@ namespace SOTS.Items.Tools
 			int dir = (x % 2 * 2) -1;
 			int x2 = (int)tileLocation.X;
             int y2 = (int)tileLocation.Y;
-			//AbandonedVillageWorldgenHelper.PrepareUnderground(new Rectangle(x2, y2, 250, 250));
-			//AVHouseWorldgenHelper.GenerateHouse0(x2, y2);
-			//AbandonedVillageWorldgenHelper.GenerateNewMineEntrance(x2, y2);
-			AbandonedVillageWorldgenHelper.PlaceStairDecor(x2, y2, -1);
+			WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
+
+            //AbandonedVillageWorldgenHelper.PrepareUnderground(new Rectangle(x2, y2, 250, 250));
+            //AVHouseWorldgenHelper.GenerateHouse0(x2, y2);
+            //AbandonedVillageWorldgenHelper.GenerateNewMineEntrance(x2, y2);
+            //AbandonedVillageWorldgenHelper.PlaceStairDecor(x2, y2, -1);
             //AbandonedVillageWorldgenHelper.DesignateAVRectangle(x2, y2, 400, 320);
-			//AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
+            //AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
 
             //AbandonedVillageWorldgenHelper.GenerateRectangle(x2, y2, 30, 30);
             //AbandonedVillageWorldgenHelper.GenerateNewRubyGemStructure(x2, y2);

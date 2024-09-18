@@ -20,8 +20,7 @@ Acknowledged But Likely Delayed:
 10. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
 11. Scroll wheel with challenger's ring
 12. Banners to work on platforms (should be fairly easy), and to have proper tooltip text
-13. Somehow fix marble biome in vibrant geode
-14. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
+13. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 
 Update Objectives:
 1. Ghost Town! (In Progress)	
@@ -85,10 +84,13 @@ N/A
 
 Daily Log:
 
-9/16/24
+9/16/24 to 9/18/24
 1. Added cool scaffold generation to the abandoned village and adjusted generation
 2. Throe Banner
 3. Fixed issue with finding a Mine Entrance in the AV that should reduce AV worldgen crash likelihood
+4. Added a fake marble tile that does not count for biome, spawns in geodes
+	1. As such, newly generated worlds will fix the issue where geodes counted as marble biome
+5. Fixed issue where Starshard right click (and perhaps other blades) would mess up player arm frame for 1-4 frames
 
 9/14/24 to 9/15/24
 1. Tesseract should no longer oversend packets in multiplayer when above a count of 10 (works in MP, duh)

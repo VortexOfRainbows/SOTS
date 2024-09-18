@@ -3879,7 +3879,7 @@ namespace SOTS.WorldgenHelpers
 						else if (distance >= radius + 0.5 - radialMod - radialMod1 && capable)
 						{
 							tile.WallType = WallID.Marble;
-							tile.TileType = TileID.Marble;
+							tile.TileType = (ushort)ModContent.TileType<FakeMarble>();
 							tile.HasTile = true;
 						}
 						else if (distance >= radius + 0.5 - radialMod - radialMod1 - radialMod2 && capable)
@@ -4446,7 +4446,7 @@ namespace SOTS.WorldgenHelpers
 									break;
 								case 2:
 									tile.HasTile = true;
-									tile.TileType = TileID.Marble;
+									tile.TileType = (ushort)ModContent.TileType<FakeMarble>();
 									tile.Slope = 0;
 									tile.IsHalfBlock = false;
 									tile.WallType = WallID.MarbleUnsafe;

@@ -8,6 +8,7 @@ using System.IO;
 using SOTS.Void;
 using SOTS.Prim.Trails;
 using Terraria.Enums;
+using SOTS.Items.Planetarium.Furniture;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -335,10 +336,10 @@ namespace SOTS.Projectiles.Blades
 				}
 			}
         }
-        public override void PostAI()
+        private void UpdateHoldOut()
         {
             Player player = Main.player[Projectile.owner];
-            if (Projectile.hide == false && toCursor != Vector2.Zero)
+            if (toCursor != Vector2.Zero)
             {
                 Vector2 toProjectile = Projectile.Center - PlayerCenter();
                 int direction = 1;
@@ -352,6 +353,11 @@ namespace SOTS.Projectiles.Blades
                 player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
                 player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(player.gravDir * toProjectile.ToRotation() + MathHelper.ToRadians(-90 + (GravDirection * FetchDirection == -1 ? -ArmAngleOffset : ArmAngleOffset))));
             }
+        }
+        public override void PostAI()
+        {
+            if(!Projectile.hide)
+                UpdateHoldOut();
             Projectile.hide = false;
             int currentUpdate = Projectile.numUpdates + 1;
             if (currentUpdate > 0)
@@ -425,8 +431,11 @@ namespace SOTS.Projectiles.Blades
                     SlashPattern(player, AbsAI0);
                 }
             }
-            else
+            bool starshardRightClickFinalSlash = Projectile.type == ModContent.ProjectileType<StarshardSlash>() && AbsAI0 >= 4;
+            if (AbsAI0 == 0 || starshardRightClickFinalSlash)
             {
+                if(starshardRightClickFinalSlash || player.itemTime != 4)
+                    UpdateHoldOut();
                 player.itemTime = player.itemAnimation = 0;
             }
         }

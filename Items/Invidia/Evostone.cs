@@ -21,7 +21,8 @@ namespace SOTS.Items.Invidia
 			Main.tileMerge[TileID.MushroomGrass][Type] = true;
 			Main.tileMerge[Type][ModContent.TileType<EvostoneBrickTile>()] = true;
 			Main.tileMerge[ModContent.TileType<EvostoneBrickTile>()][Type] = true;
-			DustType = 37; //obsidian
+
+            DustType = 37; //obsidian
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Evostone>();
 			AddMapEntry(new Color(31, 39, 57));
 			HitSound = SoundID.Tink;
