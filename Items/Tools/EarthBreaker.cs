@@ -30,7 +30,7 @@ namespace SOTS.Items.Tools
 			Item.pick = 59;
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(0, 2, 0, 0);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
 			Item.tileBoost = 3;
 			Item.autoReuse = true;

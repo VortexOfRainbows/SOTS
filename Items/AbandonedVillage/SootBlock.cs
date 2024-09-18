@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Common.GlobalTiles;
 using SOTS.Dusts;
+using SOTS.Items.Earth;
 using SOTS.Items.Tools;
 using System.Security.Permissions;
 using Terraria;
@@ -120,7 +121,7 @@ namespace SOTS.Items.AbandonedVillage
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<SootDust>();
 			HitSound = SoundID.Tink;
-            AddMapEntry(new Color(40, 31, 24));
+            AddMapEntry(new Color(101, 98, 95));
         }
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
@@ -144,6 +145,10 @@ namespace SOTS.Items.AbandonedVillage
             Item.CloneDefaults(ItemID.StoneBlock);
             Item.createTile = ModContent.TileType<SootSlabTile>();
         }
+        public override void AddRecipes()
+        {
+            CreateRecipe(5).AddIngredient<SootBlock>(1).AddIngredient(ItemID.StoneBlock, 1).AddTile(TileID.Furnaces).Register();
+        }
     }
 	public class CorruptionSoot : BasicBlock<CorruptionSootTile>
 	{
@@ -153,7 +158,7 @@ namespace SOTS.Items.AbandonedVillage
             {
                 DustType = ModContent.DustType<SootDust>();
                 HitSound = SoundID.Tink;
-                AddMapEntry(new Color(79, 59, 49));
+                AddMapEntry(new Color(101, 98, 95));
             }
             public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
             {
@@ -170,7 +175,7 @@ namespace SOTS.Items.AbandonedVillage
             {
                 DustType = ModContent.DustType<SootDust>();
                 HitSound = SoundID.Tink;
-                AddMapEntry(new Color(123, 77, 77));
+                AddMapEntry(new Color(101, 98, 95));
             }
             public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
             {

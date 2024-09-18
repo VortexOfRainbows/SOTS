@@ -61,7 +61,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SetStaticDefaults()
 		{
-			Main.wallHouse[Type] = true;
+			Main.wallHouse[Type] = false;
 			DustType = ModContent.DustType<GulaDust>();
 			AddMapEntry(new Color(102, 12, 0));
 		}

@@ -18,12 +18,13 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
 using SOTS.Items.Planetarium.Blocks;
-using System.Composition.Convention;
 
 namespace SOTS.WorldgenHelpers
 {
 	public static class AbandonedVillageWorldgenHelper
     {
+        public static ushort StoneBlock => WorldGen.crimson ? (ushort) ModContent.TileType<CrimsonSoot.CrimsonSootTile>() : (ushort)ModContent.TileType<CorruptionSoot.CorruptionSootTile>();
+        public static ushort StoneBrickBlock => (ushort)ModContent.TileType<SootSlabTile>();
         public static FastNoiseLite genNoise = null;
         public class CorruptionRectangle()
         {
@@ -39,6 +40,7 @@ namespace SOTS.WorldgenHelpers
         private static HashSet<int> ValidStoneTiles = null;
         private static HashSet<int> InvalidTiles = null;
         private static List<Point16> StairDecorPoints = new List<Point16>();
+        private static List<Rectangle> CorruptPathRects = new List<Rectangle>();
         public static void SetNoise()
         {
             if (genNoise == null)
@@ -529,14 +531,10 @@ namespace SOTS.WorldgenHelpers
                             {
                                 if (generateSides)
                                 {
-                                    ushort type = TileID.GrayBrick;
+                                    ushort type = StoneBrickBlock;
                                     if (WorldGen.genRand.NextBool(2))
                                     {
-                                        type = TileID.Stone;
-                                    }
-                                    else if (WorldGen.genRand.NextBool(3))
-                                    {
-                                        type = TileID.StoneSlab;
+                                        type = StoneBlock;
                                     }
                                     tile.TileType = (ushort)type;
                                     tile.HasTile = true;
@@ -653,9 +651,8 @@ namespace SOTS.WorldgenHelpers
 						bool open = t.WallType == WallID.RocksUnsafe1 || t.WallType == WallID.GrayBrick || t.WallType == WallID.StoneSlab
                             || t.WallType == ModContent.WallType<EarthenPlatingBeamWall>() || t.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>() || t.WallType == ModContent.WallType<EarthenPlatingWallWall>() 
                             || t.WallType == ModContent.WallType<UnsafeGulaPlatingWall>() || t.WallType == ModContent.WallType<GulaPlatingWallWall>();
-						bool isStone = t.HasTile && (t.TileType == TileID.GrayBrick || 
-                            t.TileType == TileID.Stone || 
-                            t.TileType == TileID.StoneSlab || 
+						bool isStone = t.HasTile && (t.TileType == StoneBlock || 
+                            t.TileType == StoneBrickBlock || 
                             t.TileType == ModContent.TileType<GulaPlatingTile>());
                         if (!generateStone && !open && !isStone && t.TileType != ModContent.TileType<EarthenPlatingTile>() && t.TileType != ModContent.TileType<EarthenPlatingPlatformTile>())
                         {
@@ -665,14 +662,10 @@ namespace SOTS.WorldgenHelpers
                         }
 						else if(generateStone && !open)
                         {
-                            ushort type = TileID.GrayBrick;
+                            ushort type = StoneBrickBlock;
                             if (WorldGen.genRand.NextBool(2))
                             {
-                                type = TileID.Stone;
-                            }
-                            else if (WorldGen.genRand.NextBool(3))
-                            {
-                                type = TileID.StoneSlab;
+                                type = StoneBlock;
                             }
                             t.TileType = (ushort)type;
                             t.HasTile = true;
@@ -715,7 +708,10 @@ namespace SOTS.WorldgenHelpers
                     }
                     if (size > 6 || (Main.rockLayer < y && size > 3))
                     {
-                        //PrepareUnderground(new Rectangle(x - 35, y - 45, 70, 90), 15);
+                        if (CorruptPathRects == null)
+                            CorruptPathRects = new List<Rectangle>();
+                        int rectSize = 90;
+                        CorruptPathRects.Add(new Rectangle(x - rectSize / 2, y - rectSize / 2, rectSize, rectSize));
                     }
                     total++;
                 }
@@ -2000,14 +1996,10 @@ namespace SOTS.WorldgenHelpers
                                     }
                                     break;
                                 case 18:
-                                    ushort type = TileID.GrayBrick;
+                                    ushort type = StoneBrickBlock;
                                     if (WorldGen.genRand.NextBool(2))
                                     {
-                                        type = TileID.Stone;
-                                    }
-                                    else if (WorldGen.genRand.NextBool(3))
-                                    {
-                                        type = TileID.StoneSlab;
+                                        type = StoneBlock;
                                     }
                                     tile.HasTile = false;
                                     tile.WallType = WallID.Stone;
@@ -2105,9 +2097,9 @@ namespace SOTS.WorldgenHelpers
             }
             int w = _structure.GetLength(1);
             int h = _structure.GetLength(0);
-            SOTSWorldgenHelper.SmoothRegion(PosX + w / 2, PosY + h / 2, w, h, TileID.Stone);
-            SOTSWorldgenHelper.SmoothRegion(PosX + w / 2, PosY + h / 2, w, h, TileID.StoneSlab);
-            SOTSWorldgenHelper.SmoothRegion(PosX + w / 2, PosY + h / 2, w, h, TileID.GrayBrick);
+            SOTSWorldgenHelper.SmoothRegion(PosX + w / 2, PosY + h / 2, w, h, StoneBlock);
+            SOTSWorldgenHelper.SmoothRegion(PosX + w / 2, PosY + h / 2, w, h, StoneBrickBlock);
+            //SOTSWorldgenHelper.SmoothRegion(PosX + w / 2, PosY + h / 2, w, h, StoneBrickBlock);
             _structure = new int[,] {
                 {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                 {1,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,1,2,2,2,2,2,2,2,1,2,2,2,2,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,2,2,2,2,2,1},
@@ -3343,6 +3335,12 @@ namespace SOTS.WorldgenHelpers
             }
 
             GenerateNewMineEntrance(placement.X, placement.Y);
+            foreach (Rectangle rect in CorruptPathRects)
+            {
+                PrepareUnderground(rect, 20, 0.15f);
+            }
+            CorruptPathRects = null;
+
             PlaceStructuresInAV(bestC, placement.X);
             AbandonedVillageTileCleanup(bestC);
         }
@@ -3763,11 +3761,11 @@ namespace SOTS.WorldgenHelpers
                 int j2 = j + y;
                 Tile tL = Main.tile[iL, j2];
                 Tile tR = Main.tile[iR, j2];
-                if (tL.HasTile && Main.tileSolid[tL.TileType] && sizeL < 0)
+                if (tL.HasTile && Main.tileSolid[tL.TileType] && sizeL < 0 && (tL.TileType != ModContent.TileType<EarthenPlatingPlatformTile>() || tL.Slope == SlopeType.Solid))
                 {
                     sizeL = y;
                 }
-                if (tR.HasTile && Main.tileSolid[tR.TileType] && sizeR < 0)
+                if (tR.HasTile && Main.tileSolid[tR.TileType] && sizeR < 0 && (tR.TileType != ModContent.TileType<EarthenPlatingPlatformTile>() || tR.Slope == SlopeType.Solid))
                 {
                     sizeR = y;
                 }
@@ -3806,6 +3804,13 @@ namespace SOTS.WorldgenHelpers
                 {
                     if(t.Slope == SlopeType.Solid)
                         t.Slope = !notPlateau ? SlopeType.Solid : x <= 0 ? SlopeType.SlopeDownRight : SlopeType.SlopeDownLeft;
+                    else
+                    {
+                        t.Slope = SlopeType.Solid;
+                        WorldGen.PlaceTile(i2, j2 + 1, ModContent.TileType<EarthenPlatingPlatformTile>());
+                        t = Main.tile[i2, j2 + 1];
+                        t.Slope = SlopeType.Solid;
+                    }
                     WorldGen.SquareTileFrame(i2, j2, true);
                 }
                 if(offshootPlatform)
@@ -3821,12 +3826,23 @@ namespace SOTS.WorldgenHelpers
                             int i3 = i2 + x2 * dir;
                             if (check == 1)
                             {
+                                if (Framing.GetTileSafely(i3, j2).TileType == ModContent.TileType<EarthenPlatingTorchTile>())
+                                {
+                                    Main.tile[i3, j2].ClearTile();
+                                }
                                 WorldGen.PlaceTile(i3, j2, ModContent.TileType<EarthenPlatingPlatformTile>());
                                 t = Main.tile[i3, j2];
                                 if (t.TileType == ModContent.TileType<EarthenPlatingPlatformTile>())
                                 {
                                     if (t.Slope == SlopeType.Solid)
                                         t.Slope = SlopeType.Solid;
+                                    else
+                                    {
+                                        t.Slope = SlopeType.Solid;
+                                        WorldGen.PlaceTile(i3, j2 + 1, ModContent.TileType<EarthenPlatingPlatformTile>());
+                                        t = Main.tile[i3, j2 + 1];
+                                        t.Slope = SlopeType.Solid;
+                                    }
                                     WorldGen.SquareTileFrame(i3, j2, true);
                                 }
                             }
@@ -3852,14 +3868,26 @@ namespace SOTS.WorldgenHelpers
                             {
                                 int i3 = i2 + (x3 + offshootSize) * dir;
                                 int j3 = j2 + x3 - 1;
-                                if (Framing.GetTileSafely(i3, j3).HasTile)
+                                t = Framing.GetTileSafely(i3, j3);
+                                if (t.HasTile && (t.TileType != ModContent.TileType<EarthenPlatingPlatformTile>() || t.Slope == SlopeType.Solid))
                                     break;
+                                if (t.TileType == ModContent.TileType<EarthenPlatingTorchTile>())
+                                {
+                                    Main.tile[i3, j3].ClearTile();
+                                }
                                 WorldGen.PlaceTile(i3, j3, ModContent.TileType<EarthenPlatingPlatformTile>());
                                 t = Main.tile[i3, j3];
                                 if (t.TileType == ModContent.TileType<EarthenPlatingPlatformTile>())
                                 {
                                     if (t.Slope == SlopeType.Solid)
                                         t.Slope = dir == -1 ? SlopeType.SlopeDownRight : SlopeType.SlopeDownLeft;
+                                    else
+                                    {
+                                        t.Slope = SlopeType.Solid;
+                                        WorldGen.PlaceTile(i3, j3 + 1, ModContent.TileType<EarthenPlatingPlatformTile>());
+                                        t = Main.tile[i3, j3 + 1];
+                                        t.Slope = SlopeType.Solid;
+                                    }
                                     WorldGen.SquareTileFrame(i3, j3, true);
                                 }
                             }
