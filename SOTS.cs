@@ -854,17 +854,6 @@ namespace SOTS
 				mergedUp = mergedLeft = mergedRight = mergedDown = false;
 				return;
 			}
-			bool forceNoneLeft = false, forceNoneRight = false, forceNoneUp = false, forceNoneDown = false;
-			if (Main.tile[x, y].Slope != SlopeType.Solid || Main.tile[x, y].IsHalfBlock)
-            {
-                forceNoneDown = Main.tile[x, y].BottomSlope;
-                forceNoneLeft = Main.tile[x, y].LeftSlope;
-                forceNoneUp = Main.tile[x, y].TopSlope;
-                forceNoneRight = Main.tile[x, y].RightSlope;
-                if (Main.tile[x, y].IsHalfBlock)
-					forceNoneUp = true;
-				forceSameLeft = forceSameRight = forceSameUp = forceSameDown = true;
-            }
             Main.tileMerge[myType][mergeType] = false;
 			if(mergeType == ModContent.TileType<SootBlockTile>())
             {
@@ -882,13 +871,27 @@ namespace SOTS
 			Tile tileTopRight = Main.tile[x + 1, y - 1];
 			Tile tileBottomLeft = Main.tile[x - 1, y + 1];
 			Tile check = Main.tile[x + 1, y + 1];
-            if (tileDown.IsHalfBlock || tileDown.TopSlope)
+            bool forceNoneLeft = false, forceNoneRight = false, forceNoneUp = false, forceNoneDown = false;
+            if (Main.tile[x, y].Slope != SlopeType.Solid || Main.tile[x, y].IsHalfBlock)
+            {
+                forceNoneDown = Main.tile[x, y].BottomSlope;
+                forceNoneLeft = Main.tile[x, y].LeftSlope;
+                forceNoneUp = Main.tile[x, y].TopSlope;
+                forceNoneRight = Main.tile[x, y].RightSlope;
+                if (Main.tile[x, y].IsHalfBlock)
+                    forceNoneUp = true;
+				forceSameLeft = tileLeft.HasTile ? true : forceSameLeft;
+                forceSameRight = tileRight.HasTile ? true : forceSameRight;
+                forceSameUp = tileUp.HasTile ? true : forceSameUp;
+                forceSameDown = tileDown.HasTile ? true : forceSameDown;
+            }
+            if ((tileDown.IsHalfBlock || tileDown.TopSlope) && tileDown.HasTile)
                 forceNoneDown = true;
-			if (tileUp.BottomSlope)
+			if (tileUp.BottomSlope && tileUp.HasTile)
 				forceNoneUp = true;
-            if (tileLeft.RightSlope)
+            if (tileLeft.RightSlope && tileLeft.HasTile)
                 forceNoneLeft = true;
-            if (tileRight.LeftSlope)
+            if (tileRight.LeftSlope && tileRight.HasTile)
                 forceNoneRight = true;
             Similarity leftSim = forceNoneLeft ? Similarity.None : (!forceSameLeft) ? GetSimilarity(tileLeft, myType, mergeType) : Similarity.Same;
 			Similarity rightSim = forceNoneRight ? Similarity.None : (!forceSameRight) ? GetSimilarity(tileRight, myType, mergeType) : Similarity.Same;

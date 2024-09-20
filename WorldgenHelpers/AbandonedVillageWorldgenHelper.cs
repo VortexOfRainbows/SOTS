@@ -18,6 +18,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
 using SOTS.Items.Planetarium.Blocks;
+using Steamworks;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -531,11 +532,7 @@ namespace SOTS.WorldgenHelpers
                             {
                                 if (generateSides)
                                 {
-                                    ushort type = StoneBrickBlock;
-                                    if (!WorldGen.genRand.NextBool(3))
-                                    {
-                                        type = StoneBlock;
-                                    }
+                                    ushort type = WorldGen.genRand.NextBool(5) ? StoneBrickBlock : StoneBlock;
                                     tile.TileType = (ushort)type;
                                     tile.HasTile = true;
                                     tile.WallType = WallID.Stone;
@@ -661,11 +658,7 @@ namespace SOTS.WorldgenHelpers
                         }
 						else if(generateStone && !open)
                         {
-                            ushort type = StoneBrickBlock;
-                            if (!WorldGen.genRand.NextBool(3))
-                            {
-                                type = StoneBlock;
-                            }
+                            ushort type = WorldGen.genRand.NextBool(5) ? StoneBrickBlock : StoneBlock;
                             t.TileType = (ushort)type;
                             t.HasTile = true;
 							t.WallType = WallID.Stone;
@@ -1993,11 +1986,7 @@ namespace SOTS.WorldgenHelpers
                                     }
                                     break;
                                 case 18:
-                                    ushort type = StoneBrickBlock;
-                                    if (!WorldGen.genRand.NextBool(3))
-                                    {
-                                        type = StoneBlock;
-                                    }
+                                    ushort type = WorldGen.genRand.NextBool(5) ? StoneBrickBlock : StoneBlock;
                                     tile.HasTile = false;
                                     tile.WallType = WallID.Stone;
                                     WorldGen.PlaceTile(k, l, type, true, true, -1, 0);
@@ -2611,24 +2600,46 @@ namespace SOTS.WorldgenHelpers
         }
         public static void DesignateAVRectangle(int x, int y, int w, int h)
         {
+            int ogX = x;
+            int ogY = y;
             bool validLocation = false;
             float attempts = 0;
-            while(!validLocation)
+            while (!validLocation)
             {
-                Vector2 random = WorldGen.genRand.NextVector2Circular(1, 1) * attempts;
+                float size = attempts;
+                if (size > 120)
+                    size = 120 + (size - 120) * 0.5f;
+                attempts++;
+                Vector2 random = WorldGen.genRand.NextVector2Circular(1, 1) * size;
                 if (random.Y > 0)
                     random.Y *= 0.75f;
                 else
-                    random.Y *= 0.5f;
-                x = (int)(x + random.X);
-                y = (int)(y + random.Y);
+                    random.Y *= 0.25f;
+                if (random.Y > 120)
+                    random.Y = 120 + (random.Y - 120) * 0.5f;
+                x = (int)(ogX + random.X);
+                y = (int)(ogY + random.Y);
                 x = Math.Clamp(x, 240 + w / 2, Main.maxTilesX - 240 - w / 2);
-                y = Math.Clamp(y, 240 + h / 2, Main.maxTilesY - 240 - h / 2);
+                y = Math.Clamp(y, 240 + h / 2, Main.maxTilesY - 320 - h / 2);
                 int padding = 40;
                 OuterRect = new Rectangle(x - padding - w / 2, y - padding - h / 2, w + padding * 2, h + padding * 2);
                 AVRect = new Rectangle(x - w/2, y - h / 2, w, h);
-                attempts++;
-                validLocation = ValidLocation(OuterRect, (int)attempts);
+                bool passesThroughDungeon = false;
+                Vector2 start = new Vector2(ogX, ogY - 120);
+                Vector2 end = new Vector2(x, y);
+                Vector2 toEnd = (end - start).SNormalize() * 3;
+                while (start.Distance(end) > 50)
+                {
+                    start += toEnd;
+                    int i = (int)start.X;
+                    int j = (int)start.Y;
+                    if (InvalidType(Main.tile[i, j], (int)attempts))
+                    {
+                        passesThroughDungeon = true;
+                        break;
+                    }
+                }
+                validLocation = (!passesThroughDungeon || attempts > 900) && ValidLocation(OuterRect, (int)attempts);
                 if (attempts > 1000)
                 {
                     validLocation = true;
@@ -2636,22 +2647,22 @@ namespace SOTS.WorldgenHelpers
             }
             AVSweepRect = new Rectangle(OuterRect.X - 70, OuterRect.Y - 40, OuterRect.Width + 140, OuterRect.Height + 70);
             StairDecorPoints = new List<Point16>();
-            PrepareUnderground(AVSweepRect, 50, 0.2f);
+            PrepareUnderground(AVSweepRect, 50, 0.2f, 0);
             GenerateUndergoundEntrance(x, y - h / 2 + 10);
+        }
+        public static bool InvalidType(Tile tile, int attempts)
+        {
+            int type = tile.TileType;
+            return type == TileID.BlueDungeonBrick || type == TileID.GreenDungeonBrick || type == TileID.PinkDungeonBrick
+                || type == ModContent.TileType<PyramidBrickTile>() || type == ModContent.TileType<PyramidSlabTile>() || type == TileID.LihzahrdBrick || (type == TileID.JungleGrass && attempts < 50);
         }
         public static bool ValidLocation(Rectangle rect, int attempts)
         {
-            bool InvalidType(Tile tile)
-            {
-                int type = tile.TileType;
-                return type == TileID.BlueDungeonBrick || type == TileID.GreenDungeonBrick || type == TileID.PinkDungeonBrick
-                    || type == ModContent.TileType<PyramidBrickTile>() || type == ModContent.TileType<PyramidSlabTile>() || type == TileID.LihzahrdBrick || (type == TileID.JungleGrass && attempts < 500);
-            }
             if (GenVars.shimmerPosition.ToPoint().ToVector2().Distance(rect.Center.ToVector2()) < rect.Width * 1.4f)
             {
                 return false;
             }
-            if(rect.Top < Main.rockLayer - 50 || rect.Bottom > Main.UnderworldLayer - 100)
+            if(rect.Top < Main.rockLayer - 40 || rect.Bottom > Main.UnderworldLayer - 220)
             {
                 return false;
             }
@@ -2660,15 +2671,15 @@ namespace SOTS.WorldgenHelpers
                 int pX = i;
                 int pY = rect.Y;
                 Tile t = Main.tile[pX, pY];
-                if (InvalidType(t))
+                if (InvalidType(t, attempts))
                     return false;
                 pY = rect.Y + rect.Height / 2;
                 t = Main.tile[pX, pY];
-                if (InvalidType(t))
+                if (InvalidType(t, attempts))
                     return false;
                 pY = rect.Y + rect.Height;
                 t = Main.tile[pX, pY];
-                if (InvalidType(t))
+                if (InvalidType(t, attempts))
                     return false;
             }
             for (int j = rect.Y; j <= rect.Y + rect.Height; j++)
@@ -2676,15 +2687,15 @@ namespace SOTS.WorldgenHelpers
                 int pX = rect.X;
                 int pY = j;
                 Tile t = Main.tile[pX, pY];
-                if (InvalidType(t))
+                if (InvalidType(t, attempts))
                     return false;
                 pX = rect.X + rect.Width / 2;
                 t = Main.tile[pX, pY];
-                if (InvalidType(t))
+                if (InvalidType(t, attempts))
                     return false;
                 pX = rect.X + rect.Width;
                 t = Main.tile[pX, pY];
-                if (InvalidType(t))
+                if (InvalidType(t, attempts))
                     return false;
             }
             return true;
@@ -3292,12 +3303,12 @@ namespace SOTS.WorldgenHelpers
         {
             int bestC = BestEvilBiome();
             CorruptionRectangle cR = Corruptions[bestC];
-            Vector2 bottomOfCr = new Vector2(cR.rect.Center.X, (float)Main.rockLayer + 200);
+            Vector2 bottomOfCr = new Vector2(cR.rect.Center.X, (float)Main.rockLayer + 180);
             int size = 320;
             if (WorldGen.GetWorldSize() == 0)
                 size = 240;
 
-            PrepareUnderground(cR.rect, 60, 0.15f);
+            PrepareUnderground(cR.rect, 60, 0.15f, 0);
             DesignateAVRectangle((int)bottomOfCr.X, (int)bottomOfCr.Y, size + 80, size);
 
             Point16 placement = new Point16();
@@ -3335,7 +3346,7 @@ namespace SOTS.WorldgenHelpers
             GenerateNewMineEntrance(placement.X, placement.Y);
             foreach (Rectangle rect in CorruptPathRects)
             {
-                PrepareUnderground(rect, 20, 0.15f);
+                PrepareUnderground(rect, 20, 0.15f, 0);
             }
 
             PlaceStructuresInAV(bestC, placement.X);
@@ -3560,9 +3571,10 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-            
+            genNoise = null; //Reset the noise
             foreach (Rectangle rect2 in CorruptPathRects)
             {
+                PrepareUnderground(rect2, 20, 0.1f, 1);
                 for (int i = rect2.Left; i <= rect2.Right; i++)
                 {
                     for (int j = rect2.Top; j <= rect2.Bottom; j++)
@@ -3572,6 +3584,8 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             CorruptPathRects = null;
+            PrepareUnderground(cR.rect, 60, 0.1f, 1);
+            PrepareUnderground(AVSweepRect, 50, 0.1f, 1);
         }
         public static void TryPlacingAmbientTiles(int i, int j, bool underground)
         {
@@ -3722,7 +3736,7 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-        public static void PrepareUnderground(Rectangle rect, float paddingZone = 50, float noiseWormMult = 0.2f)
+        public static void PrepareUnderground(Rectangle rect, float paddingZone = 50, float noiseWormMult = 0.2f, int passNum = 0)
         {
             SetNoise();
             int biomeType = !WorldGen.crimson ? BiomeConversionID.Corruption : BiomeConversionID.Crimson;
@@ -3743,17 +3757,35 @@ namespace SOTS.WorldgenHelpers
                     }
                     float noise = genNoise.GetNoise(i * 2, j * 2, 0);
                     Tile t = Main.tile[i, j];
-                    bool validForSootConversion = t.TileType == TileID.Dirt || t.TileType == TileID.Stone || t.TileType == TileID.Mud || t.TileType == TileID.MushroomGrass
-                        || t.TileType == TileID.Sand || t.TileType == TileID.HardenedSand || t.TileType == TileID.Sandstone || t.TileType == TileID.IceBlock || t.TileType == TileID.SnowBlock;
-                    bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
-                    if (validForSootConversion && noiseWorm && t.HasTile)
+                    if (passNum == 0)
                     {
-                        t.TileType = (ushort)ModContent.TileType<SootBlockTile>();
-                        //t.WallType = (ushort)ModContent.WallType<SootWallTile>();
+                        bool validForSootConversion = t.TileType == TileID.Dirt || t.TileType == TileID.Stone || t.TileType == TileID.Mud || t.TileType == TileID.MushroomGrass
+                            || t.TileType == TileID.Sand || t.TileType == TileID.HardenedSand || t.TileType == TileID.Sandstone || t.TileType == TileID.IceBlock || t.TileType == TileID.SnowBlock;
+                        bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
+                        if (validForSootConversion && noiseWorm && t.HasTile)
+                        {
+                            t.TileType = (ushort)ModContent.TileType<SootBlockTile>();
+                            //t.WallType = (ushort)ModContent.WallType<SootWallTile>();
+                        }
+                        else if (noise >= -percent && noise <= percent)
+                        {
+                            WorldGen.Convert(i, j, biomeType, 0);
+                        }
                     }
-                    else if (noise >= -percent && noise <= percent)
+                    else
                     {
-                        WorldGen.Convert(i, j, biomeType, 0);
+                        bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
+                        if(noiseWorm && t.HasTile)
+                        {
+                            if (ValidStoneTiles.Contains(t.TileType) && t.TileType != TileID.Crimsand && t.TileType != TileID.Ebonsand && !ValidGrassTiles.Contains(t.TileType))
+                            {
+                                t.TileType = StoneBlock;
+                            }
+                            if (t.TileType == ModContent.TileType<SootBlockTile>())
+                            {
+                                t.TileType = StoneBrickBlock;
+                            }
+                        }
                     }
                 }
             }
@@ -3826,7 +3858,7 @@ namespace SOTS.WorldgenHelpers
                 {
                     int dir = WorldGen.genRand.NextFromList(-1, 1);
                     int bonusSize = dir != SOTSUtils.SignNoZero(x) ? (int)(size * 1.5f) : (int)Math.Sqrt(size);
-                    int offshootSize = Math.Max(Main.rand.Next(2, 4 + bonusSize), Main.rand.Next(3, 5 + bonusSize));
+                    int offshootSize = Math.Max(WorldGen.genRand.Next(2, 4 + bonusSize), WorldGen.genRand.Next(3, 5 + bonusSize));
                     bool failOffshot = false;
                     for(int check = 0; check <=1; check++)
                     {

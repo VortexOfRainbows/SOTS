@@ -5663,13 +5663,21 @@ Mods: {
 			}
 
 			CorruptionSoot: {
-				DisplayName: Corruption Soot
-				Tooltip: ""
+				DisplayName: Ebonslate Block
+				Tooltip:
+					'''
+					A primordial mass of corrupt stone
+					Although it cannot be purified, it will also not spread the Corruption
+					'''
 			}
 
 			CrimsonSoot: {
-				DisplayName: Crimson Soot
-				Tooltip: ""
+				DisplayName: Crimslate Block
+				Tooltip:
+					'''
+					A primordial mass of crimson stone
+					Although it cannot be purified, it will also not spread the Crimson
+					'''
 			}
 
 			StarshardSaber: {

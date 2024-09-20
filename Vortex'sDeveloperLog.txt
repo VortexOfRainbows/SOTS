@@ -85,9 +85,14 @@ N/A
 
 Daily Log:
 
-9/18/24
+9/18/24 to 9/19/24
 1. Fixed some tile framing inconsistencies with sots tiles that had unique tile merges
 2. More consistent ambient tile spawning in the tunnel down to the AV mines
+3. Adjusted Dylan tiles more + added dusts for them
+	1. They also count towards corruption/crimson now!
+4. New spawning logic for Soot Brick and evil soot blocks
+5. Adjusted certain spawning conditions for Abandoned Village... Should now attempt avoiding crossing over the dungeon and other important structures.
+6. Abandoned village mines now places better
 
 9/16/24 to 9/18/24
 1. Added cool scaffold generation to the abandoned village and adjusted generation

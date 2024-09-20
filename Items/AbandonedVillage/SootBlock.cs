@@ -122,7 +122,7 @@ namespace SOTS.Items.AbandonedVillage
             Main.tileLighted[Type] = false;
             DustType = ModContent.DustType<SootDust>();
 			HitSound = SoundID.Tink;
-            AddMapEntry(new Color(101, 98, 95));
+            AddMapEntry(new Color(57, 50, 44));
         }
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
@@ -157,9 +157,11 @@ namespace SOTS.Items.AbandonedVillage
         {
             public override void SafeSetStaticDefaults()
             {
-                DustType = ModContent.DustType<SootDust>();
+				TileID.Sets.AddCorruptionTile(Type, 1);
+                Main.tileBrick[Type] = true;
+                DustType = ModContent.DustType<CorruptionSootDust>();
                 HitSound = SoundID.Tink;
-                AddMapEntry(new Color(101, 98, 95));
+                AddMapEntry(new Color(125, 100, 140));
             }
             public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
             {
@@ -174,9 +176,11 @@ namespace SOTS.Items.AbandonedVillage
         {
             public override void SafeSetStaticDefaults()
             {
-                DustType = ModContent.DustType<SootDust>();
+				TileID.Sets.AddCrimsonTile(Type, 1);
+				Main.tileBrick[Type] = true;
+                DustType = ModContent.DustType<CrimsonSootDust>();
                 HitSound = SoundID.Tink;
-                AddMapEntry(new Color(101, 98, 95));
+                AddMapEntry(new Color(150, 84, 84));
             }
             public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
             {
