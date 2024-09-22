@@ -111,6 +111,103 @@ namespace SOTS.Items.AbandonedVillage
 			Item.createWall = ModContent.WallType<SootWallTile>();
 		}
     }
+    public class SootSlabWall : SootWall
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createWall = ModContent.WallType<SootSlabWallWall>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<SootSlab>(1).AddTile(TileID.WorkBenches).Register();
+        }
+    }
+    public class CorruptionSootWall : SootWall
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createWall = ModContent.WallType<CorruptionSootWallWall>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<CorruptionSoot>(1).AddTile(TileID.WorkBenches).Register();
+        }
+    }
+    public class CrimsonSootWall : SootWall
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.createWall = ModContent.WallType<CrimsonSootWallWall>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<CrimsonSoot>(1).AddTile(TileID.WorkBenches).Register();
+        }
+    }
+    public class CorruptionSootWallWall : ModWall
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
+            WallID.Sets.Corrupt[Type] = true;
+            DustType = ModContent.DustType<CorruptionSootDust>();
+            AddMapEntry(new Color(63, 50, 70));
+        }
+    }
+    public class CrimsonSootWallWall : ModWall
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
+            WallID.Sets.Crimson[Type] = true;
+            DustType = ModContent.DustType<CrimsonSootDust>();
+            AddMapEntry(new Color(75, 42, 42));
+        }
+    }
+    public class SootSlabWallWall : ModWall
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
+            DustType = ModContent.DustType<SootDust>();
+            AddMapEntry(new Color(34, 29, 24));
+        }
+    }
+    public class UnsafeCorruptionSootWall : ModWall
+    {
+        public override string Texture => "SOTS/Items/AbandonedVillage/CorruptionSootWallWall";
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = false;
+            WallID.Sets.Corrupt[Type] = true;
+            DustType = ModContent.DustType<CorruptionSootDust>();
+            AddMapEntry(new Color(63, 50, 70));
+        }
+    }
+    public class UnsafeCrimsonSootWall : ModWall
+    {
+        public override string Texture => "SOTS/Items/AbandonedVillage/CrimsonSootWallWall";
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = false;
+            WallID.Sets.Crimson[Type] = true;
+            DustType = ModContent.DustType<CrimsonSootDust>();
+            AddMapEntry(new Color(75, 42, 42));
+        }
+    }
+    public class UnsafeSootSlabWall : ModWall
+    {
+        public override string Texture => "SOTS/Items/AbandonedVillage/SootSlabWallWall";
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = false;
+            DustType = ModContent.DustType<SootDust>();
+            AddMapEntry(new Color(34, 29, 24));
+        }
+    }
     public class SootSlabTile : ModTile
     {
         public override void SetStaticDefaults()
@@ -149,11 +246,20 @@ namespace SOTS.Items.AbandonedVillage
         public override void AddRecipes()
         {
             CreateRecipe(5).AddIngredient<SootBlock>(1).AddIngredient(ItemID.StoneBlock, 1).AddTile(TileID.Furnaces).Register();
+            CreateRecipe(1).AddIngredient<SootSlabWall>(4).AddTile(TileID.WorkBenches).Register();
         }
     }
 	public class CorruptionSoot : BasicBlock<CorruptionSootTile>
-	{
-		public class CorruptionSootTile : BasicTile
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.rare = ItemRarityID.Blue;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient<CorruptionSootWall>(4).AddTile(TileID.WorkBenches).Register();
+        }
+        public class CorruptionSootTile : BasicTile
         {
             public override void SafeSetStaticDefaults()
             {
@@ -172,6 +278,14 @@ namespace SOTS.Items.AbandonedVillage
     }
     public class CrimsonSoot : BasicBlock<CrimsonSootTile>
     {
+        public override void SafeSetDefaults()
+        {
+            Item.rare = ItemRarityID.Blue;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient<CrimsonSootWall>(4).AddTile(TileID.WorkBenches).Register();
+        }
         public class CrimsonSootTile : BasicTile
         {
             public override void SafeSetStaticDefaults()

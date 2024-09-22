@@ -26,6 +26,9 @@ namespace SOTS.WorldgenHelpers
     {
         public static ushort StoneBlock => WorldGen.crimson ? (ushort) ModContent.TileType<CrimsonSoot.CrimsonSootTile>() : (ushort)ModContent.TileType<CorruptionSoot.CorruptionSootTile>();
         public static ushort StoneBrickBlock => (ushort)ModContent.TileType<SootSlabTile>();
+        public static ushort StoneWall => WorldGen.crimson ? (ushort)ModContent.WallType<UnsafeCrimsonSootWall>() : (ushort)ModContent.WallType<UnsafeCorruptionSootWall>();
+        public static ushort SafeStoneWall => WorldGen.crimson ? (ushort)ModContent.WallType<CrimsonSootWallWall>() : (ushort)ModContent.WallType<CorruptionSootWallWall>();
+        public static ushort StoneBrickWall => (ushort)ModContent.WallType<UnsafeSootSlabWall>();
         public static FastNoiseLite genNoise = null;
         public class CorruptionRectangle()
         {
@@ -511,7 +514,7 @@ namespace SOTS.WorldgenHelpers
                         bool interior = false;
                         bool generateSoot = Math.Abs(i - .5f - sootLeft) < 2.25f || Math.Abs(i + .5f - sootRight) <= 2.25f;
 						bool generateSides = i >= left + 1 && i <= right && (Math.Abs(i - left) < 3.75f || Math.Abs(i - right) < 3.75f);
-                        bool validWall = tile.WallType != WallID.RocksUnsafe1 && tile.WallType != WallID.StoneSlab && tile.WallType != WallID.GrayBrick /*&& tile.WallType != WallID.Stone*/ &&
+                        bool validWall = tile.WallType != StoneWall && tile.WallType != StoneBrickWall /*&& tile.WallType != WallID.Stone*/ &&
                             tile.WallType != ModContent.WallType<EarthenPlatingBeamWall>() && tile.WallType != ModContent.WallType<EarthenPlatingPanelWallWall>() && tile.WallType != ModContent.WallType<EarthenPlatingWallWall>();
                         if ((i >= left + 1 && i <= right) || generateSoot) //remove tiles
                         {
@@ -535,7 +538,7 @@ namespace SOTS.WorldgenHelpers
                                     ushort type = WorldGen.genRand.NextBool(5) ? StoneBrickBlock : StoneBlock;
                                     tile.TileType = (ushort)type;
                                     tile.HasTile = true;
-                                    tile.WallType = WallID.Stone;
+                                    tile.WallType = SafeStoneWall;
                                 }
                                 else if (generateSoot)
                                 {
@@ -549,13 +552,7 @@ namespace SOTS.WorldgenHelpers
                         {
                             if(!generateSoot)
                             {
-                                ushort type = WallID.RocksUnsafe1;
-                                if (WorldGen.genRand.NextBool(7))
-                                {
-                                    type = WallID.GrayBrick;
-                                }
-                                else if (WorldGen.genRand.NextBool(10))
-                                    type = WallID.StoneSlab;
+                                ushort type = WorldGen.genRand.NextBool(6) ? StoneBrickWall : StoneWall;
                                 if (!generateSides)
                                     tile.WallType = (ushort)type;
                             }
@@ -618,12 +615,12 @@ namespace SOTS.WorldgenHelpers
                     Tile t = Framing.GetTileSafely(x + i2, y + j2);
                     if (radius <= wallSize + WorldGen.genRand.NextFloat(-0.5f, 0.5f))
                     {
-						//WallID.stone and soot walls are used for the border of the generation
-						if(t.WallType != WallID.Stone && t.WallType != ModContent.WallType<SootWallTile>() 
+						//safe stone wall and soot walls are used for the border of the generation
+						if(t.WallType != SafeStoneWall && t.WallType != ModContent.WallType<SootWallTile>() 
                             && t.WallType != ModContent.WallType<EarthenPlatingBeamWall>() && t.WallType != ModContent.WallType<EarthenPlatingPanelWallWall>() 
                             && t.WallType != ModContent.WallType<EarthenPlatingWallWall>() && t.WallType != ModContent.WallType<UnsafeGulaPlatingWall>() && t.WallType != ModContent.WallType<GulaPlatingWallWall>())
                         {
-                            if (t.HasTile && t.TileType != TileID.Platforms && t.TileType != TileID.Rope) //)t.WallType != WallID.StoneSlab && t.WallType != WallID.GrayBrick && t.WallType != WallID.RocksUnsafe1)
+                            if (t.HasTile && t.TileType != TileID.Platforms && t.TileType != TileID.Rope) //)t.WallType != WallID.StoneSlab && t.WallType != WallID.GrayBrick && t.WallType != StoneWall)
                             {
                                 Tile tileabove = Framing.GetTileSafely(x + i2, y + j2 - 1);
                                 if(TileIsNotContainer(t) && TileIsNotContainer(tileabove))
@@ -632,20 +629,14 @@ namespace SOTS.WorldgenHelpers
                                     t.LiquidAmount = 0;
                                 }
                             }
-                            ushort type = WallID.RocksUnsafe1;
-                            if (WorldGen.genRand.NextBool(7))
-                            {
-                                type = WallID.GrayBrick;
-                            }
-                            else if (WorldGen.genRand.NextBool(10))
-                                type = WallID.StoneSlab;
+                            ushort type = WorldGen.genRand.NextBool(6) ? StoneBrickWall : StoneWall;
                             t.WallType = type;
                         }
                     }
 					else if(radius <= outlineSize + WorldGen.genRand.NextFloat(-0.5f, 0.8f))
 					{
 						bool generateStone = radius <= wallSize + stoneSize + WorldGen.genRand.NextFloat(-0.6f, 0.8f);
-						bool open = t.WallType == WallID.RocksUnsafe1 || t.WallType == WallID.GrayBrick || t.WallType == WallID.StoneSlab
+						bool open = t.WallType == StoneWall || t.WallType == StoneBrickWall
                             || t.WallType == ModContent.WallType<EarthenPlatingBeamWall>() || t.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>() || t.WallType == ModContent.WallType<EarthenPlatingWallWall>() 
                             || t.WallType == ModContent.WallType<UnsafeGulaPlatingWall>() || t.WallType == ModContent.WallType<GulaPlatingWallWall>();
 						bool isStone = t.HasTile && (t.TileType == StoneBlock || t.TileType == StoneBrickBlock || 
@@ -661,7 +652,7 @@ namespace SOTS.WorldgenHelpers
                             ushort type = WorldGen.genRand.NextBool(5) ? StoneBrickBlock : StoneBlock;
                             t.TileType = (ushort)type;
                             t.HasTile = true;
-							t.WallType = WallID.Stone;
+							t.WallType = SafeStoneWall;
                         }
                     }
 				}
@@ -1988,7 +1979,7 @@ namespace SOTS.WorldgenHelpers
                                 case 18:
                                     ushort type = WorldGen.genRand.NextBool(5) ? StoneBrickBlock : StoneBlock;
                                     tile.HasTile = false;
-                                    tile.WallType = WallID.Stone;
+                                    tile.WallType = SafeStoneWall;
                                     WorldGen.PlaceTile(k, l, type, true, true, -1, 0);
                                     break;
                                 case 2:
@@ -2174,15 +2165,9 @@ namespace SOTS.WorldgenHelpers
                                 tile.WallType = (ushort)ModContent.WallType<EarthenPlatingBeamWall>();
                                 break;
                             case 4:
-                                if(tile.WallType == WallID.Stone || tile.WallType == ModContent.WallType<SootWallTile>())
+                                if(tile.WallType == SafeStoneWall || tile.WallType == ModContent.WallType<SootWallTile>())
                                 {
-                                    ushort type = WallID.RocksUnsafe1;
-                                    if (WorldGen.genRand.NextBool(7))
-                                    {
-                                        type = WallID.GrayBrick;
-                                    }
-                                    else if (WorldGen.genRand.NextBool(10))
-                                        type = WallID.StoneSlab;
+                                    ushort type = WorldGen.genRand.NextBool(6) ? StoneBrickWall : StoneWall;
                                     tile.WallType = (ushort)type;
                                 }
                                 break;

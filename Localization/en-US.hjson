@@ -5733,6 +5733,29 @@ Mods: {
 				DisplayName: Throe Banner
 				Tooltip: ""
 			}
+
+			CorruptionSootWall: {
+				DisplayName: Ebonslate Wall
+				Tooltip:
+					'''
+					A primordial mass of corrupt stone
+					Although it cannot be purified, it will also not spread the Corruption
+					'''
+			}
+
+			CrimsonSootWall: {
+				DisplayName: Crimslate Wall
+				Tooltip:
+					'''
+					A primordial mass of crimson stone
+					Although it cannot be purified, it will also not spread the Crimson
+					'''
+			}
+
+			SootSlabWall: {
+				DisplayName: Soot Slab Wall
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
