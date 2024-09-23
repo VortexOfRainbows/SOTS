@@ -1596,7 +1596,11 @@ Mods: {
 
 			PixelBlaster: {
 				DisplayName: Pixel Blaster
-				Tooltip: Fires a beam that melts through enemies, dealing damage 60 times per second
+				Tooltip: 
+				'''
+				Fires a beam that melts through enemies, dealing damage 60 times per second
+				Receives lowered bonuses from critical strike chance boosts
+				'''
 			}
 
 			AbyssalFury: {
