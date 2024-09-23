@@ -91,6 +91,7 @@ Daily Log:
 
 9/21/24 to 9/22/24
 1. Added Dylan's cool walls (sparkle emoji)
+2. SUPER WIP Magma Beam
 
 9/18/24 to 9/19/24
 1. Fixed some tile framing inconsistencies with sots tiles that had unique tile merges
