@@ -5762,8 +5762,8 @@ Mods: {
 			}
 
 			MagmaBeam: {
-				DisplayName: Magma Beam
-				Tooltip: ""
+				DisplayName: Magma Concentrator
+				Tooltip: Concetrate a ball of hot magma on your cursor
 			}
 		}
 
