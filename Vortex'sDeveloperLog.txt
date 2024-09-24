@@ -43,7 +43,7 @@ Update Objectives:
 	1. Make bullets accelerate slower
 	2. Make lasers accelerates lower
 	3. Make 2nd Phase laser spam attack just shoot directly at you. Keep it simple
-	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable
+	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable (for the bullet spam attack)
 	5. Make mines not last as long
 14. Throe visual Variants (use whoAmI values for the secondary spawns so these will sync in MP)
 15. Boss balancing configs
@@ -90,7 +90,7 @@ N/A
 Daily Log:
 
 9/21/24 to 9/23/24
-1. Added Dylan's cool walls (sparkle emoji)
+1. Added Dylan's cool walls (sparkle emoji) and modified wall generation appropriately
 2. Added Magma Concentrator, works in multiplayer! Seems balanced..?
 
 9/18/24 to 9/19/24

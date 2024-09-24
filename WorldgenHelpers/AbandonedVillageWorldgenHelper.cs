@@ -552,7 +552,7 @@ namespace SOTS.WorldgenHelpers
                         {
                             if(!generateSoot)
                             {
-                                ushort type = WorldGen.genRand.NextBool(6) ? StoneBrickWall : StoneWall;
+                                ushort type = WorldGen.genRand.NextBool(8) ? StoneBrickWall : StoneWall;
                                 if (!generateSides)
                                     tile.WallType = (ushort)type;
                             }
@@ -629,7 +629,7 @@ namespace SOTS.WorldgenHelpers
                                     t.LiquidAmount = 0;
                                 }
                             }
-                            ushort type = WorldGen.genRand.NextBool(6) ? StoneBrickWall : StoneWall;
+                            ushort type = WorldGen.genRand.NextBool(8) ? StoneBrickWall : StoneWall;
                             t.WallType = type;
                         }
                     }
@@ -2167,7 +2167,7 @@ namespace SOTS.WorldgenHelpers
                             case 4:
                                 if(tile.WallType == SafeStoneWall || tile.WallType == ModContent.WallType<SootWallTile>())
                                 {
-                                    ushort type = WorldGen.genRand.NextBool(6) ? StoneBrickWall : StoneWall;
+                                    ushort type = WorldGen.genRand.NextBool(8) ? StoneBrickWall : StoneWall;
                                     tile.WallType = (ushort)type;
                                 }
                                 break;
@@ -3760,15 +3760,22 @@ namespace SOTS.WorldgenHelpers
                     else
                     {
                         bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
-                        if(noiseWorm && t.HasTile)
+                        if(noiseWorm)
                         {
-                            if (ValidStoneTiles.Contains(t.TileType) && t.TileType != TileID.Crimsand && t.TileType != TileID.Ebonsand && !ValidGrassTiles.Contains(t.TileType))
+                            if(t.HasTile)
                             {
-                                t.TileType = StoneBlock;
+                                if (ValidStoneTiles.Contains(t.TileType) && t.TileType != TileID.Crimsand && t.TileType != TileID.Ebonsand && !ValidGrassTiles.Contains(t.TileType))
+                                {
+                                    t.TileType = StoneBlock;
+                                }
+                                if (t.TileType == ModContent.TileType<SootBlockTile>())
+                                {
+                                    t.TileType = StoneBrickBlock;
+                                }
                             }
-                            if (t.TileType == ModContent.TileType<SootBlockTile>())
+                            if(t.WallType == StoneWall)
                             {
-                                t.TileType = StoneBrickBlock;
+                                t.WallType = StoneBrickWall;
                             }
                         }
                     }
