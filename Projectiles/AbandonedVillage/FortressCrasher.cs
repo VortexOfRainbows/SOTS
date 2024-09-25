@@ -6,6 +6,8 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
 using System.IO;
+using Microsoft.CodeAnalysis;
+using System.Threading.Tasks.Dataflow;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {    
@@ -15,30 +17,32 @@ namespace SOTS.Projectiles.AbandonedVillage
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(aiCounter);
+			writer.Write(Projectile.penetrate);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
 			aiCounter = reader.ReadInt32();
-		}
-        public const int ThrowDuration = 30;
-		public const float ChargeDuration = 90f;
-		int bounceCounter = 0;
-		int aiCounter = 0;
+            Projectile.penetrate = reader.ReadInt32();
+        }
+        public float ThrowDuration = -1f;
+		public float ChargeDuration = -1f;
+        public int aiCounter = 0;
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Type] = 15;
+            ProjectileID.Sets.TrailingMode[Type] = 0;
+        }
         public override void SetDefaults()
         {
-			Projectile.DamageType = DamageClass.Ranged;
+            Projectile.DamageType = DamageClass.Ranged;
 			Projectile.friendly = false;
 			Projectile.width = 32;
 			Projectile.height = 32;
 			Projectile.timeLeft = 7200;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 20;
 			Projectile.tileCollide = false;
-			Projectile.usesIDStaticNPCImmunity = true;
-			Projectile.idStaticNPCHitCooldown = 10;
-		}
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-		{
-			modifiers.SourceDamage *= (1 + chargeProgress * 0.6f);
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 8;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
 		{
@@ -47,75 +51,146 @@ namespace SOTS.Projectiles.AbandonedVillage
 			fallThrough = true;
 			return true;
 		}
-		public override bool OnTileCollide(Vector2 oldVelocity)
-		{
-			Player player = Main.player[Projectile.owner];
-			if (bounceCounter >= 3 + 8 * chargeProgress)
-			{
-				aiCounter = 3601;
-				Projectile.velocity *= 0;
-				Projectile.tileCollide = false;
-				Projectile.friendly = false;
-				Projectile.netUpdate = true;
-			}
-			else
-			{
-				if (bounceCounter < 1 + 4 * chargeProgress)
-				{
-					Explosion(1);
-				}
-				if (Projectile.velocity.X != oldVelocity.X)
-					Projectile.velocity.X = -oldVelocity.X;
-				if (Projectile.velocity.Y != oldVelocity.Y)
-					Projectile.velocity.Y = -oldVelocity.Y;
-				Projectile.rotation = Projectile.velocity.ToRotation();
-			}
-			bounceCounter++;
-			return false;
+        public override void ModifyDamageHitbox(ref Rectangle hitbox)
+        {
+			var norm = saveVelo.SNormalize();
+            hitbox.X += (int)(norm.X * 44);
+			hitbox.Y += (int)(norm.Y * 44);
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+			modifiers.ArmorPenetration += 10;
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+			Projectile.ai[1] = target.whoAmI;
+			Projectile.ai[2] = 1;
+			Projectile.netUpdate = true;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.velocity = oldVelocity;
+            if (Projectile.ai[2] >= -1)
+            {
+				Projectile.penetrate -= 5;
+                Projectile.ai[1] = -1;
+                Projectile.ai[2] = 1;
+                Projectile.netUpdate = true;
+            }
+			if (Projectile.penetrate <= 0)
+				return true;
+            return false;
 		}
 		public override bool ShouldUpdatePosition()
 		{
 			return aiCounter >= ThrowDuration;
 		}
-		float chargeProgress = 0;
 		public override bool PreDraw(ref Color lightColor)
-		{
-			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			float otherAlphaMult = 1 - 0.4f * (float)aiCounter / ThrowDuration;
-			if (otherAlphaMult < 0)
-				otherAlphaMult = 0;
+        {
+            Texture2D pixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            float scaleMod = 1;
+            float alphaMult = MathF.Sqrt(1 - Projectile.alpha / 255f);
+            Vector2 previous = Projectile.Center;
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                if (Projectile.oldPos[i] == Vector2.Zero)
+                    break;
+                float perc = 1 - i / (float)Projectile.oldPos.Length;
+                Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
+                Vector2 toPrev = previous - center;
+                Main.spriteBatch.Draw(pixel, center - Main.screenPosition, null, new Color(179, 33, 68, 0) * perc * 1.0f * alphaMult, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 3.75f * perc * scaleMod), SpriteEffects.None, 0f);
+                previous = center;
+            }
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            Vector2 drawOrigin = new Vector2(24, 40);
+            float rot = Projectile.rotation + MathHelper.PiOver4;
+            int dir = 1;
+			if (Main.player[Main.myPlayer].direction * Main.player[Main.myPlayer].gravDir == -1)
+			{
+                dir = -1;
+                rot = Projectile.rotation - 5 * MathHelper.PiOver4;
+                drawOrigin = new Vector2(40, 40);
+            }
 			for (float k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(16 * (1 - chargeProgress) + 4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + chargeProgress * 90 + SOTSWorld.GlobalCounter));
-				float alphaScale = chargeProgress * 0.9f * otherAlphaMult;
-				Color color = new Color(160, 30, 35, 0);
-				color = Projectile.GetAlpha(color) * alphaScale;
-				color.A = 0;
+				float alphaScale = chargeProgress * 0.9f;
+				Color color = new Color(179, 33, 68, 0);
+                color = Projectile.GetAlpha(color) * alphaScale;
 				Vector2 drawPos = Projectile.Center - Main.screenPosition;
-				Main.spriteBatch.Draw(texture, drawPos + circular + new Vector2(-1, Projectile.gfxOffY + 2), null, color, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale * 1f, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(texture, drawPos + circular + new Vector2(0, Projectile.gfxOffY), null, color, rot, drawOrigin, Projectile.scale * 1f, dir == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			}
 			lightColor = Projectile.GetAlpha(Color.Lerp(lightColor, Color.White, 0.5f));
-			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + new Vector2(-1, Projectile.gfxOffY + 2), null, lightColor, Projectile.rotation + MathHelper.PiOver4, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, lightColor, rot, drawOrigin, Projectile.scale, dir == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
-		}
-		bool runOnce = true;
-		bool fullCharge = false;
+        }
+        float chargeProgress = 0;
+        bool runOnce = true;
+		private Vector2 saveVelo;
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
-			if (!player.channel || aiCounter > 0)
-				aiCounter++;
+			if(ChargeDuration == -1 || ThrowDuration == -1)
+			{
+				ChargeDuration = ThrowDuration = Math.Max(player.itemTime, 2);
+				//Main.NewText(player.itemTime);
+			}
+			if (Projectile.ai[2] == 1 && Projectile.friendly)
+			{
+				Projectile.localNPCHitCooldown++;
+                Projectile.friendly = Projectile.tileCollide = false;
+				if (Projectile.ai[1] == -1)
+                {
+                    Explosion(10);
+                    Projectile.velocity *= 0.2f;
+					saveVelo *= 0.8f;
+                    Projectile.ai[2] = -10;
+                }
+				else
+                {
+                    Explosion(25);
+                    Projectile.Center -= saveVelo * 0.05f;
+                    Projectile.velocity = saveVelo * -0.05f;
+                    Projectile.ai[2] = -15;
+                }
+            }
+			else if (Projectile.ai[2] < 0)
+			{
+				Projectile.ai[2]++;
+				if (Projectile.ai[2] >= -7f)
+				{
+					Projectile.ai[1] = -1;
+					Projectile.friendly = true;
+					if (Projectile.ai[2] >= -1f)
+                        Projectile.tileCollide = true;
+                    Projectile.netUpdate = true;
+                }
+				else
+                    Projectile.friendly = Projectile.tileCollide = false;
+                if (Projectile.ai[2] >= -10)
+				{
+                    int num = 11 + (int)Projectile.ai[2];
+                    Projectile.velocity += num / 55f * saveVelo;
+                }
+				else
+				{
+					Projectile.velocity += 0.01f * saveVelo;
+				}
+			}
+			if (chargeProgress >= 1)
+			{
+				chargeProgress = 1;
+                aiCounter++;
+            }
 			else
 			{
 				if (chargeProgress < 1)
 					chargeProgress += 1f / ChargeDuration;
 				if (chargeProgress > 1)
 					chargeProgress = 1;
-				if (chargeProgress == 1 && !fullCharge)
+				if (chargeProgress == 1)
 				{
-					SOTSUtils.PlaySound(SoundID.Item30, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f, -0.2f);
-					fullCharge = true;
+					SOTSUtils.PlaySound(SoundID.Item22, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f, 0.1f);
 				}
 			}
 			if (!WorldGen.InWorld((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, 10))
@@ -134,80 +209,77 @@ namespace SOTS.Projectiles.AbandonedVillage
 				Projectile.friendly = false;
 				Projectile.tileCollide = false;
 				Projectile.hide = true;
-				if (aiCounter > 4000)
+				if (aiCounter > 4000 || Projectile.penetrate < 0)
 					Projectile.Kill();
 				return;
 			}
 			else if (aiCounter >= ThrowDuration)
 			{
-				Projectile.friendly = true;
+				if (saveVelo == Vector2.Zero)
+					saveVelo = Projectile.velocity;
 				if (runOnce)
 				{
+					Projectile.ai[1] = Projectile.ai[0] = -1;
 					Projectile.extraUpdates = 1;
-					runOnce = false;
 					Projectile.netUpdate = true;
-					if(fullCharge)
-                    {
-						SOTSUtils.PlaySound(SoundID.Item96, Projectile.Center, 0.9f, -0.2f, 0);
-                    }
-					else
-						SOTSUtils.PlaySound(SoundID.Item71, Projectile.Center, 0.9f, -0.4f * chargeProgress);
-					return;
-				}
-				Projectile.tileCollide = true;
-				if(Projectile.velocity.X != 0 || Projectile.velocity.Y != 0)
+                    Projectile.tileCollide = true;
+                    Projectile.friendly = true;
+                    SOTSUtils.PlaySound(SoundID.Item71, Projectile.Center, 1.2f, -0.7f, 0);
+					runOnce = false;
+                    return;
+                }
+				else
 				{
-					if(Main.netMode != NetmodeID.Server)
-					{
-						if (Main.rand.NextBool(3))
+					int targetNum = (int)Projectile.ai[1];
+					if (targetNum != -1)
+                    {
+						NPC npc = Main.npc[targetNum];
+						if(npc.CanBeChasedBy())
 						{
-							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + 0.5f * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
-							dust.noGravity = true;
-							dust.velocity *= 0.8f * (1 - 0.2f * chargeProgress);
-							dust.scale = 1.5f * (1 + 0.3f * chargeProgress);
-							dust.fadeIn = 0.1f;
-							dust.color = new Color(219, 43, 43, 0) * 0.6f * (1 + 0.3f * chargeProgress);
-						}
-						if (Main.rand.NextBool(2))
-						{
-							if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
-							{
-								Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
-								dust3.noGravity = true;
-								dust3.velocity *= 1.7f;
-								dust3.scale = 1.4f * (1 + 0.2f * chargeProgress);
-								dust3.fadeIn = 0.1f;
-								dust3.color = new Color(200, 68, 70, 0) * 0.75f * (1 + chargeProgress);
-							}
+							Vector2 toNPC = npc.Center - Projectile.Center;
+							float length = saveVelo.Length();
+							saveVelo = (saveVelo + toNPC.SNormalize() * 0.7f).SNormalize() * length;
 						}
 						else
 						{
-							if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
-							{
-								Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<AlphaDrainDust>());
-								dust2.noGravity = true;
-								dust2.velocity *= 0.4f;
-								dust2.scale = 1.5f;
-								dust2.color = new Color(188, 128, 228, 0) * 0.5f * (1 + 0.5f * chargeProgress);
-							}
+                            Projectile.ai[1] = -1;
 						}
 					}
 				}
+				if((Projectile.velocity.X != 0 || Projectile.velocity.Y != 0) && Main.netMode != NetmodeID.Server)
+                {
+					for(float i = 0; i < 1; i += 0.5f)
+					{
+                        Dust d = PixelDust.Spawn(Projectile.Center + Projectile.velocity * i, 0, 0, Main.rand.NextVector2Square(-0.35f, 0.35f) - saveVelo * 0.5f, new Color(179, 33, 68, 0), 5);
+                        d.scale = Main.rand.NextFloat(1, 2);
+                    }
+                    if (Main.rand.NextBool(2))
+                    {
+                        if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
+                        {
+                            Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
+                            dust3.noGravity = true;
+                            dust3.velocity *= 1.5f;
+                            dust3.scale = 1.4f;
+                            dust3.fadeIn = 0.1f;
+                            dust3.color = new Color(179, 33, 68, 0) * 0.75f;
+                        }
+                    }
+                }
+				Projectile.rotation = saveVelo.ToRotation();
 			}
 			else
 			{
 				Vector2 playerToMouse = new Vector2(Projectile.ai[0], Projectile.ai[1]) - player.Center;
-				player.direction = Math.Sign(playerToMouse.X);
-				if (player.direction == 0)
-					player.direction = 1;
+				player.direction = SOTSUtils.SignNoZero(playerToMouse.X);
 				player.heldProj = Projectile.whoAmI;
-				Vector2 holdUpOffset = new Vector2(0, player.direction * 17).RotatedBy(playerToMouse.ToRotation());
+				Vector2 holdUpOffset = new Vector2(0, player.direction * 17 * player.gravDir).RotatedBy(playerToMouse.ToRotation());
 				holdUpOffset.X *= 0.9f;
 				Projectile.velocity = (playerToMouse + holdUpOffset).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length();
 				Projectile.rotation = Projectile.velocity.ToRotation();
 				Projectile.Center = player.Center;
 				Projectile.Center -= holdUpOffset;
-				Vector2 rotater = new Vector2(-12 * chargeProgress + 11 + aiCounter * 1.75f * (float)Math.Sin(MathHelper.ToRadians(410f / ThrowDuration * aiCounter)), 0).RotatedBy(Projectile.rotation);
+				Vector2 rotater = new Vector2(-10 * chargeProgress + 8 + aiCounter * 1.25f * (float)Math.Sin(MathHelper.ToRadians(410f / ThrowDuration * aiCounter)), 0).RotatedBy(Projectile.rotation);
 				Projectile.position += rotater;
 				if (player.itemAnimation <= 10)
 				{
@@ -224,28 +296,52 @@ namespace SOTS.Projectiles.AbandonedVillage
 			if(player.ItemAnimationActive && aiCounter < ThrowDuration + 9)
 			{
 				player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle((Projectile.Center - player.Center).ToRotation() + MathHelper.ToRadians(player.gravDir * -90)));
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle((Projectile.Center - player.Center).ToRotation() * player.gravDir -MathHelper.PiOver2));
 			}
 		}
 		public void Explosion(int num = 1)
         {
 			if(Main.netMode != NetmodeID.Server)
-			{
-				SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f + num * 0.1f, 0.4f - num * 0.3f);
-				for (int i = 0; i < (18 + num) * num; i++)
-				{
-					Vector2 circular = new Vector2(3 + num * 3, 0).RotatedBy(MathHelper.ToRadians(360f / (15f * num) * i));
-					int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
-					Dust dust = Main.dust[num2];
-					dust.color = new Color(255, 80, 80, 40);
-					dust.noGravity = true;
-					dust.fadeIn = 0.1f;
-					dust.scale *= 1.6f;
-					dust.alpha = Projectile.alpha;
-					dust.velocity += circular * Main.rand.NextFloat(0.5f, 1.4f);
-				}
+            {
+                SOTSUtils.PlaySound(SoundID.Item23, Projectile.Center, 1f, 0.4f);
+				Vector2 center = Projectile.Center + saveVelo.SNormalize() * 42;
+				Vector2 normVelo = Projectile.velocity.SNormalize();
+                for (int i = 0; i < num; i++)
+                {
+                    Dust d = PixelDust.Spawn(center, 0, 0, Main.rand.NextVector2Square(-3f, 3f) + normVelo * Main.rand.NextFloat(15), new Color(179, 33, 68, 0), 10);
+                    d.scale = Main.rand.NextFloat(1, 2);
+                }
 			}
 		}
-	}
+        public override void OnKill(int timeLeft)
+        {
+            float incre = SOTS.Config.lowFidelityMode ? 0.5f : 0.34f;
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                if (Projectile.oldPos[i] == Vector2.Zero)
+                    break;
+                float perc = 1 - i / (float)Projectile.oldPos.Length;
+				for(float j = 0; j < 1; j+= incre)
+				{
+                    Dust dust3 = Dust.NewDustDirect(Projectile.oldPos[i] - new Vector2(5) + Projectile.Size / 2 - saveVelo * j, 0, 0, ModContent.DustType<CopyDust4>());
+                    dust3.noGravity = true;
+                    dust3.velocity = dust3.velocity * 0.1f + saveVelo * 0.4f;
+                    dust3.scale = 2f * perc;
+                    dust3.fadeIn = 0.1f;
+                    dust3.color = new Color(179, 33, 68, 0);
+                }
+            }
+            SOTSUtils.PlaySound(SoundID.Item62, Projectile.Center, 0.75f, 0.35f);
+			int num = SOTS.Config.lowFidelityMode ? 25 : 40;
+            for (int i = 0; i < num; i++)
+            {
+                Dust dust3 = Dust.NewDustDirect(Projectile.oldPosition + Projectile.Size /2  - new Vector2(5, 5) + saveVelo * Main.rand.NextFloat(-3, 3), 0, 0, Main.rand.NextBool(3) ? DustID.Iron : DustID.Lead);
+                dust3.noGravity = true;
+                dust3.velocity = dust3.velocity * 1f + saveVelo * 0.4f;
+                dust3.scale *= 0.5f;
+				dust3.scale += 1f;
+            }
+        }
+    }
 }
 		

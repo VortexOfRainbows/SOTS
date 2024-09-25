@@ -49,6 +49,7 @@ Update Objectives:
 14. Throe visual Variants (use whoAmI values for the secondary spawns so these will sync in MP)
 15. Boss balancing configs
 16. Item that combines Botanical Symbiote and Bundle of Snakes
+17. Rework attack speed increasing items to use new TMOD system
 
 ---WIP List---
 Abandoned village generation
@@ -90,10 +91,11 @@ N/A
 
 Daily Log:
 
-9/21/24 to 9/24/24
+9/21/24 to 9/25/24
 1. Added Dylan's cool walls (sparkle emoji) and modified wall generation appropriately
 2. Added Magma Concentrator, works in multiplayer! Seems balanced..?
-3. Super WIP Fortress Crasher (right now it is a clone of brachial lance)
+3. Added Fortress Crasher, Seems fairly balanced. It is a bit weaker in dps compared to Sandstorm Pouch and Icebreaker, but has extra utility
+4. Brachial Lance now works slightly better upside down (still not perfect, but works better)
 
 9/18/24 to 9/19/24
 1. Fixed some tile framing inconsistencies with sots tiles that had unique tile merges

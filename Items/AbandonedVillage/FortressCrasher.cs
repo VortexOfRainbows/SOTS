@@ -2,11 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using SOTS.Void;
 using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Earth;
-using SOTS.Items.Permafrost;
 
 namespace SOTS.Items.AbandonedVillage
 {
@@ -18,12 +14,12 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 32;  
+            Item.damage = 20;  
             Item.DamageType = DamageClass.Ranged;  
             Item.width = 64;    
             Item.height = 64;
-			Item.useAnimation = 36;
-			Item.useTime = 36;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
 			Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 3f;
             Item.rare = ItemRarityID.Green;

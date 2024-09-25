@@ -233,8 +233,8 @@ namespace SOTS.Projectiles.Pyramid
 				if (player.direction == 0)
 					player.direction = 1;
 				player.heldProj = Projectile.whoAmI;
-				Vector2 holdUpOffset = new Vector2(0, player.direction * 17).RotatedBy(playerToMouse.ToRotation());
-				holdUpOffset.X *= 0.9f;
+				Vector2 holdUpOffset = new Vector2(0, player.direction * 17 * player.gravDir).RotatedBy(playerToMouse.ToRotation());
+                holdUpOffset.X *= 0.9f;
 				Projectile.velocity = (playerToMouse + holdUpOffset).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length();
 				Projectile.rotation = Projectile.velocity.ToRotation();
 				Projectile.Center = player.Center;
@@ -256,8 +256,8 @@ namespace SOTS.Projectiles.Pyramid
 			if(player.ItemAnimationActive && aiCounter < ThrowDuration + 9)
 			{
 				player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle((Projectile.Center - player.Center).ToRotation() + MathHelper.ToRadians(player.gravDir * -90)));
-			}
+                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle((Projectile.Center - player.Center).ToRotation() * player.gravDir - MathHelper.PiOver2));
+            }
 			if(Projectile.numUpdates == 0 && aiCounter <= 3600)
 				catalogueParticles();
 		}

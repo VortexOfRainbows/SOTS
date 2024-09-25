@@ -742,7 +742,7 @@ namespace SOTS
 		public static int ApplyAttackSpeedClassModWithGeneric(Player player, DamageClass damageClass, float startingUseTime)
 		{
 			float AndGeneric = player.GetTotalAttackSpeed(damageClass);
-			return (int)(startingUseTime / (AndGeneric + ModPlayer(player).attackSpeedMod - 1));
+			return (int)(startingUseTime / AndGeneric);
 		}
         public override void UpdateEquips()
         {

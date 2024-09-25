@@ -5768,7 +5768,7 @@ Mods: {
 
 			FortressCrasher: {
 				DisplayName: Fortress Crasher
-				Tooltip: ""
+				Tooltip: Throw a drilling spear that repeatedly hits enemies, can travel through walls, and ignores 10 defense
 			}
 		}
 
