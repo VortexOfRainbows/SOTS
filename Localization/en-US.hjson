@@ -5765,6 +5765,11 @@ Mods: {
 				DisplayName: Magma Concentrator
 				Tooltip: Concetrate a ball of hot magma on your cursor
 			}
+
+			FortressCrasher: {
+				DisplayName: Fortress Crasher
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7483,6 +7488,7 @@ Mods: {
 			CrystalExplosionSmall.DisplayName: Crystal Explosion Small
 			MagmaBeam.DisplayName: Magma Beam
 			MagmaLaser.DisplayName: Magma Laser
+			FortressCrasher.DisplayName: Fortress Crasher
 		}
 
 		DamageClasses: {
