@@ -6,8 +6,6 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
 using System.IO;
-using Microsoft.CodeAnalysis;
-using System.Threading.Tasks.Dataflow;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {    
@@ -16,13 +14,17 @@ namespace SOTS.Projectiles.AbandonedVillage
         public override string Texture => "SOTS/Items/AbandonedVillage/FortressCrasher";
         public override void SendExtraAI(BinaryWriter writer)
         {
-			writer.Write(aiCounter);
-			writer.Write(Projectile.penetrate);
+            writer.Write(ThrowDuration);
+            writer.Write(ChargeDuration);
+            writer.Write(Projectile.penetrate);
+			writer.WriteVector2(saveVelo);
 		}
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-			aiCounter = reader.ReadInt32();
+            ThrowDuration = reader.ReadSingle();
+            ChargeDuration = reader.ReadSingle();
             Projectile.penetrate = reader.ReadInt32();
+            saveVelo = reader.ReadVector2();
         }
         public float ThrowDuration = -1f;
 		public float ChargeDuration = -1f;
@@ -87,6 +89,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 		}
 		public override bool PreDraw(ref Color lightColor)
         {
+			Player player = Main.player[Projectile.owner];
             Texture2D pixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
             float scaleMod = 1;
             float alphaMult = MathF.Sqrt(1 - Projectile.alpha / 255f);
@@ -105,7 +108,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             Vector2 drawOrigin = new Vector2(24, 40);
             float rot = Projectile.rotation + MathHelper.PiOver4;
             int dir = 1;
-			if (Main.player[Main.myPlayer].direction * Main.player[Main.myPlayer].gravDir == -1)
+			if (player.direction * player.gravDir == -1)
 			{
                 dir = -1;
                 rot = Projectile.rotation - 5 * MathHelper.PiOver4;
@@ -132,8 +135,11 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Player player = Main.player[Projectile.owner];
 			if(ChargeDuration == -1 || ThrowDuration == -1)
 			{
-				ChargeDuration = ThrowDuration = Math.Max(player.itemTime, 2);
-				//Main.NewText(player.itemTime);
+				if(Projectile.owner == Main.myPlayer)
+                {
+                    ChargeDuration = ThrowDuration = Math.Max(player.itemTime, 2);
+                    Projectile.netUpdate = true;
+                }
 			}
 			if (Projectile.ai[2] == 1 && Projectile.friendly)
 			{
@@ -193,15 +199,6 @@ namespace SOTS.Projectiles.AbandonedVillage
 					SOTSUtils.PlaySound(SoundID.Item22, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f, 0.1f);
 				}
 			}
-			if (!WorldGen.InWorld((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, 10))
-			{
-				aiCounter = 3601;
-				Projectile.velocity *= 0;
-				Projectile.tileCollide = false;
-				Projectile.friendly = false;
-				Projectile.netUpdate = true;
-			}
-			//SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			if (aiCounter > 3600)
             {
 				Projectile.extraUpdates = 1;
@@ -231,7 +228,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 				else
 				{
 					int targetNum = (int)Projectile.ai[1];
-					if (targetNum != -1)
+					if (targetNum >= 0 && targetNum < 200)
                     {
 						NPC npc = Main.npc[targetNum];
 						if(npc.CanBeChasedBy())

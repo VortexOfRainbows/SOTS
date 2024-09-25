@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.AbandonedVillage
         }
         public override bool PreDraw(ref Color lightColor)
         {
-            if (RunOnce || points.Count <= 0)
+            if (RunOnce || points == null || points.Count <= 0)
                 return false;
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);

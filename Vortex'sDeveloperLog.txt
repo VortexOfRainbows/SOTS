@@ -95,6 +95,7 @@ Daily Log:
 1. Added Dylan's cool walls (sparkle emoji) and modified wall generation appropriately
 2. Added Magma Concentrator, works in multiplayer! Seems balanced..?
 3. Added Fortress Crasher, Seems fairly balanced. It is a bit weaker in dps compared to Sandstorm Pouch and Icebreaker, but has extra utility
+	1. A bit jittery, but works in multiplayer!
 4. Brachial Lance now works slightly better upside down (still not perfect, but works better)
 
 9/18/24 to 9/19/24
