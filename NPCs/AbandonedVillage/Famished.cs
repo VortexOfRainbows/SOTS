@@ -16,6 +16,7 @@ namespace SOTS.NPCs.AbandonedVillage
 	{
         public const int MaxRadius = 14;
         public int MaxSize => MaxRadius * MaxRadius * 4;
+        public int LifePerBlock => Main.masterMode ? 15 : Main.expertMode ? 10 : 5;
 		public void SetFrame(int x, int y, int w, int h)
 		{
             if(Block[x, y].FrameX != w || Block[x, y].FrameY != h)
@@ -317,10 +318,15 @@ namespace SOTS.NPCs.AbandonedVillage
             if (Points.Count <= 0)
                 return false;
             Point toKill = Points.Last();
-            Block[toKill.X, toKill.Y] = null;
-            FrameTileSquare(toKill.X, toKill.Y);
-            Points.Remove(toKill);
-            validPoints.Remove(toKill);
+            KillBlock(toKill.X, toKill.Y);
+            return true;
+        }
+        public bool KillBlock(int x, int y)
+        {
+            Block[x, y] = null;
+            FrameTileSquare(x, y);
+            Points.Remove(new Point(x, y));
+            validPoints.Remove(new Point(x, y));
             return true;
         }
         public bool AddBlock(int x, int y)
@@ -510,7 +516,9 @@ namespace SOTS.NPCs.AbandonedVillage
         private int LastRecordedBlockCount = 0;
         public override bool PreAI()
 		{
-            if(Block == null)
+            if (NPC.localAI[1] == 0)
+                NPC.localAI[1] = NPC.life;
+            if (Block == null)
                 Block = new FamishBlock[MaxRadius * 2 + 1, MaxRadius * 2 + 1];
             if (!foundSeedableLocation)
             {
@@ -556,27 +564,25 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     if (!TileValid(fB.i, fB.j))
                     {
-                        Block[fB.x, fB.y] = null;
-                        FrameTileSquare(fB.x, fB.y);
+                        if(KillBlock(fB.x, fB.y))
+                            CurrentBlocks--;
                     }
                 }
             }
-			NPC.TargetClosest(false);
+
+            int life = (int)NPC.localAI[1] + CurrentBlocks * LifePerBlock;
+            NPC.lifeMax = life;
+            NPC.life = Math.Min(NPC.life, NPC.lifeMax);
+            NPC.TargetClosest(false);
             if(LastRecordedBlockCount != TotalBlocks)
             {
-                if(LastRecordedBlockCount < TotalBlocks)
-                {
-                    NPC.life += 10;
-                    NPC.lifeMax += 10;
-                }
+                NPC.life += LifePerBlock;
                 LastRecordedBlockCount = TotalBlocks;
             }
             if(TotalBlocks > 0)
             {
-                float percentBlocks = CurrentBlocks / NPC.localAI[0];
-                float percentHealthRemaining = NPC.life / (float)NPC.lifeMax;
-                //Main.NewText(CurrentBlocks);
-                if (percentBlocks > percentHealthRemaining && CurrentBlocks > 0)
+                int howManyBlocksIShouldHaveBasedOnMyLife = (int)MathF.Ceiling((NPC.life - (int)NPC.localAI[1]) / (float)LifePerBlock);
+                if (howManyBlocksIShouldHaveBasedOnMyLife < CurrentBlocks && CurrentBlocks > 0)
                 {
                     if(KillBlock())
                         CurrentBlocks--;
