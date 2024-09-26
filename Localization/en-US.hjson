@@ -6644,6 +6644,7 @@ Mods: {
 			CorpseBloom.DisplayName: Corpsebloom
 			EarthenGizmo.DisplayName: Earthen Gizmo
 			Throe.DisplayName: Throe
+			Famished.DisplayName: Famished
 		}
 
 		Bestiary: {

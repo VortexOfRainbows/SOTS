@@ -89,6 +89,13 @@ N/A
 
 Daily Log:
 
+9/26/24
+1. WIP Famished... Needs:
+	1. Gore for when blocks die. Dusts for when hit and other visuals. Visuals and sounds for spreading and hitting.
+	2. Floodfill algorithm to kill any blocks not attached to the heart. Algorithm to drop health appropriately after non-attached blocks are killed.
+	3. Animation when damaging the player (like a spike protrudes out temporarily). potentially spike surround the outer shell.
+	4. Drops, Server syncing, Polish, Banner.
+
 9/21/24 to 9/25/24
 1. Added Dylan's cool walls (sparkle emoji) and modified wall generation appropriately
 2. Added Magma Concentrator, works in multiplayer! Seems balanced..?
