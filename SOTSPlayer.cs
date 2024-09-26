@@ -738,11 +738,16 @@ namespace SOTS
 			int originalDamage = startingDamage;
 			StatModifier AndGeneric = player.GetTotalDamage(damageClass);
 			return (int)AndGeneric.ApplyTo(originalDamage);
-		}
-		public static int ApplyAttackSpeedClassModWithGeneric(Player player, DamageClass damageClass, float startingUseTime)
+        }
+        public static float GetAttackSpeedMultWithGeneric(Player player, DamageClass damageClass)
+        {
+            float AndGeneric = player.GetTotalAttackSpeed(damageClass);
+            return AndGeneric;
+        }
+        public static int ApplyAttackSpeedClassModWithGeneric(Player player, DamageClass damageClass, float startingUseTime)
 		{
 			float AndGeneric = player.GetTotalAttackSpeed(damageClass);
-			return (int)(startingUseTime / AndGeneric);
+            return (int)(startingUseTime / AndGeneric);
 		}
         public override void UpdateEquips()
         {
@@ -1259,6 +1264,8 @@ namespace SOTS
 			{
 				onhit--;
 			}
+			// Do something here to increase attack speed
+			Player.GetAttackSpeed(DamageClass.Generic) += attackSpeedMod - 1;
 			attackSpeedMod = 1;
 			Lockpick = false;
 			DoubleVisionActive = false;
@@ -1651,20 +1658,20 @@ namespace SOTS
 		{
 			return UseTimeMultiplier(item);
 		}
-		public override float UseTimeMultiplier(Item item)
-		{
-			float standard = attackSpeedMod;
-			int time = item.useAnimation;
-			int cannotPass = 2;
-			float current = time / standard;
-			if (current < cannotPass)
-			{
-				standard = time / 2f;
-			}
-			if (item.channel == false || item.type == ModContent.ItemType<Items.OlympianAxe>())
-				return 1f / standard;
-			return base.UseTimeMultiplier(item);
-		}
+		//public override float UseTimeMultiplier(Item item)
+		//{
+		//	float standard = attackSpeedMod;
+		//	int time = item.useAnimation;
+		//	int cannotPass = 2;
+		//	float current = time / standard;
+		//	if (current < cannotPass)
+		//	{
+		//		standard = time / 2f;
+		//	}
+		//	if (item.channel == false || item.type == ModContent.ItemType<Items.OlympianAxe>())
+		//		return 1f / standard;
+		//	return base.UseTimeMultiplier(item);
+		//}
 		public override void ModifyHitNPCWithProj(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */
 		{
 			if (SparkleDamage && !target.immortal)

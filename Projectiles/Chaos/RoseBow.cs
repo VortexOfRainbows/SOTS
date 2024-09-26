@@ -1,13 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Projectiles.Planetarium;
+using SOTS.Items;
 using SOTS.Void;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Humanizer.In;
 
 namespace SOTS.Projectiles.Chaos
 {
@@ -221,7 +220,7 @@ namespace SOTS.Projectiles.Chaos
                 }
                 if (chargeLevel >= 1)
                     afterCount2++;
-                int timeForThorn = (int)(Projectile.ai[0] * 0.45f);
+                int timeForThorn = Math.Max((int)(Projectile.ai[0] * 0.45f), 1);
                 if((int)afterCount2 % timeForThorn == 0 && (int)afterCount2 <= timeForThorn * 6 && (int)afterCount2 > 0) //6 thorns one first charge
                 {
                     if(Main.myPlayer == Projectile.owner)
@@ -230,7 +229,7 @@ namespace SOTS.Projectiles.Chaos
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.5f, 4f), ModContent.ProjectileType<ChaosThorn>(), (int)(Projectile.damage * 1.0f), Projectile.knockBack, Main.myPlayer, 60, rotation);
                     }
                 }
-                timeForThorn = (int)(Projectile.ai[0] * 0.35f);
+                timeForThorn = Math.Max((int)(Projectile.ai[0] * 0.35f), 1);
                 if ((int)afterCount1 % timeForThorn == 0 && (int)afterCount1 <= timeForThorn * 8 && (int)afterCount1 > 0) //8 thorns on second charge
                 {
                     if (Main.myPlayer == Projectile.owner)
@@ -326,10 +325,8 @@ namespace SOTS.Projectiles.Chaos
                     Projectile.netUpdate = true;
                 Projectile.velocity.X = num7;
                 Projectile.velocity.Y = num8;
-                float reduced = 1f;
-                if (chargeLevel >= 1)
-                    reduced = 0.5f;
-                Projectile.ai[0] = selectedItem.useTime * reduced;
+                float reduced = chargeLevel >= 1 ? 0.5f : 1f;
+                Projectile.ai[0] = SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, ModContent.GetInstance<VoidRanged>(), selectedItem.useTime) * reduced;
             }
             if (counter == -1 && Projectile.ai[0] != 0 && runOnce)
             {

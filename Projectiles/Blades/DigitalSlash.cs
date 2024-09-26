@@ -173,7 +173,7 @@ namespace SOTS.Projectiles.Blades
 					if (distance > 320)
 						distance = 320;
 					toCursor = cursorArea - player.Center;
-					spinSpeed = (1.0f + (4.4f / (float)Math.Pow(distance / 100f, 1.9f))) * randMod * 5f * SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee);
+					spinSpeed = (1.0f + (4.4f / (float)Math.Pow(distance / 100f, 1.9f))) * randMod * 5f * SOTSPlayer.GetAttackSpeedMultWithGeneric(player, Projectile.DamageType);
 				}
 				counterOffset = 205 + 45f / randMod;
 				float slashOffset = counterOffset * FetchDirection;

@@ -49,7 +49,7 @@ namespace SOTS.Items.Chaos
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.Chaos.RoseBow>(), damage, knockback, player.whoAmI, SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, DamageClass.Ranged, Item.useTime), type);
+			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.Chaos.RoseBow>(), damage, knockback, player.whoAmI, SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, Item.DamageType, Item.useTime), type);
 			return false;
 		}
 		public override void AddRecipes()

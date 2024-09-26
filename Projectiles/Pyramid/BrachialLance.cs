@@ -5,10 +5,10 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
-using Terraria.Audio;
 using SOTS.NPCs.Boss.Curse;
 using System.Collections.Generic;
 using System.IO;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Pyramid
 		int aiCounter = 0;
         public override void SetDefaults()
         {
-			Projectile.DamageType = DamageClass.Magic;
+			Projectile.DamageType = ModContent.GetInstance<VoidMagic>();
 			Projectile.friendly = false;
 			Projectile.width = 38;
 			Projectile.height = 38;
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Pyramid
 			else
 			{
 				if (chargeProgress < 1)
-					chargeProgress += 1f / ChargeDuration;
+					chargeProgress += 1f / ChargeDuration * 100f / SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, Projectile.DamageType, 100);
 				if (chargeProgress > 1)
 					chargeProgress = 1;
 				if (chargeProgress == 1 && !fullCharge)

@@ -90,17 +90,17 @@ namespace SOTS.Projectiles.Planetarium
                 float num3 = (float)((double)Main.mouseY + Main.screenPosition.Y - vector2_2.Y);
                 if ((double)Main.player[Projectile.owner].gravDir == -1.0)
                     num3 = (float)((double)(Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - vector2_2.Y);
-                float num4 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
                 float num5 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
                 float num6 = num1 / num5;
                 float num7 = num2 * num6;
                 float num8 = num3 * num6;
 
-                if ((double)num7 != Projectile.velocity.X || (double)num8 != Projectile.velocity.Y || Projectile.ai[0] != (int)(selectedItem.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod))
+                int desiredSpeed = SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, Projectile.DamageType, selectedItem.useTime);
+                if ((double)num7 != Projectile.velocity.X || (double)num8 != Projectile.velocity.Y || Projectile.ai[0] != desiredSpeed)
                     Projectile.netUpdate = true;
                 Projectile.velocity.X = num7;
                 Projectile.velocity.Y = num8;
-                Projectile.ai[0] = (int)(selectedItem.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod);
+                Projectile.ai[0] = desiredSpeed;
             }
             if (Projectile.ai[0] != 0 && counter > 0)
             {

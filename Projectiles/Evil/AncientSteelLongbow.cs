@@ -92,7 +92,6 @@ namespace SOTS.Projectiles.Evil
                 float num3 = (float)((double)Main.mouseY + Main.screenPosition.Y - vector2_2.Y);
                 if ((double)Main.player[Projectile.owner].gravDir == -1.0)
                     num3 = (float)((double)(Main.screenHeight - Main.mouseY) + Main.screenPosition.Y - vector2_2.Y);
-                float num4 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
                 float num5 = (float)Math.Sqrt(num2 * (double)num2 + num3 * (double)num3);
                 float num6 = num1 / num5;
                 float num7 = num2 * num6;
@@ -102,8 +101,6 @@ namespace SOTS.Projectiles.Evil
                     Projectile.netUpdate = true;
                 Projectile.velocity.X = num7;
                 Projectile.velocity.Y = num8;
-                float reduced = 1f;
-                Projectile.ai[0] = selectedItem.useTime * reduced;
             }
             if (counter == -1)
             {

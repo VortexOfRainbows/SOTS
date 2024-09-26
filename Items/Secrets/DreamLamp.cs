@@ -188,7 +188,7 @@ namespace SOTS.Items.Secrets
 			if (player.altFunctionUse == 2)
 			{
 				Vector2 normal = velocity.SafeNormalize(Vector2.Zero);
-				Projectile.NewProjectile(source, position, normal * 12, type, damage, knockback, player.whoAmI, IsItemForgotten ? 2 : 1, (int)(Item.useTime / SOTSPlayer.ModPlayer(player).attackSpeedMod));
+				Projectile.NewProjectile(source, position, normal * 12, type, damage, knockback, player.whoAmI, IsItemForgotten ? 2 : 1, SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, Item.DamageType, Item.useTime));
 			}
 			else
             {

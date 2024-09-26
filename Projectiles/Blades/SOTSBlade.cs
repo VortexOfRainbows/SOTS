@@ -235,7 +235,7 @@ namespace SOTS.Projectiles.Blades
             get
             {
                 Player player = Main.player[Projectile.owner];
-                return 1 - MeleeSpeedMultiplier + MeleeSpeedMultiplier * (SOTSPlayer.ModPlayer(player).attackSpeedMod * player.GetAttackSpeed(DamageClass.Melee));
+                return 1 - MeleeSpeedMultiplier + MeleeSpeedMultiplier * SOTSPlayer.GetAttackSpeedMultWithGeneric(player, Projectile.DamageType);
             }
         }
         public override bool PreAI()

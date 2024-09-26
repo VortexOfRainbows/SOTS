@@ -353,7 +353,11 @@ namespace SOTS.Projectiles.Camera
 			Lighting.AddLight(Projectile.Center, new Vector3(86 / 255f, 226 / 255f, 100 / 255f) * windUp / windUpTime);
 			Projectile.rotation += 0.2f;
 			if (windUp < windUpTime)
-				windUp += 1;
+			{
+				float maxIncrement = windUpTime / 2;
+                windUp += MathF.Min(100f / SOTSPlayer.ApplyAttackSpeedClassModWithGeneric(player, Projectile.DamageType, 100), maxIncrement);
+				windUp = Math.Min(windUp, windUpTime);
+            }
 			else
 				postCounter++;
 			if (Main.myPlayer == Projectile.owner)

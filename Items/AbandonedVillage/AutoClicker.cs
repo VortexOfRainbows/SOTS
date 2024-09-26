@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-using SOTS.Items.Earth.Glowmoth;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
