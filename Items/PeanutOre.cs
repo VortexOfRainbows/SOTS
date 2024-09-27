@@ -1,15 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Dusts;
 using SOTS.Items.Invidia;
-using SOTS.Items.Permafrost;
 using SOTS.Items.Potions;
 using SOTS.Items.Slime;
-using SOTS.Items.Void;
-using SOTS.Projectiles.Permafrost;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;

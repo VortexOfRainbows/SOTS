@@ -10,15 +10,60 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
+using static System.Net.Mime.MediaTypeNames;
 using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
 	public class Famished : ModNPC
 	{
+        private Queue<FamishBlock> floodFillQueue = new Queue<FamishBlock>();
         public const int MaxRadius = 14;
         public int MaxSize => MaxRadius * MaxRadius * 4;
         public int LifePerBlock => Main.masterMode ? 15 : Main.expertMode ? 10 : 5;
+        public void UpdateConnections()
+        {
+            foreach (FamishBlock fb in Block)
+            {
+                if(fb != null)
+                {
+                    fb.HasPathToHost = false;
+                }
+            }
+            floodFillQueue = new Queue<FamishBlock>();
+            if(Block[MaxRadius, MaxRadius] != null)
+                FloodFill(Block[MaxRadius, MaxRadius]);
+            int c = 0;
+            while (floodFillQueue.TryDequeue(out FamishBlock block))
+            {
+                if (c > 1000)
+                {
+                    Main.NewText("SOTS ERROR: SOMEHOW OVERFLOWED FLOODFILL QUEUE", Color.Red);
+                    break;
+                }
+                //Main.NewText(block);
+                FloodFill(block);
+            }
+        }
+        public void AddBlockToQueue(FamishBlock fb)
+        {
+            if (fb != null && !fb.HasPathToHost)
+                floodFillQueue.Enqueue(fb);
+        }
+        public void FloodFill(FamishBlock fb)
+        {
+            fb.HasPathToHost = true;
+            int x = fb.x;
+            int y = fb.y;
+            if (x < 1 || x >= MaxRadius * 2 || y < 1 || y >= MaxRadius * 2)
+            {
+                return;
+            }
+            AddBlockToQueue(Block[x - 1, y]);
+            AddBlockToQueue(Block[x + 1, y]);
+            AddBlockToQueue(Block[x, y - 1]);
+            AddBlockToQueue(Block[x, y + 1]);
+        }   
 		public void SetFrame(int x, int y, int w, int h)
 		{
             if(Block[x, y].FrameX != w || Block[x, y].FrameY != h)
@@ -322,25 +367,30 @@ namespace SOTS.NPCs.AbandonedVillage
             if (Points.Count <= 0)
                 return false;
             Point toKill = Points.Last();
-            KillBlock(toKill.X, toKill.Y, false);
-            return true;
+            return KillBlock(toKill.X, toKill.Y, false);
         }
         public bool KillBlock(int x, int y, bool text = false)
         {
             if(Block[x, y] != null)
             {
-                GenerateDust(Block[x, y].i, Block[x, y].j, -1, 10);
-                Block[x, y] = null;
-                FrameTileSquare(x, y);
+                bool hadPath = Block[x, y].HasPathToHost; //Store this variable so it can be used to check after the reference has been destroyed.
+                GenerateDust(Block[x, y].i, Block[x, y].j, -1, 10); //First generate the dust
+                CurrentBlocks--; //We have killed a block, so decrease block count
+                Block[x, y] = null; //Destroy the reference, so tile framing can happen appropriately.
+                FrameTileSquare(x, y); //Frame the tiles
+
+                NPC.HitEffect(0, LifePerBlock, false); //Activate the on hit code when a block is broken.
+                if (text) //Spawn text for being hurt, so there is better clarity in how much damage the famish takes
+                    QueueDamageOrHealing -= LifePerBlock;
+
+                if (hadPath) //If the segment was previously connected to the host, update the connections other segments have now that this one is disconnected
+                    UpdateConnections();
+
                 Points.Remove(new Point(x, y));
                 validPoints.Remove(new Point(x, y));
-                CurrentBlocks--;
-
-                NPC.HitEffect(0, LifePerBlock, false);
-                if (text && Main.netMode != NetmodeID.Server)
-                    CombatText.NewText(NPC.Hitbox, CombatText.DamagedHostile, LifePerBlock, false, false);
+                return true;
             }
-            return true;
+            return false;
         }
         public bool AddBlock(int x, int y)
 		{
@@ -358,8 +408,7 @@ namespace SOTS.NPCs.AbandonedVillage
                     FrameTileSquare(x, y);
                     TotalBlocks++;
                     CurrentBlocks++;
-                    if (Main.netMode != NetmodeID.Server)
-                        CombatText.NewText(NPC.Hitbox, CombatText.HealLife, LifePerBlock, false, true);
+                    QueueDamageOrHealing += LifePerBlock;
                     return true;
                 }
             }
@@ -559,8 +608,11 @@ namespace SOTS.NPCs.AbandonedVillage
 		private bool RunOnce = true;
         private bool foundSeedableLocation = false;
         private int LastRecordedBlockCount = 0;
+        public int QueueDamageOrHealing = 0;
+        public int QueueDamageHealingTimer = 0;
         public override bool PreAI()
-		{
+        {
+            int prevQueDamHeal = QueueDamageOrHealing;
             if (NPC.localAI[1] == 0)
                 NPC.localAI[1] = NPC.life;
             if (Block == null)
@@ -578,13 +630,33 @@ namespace SOTS.NPCs.AbandonedVillage
                 else
                     return true;
             }
-			if(RunOnce && Main.netMode != NetmodeID.MultiplayerClient)
+            bool anyDisconnected = false;
+            foreach (FamishBlock fB in Block)
+            {
+                if (fB != null)
+                {
+                    bool dieFromBeingDisconnected = !fB.HasPathToHost;
+                    if (dieFromBeingDisconnected)
+                    {
+                        anyDisconnected = true;
+                        float x = fB.x - MaxRadius;
+                        float y = fB.y - MaxRadius;
+                        int chance = Math.Max(20 - (int)MathF.Sqrt(x * x + y * y), 3);
+                        dieFromBeingDisconnected = Main.rand.NextBool(chance);
+                    }
+                    if (!TileValid(fB.i, fB.j) || dieFromBeingDisconnected)
+                    {
+                        KillBlock(fB.x, fB.y, true);
+                    }
+                }
+            }
+            if (RunOnce && Main.netMode != NetmodeID.MultiplayerClient)
             {
 				AddBlock(MaxRadius, MaxRadius);
                 NPC.netUpdate = true;
                 RunOnce = false;
             }
-            else
+            else if(!anyDisconnected)
             {
                 int difference = (int)NPC.localAI[0] - TotalBlocks;
                 int rate = Math.Clamp((int)((1 - MathF.Pow(difference / 50f, .25f)) * NPC.localAI[0]), 2, 300);
@@ -624,16 +696,6 @@ namespace SOTS.NPCs.AbandonedVillage
 			NPC.Center = pointPos.ToVector2() * 16 + new Vector2(8, 8);
             NPC.velocity *= 0.95f;
             NPC.ai[0]++;
-            foreach (FamishBlock fB in Block)
-            {
-                if(fB != null)
-                {
-                    if (!TileValid(fB.i, fB.j))
-                    {
-                        KillBlock(fB.x, fB.y, true);
-                    }
-                }
-            }
 
             int life = (int)NPC.localAI[1] + CurrentBlocks * LifePerBlock;
             if(NPC.lifeMax < life)
@@ -656,6 +718,26 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     KillBlock();
                 }
+            }
+            if (QueueDamageOrHealing == 0 || prevQueDamHeal != QueueDamageOrHealing)
+                QueueDamageHealingTimer = 0;
+            else
+                QueueDamageHealingTimer++;
+            if (QueueDamageHealingTimer > 3)
+            {
+                if (QueueDamageOrHealing < 0)
+                {
+                    if (Main.netMode != NetmodeID.Server)
+                        CombatText.NewText(NPC.Hitbox, CombatText.DamagedHostile, -QueueDamageOrHealing, false, false);
+                    QueueDamageOrHealing = 0;
+                }
+                else if (QueueDamageOrHealing > 0)
+                {
+                    if (Main.netMode != NetmodeID.Server)
+                        CombatText.NewText(NPC.Hitbox, CombatText.HealLife, QueueDamageOrHealing, false, true);
+                    QueueDamageOrHealing = 0;
+                }
+                QueueDamageHealingTimer = 0;
             }
             return true;
 		}

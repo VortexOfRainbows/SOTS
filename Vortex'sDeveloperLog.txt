@@ -91,13 +91,13 @@ Daily Log:
 
 9/25/24 to 9/26/24
 1. WIP Famished... Needs:
-	1. Floodfill algorithm to kill any blocks not attached to the heart. Algorithm to drop health appropriately after non-attached blocks are killed.
-	2. Animation when damaging the player (like a spike protrudes out temporarily). potentially spike surround the outer shell.
-	3. Drops (including placeable variants of the block), Server syncing, Polish, Banner.
-	4. Special screenshot for the bestiary including both evil variants since they are technically the same enemy.
-	5. Do not allow breaking blocks the heart protects directly
-	6. Store seed position so the enemy can never move from the seed position
-2. Famished: Has dusts and sounds.
+	1. Animation when damaging the player (like a spike protrudes out temporarily). potentially spike surround the outer shell.
+	2. Drops (including placeable variants of the block), Polish, Banner.
+	3. Special screenshot for the bestiary including both evil variants since they are technically the same enemy.
+	4. Do not allow breaking blocks the heart protects directly
+	5. Store seed position so the enemy can never move from the seed position
+	6. SERVER SYNCING (THIS WILL BE NIGHTMARE)
+2. Famished: Has dusts and sounds. finished FLOODFILL
 
 9/21/24 to 9/25/24
 1. Added Dylan's cool walls (sparkle emoji) and modified wall generation appropriately
