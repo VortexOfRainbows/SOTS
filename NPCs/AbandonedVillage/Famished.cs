@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using rail;
+using SOTS.Dusts;
+using SOTS.NPCs.Town;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -240,7 +242,6 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         public class FamishBlock
         {
-            public bool HasDetail = false;
             public int i => (int)owner.Center.X / 16 + x - MaxRadius;
             public int j => (int)owner.Center.Y / 16 + y - MaxRadius;
 			public FamishBlock(NPC owner, int x, int y, int FrameX, int FrameY)
@@ -252,14 +253,17 @@ namespace SOTS.NPCs.AbandonedVillage
 				this.FrameY = FrameY;
                 this.owner = owner;
                 HasDetail = Main.rand.NextBool(2);
-			}
+                HasPathToHost = true;
+            }
             public NPC owner;
 			public int FrameNumber;
 			public int x; //Local positions
 			public int y;
 			public int FrameX;
 			public int FrameY;
-			public Rectangle Rect => new Rectangle(FrameX, FrameY, 16, 16);
+            public bool HasPathToHost;
+            public bool HasDetail;
+            public Rectangle Rect => new Rectangle(FrameX, FrameY, 16, 16);
 		}
 		public Point pointPos => (NPC.Center * 1f / 16f).ToPoint();
         public List<Point> Points = new List<Point>();
@@ -318,15 +322,24 @@ namespace SOTS.NPCs.AbandonedVillage
             if (Points.Count <= 0)
                 return false;
             Point toKill = Points.Last();
-            KillBlock(toKill.X, toKill.Y);
+            KillBlock(toKill.X, toKill.Y, false);
             return true;
         }
-        public bool KillBlock(int x, int y)
+        public bool KillBlock(int x, int y, bool text = false)
         {
-            Block[x, y] = null;
-            FrameTileSquare(x, y);
-            Points.Remove(new Point(x, y));
-            validPoints.Remove(new Point(x, y));
+            if(Block[x, y] != null)
+            {
+                GenerateDust(Block[x, y].i, Block[x, y].j, -1, 10);
+                Block[x, y] = null;
+                FrameTileSquare(x, y);
+                Points.Remove(new Point(x, y));
+                validPoints.Remove(new Point(x, y));
+                CurrentBlocks--;
+
+                NPC.HitEffect(0, LifePerBlock, false);
+                if (text && Main.netMode != NetmodeID.Server)
+                    CombatText.NewText(NPC.Hitbox, CombatText.DamagedHostile, LifePerBlock, false, false);
+            }
             return true;
         }
         public bool AddBlock(int x, int y)
@@ -339,13 +352,45 @@ namespace SOTS.NPCs.AbandonedVillage
                 if (Block[x, y] == null)
                 {
                     Block[x, y] = block;
+                    GenerateDust(block.i, block.j, 1, 10);
                     validPoints.Add(new Point(x, y));
                     Points.Add(new Point(x, y));
                     FrameTileSquare(x, y);
+                    TotalBlocks++;
+                    CurrentBlocks++;
+                    if (Main.netMode != NetmodeID.Server)
+                        CombatText.NewText(NPC.Hitbox, CombatText.HealLife, LifePerBlock, false, true);
                     return true;
                 }
             }
             return false;
+        }
+        public void GenerateDust(int i, int j, int dir = 1, int num = 10)
+        {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+            Vector2 center = new Vector2(i * 16 + 8, j * 16 + 8);
+            if (dir == 1)
+            {
+                SOTSUtils.PlaySound(SoundID.NPCHit1, center, 1.5f, -0.6f);
+            }
+            if(dir == -1)
+            {
+                SOTSUtils.PlaySound(SoundID.NPCDeath1, center, 1.2f, 0.3f);
+            }
+            for(int a = 0; a < num; a++)
+            {
+                Dust dust = Dust.NewDustDirect(new Vector2(i * 16 - 2, j * 16 - 2), 16, 16, WorldGen.crimson ? DustType<FamishedDustCrimson>() : DustType<FamishedDustCorruption>());
+                Vector2 toCenter = center - dust.position;
+                dust.scale = Main.rand.NextFloat(1.35f, 1.45f);
+                if(dir == 1)
+                {
+                    dust.position -= toCenter.SNormalize() * 12;
+                }
+                dust.velocity *= 0.1f;
+                dust.velocity += toCenter.SNormalize() * (toCenter.Length() + 12) * dir * 0.075f;
+                dust.noGravity = true;
+            }
         }
         public void FrameTileSquare(int x, int y)
         {
@@ -376,24 +421,24 @@ namespace SOTS.NPCs.AbandonedVillage
 		public override void SetDefaults()
 		{
 			NPC.aiStyle = -1;
-            NPC.lifeMax = 100;  
-            NPC.damage = 24; 
-            NPC.defense = 4;  
-            NPC.knockBackResist = 0.5f;
+            NPC.lifeMax = 15;  
+            NPC.damage = 40; 
+            NPC.defense = 0;  
+            NPC.knockBackResist = 0.0f;
             NPC.width = 16;
             NPC.height = 16;
-            NPC.value = 0;
-            NPC.npcSlots = 0f;
+            NPC.value = Item.buyPrice(0, 0, 5, 0);
+            NPC.npcSlots = 2.0f;
 			NPC.noGravity = true;
             NPC.noTileCollide = true;
 			NPC.alpha = 0;
 			NPC.HitSound = SoundID.NPCHit19;
 			NPC.DeathSound = SoundID.NPCDeath1;
-            NPC.localAI[0] = 60;
+            NPC.localAI[0] = 50; //Essentially starts with 15 + 250 = 265, 30 + 500 = 530, 45 + 750 = 795 life, but then keeps growing...
 		}
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-			NPC.lifeMax = NPC.lifeMax * 3 / 4;
+            NPC.damage = 3 * NPC.damage / 4; //40, 60, 90
         }
 		public const int DefaultFrameX = 162;
 		public const int DefaultFrameY = 144;
@@ -504,7 +549,7 @@ namespace SOTS.NPCs.AbandonedVillage
                     Vector2 defPosition = new Vector2(fB.i * 16, fB.j * 16);
                     Rectangle glowOffset = fB.HasDetail ? new Rectangle(fB.FrameX, fB.FrameY + 90, 16, 16) : fB.Rect;
                     Vector2 toPlayer = Main.LocalPlayer.Center - defPosition - drawOrigin;
-                    spriteBatch.Draw(textureGlow, defPosition - screenPos + drawOrigin + toPlayer.SNormalize() * 2, glowOffset, Color.White, NPC.rotation, drawOrigin, NPC.scale * scale, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(textureGlow, defPosition - screenPos + drawOrigin + toPlayer.SNormalize() * 3, glowOffset, Color.White, NPC.rotation, drawOrigin, NPC.scale * scale, SpriteEffects.None, 0f);
                 }
             }
             spriteBatch.Draw(texture, drawPos, frame, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
@@ -536,42 +581,67 @@ namespace SOTS.NPCs.AbandonedVillage
 			if(RunOnce && Main.netMode != NetmodeID.MultiplayerClient)
             {
 				AddBlock(MaxRadius, MaxRadius);
-                TotalBlocks++;
-                CurrentBlocks++;
                 NPC.netUpdate = true;
                 RunOnce = false;
+            }
+            else
+            {
+                int difference = (int)NPC.localAI[0] - TotalBlocks;
+                int rate = Math.Clamp((int)((1 - MathF.Pow(difference / 50f, .25f)) * NPC.localAI[0]), 2, 300);
+                if (TotalBlocks < NPC.localAI[0] && NPC.ai[0] >= rate)
+                {
+                    NPC.ai[0] -= rate;
+                    bool success = GrowBlock();
+                    if(!success && validPoints.Count <= 0)
+                    {
+                        NPC.localAI[0]--;
+                        if(Points.Count > 0)
+                        {
+                            int pick1 = Main.rand.Next(Points.Count);
+                            int pick2 = Main.rand.Next(Points.Count);
+                            int pick3 = Main.rand.Next(Points.Count);
+                            int pick4 = Main.rand.Next(Points.Count);
+                            int pick5 = Main.rand.Next(Points.Count);
+                            validPoints.Add(Points[pick1]);
+                            if (pick2 != pick1)
+                                validPoints.Add(Points[pick2]);
+                            if (pick3 != pick2 && pick3 != pick1)
+                                validPoints.Add(Points[pick3]);
+                            if (pick4 != pick3 && pick4 != pick2 && pick4 != pick1)
+                                validPoints.Add(Points[pick4]);
+                            if (pick5 != pick4 && pick5 != pick3 && pick5 != pick2 && pick5 != pick1)
+                                validPoints.Add(Points[pick5]);
+                        }
+                        else
+                        {
+                            AddBlock(MaxRadius, MaxRadius);
+                        }
+                    }
+                }
+                if (TotalBlocks >= NPC.localAI[0] && NPC.localAI[0] < MaxSize)
+                    NPC.localAI[0]++;
             }
 			NPC.Center = pointPos.ToVector2() * 16 + new Vector2(8, 8);
             NPC.velocity *= 0.95f;
             NPC.ai[0]++;
-            if (NPC.ai[0] > 50)
-            {
-                NPC.ai[0] = 0;
-                if (NPC.localAI[0] < MaxSize)
-                    NPC.localAI[0]++;
-            }    
-			if(TotalBlocks < NPC.localAI[0])
-			{
-                if(GrowBlock())
-                {
-                    TotalBlocks++;
-                    CurrentBlocks++;
-                }
-            }
             foreach (FamishBlock fB in Block)
             {
                 if(fB != null)
                 {
                     if (!TileValid(fB.i, fB.j))
                     {
-                        if(KillBlock(fB.x, fB.y))
-                            CurrentBlocks--;
+                        KillBlock(fB.x, fB.y, true);
                     }
                 }
             }
 
             int life = (int)NPC.localAI[1] + CurrentBlocks * LifePerBlock;
-            NPC.lifeMax = life;
+            if(NPC.lifeMax < life)
+                NPC.lifeMax = life;
+            if(NPC.life > life)
+            {
+                NPC.life = life;
+            }
             NPC.life = Math.Min(NPC.life, NPC.lifeMax);
             NPC.TargetClosest(false);
             if(LastRecordedBlockCount != TotalBlocks)
@@ -579,13 +649,12 @@ namespace SOTS.NPCs.AbandonedVillage
                 NPC.life += LifePerBlock;
                 LastRecordedBlockCount = TotalBlocks;
             }
-            if(TotalBlocks > 0)
+            int howManyBlocksIShouldHaveBasedOnMyLife = (int)MathF.Ceiling((NPC.life - (int)NPC.localAI[1]) / (float)LifePerBlock);
+            if (TotalBlocks > 0)
             {
-                int howManyBlocksIShouldHaveBasedOnMyLife = (int)MathF.Ceiling((NPC.life - (int)NPC.localAI[1]) / (float)LifePerBlock);
                 if (howManyBlocksIShouldHaveBasedOnMyLife < CurrentBlocks && CurrentBlocks > 0)
                 {
-                    if(KillBlock())
-                        CurrentBlocks--;
+                    KillBlock();
                 }
             }
             return true;
@@ -600,8 +669,7 @@ namespace SOTS.NPCs.AbandonedVillage
             {
                 while(CurrentBlocks > 0)
                 {
-                    if (KillBlock())
-                        CurrentBlocks--;
+                    KillBlock();
                 }
             }
             if (Main.netMode == NetmodeID.Server)
