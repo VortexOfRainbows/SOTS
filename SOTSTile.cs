@@ -22,6 +22,7 @@ using SOTS.Items.Conduit;
 using SOTS.Items.Pyramid.PyramidWalls;
 using Terraria.DataStructures;
 using SOTS.Items.AbandonedVillage;
+using SOTS.NPCs.AbandonedVillage;
 
 namespace SOTS
 {
@@ -290,7 +291,7 @@ namespace SOTS
         }
         public override bool CanExplode(int i, int j, int type)
         {
-            if(!IsValidTileAbove(i, j, type))
+            if (!IsValidTileAbove(i, j, type))
             {
                 return false;
             }
@@ -348,7 +349,8 @@ namespace SOTS
         }
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            base.KillTile(i, j, type, ref fail, ref effectOnly, ref noItem);
+            if (Famished.CheckForListeners(i, j, true)) //Don't break tiles that famished are on top of
+                fail = true;
         }
         public override bool PreDraw(int i, int j, int type, SpriteBatch spriteBatch)
         {

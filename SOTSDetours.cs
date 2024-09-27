@@ -11,6 +11,7 @@ using SOTS.Items.Celestial;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
 using SOTS.Items.Pyramid.PyramidWalls;
+using SOTS.NPCs.AbandonedVillage;
 using SOTS.NPCs.Town;
 using SOTS.Projectiles.Blades;
 using SOTS.Projectiles.Chaos;
@@ -119,6 +120,8 @@ namespace SOTS
 
 			//Prevent certain projectiles from cutting tiles when they aren't supposed to, but allow cutting tiles where they are supposed to
 			On_Projectile.CutTilesAt += On_Projectile_CutTilesAt;
+
+			On_Projectile.CanExplodeTile += On_Projectile_CanExplodeTile;
 
             if (!Main.dedServ)
 				ResizeTargets();
@@ -243,8 +246,10 @@ namespace SOTS
 		}
 		private static void Player_PickTile(On_Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
 		{
-			if (self != null)
-			{
+			if (self != null) //This code only runs on client
+            {
+				if (Famished.CheckForListeners(x, y, true)) //Don't break tiles that famished are on top of
+					return;
 				if (SOTSPlayer.ModPlayer(self).bonusPickaxePower > 0)
 					pickPower += SOTSPlayer.ModPlayer(self).bonusPickaxePower;
 				if (SOTSPlayer.ModPlayer(self).ConduitBelt)
@@ -269,9 +274,6 @@ namespace SOTS
 					if (DoNotMineNormally)
 						return;
 				}
-			}
-			if (self != null) //This code only runs on client
-			{
 				if (SOTSPlayer.ModPlayer(self).GoldenTrowel)
 				{
 					Tile tile = Framing.GetTileSafely(x, y);
@@ -1069,5 +1071,11 @@ namespace SOTS
                 orig(self, boxPosition, boxWidth, boxWidth);
             }
 		}
+		private static bool On_Projectile_CanExplodeTile(On_Projectile.orig_CanExplodeTile orig, Projectile self, int x, int y)
+		{
+			if (Famished.CheckForListeners(x, y, false))
+				return true; //Allow exploding the tile, since it will just result in breaking the famish anyways
+            return orig(self, x, y);
+        }
     }
 }

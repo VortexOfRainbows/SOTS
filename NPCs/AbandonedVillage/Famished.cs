@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using SOTS.Dusts;
-using SOTS.NPCs.Town;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +8,54 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
-using static System.Net.Mime.MediaTypeNames;
 using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
 	public class Famished : ModNPC
 	{
+		public static List<int> TileBreakListeners = new List<int>();
+        public static bool CheckForListeners(int x, int y, bool killListeners)
+        {
+            for (int i = TileBreakListeners.Count - 1; i >= 0; i--)
+            {
+                if (UpdateTileListener(TileBreakListeners[i], x, y, killListeners))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        private static bool UpdateTileListener(int ID, int i, int j, bool killListeners)
+        {
+            if(ID < 0)
+            {
+                TileBreakListeners.Remove(ID);
+            }
+            else
+            {
+                NPC npc = Main.npc[ID];
+                if(npc.active && npc.type == NPCType<Famished>() && npc.ModNPC is Famished fm)
+                {
+                    int x = i + MaxRadius - (int)npc.Center.X / 16;
+                    int y = j + MaxRadius - (int)npc.Center.Y / 16;
+                    if(!killListeners)
+                    {
+                        if (x <= 0 || y <= 0 || x >= MaxRadius * 2 || y >= MaxRadius * 2)
+                            return false;
+                        if (fm.Block[x, y] != null)
+                            return true;
+                    }
+                    else
+                        return fm.KillBlock(x, y, true);
+                }
+                else
+                {
+                    TileBreakListeners.Remove(ID);
+                }
+            }
+            return false;
+        }
         private Queue<FamishBlock> floodFillQueue = new Queue<FamishBlock>();
         public const int MaxRadius = 14;
         public int MaxSize => MaxRadius * MaxRadius * 4;
@@ -371,6 +410,8 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         public bool KillBlock(int x, int y, bool text = false)
         {
+            if (x <= 0 || y <= 0 || x >= MaxRadius * 2 || y >= MaxRadius * 2)
+                return false;
             if(Block[x, y] != null)
             {
                 bool hadPath = Block[x, y].HasPathToHost; //Store this variable so it can be used to check after the reference has been destroyed.
@@ -612,6 +653,10 @@ namespace SOTS.NPCs.AbandonedVillage
         public int QueueDamageHealingTimer = 0;
         public override bool PreAI()
         {
+            if(!TileBreakListeners.Contains(NPC.whoAmI))
+            {
+                TileBreakListeners.Add(NPC.whoAmI);
+            }
             int prevQueDamHeal = QueueDamageOrHealing;
             if (NPC.localAI[1] == 0)
                 NPC.localAI[1] = NPC.life;

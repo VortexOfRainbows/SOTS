@@ -11,10 +11,6 @@ namespace SOTS.Projectiles.Earth
 {    
     public class MinersPickaxe : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Miner's Pickaxe");
-		}
         public override void SetDefaults()
         {
             Projectile.width = 28;
@@ -71,10 +67,9 @@ namespace SOTS.Projectiles.Earth
         {
             return counter >= timeToLaunch;
         }
-        Vector2 ogVelo = Vector2.Zero;
         public const int itemUseTime = 16;
         public const float timeToLaunch = 40;
-        int counter = 0;
+        private int counter = 0;
         public override void AI()
 		{
             Player player = Main.player[Projectile.owner];
@@ -83,7 +78,7 @@ namespace SOTS.Projectiles.Earth
             if(counter < timeToLaunch)
             {
                 if(counter == 1)
-                    SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, -0.2f);
+                    SOTSUtils.PlaySound(SoundID.Item15, Projectile.Center, 0.8f, -0.2f);
                 if (Projectile.owner == Main.myPlayer)
                 {
                     Projectile.ai[0] = Main.MouseWorld.X;
@@ -148,7 +143,7 @@ namespace SOTS.Projectiles.Earth
                     Vector2 center = Projectile.Center;
                     int i = (int)center.X / 16 + k;
                     int j = (int)center.Y / 16 + h;
-                    if (SOTSWorldgenHelper.CanExplodeTile(i, j))
+                    if (Projectile.CanExplodeTile(i, j))
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             WorldGen.KillTile(i, j, false, false, false);

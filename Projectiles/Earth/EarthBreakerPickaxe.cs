@@ -146,7 +146,7 @@ namespace SOTS.Projectiles.Earth
                     Vector2 center = Projectile.Center;
                     int i = (int)center.X / 16 + k;
                     int j = (int)center.Y / 16 + h;
-                    if (SOTSWorldgenHelper.CanExplodeTile(i, j))
+                    if (Projectile.CanExplodeTile(i, j))
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                             WorldGen.KillTile(i, j, false, false, false);

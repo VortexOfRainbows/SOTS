@@ -21,16 +21,17 @@ using SOTS.Items.Chaos;
 using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Fragments;
 using Microsoft.Xna.Framework;
-using System.Collections.Generic;
 using SOTS.Items.Earth.Glowmoth;
 using Terraria.DataStructures;
 using SOTS.Items.Conduit;
 using Terraria.WorldBuilding;
+using System.Runtime.Versioning;
 
 namespace SOTS.WorldgenHelpers
 {
 	public class SOTSWorldgenHelper
 	{
+		[Obsolete]
 		public static bool CanExplodeTile(int i, int j)
 		{
 			bool canKillTile = true;
