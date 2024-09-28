@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
@@ -39,6 +40,10 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     int x = i + MaxRadius - (int)npc.Center.X / 16;
                     int y = j + MaxRadius - (int)npc.Center.Y / 16;
+                    if(x == MaxRadius && y == MaxRadius) //Any blocks in the center (where the heart is), are unbreakable.
+                    {
+                        killListeners = false;
+                    }
                     if(!killListeners)
                     {
                         if (x <= 0 || y <= 0 || x >= MaxRadius * 2 || y >= MaxRadius * 2)
@@ -401,6 +406,41 @@ namespace SOTS.NPCs.AbandonedVillage
             }
             return false;
         }
+        private bool GrowBlockDirect(int x, int y)
+        {
+            int i = pointPos.X + x - MaxRadius;
+            int j = pointPos.Y + y - MaxRadius;
+            bool spaceAvailableRight = Block[x + 1, y] == null && TileValid(i + 1, j);
+            bool spaceAvailableLeft = Block[x - 1, y] == null && TileValid(i - 1, j);
+            bool spaceAvailableUp = Block[x, y - 1] == null && TileValid(i, j - 1);
+            bool spaceAvailableDown = Block[x, y + 1] == null && TileValid(i, j + 1);
+            if ((!spaceAvailableRight && !spaceAvailableDown && !spaceAvailableLeft && !spaceAvailableUp) || Block[x, y] == null)
+            {
+                return false;
+            }
+            else
+            {
+                List<int> validDir = new List<int>();
+                if (spaceAvailableRight)
+                    validDir.Add(0);
+                if (spaceAvailableLeft)
+                    validDir.Add(1);
+                if (spaceAvailableUp)
+                    validDir.Add(2);
+                if (spaceAvailableDown)
+                    validDir.Add(3);
+                int choice = Main.rand.NextFromCollection(validDir);
+                if (choice == 0)
+                    return AddBlock(x + 1, y);
+                if (choice == 1)
+                    return AddBlock(x - 1, y);
+                if (choice == 2)
+                    return AddBlock(x, y - 1);
+                if (choice == 3)
+                    return AddBlock(x, y + 1);
+            }
+            return false;
+        }
         public bool KillBlock()
         {
             if (Points.Count <= 0)
@@ -708,8 +748,10 @@ namespace SOTS.NPCs.AbandonedVillage
                 if (TotalBlocks < NPC.localAI[0] && NPC.ai[0] >= rate)
                 {
                     NPC.ai[0] -= rate;
-                    bool success = GrowBlock();
-                    if(!success && validPoints.Count <= 0)
+                    bool success = GrowBlockDirect(MaxRadius, MaxRadius); //Try growing a block from the center first
+                    if (!success)
+                        success = GrowBlock(); //If you couldn't grow a block from the center, try elsewhere
+                    if (!success && validPoints.Count <= 0) //If we've run out of points to grow blocks from, try adding some new points to grow blocks from
                     {
                         NPC.localAI[0]--;
                         if(Points.Count > 0)
