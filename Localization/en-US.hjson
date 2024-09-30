@@ -5770,6 +5770,16 @@ Mods: {
 				DisplayName: Fortress Crasher
 				Tooltip: Throw a drilling spear that repeatedly hits enemies, can travel through walls, and ignores 10 defense
 			}
+
+			FamishedBlockCorruption: {
+				DisplayName: Ebonbody Block
+				Tooltip: "'Smells of disease and rot'"
+			}
+
+			FamishedBlockCrimson: {
+				DisplayName: Crimbody Block
+				Tooltip: "'Smells of blood and rot'"
+			}
 		}
 
 		ItemTooltip: {

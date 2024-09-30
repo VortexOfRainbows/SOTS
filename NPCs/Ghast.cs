@@ -7,7 +7,6 @@ using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using SOTS.WorldgenHelpers;
 using System;
-using System.ComponentModel;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -17,7 +16,8 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.NPCs
 {
 	public class Ghast : ModNPC
-	{	float ai1 = 0;
+	{	
+		private float ai1 = 0;
 		public override void SetDefaults()
 		{
 			NPC.aiStyle = 0;

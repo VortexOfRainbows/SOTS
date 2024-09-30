@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalTiles;
 using SOTS.Dusts;
 using SOTS.Items.Earth;
@@ -9,6 +10,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.Items.AbandonedVillage.CorruptionSoot;
 using static SOTS.Items.AbandonedVillage.CrimsonSoot;
+using static SOTS.Items.AbandonedVillage.FamishedBlockCorruption;
+using static SOTS.Items.AbandonedVillage.FamishedBlockCrimson;
 
 namespace SOTS.Items.AbandonedVillage
 {
@@ -300,6 +303,110 @@ namespace SOTS.Items.AbandonedVillage
             {
                 SOTS.MergeWithFrame(i, j, Type, ModContent.TileType<SootBlockTile>(), resetFrame: resetFrame);
                 return false;
+            }
+        }
+    }
+    public class FamishedBlockCrimson : BasicBlock<FamishedTileCrimson>
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.rare = ItemRarityID.Blue;
+        }
+        public class FamishedTileCrimson : BasicTile
+        {
+            public override string Texture => "SOTS/NPCs/AbandonedVillage/TheFamishedCrimsonVersion";
+            public override void SafeSetStaticDefaults()
+            {
+                //TileID.Sets.AddCrimsonTile(Type, 1);
+                Main.tileBrick[Type] = true;
+                DustType = ModContent.DustType<FamishedDustCrimson>();
+                HitSound = SoundID.NPCHit1;
+                MineResist = 0.1f;
+                AddMapEntry(new Color(228, 131, 134));
+            }
+            private static bool FramingPreventRepitions = false;
+            public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+            {
+                if (!FramingPreventRepitions)
+                {
+                    FramingPreventRepitions = true;
+                    try
+                    {
+                        WorldGen.TileFrame(i, j, resetFrame, noBreak);
+                        if (Main.tile[i, j].TileFrameY < 90 && WorldGen.genRand.NextBool(2))
+                        {
+                            Main.tile[i, j].TileFrameY += 90;
+                        }
+                        FramingPreventRepitions = false;
+                        return false;
+                    }
+                    catch
+                    {
+
+                    }
+                    FramingPreventRepitions = false;
+                }
+                return true;
+            }
+            public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+            {
+                if (Main.tile[i, j].TileFrameY >= 90)
+                {
+                    Vector2 lookToPlayer = Main.LocalPlayer.Center - new Vector2(i * 16 + 8, j * 16 + 8);
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, (Texture2D)ModContent.Request<Texture2D>(Texture + "Glow"), Color.White, lookToPlayer.SNormalize() * 2f, false);
+                }
+            }
+        }
+    }
+    public class FamishedBlockCorruption : BasicBlock<FamishedTileCorruption>
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.rare = ItemRarityID.Blue;
+        }
+        public class FamishedTileCorruption : BasicTile
+        {
+            public override string Texture => "SOTS/NPCs/AbandonedVillage/TheFamishedCorruptionVersion";
+            public override void SafeSetStaticDefaults()
+            {
+                //TileID.Sets.AddCorruptionTile(Type, 1);
+                Main.tileBrick[Type] = true;
+                DustType = ModContent.DustType<FamishedDustCorruption>();
+                HitSound = SoundID.NPCHit1;
+                MineResist = 0.1f;
+                AddMapEntry(new Color(169, 139, 126));
+            }
+            private static bool FramingPreventRepitions = false;
+            public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+            {
+                if (!FramingPreventRepitions)
+                {
+                    FramingPreventRepitions = true;
+                    try
+                    {
+                        WorldGen.TileFrame(i, j, resetFrame, noBreak);
+                        if (Main.tile[i, j].TileFrameY < 90 && WorldGen.genRand.NextBool(2))
+                        {
+                            Main.tile[i, j].TileFrameY += 90;
+                        }
+                        FramingPreventRepitions = false;
+                        return false;
+                    }
+                    catch
+                    {
+
+                    }
+                    FramingPreventRepitions = false;
+                }
+                return true;
+            }
+            public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+            {
+                if (Main.tile[i, j].TileFrameY >= 90)
+                {
+                    Vector2 lookToPlayer = Main.LocalPlayer.Center - new Vector2(i * 16 + 8, j * 16 + 8);
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, (Texture2D)ModContent.Request<Texture2D>(Texture + "Glow"), Color.White, lookToPlayer.SNormalize() * 2f, false);
+                }
             }
         }
     }

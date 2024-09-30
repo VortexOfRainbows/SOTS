@@ -1,8 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Fragments;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -15,7 +18,15 @@ namespace SOTS.NPCs.AbandonedVillage
 {
 	public class Famished : ModNPC
 	{
-		public static List<int> TileBreakListeners = new List<int>();
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+
+        }
+        public static List<int> TileBreakListeners = new List<int>();
         public static bool CheckForListeners(int x, int y, bool killListeners)
         {
             for (int i = TileBreakListeners.Count - 1; i >= 0; i--)
@@ -455,7 +466,7 @@ namespace SOTS.NPCs.AbandonedVillage
             if(Block[x, y] != null)
             {
                 bool hadPath = Block[x, y].HasPathToHost; //Store this variable so it can be used to check after the reference has been destroyed.
-                GenerateDust(Block[x, y].i, Block[x, y].j, -1, 10); //First generate the dust
+                GenerateDust(Block[x, y].i, Block[x, y].j, -1, 10, true); //First generate the dust
                 CurrentBlocks--; //We have killed a block, so decrease block count
                 Block[x, y] = null; //Destroy the reference, so tile framing can happen appropriately.
                 FrameTileSquare(x, y); //Frame the tiles
@@ -483,7 +494,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 if (Block[x, y] == null)
                 {
                     Block[x, y] = block;
-                    GenerateDust(block.i, block.j, 1, 10);
+                    GenerateDust(block.i, block.j, 1, 10, true);
                     validPoints.Add(new Point(x, y));
                     Points.Add(new Point(x, y));
                     FrameTileSquare(x, y);
@@ -495,18 +506,21 @@ namespace SOTS.NPCs.AbandonedVillage
             }
             return false;
         }
-        public void GenerateDust(int i, int j, int dir = 1, int num = 10)
+        public void GenerateDust(int i, int j, int dir = 1, int num = 10, bool sound = true)
         {
             if (Main.netMode == NetmodeID.Server)
                 return;
             Vector2 center = new Vector2(i * 16 + 8, j * 16 + 8);
-            if (dir == 1)
+            if(sound)
             {
-                SOTSUtils.PlaySound(SoundID.NPCHit1, center, 1.5f, -0.6f);
-            }
-            if(dir == -1)
-            {
-                SOTSUtils.PlaySound(SoundID.NPCDeath1, center, 1.2f, 0.3f);
+                if (dir == 1)
+                {
+                    SOTSUtils.PlaySound(SoundID.NPCHit1, center, 1.5f, -0.6f);
+                }
+                if (dir == -1)
+                {
+                    SOTSUtils.PlaySound(SoundID.NPCDeath1, center, 1.2f, 0.3f);
+                }
             }
             for(int a = 0; a < num; a++)
             {
@@ -563,7 +577,7 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.noTileCollide = true;
 			NPC.alpha = 0;
 			NPC.HitSound = SoundID.NPCHit19;
-			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.DeathSound = SoundID.NPCDeath23;
             NPC.localAI[0] = 50; //Essentially starts with 15 + 250 = 265, 30 + 500 = 530, 45 + 750 = 795 life, but then keeps growing...
 		}
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -691,6 +705,7 @@ namespace SOTS.NPCs.AbandonedVillage
         private int LastRecordedBlockCount = 0;
         public int QueueDamageOrHealing = 0;
         public int QueueDamageHealingTimer = 0;
+        public Vector2 groundedPosition;
         public override bool PreAI()
         {
             if(!TileBreakListeners.Contains(NPC.whoAmI))
@@ -710,6 +725,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 if (TileValid(i, j))
                 {
                     foundSeedableLocation = true;
+                    groundedPosition = pointPos.ToVector2() * 16 + new Vector2(8, 8);
                     NPC.velocity *= 0f;
                 }
                 else
@@ -780,7 +796,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 if (TotalBlocks >= NPC.localAI[0] && NPC.localAI[0] < MaxSize)
                     NPC.localAI[0]++;
             }
-			NPC.Center = pointPos.ToVector2() * 16 + new Vector2(8, 8);
+			NPC.Center = groundedPosition;
             NPC.velocity *= 0.95f;
             NPC.ai[0]++;
 
@@ -836,10 +852,12 @@ namespace SOTS.NPCs.AbandonedVillage
 		{
             if(NPC.life <= 0)
             {
-                while(CurrentBlocks > 0)
-                {
-                    KillBlock();
-                }
+                while (KillBlock()) ;
+                GenerateDust(pointPos.X, pointPos.Y, -2, 45, false);
+            }
+            else
+            {
+                GenerateDust(pointPos.X, pointPos.Y, -1, (int)(hit.Damage / 8f + 0.99f), false);
             }
             if (Main.netMode == NetmodeID.Server)
 				return;
@@ -871,6 +889,14 @@ namespace SOTS.NPCs.AbandonedVillage
                 }
             }
             return false;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            LeadingConditionRule worldCrimson = new LeadingConditionRule(new Conditions.IsCrimson());
+            npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEvil>(), 1, 1, 1));
+            worldCrimson.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCrimson>(), 1, 20, 40));
+            worldCrimson.OnFailedConditions(ItemDropRule.Common(ItemType<FamishedBlockCorruption>(), 1, 20, 40));
+            npcLoot.Add(worldCrimson);
         }
     }
 }

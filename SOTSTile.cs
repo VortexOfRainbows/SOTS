@@ -397,6 +397,10 @@ namespace SOTS
                 TileFrameX = 0;
                 TileFrameY = 0;
             }
+            if(type == TileType<FamishedBlockCorruption.FamishedTileCorruption>() || type == TileType<FamishedBlockCrimson.FamishedTileCrimson>())
+            {
+                TileFrameY += (i + j) % 2 == 1 ? 90 : 0;
+            }
             int width = 16;
             int height = 16;
             Vector2 location = new Vector2(i * 16, j * 16);

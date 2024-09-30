@@ -1,9 +1,9 @@
 using SOTS.NPCs.Inferno;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ModLoader;
 using Terraria.Localization;
 using SOTS.NPCs.Tide;
+using SOTS.NPCs.AbandonedVillage;
 
 namespace SOTS.Common.ItemDropConditions
 {
