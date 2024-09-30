@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
@@ -20,11 +21,45 @@ namespace SOTS.NPCs.AbandonedVillage
 	{
         public override void SendExtraAI(BinaryWriter writer)
         {
-
+            writer.WriteVector2(groundedPosition);
+            writer.Write(CurrentBlocks);
+            writer.Write(TotalBlocks);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
+            groundedPosition = reader.ReadVector2();
+            CurrentBlocks = reader.ReadInt32();
+            TotalBlocks = reader.ReadInt32();
+        }
+        public void ReceiveBlockData(BinaryReader reader)
+        {
+            int fromClient = reader.ReadInt32();
+            int x = reader.ReadInt32();
+            int y = reader.ReadInt32();
+            int change = reader.ReadInt32();
+            
+            if (change == 0)
+                KillBlock(x, y, true, false); //Dont send packets since we just received the packets we need
+            if (change == 1)
+                KillBlock(x, y, false, false);
+            if (change == 2)
+                AddBlock(x, y, false);
 
+            if (Main.netMode == NetmodeID.Server) //If the server receives the packet, it should send it to everyone except the client the server received it from!
+            {
+                SendBlockData(x, y, change, Main.myPlayer, fromClient);
+            }
+        }
+        public void SendBlockData(int x, int y, int change, int fromClient, int ignoreClient = -1)
+        {
+            var packet = Mod.GetPacket();
+            packet.Write((byte)SOTSMessageType.SyncFamineBlock);
+            packet.Write(NPC.whoAmI);
+            packet.Write(fromClient);
+            packet.Write(x);
+            packet.Write(y);
+            packet.Write(change);
+            packet.Send(-1, ignoreClient);
         }
         public static List<int> TileBreakListeners = new List<int>();
         public static bool CheckForListeners(int x, int y, bool killListeners)
@@ -63,7 +98,7 @@ namespace SOTS.NPCs.AbandonedVillage
                             return true;
                     }
                     else
-                        return fm.KillBlock(x, y, true);
+                        return fm.KillBlock(x, y, true, true);
                 }
                 else
                 {
@@ -383,37 +418,10 @@ namespace SOTS.NPCs.AbandonedVillage
             Point p = validPoints[rand];
             int x = p.X;
             int y = p.Y;
-            int i = pointPos.X + x - MaxRadius;
-            int j = pointPos.Y + y - MaxRadius;
-            bool spaceAvailableRight = Block[x + 1, y] == null && TileValid(i + 1, j);
-            bool spaceAvailableLeft = Block[x - 1, y] == null && TileValid(i - 1, j);
-            bool spaceAvailableUp = Block[x, y - 1] == null && TileValid(i, j - 1);
-            bool spaceAvailableDown = Block[x, y + 1] == null && TileValid(i, j + 1);
-            if (!spaceAvailableRight && !spaceAvailableDown && !spaceAvailableLeft && !spaceAvailableUp)
+            if (!GrowBlockDirect(x, y))
             {
                 validPoints.Remove(p);
                 return GrowBlock();
-            }
-            else
-            {
-                List<int> validDir = new List<int>();
-                if (spaceAvailableRight)
-                    validDir.Add(0);
-                if (spaceAvailableLeft)
-                    validDir.Add(1);
-                if (spaceAvailableUp)
-                    validDir.Add(2);
-                if (spaceAvailableDown)
-                    validDir.Add(3);
-                int choice = Main.rand.NextFromCollection(validDir);
-                if(choice == 0)
-                    return AddBlock(x + 1, y);
-                if (choice == 1)
-                    return AddBlock(x - 1, y);
-                if (choice == 2)
-                    return AddBlock(x, y - 1);
-                if (choice == 3)
-                    return AddBlock(x, y + 1);
             }
             return false;
         }
@@ -442,24 +450,24 @@ namespace SOTS.NPCs.AbandonedVillage
                     validDir.Add(3);
                 int choice = Main.rand.NextFromCollection(validDir);
                 if (choice == 0)
-                    return AddBlock(x + 1, y);
+                    return AddBlock(x + 1, y, true);
                 if (choice == 1)
-                    return AddBlock(x - 1, y);
+                    return AddBlock(x - 1, y, true);
                 if (choice == 2)
-                    return AddBlock(x, y - 1);
+                    return AddBlock(x, y - 1, true);
                 if (choice == 3)
-                    return AddBlock(x, y + 1);
+                    return AddBlock(x, y + 1, true);
             }
             return false;
         }
-        public bool KillBlock()
+        public bool KillBlock(bool sendPacket)
         {
             if (Points.Count <= 0)
                 return false;
             Point toKill = Points.Last();
-            return KillBlock(toKill.X, toKill.Y, false);
+            return KillBlock(toKill.X, toKill.Y, false, sendPacket);
         }
-        public bool KillBlock(int x, int y, bool text = false)
+        public bool KillBlock(int x, int y, bool text, bool sendPacket)
         {
             if (x <= 0 || y <= 0 || x >= MaxRadius * 2 || y >= MaxRadius * 2)
                 return false;
@@ -480,11 +488,15 @@ namespace SOTS.NPCs.AbandonedVillage
 
                 Points.Remove(new Point(x, y));
                 validPoints.Remove(new Point(x, y));
+                if (sendPacket && Main.netMode != NetmodeID.SinglePlayer)
+                {
+                    SendBlockData(x, y, text ? 0 : 1, Main.myPlayer, -1);
+                }
                 return true;
             }
             return false;
         }
-        public bool AddBlock(int x, int y)
+        public bool AddBlock(int x, int y, bool sendPacket)
 		{
             //int i = pointPos.X - 10;
             //int j = pointPos.Y - 10;
@@ -501,6 +513,10 @@ namespace SOTS.NPCs.AbandonedVillage
                     TotalBlocks++;
                     CurrentBlocks++;
                     QueueDamageOrHealing += LifePerBlock;
+                    if(sendPacket && Main.netMode != NetmodeID.SinglePlayer)
+                    {
+                        SendBlockData(x, y, 2, Main.myPlayer, -1);
+                    }
                     return true;
                 }
             }
@@ -745,24 +761,28 @@ namespace SOTS.NPCs.AbandonedVillage
                         int chance = Math.Max(20 - (int)MathF.Sqrt(x * x + y * y), 3);
                         dieFromBeingDisconnected = Main.rand.NextBool(chance);
                     }
-                    if (!TileValid(fB.i, fB.j) || dieFromBeingDisconnected)
+                    if(Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        KillBlock(fB.x, fB.y, true);
+                        if (!TileValid(fB.i, fB.j) || dieFromBeingDisconnected)
+                        {
+                            KillBlock(fB.x, fB.y, true, true);
+                        }
                     }
                 }
             }
             if (RunOnce && Main.netMode != NetmodeID.MultiplayerClient)
             {
-				AddBlock(MaxRadius, MaxRadius);
+				AddBlock(MaxRadius, MaxRadius, true);
                 NPC.netUpdate = true;
                 RunOnce = false;
             }
-            else if(!anyDisconnected)
+            else if(!anyDisconnected && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int difference = (int)NPC.localAI[0] - TotalBlocks;
                 int rate = Math.Clamp((int)((1 - MathF.Pow(difference / 50f, .25f)) * NPC.localAI[0]), 2, 300);
                 if (TotalBlocks < NPC.localAI[0] && NPC.ai[0] >= rate)
                 {
+                    NPC.netUpdate = true;
                     NPC.ai[0] -= rate;
                     bool success = GrowBlockDirect(MaxRadius, MaxRadius); //Try growing a block from the center first
                     if (!success)
@@ -789,7 +809,7 @@ namespace SOTS.NPCs.AbandonedVillage
                         }
                         else
                         {
-                            AddBlock(MaxRadius, MaxRadius);
+                            AddBlock(MaxRadius, MaxRadius, true);
                         }
                     }
                 }
@@ -815,11 +835,11 @@ namespace SOTS.NPCs.AbandonedVillage
                 LastRecordedBlockCount = TotalBlocks;
             }
             int howManyBlocksIShouldHaveBasedOnMyLife = (int)MathF.Ceiling((NPC.life - (int)NPC.localAI[1]) / (float)LifePerBlock);
-            if (TotalBlocks > 0)
+            if (TotalBlocks > 0 && Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (howManyBlocksIShouldHaveBasedOnMyLife < CurrentBlocks && CurrentBlocks > 0)
                 {
-                    KillBlock();
+                    KillBlock(true);
                 }
             }
             if (QueueDamageOrHealing == 0 || prevQueDamHeal != QueueDamageOrHealing)
@@ -852,7 +872,7 @@ namespace SOTS.NPCs.AbandonedVillage
 		{
             if(NPC.life <= 0)
             {
-                while (KillBlock()) ;
+                while (KillBlock(false)) ;
                 GenerateDust(pointPos.X, pointPos.Y, -2, 45, false);
             }
             else

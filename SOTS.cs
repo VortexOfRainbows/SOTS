@@ -246,12 +246,14 @@ namespace SOTS
 			SyncTesseractData,
 			SyncConduitPlayer,
 			SyncConduitPlayerAll,
-            SyncGlobalNPC2
+            SyncGlobalNPC2,
+			SyncFamineBlock
         }
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
 			int msgType = reader.ReadByte();
-			if (msgType == (int)SOTSMessageType.SyncTileLocations || msgType == (int)SOTSMessageType.RequestTileLocations)
+            //Main.NewText(msgType);
+            if (msgType == (int)SOTSMessageType.SyncTileLocations || msgType == (int)SOTSMessageType.RequestTileLocations)
             {
 				Common.Systems.ImportantTilesWorld.HandlePacket(reader, whoAmI, msgType);
 				return;
@@ -593,6 +595,15 @@ namespace SOTS
                     packet.Send(-1, playernumber);
                 }
             }
+			if(msgType == (int)SOTSMessageType.SyncFamineBlock)
+			{
+				int NPCID = reader.ReadInt32();
+				NPC npc = Main.npc[NPCID];
+				if(npc.ModNPC is NPCs.AbandonedVillage.Famished fm)
+				{
+					fm.ReceiveBlockData(reader);
+				}
+			}
         }
 		public static void SendTesseractDataPacket(int playerNumber, int tesseractID)
         {

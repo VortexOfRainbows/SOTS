@@ -94,12 +94,12 @@ Daily Log:
 	1. Animation when damaging the player (like a spike protrudes out temporarily). potentially spike surround the outer shell.
 	2. Polish, Banner.
 	3. Special screenshot for the bestiary including both evil variants since they are technically the same enemy.
-	4. SERVER SYNCING (THIS WILL BE NIGHTMARE)
 2. Famished: Has dusts and sounds. finished FLOODFILL. 
 	1. Added tile break listeners... essentially, the famished will now take damage from tools before the blocks beneath them do. Includes explosives and other tools
 	2. Heart block cannot be broken. Grows back from the heart more often.
 	3. Famished now is harder to move from the seed position.
 	4. Placeable blocks (Crimbody and Ebonbody)
+	5. Idk how but I server synced it wtf. (works in Multiplayer)
 
 9/21/24 to 9/25/24
 1. Added Dylan's cool walls (sparkle emoji) and modified wall generation appropriately
