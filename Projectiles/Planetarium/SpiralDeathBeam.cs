@@ -12,14 +12,13 @@ namespace SOTS.Projectiles.Planetarium
 	{
 		public override void SetStaticDefaults() 
 		{
-			// DisplayName.SetDefault("Spiral Death Beam");
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2000; //1600 + 400 = 125 blocks
 		}
 		public override void SetDefaults() 
 		{
 			Projectile.width = 16;
 			Projectile.height = 20;
 			Projectile.timeLeft = 100;
-			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.penetrate = -1;
 			Projectile.hostile = true;
 			Projectile.friendly = false;

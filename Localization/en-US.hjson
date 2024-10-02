@@ -931,8 +931,8 @@ Mods: {
 				Tooltip:
 					'''
 					Increases void received from food by 25%
-					Consuming potions multiple times will increase buff duration instead of resetting it
-					Debuff durations are drained faster, increasing the duration of all active buffs
+					Consuming potions multiple times will increase buff duration instead of resetting it, up to double the duration
+					Debuff durations are drained faster, prolonging the duration of all active buffs
 					'''
 			}
 

@@ -9,8 +9,6 @@ using SOTS.Items.Planetarium.FromChests;
 using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Planetarium;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,7 +18,7 @@ namespace SOTS.NPCs.Boss.Advisor
 {	[AutoloadBossHead]
 	public class TheAdvisorHead : ModNPC
 	{
-		int despawn = 0;
+		private int despawn = 0;
 		private float attackPhase1 {
 			get => NPC.ai[0];
 			set => NPC.ai[0] = value;
@@ -100,14 +98,16 @@ namespace SOTS.NPCs.Boss.Advisor
 		}
 		public override bool CheckActive()
 		{
-			return !dormant;
+			Player player = Main.player[NPC.target];
+			bool canDespawn = despawn > 0 || player.Distance(NPC.Center) > 3200;
+			return !dormant && canDespawn;
 		}
 		public const int NormalModeHP = 12500;
 		public const int NormalModeDamage = 54;
 		public const float ExpertLifeScale = 0.64002f;
 		public override void SetDefaults()
         {
-            NPC.aiStyle =0;
+            NPC.aiStyle = 0;
             NPC.lifeMax = NormalModeHP;
             NPC.damage = 54;
             NPC.defense = 24;

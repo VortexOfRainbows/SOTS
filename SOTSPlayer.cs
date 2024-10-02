@@ -1928,7 +1928,7 @@ namespace SOTS
 			}
 			bool inverseAmberRingInRange = InverseAmberRing && Player.statLife > Player.statLifeMax2 * 0.9f;
 
-            if (DrainDebuffs)
+            if (DrainDebuffs && !inverseAmberRingInRange)
 			{
 				int totalDrainedDebuffs = 0;
 				for (int i = 0; i < Player.buffTime.Length; i++)
@@ -1943,11 +1943,9 @@ namespace SOTS
 						}
 					}
 				}
-				int drainAmt = 3;
-				if (inverseAmberRingInRange)
-					drainAmt = 2;
+				int drainAmt = 1;
 				if (totalDrainedDebuffs >= 1)
-					IncreaseBuffDurations(Player, totalDrainedDebuffs * drainAmt, 0f, totalDrainedDebuffs * drainAmt, true);
+					IncreaseBuffDurations(Player, drainAmt, 0f, drainAmt, true);
 			}
 			if(inverseAmberRingInRange)
 			{

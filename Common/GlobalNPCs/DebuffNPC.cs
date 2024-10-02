@@ -1301,7 +1301,7 @@ namespace SOTS.Common.GlobalNPCs
                             for (int j = 0; j < rand; j++)
                                 Item.NewItem(npc.GetSource_Death("SOTS:KilledByBaguette"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemType<BaguetteCrumb>(), 1);
                         }
-                        if (sPlayer.RubyRing && heartCount < 40)
+                        if (sPlayer.RubyRing && heartCount < 40 && !npc.SpawnedFromStatue)
                         {
                             if(lastHitWasCrit || Main.rand.NextBool(2))
                                 Item.NewItem(npc.GetSource_Death("SOTS:KilledWithVulture"), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ItemID.Heart, 1);

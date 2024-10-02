@@ -1,11 +1,7 @@
-using System;
 using System.IO;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Dusts;
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,12 +9,11 @@ namespace SOTS.Projectiles.Planetarium
 {    
     public class AdvisorPet : ModProjectile
     {
-        Vector2[] hookPos = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
-		Vector2[] hookPos2 = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
+        private Vector2[] hookPos = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
+		private Vector2[] hookPos2 = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
 		public float glow = 14f;
         public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Advisor Pet");
 			Main.projFrames[Projectile.type] = 1;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.LightPet[Projectile.type] = true;
@@ -141,129 +136,133 @@ namespace SOTS.Projectiles.Planetarium
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
-		{
-			for (int j = 0; j < 4;)
-			{
-				float scale = Projectile.scale * 0.85f;
-				int ai2 = 0;
-				if (j > 1)
-					ai2 += 180;
-				Vector2 toPos = Projectile.Center + hookPos[j];
-				Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Planetarium/AdvisorPetVine");
-				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Planetarium/AdvisorPetVineGlow");
-				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-				Vector2 projectilePos = new Vector2(Projectile.Center.X + (-24 + 16 * j) * 1f * 0.25f, Projectile.position.Y + Projectile.height);
-				Vector2 distanceToOwner = projectilePos - toPos;
-				Vector2 centerOfCircle = toPos + distanceToOwner / 2;
-				float startingRadians = distanceToOwner.ToRotation();
-				float radius = distanceToOwner.Length() / 3;
-				float distance = distanceToOwner.Length();
-				float minDist = 66f;
-				float midPointDist = minDist - distance;
-				if (midPointDist < 0) midPointDist = 0;
-				midPointDist /= 1.75f;
-				Vector2 point1 = centerOfCircle + new Vector2(0, midPointDist).RotatedBy(startingRadians + MathHelper.ToRadians(ai2));
-				Vector2 point2 = centerOfCircle + new Vector2(0, midPointDist).RotatedBy(startingRadians + MathHelper.ToRadians(180 + ai2));
-
-				Vector2 pointprojectileTo1 = projectilePos - point1;
-				pointprojectileTo1 = pointprojectileTo1.SafeNormalize(new Vector2(1, 0));
-				pointprojectileTo1 *= radius;
-				point1 = projectilePos - pointprojectileTo1;
-				Vector2 pointEndTo2 = point2 - toPos;
-				pointEndTo2 = pointEndTo2.SafeNormalize(new Vector2(1, 0));
-				pointEndTo2 *= radius;
-				point2 = toPos + pointEndTo2;
-				Vector2 point1To2 = point1 - point2;
-				float dynamLength = 0.2f;
-				Color color = new Color(100, 100, 100, 0);
-				int totalSeg = 12;
-				int currentSeg = 0;
-				int currentSegMult = 0;
-				int max = 4;
-				for (int i = 0; i < max; i++)
-				{
-					Vector2 dist = -pointprojectileTo1 / (float)(max);
-					Vector2 pos = projectilePos + dist * i;
-					Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
-					Vector2 drawPos = pos - Main.screenPosition;
-					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), pointprojectileTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
-					for (int k = 0; k < glow / 2; k++)
-					{
-						float x = Main.rand.Next(-10, 11) * 0.1f;
-						float y = Main.rand.Next(-10, 11) * 0.1f;
-						Main.spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, pointprojectileTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
-					}
-					currentSeg++;
-					currentSegMult++;
-				}
-				max = 4;
-				for (int i = 0; i < max; i++)
-				{
-					Vector2 bobbing = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(180f / max * i)); //creates length of circle
-					bobbing.Y *= (midPointDist / 40f);
-					Vector2 circularLocation = new Vector2(0, bobbing.Y).RotatedBy(point1To2.ToRotation() + MathHelper.ToRadians(ai2)); //applies rotation
-					Vector2 dist = -point1To2 / (float)(max * 2);
-					Vector2 pos = point1 + dist * i;
-					Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
-					Vector2 drawPos = pos + circularLocation - Main.screenPosition;
-					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
-					for (int k = 0; k < glow / 2; k++)
-					{
-						float x = Main.rand.Next(-10, 11) * 0.1f;
-						float y = Main.rand.Next(-10, 11) * 0.1f;
-						Main.spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
-					}
-					currentSeg++;
-					currentSegMult++;
-				}
-				for (int i = 0; i < max; i++)
-				{
-					Vector2 bobbing = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(180f / max * i));
-					bobbing.Y *= (midPointDist / 40f);
-					Vector2 circularLocation = new Vector2(0, bobbing.Y).RotatedBy(point1To2.ToRotation() + MathHelper.ToRadians(ai2)); //applies rotation
-					Vector2 dist = -point1To2 / (float)(max * 2);
-					Vector2 pos = centerOfCircle + dist * i;
-					Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
-					Vector2 drawPos = pos + circularLocation - Main.screenPosition;
-					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
-					for (int k = 0; k < glow / 2; k++)
-					{
-						float x = Main.rand.Next(-10, 11) * 0.1f;
-						float y = Main.rand.Next(-10, 11) * 0.1f;
-						Main.spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
-					}
-					currentSeg++;
-					currentSegMult--;
-				}
-				max = 4;
-				for (int i = 0; i < max; i++)
-				{
-					Vector2 dist = -pointEndTo2 / (float)(max);
-					Vector2 pos = point2 + dist * i;
-					Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
-					Vector2 drawPos = pos - Main.screenPosition;
-					Main.spriteBatch.Draw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
-					for (int k = 0; k < glow / 2; k++)
-					{
-						float x = Main.rand.Next(-10, 11) * 0.1f;
-						float y = Main.rand.Next(-10, 11) * 0.1f;
-						Main.spriteBatch.Draw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
-					}
-					currentSeg++;
-					currentSegMult--;
-				}
-				if (j == 0)
-					j = 3;
-				else if (j == 3)
-					j = 1;
-				else if (j == 1)
-					j = 2;
-				else if (j == 2)
-					j = 4;
-			}
-			DrawGlow();
-			return true;
+        {
+            DrawArms(lightColor);
+            return true;
 		}
+		public void DrawArms(Color lightColor)
+        {
+            for (int j = 0; j < 4;)
+            {
+                float scale = Projectile.scale * 0.85f;
+                int ai2 = 0;
+                if (j > 1)
+                    ai2 += 180;
+                Vector2 toPos = Projectile.Center + hookPos[j];
+                Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Planetarium/AdvisorPetVine");
+                Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Planetarium/AdvisorPetVineGlow");
+                Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+                Vector2 projectilePos = new Vector2(Projectile.Center.X + (-24 + 16 * j) * 1f * 0.25f, Projectile.position.Y + Projectile.height);
+                Vector2 distanceToOwner = projectilePos - toPos;
+                Vector2 centerOfCircle = toPos + distanceToOwner / 2;
+                float startingRadians = distanceToOwner.ToRotation();
+                float radius = distanceToOwner.Length() / 3;
+                float distance = distanceToOwner.Length();
+                float minDist = 66f;
+                float midPointDist = minDist - distance;
+                if (midPointDist < 0) midPointDist = 0;
+                midPointDist /= 1.75f;
+                Vector2 point1 = centerOfCircle + new Vector2(0, midPointDist).RotatedBy(startingRadians + MathHelper.ToRadians(ai2));
+                Vector2 point2 = centerOfCircle + new Vector2(0, midPointDist).RotatedBy(startingRadians + MathHelper.ToRadians(180 + ai2));
+
+                Vector2 pointprojectileTo1 = projectilePos - point1;
+                pointprojectileTo1 = pointprojectileTo1.SafeNormalize(new Vector2(1, 0));
+                pointprojectileTo1 *= radius;
+                point1 = projectilePos - pointprojectileTo1;
+                Vector2 pointEndTo2 = point2 - toPos;
+                pointEndTo2 = pointEndTo2.SafeNormalize(new Vector2(1, 0));
+                pointEndTo2 *= radius;
+                point2 = toPos + pointEndTo2;
+                Vector2 point1To2 = point1 - point2;
+                float dynamLength = 0.2f;
+                Color color = new Color(100, 100, 100, 0);
+                int totalSeg = 12;
+                int currentSeg = 0;
+                int currentSegMult = 0;
+                int max = 4;
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 dist = -pointprojectileTo1 / (float)(max);
+                    Vector2 pos = projectilePos + dist * i;
+                    Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
+                    Vector2 drawPos = pos - Main.screenPosition;
+                    Main.EntitySpriteDraw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), pointprojectileTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+                    for (int k = 0; k < glow / 2; k++)
+                    {
+                        float x = Main.rand.Next(-10, 11) * 0.1f;
+                        float y = Main.rand.Next(-10, 11) * 0.1f;
+                        Main.EntitySpriteDraw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, pointprojectileTo1.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+                    }
+                    currentSeg++;
+                    currentSegMult++;
+                }
+                max = 4;
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 bobbing = new Vector2(12, 0).RotatedBy(MathHelper.ToRadians(180f / max * i)); //creates length of circle
+                    bobbing.Y *= (midPointDist / 40f);
+                    Vector2 circularLocation = new Vector2(0, bobbing.Y).RotatedBy(point1To2.ToRotation() + MathHelper.ToRadians(ai2)); //applies rotation
+                    Vector2 dist = -point1To2 / (float)(max * 2);
+                    Vector2 pos = point1 + dist * i;
+                    Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
+                    Vector2 drawPos = pos + circularLocation - Main.screenPosition;
+                    Main.EntitySpriteDraw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+                    for (int k = 0; k < glow / 2; k++)
+                    {
+                        float x = Main.rand.Next(-10, 11) * 0.1f;
+                        float y = Main.rand.Next(-10, 11) * 0.1f;
+                        Main.EntitySpriteDraw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+                    }
+                    currentSeg++;
+                    currentSegMult++;
+                }
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 bobbing = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(180f / max * i));
+                    bobbing.Y *= (midPointDist / 40f);
+                    Vector2 circularLocation = new Vector2(0, bobbing.Y).RotatedBy(point1To2.ToRotation() + MathHelper.ToRadians(ai2)); //applies rotation
+                    Vector2 dist = -point1To2 / (float)(max * 2);
+                    Vector2 pos = centerOfCircle + dist * i;
+                    Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
+                    Vector2 drawPos = pos + circularLocation - Main.screenPosition;
+                    Main.EntitySpriteDraw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+                    for (int k = 0; k < glow / 2; k++)
+                    {
+                        float x = Main.rand.Next(-10, 11) * 0.1f;
+                        float y = Main.rand.Next(-10, 11) * 0.1f;
+                        Main.EntitySpriteDraw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, point1To2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+                    }
+                    currentSeg++;
+                    currentSegMult--;
+                }
+                max = 4;
+                for (int i = 0; i < max; i++)
+                {
+                    Vector2 dist = -pointEndTo2 / (float)(max);
+                    Vector2 pos = point2 + dist * i;
+                    Vector2 dynamicAddition = new Vector2(dynamLength, 0).RotatedBy(MathHelper.ToRadians(currentSeg * 180f / totalSeg + Projectile.ai[0]));
+                    Vector2 drawPos = pos - Main.screenPosition;
+                    Main.EntitySpriteDraw(texture, drawPos + dynamicAddition, null, Projectile.GetAlpha(lightColor), pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+                    for (int k = 0; k < glow / 2; k++)
+                    {
+                        float x = Main.rand.Next(-10, 11) * 0.1f;
+                        float y = Main.rand.Next(-10, 11) * 0.1f;
+                        Main.EntitySpriteDraw(texture2, drawPos + dynamicAddition + new Vector2(x, y), null, color, pointEndTo2.ToRotation() + MathHelper.ToRadians(45), drawOrigin, scale, SpriteEffects.None, 0f);
+                    }
+                    currentSeg++;
+                    currentSegMult--;
+                }
+                if (j == 0)
+                    j = 3;
+                else if (j == 3)
+                    j = 1;
+                else if (j == 1)
+                    j = 2;
+                else if (j == 2)
+                    j = 4;
+            }
+            DrawGlow();
+        }
         public override void PostDraw(Color lightColor)
         {
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Planetarium/AdvisorPetEye");

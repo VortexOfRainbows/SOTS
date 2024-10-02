@@ -9,10 +9,10 @@ namespace SOTS.Projectiles.Planetarium
 {
 	public class ThunderColumnFast : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Thunder Column");
-		}
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2000; //1600 + 400 = 125 blocks
+        }
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(Projectile.velocity.X);

@@ -652,9 +652,10 @@ namespace SOTS
 		{
 			if (SOTSPlayer.ModPlayer(self).PotionStacking && self.whoAmI == Main.myPlayer && (!quiet || Main.netMode == NetmodeID.SinglePlayer))
 			{
-				if (type == BuffID.WellFed || type == BuffID.WellFed2 || type == BuffID.WellFed3)
+				int originalTimeToAdd = timeToAdd;
+                int currentTime = 0;
+                if (type == BuffID.WellFed || type == BuffID.WellFed2 || type == BuffID.WellFed3)
 				{
-					int currentTime = 0;
 					if (self.HasBuff(BuffID.WellFed))
 						currentTime = self.buffTime[self.FindBuffIndex(BuffID.WellFed)];
 					if (self.HasBuff(BuffID.WellFed2))
@@ -666,10 +667,11 @@ namespace SOTS
 				}
 				else if (self.HasBuff(type) && !Main.debuff[type])
 				{
-					int currentTime = self.buffTime[self.FindBuffIndex(type)];
+					currentTime = self.buffTime[self.FindBuffIndex(type)];
 					if (currentTime > 120)
 						timeToAdd += currentTime;
 				}
+				timeToAdd = Math.Clamp(timeToAdd, currentTime, Math.Max(currentTime, originalTimeToAdd * 2));
 			}
 			orig(self, type, timeToAdd, quiet, foodHack);
         }
