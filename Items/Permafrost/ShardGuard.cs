@@ -57,9 +57,9 @@ namespace SOTS.Items.Permafrost
 		{
 			CreateRecipe(1).AddIngredient<DissolvingAurora>(1).AddIngredient(ItemID.FrozenTurtleShell, 1).AddIngredient<PermafrostMedallion>(1).AddIngredient<ShatterHeartShield>(1).AddTile(TileID.TinkerersWorkbench).Register();
         }
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
     }
 }

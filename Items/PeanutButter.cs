@@ -28,9 +28,9 @@ namespace SOTS.Items
 			player.lifeRegen += 1;
 			modPlayer.petPinky += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
         }
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
     }
 }

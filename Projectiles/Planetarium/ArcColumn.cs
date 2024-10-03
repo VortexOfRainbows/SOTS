@@ -1,20 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using System.IO;
-using System;
 using SOTS.Dusts;
 
 namespace SOTS.Projectiles.Planetarium
 {
 	public class ArcColumn : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Arc Thunder");
-		}
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;
@@ -27,6 +21,8 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.penetrate = -1;
 			Projectile.extraUpdates = 3;
 			Projectile.scale = 0.75f;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 20;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -38,7 +34,7 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.velocity.X = reader.ReadSingle();
 			Projectile.velocity.Y = reader.ReadSingle();
 		}
-		Vector2[] trailPos = new Vector2[5];
+		private Vector2[] trailPos = new Vector2[5];
 		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
@@ -54,7 +50,7 @@ namespace SOTS.Projectiles.Planetarium
 					return false;
                 }
 				Color color = new Color(120, 130, 160, 0);
-				Vector2 drawPos = trailPos[k] - Main.screenPosition;
+				Vector2 drawPos;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
 				color = Projectile.GetAlpha(color) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
@@ -79,7 +75,7 @@ namespace SOTS.Projectiles.Planetarium
 			}
 			return false;
 		}
-		bool runOnce = true;
+		private bool runOnce = true;
 		public void cataloguePos()
         {
 			Vector2 current = Projectile.Center;
@@ -117,7 +113,7 @@ namespace SOTS.Projectiles.Planetarium
 			if (iterator >= trailPos.Length)
 				Projectile.Kill();
 		}
-		int endHow = 0;
+		private int endHow = 0;
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
 			endHow = 1;
@@ -125,10 +121,10 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.velocity *= 0f;
             return false;
         }
-		int counter = 0;
-		int counter2 = 0;
-		Vector2 originalVelo = Vector2.Zero;
-		Vector2 originalPos = Vector2.Zero;
+		private int counter = 0;
+	    private int counter2 = 0;
+		private Vector2 originalVelo = Vector2.Zero;
+		private Vector2 originalPos = Vector2.Zero;
         public override void AI()
 		{
 			if(Projectile.timeLeft < 220)
@@ -149,8 +145,6 @@ namespace SOTS.Projectiles.Planetarium
 			}
 			originalPos += originalVelo * 1.4f;
 			checkPos();
-			Player player = Main.player[Projectile.owner];
-			Vector2 toPlayer = player.Center - Projectile.Center;
 			if(counter2 > 30 - Projectile.ai[0] * 1)
 			{
 				if (Projectile.ai[0] > 0 && endHow == 0)

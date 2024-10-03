@@ -25,8 +25,8 @@ namespace SOTS.Items.Planetarium.FromChests
 			Item.damage = 20;
 			Item.knockBack = 2f;
 			Item.mana = 12;
-			Item.width = 26;
-			Item.height = 32;
+			Item.width = 38;
+			Item.height = 40;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -46,7 +46,7 @@ namespace SOTS.Items.Planetarium.FromChests
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<DissolvingNature>(), 1).AddIngredient(ModContent.ItemType<FragmentOfInferno>(), 3).AddIngredient(ModContent.ItemType<AcornBag>(), 1).AddIngredient(ModContent.ItemType<OtherworldlyAlloy>(), 10).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
+			CreateRecipe(1).AddIngredient<DissolvingNature>().AddIngredient<FragmentOfInferno>(3).AddIngredient<AcornBag>().AddIngredient<OtherworldlyAlloy>(10).AddTile(ModContent.TileType<HardlightFabricatorTile>()).Register();
 		}
 	}
 }

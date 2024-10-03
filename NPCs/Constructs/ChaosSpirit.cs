@@ -1,15 +1,8 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Dusts;
-using SOTS.Items.Fragments;
-using SOTS.NPCs.Boss;
 using SOTS.NPCs.Boss.Lux;
-using SOTS.Projectiles.Chaos;
-using SOTS.Void;
 using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,9 +10,9 @@ namespace SOTS.NPCs.Constructs
 {
 	public class ChaosSpirit : ModNPC
 	{
-		float wingSpeedMult = 1f;
-		float wingHeight; //wings offset in degrees
-		Vector2 baseVelo = Vector2.Zero;
+		private float wingSpeedMult = 1f;
+		private float wingHeight; //wings offset in degrees
+        private Vector2 baseVelo = Vector2.Zero;
 		public void WingStuff()
 		{
 			NPC.ai[3] += 1.5f;
@@ -81,11 +74,10 @@ namespace SOTS.NPCs.Constructs
 		{
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosParticle");
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			float dipAndRise = (float)Math.Sin(MathHelper.ToRadians(dipAndRiseCounter));
-			float supposedWingHeight = wingHeight - 19;
-			dipAndRise = supposedWingHeight / 27f;
+            float supposedWingHeight = wingHeight - 19;
+			float dipAndRise = supposedWingHeight / 27f;
 			dipAndRise = MathHelper.Clamp(dipAndRise, -1, 1);
-			int width = 130;
+            int width = 130;
 			int height = 90;
 			int amtOfParticles = 120;
 			for (int j = -1; j <= 1; j += 2)
@@ -230,13 +222,13 @@ namespace SOTS.NPCs.Constructs
 				NPC.dontTakeDamage = true;
 				NPC.velocity.Y -= 0.026f;
 				NPC.velocity.X *= 1.095f;
+                NPC.ai[0] = -2;
 				if(Main.netMode != NetmodeID.Server && rubble != -2 && rubbleActive)
-				{
+                {
 					DrawChains(null, Main.screenPosition, true);
 					rubbleActive = false;
-					NPC.ai[0] = -2;
-				}
-			}
+                }
+            }
 			else
 			{
 				owner = Main.npc[rubble];

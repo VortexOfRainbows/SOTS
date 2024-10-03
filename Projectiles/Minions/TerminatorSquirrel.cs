@@ -3,10 +3,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using SOTS.Buffs;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.MinionBuffs;
-using Terraria.Audio;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -14,7 +12,6 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Terminator Squirrel");
 			Main.projFrames[Projectile.type] = 1;
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			Main.projPet[Projectile.type] = true;
@@ -22,9 +19,9 @@ namespace SOTS.Projectiles.Minions
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 		}
-		Vector2[] trailPos = new Vector2[12];
-		bool runOnce = true;
-		float glow = 14f;
+		private Vector2[] trailPos = new Vector2[12];
+        private bool runOnce = true;
+        private float glow = 14f;
 		public override bool PreAI()
 		{
 			//Projectile.SetDamageBasedOnOriginalDamage(Projectile.owner);
@@ -70,7 +67,7 @@ namespace SOTS.Projectiles.Minions
 			{
 				float scale = Projectile.scale * (trailPos.Length - k) / (float)trailPos.Length;
 				scale *= 1f;
-				Vector2 drawPos = trailPos[k] - Main.screenPosition;
+				Vector2 drawPos;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
 				if (trailPos[k] == Vector2.Zero || betweenPositions.Length() > 3000)
@@ -155,7 +152,6 @@ namespace SOTS.Projectiles.Minions
 		{
 			Player player = Main.player[Projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			float orbital = modPlayer.orbitalCounter;
 			#region Active check
 			gunVelocity *= 0.95f;
 			afterImage = false;
@@ -278,10 +274,9 @@ namespace SOTS.Projectiles.Minions
 			#endregion
 
 			#region Movement
-
 			Projectile.ai[0]++;
 			// Default movement parameters (here for attacking)
-			float firerate = 66f;
+			float firerate = 72f;
 			float speed = 22f;
 			float inertia = 8f;
 			float rotationDirection = 0;
@@ -289,11 +284,9 @@ namespace SOTS.Projectiles.Minions
 			if (foundTarget)
 			{
 				Projectile.ai[1]++;
-				// Minion has a target: attack (here, fly towards the enemy)
 				if (distanceFromTarget > 320f + targetWidth * 0.8f)
 				{
 					Vector2 direction = targetCenter - Projectile.Center;
-					// The immediate range around the target (so it doesn't latch onto it when close)
 					direction.Normalize();
 					direction *= speed;
 					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
@@ -302,7 +295,6 @@ namespace SOTS.Projectiles.Minions
 				{
 					speed = 12f;
 					Vector2 direction = Projectile.Center - targetCenter;
-					// If it is too close, move away
 					direction.Normalize();
 					direction *= speed;
 					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
@@ -310,26 +302,27 @@ namespace SOTS.Projectiles.Minions
 				else
 				{
 					Vector2 direction = targetCenter - Projectile.Center;
-					Projectile.velocity = (Projectile.velocity * (inertia - 1)) / inertia;
+					Projectile.velocity = Projectile.velocity * (inertia - 1) / inertia;
 					if (Projectile.ai[0] >= firerate)
 					{
 						Projectile.ai[0] -= firerate;
-						float shootspeed = 16.5f;
-						for(int i = 0; i < 2 + Main.rand.Next(2) + Main.rand.Next(2) + Main.rand.Next(2); i++)
-						{
-							Vector2 newDirection = direction.RotatedByRandom(MathHelper.ToRadians(15 + i * 3)).SafeNormalize(Vector2.Zero);
-							Vector2 offset = newDirection * Projectile.width / 2;
-							newDirection *= shootspeed;
-							Vector2 projVelo = newDirection;
-							projVelo.X += Main.rand.Next(-10, 11) * (0.1f + 0.02f * i);
-							projVelo.Y += Main.rand.Next(-14, 4) * (0.1f + 0.03f * i);
-							if (Projectile.owner == Main.myPlayer)
+                        if (Projectile.owner == Main.myPlayer)
+                        {
+							int count = Main.rand.Next(3, 5);
+                            float shootspeed = 16.5f;
+                            for (int i = 0; i < count; i++)
 							{
+								Vector2 newDirection = direction.RotatedByRandom(MathHelper.ToRadians(15 + i * 3)).SafeNormalize(Vector2.Zero);
+								Vector2 offset = newDirection * Projectile.width / 2;
+								newDirection *= shootspeed;
+								Vector2 projVelo = newDirection;
+								projVelo.X += Main.rand.Next(-10, 11) * (0.1f + 0.02f * i);
+								projVelo.Y += Main.rand.Next(-14, 4) * (0.1f + 0.03f * i);
 								Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + offset, projVelo, ModContent.ProjectileType<TerminatorAcorn>(), (int)(Projectile.damage * (1f - i * 0.125f)) + 1, Projectile.knockBack, Projectile.owner, i);
-								Projectile.netUpdate = true;
 							}
-						}
-						gunVelocity = -4.75f * direction.SafeNormalize(Vector2.Zero);
+							Projectile.netUpdate = true;
+                        }
+                        gunVelocity = -4.75f * direction.SafeNormalize(Vector2.Zero);
 						Projectile.velocity += -direction.SafeNormalize(Vector2.Zero);
 						glow = 16f;
 					}

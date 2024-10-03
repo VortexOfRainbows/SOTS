@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using Terraria.Utilities.Terraria.Utilities;
 
 namespace SOTS.Projectiles.Blades
 {    

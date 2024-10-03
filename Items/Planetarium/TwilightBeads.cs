@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Planetarium;
 using SOTS.Void;
 using Terraria;
@@ -35,31 +36,11 @@ namespace SOTS.Items.Planetarium
 	public class BeadPlayer : ModPlayer
 	{
 		public int attackNum = 0;
-
 		public int soulDamage = 0;
 		public bool RetaliationSouls = false;
-		public bool spawnSouls = false;
 		public override void ResetEffects()
 		{
-			int currentSouls = 0;
-
-			for (int i = 0; i < Main.projectile.Length; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if (ModContent.ProjectileType<SoulofRetaliation>() == proj.type && proj.active && proj.owner == Player.whoAmI && proj.timeLeft > 748)
-				{
-					currentSouls++;
-				}
-			}
-			if (currentSouls < 5)
-			{
-				spawnSouls = true;
-			}
-			else
-			{
-				spawnSouls = false;
-			}
-			if(attackNum >= 10)
+            if (attackNum >= 10)
 			{
 				attackNum++;
 				if(attackNum > 12)
@@ -72,17 +53,17 @@ namespace SOTS.Items.Planetarium
 		}
 		public void SpawnSouls()
 		{
-			if (attackNum < 10 && Player.whoAmI == Main.myPlayer && spawnSouls && RetaliationSouls)
+			if (attackNum < 10 && Player.whoAmI == Main.myPlayer && Player.ownedProjectileCounts[ModContent.ProjectileType<SoulofRetaliation>()] < 5 && RetaliationSouls)
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:TwilightBeads"), Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, Player.whoAmI);
+					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:TwilightBeads"), Player.Center, Vector2.Zero, ModContent.ProjectileType<SoulofRetaliation>(), soulDamage, 1f, Main.myPlayer);
 				}
 			}
 		}
-		public override void ModifyHurt(ref Player.HurtModifiers modifiers)
-		{
-			SpawnSouls();
-		}
+        public override void OnHurt(Player.HurtInfo info)
+        {
+            SpawnSouls();
+        }
 	}
 }

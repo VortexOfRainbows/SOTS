@@ -9,10 +9,6 @@ namespace SOTS.Projectiles
 {    
     public class Trains : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Train Snake");
-		}
         public override void SetDefaults()
         {
             Projectile.width = 32;

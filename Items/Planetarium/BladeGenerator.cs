@@ -9,10 +9,10 @@ namespace SOTS.Items.Planetarium
 {
 	public class BladeGenerator : ModItem
     {
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
         public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);

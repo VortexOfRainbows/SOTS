@@ -99,6 +99,11 @@ namespace SOTS.Projectiles.Blades
                 standardSwordLength = texture.Height - HeldDistFromPlayer;
             }
             float scaleMultiplier = length / standardSwordLength;
+            if (Projectile.type == ModContent.ProjectileType<VorpalKnifeSlash>()) //This helps prevent the blade from getting to big in strange multiplayer scenarios
+            {
+                if (scaleMultiplier > 5)
+                    scaleMultiplier = 5;
+            }
             float rotation = playerToProjectile.ToRotation();
             rotation += isDiagonalSprite ? MathHelper.ToRadians(direction == -1 ? -225 : 45) : MathHelper.ToRadians(90 + direction * OffsetAngleIfNotDiagonal);
             if (Projectile.type == ModContent.ProjectileType<EarthGrinderSlash>() && thisSlashNumber == 1)

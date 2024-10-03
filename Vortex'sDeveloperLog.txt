@@ -64,7 +64,7 @@ If any other issues come up with Gilded Blade Wings trail interfering with how o
 Conduit powering code for the two portals
 
 ---Balance Needed List (by Severity, -weak, +strong)---
-5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Night Illuminator, ++Cursed Blade, Terminator Acorns
+5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. Earthen Gizmo, Corpsebloom, Throe
 2. +++Soot Extractinator loot, +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple
@@ -74,9 +74,7 @@ Conduit powering code for the two portals
 N/A
 
 ---Multiplayer Fixes/Testing Needed---
-Fix Lux chains not disappearing when running away in multiplayer
-Fix vorpal knife appearing massive when far away in multiplayer
-Soul Beads not working in multiplayer :(
+N/A
 
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
@@ -90,7 +88,7 @@ N/A
 
 Daily Log:
 
-9/25/24 to 10/1/24
+9/25/24 to 10/2/24
 1. WIP Famished... Needs:
 	1. Animation when damaging the player (like a spike protrudes out temporarily). potentially spike surround the outer shell.
 	2. Polish, Banner.
@@ -106,7 +104,18 @@ Daily Log:
 4. Ruby Ring (Beelzebub) no longer works on statues, also slightly decreased duration added from hearts (min: 5 -> 4 seconds, max: 10 -> 9 seconds)
 5. Fixed bug where Advisor's Thunder Column and Spiral Death laser attack might be invisible when offscreen
 6. Advisor should now despawn when far away less often
-7. Calculator tentacles should be properly effected by Dyes again
+7. Calculator tentacles should be properly effected by Dyes again, and made visuals from the redirect telegraph more consistent
+8. Optimized some Soul Beads code, and it should appear brighter now
+9. Accessories with damage stat should now finally be no longer effected by weapon reforges.
+10. Lux Chains should now disappear when the chassis is killed in multiplayer
+11. Fix obscure multiplayer bug with vorpal knife that occasionally lead to the screen being blocked by a big visual.
+12. Prim trials should now get stuck on incorrect projectiles less often, especially in multiplayer
+13. Night Illuminator damage 10 -> 8
+14. Cursed Blade damage 24 -> 21
+15. Terminator acorns resprite, and changed total acorns shot formula to never shoot 2 or 5 acorns (average stays the same). Firerate 66 -> 72 (~8-9% nerf)
+16. Meteorite key resprite
+17. Arclight Orbs (minor) resprite + improved visuals and code, lightning now uses static immunity, boosting overall damage
+18. Cataclysm spheres improved visuals and code
 
 9/21/24 to 9/25/24
 1. Added Dylan's cool walls (sparkle emoji) and modified wall generation appropriately

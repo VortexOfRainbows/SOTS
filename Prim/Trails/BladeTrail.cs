@@ -88,10 +88,12 @@ namespace SOTS.Prim.Trails
 		public Vector2 ownerCenter;
 		public List<float> WidthList = new List<float>();
 		public List<Vector2> toOwner = new List<Vector2>();
+		private int projType = -1;
 		public override void OnUpdate()
 		{
-			if (Entity is Projectile proj && !Destroyed)
+			if (Entity is Projectile proj && !Destroyed && (proj.type == projType || projType == -1))
 			{
+				projType = proj.type; //This is not fullproof, but it helps prevent the trail from sticking to things it shouldn't in a handful of edge cases
 				Player player = Main.player[proj.owner];
 				FakePlayerProjectile fPP;
 				bool hasModProj = proj.TryGetGlobalProjectile(out fPP);

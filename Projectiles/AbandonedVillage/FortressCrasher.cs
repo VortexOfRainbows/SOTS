@@ -127,8 +127,12 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY), null, lightColor, rot, drawOrigin, Projectile.scale, dir == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			return false;
         }
-        float chargeProgress = 0;
-        bool runOnce = true;
+        private float chargeProgress = 0;
+        private bool runOnce = true;
+		public void SetVelo(Vector2 velo) //Used by SOTSProjectile to give homing accessories synergy with the item visually
+		{
+			saveVelo = velo;
+		}
 		private Vector2 saveVelo;
 		public override void AI()
 		{

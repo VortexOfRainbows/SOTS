@@ -33,9 +33,9 @@ namespace SOTS.Items.Inferno
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Glass, 20).AddIngredient(ModContent.ItemType<DissolvingNether>(), 1).AddIngredient(ModContent.ItemType<BluefirePotion>(), 8).AddTile(TileID.MythrilAnvil).Register();
         }
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
     }
 }

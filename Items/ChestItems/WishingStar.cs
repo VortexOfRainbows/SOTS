@@ -138,9 +138,5 @@ namespace SOTS.Items.ChestItems
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.WishingStar = true;
         }
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
     }
 }

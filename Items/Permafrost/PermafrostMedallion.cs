@@ -32,9 +32,9 @@ namespace SOTS.Items.Permafrost
 			player.SOTSPlayer().artifactProbeDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, Item.DamageType, Item.damage);
 			player.SOTSPlayer().artifactProbeNum += 8;
         }
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
     }
 }

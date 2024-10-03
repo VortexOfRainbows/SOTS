@@ -27,10 +27,10 @@ namespace SOTS.Items.Chaos
             if (!Main.dayTime)
                 player.lifeRegen += 1;
             modPlayer.BundleSnakeDamage += SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, Item.damage);
-		}
-        public override bool WeaponPrefix()
-        {
-            return false;
         }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
     }
 }

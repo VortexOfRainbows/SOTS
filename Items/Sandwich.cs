@@ -33,9 +33,9 @@ namespace SOTS.Items
 		{
 			CreateRecipe(1).AddIngredient<Baguette>(1).AddIngredient<RoyalJelly>(1).AddIngredient<PeanutButter>(1).AddTile(TileID.CookingPots).Register();
         }
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
     }
 }

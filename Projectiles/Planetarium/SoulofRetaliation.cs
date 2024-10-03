@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Planetarium;
 using System;
 using System.IO;
@@ -11,16 +10,15 @@ namespace SOTS.Projectiles.Planetarium
 {    
     public class SoulofRetaliation : ModProjectile 
     {
-		public override void SetStaticDefaults()
+		public override Color? GetAlpha(Color lightColor) => Color.White;
+        public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Soul of Retaliation");
-		}
+            Main.projFrames[Projectile.type] = 4;
+        }
         public override void SetDefaults()
         {
-			Projectile.width = 22;
-			Projectile.height = 22;
+			Projectile.width = Projectile.height = 22;
 			Projectile.penetrate = 1;
-			Main.projFrames[Projectile.type] = 4;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 900;
 			Projectile.tileCollide = false;
@@ -93,7 +91,6 @@ namespace SOTS.Projectiles.Planetarium
 				}
 				Vector2 toPlayer = player.Center - Projectile.Center;
 				float distance = toPlayer.Length();
-				float speed = distance * 0.1f;
 				if(distance > 2000f)
 				{
 					if(Main.myPlayer == Projectile.owner)

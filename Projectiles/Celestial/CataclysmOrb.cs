@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using SOTS.Projectiles.Lightning;
 using SOTS.Dusts;
 
@@ -11,17 +10,11 @@ namespace SOTS.Projectiles.Celestial
 {    
     public class CataclysmOrb : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Cataclysm Bomb");
-		}
+		private Color dustColor => Color.Lerp(new Color(210, 255, 205, 100), new Color(30, 150, 60, 100), Main.rand.NextFloat(1));
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(48);
             AIType = 48; 
-			// Projectile.thrown = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
-			// Projectile.magic = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
-			// Projectile.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.width = 14;
 			Projectile.height = 14;
@@ -42,27 +35,35 @@ namespace SOTS.Projectiles.Celestial
 			}
 			color = Color.White;
 			Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-		}
-		public override void AI()
+        }
+        private bool RunOnce = true;
+        public override void AI()
 		{
 			if(Projectile.timeLeft >= 800)
 			{
 				Projectile.timeLeft = Main.rand.Next(32, 48);
-			}
-		}
+            }
+            if (RunOnce)
+            {
+                RunOnce = false;
+                for (int i = 0; i < 5; i++)
+                    PixelDust.Spawn(Projectile.Center, 0, 0, Main.rand.NextVector2Square(-1.2f, 1.2f) + Projectile.velocity * 0.5f, dustColor, 6).scale = Main.rand.NextFloat(1.5f, 2f);
+            }
+            if (!Main.rand.NextBool(4))
+            {
+                PixelDust.Spawn(Projectile.Center, 0, 0, Main.rand.NextVector2Square(-0.17f, 0.17f) + Projectile.velocity * 0.65f, dustColor, 6).scale = Main.rand.NextFloat(1f, 1.5f);
+            }
+        }
 		public override void OnKill(int timeLeft)
         {
 			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.625f);
 			for (int i = 0; i < 10; i++)
 			{
-				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+				var num371 = Dust.NewDust(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0, Projectile.alpha, dustColor, 1.6f);
 				Dust dust = Main.dust[num371];
 				dust.velocity += Projectile.velocity * 0.1f;
 				dust.noGravity = true;
-				dust.color = Color.Lerp(new Color(210, 255, 205, 100), new Color(30, 150, 60, 100), new Vector2(-0.5f, 0).RotatedBy(Main.rand.Next(360)).X + 0.5f);
-				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
-				dust.alpha = Projectile.alpha;
 			}
 			SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.55f, 0.1f);
 			if (Projectile.owner == Main.myPlayer)

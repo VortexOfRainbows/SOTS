@@ -33,9 +33,9 @@ namespace SOTS.Items.Nature
 		{
 			CreateRecipe(1).AddIngredient(ItemID.Cactus, 20).AddIngredient(ModContent.ItemType<FragmentOfNature>(), 4).AddIngredient(ItemID.PinkPricklyPear, 1).AddTile(TileID.WorkBenches).Register();
         }
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
     }
 }

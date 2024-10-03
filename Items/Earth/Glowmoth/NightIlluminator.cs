@@ -27,7 +27,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 10;
+			Item.damage = 8;
 			Item.knockBack = 3f;
 			Item.mana = 10;
 			Item.width = 58;

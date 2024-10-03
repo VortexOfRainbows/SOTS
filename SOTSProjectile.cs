@@ -28,6 +28,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
 using SOTS.Projectiles.BiomeChest;
+using SOTS.Projectiles.AbandonedVillage;
+using System.Collections;
 
 namespace SOTS
 {
@@ -483,7 +485,7 @@ namespace SOTS
 					int target2 = -1;
 					float speed = projectile.velocity.Length();
 					bool capable = speed > 1f && (projectile.CountsAsClass(DamageClass.Ranged) || projectile.CountsAsClass(DamageClass.Melee) || projectile.CountsAsClass(DamageClass.Magic) || projectile.CountsAsClass(DamageClass.Throwing) || (!projectile.sentry && !projectile.minion)) && (projectile.ModProjectile == null || projectile.ModProjectile.ShouldUpdatePosition()) && (projectile.ModProjectile == null || projectile.ModProjectile.CanDamage() == null || (bool)projectile.ModProjectile.CanDamage() == true);
-					if (projectile.friendly == true && projectile.hostile == false && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(projectile.type)))
+					if (projectile.friendly && !projectile.hostile && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(projectile.type)))
 					{
 						//Main.NewText("past Check " + projectile.whoAmI);
 						for (int i = 0; i < Main.npc.Length; i++)
@@ -516,6 +518,10 @@ namespace SOTS
 								Vector2 velocity2 = goTo.SafeNormalize(Vector2.Zero);
 								float close = (velocity1 - velocity2).Length() * 40f;
 								projectile.velocity = goTo;
+								if(projectile.ModProjectile is FortressCrasher crasher)
+								{
+									crasher.SetVelo(goTo);
+								}
 								if (petAdvisorID != -1 && effect)
 								{
 									Projectile proj = Main.projectile[petAdvisorID];
@@ -733,20 +739,18 @@ namespace SOTS
 			Vector2 savePos = projPos;
 			Color color = new Color(255, 182, 242, 0);
 			int remaining = 3000;
-			int interator = 0;
+			int iterator = 0;
 			currentPos += newtoProjectile * 2;
 			while (remaining > 0)
 			{
 				remaining--;
-				interator++;
+				iterator++;
 				currentPos += newtoProjectile;
-				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
-				Dust dust = Main.dust[num1];
-				dust.velocity *= 0.2f;
+                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha, color);
+                dust.velocity *= 0.1f;
 				dust.noGravity = true;
-				dust.color = color;
 				dust.fadeIn = 0.2f;
-				dust.scale *= 1.25f;
+				dust.scale = dust.scale * 0.5f + 0.75f;
 				dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
 				toProjectile = projectile.Center - currentPos;
 				if (toProjectile.Length() < Math.Sqrt(proj.width * projectile.height) + 8 && remaining > 60)
@@ -756,15 +760,13 @@ namespace SOTS
 						Vector2 currentFromProjectile = currentPos - projectile.Center;
 						currentFromProjectile = currentFromProjectile.RotatedBy(MathHelper.ToRadians(i));
 						currentFromProjectile += projectile.Center;
-						interator++;
-						num1 = Dust.NewDust(new Vector2(currentFromProjectile.X - 4, currentFromProjectile.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
-						dust = Main.dust[num1];
-						dust.velocity *= 0.2f;
+						iterator++;
+						dust = Dust.NewDustDirect(new Vector2(currentFromProjectile.X - 4, currentFromProjectile.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha, color);
+                        dust.velocity *= 0.1f;
 						dust.noGravity = true;
-						dust.color = color;
 						dust.fadeIn = 0.2f;
-						dust.scale *= 1.25f;
-						dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
+                        dust.scale = dust.scale * 0.5f + 0.75f;
+                        dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
 					}
 					remaining = 20;
 					currentPos = new Vector2((float)Math.Sqrt(proj.width * projectile.height) + 8, 0).RotatedBy(projectile.velocity.ToRotation()) + projectile.Center;
@@ -780,31 +782,27 @@ namespace SOTS
 			{
 				newtoProjectile = projectile.velocity.RotatedBy(MathHelper.ToRadians(-160)).SafeNormalize(Vector2.Zero) * 3;
 				currentPos += newtoProjectile;
-				interator++;
-				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
-				Dust dust = Main.dust[num1];
-				dust.velocity *= 0.2f;
-				dust.noGravity = true;
-				dust.color = color;
-				dust.fadeIn = 0.2f;
-				dust.scale *= 1.25f;
-				dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
+				iterator++;
+                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha, color);
+                dust.velocity *= 0.1f;
+                dust.noGravity = true;
+                dust.fadeIn = 0.2f;
+                dust.scale = dust.scale * 0.5f + 0.75f;
+                dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
 			}
 			currentPos = savePos;
 			for (int i = 0; i < 8; i++)
 			{
 				newtoProjectile = projectile.velocity.RotatedBy(MathHelper.ToRadians(160)).SafeNormalize(Vector2.Zero) * 3;
 				currentPos += newtoProjectile;
-				interator++;
-				int num1 = Dust.NewDust(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha);
-				Dust dust = Main.dust[num1];
-				dust.velocity *= 0.2f;
-				dust.noGravity = true;
-				dust.color = color;
-				dust.fadeIn = 0.2f;
-				dust.scale *= 1.25f;
-				dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
-			}
+				iterator++;
+                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha, color);
+                dust.velocity *= 0.1f;
+                dust.noGravity = true;
+                dust.fadeIn = 0.2f;
+                dust.scale = dust.scale * 0.5f + 0.75f;
+                dust.shader = GameShaders.Armor.GetShaderFromItemId(player.miscDyes[1].type);
+            }
 		}
 		public static void DrawStar(Vector2 location, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180)
 		{

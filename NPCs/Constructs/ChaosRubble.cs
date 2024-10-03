@@ -1,8 +1,6 @@
 using System;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -77,7 +75,7 @@ namespace SOTS.NPCs.Constructs
 			NPC.dontTakeDamage = true;
 			return base.PreAI();
 		}
-		Vector2 lastVelocity = Vector2.Zero;
+		private Vector2 lastVelocity = Vector2.Zero;
         public override void AI()
         {
 			NPC.ai[0]++;

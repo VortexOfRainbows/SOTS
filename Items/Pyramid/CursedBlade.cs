@@ -15,7 +15,7 @@ namespace SOTS.Items.Pyramid
         }
         public override void SafeSetDefaults()
         {
-            Item.damage = 24;
+            Item.damage = 21;
             Item.DamageType = DamageClass.Summon;
             Item.width = 34;
             Item.height = 34;

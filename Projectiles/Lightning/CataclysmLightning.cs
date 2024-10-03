@@ -1,22 +1,14 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
 
 namespace SOTS.Projectiles.Lightning
 {    
     public class CataclysmLightning : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Cataclysm Lightning");
-		}
 		public override void SetDefaults()
 		{
 			Projectile.width = 12;
@@ -30,11 +22,6 @@ namespace SOTS.Projectiles.Lightning
 			Projectile.scale = 1f;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 40;
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
-			target.immune[Projectile.owner] = 0;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
@@ -55,7 +42,6 @@ namespace SOTS.Projectiles.Lightning
 				}
 			}
 			return false;
-			//return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint, 8f, ref point);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -78,7 +64,7 @@ namespace SOTS.Projectiles.Lightning
 					int scaleDown = k - (trailPos.Count - degradePoint);
 					scale *= 1 - 0.75f * (scaleDown / (float)degradePoint);
 				}
-				Vector2 drawPos = trailPos[k] - Main.screenPosition;
+				Vector2 drawPos;
 				Vector2 currentPos = trailPos[k];
 				Vector2 betweenPositions = previousPosition - currentPos;
 				float max = betweenPositions.Length() / (texture.Width * scale * 0.5f);
@@ -106,11 +92,11 @@ namespace SOTS.Projectiles.Lightning
 		{
 			return false;
 		}
-		List<Vector2> trailPos = new List<Vector2>();
-		int dist = 140;
-		bool runOnce = true;
-		int currentNPC = -1;
-		float speed = 5.5f;
+		private List<Vector2> trailPos = new List<Vector2>();
+		private int dist = 140;
+		private bool runOnce = true;
+		private int currentNPC = -1;
+        private float speed = 5.5f;
 		public void runStartCalculations()
         {
 			Vector2 location = Projectile.Center;
@@ -159,7 +145,7 @@ namespace SOTS.Projectiles.Lightning
                 }
 			}
 		}
-		int redirections = 0;
+        private int redirections = 0;
 		public float Redirect(float radians, Vector2 pos, Vector2 npc)
 		{
 			float dX = npc.X - pos.X;
@@ -177,7 +163,6 @@ namespace SOTS.Projectiles.Lightning
 		}
 		public int FindClosestEnemy(Vector2 pos, int currentIndex)
 		{
-			Player player = Main.player[Projectile.owner];
 			if (currentNPC != -1)
 			{
 				return currentNPC;

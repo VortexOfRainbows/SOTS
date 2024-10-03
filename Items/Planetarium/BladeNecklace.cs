@@ -88,9 +88,9 @@ namespace SOTS.Items.Planetarium
 			beadPlayer.soulDamage += damage;
 			beadPlayer.RetaliationSouls = true;
         }
-        public override bool WeaponPrefix()
-        {
-            return false;
-        }
+        public override bool WeaponPrefix() => false;
+        public override bool MagicPrefix() => false;
+        public override bool MeleePrefix() => false;
+        public override bool RangedPrefix() => false;
     }
 }
