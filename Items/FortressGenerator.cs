@@ -39,7 +39,7 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<PlatformGenerator>(), 1).AddIngredient(ItemID.PaladinsShield, 1).AddIngredient(ItemID.PygmyNecklace, 1).AddRecipeGroup("SOTS:T2DD2Armor", 1).AddRecipeGroup("SOTS:T2DD2Accessory", 1).AddIngredient(ItemID.SpectreBar, 10).AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1).AddTile(TileID.TinkerersWorkbench).Register();
+			CreateRecipe(1).AddIngredient<PlatformGenerator>().AddIngredient(ItemID.PaladinsShield, 1).AddIngredient(ItemID.PygmyNecklace, 1).AddRecipeGroup("SOTS:T2DD2Armor", 1).AddRecipeGroup("SOTS:T2DD2Accessory", 1).AddIngredient(ItemID.SpectreBar, 10).AddIngredient<DissolvingDeluge>().AddTile(TileID.TinkerersWorkbench).Register();
 		}
 	}
 }

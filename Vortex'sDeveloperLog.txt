@@ -116,6 +116,7 @@ Daily Log:
 16. Meteorite key resprite
 17. Arclight Orbs (minor) resprite + improved visuals and code, lightning now uses static immunity, boosting overall damage
 18. Cataclysm spheres improved visuals and code
+19. Calculator + equip resprite
 
 9/21/24 to 9/25/24
 1. Added Dylan's cool walls (sparkle emoji) and modified wall generation appropriately

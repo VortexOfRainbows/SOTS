@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using SOTS.Items.Fragments;
 using Terraria;
 using Terraria.ID;
@@ -15,8 +14,8 @@ namespace SOTS.Items.Planetarium.FromChests
 		}
 		public override void SetDefaults()
 		{
-            Item.width = 30;     
-            Item.height = 36;   
+            Item.width = 32;     
+            Item.height = 38;   
             Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.accessory = true;
