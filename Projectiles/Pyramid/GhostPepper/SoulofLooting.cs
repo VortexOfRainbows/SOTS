@@ -1,7 +1,9 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Void;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,15 +12,15 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 {    
     public class SoulofLooting : ModProjectile 
     {
+		private int Owner => (int)Projectile.ai[0];
 		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Sool of Looting");
-		}
+        {
+            Main.projFrames[Projectile.type] = 8;
+        }
         public override void SetDefaults()
 		{
 			Projectile.width = 22;
 			Projectile.height = 22;
-			Main.projFrames[Projectile.type] = 8;
 			Projectile.netImportant = true;
 			Projectile.timeLeft = 900;
 			Projectile.hostile = false;
@@ -29,15 +31,37 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 		}
         public override void PostDraw(Color lightColor)
 		{
-			Texture2D texture1 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/SoulofLooting").Value;
-			Vector2 drawOrigin1 = new Vector2(texture1.Width * 0.5f, texture1.Height * 0.5f * 0.125f);
-			Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
-			Main.spriteBatch.Draw(texture1, drawPos2 + new Vector2(0, Projectile.gfxOffY), new Rectangle(0, 22 * Projectile.frame, 22, 22), Projectile.GetAlpha(ColorHelpers.soulLootingColor), Projectile.rotation, drawOrigin1, Projectile.scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+			Texture2D texture = Mod.Assets.Request<Texture2D>(GhostPepper.IsAlternate ? "Projectiles/Pyramid/GhostPepper/BrownFeather" : "Projectiles/Pyramid/GhostPepper/SoulofLooting").Value;
+			Color c = ColorHelpers.soulLootingColor;
+			c.A = 0;
+            if (!GhostPepper.IsAlternate)
+			{
+                Vector2 drawOrigin1 = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f * 0.125f);
+                Vector2 drawPos2 = Projectile.Center - Main.screenPosition;
+				Rectangle frame = new Rectangle(0, 22 * Projectile.frame, 22, 22);
+                for (int i = 0; i < 6; i++)
+                {
+                    Vector2 circular = new Vector2(4f, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3f + 60 * i));
+                    Main.spriteBatch.Draw(texture, drawPos2 + circular, frame, Projectile.GetAlpha(c) * 0.75f, Projectile.rotation, drawOrigin1, Projectile.scale, SpriteEffects.None, 0f);
+                }
+                Main.spriteBatch.Draw(texture, drawPos2, frame, Projectile.GetAlpha(ColorHelpers.soulLootingColor * 1.5f), Projectile.rotation, drawOrigin1, Projectile.scale, SpriteEffects.None, 0f);
+            }
+            else
+            {
+                Vector2 sinusoid = new Vector2(0, 4 * (float)Math.Cos(1.7f * MathHelper.ToRadians(SOTSWorld.GlobalCounter)));
+                float rotation = 15 * (float)Math.Sin(1f * MathHelper.ToRadians(SOTSWorld.GlobalCounter)) * MathHelper.Pi / 180f;
+                Vector2 drawOrigin1 = texture.Size() / 2;
+                Vector2 drawPos2 = Projectile.Center + sinusoid - Main.screenPosition;
+				for(int i = 0; i < 6; i++)
+				{
+					Vector2 circular = new Vector2(4f, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3f + 60 * i));
+					Main.spriteBatch.Draw(texture, drawPos2 + circular, null, Projectile.GetAlpha(c), Projectile.rotation + rotation, drawOrigin1, Projectile.scale, SpriteEffects.None, 0f);
+                }
+                Main.spriteBatch.Draw(texture, drawPos2, null, Projectile.GetAlpha(Color.White), Projectile.rotation + rotation, drawOrigin1, Projectile.scale, SpriteEffects.None, 0f);
+            }
         }
-		int owner = 0;
-		public override void AI()
+        public override void AI()
 		{
-			owner = (int)Projectile.ai[0];
 			Lighting.AddLight(Projectile.Center, new Vector3(ColorHelpers.soulLootingColor.R, ColorHelpers.soulLootingColor.G, ColorHelpers.soulLootingColor.B) * 1f / 255f);
 			Projectile.frameCounter++;																																						
 			if (Projectile.frameCounter >= 5)
@@ -46,28 +70,34 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 				Projectile.frame = (Projectile.frame + 1) % 8;
 			}
 			Projectile.ai[1]++;
-			if (Projectile.ai[1] % 6 == 0)
+			if ((int)Projectile.ai[1] % 6 == 0)
 				Projectile.alpha++;
 			Projectile.velocity *= 0.95f;
-			Player player = Main.player[owner];
+			Player player = Main.player[Owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			int pepperID = -1;
-			int count = 0;
+			int count = player.ownedProjectileCounts[Type];
 			for(int i = 0; i < Main.projectile.Length; i++)
             {
 				Projectile proj = Main.projectile[i];
-				if(proj.type == ModContent.ProjectileType<GhostPepper>() && proj.active && proj.owner == owner)
+				if(proj.type == ModContent.ProjectileType<GhostPepper>() && proj.active && proj.owner == Owner)
                 {
 					pepperID = proj.whoAmI;
+					break;
                 }
-				if (proj.type == Projectile.type && proj.active && (int)proj.ai[0] == owner)
-					count++;
             }
-			if(count > 40 || voidPlayer.lootingSouls >= voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
+			if(count > 30 || voidPlayer.lootingSouls >= voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
             {
-				Projectile.Kill();
+                --player.ownedProjectileCounts[Type];
+                Projectile.Kill();
             }
-			Collect(player, pepperID);
+			if(Main.rand.NextBool(3))
+			{
+				Color c = ColorHelpers.soulLootingColor;
+				c.A = 0;
+                PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, Main.rand.NextVector2Circular(3, 3), Projectile.GetAlpha(c), 8);
+            }
+            Collect(player, pepperID);
 		}
 		public void Collect(Player player, int proj)
         {
@@ -91,8 +121,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
         public override void OnKill(int timeLeft)
 		{
 			int particlesR = 60;
-			owner = (int)Projectile.ai[0];
-			Player player = Main.player[owner];
+			Player player = Main.player[Owner];
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			if (voidPlayer.lootingSouls < voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption)
 			{
@@ -110,16 +139,11 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 			for (int i = 0; i < 360; i += particlesR)
 			{
 				Vector2 rotationalPos = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), 22, 22, ModContent.DustType<CopyDust4>());
-				Dust dust = Main.dust[num1];
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5) + rotationalPos, 22, 22, ModContent.DustType<CopyDust4>(), Alpha: Projectile.alpha, newColor: ColorHelpers.soulLootingColor * 0.75f);
 				dust.noGravity = true;
-				dust.velocity *= 0.1f;
-				dust.position += rotationalPos;
-				dust.velocity += rotationalPos * 0.3f;
-				dust.scale *= 2f;
+                dust.velocity = dust.velocity * 0.05f + rotationalPos * 0.4f;
+				dust.scale = dust.scale * 0.5f + 1f;
 				dust.fadeIn = 0.1f;
-				dust.alpha = Projectile.alpha;
-				dust.color = ColorHelpers.soulLootingColor;
 			}
 			base.OnKill(timeLeft);
         }

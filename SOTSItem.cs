@@ -42,6 +42,8 @@ using SOTS.Buffs;
 using Mono.CompilerServices.SymbolWriter;
 using Terraria.Chat;
 using Terraria.Map;
+using SOTS.Projectiles.Pyramid.GhostPepper;
+using SOTS.Items.Gems;
 
 namespace SOTS
 {
@@ -266,7 +268,6 @@ namespace SOTS
 				if (item.type == ItemType<LuxBag>())
 					alphaMult = 0.2f;
 				Texture2D texture = TextureAssets.Item[item.type].Value;
-
 				Rectangle frame;
 
 				if (Main.itemAnimations[item.type] != null)
@@ -321,7 +322,8 @@ namespace SOTS
 					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 					{
 						line2.OverrideColor = new Color(0, 130, 235, 255);
-					}
+                        break;
+                    }
 				}
 			}
 			if (rarities2.Contains(item.type))
@@ -331,7 +333,8 @@ namespace SOTS
 					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 					{
 						line2.OverrideColor = new Color(210, 0, 0);
-					}
+                        break;
+                    }
 				}
 			}
 			if (rarities3.Contains(item.type))
@@ -342,19 +345,23 @@ namespace SOTS
 					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 					{
 						line2.OverrideColor = overrideColor;
-					}
+                        break;
+                    }
 				}
 			}
-			if (rarities4.Contains(item.type))
+			bool GoldenApple = item.type == ItemType<CursedApple>() && GhostPepper.IsAlternate;
+
+            if (rarities4.Contains(item.type) || GoldenApple)
 			{
 				Color overrideColor = new Color(66, 226, 75);
-				if (DreamLamp.IsItemForgotten)
+				if (DreamLamp.IsItemForgotten && !GoldenApple)
 					overrideColor = new Color(95, 85, 105);
 				foreach (TooltipLine line2 in tooltips)
 				{
 					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
 					{
 						line2.OverrideColor = overrideColor;
+						break;
 					}
 				}
 			}
@@ -373,7 +380,9 @@ namespace SOTS
 			if (dedicatedPurpleRed.Contains(item.type))
 			{
 				dedicatedColor = ColorHelpers.soulLootingColor;
-				dedicated = true;
+				if (GoldenApple)
+					dedicatedColor = new Color(61, 166, 136); //For my resident hololive fan friend
+                dedicated = true;
 			}
 			if (dedicatedRainbow.Contains(item.type) && (item.type != ItemType<DreamLamp>() || !DreamLamp.IsItemForgotten))
 			{
@@ -418,7 +427,6 @@ namespace SOTS
 				TooltipLine line = new TooltipLine(Mod, "Dedicated", Language.GetTextValue("Mods.SOTS.Common.Dedicated"));
 				line.OverrideColor = dedicatedColor;
 				tooltips.Add(line);
-			
 			}
 			if(!item.IsAir)
             {
@@ -750,14 +758,14 @@ namespace SOTS
         }
         public override void UpdateEquip(Item item, Player player)
         {
-			if(item.type == ModContent.ItemType<GildedBladeWings>() || item.type == ModContent.ItemType<MachinaBooster>())
+			if(item.type == ItemType<GildedBladeWings>() || item.type == ItemType<MachinaBooster>())
             {
                  WingUpdate(-10, player, false);
             }
         }
         public override void UpdateVanity(Item item, Player player)
         {
-            if (item.type == ModContent.ItemType<GildedBladeWings>() || item.type == ModContent.ItemType<MachinaBooster>())
+            if (item.type == ItemType<GildedBladeWings>() || item.type == ItemType<MachinaBooster>())
             {
                 WingUpdate(-10, player, false);
             }
@@ -998,22 +1006,28 @@ namespace SOTS
 		public static HashSet<WormholeRecipe> WormholeRecipes;
 		public static void DrawInInventoryBobbing(SpriteBatch spriteBatch, Item item, Vector2 position, Rectangle frame, Color drawColor, float scale, float speedMultiplier = 1f, float sinMult = 1f)
 		{
-			Texture2D texture = TextureAssets.Item[item.type].Value;
-			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 sinusoid = new Vector2(0, 3 * sinMult * scale * (float)Math.Cos(speedMultiplier * MathHelper.ToRadians(SOTSWorld.GlobalCounter)));
-			float rotation = 14 * (float)Math.Sin(0.5f * MathHelper.ToRadians(SOTSWorld.GlobalCounter) * speedMultiplier);
-			spriteBatch.Draw(texture, position + sinusoid, frame, drawColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+			DrawInInventoryBobbing(TextureAssets.Item[item.type].Value, spriteBatch, item, position, frame, drawColor, scale, speedMultiplier, sinMult);
 		}
 		public static void DrawInWorldBobbing(SpriteBatch spriteBatch, Item item, Vector2 offset, Color color, ref float rotation, ref float scale, float speedMultiplier = 1f, float sinMult = 1f)
 		{
-			Texture2D texture = TextureAssets.Item[item.type].Value;
-			scale *= item.scale;
-			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 sinusoid = new Vector2(0, sinMult * 6 * scale * (float)Math.Cos(speedMultiplier * 2 * MathHelper.ToRadians(SOTSWorld.GlobalCounter))) + new Vector2(0, -3 * scale);
-			rotation = 15 * (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter) * speedMultiplier);
-			spriteBatch.Draw(texture, item.position + offset + origin + sinusoid - Main.screenPosition, null, color, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
-		}
-		public static void InitializeWormholeRecipes()
+			DrawInWorldBobbing(TextureAssets.Item[item.type].Value, spriteBatch, item, offset, color, ref rotation, ref scale, speedMultiplier, sinMult);
+        }
+        public static void DrawInInventoryBobbing(Texture2D texture, SpriteBatch spriteBatch, Item item, Vector2 position, Rectangle frame, Color drawColor, float scale, float speedMultiplier = 1f, float sinMult = 1f)
+        {
+            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 sinusoid = new Vector2(0, 3 * sinMult * scale * (float)Math.Cos(speedMultiplier * MathHelper.ToRadians(SOTSWorld.GlobalCounter)));
+            float rotation = 14 * (float)Math.Sin(0.5f * MathHelper.ToRadians(SOTSWorld.GlobalCounter) * speedMultiplier);
+            spriteBatch.Draw(texture, position + sinusoid, frame, drawColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+        }
+        public static void DrawInWorldBobbing(Texture2D texture, SpriteBatch spriteBatch, Item item, Vector2 offset, Color color, ref float rotation, ref float scale, float speedMultiplier = 1f, float sinMult = 1f)
+        {
+            scale *= item.scale;
+            Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+            Vector2 sinusoid = new Vector2(0, sinMult * 6 * scale * (float)Math.Cos(speedMultiplier * 2 * MathHelper.ToRadians(SOTSWorld.GlobalCounter))) + new Vector2(0, -3 * scale);
+            rotation = 15 * (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter) * speedMultiplier);
+            spriteBatch.Draw(texture, item.position + offset + origin + sinusoid - Main.screenPosition, null, color, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+        }
+        public static void InitializeWormholeRecipes()
         {
 			WormholeRecipes = new HashSet<WormholeRecipe>() { 
 				new WormholeRecipe(ItemType<TwilightGel>(), ItemType<SkipSoul>()), 
@@ -1023,7 +1037,8 @@ namespace SOTS
                 new WormholeRecipe(ItemType<Riptide>(), ItemType<Atlantis>()),
                 new WormholeRecipe(ItemType<BagOfAmmoGathering>(), ItemType<InfinityPouch>()),
                 new WormholeRecipe(ItemType<AlmondMilk>(), ItemType<Taco>()),
-				new WormholeRecipe(ItemType<WishingStar>(), ItemType<WishingStar>())
+				new WormholeRecipe(ItemType<WishingStar>(), ItemType<WishingStar>()),
+                new WormholeRecipe(ItemType<CursedApple>(), ItemType<CursedApple>())
             };
 		}
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
@@ -1057,6 +1072,12 @@ namespace SOTS
 								p.SOTSPlayer().ResetVisionID(true);
 						}
                     }
+					if(item.type == ItemType<CursedApple>())
+					{
+						SOTSWorld.GoldenApple = !SOTSWorld.GoldenApple;
+                        if (Main.netMode != NetmodeID.SinglePlayer)
+                            SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+					}
                 }
             }
         }

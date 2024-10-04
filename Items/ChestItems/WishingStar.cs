@@ -32,28 +32,20 @@ namespace SOTS.Items.ChestItems
         }
         public int MyPlayer = -1;
         public static bool IsAlternate => Main.LocalPlayer.SOTSPlayer().UniqueVisionNumber % 8 == 7; //Basically checking for the nameless vision
-        public string appropriateNameRightNow => IsAlternate ? this.GetLocalizedValue("AltDisplayName") : this.GetLocalizedValue("DisplayName");
+        public string AppropriateNameRightNow => IsAlternate ? this.GetLocalizedValue("AltDisplayName") : this.GetLocalizedValue("DisplayName");
         public override void UpdateInventory(Player player)
         {
             MyPlayer = player.whoAmI;
-            //if (Main.netMode != NetmodeID.Server)
-            //    Main.NewText(MyPlayer, Color.Gray);
-            //else
-            //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(MyPlayer.ToString()), Color.Orange);
             SetOverridenName();
         }
         public override void PostUpdate()
         {
-            //if(Main.netMode != NetmodeID.Server)
-            //    Main.NewText(MyPlayer);
-            //else
-            //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(MyPlayer.ToString()), Color.Red);
             SetOverridenName();
         }
         public void SetOverridenName()
         {
             if (Item.type == ModContent.ItemType<WishingStar>())
-                Item.SetNameOverride(appropriateNameRightNow);
+                Item.SetNameOverride(AppropriateNameRightNow);
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
@@ -135,8 +127,9 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
+            SetOverridenName();
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.WishingStar = true;
+            modPlayer.WishingStar = true;
         }
     }
 }

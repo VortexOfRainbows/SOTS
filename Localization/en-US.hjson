@@ -3354,7 +3354,9 @@ Mods: {
 
 			CursedApple: {
 				DisplayName: Cursed Apple
-				Tooltip:
+				AltDisplayName: Golden Apple
+				Tooltip: Temp
+				DefaultTooltip:
 					'''
 					Summons a pet Ghost Pepper to assist after combat
 					Plunder 2 Souls of Looting from every killed enemy, and store them inside your void meter
@@ -3363,6 +3365,16 @@ Mods: {
 					Enemies can be marked multiple times
 					Requires 100 souls to mark a boss
 					Some rare enemies will also require more souls to mark
+					'''
+				AltTooltip:
+					'''
+					Summons Friend to assist after combat
+					Plunder 2 Looting Feathers from every killed enemy, and store them inside your void meter
+					Right click on an enemy to mark it for harvesting, consuming 10 feathers
+					Marked enemies drop extra loot
+					Enemies can be marked multiple times
+					Requires 100 feathers to mark a boss
+					Some rare enemies will also require more feathers to mark
 					'''
 			}
 

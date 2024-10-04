@@ -7,6 +7,7 @@ using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -62,6 +63,14 @@ namespace SOTS.NPCs.AbandonedVillage
             }
         }
         public ThroeFace[] faces;
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(MyHorizontalFrame);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            MyHorizontalFrame = reader.ReadInt32();
+        }
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 5;
@@ -75,8 +84,8 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.damage = 25; 
             NPC.defense = 0;	
             NPC.knockBackResist = 0.25f;
-            NPC.width = 32;
-            NPC.height = 54;
+            NPC.width = 34;
+            NPC.height = 56;
             NPC.value = 250;
             NPC.boss = NPC.lavaImmune = false;
             NPC.noGravity = NPC.noTileCollide = NPC.netAlways = NPC.dontTakeDamage = true;
@@ -92,8 +101,11 @@ namespace SOTS.NPCs.AbandonedVillage
             return Aggressive && !NPC.dontTakeDamage;
         }
         public bool Aggressive => NPC.life < NPC.lifeMax || NPC.ai[3] < 0;
+        public int MyHorizontalFrame = -1;
         public override void AI()
         {
+            if (MyHorizontalFrame == -1)
+                MyHorizontalFrame = NPC.whoAmI % 3;
             if (NPC.ai[3] >= 0)
             {
                 if (faces == null)
@@ -139,10 +151,11 @@ namespace SOTS.NPCs.AbandonedVillage
 
             NPC.gfxOffY = -4;
 
-            if (NPC.ai[3] == -1)
+            if (NPC.ai[3] <= -1 && NPC.ai[3] >= -10)
             {
+                MyHorizontalFrame = Math.Abs((int)NPC.ai[3]) % 3;
                 NPC.velocity += Main.rand.NextVector2Circular(5, 5);
-                NPC.ai[3] = -2;
+                NPC.ai[3] = -20f;
                 NPC.life = (int)NPC.ai[2];
                 NPC.ai[2] = 0;
                 NPC.localAI[1] = -1;
@@ -150,27 +163,25 @@ namespace SOTS.NPCs.AbandonedVillage
 
             if (Aggressive)
             {
-               int invis = 0;
-                //Split into multiple aggressive throes
-                //TODO!
+                int invis = 0;
                 NPC.knockBackResist = 0.5f;
                 NPC.velocity *= 0.971f;
                 NPC.ai[0]++;
                 if (NPC.ai[3] >= 0 || NPC.localAI[1] >= 0)
                 {
                     NPC.netUpdate = true;
-                    NPC.ai[3] = -2;
+                    NPC.ai[3] = -20;
                     NPC.ai[2] = 0;
-                    NPC.ai[1] = 1;
+                    NPC.ai[1] = 0.9f;
                     NPC.localAI[1] = -1; //This is to help multiplayer clients create a visual effect, since this variable is not synced in multiplayer
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         for (int i = 0; i < 4; i++)
                         {
-                            NPC.NewNPCDirect(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.position.Y + NPC.height), Type, 0, Main.rand.Next(90), 0.875f, NPC.life, -1);
+                            NPC.NewNPCDirect(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.position.Y + NPC.height), Type, 0, Main.rand.Next(90), 0.875f, NPC.life, -(1 + (i + NPC.whoAmI) % 3));
                         }
                         //This one can be spawned server side since the position for the visual should be synced among all clients
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.75f, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0, 56);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity * 0.75f, ProjectileType<ThroeProj>(), 0, MyHorizontalFrame, Main.myPlayer, (int)NPC.frameCounter, 0, 56);
                     }
                     if(Main.netMode != NetmodeID.Server)
                     {
@@ -182,7 +193,7 @@ namespace SOTS.NPCs.AbandonedVillage
                                 //Deliberately setting the Main.myPlayer (owner) parameter to 0 in order to make the spawning of the projectile client sided, as this is a projectile spawned for visual effect, and the visual for Throes is not synced.
                                 float circular = MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.5f + 90 * i++);
                                 Vector2 cloneLocation = NPC.Center + tF.position.RotatedBy(circular);
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), cloneLocation, (NPC.velocity + tF.velocity) * 0.26f, ProjectileType<ThroeProj>(), 0, 0, -1, tF.FrameCounter, 0.5f, 28);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), cloneLocation, (NPC.velocity + tF.velocity) * 0.26f, ProjectileType<ThroeProj>(), 0, 1 + (i + NPC.whoAmI) % 3, -1, tF.FrameCounter, 0.5f, 28);
                             }
                         }
                         SOTSUtils.PlaySound(SoundID.DD2_GhastlyGlaiveImpactGhost, NPC.Center, 1.2f, -0.3f);
@@ -202,13 +213,13 @@ namespace SOTS.NPCs.AbandonedVillage
                             NPC.Center = player.Center + new Vector2(distToPlayer * 0.8f + 96, 0).RotatedBy(MathHelper.ToRadians(NPC.ai[0] * 4));
                             NPC.netUpdate = true;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0, -32);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, MyHorizontalFrame, Main.myPlayer, (int)NPC.frameCounter, 0, -32);
                         }
                         if ((int)NPC.ai[2] == -40)
                         {
                             NPC.netUpdate = true;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0.75f, 32);
+                                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, MyHorizontalFrame, Main.myPlayer, (int)NPC.frameCounter, 0.75f, 32);
                         }
                     }
 
@@ -272,15 +283,16 @@ namespace SOTS.NPCs.AbandonedVillage
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
-            Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 10);
+            Vector2 drawOrigin = new Vector2(texture.Width / 6, texture.Height / 10);
             Vector2 drawPos = NPC.Center - screenPos;
-            Rectangle frame2 = new Rectangle(0, NPC.frame.Y, texture.Width, texture.Height / 5);
+            Rectangle frame2 = new Rectangle(MyHorizontalFrame * texture.Width / 3, NPC.frame.Y, texture.Width / 3, texture.Height / 5);
             if (faces != null && NPC.ai[3] >= 0)
             {
                 int i = 0;
                 foreach(ThroeFace tF in faces)
                 {
-                    Rectangle frame = new Rectangle(0, tF.FrameCounter / 5 % 5 * texture.Height / 5, texture.Width, texture.Height / 5);
+                    int frameNum = (1 + (i + NPC.whoAmI) % 3) % 3;
+                    Rectangle frame = new Rectangle(frameNum * texture.Width / 3, tF.FrameCounter / 5 % 5 * texture.Height / 5, texture.Width / 3, texture.Height / 5);
                     float circular = MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.5f + 90 * i++);
                     Vector2 cloneLocation = drawPos + tF.position.RotatedBy(circular);
                     float sinusoid = MathF.Sin(MathHelper.ToRadians(tF.AI * 4));
@@ -380,7 +392,7 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             if(Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, 0, Main.myPlayer, (int)NPC.frameCounter, 0, 64);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, MyHorizontalFrame, Main.myPlayer, (int)NPC.frameCounter, 0, 64);
             }
         }
     }
@@ -391,11 +403,12 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             int dir = SOTSUtils.SignNoZero(Projectile.ai[2]);
             int frame = (int)(Projectile.ai[0] / 5) % 5;
+            int horizontalFrame = (int)Projectile.knockBack % 3;
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-            Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 10);
+            Vector2 drawOrigin = new Vector2(texture.Width / 6, texture.Height / 10);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
-            Rectangle frameRect = new Rectangle(0, frame * texture.Height / 5, texture.Width, texture.Height / 5);
-            float perc = (Projectile.timeLeft / 60f);
+            Rectangle frameRect = new Rectangle(horizontalFrame * texture.Width / 3, frame * texture.Height / 5, texture.Width / 3, texture.Height / 5);
+            float perc = Projectile.timeLeft / 60f;
             float reverse = dir == -1 ? perc : (1 - perc);
             float normal = dir == 1 ? perc : perc * (1 - perc);
             for (int i = 0; i < 4; i++)
@@ -416,11 +429,7 @@ namespace SOTS.NPCs.AbandonedVillage
             Projectile.alpha = 255;
             Projectile.timeLeft = 60;
         }
-        public override bool? CanHitNPC(NPC target)
-        {
-            return target.whoAmI != Projectile.ai[0];
-        }
-        bool runOnce = true;
+        private bool runOnce = true;
         public override void AI()
         {
             if(runOnce)

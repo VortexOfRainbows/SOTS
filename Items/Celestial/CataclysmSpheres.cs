@@ -17,7 +17,7 @@ namespace SOTS.Items.Celestial
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 45;
+			Item.damage = 50;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 26;
 			Item.useAnimation = 26;

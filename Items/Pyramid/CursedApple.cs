@@ -7,12 +7,63 @@ using Terraria.ObjectData;
 using Terraria.DataStructures;
 using SOTS.Void;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using SOTS.Projectiles.Pyramid.GhostPepper;
+using static SOTS.ItemHelpers;
 
 namespace SOTS.Items.Pyramid
 {
 	public class CursedApple : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public string AppropriateNameRightNow => GhostPepper.IsAlternate ? this.GetLocalizedValue("AltDisplayName") : this.GetLocalizedValue("DisplayName");
+        public override string Texture => "SOTS/Items/Pyramid/CursedApple";
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+			if(GhostPepper.IsAlternate)
+            {
+				Texture2D t = ModContent.Request<Texture2D>("SOTS/Items/Pyramid/GoldenApple").Value;
+                DrawInInventoryBobbing(t, spriteBatch, Item, position, new Rectangle(0, 0, t.Width, t.Height), Color.White, scale * 0.85f, 0.75f, 0.75f);
+            }
+            return !GhostPepper.IsAlternate;
+        }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            if (GhostPepper.IsAlternate)
+            {
+                DrawInWorldBobbing(ModContent.Request<Texture2D>("SOTS/Items/Pyramid/GoldenApple").Value, spriteBatch, Item, Vector2.Zero, lightColor, ref rotation, ref scale, 0.75f, 0.75f);
+            }
+            return !GhostPepper.IsAlternate;
+        }
+        public override void UpdateInventory(Player player)
+        {
+            SetOverridenName();
+        }
+        public override void PostUpdate()
+        {
+            SetOverridenName();
+        }
+        public void SetOverridenName()
+        {
+            if (Item.type == ModContent.ItemType<CursedApple>())
+                Item.SetNameOverride(AppropriateNameRightNow);
+        }
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            foreach (TooltipLine line in tooltips)
+            {
+                if (line.Mod == "Terraria")
+                {
+                    if (line.Name == "Tooltip0")
+                    {
+                        if (!GhostPepper.IsAlternate)
+                            line.Text = Language.GetTextValue("Mods.SOTS.Items.CursedApple.DefaultTooltip");
+                        else
+                            line.Text = Language.GetTextValue("Mods.SOTS.Items.CursedApple.AltTooltip");
+                    }
+                }
+            }
+        }
+        public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
 		}
@@ -22,8 +73,6 @@ namespace SOTS.Items.Pyramid
 			Item.height = 32;
 			Item.maxStack = 1;
 			Item.rare = ItemRarityID.LightPurple;
-			//Item.consumable = true;
-			//Item.createTile = mod.TileType("CursedAppleTile");
 			Item.value = Item.sellPrice(0, 10, 0, 0);
 			Item.accessory = true;
 			Item.hasVanityEffects = true;
@@ -36,13 +85,14 @@ namespace SOTS.Items.Pyramid
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
+            SetOverridenName();
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
+            VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.soulsOnKill += 2;
 			//modPlayer.typhonRange = 120;
 			if (!hideVisual)
 				modPlayer.petPepper = true;
-		}
+        }
 	}
 	public class CursedAppleTile : ModTile
 	{

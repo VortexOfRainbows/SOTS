@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.PerformanceData;
 using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -39,7 +38,6 @@ using SOTS.WorldgenHelpers;
 using SOTS.Items.Furniture.AncientGold;
 using Terraria.UI;
 using SOTS.Void;
-using SOTS.Items.Invidia;
 using SOTS.Items.Furniture.Nature;
 using SOTS.Items.Temple;
 using SOTS.Items.Furniture.Permafrost;
@@ -77,6 +75,7 @@ namespace SOTS
 			packet.Write(DiamondKeySlotted);
 			packet.Write(AmberKeySlotted);
 			packet.Write(DreamLampSolved);
+			packet.Write(GoldenApple);
 			packet.Send();
 		}
 		public static void SyncTimeFreeze(Player clientSender)
@@ -185,7 +184,7 @@ namespace SOTS
         }
         public override void PostUpdateDusts()
         {
-			if(!SOTSWorld.IsFrozenThisFrame)
+			if(!IsFrozenThisFrame)
 				ParticleHelper.Update();
         }
         public static void Update()
@@ -215,9 +214,7 @@ namespace SOTS
 		}
 		private void PreSaveAndQuit_AwaitThreadedTasks()
 		{
-			while (PhaseWorldgenHelper.Generating)
-			{
-			}
+			while (PhaseWorldgenHelper.Generating) ;
 		}
 		public static int SecretFoundMusicTimer = 0;
         public static int planetarium = 0;
@@ -241,6 +238,7 @@ namespace SOTS
 		public static bool DiamondKeySlotted = false;
 		public static bool AmberKeySlotted = false;
 		public static bool DreamLampSolved = false;
+		public static bool GoldenApple = false;
 		public void ResetWorldVariables()
 		{
 			GlobalCounter = 0;
@@ -264,7 +262,8 @@ namespace SOTS
 			DiamondKeySlotted = false;
 			AmberKeySlotted = false;
 			DreamLampSolved = false;
-		}
+			GoldenApple = false;
+        }
 		public override void OnWorldLoad()
 		{
 			SOTSConfig.voidBarNeedsLoading = 1;
@@ -293,8 +292,9 @@ namespace SOTS
 			tag["DiamondKey"] = DiamondKeySlotted;
 			tag["AmberKey"] = AmberKeySlotted;
 			tag["DreamLamp"] = DreamLampSolved;
+			tag["GoldenApple"] = GoldenApple;
 		}
-        public override void LoadWorldData(TagCompound tag)
+		public override void LoadWorldData(TagCompound tag)
 		{
 			downedGlowmoth = tag.GetBool("DownedGlowmoth");
 			downedPinky = tag.GetBool("DownedPinky");
@@ -312,7 +312,8 @@ namespace SOTS
 			DiamondKeySlotted = tag.GetBool("DiamondKey");
 			AmberKeySlotted = tag.GetBool("AmberKey");
 			DreamLampSolved = tag.GetBool("DreamLamp");
-		}
+            GoldenApple = tag.GetBool("GoldenApple");
+        }
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
 			flags[0] = downedPinky;
@@ -336,6 +337,7 @@ namespace SOTS
 			writer.Write(flags);
 			writer.Write(gemFlags);
 			writer.Write(GlobalCounter);
+			writer.Write(GoldenApple);
 		}
 		public override void NetReceive(BinaryReader reader) {
 			BitsByte flags = reader.ReadByte();
@@ -358,6 +360,7 @@ namespace SOTS
 			DreamLampSolved = gemFlags[7];
 
 			GlobalCounter = reader.ReadInt32();
+			GoldenApple = reader.ReadBoolean();
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{

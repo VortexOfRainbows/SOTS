@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Blades;
 using SOTS.Projectiles.Camera;
+using SOTS.Projectiles.Pyramid.GhostPepper;
 using System;
 using Terraria;
 
@@ -38,8 +39,15 @@ namespace SOTS
         {
 			soulColorCounter++;
 			float toRadians = MathHelper.ToRadians(soulColorCounter);
-			destabilizeColor = Color.Lerp(new Color(80, 190, 80), new Color(64, 178, 172), 0.5f + (float)Math.Sin(toRadians * 1.25f) * 0.5f);
-			soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + (float)Math.Sin(toRadians * 1.5f) * 0.5f);
+			destabilizeColor = Color.Lerp(new Color(80, 190, 80), new Color(64, 178, 172), 0.5f + MathF.Sin(toRadians * 1.25f) * 0.5f);
+			if(GhostPepper.IsAlternate)
+			{
+                soulLootingColor = Color.Lerp(new Color(52, 73, 117), new Color(88, 115, 176), 0.5f + MathF.Sin(toRadians * 1.5f) * 0.5f) * 1.2f;
+            }
+			else
+            {
+                soulLootingColor = Color.Lerp(new Color(66, 56, 111), new Color(171, 3, 35), 0.5f + MathF.Sin(toRadians * 1.5f) * 0.5f);
+            }
 			float newAi = soulColorCounter * 3 / 13f;
 			double frequency = 0.3;
 			double center = 200;
@@ -48,20 +56,20 @@ namespace SOTS
 			double grn = Math.Sin(frequency * newAi + 2.0) * width + center;
 			double blu = Math.Sin(frequency * newAi + 4.0) * width + center;
 			pastelRainbow = new Color((int)red, (int)grn, (int)blu);
-			NatureColor = Color.Lerp(new Color(192, 222, 143), new Color(45, 102, 46), 0.5f + (float)Math.Sin(toRadians) * 0.5f);
-			EarthColor = Color.Lerp(new Color(253, 234, 157), new Color(142, 118, 43), 0.5f + (float)Math.Sin(toRadians * 2.5f) * 0.5f);
-			TideColor = Color.Lerp(new Color(177, 187, 238), new Color(64, 72, 178), 0.5f + (float)Math.Sin(toRadians * 0.5f) * 0.5f);
-			PermafrostColor = Color.Lerp(new Color(188, 217, 245), new Color(106, 148, 234), 0.5f + (float)Math.Sin(toRadians * 0.5f) * 0.5f);
-			OtherworldColor = Color.Lerp(new Color(167, 45, 225, 0), new Color(64, 178, 172, 0), 0.5f + (float)Math.Sin(toRadians * 0.5f) * 0.5f);
+			NatureColor = Color.Lerp(new Color(192, 222, 143), new Color(45, 102, 46), 0.5f + MathF.Sin(toRadians) * 0.5f);
+			EarthColor = Color.Lerp(new Color(253, 234, 157), new Color(142, 118, 43), 0.5f + MathF.Sin(toRadians * 2.5f) * 0.5f);
+			TideColor = Color.Lerp(new Color(177, 187, 238), new Color(64, 72, 178), 0.5f + MathF.Sin(toRadians * 0.5f) * 0.5f);
+			PermafrostColor = Color.Lerp(new Color(188, 217, 245), new Color(106, 148, 234), 0.5f + MathF.Sin(toRadians * 0.5f) * 0.5f);
+			OtherworldColor = Color.Lerp(new Color(167, 45, 225, 0), new Color(64, 178, 172, 0), 0.5f + MathF.Sin(toRadians * 0.5f) * 0.5f);
 			PurpleOtherworldColor = Color.Lerp(OtherworldColor, new Color(167, 45, 225, 0), 0.5f);
-            EvilColor = Color.Lerp(new Color(55, 7, 0, 0), new Color(38, 18, 61, 0), 0.5f + (float)Math.Sin(toRadians * 1.25f) * 0.5f);
+            EvilColor = Color.Lerp(new Color(55, 7, 0, 0), new Color(38, 18, 61, 0), 0.5f + MathF.Sin(toRadians * 1.25f) * 0.5f);
 			RedEvilColor = Color.Lerp(EvilColor, new Color(255, 30, 0, 0), 0.5f) * 1.5f;
-			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + (float)Math.Sin(toRadians * 2.5f) * 0.5f);
+			VibrantColor = Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + MathF.Sin(toRadians * 2.5f) * 0.5f);
 
 			Color LemegetonRed = new Color(255, 82, 97);
 			Color LemegetonGreen = new Color(104, 229, 101);
 			Color LemegetonPurple = new Color(200, 119, 247);
-			float lerpAmt = 1.5f + 3 * (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 0.33f)) * 0.5f;
+			float lerpAmt = 1.5f + 3 * MathF.Sin(MathHelper.ToRadians(soulColorCounter * 0.33f)) * 0.5f;
 			if (lerpAmt < 1)
 			{
 				LemegetonColor = Color.Lerp(LemegetonRed, LemegetonGreen, lerpAmt);
@@ -87,11 +95,11 @@ namespace SOTS
 		}
 		public static Color InfernoColorAttemptDegrees(float degrees)
 		{
-			return InfernoColorAttempt(0.5f * (float)Math.Sin(MathHelper.ToRadians(soulColorCounter * 3f + degrees)));
+			return InfernoColorAttempt(0.5f * MathF.Sin(MathHelper.ToRadians(soulColorCounter * 3f + degrees)));
 		}
 		public static Color VibrantColorAttempt(float degrees, bool avoidColorCycling = false)
 		{
-			return Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians((!avoidColorCycling ? soulColorCounter * 2.5f : 0) + degrees)));
+			return Color.Lerp(new Color(80, 120, 220, 0), new Color(180, 230, 100, 0), 0.5f + 0.5f * MathF.Sin(MathHelper.ToRadians((!avoidColorCycling ? soulColorCounter * 2.5f : 0) + degrees)));
 		}
 		public static Color pastelAttempt(float radians, bool pinkify = false)
 		{
