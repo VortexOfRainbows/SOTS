@@ -21,7 +21,7 @@ namespace SOTS.Items.Pyramid
         {
 			if(GhostPepper.IsAlternate)
             {
-				Texture2D t = ModContent.Request<Texture2D>("SOTS/Items/Pyramid/GoldenApple").Value;
+				Texture2D t = ModContent.Request<Texture2D>("SOTS/Items/Secrets/GoldenApple").Value;
                 DrawInInventoryBobbing(t, spriteBatch, Item, position, new Rectangle(0, 0, t.Width, t.Height), Color.White, scale * 0.85f, 0.75f, 0.75f);
             }
             return !GhostPepper.IsAlternate;
@@ -30,7 +30,7 @@ namespace SOTS.Items.Pyramid
         {
             if (GhostPepper.IsAlternate)
             {
-                DrawInWorldBobbing(ModContent.Request<Texture2D>("SOTS/Items/Pyramid/GoldenApple").Value, spriteBatch, Item, Vector2.Zero, lightColor, ref rotation, ref scale, 0.75f, 0.75f);
+                DrawInWorldBobbing(ModContent.Request<Texture2D>("SOTS/Items/Secrets/GoldenApple").Value, spriteBatch, Item, Vector2.Zero, lightColor, ref rotation, ref scale, 0.75f, 0.75f);
             }
             return !GhostPepper.IsAlternate;
         }
@@ -88,7 +88,7 @@ namespace SOTS.Items.Pyramid
             SetOverridenName();
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
             VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			voidPlayer.soulsOnKill += 2;
+			voidPlayer.soulsOnKill += GhostPepper.IsAlternate ? 3 : 2;
 			//modPlayer.typhonRange = 120;
 			if (!hideVisual)
 				modPlayer.petPepper = true;

@@ -8,7 +8,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 {
 	public class GhostPepper : ModProjectile
 	{
-		public static bool IsAlternate => SOTSWorld.GoldenApple;
+		public static bool IsAlternate => SOTSWorld.GoldenAppleSolved;
 		private string AltText => IsAlternate? "Alt" : "";
 		public override void SetStaticDefaults()
 		{

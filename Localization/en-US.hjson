@@ -1042,7 +1042,7 @@ Mods: {
 				DisplayName: Selene
 				Tooltip:
 					'''
-					Applies a stacking, permanent curse that deals 2 damage per second and increases damage taken by enemies by 0.5%
+					Applies a stacking, permanent curse that deals 2 damage per second and increases damage done by 0.5%
 					Launches waves that deal 50% damage and have a 20% chance to apply the curse
 					'''
 			}
@@ -3369,7 +3369,7 @@ Mods: {
 				AltTooltip:
 					'''
 					Summons Friend to assist after combat
-					Plunder 2 Looting Feathers from every killed enemy, and store them inside your void meter
+					Plunder 3 Looting Feathers from every killed enemy, and store them inside your void meter
 					Right click on an enemy to mark it for harvesting, consuming 10 feathers
 					Marked enemies drop extra loot
 					Enemies can be marked multiple times
@@ -7512,6 +7512,7 @@ Mods: {
 			MagmaBeam.DisplayName: Magma Beam
 			MagmaLaser.DisplayName: Magma Laser
 			FortressCrasher.DisplayName: Fortress Crasher
+			ConduitParticleProjectile.DisplayName: Conduit Particle Projectile
 		}
 
 		DamageClasses: {

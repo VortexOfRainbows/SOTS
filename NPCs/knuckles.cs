@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 
 namespace SOTS.NPCs
 {[AutoloadBossHead]
-	public class Knuckles : ModNPC
+	public class knuckles : ModNPC
 	{
 		public override void SetStaticDefaults()
 		{

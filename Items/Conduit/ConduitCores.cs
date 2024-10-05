@@ -631,7 +631,20 @@ namespace SOTS.Items.Conduit
 			}
 			ConvertToActiveState(i, j);
 		}
-		public void ConvertToActiveState(int i, int j)
+        public override void Update()
+        {
+			if(Main.netMode == NetmodeID.Server)
+            {
+                Tile tile = Main.tile[Position.X, Position.Y];
+                if (ConduitTile == ModContent.GetInstance<ConduitTile>())
+                {
+                    ModTile mTile = ModContent.GetModTile(tile.TileType);
+                    if (mTile is ConduitTile cTile)
+                        CTile = cTile;
+                }
+            }
+        }
+        public void ConvertToActiveState(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
 			if (tileCountChassis >= 20)

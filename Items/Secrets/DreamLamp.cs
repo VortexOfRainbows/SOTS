@@ -43,7 +43,6 @@ namespace SOTS.Items.Secrets
 			Item.shootSpeed = 5f;
 			Item.knockBack = 5;
 			Item.noMelee = true;
-			Item.scale = 0.8f;
 			Item.UseSound = null;
 			Item.maxStack = 1;
 			Item.autoReuse = false;
@@ -143,7 +142,6 @@ namespace SOTS.Items.Secrets
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
 			Texture2D realTexture = Terraria.GameContent.TextureAssets.Item[Type].Value;
-			scale *= Item.scale;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			Vector2 sinusoid = new Vector2(0, 6 * scale * (float)Math.Cos(1.7f * MathHelper.ToRadians(SOTSWorld.GlobalCounter))) + new Vector2(0, -3 * scale);
 			rotation = 15 * (float)Math.Sin(1f * MathHelper.ToRadians(SOTSWorld.GlobalCounter));
@@ -154,7 +152,7 @@ namespace SOTS.Items.Secrets
 			}
 			else
 				realTexture = texture;
-			spriteBatch.Draw(realTexture, Item.position + origin + sinusoid - Main.screenPosition, null, lightColor, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(realTexture, Item.position + origin + sinusoid - Main.screenPosition, null, lightColor, rotation * MathHelper.Pi / 180f, origin, scale * 0.8f, SpriteEffects.None, 0f);
 			return false;
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

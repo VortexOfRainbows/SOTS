@@ -75,7 +75,7 @@ namespace SOTS
 			packet.Write(DiamondKeySlotted);
 			packet.Write(AmberKeySlotted);
 			packet.Write(DreamLampSolved);
-			packet.Write(GoldenApple);
+			packet.Write(GoldenAppleSolved);
 			packet.Send();
 		}
 		public static void SyncTimeFreeze(Player clientSender)
@@ -238,7 +238,7 @@ namespace SOTS
 		public static bool DiamondKeySlotted = false;
 		public static bool AmberKeySlotted = false;
 		public static bool DreamLampSolved = false;
-		public static bool GoldenApple = false;
+		public static bool GoldenAppleSolved = false;
 		public void ResetWorldVariables()
 		{
 			GlobalCounter = 0;
@@ -262,7 +262,7 @@ namespace SOTS
 			DiamondKeySlotted = false;
 			AmberKeySlotted = false;
 			DreamLampSolved = false;
-			GoldenApple = false;
+			GoldenAppleSolved = false;
         }
 		public override void OnWorldLoad()
 		{
@@ -292,7 +292,7 @@ namespace SOTS
 			tag["DiamondKey"] = DiamondKeySlotted;
 			tag["AmberKey"] = AmberKeySlotted;
 			tag["DreamLamp"] = DreamLampSolved;
-			tag["GoldenApple"] = GoldenApple;
+			tag["GoldenApple"] = GoldenAppleSolved;
 		}
 		public override void LoadWorldData(TagCompound tag)
 		{
@@ -312,7 +312,7 @@ namespace SOTS
 			DiamondKeySlotted = tag.GetBool("DiamondKey");
 			AmberKeySlotted = tag.GetBool("AmberKey");
 			DreamLampSolved = tag.GetBool("DreamLamp");
-            GoldenApple = tag.GetBool("GoldenApple");
+            GoldenAppleSolved = tag.GetBool("GoldenApple");
         }
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
@@ -337,7 +337,7 @@ namespace SOTS
 			writer.Write(flags);
 			writer.Write(gemFlags);
 			writer.Write(GlobalCounter);
-			writer.Write(GoldenApple);
+			writer.Write(GoldenAppleSolved);
 		}
 		public override void NetReceive(BinaryReader reader) {
 			BitsByte flags = reader.ReadByte();
@@ -360,7 +360,7 @@ namespace SOTS
 			DreamLampSolved = gemFlags[7];
 
 			GlobalCounter = reader.ReadInt32();
-			GoldenApple = reader.ReadBoolean();
+			GoldenAppleSolved = reader.ReadBoolean();
 		}
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{

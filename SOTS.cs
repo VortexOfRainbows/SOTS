@@ -466,7 +466,7 @@ namespace SOTS
 					SOTSWorld.DiamondKeySlotted = reader.ReadBoolean();
 					SOTSWorld.AmberKeySlotted = reader.ReadBoolean();
 					SOTSWorld.DreamLampSolved = reader.ReadBoolean();
-                    SOTSWorld.GoldenApple = reader.ReadBoolean();
+                    SOTSWorld.GoldenAppleSolved = reader.ReadBoolean();
                     if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -480,7 +480,7 @@ namespace SOTS
 						packet.Write(SOTSWorld.DiamondKeySlotted);
 						packet.Write(SOTSWorld.AmberKeySlotted);
 						packet.Write(SOTSWorld.DreamLampSolved);
-                        packet.Write(SOTSWorld.GoldenApple);
+                        packet.Write(SOTSWorld.GoldenAppleSolved);
                         packet.Send(-1, playernumber2);
 					}
 					break;

@@ -131,31 +131,6 @@ namespace SOTS
 				};
 				tooltips.Add(line);
 			}
-			/*if (originalOwner.Length > 0)
-			{
-				TooltipLine line = new TooltipLine(mod, "CraftedBy", "Crafted by: " + originalOwner)
-				{
-					overrideColor = Color.LimeGreen
-				};
-				tooltips.Add(line);
-				foreach (TooltipLine line2 in tooltips)
-				{
-					if (line2.mod == "Terraria" && line2.Name == "ItemName")
-					{
-						line2.text = originalOwner + "'s " + line2.text;
-					}
-				}
-			}*/
-			/*if (GetInstance<ExampleConfigClient>().ShowModOriginTooltip)
-			{
-				foreach (TooltipLine line3 in tooltips)
-				{
-					if (line3.mod == "Terraria" && line3.Name == "ItemName")
-					{
-						line3.text = line3.text + (item.modItem != null ? " [" + item.modItem.mod.DisplayName + "]" : "");
-					}
-				}
-			}*/
 		}
 		public override void NetSend(Item item, BinaryWriter writer)
 		{
@@ -933,7 +908,7 @@ namespace SOTS
             Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 sinusoid = new Vector2(0, sinMult * 6 * scale * (float)Math.Cos(speedMultiplier * 2 * MathHelper.ToRadians(SOTSWorld.GlobalCounter))) + new Vector2(0, -3 * scale);
             rotation = 15 * (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter) * speedMultiplier);
-            spriteBatch.Draw(texture, item.position + offset + origin + sinusoid - Main.screenPosition, null, color, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, item.Center + offset + sinusoid - Main.screenPosition, null, color, rotation * MathHelper.Pi / 180f, origin, scale, SpriteEffects.None, 0f);
         }
         public static void InitializeWormholeRecipes()
         {
@@ -946,7 +921,6 @@ namespace SOTS
                 new WormholeRecipe(ItemType<BagOfAmmoGathering>(), ItemType<InfinityPouch>()),
                 new WormholeRecipe(ItemType<AlmondMilk>(), ItemType<Taco>()),
 				new WormholeRecipe(ItemType<WishingStar>(), ItemType<WishingStar>()),
-                new WormholeRecipe(ItemType<CursedApple>(), ItemType<CursedApple>())
             };
 		}
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
@@ -980,12 +954,6 @@ namespace SOTS
 								p.SOTSPlayer().ResetVisionID(true);
 						}
                     }
-					if(item.type == ItemType<CursedApple>())
-					{
-						SOTSWorld.GoldenApple = !SOTSWorld.GoldenApple;
-                        if (Main.netMode != NetmodeID.SinglePlayer)
-                            SOTSWorld.SyncGemLocks(Main.LocalPlayer);
-					}
                 }
             }
         }

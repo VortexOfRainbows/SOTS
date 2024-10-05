@@ -10,9 +10,13 @@ using SOTS.Items.Planetarium;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Secrets;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace SOTS
@@ -271,6 +275,256 @@ namespace SOTS
                     }
                 }
             }
+        }
+    }
+    public class ConduitItem : GlobalItem
+    {
+        public override void NetSend(Item item, BinaryWriter writer)
+        {
+            writer.Write(RunOnce);
+            writer.Write(ConduitTransformTimer);
+            writer.Write(ConduitTransformType);
+            writer.Write(ConduitX);
+            writer.Write(ConduitY);
+        }
+        public override void NetReceive(Item item, BinaryReader reader)
+        {
+            RunOnce = reader.ReadBoolean();
+            ConduitTransformTimer = reader.ReadInt32();
+            ConduitTransformType = reader.ReadInt32();
+            ConduitX = reader.ReadInt32();
+            ConduitY = reader.ReadInt32();
+        }
+        public override bool AppliesToEntity(Item entity, bool lateInstantiation)
+        {
+            bool validItem = entity.type == ModContent.ItemType<DreamLamp>() || entity.type == ModContent.ItemType<CursedApple>(); //Plan to expand this system more thoroughly in the future. For now, we will just check the 2 items that it effects
+            return lateInstantiation && validItem;
+        }
+        public static Color ConduitColor(int i)
+        {
+            Color color;
+            switch (i)
+            {
+                case 0:
+                    color = ColorHelper.NatureColor;
+                    break;
+                case 1:
+                    color = ColorHelper.EarthColor;
+                    break;
+                case 2:
+                    color = ColorHelper.PermafrostColor;
+                    break;
+                case 3:
+                    color = ColorHelper.PurpleOtherworldColor;
+                    break;
+                case 4:
+                    color = ColorHelper.TideColor;
+                    break;
+                case 5:
+                    color = ColorHelper.RedEvilColor;
+                    break;
+                case 6:
+                    color = ColorHelper.Inferno1;
+                    break;
+                default:
+                    color = ColorHelper.ChaosPink;
+                    break;
+            }
+            return color;
+        }
+        public override bool InstancePerEntity => true;
+        private bool IsBeingTransformed => ConduitTransformTimer > 0 && ConduitTransformType != -1;
+        private ConduitCounterTE MyConduit
+        {
+            get
+            {
+                bool success = TileEntity.ByPosition.TryGetValue(new Point16(ConduitX, ConduitY), out TileEntity te);
+                if(success && te is ConduitCounterTE ccte)
+                {
+                    return ccte;
+                }
+                return null;
+            }
+        }
+        private float TransfromPercent => ConduitTransformTimer / 150f;
+        private float PrevConduitTransformTimer = -30;
+        private float ConduitTransformTimer = -30;
+        private int ConduitTransformType = -1;
+        private int ConduitX = -1;
+        private int ConduitY = -1;
+        private bool RunOnce = true;
+        public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            if (MyConduit != null)
+                MyConduit.DrawConduitToLocation(ConduitX, ConduitY, item.Center, 1f, ConduitColor(ConduitTransformType));
+            return true;
+        }
+        public override void PostDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            if (IsBeingTransformed)
+            {
+                ConduitHelper.DrawConduitCircleFull(item.Center, TransfromPercent, ConduitColor(ConduitTransformType) * MathF.Min(1, ConduitTransformTimer / 90f));
+            }
+        }
+        public override bool OnPickup(Item item, Player player) //happens only on client
+        {
+            RunOnce = true;
+            return true;
+        }
+        private void ResetVars(Item item)
+        {
+            ConduitTransformTimer = -30;
+            ConduitTransformType = -1;
+            ConduitX = -1;
+            ConduitY = -1;
+        }
+        public void CheckForNearbyConduits(Item item)
+        {
+            bool validForNature = (item.type == ModContent.ItemType<DreamLamp>() && !SOTSWorld.DreamLampSolved) || (item.type == ModContent.ItemType<CursedApple>() && !SOTSWorld.GoldenAppleSolved);
+            bool validForEvil = (item.type == ModContent.ItemType<DreamLamp>() && SOTSWorld.DreamLampSolved) || (item.type == ModContent.ItemType<CursedApple>() && SOTSWorld.GoldenAppleSolved);
+            foreach (ConduitCounterTE tileEntity in TileEntity.ByID.Values.OfType<ConduitCounterTE>())
+            {
+                if (tileEntity.ConduitTile != null)
+                {
+                    int type = tileEntity.ConduitTile.DissolvingTileType;
+                    bool worksForNature = type == ModContent.TileType<DissolvingNatureTile>() && validForNature;
+                    bool worksForEvil = type == ModContent.TileType<DissolvingUmbraTile>() && validForEvil;
+                    if (worksForNature || worksForEvil)
+                    {
+                        float distance = Vector2.Distance(tileEntity.Position.ToVector2() * 16 + new Vector2(8, 8), item.Center);
+                        if (distance <= 640)
+                        {
+                            ConduitX = tileEntity.Position.X;
+                            ConduitY = tileEntity.Position.Y;
+                            ConduitTransformType = worksForEvil ? 5 : 0;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed) //Happens on server and client
+        {
+            if (RunOnce)
+            {
+                ResetVars(item);
+                CheckForNearbyConduits(item);
+                RunOnce = false;
+            }
+            //if (Main.netMode == NetmodeID.Server)
+            //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(ConduitTransformTimer + ", " + ConduitTransformType), Color.Red);
+            //else
+            //    Main.NewText(ConduitTransformTimer + ", " + ConduitTransformType, Color.Green);
+            if (MyConduit == null)
+            {
+                ResetVars(item);
+            }
+            else
+            {
+                if (IsBeingTransformed)
+                {
+                    float perc = 1 - TransfromPercent;
+                    gravity *= perc * perc;
+                    maxFallSpeed *= perc * perc;
+                }
+                if (ConduitTransformType >= 0)
+                    ConduitTransformTimer++;
+                if (ConduitTransformTimer > 150)
+                {
+                    if (ConduitTransformType == 0)
+                    {
+                        if (item.type == ModContent.ItemType<DreamLamp>())
+                        {
+                            SOTSWorld.DreamLampSolved = true;
+                            if (Main.netMode != NetmodeID.SinglePlayer)
+                                SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                        }
+                        if (item.type == ModContent.ItemType<CursedApple>())
+                        {
+                            SOTSWorld.GoldenAppleSolved = true;
+                            if (Main.netMode != NetmodeID.SinglePlayer)
+                                SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                        }
+                    }
+                    if (ConduitTransformType == 5)
+                    {
+                        if (item.type == ModContent.ItemType<DreamLamp>())
+                        {
+                            SOTSWorld.DreamLampSolved = false;
+                            if (Main.netMode != NetmodeID.SinglePlayer)
+                                SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                        }
+                        if (item.type == ModContent.ItemType<CursedApple>())
+                        {
+                            SOTSWorld.GoldenAppleSolved = false;
+                            if (Main.netMode != NetmodeID.SinglePlayer)
+                                SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                        }
+                    }
+                    EndingDust(item);
+                    ResetVars(item);
+                }
+            }
+        }
+        public override bool CanPickup(Item item, Player player) => !IsBeingTransformed;
+        private void EndingDust(Item item)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Projectile.NewProjectile(new EntitySource_Misc("SOTS:ConduitTransform"), item.Center, Vector2.Zero, ModContent.ProjectileType<ConduitParticleProjectile>(), 0, 0, Main.myPlayer, ConduitTransformType, ConduitX, ConduitY);
+            }
+        }
+    }
+    public class ConduitParticleProjectile : ModProjectile
+    {
+        public override string Texture => "SOTS/Assets/WhitePixel";
+        public override void SetDefaults()
+        {
+            Projectile.friendly = Projectile.hostile = false;
+            Projectile.hide = true;
+            Projectile.timeLeft = 2;
+            Projectile.width = 16;
+            Projectile.height = 16;
+        }
+        public override bool PreAI()
+        {
+            Projectile.Kill();
+            return false;
+        }
+        public override void OnKill(int timeLeft)
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                Color c = ConduitItem.ConduitColor((int)Projectile.ai[0]);
+                SOTSUtils.PlaySound(SoundID.Item30, Projectile.Center, 1f, -0.1f);
+                for (int a = 0; a < 72; a++)
+                {
+                    Vector2 outward = new Vector2(0, 9f).RotatedBy(MathHelper.TwoPi * a / 24f);
+                    Dust dust = Dust.NewDustDirect(Projectile.Center + outward.SafeNormalize(Vector2.Zero) * 16 - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, c, 1.1f);
+                    dust.scale *= 1.5f;
+                    dust.velocity *= 0.6f;
+                    dust.velocity += outward / dust.scale;
+                    dust.fadeIn = 0.1f;
+                    dust.noGravity = true;
+                }
+                Vector2 conduitPosition = new Vector2(Projectile.ai[1] * 16 + 8, Projectile.ai[2] * 16 + 8);
+                Vector2 betweenConduit = conduitPosition - Projectile.Center;
+                float distanceBetweenDust = 7f;
+                float length = betweenConduit.Length() / distanceBetweenDust;
+                for(int d = 0; d < length; d++)
+                {
+                    Vector2 spawnPosition = Projectile.Center + betweenConduit.SafeNormalize(Vector2.Zero) * distanceBetweenDust * d;
+                    Dust dust = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>(), 0, 0, 0, c, 1.1f);
+                    dust.scale *= 1.4f;
+                    dust.velocity *= 0.5f;
+                    dust.fadeIn = 0.1f;
+                    dust.noGravity = true;
+                }
+            }
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
         }
     }
 }

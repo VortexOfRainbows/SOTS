@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Blades
 					else if (slashNumber == 1)
 					{
 						v.distance = distance * 0.96f;
-						v.delayDeathTime = 20;
+						v.delayDeathTime = 16;
 					}
 				}
 			}

@@ -48,9 +48,6 @@ Update Objectives:
 	5. Make mines not last as long
 14. Boss balancing configs
 15. Item that combines Botanical Symbiote and Bundle of Snakes
-16. Golden apple should be obtained with the Nature Conduit. And it should be functionally more powerful.
-	1. Can be nerfed back down at the Evil Conduit.
-	2. Maybe allow Dreaming Lamp to be downgraded this way too?
 
 ---WIP List---
 Abandoned village generation
@@ -90,12 +87,16 @@ N/A
 
 Daily Log:
 
-10/3/24
+10/3/24 to 10/5/24
 1. Improvements to Ghost Pepper visuals and code
 	1. Max souls before autocollect 40 -> 30
-2. Added a purely cosmetic alternative to cursed apple: Golden Apple. Conversion seems to work in multiplayer
+2. Added a secret alternative to cursed apple: Golden Apple, which harvests 3 souls instead of 2 per enemy killed
 	1. Cursed Apple is effected properly by dyes once again
 3. Polish some code and reorganize ColorHelper into appropriate folder
+4. Dreaming Lamp and (now) Golden Apple can be obtained from Nature Conduit while still in item form, and can be un-upgraded using the Evil Conduit.
+	1. This seems to work in multiplayer.
+5. Minor tooltip changes (such as to Selene, to make it more understandable)
+6. Selene now ends 4 frames sooner
 
 9/25/24 to 10/3/24
 1. WIP Famished... Needs:

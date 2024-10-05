@@ -1,7 +1,4 @@
-using Microsoft.Xna.Framework;
-using System;
 using Terraria;
-using Terraria.Graphics.Capture;
 using Terraria.ModLoader;
 
 namespace SOTS.Biomes
@@ -37,7 +34,7 @@ namespace SOTS.Biomes
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Player player)
         {
-            return NPC.AnyNPCs(ModContent.NPCType<NPCs.Knuckles>()) && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<NPCs.Knuckles>())].Distance(player.Center) <= 7000f;
+            return NPC.AnyNPCs(ModContent.NPCType<NPCs.knuckles>()) && Main.npc[NPC.FindFirstNPC(ModContent.NPCType<NPCs.knuckles>())].Distance(player.Center) <= 7000f;
         }
     }
 }
