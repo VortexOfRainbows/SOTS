@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Chaos;
 using SOTS.Items.Fragments;
@@ -86,7 +87,7 @@ namespace SOTS.NPCs.Phase
         {
             if(Main.rand.NextBool(50))
             {
-                Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelpers.ChaosPink, 1.4f);
+                Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
@@ -323,7 +324,7 @@ namespace SOTS.NPCs.Phase
         {
             if (Main.rand.NextBool(50))
             {
-                Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelpers.ChaosPink, 1.4f);
+                Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
@@ -420,7 +421,7 @@ namespace SOTS.NPCs.Phase
                 {
                     break;
                 }
-                Color color = ColorHelpers.ChaosPink * (0.1f + 0.9f * ((255 - NPC.alpha) / 255f));
+                Color color = ColorHelper.ChaosPink * (0.1f + 0.9f * ((255 - NPC.alpha) / 255f));
                 color.A = 0;
                 color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
                 Vector2 drawPos = trailPos[k] - screenPos;
@@ -485,7 +486,7 @@ namespace SOTS.NPCs.Phase
             if (Main.rand.NextBool(3))
             {
                 Vector2 from = NPC.Center + new Vector2(0, 12).RotatedBy(NPC.rotation);
-                Dust dust = Dust.NewDustDirect(from - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelpers.ChaosPink, 1.4f);
+                Dust dust = Dust.NewDustDirect(from - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
                 dust.velocity *= 0.3f;
                 dust.velocity += new Vector2(-2, 0).RotatedBy(NPC.rotation);
                 dust.noGravity = true;

@@ -6,6 +6,7 @@ using Terraria.ID;
 using System.IO;
 using Terraria.ModLoader;
 using SOTS.Buffs.MinionBuffs;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -59,7 +60,7 @@ namespace SOTS.Projectiles.Minions
 			for (int j = 0; j < 2; j++)
 				for (int i = 180; i < 360; i += 6)
 				{
-					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i + 180 * j));
+					Color color = ColorHelper.Pastel(MathHelper.ToRadians(i + 180 * j));
 					Vector2 addition = new Vector2(0, postChargeCounter * (0.5f + 0.5f * j)).RotatedBy(Projectile.rotation);
 					Vector2 center = Projectile.Center + addition;
 					Vector2 rotation = new Vector2(26 * (j == 0 ? 1 : furtherCompression), 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
@@ -71,7 +72,7 @@ namespace SOTS.Projectiles.Minions
 			for (int j = 0; j < 2; j++)
 				for (int i = 0; i < 180; i += 6)
 				{
-					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i + 180 * j));
+					Color color = ColorHelper.Pastel(MathHelper.ToRadians(i + 180 * j));
 					Vector2 addition = new Vector2(0, postChargeCounter * (0.5f + 0.5f * j)).RotatedBy(Projectile.rotation);
 					Vector2 center = Projectile.Center + addition;
 					Vector2 rotation = new Vector2(26 * (j == 0 ? 1 : furtherCompression), 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
@@ -91,7 +92,7 @@ namespace SOTS.Projectiles.Minions
 					for (int k = 0; k < 6; k++)
 					{
 						float scale = 1.0f - 0.25f * i;
-						Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+						Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 						Vector2 modi = new Vector2(2f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 						Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + toPosition + modi, null, new Color(color.R, color.G, color.B, 0), toPosition.ToRotation(), origin, scale, SpriteEffects.None, 0f);
 					}
@@ -105,7 +106,7 @@ namespace SOTS.Projectiles.Minions
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+				Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 				Vector2 modi = new Vector2(2f, 0).RotatedBy(MathHelper.ToRadians(k * 60 + SOTSPlayer.ModPlayer(player).orbitalCounter));
 				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}

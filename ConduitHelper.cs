@@ -1,19 +1,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs.ConduitBoosts;
-using SOTS.Common.ItemDropConditions;
 using SOTS.Common.ModPlayers;
 using SOTS.Common.Systems;
+using SOTS.Helpers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Conduit;
 using SOTS.Items.Fragments;
 using SOTS.Items.Planetarium;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Secrets;
-using SOTS.Void;
 using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
@@ -22,7 +19,7 @@ namespace SOTS
 {
 	public static class ConduitHelper
 	{
-		public static void preDrawBeforePlayers()
+		public static void PreDrawBeforePlayers()
 		{
 			bool hasDrawnToAcediaPortalNature = false, hasDrawnToAcediaPortalEarth = false;
             bool hasDrawnToAvaritiaPortalChaos = false, hasDrawnToAvaritiaPortalOtherworld = false;
@@ -61,7 +58,7 @@ namespace SOTS
 							(nature || earthen))
 						{
 							Vector2 acediaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
-							bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, acediaPortal, 1f, ColorHelpers.AcediaColor);
+							bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, acediaPortal, 1f, ColorHelper.AcediaColor);
 							if (nature && !hasDrawnToAcediaPortalNature && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
 							{
 								float Percent = tileEntity.tileCountDissolving / 20f;
@@ -91,7 +88,7 @@ namespace SOTS
                             (chaos || otherworld))
                         {
                             Vector2 avaritiaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
-                            bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, avaritiaPortal, 1f, ColorHelpers.OtherworldColor);
+                            bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, avaritiaPortal, 1f, ColorHelper.OtherworldColor);
                             if (otherworld && !hasDrawnToAvaritiaPortalOtherworld && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
                             {
                                 float Percent = tileEntity.tileCountDissolving / 20f;
@@ -121,7 +118,7 @@ namespace SOTS
                             (earth || evil))
                         {
                             Vector2 gulaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
-                            bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, gulaPortal, 1f, ColorHelpers.RedEvilColor);
+                            bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, gulaPortal, 1f, ColorHelper.RedEvilColor);
                             if (earth && !hasDrawnToGulaPortalEarth && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
                             {
                                 float Percent = tileEntity.tileCountDissolving / 20f;
@@ -148,7 +145,7 @@ namespace SOTS
 						if (tile.HasUnactuatedTile && tile.TileType == ModContent.TileType<ForgottenLampTile>())
 						{
 							Vector2 dreamLamp = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
-							tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, dreamLamp, 1f, ColorHelpers.DreamLampColor);
+							tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, dreamLamp, 1f, ColorHelper.DreamLampColor);
 						}
 					}
 					tileEntity.DrawConduitAura(tileEntity.Position.X, tileEntity.Position.Y);
@@ -192,14 +189,14 @@ namespace SOTS
 		public static void DrawPlayerEffectOutline(Player player)
 		{
 			ConduitPlayer CP = player.ConduitPlayer();
-            DrawSingleCircle(player, ColorHelpers.NatureColor, CP.NaturePower);
-            DrawSingleCircle(player, ColorHelpers.EarthColor, CP.EarthPower);
-            DrawSingleCircle(player, ColorHelpers.PermafrostColor, CP.PermafrostPower);
-            DrawSingleCircle(player, ColorHelpers.PurpleOtherworldColor, CP.OtherworldPower);
-            DrawSingleCircle(player, ColorHelpers.TideColor, CP.TidePower);
-            DrawSingleCircle(player, ColorHelpers.RedEvilColor, CP.EvilPower);
-            DrawSingleCircle(player, ColorHelpers.Inferno1, CP.InfernoPower);
-            DrawSingleCircle(player, ColorHelpers.ChaosPink, CP.ChaosPower);
+            DrawSingleCircle(player, ColorHelper.NatureColor, CP.NaturePower);
+            DrawSingleCircle(player, ColorHelper.EarthColor, CP.EarthPower);
+            DrawSingleCircle(player, ColorHelper.PermafrostColor, CP.PermafrostPower);
+            DrawSingleCircle(player, ColorHelper.PurpleOtherworldColor, CP.OtherworldPower);
+            DrawSingleCircle(player, ColorHelper.TideColor, CP.TidePower);
+            DrawSingleCircle(player, ColorHelper.RedEvilColor, CP.EvilPower);
+            DrawSingleCircle(player, ColorHelper.Inferno1, CP.InfernoPower);
+            DrawSingleCircle(player, ColorHelper.ChaosPink, CP.ChaosPower);
         }
         public static void DrawSingleCircle(Player player, Color color, int Power)
         {
@@ -229,20 +226,20 @@ namespace SOTS
             Texture2D texture = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/AcediaGatewayTileGlow" + variant).Value;
             Texture2D textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/AcediaGatewayTileGlowMask" + variant).Value;
             Color defaultColor = new Color(120, 100, 130, 0);
-            Color alternatingColor = ColorHelpers.AcediaColor * 0.65f;
+            Color alternatingColor = ColorHelper.AcediaColor * 0.65f;
             if (tile.TileType == ModContent.TileType<AvaritianGatewayTile>())
 			{
                 texture = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/AvaritianGatewayTileGlow" + variant).Value;
                 textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/AvaritianGatewayTileGlowMask" + variant).Value;
                 defaultColor = new Color(120, 100, 130, 0);
-                alternatingColor = ColorHelpers.OtherworldColor * 0.65f;
+                alternatingColor = ColorHelper.OtherworldColor * 0.65f;
             }
             if (tile.TileType == ModContent.TileType<GulaGatewayTile>())
             {
                 texture = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/GulaGatewayTileGlow" + variant).Value;
                 textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/GulaGatewayTileGlowMask" + variant).Value;
                 defaultColor = new Color(130, 100, 110, 0);
-                alternatingColor = ColorHelpers.GulaColor * 0.65f;
+                alternatingColor = ColorHelper.GulaColor * 0.65f;
             }
             for (int twice = 0; twice < 2; twice++)
             {

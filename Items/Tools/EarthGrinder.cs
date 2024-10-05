@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
-using SOTS.Buffs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Projectiles.Blades;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -51,7 +50,7 @@ namespace SOTS.Items.Tools
                 dust.velocity *= 0.3f;
                 dust.scale = 1f;
                 dust.fadeIn = 10f;
-                dust.color = ColorHelpers.EarthColor;
+                dust.color = ColorHelper.EarthColor;
                 dust.color.A = 0;
             }
         }

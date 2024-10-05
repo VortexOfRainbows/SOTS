@@ -61,6 +61,7 @@ using SOTS.Items.Chaos;
 using SOTS.Buffs.Debuffs;
 using System.Security.Permissions;
 using Terraria.Chat;
+using SOTS.Helpers;
 
 namespace SOTS
 {
@@ -1249,7 +1250,7 @@ namespace SOTS
             }
             if (chaosPiecesWorn > 0)
             {
-                Lighting.AddLight(Player.Center, Vector3.Lerp(Vector3.One, ColorHelpers.ChaosPink.ToVector3(), 0.5f) * chaosPiecesWorn * 0.5f);
+                Lighting.AddLight(Player.Center, Vector3.Lerp(Vector3.One, ColorHelper.ChaosPink.ToVector3(), 0.5f) * chaosPiecesWorn * 0.5f);
             }
             typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
             assassinateNum = 1;

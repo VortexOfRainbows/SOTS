@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Helpers;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -10,7 +11,7 @@ namespace SOTS.Items.ChestItems
 	{
         public override Color? GetAlpha(Color lightColor)
         {
-			lightColor = lightColor.MultiplyRGB(new Color((int)(ColorHelpers.EvilColor.R * 3f), (int)(ColorHelpers.EvilColor.G * 3f), (int)(ColorHelpers.EvilColor.B * 3f)));
+			lightColor = lightColor.MultiplyRGB(new Color((int)(ColorHelper.EvilColor.R * 3f), (int)(ColorHelper.EvilColor.G * 3f), (int)(ColorHelper.EvilColor.B * 3f)));
             return lightColor;
         }
         public override void SetStaticDefaults()

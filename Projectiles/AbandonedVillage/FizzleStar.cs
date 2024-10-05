@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.Diagnostics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {
@@ -71,7 +72,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
                 Vector2 toPrev = previous - center;
-                Color c = ColorHelpers.VibrantColorAttempt(i * 9f, true);
+                Color c = ColorHelper.VibrantColorGradient(i * 9f, true);
                 if (Projectile.ai[2] < 0)
                 {
                     c = FizzleColor;
@@ -120,7 +121,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 		public override void AI()
         {
             counter++;
-            Color c = Projectile.ai[2] >= 0 ? ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180), true) : FizzleColor * 0.75f;
+            Color c = Projectile.ai[2] >= 0 ? ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true) : FizzleColor * 0.75f;
             if (Main.rand.NextBool(6))
             {
                 Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), newColor: c);
@@ -172,7 +173,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 }
                 for (int i = 0; i < Projectile.oldPos.Length; i++)
                 {
-                    Color c = ColorHelpers.VibrantColorAttempt(i * 9f, true);
+                    Color c = ColorHelper.VibrantColorGradient(i * 9f, true);
                     if (Projectile.oldPos[i] == Vector2.Zero)
                         break;
                     Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;

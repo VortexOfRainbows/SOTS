@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.Common.GlobalNPCs;
+using SOTS.Helpers;
 using SOTS.Void;
 using SOTS.WorldgenHelpers;
 using Terraria;
@@ -622,7 +623,7 @@ namespace SOTS.FakePlayer
                 Projectile.Kill();
             }
         }
-        public Color coreColor => ColorHelpers.TesseractColor(MathHelper.TwoPi * (Projectile.ai[2] % 10) / 10f, 0.5f);
+        public Color coreColor => ColorHelper.TesseractColor(MathHelper.TwoPi * (Projectile.ai[2] % 10) / 10f, 0.5f);
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;

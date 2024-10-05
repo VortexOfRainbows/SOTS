@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
+using SOTS.Helpers;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -40,7 +41,7 @@ namespace SOTS.Projectiles.Evil
         public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = ColorHelpers.EvilColor;
+			Color color = ColorHelper.EvilColor;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < 5; k++)
 			{
@@ -71,7 +72,7 @@ namespace SOTS.Projectiles.Evil
 				Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, Main.rand.NextVector2Circular(1, 1));
 				dust.velocity *= 0.5f;
 				dust.velocity -= Projectile.velocity * 0.05f;
-				dust.color = ColorHelpers.EvilColor;
+				dust.color = ColorHelper.EvilColor;
 				dust.color.A = 100;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
@@ -87,11 +88,10 @@ namespace SOTS.Projectiles.Evil
 			for (int i = 0; i < 360; i += 60)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
-				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowMk2);
-				Dust dust = Main.dust[dust2];
-				dust.velocity = circularLocation * 0.4f;
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowMk2);
+                dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
-				dust.color = ColorHelpers.EvilColor;
+				dust.color = ColorHelper.EvilColor;
 				dust.color.A = 100;
 				dust.noGravity = true;
 				dust.alpha = 100;

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using SOTS.WorldgenHelpers;
 using System;
@@ -63,7 +64,7 @@ namespace SOTS.Projectiles.Tide
 		float counter = 0;
 		public override void AI()
 		{
-			Lighting.AddLight(Projectile.Center, ColorHelpers.TideColor.ToVector3());
+			Lighting.AddLight(Projectile.Center, ColorHelper.TideColor.ToVector3());
 			if (runOnce)
             {
                 for (int i = 0; i < 36; i++)

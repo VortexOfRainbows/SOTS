@@ -2,6 +2,7 @@ using log4net.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Projectiles.Base;
 using SOTS.Void;
 using System;
@@ -71,7 +72,7 @@ namespace SOTS.Projectiles.Chaos
 				Vector2 circular = new Vector2(4 * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 				if (k != 0)
 				{
-					color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+					color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 					color.A = 0;
 				}
 				else
@@ -113,7 +114,7 @@ namespace SOTS.Projectiles.Chaos
 							circularLocation += 0.5f * new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
 							Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
 							dust2.velocity = -circularLocation * 0.04f;
-							dust2.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(0, 6.28f), true);
+							dust2.color = ColorHelper.Pastel(Main.rand.NextFloat(0, 6.28f), true);
 							dust2.noGravity = true;
 							dust2.fadeIn = 0.2f;
 							dust2.scale *= 2.2f;
@@ -184,7 +185,7 @@ namespace SOTS.Projectiles.Chaos
 				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 				Dust dust = Main.dust[dust2];
 				dust.velocity += circularLocation * 3f;
-				dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+				dust.color = ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

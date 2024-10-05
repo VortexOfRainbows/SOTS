@@ -9,7 +9,6 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;

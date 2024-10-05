@@ -3,12 +3,13 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Blades
 {    
     public class SeleneSlash : SOTSBlade
 	{
-		public override Color color1 => ColorHelpers.VoidAnomaly;
+		public override Color color1 => ColorHelper.VoidAnomaly;
 		public override Color color2 => new Color(80, 60, 90);
 		public override void SafeSetDefaults()
 		{

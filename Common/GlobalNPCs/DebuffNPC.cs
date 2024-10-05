@@ -41,6 +41,7 @@ using SOTS.FakePlayer;
 using SOTS.Projectiles;
 using Terraria.GameContent;
 using System.Drawing.Drawing2D;
+using SOTS.Helpers;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -360,12 +361,12 @@ namespace SOTS.Common.GlobalNPCs
         {
             int height = 18;
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/PlatinumCurse").Value, ref PlatinumCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.soulLootingColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Harvesting").Value, ref HarvestCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.destabilizeColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value, ref DestableCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.SoulLootingColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Harvesting").Value, ref HarvestCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.DestabilizeColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value, ref DestableCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 0, 0), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref BleedingCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.VoidAnomaly, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelpers.ToothAcheLime, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BlightCurse").Value, ref BlightCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.VoidAnomaly, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.ToothAcheLime, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BlightCurse").Value, ref BlightCurse, ref height);
             DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/CrystalCurse").Value, ref CrystalCurse, ref height);
         }
         public void StackDebuff(NPC npc, Player player, ref int Debuff, int amount = 1, int netType = 0)
@@ -418,7 +419,7 @@ namespace SOTS.Common.GlobalNPCs
                 int amt = HarvestCost(npc);
                 if (!npc.immortal)
                 {
-                    var index = CombatText.NewText(npc.Hitbox, ColorHelpers.soulLootingColor.MultiplyRGB(Color.White), -amt);
+                    var index = CombatText.NewText(npc.Hitbox, ColorHelper.SoulLootingColor.MultiplyRGB(Color.White), -amt);
                     if (Main.netMode == NetmodeID.Server && index != 100)
                     {
                         var combatText = Main.combatText[index];
@@ -739,7 +740,7 @@ namespace SOTS.Common.GlobalNPCs
                     {
                         Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, DustType<PixelDust>());
                         dust.velocity *= 0.5f;
-                        dust.color = ColorHelpers.VoidAnomaly;
+                        dust.color = ColorHelper.VoidAnomaly;
                         dust.color.A = 0;
                         dust.noGravity = true;
                         dust.fadeIn = 12f;
@@ -1110,7 +1111,7 @@ namespace SOTS.Common.GlobalNPCs
                         Color color = Color.White;
                         if (proj.type == ProjectileType<EvilGrowth>())
                         {
-                            color = new Color(ColorHelpers.EvilColor.R, ColorHelpers.EvilColor.G, ColorHelpers.EvilColor.B);
+                            color = new Color(ColorHelper.EvilColor.R, ColorHelper.EvilColor.G, ColorHelper.EvilColor.B);
                             texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilArm").Value;
                         }
                         float scale = proj.scale;

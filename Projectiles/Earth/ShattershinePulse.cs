@@ -7,6 +7,7 @@ using SOTS.Dusts;
 using Terraria.ID;
 using SOTS.Utilities;
 using System;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Earth 
 {    
@@ -77,7 +78,7 @@ namespace SOTS.Projectiles.Earth
                     dust.scale = 1.4f + Main.rand.NextFloat(-0.1f, 0.1f);
                     dust.fadeIn = 0.1f;
                     dust.alpha = 100;
-                    dust.color = ColorHelpers.VibrantColorAttempt(degrees);
+                    dust.color = ColorHelper.VibrantColorGradient(degrees);
                     dust.velocity += velo * 0.12f;
                 }
             }

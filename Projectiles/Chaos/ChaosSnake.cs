@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.NPCs;
 using SOTS.Void;
 using System;
@@ -29,7 +30,7 @@ namespace SOTS.Projectiles.Chaos
 			bool lowfidel = SOTS.Config.lowFidelityMode;
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0] - k), true);
+				Color color = ColorHelper.Pastel(MathHelper.ToRadians(Projectile.ai[0] - k), true);
 				color.A = 0;
 				float yScale = (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length;
 				color = Projectile.GetAlpha(color) * yScale * 0.5f;
@@ -94,7 +95,7 @@ namespace SOTS.Projectiles.Chaos
 			{
 				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num2];
-				dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0]), true);
+				dust.color = ColorHelper.Pastel(MathHelper.ToRadians(Projectile.ai[0]), true);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2f;
@@ -126,9 +127,8 @@ namespace SOTS.Projectiles.Chaos
 			{
 				for (int i = 0; i < 10; i++)
 				{
-					int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
-					Dust dust = Main.dust[num2];
-					dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0]), true);
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+					dust.color = ColorHelper.Pastel(MathHelper.ToRadians(Projectile.ai[0]), true);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 2f;
@@ -138,8 +138,8 @@ namespace SOTS.Projectiles.Chaos
 			}
 			if((end && !Main.rand.NextBool(3)) || Main.rand.NextBool(10))
             {
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
-				dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[0]), true);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				dust.color = ColorHelper.Pastel(MathHelper.ToRadians(Projectile.ai[0]), true);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2f;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Conduit;
 using SOTS.Items.Fragments;
@@ -112,7 +113,7 @@ namespace SOTS.NPCs.Anomaly
 					d.fadeIn = 0.2f;
 					d.noGravity = true;
 					d.scale *= 1.5f;
-					d.color = ColorHelpers.VoidAnomaly;
+					d.color = ColorHelper.VoidAnomaly;
 					Vector2 circular = new Vector2(32, 0).RotatedBy(k / 30f * MathHelper.TwoPi);
 					d = Dust.NewDustDirect(NPC.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
 					d.velocity *= 0.4f;
@@ -120,7 +121,7 @@ namespace SOTS.NPCs.Anomaly
 					d.fadeIn = 0.2f;
 					d.noGravity = true;
 					d.scale *= 1.75f;
-					d.color = ColorHelpers.VoidAnomaly;
+					d.color = ColorHelper.VoidAnomaly;
 				}
 			}
 		}
@@ -172,7 +173,7 @@ namespace SOTS.NPCs.Anomaly
 						d.fadeIn = 0.2f;
 						d.noGravity = true;
 						d.scale *= 1.5f;
-						d.color = ColorHelpers.VoidAnomaly;
+						d.color = ColorHelper.VoidAnomaly;
 					}
 					else
 					{
@@ -182,7 +183,7 @@ namespace SOTS.NPCs.Anomaly
 						d.fadeIn = 8f;
 						d.noGravity = true;
 						d.scale *= 2f;
-						d.color = ColorHelpers.VoidAnomaly;
+						d.color = ColorHelper.VoidAnomaly;
 						d.color.A = 0;
 					}
 				}
@@ -244,7 +245,7 @@ namespace SOTS.NPCs.Anomaly
 							d.fadeIn = 0.2f;
 							d.noGravity = true;
 							d.scale *= 1.5f;
-							d.color = ColorHelpers.VoidAnomaly;
+							d.color = ColorHelper.VoidAnomaly;
 							Vector2 circular = new Vector2(32, 0).RotatedBy(k / 30f * MathHelper.TwoPi);
 							d = Dust.NewDustDirect(NPC.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
 							d.velocity *= 0.35f;
@@ -252,7 +253,7 @@ namespace SOTS.NPCs.Anomaly
 							d.fadeIn = 0.2f;
 							d.noGravity = true;
 							d.scale *= 1.75f;
-							d.color = ColorHelpers.VoidAnomaly;
+							d.color = ColorHelper.VoidAnomaly;
 						}
 					}
 				}

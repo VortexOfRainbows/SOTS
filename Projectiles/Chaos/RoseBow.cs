@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items;
 using SOTS.Void;
 using System;
@@ -43,11 +44,11 @@ namespace SOTS.Projectiles.Chaos
             for (int i = 0; i < 6; i++)
             {
                 Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(i * 120) + SOTSWorld.GlobalCounter);
-                Color drawColor = ColorHelpers.pastelAttempt(circular.ToRotation(), false);
+                Color drawColor = ColorHelper.Pastel(circular.ToRotation(), false);
                 drawColor.A = 0;
                 Main.spriteBatch.Draw(gTexture, drawPos + circular, null, drawColor * alphaMult, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
-            Color c = ColorHelpers.ChaosPink;
+            Color c = ColorHelper.ChaosPink;
             c.A = 0;
             DrawArrows();
             if (chargeLevel == 2)
@@ -129,7 +130,7 @@ namespace SOTS.Projectiles.Chaos
                     {
                         Vector2 circular = new Vector2(1.33f * (1 + chargePercent + chargeLevel), 0).RotatedBy(MathHelper.ToRadians(i * 72 + 180 * j + SOTSWorld.GlobalCounter));
                         Vector2 stretch = new Vector2(1 - 0.25f * (chargePercent + chargeLevel), 1 + 0.25f * (chargePercent + chargeLevel));
-                        Color drawColor = ColorHelpers.pastelAttempt(circular.ToRotation(), false);
+                        Color drawColor = ColorHelper.Pastel(circular.ToRotation(), false);
                         drawColor.A = 0;
                         float reverseAlphaMult = 1;
                         if(oldTexture != null)
@@ -153,7 +154,7 @@ namespace SOTS.Projectiles.Chaos
                 Texture2D texture = Mod.Assets.Request<Texture2D>("Assets/StrangeGradient").Value;
                 if(chargePercent > 0)
                 {
-                    Color c = ColorHelpers.ChaosPink;
+                    Color c = ColorHelper.ChaosPink;
                     c.A = 0;
                     float alphaMult = (float)Math.Sin(MathHelper.ToRadians(chargePercent * 170));
                     float length = 48 * (1 - chargePercent);
@@ -283,7 +284,7 @@ namespace SOTS.Projectiles.Chaos
                         circularLocation.Y *= 1.0f;
                         circularLocation.X *= 0.7f;
                         circularLocation = circularLocation.RotatedBy(Projectile.velocity.ToRotation());
-                        Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelpers.ChaosPink);
+                        Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelper.ChaosPink);
                         dust.noGravity = true;
                         dust.scale = dust.scale * 0.5f + 0.9f;
                         dust.velocity = circularLocation * -0.11f + player.velocity * 0.95f;
@@ -291,7 +292,7 @@ namespace SOTS.Projectiles.Chaos
                     }
                 }
             }
-            Lighting.AddLight(Projectile.Center, (ColorHelpers.ChaosPink * 0.25f * (1 + actionPercent + chargeLevel)).ToVector3());
+            Lighting.AddLight(Projectile.Center, (ColorHelper.ChaosPink * 0.25f * (1 + actionPercent + chargeLevel)).ToVector3());
         }
         bool runOnce = true;
         public override bool PreAI()
@@ -364,7 +365,7 @@ namespace SOTS.Projectiles.Chaos
                 Vector2 velocity = new Vector2(x, y).RotatedBy(spin) * mult * mainSize;
                 velocity.X *= 0.6f;
                 velocity = velocity.RotatedBy(rotation);
-                Dust dust = Dust.NewDustDirect(position - new Vector2(4, 4), 0, 0, DustType, 0, 0, 0, ColorHelpers.ChaosPink);
+                Dust dust = Dust.NewDustDirect(position - new Vector2(4, 4), 0, 0, DustType, 0, 0, 0, ColorHelper.ChaosPink);
                 dust.noGravity = true;
                 dust.scale = (dust.scale * 0.5f + 1) * scaleMult;
                 dust.velocity = dust.velocity * 0.1f + velocity + outWards;

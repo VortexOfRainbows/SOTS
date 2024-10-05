@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -33,7 +34,7 @@ namespace SOTS.Projectiles.Chaos
             Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
             for (int i = 0; i < 6; i++)
             {
-                Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
+                Color color = ColorHelper.Pastel(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
                 color.A = 0;
                 Vector2 rotationAround = new Vector2(4 * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + SOTSWorld.GlobalCounter));
                 Main.spriteBatch.Draw(texture, Projectile.Center + rotationAround - Main.screenPosition, null, color * 1f, Projectile.rotation, drawOrigin, Projectile.scale * 1f, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);

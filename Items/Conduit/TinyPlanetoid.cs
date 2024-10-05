@@ -4,6 +4,7 @@ using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Helpers;
 
 namespace SOTS.Items.Conduit
 {
@@ -53,11 +54,11 @@ namespace SOTS.Items.Conduit
 			VoidPlayer vPlayer = player.VoidPlayer();
 			vPlayer.voidMeterMax2 += 50;
             player.gravControl = true;
-            Lighting.AddLight(player.Center, ColorHelpers.VoidAnomaly.ToVector3() * 1.25f);
+            Lighting.AddLight(player.Center, ColorHelper.VoidAnomaly.ToVector3() * 1.25f);
         }
         public override void UpdateVanity(Player player)
         {
-            Lighting.AddLight(player.Center, ColorHelpers.VoidAnomaly.ToVector3() * 1.25f);
+            Lighting.AddLight(player.Center, ColorHelper.VoidAnomaly.ToVector3() * 1.25f);
         }
     }
 }

@@ -1,9 +1,8 @@
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using SOTS.Helpers;
 using SOTS.Items;
-using SOTS.Items.Inferno;
 using System;
 using System.Linq;
 using System.Reflection;
@@ -1045,7 +1044,7 @@ namespace SOTS.FakePlayer
             }
             if (FakePlayerType == FakePlayerTypeID.Tesseract)
             {
-                return ColorHelpers.TesseractColor(MathHelper.TwoPi * (OverrideUseSlot % 10) / 10f, 0.5f);
+                return ColorHelper.TesseractColor(MathHelper.TwoPi * (OverrideUseSlot % 10) / 10f, 0.5f);
             }
             return new Color(255, 255, 255);
         }

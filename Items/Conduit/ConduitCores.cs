@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.ConduitBoosts;
 using SOTS.Common.Systems;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Fragments;
 using SOTS.Items.Secrets;
 using SOTS.Void;
@@ -38,7 +39,7 @@ namespace SOTS.Items.Conduit
 	{
 		public override int DissolvingTileType => ModContent.TileType<DissolvingNatureTile>();
 		public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/NatureConduitTileGlow").Value;
-		public override Color elementalColor => ColorHelpers.NatureColor;
+		public override Color elementalColor => ColorHelper.NatureColor;
 		public override void SafeSetStaticDefaults()
 		{
 			LocalizedText name = CreateMapEntryName();
@@ -65,7 +66,7 @@ namespace SOTS.Items.Conduit
 	{
 		public override int DissolvingTileType => ModContent.TileType<DissolvingEarthTile>();
 		public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/EarthenConduitTileGlow").Value;
-		public override Color elementalColor => ColorHelpers.EarthColor;
+		public override Color elementalColor => ColorHelper.EarthColor;
 		public override void SafeSetStaticDefaults()
 		{
 			LocalizedText name = CreateMapEntryName();
@@ -92,7 +93,7 @@ namespace SOTS.Items.Conduit
     {
         public override int DissolvingTileType => ModContent.TileType<DissolvingAuroraTile>();
         public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/PermafrostConduitTileGlow").Value;
-        public override Color elementalColor => ColorHelpers.PermafrostColor;
+        public override Color elementalColor => ColorHelper.PermafrostColor;
         public override void SafeSetStaticDefaults()
         {
             LocalizedText name = CreateMapEntryName();
@@ -119,7 +120,7 @@ namespace SOTS.Items.Conduit
     {
         public override int DissolvingTileType => ModContent.TileType<DissolvingAetherTile>();
         public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/OtherworldConduitTileGlow").Value;
-        public override Color elementalColor => ColorHelpers.PurpleOtherworldColor;
+        public override Color elementalColor => ColorHelper.PurpleOtherworldColor;
         public override void SafeSetStaticDefaults()
         {
             LocalizedText name = CreateMapEntryName();
@@ -146,7 +147,7 @@ namespace SOTS.Items.Conduit
     {
         public override int DissolvingTileType => ModContent.TileType<DissolvingDelugeTile>();
         public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/TidalConduitTileGlow").Value;
-        public override Color elementalColor => ColorHelpers.TideColor;
+        public override Color elementalColor => ColorHelper.TideColor;
         public override void SafeSetStaticDefaults()
         {
             LocalizedText name = CreateMapEntryName();
@@ -173,7 +174,7 @@ namespace SOTS.Items.Conduit
     {
         public override int DissolvingTileType => ModContent.TileType<DissolvingUmbraTile>();
         public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/EvilConduitTileGlow").Value;
-        public override Color elementalColor => ColorHelpers.RedEvilColor;
+        public override Color elementalColor => ColorHelper.RedEvilColor;
         public override void SafeSetStaticDefaults()
         {
             LocalizedText name = CreateMapEntryName();
@@ -200,7 +201,7 @@ namespace SOTS.Items.Conduit
     {
         public override int DissolvingTileType => ModContent.TileType<DissolvingNetherTile>();
         public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/InfernoConduitTileGlow").Value;
-        public override Color elementalColor => ColorHelpers.Inferno1;
+        public override Color elementalColor => ColorHelper.Inferno1;
         public override void SafeSetStaticDefaults()
         {
             LocalizedText name = CreateMapEntryName();
@@ -228,7 +229,7 @@ namespace SOTS.Items.Conduit
     {
         public override int DissolvingTileType => ModContent.TileType<DissolvingBrillianceTile>();
         public override Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/ChaosConduitTileGlow").Value;
-        public override Color elementalColor => ColorHelpers.ChaosPink;
+        public override Color elementalColor => ColorHelper.ChaosPink;
         public override void SafeSetStaticDefaults()
         {
             LocalizedText name = CreateMapEntryName();
@@ -448,7 +449,7 @@ namespace SOTS.Items.Conduit
 		}
 		public virtual int DissolvingTileType => ModContent.TileType<DissolvingBrillianceTile>();
 		public virtual Texture2D GlowTexture => ModContent.Request<Texture2D>("SOTS/Items/Conduit/NatureConduitTileGlow").Value;
-		public virtual Color elementalColor => ColorHelpers.NatureColor;
+		public virtual Color elementalColor => ColorHelper.NatureColor;
         public sealed override void NearbyEffects(int i, int j, bool closer)
 		{
 			int left = i;

@@ -10,6 +10,7 @@ using SOTS.Items.Tools;
 using SOTS.Void;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader;
+using SOTS.Helpers;
 
 namespace SOTS.NPCs.TreasureSlimes
 {
@@ -34,7 +35,7 @@ namespace SOTS.NPCs.TreasureSlimes
 			BannerItem = ItemType<HallowTreasureSlimeBanner>();
 			NPC.lavaImmune = true;
 			LootAmt = 3;
-			Color c = ColorHelpers.ChaosPink;
+			Color c = ColorHelper.ChaosPink;
 			c.A = 100;
 			gelColor = c;
 			items = new List<TreasureSlimeItem>()

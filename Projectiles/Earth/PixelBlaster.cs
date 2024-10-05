@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -96,7 +97,7 @@ namespace SOTS.Projectiles.Earth
         public override void PostAI()
         {
             Player player = Main.player[Projectile.owner];
-            Color color = ColorHelpers.EarthColor;
+            Color color = ColorHelper.EarthColor;
             color.A = 0;
             Vector2 gunTip = Projectile.Center + new Vector2(42, -2 * Projectile.direction).RotatedBy(Projectile.velocity.ToRotation());
             Projectile.ai[0]++;

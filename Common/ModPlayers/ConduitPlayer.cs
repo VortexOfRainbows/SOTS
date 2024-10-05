@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using SOTS.Buffs.ConduitBoosts;
+using SOTS.Helpers;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -81,14 +82,14 @@ namespace SOTS.Common.ModPlayers
         public int ChaosPower = 0;
         public override void ResetEffects()
         {
-            IteratePower(ref NaturePower, ColorHelpers.NatureColor, 0);
-            IteratePower(ref EarthPower, ColorHelpers.EarthColor, 1);
-            IteratePower(ref PermafrostPower, ColorHelpers.PermafrostColor, 2);
-            IteratePower(ref OtherworldPower, ColorHelpers.PurpleOtherworldColor, 3);
-            IteratePower(ref TidePower, ColorHelpers.TideColor, 4);
-            IteratePower(ref EvilPower, ColorHelpers.RedEvilColor, 5);
-            IteratePower(ref InfernoPower, ColorHelpers.Inferno1, 6);
-            IteratePower(ref ChaosPower, ColorHelpers.ChaosPink, 7);
+            IteratePower(ref NaturePower, ColorHelper.NatureColor, 0);
+            IteratePower(ref EarthPower, ColorHelper.EarthColor, 1);
+            IteratePower(ref PermafrostPower, ColorHelper.PermafrostColor, 2);
+            IteratePower(ref OtherworldPower, ColorHelper.PurpleOtherworldColor, 3);
+            IteratePower(ref TidePower, ColorHelper.TideColor, 4);
+            IteratePower(ref EvilPower, ColorHelper.RedEvilColor, 5);
+            IteratePower(ref InfernoPower, ColorHelper.Inferno1, 6);
+            IteratePower(ref ChaosPower, ColorHelper.ChaosPink, 7);
 
             if(NatureBoosted || EarthBoosted || PermafrostBoosted || OtherworldBoosted || TideBoosted || EvilBoosted || InfernoBoosted || ChaosBoosted)
             {

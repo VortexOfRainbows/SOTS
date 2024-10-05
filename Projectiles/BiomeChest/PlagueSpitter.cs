@@ -1,15 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using SOTS.Dusts;
-using SOTS.Items.Evil;
-using SOTS.Items.Permafrost;
+using SOTS.Helpers;
 using SOTS.Projectiles.Blades;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
-using System.Threading;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -23,7 +19,7 @@ namespace SOTS.Projectiles.BiomeChest
         { 
             get
             {
-                return Color.Lerp(ColorHelpers.ToothAcheLime, ToothAcheSlash.toothAcheGreen, Main.rand.NextFloat(1f));
+                return Color.Lerp(ColorHelper.ToothAcheLime, ToothAcheSlash.toothAcheGreen, Main.rand.NextFloat(1f));
             }
         }
         public override void SendExtraAI(BinaryWriter writer)

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using System.IO;
@@ -148,15 +149,14 @@ namespace SOTS.Projectiles.Earth
             }
             if (Main.rand.NextBool(12))
             {
-                int num1 = Dust.NewDust(new Vector2(Projectile.Hitbox.X, Projectile.Hitbox.Y), Projectile.Hitbox.Width, Projectile.Hitbox.Height, DustID.GlowingMushroom, 0f, 0f, 150, default(Color), 1.3f);
-                Main.dust[num1].velocity *= 0.2f;
-                Main.dust[num1].scale = 0.8f;
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Hitbox.X, Projectile.Hitbox.Y), Projectile.Hitbox.Width, Projectile.Hitbox.Height, DustID.GlowingMushroom, 0f, 0f, 150, default(Color), 1.3f);
+                dust.velocity *= 0.2f;
+                dust.scale = 0.8f;
             }
             else if (Main.rand.NextBool(6))
             {
-                int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
-                Dust dust = Main.dust[num2];
-                dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
+                dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.44f;
@@ -180,7 +180,7 @@ namespace SOTS.Projectiles.Earth
                 Vector2 circular = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 12));
                 int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
                 Dust dust = Main.dust[num2];
-                dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+                dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.5f;

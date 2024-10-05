@@ -5,6 +5,7 @@ using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Chaos
 {
@@ -79,7 +80,7 @@ namespace SOTS.Projectiles.Chaos
 						Dust dust = Main.dust[dust2];
 						dust.velocity *= 2f;
 						dust.velocity += Projectile.velocity * 0.2f;
-						dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+						dust.color = ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true);
 						dust.noGravity = true;
 						dust.alpha = 90;
 						dust.fadeIn = 0.1f;
@@ -138,8 +139,8 @@ namespace SOTS.Projectiles.Chaos
 			{
 				if (!SOTS.Config.lowFidelityMode || i % 2 == 0)
 				{
-					float radians = MathHelper.ToRadians((i + ColorHelpers.soulColorCounter) * 2);
-					Color color = ColorHelpers.pastelAttempt(radians);
+					float radians = MathHelper.ToRadians((i + ColorHelper.SoulColorCounter) * 2);
+					Color color = ColorHelper.Pastel(radians);
 					color.A = 0;
 					float mult = 1 - (i / maxLength);
 					float sinusoid = 1;
@@ -150,7 +151,7 @@ namespace SOTS.Projectiles.Chaos
 						{
 							mult = 1 - (i - maxLength + 40) / 40f;
 						}
-						sinusoid = 1.0f + (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(i * 16 + ColorHelpers.soulColorCounter * 4f))) * Projectile.scale;
+						sinusoid = 1.0f + (0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(i * 16 + ColorHelper.SoulColorCounter * 4f))) * Projectile.scale;
 					}
 					float scale = Projectile.scale * scalingFactor * scaleMult * sinusoid;
 					Vector2 drawPos = position - Main.screenPosition;

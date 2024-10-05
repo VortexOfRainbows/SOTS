@@ -8,6 +8,7 @@ using SOTS.Items.Pyramid;
 using SOTS.Common.GlobalNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
+using SOTS.Helpers;
 
 namespace SOTS.Items.Chaos
 {
@@ -17,12 +18,12 @@ namespace SOTS.Items.Chaos
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterEffect").Value;
 			Texture2D textureBlack = Mod.Assets.Request<Texture2D>("Items/Chaos/RealityShatterBlack").Value;
-			Color color = Color.White;
+			Color color;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(2 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
-				color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+				color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 				color.A = 0;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + circular, null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}
@@ -40,7 +41,7 @@ namespace SOTS.Items.Chaos
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(1 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+				Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 				color.A = 0;
 				Main.spriteBatch.Draw(texture, new Vector2(position.X, position.Y) + circular, null, color * (1f - (Item.alpha / 255f)), 0f, origin, scale, SpriteEffects.None, 0f);
 			}

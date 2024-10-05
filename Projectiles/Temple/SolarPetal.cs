@@ -7,6 +7,7 @@ using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Temple
 {    
@@ -142,7 +143,7 @@ namespace SOTS.Projectiles.Temple
         {
             get
             {
-				return Color.Lerp(ColorHelpers.InfernoColorAttempt(0.5f + Main.rand.NextFloat(0.5f)), new Color(190, 80, 60), 0.3f + Main.rand.NextFloat(0.3f));
+				return Color.Lerp(ColorHelper.InfernoColorGradient(0.5f + Main.rand.NextFloat(0.5f)), new Color(190, 80, 60), 0.3f + Main.rand.NextFloat(0.3f));
             }
         }
         public override bool PreAI()

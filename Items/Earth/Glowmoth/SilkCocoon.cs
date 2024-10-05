@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Void;
@@ -130,7 +131,7 @@ namespace SOTS.Items.Earth.Glowmoth
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
 		{
-			Vector3 vColor = ColorHelpers.VibrantColor.ToVector3() * 0.65f;
+			Vector3 vColor = ColorHelper.VibrantColor.ToVector3() * 0.65f;
 			r = vColor.X;
 			g = vColor.Y;
 			b = vColor.Z;
@@ -160,9 +161,8 @@ namespace SOTS.Items.Earth.Glowmoth
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X - Projectile.width, Projectile.position.Y - Projectile.height) - new Vector2(5), Projectile.width * 3, Projectile.height * 3, ModContent.DustType<Dusts.CopyDust4>());
-				Dust dust = Main.dust[num2];
-				dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360));
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X - Projectile.width, Projectile.position.Y - Projectile.height) - new Vector2(5), Projectile.width * 3, Projectile.height * 3, ModContent.DustType<Dusts.CopyDust4>());
+				dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(360));
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.75f;

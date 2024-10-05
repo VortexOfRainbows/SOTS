@@ -1,16 +1,10 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
-using Terraria.ID;
-using SOTS.NPCs;
 using SOTS.Dusts;
-using SOTS.Void;
+using SOTS.Helpers;
 using SOTS.NPCs.TreasureSlimes;
 
 namespace SOTS.Projectiles.Slime
@@ -39,7 +33,7 @@ namespace SOTS.Projectiles.Slime
 				return new Color(123, 173, 75, 100);
 			if (type == 8)
             {
-				Color c = ColorHelpers.ChaosPink;
+				Color c = ColorHelper.ChaosPink;
 				c.A = 100;
 				return c;
 			}

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using System;
 using System.IO;
 using Terraria;
@@ -148,7 +149,7 @@ namespace SOTS.Projectiles.Permafrost
             {
                 for (int i = 0; i < 15; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), newColor: ColorHelpers.PolarisColor(Main.rand.NextFloat(1)));
+                    Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), newColor: ColorHelper.PolarisColor(Main.rand.NextFloat(1)));
                     dust.scale *= 1.3f;
                     dust.velocity *= 0.8f;
                     dust.velocity += Projectile.velocity * 0.2f;
@@ -165,7 +166,7 @@ namespace SOTS.Projectiles.Permafrost
                     for (int i = -1; i <= 1; i += 2)
                     {
                         Vector2 circular = new Vector2(0, scaleUp * i).RotatedBy(Projectile.rotation - MathHelper.PiOver2);
-                        Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + circular + Projectile.velocity * j, 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelpers.PolarisColor(0.5f + i * 0.5f * MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2))));
+                        Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + circular + Projectile.velocity * j, 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelper.PolarisColor(0.5f + i * 0.5f * MathF.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2))));
                         dust.scale = dust.scale * 0.5f + .65f + Projectile.ai[1] / 350f;
                         dust.velocity *= 0.04f;
                         dust.velocity += Projectile.velocity * 0.05f;
@@ -184,7 +185,7 @@ namespace SOTS.Projectiles.Permafrost
         {
             for (int i = 0; i < 24; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelpers.PolarisColor(Main.rand.NextFloat(1)));
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelper.PolarisColor(Main.rand.NextFloat(1)));
                 dust.scale = dust.scale + 1.25f;
                 dust.velocity *= 1.2f;
                 dust.velocity += Projectile.velocity * Main.rand.NextFloat() * 0.7f;
@@ -279,7 +280,7 @@ namespace SOTS.Projectiles.Permafrost
                     continue;
                 float scale = (Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length;
                 Vector2 drawPos = Projectile.oldPos[k] + Projectile.Size / 2;
-                Dust dust = Dust.NewDustDirect(drawPos - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelpers.PolarisColor(scale));
+                Dust dust = Dust.NewDustDirect(drawPos - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelper.PolarisColor(scale));
                 dust.fadeIn = 0.2f;
                 dust.noGravity = true;
                 dust.color.A = 0;
@@ -315,7 +316,7 @@ namespace SOTS.Projectiles.Permafrost
             {
                 if(Main.rand.NextBool(3))
                 {
-                    Dust dust = PixelDust.Spawn(Projectile.Center + Projectile.velocity * j, 0, 0, Main.rand.NextVector2Square(-0.1f, 0.1f), ColorHelpers.PolarisColor(Main.rand.NextFloat(1)));
+                    Dust dust = PixelDust.Spawn(Projectile.Center + Projectile.velocity * j, 0, 0, Main.rand.NextVector2Square(-0.1f, 0.1f), ColorHelper.PolarisColor(Main.rand.NextFloat(1)));
                     dust.color.A = 0;
                     dust.scale = 1.0f;
                     dust.color *= 0.5f;

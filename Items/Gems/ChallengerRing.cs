@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
 using SOTS.Void;
@@ -150,19 +151,19 @@ namespace SOTS.Items.Gems
 				if(line.Mod == "Terraria")
                 {
                     if (line.Name == "Tooltip1") //checks the name of the tootip line
-                        AddGemTooltipLine(line, selected, 0, ColorHelpers.AmethystColor);
+                        AddGemTooltipLine(line, selected, 0, ColorHelper.AmethystColor);
                     if (line.Name == "Tooltip2")
-                        AddGemTooltipLine(line, selected, 1, ColorHelpers.TopazColor);
+                        AddGemTooltipLine(line, selected, 1, ColorHelper.TopazColor);
                     if (line.Name == "Tooltip3")
-                        AddGemTooltipLine(line, selected, 2, ColorHelpers.SapphireColor);
+                        AddGemTooltipLine(line, selected, 2, ColorHelper.SapphireColor);
                     if (line.Name == "Tooltip4")
-                        AddGemTooltipLine(line, selected, 3, ColorHelpers.EmeraldColor);
+                        AddGemTooltipLine(line, selected, 3, ColorHelper.EmeraldColor);
                     if (line.Name == "Tooltip5")
-                        AddGemTooltipLine(line, selected, 4, ColorHelpers.RubyColor);
+                        AddGemTooltipLine(line, selected, 4, ColorHelper.RubyColor);
                     if (line.Name == "Tooltip6")
-                        AddGemTooltipLine(line, selected, 5, ColorHelpers.DiamondColor);
+                        AddGemTooltipLine(line, selected, 5, ColorHelper.DiamondColor);
                     if (line.Name == "Tooltip7")
-                        AddGemTooltipLine(line, selected, 6, ColorHelpers.AmberColor);
+                        AddGemTooltipLine(line, selected, 6, ColorHelper.AmberColor);
                 }
 			}
 			base.ModifyTooltips(tooltips);

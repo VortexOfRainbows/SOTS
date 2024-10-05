@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using System.IO;
@@ -68,7 +69,7 @@ namespace SOTS.Projectiles.Tide
 				{
 					break;
 				}
-				Color color = ColorHelpers.ShrimpColorAttempt((float)k / (trailPos.Length - 1)) * 1.2f;
+				Color color = ColorHelper.ShrimpColorGradient((float)k / (trailPos.Length - 1)) * 1.2f;
                 if (Projectile.ai[0] == -1)
 				{
 					color = PurpleShrimpColorAttempt((float)k / (trailPos.Length - 1)) * 1.0f;
@@ -100,7 +101,7 @@ namespace SOTS.Projectiles.Tide
 		public override void AI()
 		{
 			cataloguePos();
-			Lighting.AddLight(Projectile.Center, ColorHelpers.TideColor.ToVector3());
+			Lighting.AddLight(Projectile.Center, ColorHelper.TideColor.ToVector3());
 			if (runOnce)
 			{
 				if (Projectile.ai[0] == -1)
@@ -126,7 +127,7 @@ namespace SOTS.Projectiles.Tide
             {
 				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
-				dust.color = ColorHelpers.ShrimpColorAttempt(Main.rand.NextFloat(1)) * 1.2f;
+				dust.color = ColorHelper.ShrimpColorGradient(Main.rand.NextFloat(1)) * 1.2f;
 				if (Projectile.ai[0] == -1)
 				{
 					dust.color = PurpleShrimpColorAttempt(Main.rand.NextFloat(1)) * 1.2f;

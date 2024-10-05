@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Fragments;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.Blades;
@@ -280,7 +281,7 @@ namespace SOTS.Items.Furniture.Functional
 					Projectile.hostile = true;
 					totalDistanceToTravel = -48;
 					SOTSUtils.PlaySound(SoundID.Item53, Projectile.Center, 0.9f, -0.6f);
-					Color color = ColorHelpers.EarthColor;
+					Color color = ColorHelper.EarthColor;
 					color.A = 0;
 					for (int l = 0; l < 25; l++)
 					{

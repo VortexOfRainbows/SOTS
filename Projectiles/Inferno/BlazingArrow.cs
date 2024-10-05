@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Inferno
 {    
@@ -116,14 +117,14 @@ namespace SOTS.Projectiles.Inferno
 				dust.velocity *= 0.1f;
 				dust.scale = 0.5f;
 				dust.fadeIn = 0.1f;
-				dust.color = ColorHelpers.InfernoColorAttemptDegrees(MathHelper.ToRadians(helixRot * 2));
+				dust.color = ColorHelper.InfernoColorGradientDegrees(MathHelper.ToRadians(helixRot * 2));
 
 				dust = Dust.NewDustDirect(new Vector2(helixPos2.X - 4, helixPos2.Y - 4), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;
 				dust.scale = 0.5f;
 				dust.fadeIn = 0.1f;
-				dust.color = ColorHelpers.InfernoColorAttemptDegrees(MathHelper.ToRadians(helixRot * 3));
+				dust.color = ColorHelper.InfernoColorGradientDegrees(MathHelper.ToRadians(helixRot * 3));
 			}
 		}
 	}

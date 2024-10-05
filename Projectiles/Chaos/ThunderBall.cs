@@ -2,6 +2,7 @@ using log4net.Util;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Projectiles.Base;
 using SOTS.Void;
 using System;
@@ -49,7 +50,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					float sin = (float)Math.Sin(MathHelper.ToRadians(k * 24 + 720f * (counter / 60f) * (counter / 60f)));
 					Vector2 circularPos = new Vector2((32 + sin * 8) * (1 - Projectile.scale), 0).RotatedBy(MathHelper.ToRadians(k * 4) + Projectile.rotation);
-					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 3));
+					Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 3));
 					color.A = 0;
 					Vector2 drawPos = Projectile.Center + circularPos - Main.screenPosition;
 					Main.spriteBatch.Draw(texture, drawPos, null, Projectile.GetAlpha(color), Projectile.rotation, drawOrigin, (1 - Projectile.scale), SpriteEffects.None, 0f);
@@ -66,7 +67,7 @@ namespace SOTS.Projectiles.Chaos
 				Vector2 circular = new Vector2(4 * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 				if (k != 0)
 				{
-					color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+					color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 					color.A = 0;
 				}
 				else
@@ -78,8 +79,8 @@ namespace SOTS.Projectiles.Chaos
         {
 			return false;
         }
-		float counter = 0;
-		bool runOnce = true;
+		private float counter = 0;
+        private bool runOnce = true;
         public override void AI()
 		{
 			if(runOnce)

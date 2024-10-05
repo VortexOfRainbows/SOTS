@@ -8,6 +8,7 @@ using SOTS.Dusts;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;
+using SOTS.Helpers;
 
 namespace SOTS.NPCs.Constructs
 {
@@ -84,7 +85,7 @@ namespace SOTS.NPCs.Constructs
 				Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 				if (k != 0)
 				{
-					color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+					color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 					color.A = 0;
 				}
 				else

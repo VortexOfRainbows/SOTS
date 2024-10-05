@@ -2,6 +2,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -32,7 +33,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
         public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>(GhostPepper.IsAlternate ? "Projectiles/Pyramid/GhostPepper/BrownFeather" : "Projectiles/Pyramid/GhostPepper/SoulofLooting").Value;
-			Color c = ColorHelpers.soulLootingColor;
+			Color c = ColorHelper.SoulLootingColor;
 			c.A = 0;
             if (!GhostPepper.IsAlternate)
 			{
@@ -44,7 +45,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
                     Vector2 circular = new Vector2(4f, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3f + 60 * i));
                     Main.spriteBatch.Draw(texture, drawPos2 + circular, frame, Projectile.GetAlpha(c) * 0.75f, Projectile.rotation, drawOrigin1, Projectile.scale, SpriteEffects.None, 0f);
                 }
-                Main.spriteBatch.Draw(texture, drawPos2, frame, Projectile.GetAlpha(ColorHelpers.soulLootingColor * 1.5f), Projectile.rotation, drawOrigin1, Projectile.scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, drawPos2, frame, Projectile.GetAlpha(ColorHelper.SoulLootingColor * 1.5f), Projectile.rotation, drawOrigin1, Projectile.scale, SpriteEffects.None, 0f);
             }
             else
             {
@@ -62,7 +63,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
         }
         public override void AI()
 		{
-			Lighting.AddLight(Projectile.Center, new Vector3(ColorHelpers.soulLootingColor.R, ColorHelpers.soulLootingColor.G, ColorHelpers.soulLootingColor.B) * 1f / 255f);
+			Lighting.AddLight(Projectile.Center, new Vector3(ColorHelper.SoulLootingColor.R, ColorHelper.SoulLootingColor.G, ColorHelper.SoulLootingColor.B) * 1f / 255f);
 			Projectile.frameCounter++;																																						
 			if (Projectile.frameCounter >= 5)
 			{
@@ -93,7 +94,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
             }
 			if(Main.rand.NextBool(3))
 			{
-				Color c = ColorHelpers.soulLootingColor;
+				Color c = ColorHelper.SoulLootingColor;
 				c.A = 0;
                 PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, Main.rand.NextVector2Circular(3, 3), Projectile.GetAlpha(c), 8);
             }
@@ -128,7 +129,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 				SOTSUtils.PlaySound(SoundID.Grab, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f);
 				voidPlayer.lootingSouls++;
 				voidPlayer.SendClientChanges(voidPlayer);
-				var index = CombatText.NewText(Projectile.Hitbox, ColorHelpers.soulLootingColor.MultiplyRGB(Color.White), 1);
+				var index = CombatText.NewText(Projectile.Hitbox, ColorHelper.SoulLootingColor.MultiplyRGB(Color.White), 1);
 				if (Main.netMode == NetmodeID.Server && index != 100)
 				{
 					var combatText = Main.combatText[index];
@@ -139,7 +140,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 			for (int i = 0; i < 360; i += particlesR)
 			{
 				Vector2 rotationalPos = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5) + rotationalPos, 22, 22, ModContent.DustType<CopyDust4>(), Alpha: Projectile.alpha, newColor: ColorHelpers.soulLootingColor * 0.75f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5) + rotationalPos, 22, 22, ModContent.DustType<CopyDust4>(), Alpha: Projectile.alpha, newColor: ColorHelper.SoulLootingColor * 0.75f);
 				dust.noGravity = true;
                 dust.velocity = dust.velocity * 0.05f + rotationalPos * 0.4f;
 				dust.scale = dust.scale * 0.5f + 1f;

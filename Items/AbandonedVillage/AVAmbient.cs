@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -187,7 +188,7 @@ namespace SOTS.Items.AbandonedVillage
                 type = ModContent.DustType<SootDust>();
                 if (!Main.rand.NextBool(3))
                 {
-                    Dust dust = PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, -2);
+                    Dust dust = PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelper.AVDustColor, -2);
                     dust.scale = Main.rand.NextFloat(1f, 2f);
                     dust.alpha = 150;
                 }
@@ -196,9 +197,9 @@ namespace SOTS.Items.AbandonedVillage
         public override void ModifyLight2(int style, int frameY, ref Vector3 color)
         {
             if (style == 4 || style == 5 || style == 6)
-                color += ColorHelpers.AVCursedLight;
+                color += ColorHelper.AVCursedLight;
             if (style == 7 || style == 8 || style == 9 || style == 6)
-                color += ColorHelpers.AVIchorLight;
+                color += ColorHelper.AVIchorLight;
         }
     }
     public class AVAmbientTile2x1 : AVAmbientTile
@@ -217,7 +218,7 @@ namespace SOTS.Items.AbandonedVillage
                 type = ModContent.DustType<SootDust>();
                 if (!Main.rand.NextBool(3))
                 {
-                    Dust dust = PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, -2);
+                    Dust dust = PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelper.AVDustColor, -2);
                     dust.scale = Main.rand.NextFloat(1f, 2f);
                     dust.alpha = 150;
                 }
@@ -248,7 +249,7 @@ namespace SOTS.Items.AbandonedVillage
                 type = ModContent.DustType<SootDust>();
                 if (!Main.rand.NextBool(3))
                 {
-                    Dust dust = PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, -2);
+                    Dust dust = PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelper.AVDustColor, -2);
                     dust.scale = Main.rand.NextFloat(1f, 2f);
                     dust.alpha = 150;
                 }
@@ -279,7 +280,7 @@ namespace SOTS.Items.AbandonedVillage
                     type = DustID.Bone;
                 else
                 {
-                    Dust dust = PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelpers.AVDustColor, -2);
+                    Dust dust = PixelDust.Spawn(centerPos, 16, 16, Main.rand.NextVector2Circular(2, 2), ColorHelper.AVDustColor, -2);
                     dust.scale = Main.rand.NextFloat(1f, 2f);
                     dust.alpha = 150;
                 }
@@ -301,8 +302,8 @@ namespace SOTS.Items.AbandonedVillage
         {
             if (style >= 9)
             {
-                color += ColorHelpers.AVCursedLight;
-                color += ColorHelpers.AVIchorLight;
+                color += ColorHelper.AVCursedLight;
+                color += ColorHelper.AVIchorLight;
             }
         }
     }
@@ -339,9 +340,9 @@ namespace SOTS.Items.AbandonedVillage
         public override void ModifyLight2(int style, int frameY, ref Vector3 color)
         {
             if (style < 4)
-                color += ColorHelpers.AVCursedLight;
+                color += ColorHelper.AVCursedLight;
             else
-                color += ColorHelpers.AVIchorLight;
+                color += ColorHelper.AVIchorLight;
         }
     }
     public class AVAmbientTile1x2 : AVAmbientTile

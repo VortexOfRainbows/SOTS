@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;
@@ -100,7 +101,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     SOTSUtils.PlaySound(SoundID.Item15, Projectile.Center, 1.25f, 0.3f);
                 else
                     SOTSUtils.PlaySound(SoundID.Item15, Projectile.Center, 1.2f, 0.15f);
-                Color color = Color.Lerp(ColorHelpers.Inferno1, ColorHelpers.EarthColor, 0.3f);
+                Color color = Color.Lerp(ColorHelper.Inferno1, ColorHelper.EarthColor, 0.3f);
                 color.A = 0;
                 float r = Projectile.velocity.ToRotation();
                 for (int i = 0; i < 20; i++)
@@ -179,7 +180,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 pos = Projectile.Center - Projectile.velocity;
-            Color c = Color.Lerp(ColorHelpers.Inferno1, ColorHelpers.EarthColor, 0.3f);
+            Color c = Color.Lerp(ColorHelper.Inferno1, ColorHelper.EarthColor, 0.3f);
             c.A = 0;
             for (int i = 0; i < points.Count; i++)
             {
@@ -198,7 +199,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             float sin = 1.4f * MathF.Max(Counter2 / 20f, 0.25f) * TimeLeftPercent;
             float scale = Projectile.scale * sin;
-            Color color = Color.Lerp(ColorHelpers.Inferno1, ColorHelpers.EarthColor, 0.25f) * 0.3f * TimeLeftPercent;
+            Color color = Color.Lerp(ColorHelper.Inferno1, ColorHelper.EarthColor, 0.25f) * 0.3f * TimeLeftPercent;
             color.A = 0;
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
@@ -302,7 +303,7 @@ namespace SOTS.Projectiles.AbandonedVillage
         }
         public void InitializeLaser()
         {
-            Color color = Color.Lerp(ColorHelpers.Inferno1, ColorHelpers.EarthColor, 0.3f);
+            Color color = Color.Lerp(ColorHelper.Inferno1, ColorHelper.EarthColor, 0.3f);
             color.A = 0;
             Player player = Main.player[Projectile.owner];
             if (RunOnce)

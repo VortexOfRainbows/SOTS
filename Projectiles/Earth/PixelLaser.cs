@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -67,7 +68,7 @@ namespace SOTS.Projectiles.Earth
 		bool hasInit = false;
 		public void InitializeLaser()
 		{
-			Color color = ColorHelpers.EarthColor;
+			Color color = ColorHelper.EarthColor;
 			color.A = 0;
 			Vector2 startingPosition = Projectile.Center;
 			Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero);
@@ -149,7 +150,7 @@ namespace SOTS.Projectiles.Earth
 			Vector2 start = Projectile.Center;
 			Vector2 final = finalPosition;
 			float xScale = Vector2.Distance(start, final) / texture.Width;
-			Color color = ColorHelpers.EarthColor;
+			Color color = ColorHelper.EarthColor;
 			color.A = 0;
 			for(int i = 0; i <= 8; i++)
 			{

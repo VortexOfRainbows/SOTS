@@ -10,6 +10,7 @@ using static SOTS.SOTS;
 using Terraria.Localization;
 using SOTS.Items.Chaos;
 using System;
+using SOTS.Helpers;
 
 namespace SOTS.Items.Wings
 {
@@ -57,7 +58,7 @@ namespace SOTS.Items.Wings
 				Vector2 offset = new Vector2(2, 0).RotatedBy(k * MathHelper.PiOver4 + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2));
 				Main.spriteBatch.Draw(texture2, position + offset, null, color, 0f, origin, scale, SpriteEffects.None, 0f);
             }
-            Main.spriteBatch.Draw(texture3, position, null, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter), true) * 1.2f, 0f, origin, scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture3, position, null, ColorHelper.Pastel(MathHelper.ToRadians(SOTSWorld.GlobalCounter), true) * 1.2f, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
@@ -76,7 +77,7 @@ namespace SOTS.Items.Wings
                 Vector2 offset = new Vector2(2, 0).RotatedBy(k * MathHelper.PiOver4 + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2));
                 Main.spriteBatch.Draw(texture2, drawPos + offset, null, color * alpha, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
             }
-            Main.spriteBatch.Draw(texture3, drawPos, null, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter), true) * 1.2f * alpha, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(texture3, drawPos, null, ColorHelper.Pastel(MathHelper.ToRadians(SOTSWorld.GlobalCounter), true) * 1.2f * alpha, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
             return false;
 		}
 		public override void SetDefaults()
@@ -187,7 +188,7 @@ namespace SOTS.Items.Wings
             Vector2 previous = points[points.Length - 1];
             for (int i = 0; i < points.Length; i++)
             {
-                Color color = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2) + i / (float)repeats * MathHelper.TwoPi, true), 0.8f);
+                Color color = Color.Lerp(Color.Black, ColorHelper.Pastel(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2) + i / (float)repeats * MathHelper.TwoPi, true), 0.8f);
                 Color color2 = color * 1.1f;
                 color.A = 0;
                 Vector2 current = points[i];
@@ -199,7 +200,7 @@ namespace SOTS.Items.Wings
             previous = points2[points2.Length - 1];
             for (int i = 0; i < points2.Length; i++)
             {
-                Color color = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * -1) + i / (float)repeats * MathHelper.TwoPi * 2, true), 0.8f);
+                Color color = Color.Lerp(Color.Black, ColorHelper.Pastel(MathHelper.ToRadians(SOTSWorld.GlobalCounter * -1) + i / (float)repeats * MathHelper.TwoPi * 2, true), 0.8f);
                 Color color2 = color * 1.1f;
                 color.A = 0;
                 Vector2 current = points2[i];
@@ -208,7 +209,7 @@ namespace SOTS.Items.Wings
                 drawData2.Add(new DrawData(pixel, points2[i], null, color2, toPrevious.ToRotation(), new Vector2(0, 1), new Vector2(toPrevious.Length() / 2, scale) + Vector2.One * 0.6f, SpriteEffects.None, 0));
                 previous = current;
             }
-            Color finalColor2 = Color.Lerp(Color.Black, ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2) + 37f / (float)repeats * MathHelper.TwoPi, true), 0.8f);
+            Color finalColor2 = Color.Lerp(Color.Black, ColorHelper.Pastel(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2) + 37f / (float)repeats * MathHelper.TwoPi, true), 0.8f);
             Color finalColor3 = finalColor2;
             finalColor2.A = 0;
             drawData0.Add(new DrawData(pixel, bonusPoint, null, finalColor2, 0f, new Vector2(1, 1), 1.2f * scale, SpriteEffects.None, 0));

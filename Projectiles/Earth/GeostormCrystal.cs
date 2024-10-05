@@ -11,6 +11,7 @@ using Terraria.ID;
 using SOTS.Void;
 using SOTS.Dusts;
 using SOTS.Prim.Trails;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Earth
 {    
@@ -71,7 +72,7 @@ namespace SOTS.Projectiles.Earth
 			for (int i = 0; i < 360; i += 60)
 			{
 				Vector2 circular = new Vector2(windup, 0).RotatedBy(MathHelper.ToRadians(i + windup * 3f));
-				color = ColorHelpers.VibrantColorAttempt(i);
+				color = ColorHelper.VibrantColorGradient(i);
 				Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition, frame, color * ((255f - Projectile.alpha) / 255f) * (0.4f + 0.5f * windup / maxWindup), Projectile.rotation, origin, Projectile.scale * 1.1f, SpriteEffects.FlipVertically, 0.0f);
 			}
 			color = Color.White * ((255f - Projectile.alpha) / 255f);
@@ -118,7 +119,7 @@ namespace SOTS.Projectiles.Earth
 				if (Projectile.timeLeft > 120)
                 {
 					if (Main.netMode != NetmodeID.Server)
-						SOTS.primitives.CreateTrail(new StarTrail(Projectile, ColorHelpers.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, ColorHelpers.VibrantColorAttempt(Projectile.ai[1]) * 0.5f, 12, 8));
+						SOTS.primitives.CreateTrail(new StarTrail(Projectile, ColorHelper.VibrantColorGradient(Projectile.ai[1]) * 0.5f, ColorHelper.VibrantColorGradient(Projectile.ai[1]) * 0.5f, 12, 8));
 					Projectile.timeLeft = 120;
 				}
 				count += 5;
@@ -170,7 +171,7 @@ namespace SOTS.Projectiles.Earth
 					dust.scale = 1.5f + Main.rand.NextFloat(-0.1f, 0.1f);
 					dust.fadeIn = 0.1f;
 					dust.alpha = 100;
-					dust.color = ColorHelpers.VibrantColorAttempt(degrees);
+					dust.color = ColorHelper.VibrantColorGradient(degrees);
 					dust.velocity += velo * 0.15f + outwards;
 				}
 			}
@@ -187,7 +188,7 @@ namespace SOTS.Projectiles.Earth
 					dust.scale = 1.8f + Main.rand.NextFloat(-0.1f, 0.1f);
 					dust.fadeIn = 0.1f;
 					dust.alpha = 100;
-					dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360));
+					dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(360));
 					dust.velocity += Projectile.oldVelocity * 0.3f;
 				}
 				for (int i = 0; i < 16; i++)

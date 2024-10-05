@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -49,7 +50,7 @@ namespace SOTS.Projectiles.Chaos
 			{
 				if (!SOTS.Config.lowFidelityMode || k % 2 == 0)
 				{
-					Color color2 = ColorHelpers.pastelAttempt(MathHelper.ToRadians((ColorHelpers.soulColorCounter + k) * 6 + Projectile.whoAmI * 18), blendColor);
+					Color color2 = ColorHelper.PastelGradient(MathHelper.ToRadians((ColorHelper.SoulColorCounter + k) * 6 + Projectile.whoAmI * 18), blendColor);
 					color2.A = 0;
 					float scale = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 					Vector2 drawPos = Projectile.oldPos[k] + new Vector2(12, 12) - Main.screenPosition;
@@ -66,7 +67,7 @@ namespace SOTS.Projectiles.Chaos
 				blendColor = new Color(60, 140, 200);
 			else if (Projectile.ai[1] == -1)
 				blendColor = new Color(80, 240, 80);
-			Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 6 + Projectile.whoAmI * 18), blendColor);
+			Color color = ColorHelper.PastelGradient(MathHelper.ToRadians(ColorHelper.SoulColorCounter * 6 + Projectile.whoAmI * 18), blendColor);
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawTrail();
@@ -114,11 +115,10 @@ namespace SOTS.Projectiles.Chaos
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
-				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
-				Dust dust = Main.dust[dust2];
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
-				dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), blendColor);
+				dust.color = ColorHelper.PastelGradient(Main.rand.NextFloat(6.28f), blendColor);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

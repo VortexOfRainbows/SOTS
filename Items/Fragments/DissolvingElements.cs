@@ -7,14 +7,15 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using System.Collections.Generic;
 using Terraria.Localization;
+using SOTS.Helpers;
 
 namespace SOTS.Items.Fragments
 {
-	public abstract class DissolvingElement : ModItem//TODO 文本无法正常显示
+	public abstract class DissolvingElement : ModItem
 	{
 		public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
-			foreach (TooltipLine line in tooltips) //goes through each tooltip line
+			foreach (TooltipLine line in tooltips)
 			{
 				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
 				{
@@ -36,7 +37,6 @@ namespace SOTS.Items.Fragments
 		public virtual Color glowColor => new Color(100, 100, 100, 0);
 		public sealed override void SetStaticDefaults()
 		{
-			//Tooltip.SetDefault("WILL BE FILLED IN GAME");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(FrameSpeed, TotalFrames));
 			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
 			ItemID.Sets.ItemNoGravity[Item.type] = true;
@@ -115,7 +115,6 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingNature : DissolvingElement
 	{
-		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nature");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingNatureNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingNatureFlipped");
         public override int FrameSpeed => 5;
@@ -133,7 +132,6 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingEarth : DissolvingElement
 	{
-		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Earth");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingEarthNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingEarthFlipped");
 		public override int FrameSpeed => 6;
@@ -151,7 +149,6 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAurora : DissolvingElement
 	{
-		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aurora");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingAuroraNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingAuroraFlipped");
 		public override int FrameSpeed => 8;
@@ -169,7 +166,6 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingDeluge : DissolvingElement
 	{
-		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Deluge");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingDelugeNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingDelugeFlipped");
 		public override int FrameSpeed => 6;
@@ -188,13 +184,12 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingAether : DissolvingElement
 	{
-		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Aether");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingAetherNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingAetherFlipped");
 		public override int FrameSpeed => 6;
         public override int TotalFrames => 8;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeAether;
-        public override Color glowColor => ColorHelpers.OtherworldColor;
+        public override Color glowColor => ColorHelper.OtherworldColor;
         public override void SafeSetDefaults()
 		{
 			Item.width = 34;
@@ -210,7 +205,7 @@ namespace SOTS.Items.Fragments
 		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Umbra");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingUmbraNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingUmbraFlipped");
-		public override Color glowColor => ColorHelpers.EvilColor * 1.2f;
+		public override Color glowColor => ColorHelper.EvilColor * 1.2f;
 		public override int FrameSpeed => 5;
 		public override int TotalFrames => 10;
 		public override bool PolarizeElement => DissolvingElementsPlayer.ModPlayer(Main.LocalPlayer).PolarizeUmbra;
@@ -227,7 +222,6 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingNether : DissolvingElement
 	{
-		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Nether");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingNetherNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingNetherFlipped");
 		public override int FrameSpeed => 5;
@@ -246,7 +240,6 @@ namespace SOTS.Items.Fragments
 	}
 	public class DissolvingBrilliance : DissolvingElement
 	{
-		//public override void SafeSetStaticDefaults() => DisplayName.SetDefault("Dissolving Brilliance");
 		public override string NormalToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingBrillianceNormal");
 		public override string PolarizeToolTip => Language.GetTextValue("Mods.SOTS.ItemTooltip.DissolvingElements.DissolvingBrillianceFlipped");
 		public override int FrameSpeed => 5;

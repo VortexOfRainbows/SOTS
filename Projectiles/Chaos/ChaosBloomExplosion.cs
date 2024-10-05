@@ -7,6 +7,7 @@ using SOTS.Utilities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using SOTS.Void;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Chaos
 {    
@@ -49,7 +50,7 @@ namespace SOTS.Projectiles.Chaos
                 scale *= this.scale;
                 float dist1 = 6 * scale;
                 float dist2 = 8 * scale;
-                Color c = ColorHelpers.ChaosPink;
+                Color c = ColorHelper.ChaosPink;
                 c.A = 0;
                 if(!isAlternate)
                     SOTSProjectile.DrawStar(Projectile.Center, c, alphaMult * 1.5f, 0, MathHelper.ToRadians(Projectile.ai[0]), 8, dist1, dist2, 0.9f, 360);
@@ -103,7 +104,7 @@ namespace SOTS.Projectiles.Chaos
                 scale = Main.rand.NextFloat(1f, 1.4f);
        
             SOTSUtils.PlaySound(SoundID.Item62, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, -0.2f);
-            Color colorMan = ColorHelpers.ChaosPink;
+            Color colorMan = ColorHelper.ChaosPink;
             Vector2 atLoc = Projectile.Center;
             float density = 1.5f;
             if (isAlternate)

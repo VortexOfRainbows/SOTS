@@ -6,6 +6,7 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using SOTS.Common;
 using System;
+using SOTS.Helpers;
 
 namespace SOTS.FakePlayer
 {
@@ -15,7 +16,7 @@ namespace SOTS.FakePlayer
         {
             if(fakePlayer.FakePlayerType == FakePlayerTypeID.Tesseract)
             {
-                return ColorHelpers.TesseractColor(MathHelper.TwoPi * (fakePlayer.OverrideUseSlot % 10) / 10f, 0.5f);
+                return ColorHelper.TesseractColor(MathHelper.TwoPi * (fakePlayer.OverrideUseSlot % 10) / 10f, 0.5f);
             }
             return Color.White;
         }

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
@@ -34,13 +35,13 @@ namespace SOTS.Projectiles.Evil
 			for(int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.75f;
-				Main.dust[num1].scale *= 1.45f;
-				Main.dust[num1].alpha = 100;
-				Main.dust[num1].color = ColorHelpers.EvilColor;
-				Main.dust[num1].fadeIn = 0.2f;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				dust.noGravity = true;
+				dust.velocity *= 0.75f;
+				dust.scale *= 1.45f;
+				dust.alpha = 100;
+				dust.color = ColorHelper.EvilColor;
+                dust.fadeIn = 0.2f;
 			}
 		}
 	}

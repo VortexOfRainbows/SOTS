@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Items.Fragments;
 using SOTS.Items.Permafrost;
 using System;
@@ -27,7 +28,7 @@ namespace SOTS.Items.Furniture.Misc
     }
     public class SoulOfPlightInABottleTile : Lantern<SoulOfPlightInABottle>
     {
-        protected override Vector3 LightClr => ColorHelpers.PolarisColor(0.5f + 0.5f * (float)Math.Sin(SOTSWorld.GlobalCounter * MathHelper.TwoPi / 720f)).ToVector3();
+        protected override Vector3 LightClr => ColorHelper.PolarisColor(0.5f + 0.5f * (float)Math.Sin(SOTSWorld.GlobalCounter * MathHelper.TwoPi / 720f)).ToVector3();
         public override void AnimateTile(ref int frame, ref int frameCounter)
         {
             frameCounter++;

@@ -48,6 +48,9 @@ Update Objectives:
 	5. Make mines not last as long
 14. Boss balancing configs
 15. Item that combines Botanical Symbiote and Bundle of Snakes
+16. Golden apple should be obtained with the Nature Conduit. And it should be functionally more powerful.
+	1. Can be nerfed back down at the Evil Conduit.
+	2. Maybe allow Dreaming Lamp to be downgraded this way too?
 
 ---WIP List---
 Abandoned village generation
@@ -92,6 +95,7 @@ Daily Log:
 	1. Max souls before autocollect 40 -> 30
 2. Added a purely cosmetic alternative to cursed apple: Golden Apple. Conversion seems to work in multiplayer
 	1. Cursed Apple is effected properly by dyes once again
+3. Polish some code and reorganize ColorHelper into appropriate folder
 
 9/25/24 to 10/3/24
 1. WIP Famished... Needs:

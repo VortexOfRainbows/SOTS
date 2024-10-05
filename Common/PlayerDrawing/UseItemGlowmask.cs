@@ -14,6 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.FakePlayer;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Helpers;
 
 namespace SOTS.Common.PlayerDrawing
 {
@@ -145,7 +146,7 @@ namespace SOTS.Common.PlayerDrawing
 								for (int k = 0; k < 6; k++)
 								{
 									Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
-									color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60)) * 0.33f;
+									color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60)) * 0.33f;
 									color.A = 0;
 									DrawData value2 = new DrawData(texture, position + circular, new Microsoft.Xna.Framework.Rectangle?(new Rectangle(0, 0, Terraria.GameContent.TextureAssets.Item[item.type].Value.Width, Terraria.GameContent.TextureAssets.Item[item.type].Value.Height)), color, drawPlayer.itemRotation, origin5, beginningScale, effects, 0);
 									drawInfo.DrawDataCache.Add(value2);
@@ -167,7 +168,7 @@ namespace SOTS.Common.PlayerDrawing
 							for (int k = 0; k < 6; k++)
 							{
 								Vector2 circular = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
-                                Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+                                Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 								color.A = 0;
 								DrawData value = new DrawData(texture, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);
@@ -190,7 +191,7 @@ namespace SOTS.Common.PlayerDrawing
 							{
 								Color color = glowColor;
 								Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 6));
-								color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+								color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 								color.A = 0;
 								DrawData value = new DrawData(tEffect, location - Main.screenPosition + circular, new Rectangle(0, 0, texture.Width, texture.Height), color * 0.3f, drawPlayer.itemRotation, new Vector2(texture.Width * 0.5f - texture.Width * 0.5f * (float)drawPlayer.direction, drawPlayer.gravDir == -1 ? 0f : texture.Height), beginningScale, effects, 0);
 								drawInfo.DrawDataCache.Add(value);

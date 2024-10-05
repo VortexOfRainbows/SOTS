@@ -12,6 +12,7 @@ using SOTS.Projectiles.Chaos;
 using Terraria.Audio;
 using System;
 using System.Collections.Generic;
+using SOTS.Helpers;
 //using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
@@ -84,7 +85,7 @@ namespace SOTS.Items.MusicBoxes
 				{
 					float radians = MathHelper.ToRadians(360f * k / total);
 					Vector2 circularOffset = new Vector2(1.0f + frameX * 0.5f, 0).RotatedBy(radians + MathHelper.ToRadians(SOTSWorld.GlobalCounter * (2 + frameX)));
-					Color color = ColorHelpers.pastelAttempt(radians, false);
+					Color color = ColorHelper.Pastel(radians, false);
 					color.A = 0;
 					color *= 0.5f + 0.1f * frameX;
 					spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Items/MusicBoxes/LuxMusicBoxTileGlow").Value, new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y + 2) + zero + circularOffset, new Rectangle(frameX * 16, 0, 32, 32), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
@@ -105,7 +106,7 @@ namespace SOTS.Items.MusicBoxes
 				for (int i = startEnd; i < startEnd + 180; i += 6)
 				{
 					float radians = MathHelper.ToRadians(i);
-					Color color = ColorHelpers.pastelAttempt(radians, false);
+					Color color = ColorHelper.Pastel(radians, false);
 					color.A = 0;
 					color *= 0.5f;
 					float sinusoid = (float)Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter * (3 - j)));

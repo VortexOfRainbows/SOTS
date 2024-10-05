@@ -6,6 +6,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.WorldgenHelpers;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Earth
 {    
@@ -117,12 +118,12 @@ namespace SOTS.Projectiles.Earth
                 dust.velocity *= 0.3f;
                 dust.scale = 1.5f;
                 dust.fadeIn = 6f;
-                dust.color = ColorHelpers.EarthColor;
+                dust.color = ColorHelper.EarthColor;
                 dust.color.A = 0;
                 Projectile.velocity.Y += 0.1f;
             }
             Projectile.direction = overrideDirection.X > 0 ? 1 : -1;
-            Lighting.AddLight(Projectile.Center, ColorHelpers.EarthColor.ToVector3() * 0.5f);
+            Lighting.AddLight(Projectile.Center, ColorHelper.EarthColor.ToVector3() * 0.5f);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
         {
@@ -171,7 +172,7 @@ namespace SOTS.Projectiles.Earth
                 dust.velocity += circularLocation * 0.3f;
                 dust.scale = 1.5f;
                 dust.fadeIn = 4f;
-                dust.color = ColorHelpers.EarthColor;
+                dust.color = ColorHelper.EarthColor;
                 dust.color.A = 0;
             }
         }

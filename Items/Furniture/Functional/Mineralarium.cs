@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Chaos;
 using SOTS.Items.Earth;
 using SOTS.Items.Fragments;
@@ -151,7 +152,7 @@ namespace SOTS.Items.Furniture.Functional
 			int percentToString = (int)(percent * 100);
 			if (Main.tile[i, j - 1].TileType == Type)
 			{
-				Main.NewText(Language.GetTextValue("Mods.SOTS.MineralariumTileText.0"), ColorHelpers.EarthColor);
+				Main.NewText(Language.GetTextValue("Mods.SOTS.MineralariumTileText.0"), ColorHelper.EarthColor);
 			}
 			else if (entity.isObstructed)
 			{
@@ -215,7 +216,7 @@ namespace SOTS.Items.Furniture.Functional
 			}
 			if(tile.TileFrameX == 108 && (!hasOtherMineralarium || !entity.isObstructed || entity.fakeObstructed) && !(Main.tile[i, j - 1].HasTile && Main.tile[i, j - 1].TileType == ModContent.TileType<MineralariumTile>()))
 			{
-				Color lightVisuals = ColorHelpers.EarthColor;
+				Color lightVisuals = ColorHelper.EarthColor;
 				lightVisuals.A = 0;
 				left += 3;
 				top -= 3;
@@ -742,7 +743,7 @@ namespace SOTS.Items.Furniture.Functional
 			int tileID = (int)Projectile.ai[1];
 			int i = (int)Projectile.Center.X / 16;
 			int j = (int)Projectile.Center.Y / 16;
-			Color color = ColorHelpers.EarthColor;
+			Color color = ColorHelper.EarthColor;
 			color.A = 0;
 			WorldGen.PlaceTile(i, j, tileID, false, true, -1, 0);
 			WorldGen.KillTile(i, j, true, true);

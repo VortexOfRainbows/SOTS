@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Buffs;
+using SOTS.Helpers;
 using SOTS.Items.Pyramid;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
@@ -45,7 +46,7 @@ namespace SOTS.Items.Permafrost
 				ylocation -= 40;
 				for(int k = 0; k < 5; k++)
 				{
-					float counter = ColorHelpers.soulColorCounter * 2f + k;
+					float counter = ColorHelper.SoulColorCounter * 2f + k;
 					for (int a = 0; a < 4; a++)
 					{
 						Vector2 circularLocation = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(counter + a * 90));

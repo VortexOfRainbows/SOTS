@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.NPCs;
 using SOTS.Void;
 using System;
@@ -74,7 +75,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					break;
 				}
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[1] + k * 2), ColorHelpers.ChaosPink);
+				Color color = ColorHelper.PastelGradient(MathHelper.ToRadians(Projectile.ai[1] + k * 2), ColorHelper.ChaosPink);
 				color.A = 0;
 				color = color * (float)Math.Sqrt(((trailPos.Length - k) / (float)trailPos.Length));
 				Vector2 currentPos = trailPos[k];
@@ -95,7 +96,7 @@ namespace SOTS.Projectiles.Chaos
 			if(!hasHit)
 			{
 				Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 6 + Projectile.whoAmI * 18));
+				Color color = ColorHelper.Pastel(MathHelper.ToRadians(ColorHelper.SoulColorCounter * 6 + Projectile.whoAmI * 18));
 				color.A = 0;
 				Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 				for (int k = 0; k < 4; k++)
@@ -145,7 +146,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 					Dust dust = Main.dust[dust2];
-					dust.color = ColorHelpers.ChaosPink;
+					dust.color = ColorHelper.ChaosPink;
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale = 1.5f;
@@ -218,9 +219,8 @@ namespace SOTS.Projectiles.Chaos
 				if(runOnce)
 					for (int i = 0; i < 4; i++)
 					{
-						int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
-						Dust dust = Main.dust[dust2];
-						dust.color = ColorHelpers.ChaosPink;
+                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+						dust.color = ColorHelper.ChaosPink;
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale = 1.5f;

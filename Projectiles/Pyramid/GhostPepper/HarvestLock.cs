@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Void;
 using SOTS.Common.GlobalNPCs;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Pyramid.GhostPepper
 {    
@@ -90,7 +91,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 							dust.scale *= 2.2f;
 							dust.fadeIn = 0.1f;
 							dust.alpha = 0;
-							dust.color = ColorHelpers.soulLootingColor;
+							dust.color = ColorHelper.SoulLootingColor;
 						}
 					}
 					if(Projectile.timeLeft > 40)
@@ -173,7 +174,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Pyramid/GhostPepper/GhostPepperTail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 previousPosition = current;
-			Color color = new Color(ColorHelpers.soulLootingColor.R, ColorHelpers.soulLootingColor.G, ColorHelpers.soulLootingColor.B, 0);
+			Color color = new Color(ColorHelper.SoulLootingColor.R, ColorHelper.SoulLootingColor.G, ColorHelper.SoulLootingColor.B, 0);
 			color *= (Projectile.timeLeft - 30) / 90f;
 			for (int k = 0; k < trailArray.Length; k++)
 			{

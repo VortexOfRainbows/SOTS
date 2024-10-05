@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using System.Collections.Generic;
 using System;
 using Terraria.Localization;
+using SOTS.Helpers;
 
 namespace SOTS.Void
 {
@@ -97,9 +98,9 @@ namespace SOTS.Void
 			}
 			string voidManaText = voidmeter.ToString();
 			int voidMax = voidPlayer.voidMeterMax2 - voidPlayer.VoidMinionConsumption;
-			string voidManaMaxText = voidMax.ToString();
+			string voidManaMaxText;
 			string voidSoulsText = voidPlayer.lootingSouls.ToString();
-			Color soulColor = ColorHelpers.soulLootingColor;
+			Color soulColor = ColorHelper.SoulLootingColor;
 			if (text != null)
 			{
 				if (player.dead)

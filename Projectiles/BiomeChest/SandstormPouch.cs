@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using System.IO;
@@ -120,7 +121,7 @@ namespace SOTS.Projectiles.BiomeChest
                     Vector2 circular = new Vector2(0, 1).RotatedBy(i * MathF.PI + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 6));
                     circular.X *= 0.5f;
                     circular = circular.RotatedBy(Projectile.velocity.ToRotation());
-                    Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 24 * windUp, 0, 0, ModContent.DustType<Dusts.ModSandDust>(), 0, 0, 0, ColorHelpers.SandstormPouchColor * 0.5f);
+                    Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 24 * windUp, 0, 0, ModContent.DustType<ModSandDust>(), 0, 0, 0, ColorHelper.SandstormPouchColor * 0.5f);
                     dust.noGravity = true;
                     dust.scale = 1.0f;
                     dust.velocity *= 0.02f + recoil * 0.1f;

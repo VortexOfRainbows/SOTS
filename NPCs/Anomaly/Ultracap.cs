@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Conduit;
 using SOTS.Items.Pyramid;
@@ -189,7 +190,7 @@ namespace SOTS.NPCs.Anomaly
             }
 			if (!Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(-4, NPC.height - 17), NPC.width, 12, DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, Main.rand.NextFloat(1f)), 1f);
+				Dust dust = Dust.NewDustDirect(NPC.position + new Vector2(-4, NPC.height - 17), NPC.width, 12, DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(1f)), 1f);
 				dust.color.A = 0;
 				dust.noGravity = true;
 				dust.velocity.X = NPC.velocity.X + Main.rand.NextFloat(-1, 1f);
@@ -250,7 +251,7 @@ namespace SOTS.NPCs.Anomaly
 					d.fadeIn = 0.2f;
 					d.noGravity = true;
 					d.scale *= 1.5f;
-					d.color = ColorHelpers.VoidAnomaly;
+					d.color = ColorHelper.VoidAnomaly;
 				}
 			}		
 		}

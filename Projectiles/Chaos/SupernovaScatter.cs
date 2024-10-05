@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.NPCs;
 using SOTS.Void;
 using System;
@@ -66,7 +67,7 @@ namespace SOTS.Projectiles.Chaos
 				{
 					break;
 				}
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[1] + k * 2), true);
+				Color color = ColorHelper.Pastel(MathHelper.ToRadians(Projectile.ai[1] + k * 2), true);
 				color.A = 0;
 				Vector2 drawPos = trailPos[k] - Main.screenPosition;
 				Vector2 currentPos = trailPos[k];
@@ -87,8 +88,8 @@ namespace SOTS.Projectiles.Chaos
 			TrailPreDraw();
 			return false;
 		}
-		bool hasHit = false;
-		bool runOnce = true;
+        private bool hasHit = false;
+        private bool runOnce = true;
 		public override void AI()
 		{
 			cataloguePos();
@@ -99,9 +100,8 @@ namespace SOTS.Projectiles.Chaos
 			}
 			if(Main.rand.NextBool(40) || (hasHit && Main.rand.NextBool(8)))
             {
-				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
-				Dust dust = Main.dust[dust2];
-				dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(Projectile.ai[1]), true);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				dust.color = ColorHelper.Pastel(MathHelper.ToRadians(Projectile.ai[1]), true);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale = 1.3f;

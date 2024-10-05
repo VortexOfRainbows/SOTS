@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Void;
 using System.Collections.Generic;
 using Terraria;
@@ -54,7 +55,7 @@ namespace SOTS.Projectiles.Nature
 					Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 					dust2.velocity += Projectile.velocity * 0.5f;
 					dust2.noGravity = true;
-					dust2.color = ColorHelpers.NatureColor;
+					dust2.color = ColorHelper.NatureColor;
 					dust2.noGravity = true;
 					dust2.fadeIn = 0.2f;
 					dust2.scale *= 1.4f;
@@ -101,7 +102,7 @@ namespace SOTS.Projectiles.Nature
 					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 					dust.velocity += Projectile.velocity * 0.3f;
 					dust.noGravity = true;
-					dust.color = ColorHelpers.NatureColor;
+					dust.color = ColorHelper.NatureColor;
 					dust.noGravity = true;
 					dust.fadeIn = 0.2f;
 					dust.alpha = Projectile.alpha;
@@ -121,7 +122,7 @@ namespace SOTS.Projectiles.Nature
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<Dusts.CopyDust4>(), 0, 0, 100, default, 1.6f);
 				dust.velocity += Projectile.velocity * 0.3f;
 				dust.noGravity = true;
-				dust.color = ColorHelpers.NatureColor;
+				dust.color = ColorHelper.NatureColor;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
 			}
@@ -132,11 +133,11 @@ namespace SOTS.Projectiles.Nature
 				return false;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Player player = Main.player[Projectile.owner];
 			float scale = 0.1f;
 			int alpha = 0;
 			float rotation = Projectile.velocity.ToRotation();
-			Color color = new Color(ColorHelpers.NatureColor.R, ColorHelpers.NatureColor.G, ColorHelpers.NatureColor.B, 0);
+			Color color = ColorHelper.NatureColor;
+			color.A = 0;
 			for (int i = 0; i < drawPoints.Count; i += 2)
 			{
 				if(scale < 1)

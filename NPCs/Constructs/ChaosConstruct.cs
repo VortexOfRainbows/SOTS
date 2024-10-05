@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Chaos;
@@ -121,7 +122,7 @@ namespace SOTS.NPCs.Constructs
 					if (degreesCount < 0)
 						sinusoid = 0;
 					float radians = MathHelper.ToRadians(i * 360f / amtOfParticles);
-					Color c = ColorHelpers.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount));
+					Color c = ColorHelper.Pastel(radians + MathHelper.ToRadians(Main.GameUpdateCount));
 					Vector2 circular = new Vector2(-1, 0).RotatedBy(radians);
 					float increaseAmount = 1f;
 					if (i < amtOfParticles / 2)

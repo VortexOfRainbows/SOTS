@@ -2,6 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace SOTS.Projectiles.Earth
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 30);
+			Color color = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 30);
 			Vector2 drawPos = Projectile.Center - Main.screenPosition;
 			color = Projectile.GetAlpha(color);
 			for (int j = 0; j < 3; j++)
@@ -55,10 +56,9 @@ namespace SOTS.Projectiles.Earth
 				int direction = i * 2 - 1;
 				float radianDir = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X);
 				Vector2 helixPos1 = Projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir + direction * MathHelper.ToRadians(90));
-				int num1 = Dust.NewDust(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
-				Dust dust = Main.dust[num1];
-				Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 30);
-				dust.color = color2;
+				Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 30);
+                Dust dust = Dust.NewDustDirect(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+                dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 0.75f;
@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Earth
 			{
 				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num1];
-				Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 30);
+				Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 30);
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;

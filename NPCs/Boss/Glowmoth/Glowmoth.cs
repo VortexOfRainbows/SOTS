@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.Items.Pyramid;
@@ -118,7 +119,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				int thisFrameNumber = (CurrentFrameNumber + j) % 10;
 				Vector2 position = NPC.oldPos[j] + new Vector2(NPC.width, NPC.height) / 2;
 				float alphaMult = 1 - (j / (float)NPCID.Sets.TrailCacheLength[Type]);
-				Color trailColor = ColorHelpers.VibrantColorAttempt(j * 12);
+				Color trailColor = ColorHelper.VibrantColorGradient(j * 12);
 				if (AI0 != SparklePhase)
 				{
 					trailColor = NPC.GetAlpha(trailColor) * 0.4f;
@@ -164,7 +165,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			{
 				despawn++;
 			}
-			glowColor = ColorHelpers.VibrantColor;
+			glowColor = ColorHelper.VibrantColor;
 			return true;
 		}
         public override void AI()
@@ -361,11 +362,10 @@ namespace SOTS.NPCs.Boss.Glowmoth
 						{
 							Vector2 circularLocation = new Vector2(0, 48 * offsetSize).RotatedBy(MathHelper.ToRadians(i));
 							circularLocation.Y *= 1 - offsetSize * 0.5f;
-							int dust2 = Dust.NewDust(new Vector2(center.X + circularLocation.X - 5, center.Y + circularLocation.Y - 5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), Scale: 1 + offsetSize * 0.5f);
-							Dust dust = Main.dust[dust2];
+                            Dust dust = Dust.NewDustDirect(new Vector2(center.X + circularLocation.X - 5, center.Y + circularLocation.Y - 5), 0, 0, ModContent.DustType<Dusts.CopyDust4>(), Scale: 1 + offsetSize * 0.5f);
 							dust.velocity = -circularLocation * 0.1f;
 							dust.velocity.Y += NPC.velocity.Y - 2;
-							dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180) + 180, true);
+							dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180) + 180, true);
 							dust.noGravity = true;
 							dust.alpha = 100;
 						}

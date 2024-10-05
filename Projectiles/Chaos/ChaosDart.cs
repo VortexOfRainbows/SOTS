@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -41,7 +42,7 @@ namespace SOTS.Projectiles.Chaos
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
-				Color color2 = ColorHelpers.pastelAttempt(MathHelper.ToRadians((ColorHelpers.soulColorCounter + k) * 6 + Projectile.whoAmI * 18));
+				Color color2 = ColorHelper.Pastel(MathHelper.ToRadians((ColorHelper.SoulColorCounter + k) * 6 + Projectile.whoAmI * 18));
 				color2.A = 0;
 				float scale = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + new Vector2(12, 12);
@@ -52,7 +53,7 @@ namespace SOTS.Projectiles.Chaos
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 6 + Projectile.whoAmI * 18));
+			Color color = ColorHelper.Pastel(MathHelper.ToRadians(ColorHelper.SoulColorCounter * 6 + Projectile.whoAmI * 18));
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawTrail();
@@ -90,13 +91,13 @@ namespace SOTS.Projectiles.Chaos
 			}
 			for (float i = 0; i < 1; i += grow)
 			{
-				Dust dust2 = Dust.NewDustPerfect(Projectile.Center - Projectile.velocity * i, ModContent.DustType<Dusts.CopyDust4>(), Main.rand.NextVector2Circular(0.2f, 0.2f));
-				dust2.velocity += Projectile.velocity * 0.1f;
-				dust2.noGravity = true;
-				dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 6 + Projectile.whoAmI * 18), true);
-				dust2.noGravity = true;
-				dust2.fadeIn = 0.2f;
-				dust2.scale *= 1.7f;
+				Dust dust = Dust.NewDustPerfect(Projectile.Center - Projectile.velocity * i, ModContent.DustType<Dusts.CopyDust4>(), Main.rand.NextVector2Circular(0.2f, 0.2f));
+				dust.velocity += Projectile.velocity * 0.1f;
+				dust.noGravity = true;
+				dust.color = ColorHelper.Pastel(MathHelper.ToRadians(ColorHelper.SoulColorCounter * 6 + Projectile.whoAmI * 18), true);
+				dust.noGravity = true;
+				dust.fadeIn = 0.2f;
+				dust.scale *= 1.7f;
 			}
 			int target = (int)Projectile.ai[0];
 			if (target >= 0 && Projectile.ai[1] > -1)
@@ -125,7 +126,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
-				dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+				dust.color = ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true);
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

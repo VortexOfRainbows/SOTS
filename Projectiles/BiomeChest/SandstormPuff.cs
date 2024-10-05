@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using Steamworks;
 using System;
@@ -53,7 +54,7 @@ namespace SOTS.Projectiles.BiomeChest
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 Vector2 toPrev = previous - center;
-                Main.spriteBatch.Draw(pixel, center - Main.screenPosition + veloOffset, null, Lighting.GetColor((int)center.X / 16, (int)center.Y / 16, ColorHelpers.SandstormPouchColor) * perc * 1.0f * alphaMult, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 3.75f * perc * scaleMod), Projectile.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(pixel, center - Main.screenPosition + veloOffset, null, Lighting.GetColor((int)center.X / 16, (int)center.Y / 16, ColorHelper.SandstormPouchColor) * perc * 1.0f * alphaMult, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 3.75f * perc * scaleMod), Projectile.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
                 previous = center;
             }
             Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + veloOffset, null, lightColor * alphaMult, Projectile.rotation, drawOrigin, 0.75f * scaleMod, SpriteEffects.None, 0f);
@@ -76,7 +77,7 @@ namespace SOTS.Projectiles.BiomeChest
                     }
                     else
                     {
-                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 15, Projectile.Center.Y - 15), 20, 20, ModContent.DustType<ModSandDust>(), newColor: ColorHelpers.SandstormPouchColor * 0.5f);
+                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 15, Projectile.Center.Y - 15), 20, 20, ModContent.DustType<ModSandDust>(), newColor: ColorHelper.SandstormPouchColor * 0.5f);
                         dust.noGravity = true;
                         dust.velocity = dust.velocity * 0.6f + Projectile.velocity * 0.5f;
                         dust.scale *= 1.1f;
@@ -93,7 +94,7 @@ namespace SOTS.Projectiles.BiomeChest
                 {
                     float perc = 1 - i / (float)Projectile.oldPos.Length;
                     Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
-                    Dust dust = Dust.NewDustDirect(center + new Vector2(-5, -5), 0, 0, ModContent.DustType<ModSandDust>(), newColor: ColorHelpers.SandstormPouchColor * perc * 0.5f);
+                    Dust dust = Dust.NewDustDirect(center + new Vector2(-5, -5), 0, 0, ModContent.DustType<ModSandDust>(), newColor: ColorHelper.SandstormPouchColor * perc * 0.5f);
                     dust.noGravity = true;
                     dust.velocity = dust.velocity * 0.1f + Projectile.velocity * 0.5f;
                     dust.alpha = (int)(Projectile.alpha + 255 * (1 - perc));
@@ -101,7 +102,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             if (Main.rand.NextBool(3))
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<ModSandDust>(), newColor: ColorHelpers.SandstormPouchColor * 0.5f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<ModSandDust>(), newColor: ColorHelper.SandstormPouchColor * 0.5f);
                 dust.noGravity = true;
                 dust.velocity *= 0.2f;
                 dust.alpha = Projectile.alpha;
@@ -118,7 +119,7 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			for(int i = 0; i < 12; i++)
 			{
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 15, Projectile.Center.Y - 15), 20, 20, ModContent.DustType<ModSandDust>(), newColor: ColorHelpers.SandstormPouchColor * 0.5f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 15, Projectile.Center.Y - 15), 20, 20, ModContent.DustType<ModSandDust>(), newColor: ColorHelper.SandstormPouchColor * 0.5f);
 				dust.noGravity = true;
                 dust.velocity = dust.velocity * 0.6f + Projectile.velocity * 0.75f;
                 dust.scale *= 1.3f;
@@ -128,7 +129,7 @@ namespace SOTS.Projectiles.BiomeChest
             {
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
-                Dust dust = Dust.NewDustDirect(center + new Vector2(-5, -5), 0, 0, ModContent.DustType<ModSandDust>(), newColor: ColorHelpers.SandstormPouchColor * perc * 0.75f);
+                Dust dust = Dust.NewDustDirect(center + new Vector2(-5, -5), 0, 0, ModContent.DustType<ModSandDust>(), newColor: ColorHelper.SandstormPouchColor * perc * 0.75f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * 0.1f + Projectile.velocity * 0.75f;
                 dust.scale = perc + 0.5f;

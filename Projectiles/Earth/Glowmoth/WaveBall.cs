@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using System.IO;
@@ -119,7 +120,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			float alphaMult = 0.05f + 0.95f * Projectile.ai[1];
 			for (int k = 0; k < TrailLength; k++)
 			{
-				Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 18 + k * 6 + SOTSWorld.GlobalCounter);
+				Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 18 + k * 6 + SOTSWorld.GlobalCounter);
 				color2.A = 0;
 				float scale = (TrailLength - k) / (float)TrailLength;
 				Vector2 drawPos = Projectile.oldPos[k] + Projectile.Size / 2 - Main.screenPosition;
@@ -131,7 +132,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		{
 			bool alternating = (int)Projectile.ai[0] >= 0;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 18 + SOTSWorld.GlobalCounter);
+			Color color = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 18 + SOTSWorld.GlobalCounter);
 			color.A = 0;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawWebBetweenProjectile(false);
@@ -193,7 +194,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				if (Main.rand.NextBool(2))
 				{
 					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<Dusts.PixelDust>());
-					dust.color = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 18 + SOTSWorld.GlobalCounter) * Projectile.ai[1];
+					dust.color = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 18 + SOTSWorld.GlobalCounter) * Projectile.ai[1];
 					dust.fadeIn = 8;
 					dust.scale = 1f;
 					dust.velocity *= 0.2f + 1.25f * sinusoid;
@@ -219,11 +220,10 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			for (int i = 0; i < 360; i += 40)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(5), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
-				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
-				Dust dust = Main.dust[dust2];
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 				dust.velocity = circularLocation * 0.7f;
 				dust.velocity += Projectile.velocity * 0.7f;
-				dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360));
+				dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(360));
 				dust.noGravity = true;
 				dust.alpha = 60;
 				dust.fadeIn = 0.1f;

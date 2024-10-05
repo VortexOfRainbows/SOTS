@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Projectiles.Earth;
 using SOTS.Void;
 using System;
@@ -47,7 +48,7 @@ namespace SOTS.Items.Tools
                 dust.velocity *= 0.3f;
                 dust.scale = 1f;
                 dust.fadeIn = 10f;
-                dust.color = ColorHelpers.EarthColor;
+                dust.color = ColorHelper.EarthColor;
                 dust.color.A = 0;
             }
         }

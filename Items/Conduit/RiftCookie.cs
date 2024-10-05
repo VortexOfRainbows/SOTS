@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.NPCs.Town;
 using System.Text.Json.Serialization.Metadata;
 using Terraria;
@@ -98,7 +99,7 @@ namespace SOTS.Items.Conduit
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
-			Vector3 vColor = ColorHelpers.VoidAnomaly.ToVector3() * 0.2f;
+			Vector3 vColor = ColorHelper.VoidAnomaly.ToVector3() * 0.2f;
 			Lighting.AddLight(Item.position, vColor);
 		}
         public override bool CanUseItem(Player player)

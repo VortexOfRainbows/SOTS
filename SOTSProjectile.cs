@@ -30,6 +30,7 @@ using static SOTS.SOTS;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.AbandonedVillage;
 using System.Collections;
+using SOTS.Helpers;
 
 namespace SOTS
 {
@@ -279,7 +280,7 @@ namespace SOTS
 							dust.velocity *= 0.1f;
 							dust.noGravity = true;
 							dust.scale += 0.2f;
-							dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1f));
+							dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(1f));
 							dust.fadeIn = 0.1f;
 							dust.scale *= 1.2f;
 							dust.velocity += projectile.velocity * 0.1f;
@@ -298,7 +299,7 @@ namespace SOTS
 							dust.noGravity = true;
 							dust.scale *= 0.3f;
 							dust.scale += 0.8f;
-							dust.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians((projectile.whoAmI + Main.GameUpdateCount) * 12 + i * 4), true);
+							dust.color = ColorHelper.Pastel(MathHelper.ToRadians((projectile.whoAmI + Main.GameUpdateCount) * 12 + i * 4), true);
 							dust.alpha = (int)(projectile.alpha * 0.5f + 125);
 							dust.fadeIn = 0.1f;
 							dust.velocity += projectile.velocity * 0.05f;

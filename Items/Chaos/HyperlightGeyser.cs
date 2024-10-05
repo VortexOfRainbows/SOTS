@@ -1,9 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Chaos;
-using SOTS.Projectiles.Laser;
-using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -20,7 +19,7 @@ namespace SOTS.Items.Chaos
 			Rectangle frame = new Rectangle(0, 0, 78, 36);
 			for (int i = 0; i < 6; i++)
 			{
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
+				Color color = ColorHelper.Pastel(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
 				color.A = 0;
 				Vector2 rotationAround = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + SOTSWorld.GlobalCounter));
 				Main.spriteBatch.Draw(texture, position + rotationAround, frame, color, 0f, drawOrigin, scale, SpriteEffects.None, 0f);
@@ -36,7 +35,7 @@ namespace SOTS.Items.Chaos
 			Rectangle frame = new Rectangle(0, 0, 78, 36);
 			for (int i = 0; i < 6; i++)
 			{
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
+				Color color = ColorHelper.Pastel(MathHelper.ToRadians(i * 60 - SOTSWorld.GlobalCounter)) * 0.6f;
 				color.A = 0;
 				Vector2 rotationAround = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(60 * i + SOTSWorld.GlobalCounter));
 				Main.spriteBatch.Draw(texture, Item.Center + rotationAround - Main.screenPosition, frame, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);

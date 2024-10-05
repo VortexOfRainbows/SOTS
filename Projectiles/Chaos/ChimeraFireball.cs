@@ -6,6 +6,7 @@ using Terraria.ID;
 using System;
 using System.IO;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Chaos
 {    
@@ -15,7 +16,7 @@ namespace SOTS.Projectiles.Chaos
         {
             get
             {
-                Color cPink = ColorHelpers.ChaosPink;
+                Color cPink = ColorHelper.ChaosPink;
                 cPink.A = 0;
                 return cPink;
             }

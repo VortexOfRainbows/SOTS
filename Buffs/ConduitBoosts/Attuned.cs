@@ -8,6 +8,7 @@ using Terraria.DataStructures;
 using SOTS.Common.ModPlayers;
 using SOTS.Void;
 using Terraria.Localization;
+using SOTS.Helpers;
 
 namespace SOTS.Buffs.ConduitBoosts
 {
@@ -107,21 +108,21 @@ namespace SOTS.Buffs.ConduitBoosts
             ConduitPlayer CP = Main.LocalPlayer.ConduitPlayer();
             Texture2D texture = ModContent.Request<Texture2D>("SOTS/Buffs/ConduitBoosts/AttunedTiers").Value;
             if (CP.NatureBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.NatureColor, 0);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelper.NatureColor, 0);
             if (CP.EarthBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.EarthColor, 1);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelper.EarthColor, 1);
             if (CP.PermafrostBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.PermafrostColor, 2);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelper.PermafrostColor, 2);
             if (CP.OtherworldBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.PurpleOtherworldColor, 3);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelper.PurpleOtherworldColor, 3);
             if (CP.TideBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.TideColor, 4);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelper.TideColor, 4);
             if (CP.EvilBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.RedEvilColor, 5);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelper.RedEvilColor, 5);
             if (CP.InfernoBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.Inferno1, 6);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelper.Inferno1, 6);
             if (CP.ChaosBoosted)
-                DrawCell(spriteBatch, texture, drawParams, ColorHelpers.ChaosPink, 7);
+                DrawCell(spriteBatch, texture, drawParams, ColorHelper.ChaosPink, 7);
         }
         private void DrawCell(SpriteBatch spriteBatch, Texture2D texture, BuffDrawParams drawParams, Color color, int frame)
         {

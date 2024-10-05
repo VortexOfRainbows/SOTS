@@ -4,6 +4,7 @@ using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using static SOTS.ItemHelpers;
+using SOTS.Helpers;
 
 namespace SOTS.Items.Conduit
 {
@@ -50,7 +51,7 @@ namespace SOTS.Items.Conduit
         }
 		public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
-			Vector3 vColor = ColorHelpers.VoidAnomaly.ToVector3() * 0.5f;
+			Vector3 vColor = ColorHelper.VoidAnomaly.ToVector3() * 0.5f;
 			Lighting.AddLight(Item.position, vColor);
 		}
 	}

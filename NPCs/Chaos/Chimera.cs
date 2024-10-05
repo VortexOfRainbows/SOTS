@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.Items.Pyramid;
@@ -51,7 +52,7 @@ namespace SOTS.NPCs.Chaos
 			Rectangle frame = new Rectangle(0, frameY * texture.Height / 8, texture.Width, texture.Height / 8);
             Vector2 drawPos = NPC.Center - new Vector2(16 * NPC.spriteDirection, 20 - NPC.gfxOffY) - screenPos;
             spriteBatch.Draw(texture, drawPos, frame, NPC.GetAlpha(drawColor), NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : 0, 0f);
-            spriteBatch.Draw(textureG, drawPos, frame, ColorHelpers.ChaosPink, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : 0, 0f);
+            spriteBatch.Draw(textureG, drawPos, frame, ColorHelper.ChaosPink, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : 0, 0f);
             return true;
 		}
 		public override bool PreAI()

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
+using SOTS.Helpers;
 using SOTS.Projectiles.Earth;
 using SOTS.Void;
 using Terraria;
@@ -50,15 +51,14 @@ namespace SOTS.Items.Earth.Glowmoth
         {
             if (Main.rand.NextBool(8))
             {
-                int num1 = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, DustID.GlowingMushroom, player.direction * 4, -1f, 150, default(Color), 1.3f);
-                Main.dust[num1].velocity *= 0.4f;
-                Main.dust[num1].scale = 0.8f;
+                Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GlowingMushroom, player.direction * 4, -1f, 150, default(Color), 1.3f);
+                dust.velocity *= 0.4f;
+                dust.scale = 0.8f;
             }
             else if (Main.rand.NextBool(6))
             {
-                int num2 = Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<Dusts.CopyDust4>());
-                Dust dust = Main.dust[num2];
-                dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+                Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, ModContent.DustType<Dusts.CopyDust4>());
+                dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.44f;

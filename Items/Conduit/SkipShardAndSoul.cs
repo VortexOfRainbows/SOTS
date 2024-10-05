@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Pyramid;
 using SOTS.Void;
 using System;
@@ -69,7 +70,7 @@ namespace SOTS.Items.Conduit
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
-			Vector3 vColor = ColorHelpers.VoidAnomaly.ToVector3() * 0.2f;
+			Vector3 vColor = ColorHelper.VoidAnomaly.ToVector3() * 0.2f;
 			Lighting.AddLight(Item.position, vColor);
 		}
 	}
@@ -77,26 +78,26 @@ namespace SOTS.Items.Conduit
 	{
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
-			Color alphaColor = ColorHelpers.VoidAnomaly;
+			Color alphaColor = ColorHelper.VoidAnomaly;
 			alphaColor.A = 0;
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 offset = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 60));
 				ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position + offset, frame, alphaColor, scale, 1f, 0.75f);
 			}
-			ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position, frame, ColorHelpers.VoidAnomaly * 1.5f, scale, 1f, 0.75f);
+			ItemHelpers.DrawInInventoryBobbing(spriteBatch, Item, position, frame, ColorHelper.VoidAnomaly * 1.5f, scale, 1f, 0.75f);
 			return false;
         }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-			Color alpha2Color = ColorHelpers.VoidAnomaly;
+			Color alpha2Color = ColorHelper.VoidAnomaly;
 			alpha2Color.A = 0;
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 offset = new Vector2(3f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 3 + k * 60));
 				ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, offset, alpha2Color, ref rotation, ref scale, 1f, 0.75f);
 			}
-			ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, Vector2.Zero, ColorHelpers.VoidAnomaly * 1.5f, ref rotation, ref scale, 1f, 0.75f);
+			ItemHelpers.DrawInWorldBobbing(spriteBatch, Item, Vector2.Zero, ColorHelper.VoidAnomaly * 1.5f, ref rotation, ref scale, 1f, 0.75f);
             return false;
         }
         public override void SetStaticDefaults()
@@ -118,7 +119,7 @@ namespace SOTS.Items.Conduit
 		}
         public override void Update(ref float gravity, ref float maxFallSpeed)
 		{
-			Vector3 vColor = ColorHelpers.VoidAnomaly.ToVector3() * 0.34f;
+			Vector3 vColor = ColorHelper.VoidAnomaly.ToVector3() * 0.34f;
 			Lighting.AddLight(Item.position, vColor);
 		}
     }

@@ -1,11 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Void;
-using System;
+using SOTS.Helpers;
 using System.IO;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Chaos
@@ -20,11 +18,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			deathTime = reader.ReadInt32();
 		}
-		float deathTime = -1;
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Chaos Arrow Bloom");
-		}
+		private float deathTime = -1;
 		public override void SetDefaults()
 		{
 			Projectile.width = 48;
@@ -41,7 +35,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color = ColorHelpers.ChaosPink;
+			Color color = ColorHelper.ChaosPink;
 			color.A = 0;
 			for (int k = 0; k < 4; k++)
 			{
@@ -84,7 +78,7 @@ namespace SOTS.Projectiles.Chaos
 			dust2.velocity *= 0;
 			dust2.velocity -= Projectile.velocity * 0.1f;
 			dust2.noGravity = true;
-			dust2.color = ColorHelpers.ChaosPink;
+			dust2.color = ColorHelper.ChaosPink;
 			dust2.noGravity = true;
 			dust2.fadeIn = 0.2f;
 			dust2.scale = 1.8f;

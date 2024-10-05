@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -67,7 +68,7 @@ namespace SOTS.Projectiles.Chaos
 				float radius = (18 + j * 4) * (1f + radiusMult * 2.5f);
 				for (int i = 0; i < 360; i += 9)
 				{
-					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i));
+					Color color = ColorHelper.Pastel(MathHelper.ToRadians(i));
 					Vector2 center = Projectile.Center;
 					Vector2 rotation = new Vector2(radius, 0).RotatedBy(MathHelper.ToRadians(i + Main.GameUpdateCount));
 					rotation.X *= compressions[j];
@@ -84,7 +85,7 @@ namespace SOTS.Projectiles.Chaos
             {
 				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
 				dust2.noGravity = true;
-				dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18));
+				dust2.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18));
 				dust2.noGravity = true;
 				dust2.fadeIn = 0.2f;
 				dust2.scale *= 2.4f;
@@ -112,25 +113,25 @@ namespace SOTS.Projectiles.Chaos
 				runOnce = false;
 				for (int i = 0; i < 15; i++)
 				{
-					Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
-					dust2.noGravity = true;
-					dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18));
-					dust2.noGravity = true;
-					dust2.fadeIn = 0.2f;
-					dust2.scale *= 2.4f;
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+					dust.noGravity = true;
+					dust.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18));
+					dust.noGravity = true;
+					dust.fadeIn = 0.2f;
+					dust.scale *= 2.4f;
 				}
 				Vector2 start = Projectile.velocity;
 				Vector2 end = Projectile.Center;
 				for (int i = 0; i < 100; i++)
 				{
 					Vector2 spawnPosition = Vector2.Lerp(start, end, i / 100f);
-					Dust dust2 = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 120);
-					dust2.velocity *= 0.3f;
-					dust2.noGravity = true;
-					dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 3.6f) + Main.GameUpdateCount * 2f);
-					dust2.fadeIn = 0.2f;
-					dust2.scale *= 0.5f;
-					dust2.scale += 1.8f;
+					Dust dust = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+					dust.velocity *= 0.3f;
+					dust.noGravity = true;
+					dust.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 3.6f) + Main.GameUpdateCount * 2f);
+					dust.fadeIn = 0.2f;
+					dust.scale *= 0.5f;
+					dust.scale += 1.8f;
 				}
 			}
 			else
@@ -169,7 +170,7 @@ namespace SOTS.Projectiles.Chaos
 				Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>(), 0, 0, 100);
 				dust2.velocity *= 0.4f;
 				dust2.noGravity = true;
-				dust2.color = ColorHelpers.pastelRainbow;
+				dust2.color = ColorHelper.PastelRainbow;
 				dust2.noGravity = true;
 				dust2.fadeIn = 0.2f;
 				dust2.scale *= 1.4f;

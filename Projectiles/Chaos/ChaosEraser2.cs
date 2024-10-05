@@ -8,6 +8,7 @@ using Terraria.ID;
 using System.Collections.Generic;
 using SOTS.Dusts;
 using SOTS.NPCs.Boss.Lux;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Chaos
 {
@@ -80,7 +81,7 @@ namespace SOTS.Projectiles.Chaos
                         actualScale *= 1 - mult;
                     }
                     Vector2 drawPos = drawPositionList[i];
-                    Color otherC = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 3), new Color(255, 70, 70));
+                    Color otherC = ColorHelper.PastelGradient(MathHelper.ToRadians(i * 3), new Color(255, 70, 70));
                     otherC.A = 0;
                     Vector2 sinusoid = new Vector2(0, 64 * ((255 - Projectile.alpha) / 255f) * actualScale * (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 8 + i * 5))).RotatedBy(rotation);
                     float sinusoid2 = (float)Math.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 3 + i * 4));
@@ -141,33 +142,33 @@ namespace SOTS.Projectiles.Chaos
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
-                    dust2.velocity += Projectile.velocity * 0.1f;
-                    dust2.noGravity = true;
-                    dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18), new Color(255, 100, 100));
-                    dust2.noGravity = true;
-                    dust2.fadeIn = 0.2f;
-                    dust2.scale *= 2.2f;
-                    dust2 = Dust.NewDustDirect(endPosition - new Vector2(Projectile.width / 2, Projectile.height / 2), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
-                    dust2.velocity += Projectile.velocity * 0.1f;
-                    dust2.noGravity = true;
-                    dust2.color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 18), new Color(255, 100, 100));
-                    dust2.noGravity = true;
-                    dust2.fadeIn = 0.2f;
-                    dust2.scale *= 2.2f;
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+                    dust.velocity += Projectile.velocity * 0.1f;
+                    dust.noGravity = true;
+                    dust.color = ColorHelper.PastelGradient(MathHelper.ToRadians(i * 18), new Color(255, 100, 100));
+                    dust.noGravity = true;
+                    dust.fadeIn = 0.2f;
+                    dust.scale *= 2.2f;
+                    dust = Dust.NewDustDirect(endPosition - new Vector2(Projectile.width / 2, Projectile.height / 2), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+                    dust.velocity += Projectile.velocity * 0.1f;
+                    dust.noGravity = true;
+                    dust.color = ColorHelper.PastelGradient(MathHelper.ToRadians(i * 18), new Color(255, 100, 100));
+                    dust.noGravity = true;
+                    dust.fadeIn = 0.2f;
+                    dust.scale *= 2.2f;
                 }
                 SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.6f, -0.4f);
                 for (int i = 0; i < drawPositionList.Count; i += 2)
                 {
                     if (Main.rand.NextBool(4))
                     {
-                        Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
-                        dust2.velocity += Projectile.velocity * 0.1f;
-                        dust2.noGravity = true;
-                        dust2.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(0, 6.28f), new Color(255, 100, 100));
-                        dust2.noGravity = true;
-                        dust2.fadeIn = 0.2f;
-                        dust2.scale *= 2.2f;
+                        Dust dust = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
+                        dust.velocity += Projectile.velocity * 0.1f;
+                        dust.noGravity = true;
+                        dust.color = ColorHelper.PastelGradient(Main.rand.NextFloat(0, 6.28f), new Color(255, 100, 100));
+                        dust.noGravity = true;
+                        dust.fadeIn = 0.2f;
+                        dust.scale *= 2.2f;
                     }
                 }
             }
@@ -175,13 +176,13 @@ namespace SOTS.Projectiles.Chaos
             {
                 if (Main.rand.NextBool(1000))
                 {
-                    Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
-                    dust2.velocity += Projectile.velocity * 0.1f;
-                    dust2.noGravity = true;
-                    dust2.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(0, 6.28f), new Color(255, 100, 100));
-                    dust2.noGravity = true;
-                    dust2.fadeIn = 0.2f;
-                    dust2.scale *= 2.2f;
+                    Dust dust = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
+                    dust.velocity += Projectile.velocity * 0.1f;
+                    dust.noGravity = true;
+                    dust.color = ColorHelper.PastelGradient(Main.rand.NextFloat(0, 6.28f), new Color(255, 100, 100));
+                    dust.noGravity = true;
+                    dust.fadeIn = 0.2f;
+                    dust.scale *= 2.2f;
                 }
             }
             float endPercent = Projectile.timeLeft / 120f;

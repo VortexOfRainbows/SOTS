@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Projectiles.Earth.Glowmoth;
 using System;
 using System.ComponentModel;
@@ -164,9 +165,9 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return;
-			Color color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180), true);
+			Color color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true);
 			if(Blue)
-				color = ColorHelpers.VibrantColorAttempt(180 + Main.rand.NextFloat(180), true);
+				color = ColorHelper.VibrantColorGradient(180 + Main.rand.NextFloat(180), true);
 			color.A = 0;
 			for (int k = 0; k < 15; k++)
 			{

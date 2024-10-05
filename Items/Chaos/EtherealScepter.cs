@@ -1,10 +1,8 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
+using SOTS.Helpers;
 using SOTS.Projectiles.Minions;
-using SOTS.Void;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -22,7 +20,7 @@ namespace SOTS.Items.Chaos
 			for (int k = 0; k < 6; k++)
 			{
 				Vector2 circular = new Vector2(4 * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount * 2));
-				color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+				color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 				color.A = 0;
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)) + circular, null, color * 0.3f, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
 			}

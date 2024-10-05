@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.ID;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Inferno
 {    
@@ -50,7 +51,7 @@ namespace SOTS.Projectiles.Inferno
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Effects/Masks/Extra_49").Value;
 			float sin = (float)Math.Sin(MathHelper.ToRadians(120 - Projectile.timeLeft));
 			sin = 0.8f + sin * 0.3f;
-			Color color = ColorHelpers.InfernoColorAttempt(0.3f + 0.3f * (float)Math.Sin(MathHelper.ToRadians(counter)));
+			Color color = ColorHelper.InfernoColorGradient(0.3f + 0.3f * (float)Math.Sin(MathHelper.ToRadians(counter)));
 			color.A = 0;
 			Main.spriteBatch.End();
 			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
@@ -63,10 +64,10 @@ namespace SOTS.Projectiles.Inferno
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale * sin * timeBeforeEnd, SpriteEffects.None, 0f);
 			Main.spriteBatch.End();
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix); 
-			color = ColorHelpers.Inferno1 * 1.1f;
+			color = ColorHelper.Inferno1 * 1.1f;
 			color.A = 0;
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
-			color = ColorHelpers.Inferno2 * 1.1f;
+			color = ColorHelper.Inferno2 * 1.1f;
 			color.A = 0;
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(texture.Width / 2, texture.Height / 2), Projectile.scale / 2f * sin * timeBeforeEnd, SpriteEffects.None, 0f);
 			return false;
@@ -96,7 +97,7 @@ namespace SOTS.Projectiles.Inferno
 				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[dust2];
-				dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(0.5f));
+				dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(0.5f));
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 2.4f;
@@ -178,7 +179,7 @@ namespace SOTS.Projectiles.Inferno
 						Vector2 circular = new Vector2(48 * destinationScale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 						int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12) + circular, 16, 16, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[dust2];
-						dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(0.7f));
+						dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(0.7f));
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 0.5f + (float)Math.Sqrt(destinationScale);
@@ -199,7 +200,7 @@ namespace SOTS.Projectiles.Inferno
 						Vector2 circular = new Vector2(12 * destinationScale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
 						int dust2 = Dust.NewDust(Projectile.Center - new Vector2(4, 4) + circular, 0, 0, ModContent.DustType<CopyDust4>());
 						Dust dust = Main.dust[dust2];
-						dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(0.7f));
+						dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(0.7f));
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 0.8f + (float)Math.Sqrt(destinationScale);

@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,7 +17,7 @@ namespace SOTS.NPCs.Constructs
 			for(int i = 0; i < 8; i++)
 			{
 				Vector2 circular = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 45 + SOTSWorld.GlobalCounter));
+				Color color = ColorHelper.Pastel(MathHelper.ToRadians(i * 45 + SOTSWorld.GlobalCounter));
 				color.A = 0;
 				spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/ChaosRubbleGlow"), NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY) + circular, null, color * 0.4f, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
 			}

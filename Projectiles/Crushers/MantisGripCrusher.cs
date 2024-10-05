@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Projectiles.Nature;
 using SOTS.Void;
 using System;
@@ -58,11 +59,11 @@ namespace SOTS.Projectiles.Crushers
         {
 			//Player player = Main.player[Projectile.owner];
 			Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
-			Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(4) + velo * 2, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+			Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4) + velo * 2, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
 			dust.velocity *= 0.05f;
 			dust.scale = 1.25f;
 			dust.noGravity = true;
-			dust.color = ColorHelpers.NatureColor;
+			dust.color = ColorHelper.NatureColor;
 			dust.noGravity = true;
 			dust.fadeIn = 0.2f;
 			dust.velocity += velo;

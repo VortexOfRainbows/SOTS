@@ -5,6 +5,7 @@ using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Chaos
 {
@@ -104,11 +105,11 @@ namespace SOTS.Projectiles.Chaos
 			{
 				count++;
 				Vector2 position = Projectile.Center + unit * length * i;
-				float radians = MathHelper.ToRadians((Math.Abs(i) + ColorHelpers.soulColorCounter) * 3 + Projectile.whoAmI * 60);
-				Color color = ColorHelpers.pastelAttempt(radians);
+				float radians = MathHelper.ToRadians((Math.Abs(i) + ColorHelper.SoulColorCounter) * 3 + Projectile.whoAmI * 60);
+				Color color = ColorHelper.Pastel(radians);
 				color.A = 0;
 				float mult = 1;
-				float sinusoid = 1.0f + (0.1f + 0.1f * (float)Math.Sin(MathHelper.ToRadians(Math.Abs(i) * 16 + ColorHelpers.soulColorCounter * 4f))) * Projectile.scale;
+				float sinusoid = 1.0f + (0.1f + 0.1f * (float)Math.Sin(MathHelper.ToRadians(Math.Abs(i) * 16 + ColorHelper.SoulColorCounter * 4f))) * Projectile.scale;
 				float scale = Projectile.scale * scaleMult * sinusoid * (0.3f + 0.7f * (float)Math.Sin(MathHelper.Lerp(0, MathHelper.Pi, count / (max - min))));
 				Vector2 drawPos = position - Main.screenPosition;
 				if (type == 1 && i != min && i != max)

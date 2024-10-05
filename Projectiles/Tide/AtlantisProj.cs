@@ -13,6 +13,7 @@ using Terraria.GameContent.UI.Elements;
 using Mono.Cecil;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using SOTS.Buffs;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Tide
 {    
@@ -170,7 +171,7 @@ namespace SOTS.Projectiles.Tide
                             dust.velocity += Projectile.velocity * 0.35f;
                             dust.velocity *= 0.75f;
                             dust.noGravity = true;
-                            dust.color = ColorHelpers.AtlantisColorInverse;
+                            dust.color = ColorHelper.AtlantisColorInverse;
                             dust.fadeIn = 0.2f;
                         }
                         else
@@ -188,7 +189,7 @@ namespace SOTS.Projectiles.Tide
                             dust.velocity += Projectile.velocity * 0.35f;
                             dust.velocity *= 0.75f;
                             dust.noGravity = true;
-                            dust.color = ColorHelpers.AtlantisColor;
+                            dust.color = ColorHelper.AtlantisColor;
                             dust.fadeIn = 0.2f;
                         }
 						else

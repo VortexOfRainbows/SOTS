@@ -6,6 +6,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -51,7 +52,7 @@ namespace SOTS.Projectiles.Minions
 					dust.noGravity = true;
 					dust.scale = dust.scale * 0.65f + 2.55f;
 					dust.fadeIn = 0.1f;
-					dust.color = ColorHelpers.EvilColor * 1.5f;
+					dust.color = ColorHelper.EvilColor * 1.5f;
 					dust.velocity *= 0.8f;
 					dust.velocity += circularLocation * 1.0f;
 					if (!Main.rand.NextBool(4))

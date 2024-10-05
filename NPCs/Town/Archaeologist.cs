@@ -34,6 +34,7 @@ using SOTS.Items.Crushers;
 using SOTS.Items.Earth.Glowmoth;
 using Terraria.Chat;
 using SOTS.Items;
+using SOTS.Helpers;
 
 namespace SOTS.NPCs.Town
 {
@@ -1049,25 +1050,25 @@ namespace SOTS.NPCs.Town
 			for (int j = 0; j < 5; j++)
 			{
 				float total = 35;
-				color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.1f, 1f, 1 - alphaMult));
+				color = Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, MathHelper.Lerp(0.1f, 1f, 1 - alphaMult));
 				float sizeM = 0.75f;
 				if (j == 2)
 				{
 					sizeM = 1.5f;
-					color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.56f, 1f, 1 - alphaMult));
+					color = Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, MathHelper.Lerp(0.56f, 1f, 1 - alphaMult));
 					total = 40;
 				}
 				if (j == 3)
 				{
 					total = 45;
 					sizeM = 2.3f;
-					color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.425f, 1f, 1 - alphaMult));
+					color = Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, MathHelper.Lerp(0.425f, 1f, 1 - alphaMult));
 				}
 				if (j == 4 || j == 0)
 				{
 					total = 50;
 					sizeM = 3f;
-					color = Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, MathHelper.Lerp(0.21f, 1f, 1 - alphaMult));
+					color = Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, MathHelper.Lerp(0.21f, 1f, 1 - alphaMult));
 				}
 				total = 30 + (total - 30) * alphaMult;
 				float sinusoid = (float)(Math.Sin(MathHelper.ToRadians(SOTSWorld.GlobalCounter + sizeM * 22.5f)));
@@ -1102,19 +1103,19 @@ namespace SOTS.NPCs.Town
 			barrierSize += sinusoidalBonus;
 			float alphaMultBarrier = alphaBarrier * 1.05f * Projectile.timeLeft / 120f;
 			if (!SOTSWorld.DiamondKeySlotted)
-				DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize, ref alphaMultBarrier);
+				DrawBarrier(ColorHelper.DiamondColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.RubyKeySlotted)
-				DrawBarrier(ColorHelpers.RubyColor, ref barrierSize, ref alphaMultBarrier);
+				DrawBarrier(ColorHelper.RubyColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.EmeraldKeySlotted)
-				DrawBarrier(ColorHelpers.EmeraldColor, ref barrierSize, ref alphaMultBarrier);
+				DrawBarrier(ColorHelper.EmeraldColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.SapphireKeySlotted)
-				DrawBarrier(ColorHelpers.SapphireColor, ref barrierSize, ref alphaMultBarrier);
+				DrawBarrier(ColorHelper.SapphireColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.TopazKeySlotted)
-				DrawBarrier(ColorHelpers.TopazColor, ref barrierSize, ref alphaMultBarrier);
+				DrawBarrier(ColorHelper.TopazColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.AmethystKeySlotted)
-				DrawBarrier(ColorHelpers.AmethystColor, ref barrierSize, ref alphaMultBarrier);
+				DrawBarrier(ColorHelper.AmethystColor, ref barrierSize, ref alphaMultBarrier);
 			if (!SOTSWorld.AmberKeySlotted)
-				DrawBarrier(ColorHelpers.AmberColor, ref barrierSize, ref alphaMultBarrier);
+				DrawBarrier(ColorHelper.AmberColor, ref barrierSize, ref alphaMultBarrier);
 		}
 		public override void SetDefaults()
 		{
@@ -1181,7 +1182,7 @@ namespace SOTS.NPCs.Town
         }
         public void Update()
 		{
-			Color color = ColorHelpers.VoidAnomaly;
+			Color color = ColorHelper.VoidAnomaly;
 			color.A = 0;
 			if (Main.netMode == NetmodeID.Server && SOTSWorld.GlobalCounter % 120 == 0)
 			{
@@ -1315,19 +1316,19 @@ namespace SOTS.NPCs.Town
 			float sinusoidalBonus = 2 * (float)Math.Sin(MathHelper.ToRadians(barrierSize + SOTSWorld.GlobalCounter));
 			barrierSize += sinusoidalBonus;
 			if (!SOTSWorld.DiamondKeySlotted)
-				DrawBarrier(ColorHelpers.DiamondColor, ref barrierSize, ref point, false);
+				DrawBarrier(ColorHelper.DiamondColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.RubyKeySlotted)
-				DrawBarrier(ColorHelpers.RubyColor, ref barrierSize, ref point, false);
+				DrawBarrier(ColorHelper.RubyColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.EmeraldKeySlotted)
-				DrawBarrier(ColorHelpers.EmeraldColor, ref barrierSize, ref point, false);
+				DrawBarrier(ColorHelper.EmeraldColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.SapphireKeySlotted)
-				DrawBarrier(ColorHelpers.SapphireColor, ref barrierSize, ref point, false);
+				DrawBarrier(ColorHelper.SapphireColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.TopazKeySlotted)
-				DrawBarrier(ColorHelpers.TopazColor, ref barrierSize, ref point, false);
+				DrawBarrier(ColorHelper.TopazColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.AmethystKeySlotted)
-				DrawBarrier(ColorHelpers.AmethystColor, ref barrierSize, ref point, false);
+				DrawBarrier(ColorHelper.AmethystColor, ref barrierSize, ref point, false);
 			if (!SOTSWorld.AmberKeySlotted)
-				DrawBarrier(ColorHelpers.AmberColor, ref barrierSize, ref point, false);
+				DrawBarrier(ColorHelper.AmberColor, ref barrierSize, ref point, false);
 			return barrierSize / 2;
 		}
 		public int totalKeysSlotted
@@ -1566,7 +1567,7 @@ namespace SOTS.NPCs.Town
                             {
 								type = ModContent.DustType<CopyDust4>();
                             }
-							Dust dust = Dust.NewDustDirect(pos - new Vector2(3, 5), entity.width + 3, height, type, 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.3f)), type == ModContent.DustType<CopyDust4>() ? 1.3f : 1.0f);
+							Dust dust = Dust.NewDustDirect(pos - new Vector2(3, 5), entity.width + 3, height, type, 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.3f)), type == ModContent.DustType<CopyDust4>() ? 1.3f : 1.0f);
 							dust.fadeIn = type == ModContent.DustType<CopyDust4>() ? 0.2f : 7;
 							dust.noGravity = true;
 							dust.velocity *= Main.rand.NextFloat(1) * Main.rand.NextFloat(1) * 0.3f;
@@ -1606,14 +1607,14 @@ namespace SOTS.NPCs.Town
 			{
 				float radius = Radius * 16 * alphaMult;
 				Vector2 circular = new Vector2(radius + 12 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
-				Dust dust = Dust.NewDustDirect(Projectile.Center + circular * 0.5f - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.5f)), 1.5f);
+				Dust dust = Dust.NewDustDirect(Projectile.Center + circular * 0.5f - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.5f)), 1.5f);
 				dust.fadeIn = 0.4f;
 				dust.noGravity = true;
 				dust.velocity *= 0.5f;
 				dust.velocity += circular.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.4f, 3);
 				dust.color.A = (byte)Main.rand.Next(200);
 			}
-			Color c = ColorHelpers.VoidAnomaly;
+			Color c = ColorHelper.VoidAnomaly;
 			c.A = 0;
 			for (int i = 0; i < 48; i++)
 			{
@@ -1637,7 +1638,7 @@ namespace SOTS.NPCs.Town
 		public static void DustCircle(Vector2 center, float radiusX, float radiusY)
 		{
 			SOTSUtils.PlaySound(SoundID.Item117, center, 1.5f, -0.8f, 0.1f);
-			Color color = ColorHelpers.VoidAnomaly;
+			Color color = ColorHelper.VoidAnomaly;
 			for (int j = 0; j < 3; j++)
 			{
 				int type = ModContent.DustType<CopyDust4>();
@@ -1883,7 +1884,7 @@ namespace SOTS.NPCs.Town
 							Vector2 velocity = new Vector2(offset.X / width, offset.Y / height) * 2f;
 							velocity = velocity.RotatedBy(rotation);
 							Color color = data[i];
-							Dust dust = Dust.NewDustDirect(Projectile.Center + offset - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelpers.VoidAnomaly, color, 0.5f));
+							Dust dust = Dust.NewDustDirect(Projectile.Center + offset - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, color, 0.5f));
 							dust.velocity = velocity;
 							dust.fadeIn = 3;
 							dust.noGravity = true;

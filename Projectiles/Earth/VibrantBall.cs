@@ -6,6 +6,7 @@ using SOTS.Void;
 using System.IO;
 using SOTS.Dusts;
 using Terraria.ID;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Earth 
 {    
@@ -46,7 +47,7 @@ namespace SOTS.Projectiles.Earth
 					if(trailPos[k] != Vector2.Zero && trailCircular[k] != -100 && (trailPos[k] != Projectile.Center))
 					{
 						Vector2 circularPos = trailPos[k] + new Vector2(0, trailCircular[k] * direction).RotatedBy(Projectile.rotation);
-						Color color = ColorHelpers.VibrantColorAttempt((90 + k * 3) * direction);
+						Color color = ColorHelper.VibrantColorGradient((90 + k * 3) * direction);
 						Vector2 drawPos = circularPos - Main.screenPosition;
 						color = Projectile.GetAlpha(color);
 						for (int j = 0; j < 2; j++)
@@ -98,7 +99,7 @@ namespace SOTS.Projectiles.Earth
 			{
 				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
 				Dust dust = Main.dust[num2];
-				Color color2 = ColorHelpers.VibrantColorAttempt(0) * 0.75f;
+				Color color2 = ColorHelper.VibrantColorGradient(0) * 0.75f;
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;

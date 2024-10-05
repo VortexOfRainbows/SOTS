@@ -10,6 +10,7 @@ using SOTS.Buffs;
 using System.Linq;
 using SOTS.Projectiles.Inferno;
 using SOTS.Buffs.MinionBuffs;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -17,7 +18,6 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Inferno Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Minions
 		}
         public override bool PreDraw(ref Color lightColor)
 		{
-			Color color2 = ColorHelpers.InfernoColorAttemptDegrees(ColorHelpers.soulColorCounter);
+			Color color2 = ColorHelper.InfernoColorGradientDegrees(ColorHelper.SoulColorCounter);
 			color2.A = 0;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
@@ -263,7 +263,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			#endregion
 
-			Lighting.AddLight(Projectile.Center, ColorHelpers.Inferno2.R / 255f, ColorHelpers.Inferno2.G / 255f * ((255 - Projectile.alpha) / 255f), ColorHelpers.Inferno2.B / 255f * ((255 - Projectile.alpha) / 255f));
+			Lighting.AddLight(Projectile.Center, ColorHelper.Inferno2.R / 255f, ColorHelper.Inferno2.G / 255f * ((255 - Projectile.alpha) / 255f), ColorHelper.Inferno2.B / 255f * ((255 - Projectile.alpha) / 255f));
 			MoveAwayFromOthers(true, 0.11f, 2f);
 			if (Main.myPlayer == player.whoAmI)
 			{

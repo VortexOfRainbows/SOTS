@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -105,7 +106,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 						dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 5, Projectile.Center.Y + circularLocation.Y - 5), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 						dust.velocity = -circularLocation * 0.075f;
 						dust.velocity -= Projectile.velocity * 0.5f;
-						dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+						dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale = 1.0f;
@@ -115,7 +116,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<Dusts.PixelDust>());
 				dust.velocity *= 0.1f;
 				dust.velocity -= Projectile.velocity * Main.rand.NextFloat(0.5f, 1f);
-				dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+				dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
 				dust.noGravity = true;
 				dust.fadeIn = 12f;
 				dust.scale = 1;
@@ -172,7 +173,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.PixelDust>());
 					dust.velocity *= 0.5f;
 					dust.velocity += Projectile.velocity * 1.0f * (0.5f + Projectile.ai[1] / 10f) * Main.rand.NextFloat(0.1f, 6f);
-					dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+					dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
 					dust.noGravity = true;
 					dust.fadeIn = 8f;
 					dust.scale = 1;
@@ -182,7 +183,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 					dust.velocity = circularLocation * 0.5f;
 					dust.velocity += Projectile.velocity * 1.0f * (0.25f + Projectile.ai[1] / 5f);
-					dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+					dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.5f;
@@ -280,7 +281,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<Dusts.PixelDust>());
 					dust.velocity *= 0.6f;
 					dust.velocity += new Vector2(0, -Main.rand.NextFloat(1, 10));
-					dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+					dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
 					dust.noGravity = true;
 					dust.fadeIn = 8f;
 					dust.scale = 1;
@@ -289,7 +290,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				{
 					dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<Dusts.CopyDust4>());
 					dust.velocity *= 0.75f;
-					dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180, 360), true);
+					dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180, 360), true);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
 					dust.scale *= 1.15f;
@@ -388,7 +389,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					Dust dust = Dust.NewDustDirect(destination - new Vector2(5, 5) + outward, 0, 0, ModContent.DustType<Dusts.PixelDust>());
 					dust.velocity *= distTo / 640f;
 					dust.velocity -= outward * 0.1f;
-					dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180), true) * 0.5f;
+					dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true) * 0.5f;
 					dust.noGravity = true;
 					dust.fadeIn = 8f;
 					dust.scale = 1.5f;
@@ -427,7 +428,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					dust.scale = 1.4f;
 					dust.fadeIn = 0.1f;
 					dust.alpha = 100;
-					dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180), true);
+					dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true);
 					dust.velocity += velo * 0.15f;
 				}
 			}
@@ -448,7 +449,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<Dusts.PixelDust>());
 				dust.velocity *= 0.2f;
 				dust.velocity += circularLocation * Main.rand.NextFloat(0.5f, 1f);
-				dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180), true);
+				dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true);
 				dust.noGravity = true;
 				dust.fadeIn = 9f;
 				dust.scale = 2;

@@ -34,16 +34,11 @@ using SOTS.Items.Tide;
 using SOTS.FakePlayer;
 using Terraria.UI.Chat;
 using SOTS.Items.Wings;
-using System.Drawing.Printing;
 using SOTS.Items.Void;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Permafrost;
-using SOTS.Buffs;
-using Mono.CompilerServices.SymbolWriter;
-using Terraria.Chat;
-using Terraria.Map;
 using SOTS.Projectiles.Pyramid.GhostPepper;
-using SOTS.Items.Gems;
+using SOTS.Helpers;
 
 namespace SOTS
 {
@@ -76,16 +71,13 @@ namespace SOTS
 		}
 		public override void UpdateAccessory(Item item, Player player, bool hideVisual)
 		{
-			
 			if (extraVoid > 0 && (item.prefix == PrefixType<Awakened>() || item.prefix == PrefixType<Omniscient>()))
 			{
-				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-				voidPlayer.voidMeterMax2 += extraVoid;
+				player.VoidPlayer().voidMeterMax2 += extraVoid;
 			}
 			if (extraVoidGain > 0 && (item.prefix == PrefixType<Chained>() || item.prefix == PrefixType<Soulbound>()))
 			{
-				VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-				voidPlayer.bonusVoidGain += extraVoidGain;
+                player.VoidPlayer().bonusVoidGain += extraVoidGain;
 			}
 		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -135,7 +127,7 @@ namespace SOTS
 			{
 				TooltipLine line = new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.SOTS.Common.InsigniaNerf"))
 				{
-					OverrideColor = ColorHelpers.pastelRainbow
+					OverrideColor = ColorHelper.PastelRainbow
 				};
 				tooltips.Add(line);
 			}
@@ -165,27 +157,6 @@ namespace SOTS
 				}
 			}*/
 		}
-		/*public override void Load(Item item, TagCompound tag)
-		{
-			originalOwner = tag.GetString("originalOwner");
-		}
-		public override bool NeedsSaving(Item item)
-		{
-			return originalOwner.Length > 0;
-		}
-		public override TagCompound Save(Item item)
-		{
-			return new TagCompound {
-				{"originalOwner", originalOwner},
-			};
-		}
-		public override void OnCraft(Item item, Recipe recipe)
-		{
-			if (item.maxStack == 1)
-			{
-				originalOwner = Main.LocalPlayer.name;
-			}
-		}*/
 		public override void NetSend(Item item, BinaryWriter writer)
 		{
 			writer.Write(extraVoidGain);
@@ -205,43 +176,42 @@ namespace SOTS
     }
 	public class SOTSItem : GlobalItem
 	{
-		public static int[] rarities1;
-		public static int[] rarities2;
-		public static int[] rarities3;
-		public static int[] rarities4;
-		public static int[] dedicatedOrange;
-		public static int[] dedicatedBlue;
-		public static int[] dedicatedPurpleRed;
-		public static int[] dedicatedPastelPink;
-		public static int[] dedicatedMinez;
-		public static int[] dedicatedRainbow;
-		public static int[] dedicatedBlasfah;
-		public static int[] dedicatedHeartPlus;
-		public static int[] dedicatedTaco;
-		public static int[] piscesFishItems;
+		public static int[] DarkBlueRarity;
+		public static int[] DarkRedRarity;
+		public static int[] DarkGrayRarity;
+		public static int[] BrightGreenRarity;
+		public static int[] DedicatedOrange;
+		public static int[] DedicatedBlue;
+		public static int[] DedicatedPurpleRed;
+		public static int[] DedicatedPastelPink;
+		public static int[] DedicatedMinez;
+		public static int[] DedicatedRainbow;
+		public static int[] DedicatedBlasfah;
+		public static int[] DedicatedHeartPlus;
+		public static int[] DedicatedTaco;
+		public static int[] PiscesFishItems;
 		public static void LoadArrays() //called in SOTS.Load()
 		{
-			rarities1 = new int[] { ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>() }; //Dark Blue
-			rarities2 = new int[] { ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>() }; //Dark Red
-			rarities3 = new int[] { ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>() }; //Very Dark gray
-			rarities4 = new int[] { ItemType<DreamLamp>() };
+			DarkBlueRarity = [ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>()]; //Dark Blue
+			DarkRedRarity = [ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>()]; //Dark Red
+			DarkGrayRarity = [ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()]; //Very Dark gray
+			BrightGreenRarity = [ItemType<DreamLamp>()];
 
-			dedicatedOrange = new int[] { ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>() }; //friends
-			dedicatedBlue = new int[] { ItemType<Calculator>() }; //friends 2
-			dedicatedPurpleRed = new int[] { ItemType<CursedApple>(), ItemType<ArcStaffMk2>() }; //James
-			dedicatedPastelPink = new int[] { /*ItemType<StrangeFruit>()*/ }; //Tris
-			dedicatedMinez = new int[] { ItemType<DoorPants>(), ItemType<BandOfDoor>() }; //Minez
-			dedicatedRainbow = new int[] { ItemType<SubspaceLocket>(), ItemType<DreamLamp>() }; //Vortex
-			dedicatedBlasfah = new int[] { ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>() }; //Blasfah
-			dedicatedHeartPlus = new int[] { ItemType<DigitalDaito>(), ItemType<Items.Evil.ToothAche>() }; //Heart Plus Up
-			dedicatedTaco = new int[] { ItemType<Baguette>(), ItemType<Taco>() }; //Coolio/Taco
-																  //unsafeWallItem = new int[] { ItemType<UnsafeCursedTumorWall>(), ItemType<UnsafePyramidWall>(), ItemType<UnsafePyramidBrickWall>(), ItemType<UnsafeOvergrownPyramidWall>(),	ItemType<VibrantWall>() }; //Unsafe wall items
+			DedicatedOrange = [ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>()]; //friends
+			DedicatedBlue = [ItemType<Calculator>()]; //friends 2
+			DedicatedPurpleRed = [ItemType<CursedApple>(), ItemType<ArcStaffMk2>()]; //James
+			DedicatedPastelPink = []; //Tris
+			DedicatedMinez = [ItemType<DoorPants>(), ItemType<BandOfDoor>()]; //Minez
+			DedicatedRainbow = [ItemType<SubspaceLocket>(), ItemType<DreamLamp>()]; //Vortex
+			DedicatedBlasfah = [ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>()]; //Blasfah
+			DedicatedHeartPlus = [ItemType<DigitalDaito>(), ItemType<Items.Evil.ToothAche>()]; //Heart Plus Up
+			DedicatedTaco = [ItemType<Baguette>(), ItemType<Taco>()]; //Coolio/Taco
 
-			piscesFishItems = new int[] {-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
+			PiscesFishItems = [-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
 			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
 			ItemID.MutantFlinxfin, ItemID.Pengfish, ItemID.Pixiefish, ItemID.Slimefish, ItemID.Spiderfish, ItemID.TropicalBarracuda, ItemID.TundraTrout, ItemID.UnicornFish, ItemID.Wyverntail, ItemID.ZombieFish, ItemID.ArmoredCavefish, ItemID.AtlanticCod, ItemID.Bass, ItemID.BlueJellyfish, ItemID.ChaosFish, ItemID.CrimsonTigerfish,
 			ItemID.Damselfish, ItemID.DoubleCod, ItemID.Ebonkoi, ItemID.FlarefinKoi, ItemID.FrostMinnow, ItemID.GoldenCarp, ItemID.GreenJellyfish, ItemID.Hemopiranha, ItemID.Honeyfin, ItemID.NeonTetra, ItemID.Obsidifish, ItemID.PinkJellyfish, ItemID.PrincessFish, ItemID.Prismite, ItemID.RedSnapper, ItemID.Salmon, ItemID.Shrimp, ItemID.SpecularFish,
-			ItemID.Stinkfish, ItemID.Trout, ItemID.Tuna, ItemID.VariegatedLardfish, ItemType<Curgeon>(), ItemType<PhantomFish>(), ItemType<SeaSnake>(), ItemType<TinyPlanetFish>(), ItemID.ScarabFish, ItemID.ScorpioFish, ItemID.Flounder, ItemID.RockLobster };
+			ItemID.Stinkfish, ItemID.Trout, ItemID.Tuna, ItemID.VariegatedLardfish, ItemType<Curgeon>(), ItemType<PhantomFish>(), ItemType<SeaSnake>(), ItemType<TinyPlanetFish>(), ItemID.ScarabFish, ItemID.ScorpioFish, ItemID.Flounder, ItemID.RockLobster ];
 		}
 		public static Color[] ConvertToSingleColor(Texture2D texture, Color color)
 		{
@@ -314,115 +284,53 @@ namespace SOTS
 			return base.PreDrawInWorld(item, spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
 		}
 		public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
-		{
-			if (rarities1.Contains(item.type))
-			{
-				foreach (TooltipLine line2 in tooltips)
-				{
-					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
-					{
-						line2.OverrideColor = new Color(0, 130, 235, 255);
-                        break;
-                    }
-				}
-			}
-			if (rarities2.Contains(item.type))
-			{
-				foreach (TooltipLine line2 in tooltips)
-				{
-					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
-					{
-						line2.OverrideColor = new Color(210, 0, 0);
-                        break;
-                    }
-				}
-			}
-			if (rarities3.Contains(item.type))
-			{
-				Color overrideColor = new Color(60, 60, 60);
-				foreach (TooltipLine line2 in tooltips)
-				{
-					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
-					{
-						line2.OverrideColor = overrideColor;
-                        break;
-                    }
-				}
-			}
-			bool GoldenApple = item.type == ItemType<CursedApple>() && GhostPepper.IsAlternate;
-
-            if (rarities4.Contains(item.type) || GoldenApple)
-			{
-				Color overrideColor = new Color(66, 226, 75);
-				if (DreamLamp.IsItemForgotten && !GoldenApple)
-					overrideColor = new Color(95, 85, 105);
-				foreach (TooltipLine line2 in tooltips)
-				{
-					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
-					{
-						line2.OverrideColor = overrideColor;
-						break;
-					}
-				}
-			}
-			bool dedicated = false;
-			Color dedicatedColor = Color.White;
-			if (dedicatedOrange.Contains(item.type))
-			{
+        {
+            bool GoldenApple = item.type == ItemType<CursedApple>() && GhostPepper.IsAlternate;
+            Color rarityColor = Color.White;
+            Color dedicatedColor = Color.White;
+            if (DarkBlueRarity.Contains(item.type))
+				rarityColor = new Color(0, 130, 235, 255);
+			if (DarkRedRarity.Contains(item.type))
+                rarityColor = new Color(210, 0, 0);
+			if (DarkGrayRarity.Contains(item.type))
+                rarityColor = new Color(60, 60, 60);
+            if (BrightGreenRarity.Contains(item.type) || GoldenApple)
+                rarityColor = (DreamLamp.IsItemForgotten && !GoldenApple) ? new Color(95, 85, 105) : new Color(66, 226, 75);
+            if (DedicatedPastelPink.Contains(item.type))
+            {
+                dedicatedColor = new Color(255, 158, 235);
+                rarityColor = new Color(211, 0, 194);
+            }
+			if (DedicatedOrange.Contains(item.type))
 				dedicatedColor = new Color(255, 115, 0);
-				dedicated = true;
-			}
-			if (dedicatedBlue.Contains(item.type))
-			{
+			if (DedicatedBlue.Contains(item.type))
 				dedicatedColor = new Color(0, 130, 235, 255);
-				dedicated = true;
-			}
-			if (dedicatedPurpleRed.Contains(item.type))
-			{
-				dedicatedColor = ColorHelpers.soulLootingColor;
-				if (GoldenApple)
-					dedicatedColor = new Color(61, 166, 136); //For my resident hololive fan friend
-                dedicated = true;
-			}
-			if (dedicatedRainbow.Contains(item.type) && (item.type != ItemType<DreamLamp>() || !DreamLamp.IsItemForgotten))
-			{
-				dedicatedColor = ColorHelpers.pastelRainbow;
-				dedicated = true;
-			}
-			if (dedicatedPastelPink.Contains(item.type))
-			{
-				Color color = new Color(211, 0, 194);
-				foreach (TooltipLine line2 in tooltips)
-				{
-					if (line2.Mod == "Terraria" && line2.Name == "ItemName")
-					{
-						line2.OverrideColor = color;
-					}
-				}
-				dedicatedColor = new Color(255, 158, 235);
-				dedicated = true;
-			}
-			if (dedicatedMinez.Contains(item.type))
-			{
+			if (DedicatedPurpleRed.Contains(item.type))
+				dedicatedColor = ColorHelper.SoulLootingColor;
+			if (GoldenApple)
+				dedicatedColor = new Color(61, 166, 136); //For my resident hololive fan friend
+			if (DedicatedRainbow.Contains(item.type) && (item.type != ItemType<DreamLamp>() || !DreamLamp.IsItemForgotten))
+				dedicatedColor = ColorHelper.PastelRainbow;
+			if (DedicatedMinez.Contains(item.type))
 				dedicatedColor = new Color(255, 153, 51);
-				dedicated = true;
-			}
-			if (dedicatedBlasfah.Contains(item.type))
-			{
+			if (DedicatedBlasfah.Contains(item.type))
 				dedicatedColor = new Color(90, 12, 240);
-				dedicated = true;
-			}
-			if (dedicatedHeartPlus.Contains(item.type))
-			{
+			if (DedicatedHeartPlus.Contains(item.type))
 				dedicatedColor = new Color(255, 123, 123);
-				dedicated = true;
-			}
-			if (dedicatedTaco.Contains(item.type))
-			{
+			if (DedicatedTaco.Contains(item.type))
 				dedicatedColor = new Color(252, 254, 56);
-				dedicated = true;
-			}
-			if (dedicated)
+            if (rarityColor != Color.White)
+            {
+                foreach (TooltipLine line in tooltips)
+                {
+                    if (line.Mod == "Terraria" && line.Name == "ItemName")
+                    {
+                        line.OverrideColor = rarityColor;
+                        break;
+                    }
+                }
+            }
+            if (dedicatedColor != Color.White)
 			{
 				TooltipLine line = new TooltipLine(Mod, "Dedicated", Language.GetTextValue("Mods.SOTS.Common.Dedicated"));
 				line.OverrideColor = dedicatedColor;
@@ -437,7 +345,7 @@ namespace SOTS
                 if (validSlot)
                 {
                     TesseractMinionData data = fPlayer.tesseractData[tesseractDataIBelongIn];
-                    Color c = Color.Lerp(ColorHelpers.RubyColor, Color.Red, 0.4f);
+                    Color c = Color.Lerp(ColorHelper.RubyColor, Color.Red, 0.4f);
                     string aligned = Language.GetTextValue("Mods.SOTS.Common.Solar" + tesseractDataIBelongIn);
                     string text;
                     if (!data.FoundValidItem)
@@ -450,7 +358,7 @@ namespace SOTS
                     }
                     else
                     {
-                        c = Color.Lerp(ColorHelpers.pastelRainbow, ColorHelpers.AmethystColor, 0.9f);
+                        c = Color.Lerp(ColorHelper.PastelRainbow, ColorHelper.AmethystColor, 0.9f);
                         string duration = data.ChargeFrames == 7200 ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsageContinuous") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageDuration", MathF.Round(data.ChargeFrames / 60f, 3));
                         string primaryOrSecondary = !data.AltFunctionUse ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsagePrimary") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageSecondary");
                         text = Language.GetTextValue("Mods.SOTS.Common.TesseractUsage", aligned, primaryOrSecondary, duration);
@@ -1142,7 +1050,7 @@ namespace SOTS
     }
     public class AnomalyRarity : ModRarity
     {
-        public override Color RarityColor => ColorHelpers.VoidAnomaly;
+        public override Color RarityColor => ColorHelper.VoidAnomaly;
         public override int GetPrefixedRarity(int offset, float valueMult)
         {
             return Type;
@@ -1154,7 +1062,7 @@ namespace SOTS
 		{
 			get
 			{
-				return ColorHelpers.pastelRainbow;
+				return ColorHelper.PastelRainbow;
             }
 		}
         public override int GetPrefixedRarity(int offset, float valueMult)

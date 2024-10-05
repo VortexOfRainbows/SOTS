@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using Terraria;
@@ -55,7 +56,7 @@ namespace SOTS.Projectiles.Minions
 						float x = Main.rand.Next(-10, 11) * 0.125f * scale;
 						float y = Main.rand.Next(-10, 11) * 0.125f * scale;
 						if (!previousPosition.Equals(Projectile.Center))
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, ColorHelpers.OtherworldColor * 0.8f * ((255 - Projectile.alpha) / 255f), betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, ColorHelper.OtherworldColor * 0.8f * ((255 - Projectile.alpha) / 255f), betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = circularPos;
@@ -83,7 +84,7 @@ namespace SOTS.Projectiles.Minions
 				}
 			}
 			Projectile.scale *= 0.99f;
-			Lighting.AddLight(Projectile.Center, ColorHelpers.OtherworldColor.R / 255f, ColorHelpers.OtherworldColor.G / 255f, ColorHelpers.OtherworldColor.B / 255f);
+			Lighting.AddLight(Projectile.Center, ColorHelper.OtherworldColor.R / 255f, ColorHelper.OtherworldColor.G / 255f, ColorHelper.OtherworldColor.B / 255f);
 			Projectile.alpha += 6;
 		}
 	}

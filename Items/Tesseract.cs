@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.FakePlayer;
+using SOTS.Helpers;
 using SOTS.Items.OreItems;
 using SOTS.Items.Planetarium.FromChests;
 using SOTS.Items.Planetarium.Furniture;
@@ -60,7 +61,7 @@ namespace SOTS.Items
         {
             if (line.Name == "ItemName" || line.Name == "Damage" || line.Name == "Favorite" || line.Name == "FavoriteDesc")
             {
-                Color outer = ColorHelpers.TesseractColor(0, 0.5f);
+                Color outer = ColorHelper.TesseractColor(0, 0.5f);
                 Color inner = Color.Black;
                 TextSnippet[] snippets = ChatManager.ParseMessage(line.Text, inner).ToArray();
                 ChatManager.ConvertNormalSnippets(snippets);

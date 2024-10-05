@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Chaos;
 using SOTS.Items.Fragments;
@@ -125,7 +126,7 @@ namespace SOTS.NPCs.Boss.Lux
 			for (int k = 0; k < NPC.oldPos.Length; k++)
 			{
 				Vector2 drawPos = NPC.oldPos[k] - screenPos + drawOrigin + new Vector2(0f, NPC.gfxOffY);
-				Color color = NPC.GetAlpha(ColorHelpers.pastelRainbow) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
+				Color color = NPC.GetAlpha(ColorHelper.PastelRainbow) * ((float)(NPC.oldPos.Length - k) / (float)NPC.oldPos.Length);
 				color.A = 0;
 				spriteBatch.Draw(texture, drawPos, null, color * 0.5f, NPC.rotation, drawOrigin, NPC.scale * 1.1f, SpriteEffects.None, 0f);
 			}
@@ -163,7 +164,7 @@ namespace SOTS.NPCs.Boss.Lux
 				Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 				if (k != 0)
 				{
-					color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+					color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 					color.A = 0;
 				}
 				else
@@ -230,7 +231,7 @@ namespace SOTS.NPCs.Boss.Lux
 						if (degreesCount < 0)
 							sinusoid = 0;
 						float radians = MathHelper.ToRadians(i * 360f / amtOfParticles);
-						Color c = NPC.GetAlpha(ColorHelpers.pastelAttempt(radians + MathHelper.ToRadians(Main.GameUpdateCount)));
+						Color c = NPC.GetAlpha(ColorHelper.Pastel(radians + MathHelper.ToRadians(Main.GameUpdateCount)));
 						Vector2 circular = new Vector2(-1, 0).RotatedBy(radians);
 						float increaseAmount = 1f;
 						if (i < amtOfParticles / 2)
@@ -518,7 +519,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (ai3 < 80 && ai3 > 0)
 							{
 								NPC.scale -= 0.012f;
-								int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true));
+								int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true));
 								Dust dust4 = Main.dust[dust3];
 								dust4.velocity *= 2.5f;
 								dust4.noGravity = true;
@@ -1083,7 +1084,7 @@ namespace SOTS.NPCs.Boss.Lux
 							for (int i = 0; i < 120; i++)
 							{
 								Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-								dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+								dust.color = ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true);
 								dust.noGravity = true;
 								dust.fadeIn = 0.1f;
 								dust.scale *= 2.4f;
@@ -1116,7 +1117,7 @@ namespace SOTS.NPCs.Boss.Lux
 									for (int i = 0; i < 120; i++)
 									{
 										Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-										dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+										dust.color = ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true);
 										dust.noGravity = true;
 										dust.fadeIn = 0.1f;
 										dust.scale *= 2.4f;
@@ -1294,9 +1295,8 @@ namespace SOTS.NPCs.Boss.Lux
 		}
 		public override void PostAI()
 		{
-			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-			Dust dust = Main.dust[dust2];
-			dust.color = NPC.GetAlpha(ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true));
+            Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.RainbowMk2);
+			dust.color = NPC.GetAlpha(ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true));
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
@@ -1316,8 +1316,8 @@ namespace SOTS.NPCs.Boss.Lux
 				{
 					for (int i = 0; i < 50; i++)
 					{
-						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-						dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), true);
+						Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.RainbowMk2);
+						dust.color = ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 2.2f;
@@ -1562,7 +1562,7 @@ namespace SOTS.NPCs.Boss.Lux
 			Vector2 center = location + aimOffset;
 			for (int i = start; i < end; i += 4)
 			{
-				Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i), overrideColor);
+				Color color = ColorHelper.PastelGradient(MathHelper.ToRadians(i), overrideColor);
 				float radians = MathHelper.ToRadians(i + spinCounter);
 				Vector2 rotationV = new Vector2(radius * radiusMult, 0).RotatedBy(radians);
 				rotationV.X *= overrideCompression;

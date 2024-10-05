@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
@@ -126,7 +127,7 @@ namespace SOTS.NPCs.AbandonedVillage
 
             if(Main.rand.NextBool(2))
             {
-                Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelpers.AVDustColor, -5);
+                Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelper.AVDustColor, -5);
                 dust.velocity += (dust.position - new Vector2(5, 5) - NPC.Center).SNormalize() * 0.5f;
                 dust.alpha = NPC.alpha;
                 dust.scale = Main.rand.NextFloat(1, 2);
@@ -140,7 +141,7 @@ namespace SOTS.NPCs.AbandonedVillage
                     {
                         float circular = MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.5f + 90 * i);
                         Vector2 cloneLocation = NPC.Center + tF.position.RotatedBy(circular);
-                        Dust dust = PixelDust.Spawn(cloneLocation - new Vector2(NPC.width / 2, NPC.height / 2), NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelpers.AVDustColor, -5);
+                        Dust dust = PixelDust.Spawn(cloneLocation - new Vector2(NPC.width / 2, NPC.height / 2), NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelper.AVDustColor, -5);
                         dust.velocity += (dust.position - new Vector2(5, 5) - cloneLocation).SNormalize() * 0.5f;
                         dust.alpha = 150 - (int)(MathF.Sin(MathHelper.ToRadians(tF.AI * 4)) * 50);
                         dust.scale = Main.rand.NextFloat(1, 2);
@@ -349,7 +350,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 int num = 0;
                 while (num < hit.Damage / NPC.lifeMax * 80.0)
                 {
-                    Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelpers.AVDustColor, -2);
+                    Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(1, 1), ColorHelper.AVDustColor, -2);
                     dust.velocity += (dust.position - new Vector2(5, 5) - NPC.Center).SNormalize() * 0.5f;
                     dust.velocity.X += 2 * hit.HitDirection;
                     dust.alpha = NPC.alpha;
@@ -360,7 +361,7 @@ namespace SOTS.NPCs.AbandonedVillage
             {
                 for (int k = 0; k < 30; k++)
                 {
-                    Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2CircularEdge(2, 3), ColorHelpers.AVDustColor, -2);
+                    Dust dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2CircularEdge(2, 3), ColorHelper.AVDustColor, -2);
                     dust.velocity += (dust.position - new Vector2(5, 5) - NPC.Center).SNormalize() * 0.1f;
                     dust.velocity.X += 2 * hit.HitDirection;
                     dust.alpha = NPC.alpha;
@@ -439,7 +440,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     for (int k = 0; k < particleCount; k++)
                     {
-                        Dust dust = PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, Main.rand.NextVector2CircularEdge(2, 3), ColorHelpers.AVDustColor, -2);
+                        Dust dust = PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, Main.rand.NextVector2CircularEdge(2, 3), ColorHelper.AVDustColor, -2);
                         dust.velocity += (dust.position - new Vector2(5, 5) - Projectile.Center).SNormalize() * 0.1f;
                         dust.alpha = 100;
                         dust.scale = Main.rand.NextFloat(1, 2);

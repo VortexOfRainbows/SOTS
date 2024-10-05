@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Void;
 using SOTS.Dusts;
 using Terraria.ID;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Earth 
 {    
@@ -29,7 +30,7 @@ namespace SOTS.Projectiles.Earth
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Color color = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 12);
+			Color color = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 12);
 			Vector2 drawPos = Projectile.Center - Main.screenPosition;
 			color = Projectile.GetAlpha(color);
 			for (int j = 0; j < 3; j++)
@@ -44,9 +45,8 @@ namespace SOTS.Projectiles.Earth
 		{
 			for(int i = 0; i < 5; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
-				Dust dust = Main.dust[num2];
-				Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 12) * 0.66f;
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 12) * 0.66f;
 				dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
@@ -61,9 +61,8 @@ namespace SOTS.Projectiles.Earth
 			Projectile.alpha -= 30;
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
-			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
-			Dust dust = Main.dust[num2];
-			Color color2 = ColorHelpers.VibrantColorAttempt(Projectile.whoAmI * 12);
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+			Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 12);
 			dust.color = color2;
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;

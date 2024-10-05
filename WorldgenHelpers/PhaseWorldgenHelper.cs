@@ -7,6 +7,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using SOTS.Void;
 using Terraria.ID;
+using SOTS.Helpers;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -34,9 +35,9 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             if (Main.netMode == NetmodeID.Server)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(amtDestroyed.ToString()), ColorHelpers.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(amtDestroyed.ToString()), ColorHelper.ChaosPink);
             else
-                Main.NewText(amtDestroyed, ColorHelpers.ChaosPink);
+                Main.NewText(amtDestroyed, ColorHelper.ChaosPink);
         }
         private static void DoGen(object state)
         {
@@ -106,9 +107,9 @@ namespace SOTS.WorldgenHelpers
             string text = Language.GetTextValue("Mods.SOTS.WorldGeneration.Atmosphere");
             Generating = false;
             if (Main.netMode == NetmodeID.Server)
-                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), ColorHelpers.ChaosPink);
+                Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), ColorHelper.ChaosPink);
             else
-                Main.NewText(text, ColorHelpers.ChaosPink);
+                Main.NewText(text, ColorHelper.ChaosPink);
         }
         public static void Generate()
         {

@@ -8,6 +8,7 @@ using System.IO;
 using SOTS.Void;
 using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -34,7 +35,7 @@ namespace SOTS.Projectiles.Minions
 		}
         public override bool PreDraw(ref Color lightColor)
 		{
-			Color color2 = ColorHelpers.OtherworldColor;
+			Color color2 = ColorHelper.OtherworldColor;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
@@ -48,7 +49,7 @@ namespace SOTS.Projectiles.Minions
         public override void PostDraw(Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = ColorHelpers.OtherworldColor * 0.75f;
+			Color color = ColorHelper.OtherworldColor * 0.75f;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int k = 0; k < 9; k++)
 			{
@@ -257,7 +258,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			#endregion
 
-			Lighting.AddLight(Projectile.Center, ColorHelpers.OtherworldColor.R / 255f, ColorHelpers.OtherworldColor.G / 255f * ((255 - Projectile.alpha) / 255f), ColorHelpers.OtherworldColor.B / 255f * ((255 - Projectile.alpha) / 255f));
+			Lighting.AddLight(Projectile.Center, ColorHelper.OtherworldColor.R / 255f, ColorHelper.OtherworldColor.G / 255f * ((255 - Projectile.alpha) / 255f), ColorHelper.OtherworldColor.B / 255f * ((255 - Projectile.alpha) / 255f));
 			MoveAwayFromOthers(true, 0.11f, 2f);
 		}
 	}

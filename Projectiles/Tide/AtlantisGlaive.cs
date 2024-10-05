@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -123,7 +124,7 @@ namespace SOTS.Projectiles.Tide
 				dust.velocity += Projectile.velocity * 0.3f;
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
-				dust.color = ColorHelpers.AtlantisColor;
+				dust.color = ColorHelper.AtlantisColor;
 				dust.fadeIn = 0.2f;
 			}
 			if (Main.rand.NextBool(4))
@@ -132,7 +133,7 @@ namespace SOTS.Projectiles.Tide
 				dust.velocity += Projectile.velocity * 0.5f;
 				dust.velocity *= 0.25f;
 				dust.noGravity = true;
-				dust.color = ColorHelpers.AtlantisColor;
+				dust.color = ColorHelper.AtlantisColor;
                 dust.fadeIn = 0.2f;
 			}
 			if (runOnce2 && player.itemAnimation <= player.itemAnimationMax / 3)

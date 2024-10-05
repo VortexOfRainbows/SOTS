@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {
@@ -54,7 +55,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     circular.X *= 0.5f;
                     circular = circular.RotatedBy(r);
                     Vector2 drawPos = Projectile.Center;
-                    Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelpers.ToothAcheLime);
+                    Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelper.ToothAcheLime);
                     dust.noGravity = true;
                     dust.scale = 1.5f;
                     dust.velocity *= 0.05f;
@@ -79,7 +80,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 int i = Main.rand.Next(Projectile.oldPos.Length);
                 float scale = (Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length;
                 Vector2 drawPos = Projectile.oldPos[i] + Projectile.Size / 2;
-                Dust dust = Dust.NewDustDirect(drawPos - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelpers.ToothAcheLime * scale);
+                Dust dust = Dust.NewDustDirect(drawPos - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelper.ToothAcheLime * scale);
                 dust.noGravity = true;
                 dust.scale = 1.5f * scale;
                 dust.velocity *= Main.rand.NextFloat(0.2f);
@@ -90,7 +91,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             }
             else if(Main.rand.NextBool(4))
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelpers.ToothAcheLime, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelper.ToothAcheLime, 1f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * Main.rand.NextFloat(0.2f) + Projectile.velocity * Main.rand.NextFloat(.3f);
                 dust.fadeIn = 7;
@@ -103,7 +104,7 @@ namespace SOTS.Projectiles.AbandonedVillage
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
             Texture2D textureT = ModContent.Request<Texture2D>("SOTS/Projectiles/BiomeChest/PlagueBeam").Value;
-            Color color = Projectile.GetAlpha(ColorHelpers.ToothAcheLime);
+            Color color = Projectile.GetAlpha(ColorHelper.ToothAcheLime);
             color.A = 0;
             SpriteEffects effects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Vector2 drawOrigin = new Vector2(Projectile.width * 0.5f, Projectile.height * 0.5f);
@@ -121,7 +122,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     oldPos = Projectile.oldPos[i] + Projectile.Size / 2;
                 }
             }
-            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.Lerp(ColorHelpers.ToothAcheLime, Color.Black, 0.5f)), Projectile.rotation, drawOrigin, 0.75f, effects, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.Lerp(ColorHelper.ToothAcheLime, Color.Black, 0.5f)), Projectile.rotation, drawOrigin, 0.75f, effects, 0);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, color * 0.75f, Projectile.rotation, drawOrigin, 1f, effects, 0);
             Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, null, color * 0.5f, Projectile.rotation, drawOrigin, 0.75f, effects, 0);
             return false;
@@ -133,7 +134,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             {
                 float scale = (Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length;
                 Vector2 drawPos = Projectile.oldPos[i] + Projectile.Size / 2;
-                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelpers.ToothAcheLime * scale);
+                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelper.ToothAcheLime * scale);
                 dust.noGravity = true;
                 dust.scale = 2f * scale;
                 dust.velocity *= 0.3f;
@@ -143,7 +144,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             }
             for (int i = 12; i > 0; i--)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelpers.ToothAcheLime, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelper.ToothAcheLime, 1f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * Main.rand.NextFloat(0.75f) + Projectile.velocity * Main.rand.NextFloat(1f);
                 dust.fadeIn = 4;

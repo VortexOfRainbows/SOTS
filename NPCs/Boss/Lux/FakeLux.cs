@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
 using SOTS.NPCs.Constructs;
@@ -147,7 +148,7 @@ namespace SOTS.NPCs.Boss.Lux
 					for (int i = 0; i < 50; i++)
 					{
 						Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-						dust.color = ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), illusionColor());
+						dust.color = ColorHelper.PastelGradient(Main.rand.NextFloat(6.28f), illusionColor());
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale *= 2.2f;
@@ -270,9 +271,8 @@ namespace SOTS.NPCs.Boss.Lux
 		}
         public override void PostAI()
 		{
-			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
-			Dust dust = Main.dust[dust2];
-			dust.color = NPC.GetAlpha(ColorHelpers.pastelAttempt(Main.rand.NextFloat(6.28f), illusionColor() * 1.2f));
+            Dust dust = Dust.NewDustDirect(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, DustID.RainbowMk2);
+			dust.color = NPC.GetAlpha(ColorHelper.PastelGradient(Main.rand.NextFloat(6.28f), illusionColor() * 1.2f));
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
 			dust.scale *= 2f;
@@ -304,7 +304,7 @@ namespace SOTS.NPCs.Boss.Lux
 				Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
 				if (k != 0)
 				{
-					color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60), color);
+					color = ColorHelper.PastelGradient(MathHelper.ToRadians(k * 60), color);
 				}
 				else
 					circular *= 0f;

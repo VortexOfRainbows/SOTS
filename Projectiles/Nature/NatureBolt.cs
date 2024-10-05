@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Nature
 {    
@@ -80,7 +81,7 @@ namespace SOTS.Projectiles.Nature
 				dust.velocity *= 0.05f;
 				dust.scale = 1.2f + 1.2f * mult;
 				dust.noGravity = true;
-				dust.color = ColorHelpers.NatureColor;
+				dust.color = ColorHelper.NatureColor;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
 				dust.alpha = Projectile.alpha;

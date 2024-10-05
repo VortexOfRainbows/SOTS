@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Void;
 using Terraria;
 using Terraria.ID;
@@ -51,13 +52,13 @@ namespace SOTS.Projectiles.Minions
 					Color color = Projectile.GetAlpha(color2) * scale;
 					Main.spriteBatch.Draw(texture, drawPos, null, color * 0.5f, Projectile.rotation, drawOrigin, Projectile.scale * scale, SpriteEffects.None, 0f);
 				}
-				color2 = ColorHelpers.EvilColor * 1f;
+				color2 = ColorHelper.EvilColor * 1f;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Color color = ColorHelpers.EvilColor;
+			Color color = ColorHelper.EvilColor;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			DrawTrail();
 			for (int k = 0; k < 5; k++)
@@ -90,7 +91,7 @@ namespace SOTS.Projectiles.Minions
 			Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, Main.rand.NextVector2Circular(1, 1));
 			dust.velocity *= 0.1f;
 			dust.velocity -= Projectile.velocity * 0.05f;
-			dust.color = ColorHelpers.EvilColor * 1.5f;
+			dust.color = ColorHelper.EvilColor * 1.5f;
 			dust.color.A = 160;
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
@@ -124,7 +125,7 @@ namespace SOTS.Projectiles.Minions
 				Dust dust = Main.dust[dust2];
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
-				dust.color = ColorHelpers.EvilColor * 1.5f;
+				dust.color = ColorHelper.EvilColor * 1.5f;
 				dust.color.A = 150;
 				dust.noGravity = true;
 				dust.alpha = 60;

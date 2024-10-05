@@ -8,6 +8,7 @@ using Terraria.ID;
 using SOTS.Utilities;
 using System;
 using SOTS.Buffs;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Earth.Glowmoth 
 {    
@@ -103,7 +104,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
                     dust.scale = 1.4f;
                     dust.fadeIn = 0.1f;
                     dust.alpha = 100;
-                    dust.color = ColorHelpers.VibrantColorAttempt(degrees);
+                    dust.color = ColorHelper.VibrantColorGradient(degrees);
                     dust.velocity += velo * 0.11f;
                 }
             }

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Projectiles.Celestial;
 using SOTS.Void;
 using System;
@@ -59,7 +60,7 @@ namespace SOTS.Projectiles.Inferno
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			for (int i = 0; i < particleList.Count; i++)
 			{
-				Color color = ColorHelpers.Inferno1;
+				Color color = ColorHelper.Inferno1;
 				color.A = 0;
 				Vector2 drawPos = particleList[i].position - Main.screenPosition ;
 				color = Projectile.GetAlpha(color) * (0.35f + 0.65f * particleList[i].scale);

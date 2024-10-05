@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Flails;
 using SOTS.Prim.Trails;
 using SOTS.Utilities;
@@ -276,7 +277,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
                 if (k != 0) scale *= 0.3f;
                 else scale *= 0.4f;
                 Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + Projectile.Size / 2f + new Vector2(0, Projectile.gfxOffY);
-                float lerpPercent = (float)Math.Sin(MathHelper.ToRadians((float)k / Projectile.oldPos.Length * 300f + ColorHelpers.soulColorCounter * 1.5f));
+                float lerpPercent = (float)Math.Sin(MathHelper.ToRadians((float)k / Projectile.oldPos.Length * 300f + ColorHelper.SoulColorCounter * 1.5f));
                 Color colorMan = Color.Lerp(new Color(150, 180, 240), new Color(190, 10, 75), lerpPercent);
                 Color color = colorMan * ((Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length) * scale;
                 Main.spriteBatch.Draw(texture, drawPos, null, color, Projectile.rotation, origin, scale, SpriteEffects.None, 0f);
@@ -285,7 +286,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
             {
                 for(int i = 0; i < 6; i++)
                 {
-                    Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 60));
+                    Color color = ColorHelper.Pastel(MathHelper.ToRadians(i * 60));
                     Vector2 drawPos = Projectile.Center - Main.screenPosition + new Vector2(0, Projectile.gfxOffY) + Main.rand.NextVector2Circular(0.5f, 0.5f) + Vector2.UnitX.RotatedBy(MathHelper.ToRadians(i * 60)) * 2;
                     Main.spriteBatch.Draw(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value, drawPos, null, new Color(color.R, color.G, color.B, 0) * 0.3f, Projectile.rotation, Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Size() / 2, Projectile.scale * 0.75f, SpriteEffects.None, 0);
                 }

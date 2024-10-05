@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System.Collections.Generic;
 using System.IO;
@@ -64,7 +65,7 @@ namespace SOTS.Projectiles.Minions
 					Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
 					dust2.velocity += Projectile.velocity * 0.5f;
 					dust2.noGravity = true;
-					dust2.color = ColorHelpers.pastelRainbow;
+					dust2.color = ColorHelper.PastelRainbow;
 					dust2.noGravity = true;
 					dust2.fadeIn = 0.2f;
 					dust2.scale *= 1.4f;
@@ -121,7 +122,7 @@ namespace SOTS.Projectiles.Minions
 					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
 					dust.velocity += Projectile.velocity * 0.3f;
 					dust.noGravity = true;
-					dust.color = ColorHelpers.pastelRainbow;
+					dust.color = ColorHelper.PastelRainbow;
 					dust.noGravity = true;
 					dust.fadeIn = 0.2f;
 					dust.alpha = Projectile.alpha;
@@ -162,7 +163,7 @@ namespace SOTS.Projectiles.Minions
 				rotation = (drawPos - drawPos2).ToRotation();
 				for(int k = 0; k < 6; k++)
                 {
-					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+					Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 					Vector2 modi = new Vector2(3f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + SOTSPlayer.ModPlayer(player).orbitalCounter + i));
 					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0) * 0.2f * ((255 - Projectile.alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
 				}
@@ -178,7 +179,7 @@ namespace SOTS.Projectiles.Minions
 				rotation = (drawPos - drawPos2).ToRotation();
 				for (int k = 0; k < 6; k++)
 				{
-					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(k * 60));
+					Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
 					Vector2 modi = new Vector2(3f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + SOTSPlayer.ModPlayer(player).orbitalCounter + i));
 					Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0) * 0.2f * ((255 - Projectile.alpha) / 255f), rotation, origin, scale * scaleMod, SpriteEffects.None, 0f);
 				}

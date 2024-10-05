@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Projectiles.Laser;
 using SOTS.Void;
 using SOTS.WorldgenHelpers;
@@ -47,7 +48,7 @@ namespace SOTS.Projectiles.Chaos
                 if(d != 0)
                 {
                     drawPos = Projectile.Center;
-                    color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
+                    color = ColorHelper.Pastel(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
                     color *= ((100f - Projectile.alpha) / 255f);
                     color.A = 0;
                     Vector2 dynamicAddition = new Vector2(Main.rand.NextFloat(2, 4) * (1 - 1f * compression), 0).RotatedBy(MathHelper.ToRadians(45f * i) + counter);
@@ -73,7 +74,7 @@ namespace SOTS.Projectiles.Chaos
             for (i = 0; i < 8; i++)
             {
                 drawPos = Projectile.Center;
-                color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
+                color = ColorHelper.Pastel(MathHelper.ToRadians(i * 45 - SOTSWorld.GlobalCounter));
                 color *= ((100f - Projectile.alpha) / 255f);
                 color.A = 0;
                 Vector2 dynamicAddition = new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(45 * i) + counter);

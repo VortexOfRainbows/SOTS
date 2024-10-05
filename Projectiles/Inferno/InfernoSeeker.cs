@@ -12,6 +12,7 @@ using SOTS.NPCs;
 using SOTS.Void;
 using SOTS.Dusts;
 using SOTS.Common.GlobalNPCs;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Inferno
 {    
@@ -44,12 +45,11 @@ namespace SOTS.Projectiles.Inferno
 		{
 			for (int i = 0; i < 6; i++)
             {
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
-				Dust dust = Main.dust[num1];
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.velocity *= 0.7f;
 				dust.noGravity = true;
 				dust.scale += 0.1f;
-				dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1f));
+				dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(1f));
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.4f;
 				dust.alpha = Projectile.alpha; 
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.Inferno
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;
-				dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(1f));
+				dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(1f));
 				dust.fadeIn = 0.1f;
 				dust.scale = 1.2f;
 				dust.alpha = Projectile.alpha;

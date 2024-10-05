@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
@@ -85,7 +86,7 @@ namespace SOTS.Projectiles.Chaos
 				if (trailPos[k] != Projectile.Center)
 				{
 					Vector2 drawPos = trailPos[k] - Main.screenPosition;
-					Color color = ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + k * 2), false);
+					Color color = ColorHelper.Pastel(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3 + k * 2), false);
 					color = Projectile.GetAlpha(color);
 					color.A = 0; 
 					float max = betweenPositions.Length() / (texture.Width * 0.5f);
@@ -123,7 +124,7 @@ namespace SOTS.Projectiles.Chaos
 		}
 		public Color color
         {
-			get => ColorHelpers.pastelAttempt(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3), ColorHelpers.ChaosPink);
+			get => ColorHelper.PastelGradient(MathHelper.ToRadians(SOTSWorld.GlobalCounter * 3), ColorHelper.ChaosPink);
 		}
 		public override bool PreAI()
 		{

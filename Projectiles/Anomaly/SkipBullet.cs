@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Audio;
 using SOTS.Dusts;
 using System;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Anomaly
 {    
@@ -45,7 +46,7 @@ namespace SOTS.Projectiles.Anomaly
 				d.fadeIn = 8f;
 				d.noGravity = true;
 				d.scale *= 1f;
-				d.color = ColorHelpers.VoidAnomaly;
+				d.color = ColorHelper.VoidAnomaly;
 				d.color.A = 0;
 			}
 			base.OnKill(timeLeft);
@@ -61,7 +62,7 @@ namespace SOTS.Projectiles.Anomaly
 				d.fadeIn = 12f;
 				d.noGravity = true;
 				d.scale *= 1f;
-				d.color = ColorHelpers.VoidAnomaly;
+				d.color = ColorHelper.VoidAnomaly;
 				d.color.A = 0;
 			}
 			for (int i = 0; i < Main.npc.Length; i++)
@@ -88,7 +89,7 @@ namespace SOTS.Projectiles.Anomaly
 				d.fadeIn = 8f;
 				d.noGravity = true;
 				d.scale *= 1f;
-				d.color = ColorHelpers.VoidAnomaly;
+				d.color = ColorHelper.VoidAnomaly;
 				d.color.A = 0;
 			}
 			Vector2 targetPos = new Vector2(target.Center.X, target.position.Y);
@@ -104,7 +105,7 @@ namespace SOTS.Projectiles.Anomaly
 					d.fadeIn = 8f;
 					d.noGravity = true;
 					d.scale *= 1.0f;
-					d.color = ColorHelpers.VoidAnomaly;
+					d.color = ColorHelper.VoidAnomaly;
 					d.color.A = 0;
 				}
 				else
@@ -114,7 +115,7 @@ namespace SOTS.Projectiles.Anomaly
 					d.fadeIn = 0.2f;
 					d.noGravity = true;
 					d.scale *= 1.25f;
-					d.color = ColorHelpers.VoidAnomaly;
+					d.color = ColorHelper.VoidAnomaly;
 					d.color.A = 0;
 				}
 			}

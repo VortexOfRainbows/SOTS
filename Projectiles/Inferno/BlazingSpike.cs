@@ -5,6 +5,7 @@ using Terraria.ID;
 using SOTS.Void;
 using System.Collections.Generic;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Inferno
 {    
@@ -50,7 +51,7 @@ namespace SOTS.Projectiles.Inferno
 				Projectile.velocity *= 0.96f;
 			if (Projectile.velocity.Length() > 1)
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
-			Lighting.AddLight(Projectile.Center, ColorHelpers.InfernoColorAttemptDegrees(SOTSWorld.GlobalCounter * 2).ToVector3() * 0.3f);
+			Lighting.AddLight(Projectile.Center, ColorHelper.InfernoColorGradientDegrees(SOTSWorld.GlobalCounter * 2).ToVector3() * 0.3f);
 			Projectile.alpha = 220 - (int)(220f * Projectile.timeLeft / 300f);
 		}
 		public override void OnKill(int timeLeft)
@@ -58,9 +59,8 @@ namespace SOTS.Projectiles.Inferno
 			for (int i = 5; i > 0; i--)
 			{
 				Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>());
-				Dust dust = Main.dust[dust2];
-				dust.color = ColorHelpers.InfernoColorAttempt(Main.rand.NextFloat(0.5f));
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>());
+				dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(0.5f));
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
 				dust.scale *= 1.1f;

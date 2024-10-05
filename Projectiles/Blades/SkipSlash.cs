@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
 using Terraria.Audio;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -59,7 +60,7 @@ namespace SOTS.Projectiles.Blades
 						dust.velocity += circularLocation * 0.2f + Projectile.velocity * 0.4f;
 						dust.scale *= 1.5f;
 						dust.fadeIn = 0.1f;
-						dust.color = ColorHelpers.VoidAnomaly;
+						dust.color = ColorHelper.VoidAnomaly;
 						dust.color.A = 0;
 					}
 					Projectile.timeLeft = 8;
@@ -74,7 +75,7 @@ namespace SOTS.Projectiles.Blades
 					dust.noGravity = true;
 					dust.scale *= 1.6f - 0.1f * i;
 					dust.fadeIn = 0.1f;
-					dust.color = ColorHelpers.VoidAnomaly;
+					dust.color = ColorHelper.VoidAnomaly;
 					if (i == 1)
 						dust.color = new Color(203, 70, 224, 0);
 					if (i == 2)

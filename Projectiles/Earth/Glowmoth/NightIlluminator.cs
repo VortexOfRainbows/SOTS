@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Void;
 using System;
 using System.IO;
@@ -83,7 +84,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
                 Projectile.timeLeft = 2;
                 if(Main.rand.NextBool(5))
                 {
-                    Color color2 = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(180), true);
+                    Color color2 = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true);
                     Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16) + Projectile.velocity.SafeNormalize(Vector2.Zero) * 16, 24, 24, ModContent.DustType<CopyDust4>());
                     dust.color = color2;
                     dust.noGravity = true;

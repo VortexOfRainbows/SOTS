@@ -612,7 +612,7 @@ namespace SOTS
                 FakePlayerDrawing.DrawFakePlayers(0, DrawStateID.All); //Subspace servant has no shader, and thus can be drawn in its entirety right away
                 FakePlayerDrawing.DrawFakePlayers(2, DrawStateID.All); //Subspace servant has no shader, and thus can be drawn in its entirety right away
 
-                ConduitHelper.preDrawBeforePlayers();
+                ConduitHelper.PreDrawBeforePlayers();
                 for (int i = 0; i < Main.player.Length; i++)
 				{
 					Player player = Main.player[i];

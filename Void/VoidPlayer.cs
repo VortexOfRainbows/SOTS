@@ -18,6 +18,7 @@ using Terraria.Localization;
 using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.FakePlayer;
 using SOTS.Projectiles.Laser;
+using SOTS.Helpers;
 
 namespace SOTS.Void
 {
@@ -362,33 +363,33 @@ namespace SOTS.Void
 		public static Color minionVoidColor(int type)
 		{
 			if (type == (int)VoidMinionID.NatureSpirit)
-				return ColorHelpers.NatureColor;
+				return ColorHelper.NatureColor;
 			if (type == (int)VoidMinionID.ChaosSpirit)
-				return ColorHelpers.pastelRainbow;
+				return ColorHelper.PastelRainbow;
 			if (type == (int)VoidMinionID.EarthenSpirit)
-				return ColorHelpers.EarthColor;
+				return ColorHelper.EarthColor;
 			if (type == (int)VoidMinionID.OtherworldSpirit)
-				return new Color(ColorHelpers.OtherworldColor.R, ColorHelpers.OtherworldColor.G, ColorHelpers.OtherworldColor.B);
+				return new Color(ColorHelper.OtherworldColor.R, ColorHelper.OtherworldColor.G, ColorHelper.OtherworldColor.B);
 			if (type == (int)VoidMinionID.BethanySpirit)
 				return new Color(170, 220, 255);
 			if (type == (int)VoidMinionID.TBethanySpirit)
-				return ColorHelpers.LemegetonColor;
+				return ColorHelper.LemegetonColor;
 			if (type == (int)VoidMinionID.CursedBlade)
 				return new Color(76, 58, 101);
 			if (type == (int)VoidMinionID.TidalSpirit)
-				return ColorHelpers.TideColor;
+				return ColorHelper.TideColor;
 			if (type == (int)VoidMinionID.PermafrostSpirit)
-				return ColorHelpers.PermafrostColor;
+				return ColorHelper.PermafrostColor;
 			if (type == (int)VoidMinionID.InfernoSpirit)
-				return ColorHelpers.InfernoColorAttemptDegrees(ColorHelpers.soulColorCounter);
+				return ColorHelper.InfernoColorGradientDegrees(ColorHelper.SoulColorCounter);
 			if (type == (int)VoidMinionID.EvilSpirit)
 			{
-				Color color = Color.Lerp(new Color(165, 21, 0), new Color(114, 54, 183), 0.5f + (float)Math.Sin(MathHelper.ToRadians(ColorHelpers.soulColorCounter * 1.25f)) * 0.5f);
+				Color color = Color.Lerp(new Color(165, 21, 0), new Color(114, 54, 183), 0.5f + (float)Math.Sin(MathHelper.ToRadians(ColorHelper.SoulColorCounter * 1.25f)) * 0.5f);
 				return color;
 			}
 			if (type == (int)VoidMinionID.TesseractServant)
 			{
-				return ColorHelpers.TesseractColor(0);
+				return ColorHelper.TesseractColor(0);
 			}
 			return Color.White;
 		}
@@ -580,17 +581,17 @@ namespace SOTS.Void
 			//Main.NewText("I think " + player.whoAmI + " has " + voidMeterMax2 + " meter max 2 and " + voidMeter + " void and " + voidMeterMax + " void meter max 1 and " + VoidMinionConsumption + " void minion consumption");
 			lastVoidMeter = voidMeter;
 			if(Player.whoAmI == Main.myPlayer)
-				ColorHelpers.ColorUpdate();
+				ColorHelper.ColorUpdate();
 			if (soulsOnKill > 0)
 				UseSouls();
-			if (ColorHelpers.soulColorCounter % 40 == 0)
+			if (ColorHelper.SoulColorCounter % 40 == 0)
             {
 				if(soulsOnKill <= 0)
                 {
 					if (lootingSouls > 0)
 						lootingSouls--;
                 }
-				if (ColorHelpers.soulColorCounter % 360 == 0)
+				if (ColorHelper.SoulColorCounter % 360 == 0)
                 {
 					netUpdate = true;
 				}

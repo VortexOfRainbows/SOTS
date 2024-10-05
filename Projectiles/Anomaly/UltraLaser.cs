@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Anomaly
 {
@@ -30,14 +31,14 @@ namespace SOTS.Projectiles.Anomaly
         {
 			return false;
 		}
-		Vector2 finalPosition = Vector2.Zero;
-		bool hasInit = false;
-		float scaleMult = 1f;
+		private Vector2 finalPosition = Vector2.Zero;
+		private bool hasInit = false;
+		private float scaleMult = 1f;
 		public override void AI() 
 		{
 			if(!hasInit)
 			{
-				Color color = ColorHelpers.VoidAnomaly;
+				Color color = ColorHelper.VoidAnomaly;
 				color.A = 0;
 				SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.4f);
 				for (int i = 20; i > 0; i--)
@@ -53,7 +54,7 @@ namespace SOTS.Projectiles.Anomaly
 		}
 		public void InitializeLaser()
 		{
-			Color color = ColorHelpers.VoidAnomaly;
+			Color color = ColorHelper.VoidAnomaly;
 			color.A = 0;
 			Vector2 startingPosition = Projectile.Center;
 			Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero);

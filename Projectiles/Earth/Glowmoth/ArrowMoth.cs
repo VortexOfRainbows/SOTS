@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
 using Terraria.GameContent;
+using SOTS.Helpers;
 
 namespace SOTS.Projectiles.Earth.Glowmoth
 {    
@@ -84,7 +85,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
             }
 			for(int i = 0; i < 13; i++)
             {
-				Color color2 = ColorHelpers.VibrantColorAttempt(180 + Projectile.ai[0] % 180, true);
+				Color color2 = ColorHelper.VibrantColorGradient(180 + Projectile.ai[0] % 180, true);
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.color = color2;
 				dust.noGravity = true;
@@ -95,7 +96,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 			for (int i = 0; i < 6; i++)
 			{
-				Color color2 = ColorHelpers.VibrantColorAttempt(180 + Projectile.ai[0] % 180, true);
+				Color color2 = ColorHelper.VibrantColorGradient(180 + Projectile.ai[0] % 180, true);
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.color = Color.Lerp(Color.White, color2, 0.3f);
 				dust.noGravity = true;
@@ -126,7 +127,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 			}
 			if (Main.rand.NextBool(4))
 			{
-				Color color2 = ColorHelpers.VibrantColorAttempt(180 + Projectile.ai[0] % 180, true);
+				Color color2 = ColorHelper.VibrantColorGradient(180 + Projectile.ai[0] % 180, true);
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.color = color2;
 				dust.noGravity = true;

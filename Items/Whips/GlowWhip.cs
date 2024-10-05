@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.WhipBuffs;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Earth.Glowmoth;
 using SOTS.Items.Slime;
 using System;
@@ -73,7 +74,7 @@ namespace SOTS.Items.Whips
 						dust.scale *= 0.1f;
 						dust.scale += 1.25f;
 						dust.fadeIn = 0.2f;
-						dust.color = ColorHelpers.VibrantColorAttempt(Main.rand.NextFloat(360), true);
+						dust.color = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(360), true);
 					}
 				}
 			return base.PreAI();

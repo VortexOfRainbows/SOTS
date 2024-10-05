@@ -48,7 +48,7 @@ namespace SOTS.Items.Tide
 		}
 		public int ChooseItem()
 		{
-			int item = SOTSItem.piscesFishItems[Main.rand.Next(SOTSItem.piscesFishItems.Length)];
+			int item = SOTSItem.PiscesFishItems[Main.rand.Next(SOTSItem.PiscesFishItems.Length)];
 			if (System.DateTime.Now.Day == 1 && System.DateTime.Now.Month == 4)
 				item = ItemID.Bunny;
 			return item;
