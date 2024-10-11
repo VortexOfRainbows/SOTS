@@ -87,6 +87,11 @@ N/A
 
 Daily Log:
 
+10/10/2024
+1. More WIP Famished... Needs:
+	1. Gore, Polish, Banner, More MP testing.
+	2. Special screenshot for the bestiary including both evil variants since they are technically the same enemy.
+
 10/3/24 to 10/5/24
 1. Improvements to Ghost Pepper visuals and code
 	1. Max souls before autocollect 40 -> 30
@@ -99,10 +104,7 @@ Daily Log:
 6. Selene now ends 4 frames sooner
 
 9/25/24 to 10/3/24
-1. WIP Famished... Needs:
-	1. Animation when damaging the player (like a spike protrudes out temporarily). potentially spike surround the outer shell.
-	2. Polish, Banner.
-	3. Special screenshot for the bestiary including both evil variants since they are technically the same enemy.
+1. WIP Famished...
 2. Famished: Has dusts and sounds. finished FLOODFILL. 
 	1. Added tile break listeners... essentially, the famished will now take damage from tools before the blocks beneath them do. Includes explosives and other tools
 	2. Heart block cannot be broken. Grows back from the heart more often.
