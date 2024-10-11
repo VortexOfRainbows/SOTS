@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
@@ -19,6 +20,15 @@ namespace SOTS.NPCs.AbandonedVillage
 {
 	public class Famished : ModNPC
 	{
+        public static Color GlowColor
+        {
+            get
+            {
+                Color c = WorldGen.crimson ? ColorHelper.AVIchorLight.ToColor() : ColorHelper.AVCursedLight.ToColor();
+                c.A = 0;
+                return c;
+            }
+        }
         public class FamishBlock
         {
             public int i => (int)owner.Center.X / 16 + x - MaxRadius;
@@ -54,20 +64,27 @@ namespace SOTS.NPCs.AbandonedVillage
             public float IdleCounter = 0;
             public bool Kill;
             public float HeightMult;
-            public FamishVine(NPC owner, Vector2 startPosition, Vector2 endPosition, Vector2 normal)
+            public bool IgnoreTiles;
+            public FamishVine(NPC owner, Vector2 startPosition, Vector2 endPosition, Vector2 normal, bool ignoreTiles = false)
             {
                 StartPosition = startPosition;
                 EndPosition = endPosition;
                 Normal = normal;
                 this.owner = owner;
-                HeightMult = Main.rand.NextFloat(0.75f, 1.25f);
+                HeightMult = ignoreTiles ? 2.5f : Main.rand.NextFloat(0.75f, 1.25f);
                 Kill = false;
+                IgnoreTiles = ignoreTiles;
             }
             public void Update()
             {
-                if (!HasBlock(StartPosition))
+                if (IgnoreTiles)
+                {
+                    StartPosition = owner.Center;
+                    HeightMult = Math.Min(3, StartPosition.Distance(EndPosition) / 80f);
+                }
+                if (!HasBlock(StartPosition) && !IgnoreTiles)
                     Kill = true;
-                else if (!HasBlock(EndPosition))
+                else if (!HasBlock(EndPosition) && !IgnoreTiles)
                 {
                     if (Counter > 40)
                         Counter = 40;
@@ -92,12 +109,14 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         public override void SendExtraAI(BinaryWriter writer)
         {
+            writer.WriteVector2(targetPosition);
             writer.WriteVector2(groundedPosition);
             writer.Write(CurrentBlocks);
             writer.Write(TotalBlocks);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
+            targetPosition = reader.ReadVector2();
             groundedPosition = reader.ReadVector2();
             CurrentBlocks = reader.ReadInt32();
             TotalBlocks = reader.ReadInt32();
@@ -540,7 +559,8 @@ namespace SOTS.NPCs.AbandonedVillage
                 Block[x, y] = null; //Destroy the reference, so tile framing can happen appropriately.
                 FrameTileSquare(x, y); //Frame the tiles
 
-                NPC.HitEffect(0, LifePerBlock, false); //Activate the on hit code when a block is broken.
+                if(NPC.life > 0)
+                    NPC.HitEffect(0, LifePerBlock, false); //Activate the on hit code when a block is broken.
                 if (text) //Spawn text for being hurt, so there is better clarity in how much damage the famish takes
                     QueueDamageOrHealing -= LifePerBlock;
 
@@ -652,8 +672,8 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         public bool TryGrowingVine(Vector2 start, Vector2 end, bool upPriority = false)
         {
-            if (Main.netMode == NetmodeID.Server)
-                return false;
+            if (Main.netMode == NetmodeID.Server || Config.lowFidelityMode)
+                return Config.lowFidelityMode && Main.netMode != NetmodeID.Server;
             Vector2 normal = Vector2.Zero;
             bool canGrow = HasTile(start) && HasTile(end);
             if(canGrow)
@@ -694,7 +714,8 @@ namespace SOTS.NPCs.AbandonedVillage
             if(normal.LengthSquared() > 2f)
             {
                 normal = normal.SNormalize();
-                Vines.Add(new FamishVine(NPC, start, end, normal));
+                SOTSUtils.PlaySound(SoundID.NPCDeath9, start, 1.9f, -0.1f, 0.05f);
+                Vines.Add(new FamishVine(NPC, start, end, normal, false));
                 return true;
             }
             return false;
@@ -728,6 +749,7 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.value = Item.buyPrice(0, 0, 5, 0);
             NPC.npcSlots = 2.0f;
 			NPC.noGravity = true;
+            NPC.dontTakeDamage = true;
             NPC.noTileCollide = true;
 			NPC.alpha = 0;
 			NPC.HitSound = SoundID.NPCHit19;
@@ -740,7 +762,7 @@ namespace SOTS.NPCs.AbandonedVillage
         }
 		public const int DefaultFrameX = 162;
 		public const int DefaultFrameY = 144;
-        private void DrawBezierCurves(FamishVine vine, SpriteBatch spriteBatch, Vector2 screenPos, bool doDust)
+        private void DrawBezierCurves(FamishVine vine, SpriteBatch spriteBatch, Vector2 screenPos, bool doDust, bool justDustLastPoint)
         {
             if (vine.Counter < 0)
                 return;
@@ -757,7 +779,7 @@ namespace SOTS.NPCs.AbandonedVillage
             Vector2 p3 = end;
             int segments = 16;
             int max = (int)(segments * percent);
-            for (int i = 0; i < max; i++)
+            for (int i = justDustLastPoint ? max - 1 : 0; i < max; i++)
             {
                 float t = i / (float)segments;
                 Vector2 pos = CalculateBezierPoint(t, p0, p1, p2, p3); //t is the iterative variable that tells where along the curve the texture will be drawn
@@ -774,11 +796,14 @@ namespace SOTS.NPCs.AbandonedVillage
                     Texture2D texture = Request<Texture2D>(VineTexture).Value; //This fetches the texture which will be used for visualizing the bezier curve
                     Vector2 drawOrigin = new Vector2(0, texture.Height / 2);
                     spriteBatch.Draw(texture, pos - screenPos, null, drawColor, rotation, drawOrigin, new Vector2(scaleX, 0.8f + sin * 0.2f) * squashAndStretch, SpriteEffects.None, 0f); //Terraria's main drawing function
+                    //Color c2 = (WorldGen.crimson ? ColorHelper.AVIchorLight : ColorHelper.AVCursedLight).ToColor() * (0.4f + 0.4f * sin);
+                    //c2.A = 0;
+                    //spriteBatch.Draw(texture, pos - screenPos, null, c2, rotation, drawOrigin, new Vector2(scaleX, (0.8f + sin * 0.2f)) * squashAndStretch, SpriteEffects.None, 0f); //Terraria's main drawing function
                 }
                 else
                 {
-                    Dust dust = Dust.NewDustDirect(pos - new Vector2(7, 7), 4, 4, WorldGen.crimson ? DustType<FamishedDustCrimson>() : DustType<FamishedDustCorruption>());
-                    dust.scale = Main.rand.NextFloat(1.4f, 1.6f);
+                    Dust dust = Dust.NewDustDirect(pos - new Vector2(5), 0, 0, WorldGen.crimson ? DustType<FamishedDustCrimson>() : DustType<FamishedDustCorruption>());
+                    dust.scale = justDustLastPoint ? 1.2f : Main.rand.NextFloat(1.4f, 1.6f);
                     dust.velocity *= 0.6f;
                     dust.noGravity = true;
                 }
@@ -790,7 +815,14 @@ namespace SOTS.NPCs.AbandonedVillage
                 return false;
             foreach (FamishVine vine in Vines)
             {
-                DrawBezierCurves(vine, spriteBatch, screenPos, false);
+                DrawBezierCurves(vine, spriteBatch, screenPos, false, false);
+            }
+            if (!foundSeedableLocation && targetPosition != Vector2.Zero)
+            {
+                float percent = MathF.Sin(Math.Min(1, NPC.ai[3] / armingTime) * MathHelper.Pi);
+                Texture2D pixel = Request<Texture2D>("SOTS/Assets/LongGradient").Value;
+                Vector2 toTarget = targetPosition - NPC.Center;
+                spriteBatch.Draw(pixel, NPC.Center - screenPos, null, GlowColor * percent * 0.75f, toTarget.ToRotation(), new Vector2(0, 1), new Vector2(toTarget.Length() / pixel.Width, 1), SpriteEffects.None, 0f);
             }
             Texture2D texture = Request<Texture2D>(BlockTexture).Value;
             Texture2D textureGlow = Request<Texture2D>(BlockTexture + "Glow").Value;
@@ -804,7 +836,8 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     float x = fB.x - MaxRadius;
                     float y = fB.y - MaxRadius;
-                    scale = 1.08f + 0.075f * MathF.Sin((SOTSWorld.GlobalCounter * -2 + MathF.Sqrt(x * x + y * y) * 30) * MathF.PI / 180f);
+                    float sin = MathF.Sin((SOTSWorld.GlobalCounter * -2 + MathF.Sqrt(x * x + y * y) * 30) * MathF.PI / 180f);
+                    scale = 1.08f + 0.075f * sin;
                     Vector3[] slices = new Vector3[9];
                     Lighting.GetColor9Slice(fB.i, fB.j, ref slices);
                     Vector2 defPosition = new Vector2(fB.i * 16, fB.j * 16);
@@ -881,6 +914,9 @@ namespace SOTS.NPCs.AbandonedVillage
                         num2 <<= 8;
                         color.PackedValue = (uint)(num | num2 | num3) | 0xFF000000u;
                         Main.spriteBatch.Draw(texture, position - screenPos + drawOrigin, value, color, 0f, drawOrigin, scale, SpriteEffects.None, 0f);
+                        //Color c2 = (WorldGen.crimson ? ColorHelper.AVIchorLight : ColorHelper.AVCursedLight).ToColor() * (0.2f + 0.2f * sin);
+                        //c2.A = 0;
+                        //Main.spriteBatch.Draw(texture, position - screenPos + drawOrigin, value, c2, 0f, drawOrigin, scale, SpriteEffects.None, 0f);
                     }
                 }
             }
@@ -905,7 +941,14 @@ namespace SOTS.NPCs.AbandonedVillage
             drawOrigin = textureHeart.Size() / 2;
             if (isSeed)
             {
-                scale = 1;
+                float percent = Math.Min(1, MathF.Sqrt(NPC.ai[2] / armingTime));
+                float percent2 = Math.Max(0, 1 - NPC.ai[3] / armingTime);
+                scale = 0.6f + 0.3f * percent;
+                for(int i = 0; i < 6; i++)
+                {
+                    Vector2 circular = new Vector2(10 * (1 - percent) + 2, 0).RotatedBy(i / 6f * MathHelper.TwoPi + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 1.5f));
+                    spriteBatch.Draw(textureHeart, drawPos + circular, null, GlowColor * percent * percent2, NPC.rotation, drawOrigin, NPC.scale * scale, SpriteEffects.None, 0f);
+                }
             }
             else
             {
@@ -930,15 +973,100 @@ namespace SOTS.NPCs.AbandonedVillage
         private float ChaseQueuedHealingDelayed = 0;
         private float MaxChaseHealing = 10;
         private float TimeToReachMaxSize = 240;
+        private float armingTime = 70;
+        private Vector2 targetPosition;
         public int QueueDamageOrHealing = 0;
         public int QueueDamageHealingTimer = 0;
         public Vector2 groundedPosition;
+        private bool SeedAI()
+        {
+            NPC.rotation += NPC.velocity.X * 0.01f;
+            NPC.ai[2]++;
+            if (NPC.ai[2] < armingTime)
+            {
+                if ((int)NPC.ai[2] == 15)
+                    SOTSUtils.PlaySound(SoundID.Item15, NPC.Center, 1.5f, -0.3f);
+                if (NPC.velocity.LengthSquared() > 2)
+                    NPC.velocity *= 0.984f;
+                float percent = NPC.ai[2] / armingTime;
+                NPC.velocity.Y += 0.1f * MathF.Cos(percent * MathHelper.TwoPi);
+                NPC.velocity *= 1f - percent * 0.1f;
+                Vector2 oldVelo = NPC.velocity;
+                NPC.velocity = Collision.TileCollision(NPC.Center, NPC.velocity, 0, 0, true, true, 1);
+                if (oldVelo.X != NPC.velocity.X) //Bounce off of walls while priming
+                    NPC.velocity.X = -oldVelo.X;
+                if (oldVelo.Y != NPC.velocity.Y)
+                    NPC.velocity.Y = -oldVelo.Y;
+                float maxSearchDist = 800;
+                Vector2 checkPosition = NPC.Center + Main.rand.NextVector2CircularEdge(maxSearchDist, maxSearchDist) * percent;
+                int i = (int)checkPosition.X / 16;
+                int j = (int)checkPosition.Y / 16;
+                if (targetPosition == Vector2.Zero && TileValid(i, j) && NPC.ai[2] > 10)
+                {
+                    bool foundAir = false;
+                    while (!foundAir)
+                    {
+                        Vector2 toNPC = (NPC.Center - checkPosition).SNormalize() * 12f;
+                        i = (int)(checkPosition.X + toNPC.X) / 16;
+                        j = (int)(checkPosition.Y + toNPC.Y) / 16;
+                        foundAir = !TileValid(i, j);
+                        if(!foundAir)
+                            checkPosition += toNPC;
+                        if (NPC.Center.Distance(checkPosition) < 16)
+                            break;
+                    }
+                    if (foundAir)
+                    {
+                        targetPosition = checkPosition;
+                        if (Main.netMode == NetmodeID.Server)
+                            NPC.netUpdate = true;
+                    }
+                }
+            }
+            else
+            {
+                if(!Main.rand.NextBool(4) && NPC.velocity.LengthSquared() > 0.5f)
+                    PixelDust.Spawn(NPC.Center - NPC.velocity * 4f, 0, 0, Main.rand.NextVector2Circular(1, 1) + NPC.velocity * 0.5f, GlowColor * 0.5f, 5).scale = Main.rand.NextFloat(0.5f, 1.25f);
+                NPC.ai[3]++;
+                if (NPC.ai[3] % 10 == 0 && Vines.Count < 3 && Main.netMode != NetmodeID.Server)
+                {
+                    SOTSUtils.PlaySound(SoundID.NPCDeath9, NPC.Center, 1.9f, -0.1f, 0.05f);
+                    Vines.Add(new FamishVine(NPC, NPC.Center, targetPosition, Main.rand.NextVector2Circular(1, 1) * 1.5f, true));
+                }
+                Vector2 toTarget = new Vector2(0, 0.1f);
+                if (targetPosition != Vector2.Zero)
+                {
+                    toTarget = (targetPosition - NPC.Center).SNormalize() * 0.1f * MathF.Sqrt(NPC.ai[3] / armingTime);
+                }
+                NPC.velocity *= 0.965f;
+                NPC.velocity += toTarget;
+                int i = pointPos.X;
+                int j = pointPos.Y;
+                if (NPC.ai[3] > armingTime && TileValid(i, j))
+                {
+                    foundSeedableLocation = true;
+                    groundedPosition = pointPos.ToVector2() * 16 + new Vector2(8, 8);
+                    NPC.velocity *= 0f;
+                    return true;
+                }
+            }
+            return false;
+        }
         public override bool PreAI()
         {
+            NPC.dontTakeDamage = !foundSeedableLocation;
             if(!TileBreakListeners.Contains(NPC.whoAmI)) //Make sure that this NPC listens to any tile break interactions.
             {
                 TileBreakListeners.Add(NPC.whoAmI);
             }
+            if (!foundSeedableLocation)
+            {
+                bool foundSpot = SeedAI();
+                if (!foundSpot)
+                    return true;
+            }
+            NPC.knockBackResist = 0;
+            NPC.rotation = SOTSUtils.AngularLerp(NPC.rotation, 0, 0.1f);
             int prevQueDamHeal = QueueDamageOrHealing;
             ChaseQueuedHealing = MathHelper.Clamp(MathHelper.Lerp(ChaseQueuedHealing, QueueDamageOrHealing, 0.14f), -MaxChaseHealing, MaxChaseHealing); //Chase the value of the damage/healing in order to create a recoil effect for growing or being hit
             ChaseQueuedHealingDelayed = MathHelper.Clamp(MathHelper.Lerp(ChaseQueuedHealingDelayed, ChaseQueuedHealing, 0.14f), -MaxChaseHealing, MaxChaseHealing); //Chase the value of the damage/healing in order to create a recoil effect for growing or being hit
@@ -950,26 +1078,6 @@ namespace SOTS.NPCs.AbandonedVillage
                 NPC.ai[1] = TimeToReachMaxSize;
             if (Block == null)
                 Block = new FamishBlock[MaxRadius * 2 + 1, MaxRadius * 2 + 1];
-            if (!foundSeedableLocation)
-            {
-                NPC.rotation += NPC.velocity.X * 0.01f;
-                NPC.velocity.Y += 0.1f;
-                int i = pointPos.X;
-                int j = pointPos.Y;
-                if (TileValid(i, j))
-                {
-                    foundSeedableLocation = true;
-                    groundedPosition = pointPos.ToVector2() * 16 + new Vector2(8, 8);
-                    NPC.velocity *= 0f;
-                }
-                else
-                    return true;
-            }
-            else
-            { 
-                NPC.knockBackResist = 0;
-                NPC.rotation = SOTSUtils.AngularLerp(NPC.rotation, 0, 0.1f);
-            }
             bool anyDisconnected = false;
             foreach (FamishBlock fB in Block)
             {
@@ -1093,11 +1201,17 @@ namespace SOTS.NPCs.AbandonedVillage
             {
                 FamishVine vine = Vines[i];
                 vine.Update();
-                if(vine.Kill)
+                bool killOldHooks = vine.IgnoreTiles && foundSeedableLocation;
+                if(vine.Kill || killOldHooks)
                 {
-                    DrawBezierCurves(vine, null, Vector2.Zero, true);
+                    if(!killOldHooks)
+                        DrawBezierCurves(vine, null, Vector2.Zero, true, false);
                     Vines.Remove(vine);
                     i--;
+                }
+                else if(vine.Counter < 40 && vine.Counter > 3 && !Main.rand.NextBool(4))
+                {
+                    DrawBezierCurves(vine, null, Vector2.Zero, true, true);
                 }
             }
         }
@@ -1109,14 +1223,38 @@ namespace SOTS.NPCs.AbandonedVillage
                 for (int i = 0; i < Vines.Count; i++)
                 {
                     FamishVine vine = Vines[i];
-                    DrawBezierCurves(vine, null, Vector2.Zero, true);
+                    DrawBezierCurves(vine, null, Vector2.Zero, true, false);
                 }
                 GenerateDust(pointPos.X, pointPos.Y, -2, 35, false);
+                if (Main.netMode != NetmodeID.Server && foundSeedableLocation)
+                {
+                    if(WorldGen.crimson)
+                    {
+                        Gore.NewGore(NPC.GetSource_Death(), NPC.position, new Vector2(hit.HitDirection, -1), ModGores.GoreType("Gores/Famished/FamishedGore9"), .8f);
+                        Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(14, 0), new Vector2(hit.HitDirection, -1), ModGores.GoreType("Gores/Famished/FamishedGore10"), .8f);
+                        Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 18), new Vector2(hit.HitDirection, -1), ModGores.GoreType("Gores/Famished/FamishedGore11"), .8f);
+                    }
+                    else
+                    {
+                        for (int i = 1; i <= 8; i++)
+                        {
+                            Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(i * 45 - 90));
+                            Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(9, 9), circular * 0.15f, ModGores.GoreType("Gores/Famished/FamishedGore" + i), .8f);
+                        }
+                    }
+                    for(int i = 0; i < 24; i++)
+                    {
+                        Vector2 circular = new Vector2(3, 0).RotatedBy(i / 24f * MathHelper.TwoPi);
+                        PixelDust.Spawn(NPC.Center, 0, 0, Main.rand.NextVector2Circular(1, 1) + circular, GlowColor, 4).scale = Main.rand.NextFloat(1, 1.5f);
+                    }
+                }
             }
             else if(hit.HitDirection != 0)
             {
                 ChaseQueuedHealing -= hit.Damage * 0.2f;
                 ChaseQueuedHealingDelayed -= hit.Damage * 0.1f;
+                ChaseQueuedHealing = MathHelper.Clamp(ChaseQueuedHealing, MaxChaseHealing, MaxChaseHealing);
+                ChaseQueuedHealing = MathHelper.Clamp(ChaseQueuedHealingDelayed, MaxChaseHealing, MaxChaseHealing);
                 GenerateDust(pointPos.X, pointPos.Y, -1, (int)(hit.Damage / 8f + 0.99f), false);
             }
             if (Main.netMode == NetmodeID.Server)
@@ -1153,10 +1291,12 @@ namespace SOTS.NPCs.AbandonedVillage
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             LeadingConditionRule worldCrimson = new LeadingConditionRule(new Conditions.IsCrimson());
+            LeadingConditionRule worldCorrupt = new LeadingConditionRule(new Conditions.IsCorruption());
             npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEvil>(), 1, 1, 1));
             worldCrimson.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCrimson>(), 1, 20, 40));
-            worldCrimson.OnFailedConditions(ItemDropRule.Common(ItemType<FamishedBlockCorruption>(), 1, 20, 40));
+            worldCorrupt.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCorruption>(), 1, 20, 40));
             npcLoot.Add(worldCrimson);
+            npcLoot.Add(worldCorrupt);
         }
     }
 }

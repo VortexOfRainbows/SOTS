@@ -9,12 +9,12 @@ using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.ModPlayers;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace SOTS
 {
 	public static class SOTSUtils
 	{
+		public static Texture2D WhitePixel => ModContent.Request<Texture2D>("SOTS/Assets/WhitePixel").Value;
 		public static Texture2D inventoryBoxTexture => Terraria.GameContent.TextureAssets.InventoryBack.Value;
 		public static SlotId PlaySound(SoundStyle style, Vector2 position, float volume = 1f, float pitch = 0f, float pitchVariance = 0f)
 		{
@@ -154,6 +154,10 @@ namespace SOTS
                 }
                 return MathHelper.WrapAngle(MathHelper.Lerp(angle1, angle2, amount));
             }
+		}
+		public static Color ToColor(this Vector3 v3)
+		{
+			return new Color(v3.X, v3.Y, v3.Z);
 		}
     }
 }

@@ -1,13 +1,11 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Audio;
 using Microsoft.Xna.Framework;
 using SOTS.Common.GlobalNPCs;
 using System;
 using SOTS.Items.Banners;
 using SOTS.Projectiles.AbandonedVillage;
-using SOTS.Items.Pyramid;
 using Terraria.GameContent.ItemDropRules;
 using SOTS.Items.Fragments;
 

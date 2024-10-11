@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Pyramid;
-using SOTS.Projectiles.Pyramid;
-using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -14,8 +12,12 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.NPCs
 {
 	public class Maligmor : ModNPC
-	{		
-		public override void SetDefaults()
+	{
+        public override void SetStaticDefaults()
+        {
+			Main.npcFrameCount[NPC.type] = 1;  
+        }
+        public override void SetDefaults()
         {
             NPC.aiStyle = 0;
             NPC.lifeMax = 200;   
@@ -24,7 +26,6 @@ namespace SOTS.NPCs
             NPC.knockBackResist = 0f;
             NPC.width = 56;
             NPC.height = 52;
-			Main.npcFrameCount[NPC.type] = 1;  
             NPC.value = 1000;
             NPC.npcSlots = 1f;
             NPC.lavaImmune = true;
@@ -64,7 +65,7 @@ namespace SOTS.NPCs
 			drawPos += aimAt;
 			spriteBatch.Draw(texture, drawPos, NPC.frame, Color.White, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 		}
-		bool runOnce = true;
+        private bool runOnce = true;
         public override bool PreAI()
         {
 			if(runOnce)
@@ -74,8 +75,8 @@ namespace SOTS.NPCs
 			}
 			return base.PreAI();
         }
-		Vector2 toPlayerTrue;
-		Vector2 toPlayer;
+		private Vector2 toPlayerTrue;
+        private Vector2 toPlayer;
 		public override void AI()
 		{
 			NPC.TargetClosest(true);
@@ -175,29 +176,14 @@ namespace SOTS.NPCs
 			}
 			for (int i = 0; i < 1 + Main.rand.Next(2); i++)
 			{
-				int num1 = Dust.NewDust(NPC.position, NPC.width - 4, 12, ModContent.DustType<CurseDust>());
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity.X = NPC.velocity.X;
-				Main.dust[num1].velocity.Y = -2 + i * 1.0f;
-				Main.dust[num1].scale *= 1.25f + i * 0.15f;
+				Dust dust = Dust.NewDustDirect(NPC.position, NPC.width - 4, 12, ModContent.DustType<CurseDust>());
+				dust.noGravity = true;
+				dust.velocity.X = NPC.velocity.X;
+				dust.velocity.Y = -2 + i * 1.0f;
+                dust.scale *= 1.25f + i * 0.15f;
 			}
 			NPC.velocity = Collision.TileCollision(NPC.position + new Vector2(8, 8), NPC.velocity, NPC.width - 16, NPC.height - 16, true);
 			NPC.rotation = NPC.velocity.X * 0.036f;
-		}
-		public override void FindFrame(int frameHeight) 
-		{
-			/*
-			npc.frameCounter++;
-			if (npc.frameCounter >= 5f) 
-			{
-				npc.frameCounter -= 5f;
-				NPC.frame.Y += frameHeight;
-				if(NPC.frame.Y >= 4 * frameHeight)
-				{
-					NPC.frame.Y = 0;
-				}
-			}
-			*/
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
@@ -211,7 +197,7 @@ namespace SOTS.NPCs
 				if (Main.netMode != NetmodeID.Server)
 					while (num < hit.Damage / NPC.lifeMax * 50.0)
 					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<CurseDust>(), (float)(2 * hit.HitDirection), -2f, 0, default, 1.5f);
+						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType<CurseDust>(), (float)(2 * hit.HitDirection), -2f, 0, default, 1.5f);
 						num++;
 					}
 			}
@@ -221,8 +207,8 @@ namespace SOTS.NPCs
 				{
 					for (int i = 1; i <= 8; i++)
 					{
-						Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(-i * 45)) - new Vector2(9, 9);
-						Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular, circular * 0.15f, ModGores.GoreType("Gores/Maligmor/MaligmorGore" + i), 1f);
+						Vector2 circular = new Vector2(-28, 0).RotatedBy(MathHelper.ToRadians(-i * 45));
+						Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(9, 9), circular * 0.15f, ModGores.GoreType("Gores/Maligmor/MaligmorGore" + i), 1f);
 					}
 					for (int i = 0; i < 72; i++)
 					{

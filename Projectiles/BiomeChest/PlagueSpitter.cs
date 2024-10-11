@@ -62,22 +62,6 @@ namespace SOTS.Projectiles.BiomeChest
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation + MathHelper.PiOver4 * Projectile.direction * Projectile.spriteDirection, drawOrigin, Projectile.scale * 0.92f, Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
             DrawPlagueBalls();
-            //if(counter > Projectile.ai[0] * 2)
-            //{
-            //    Color color = new Color(100, 100, 100, 0);
-            //    float percent = (counter - (Projectile.ai[0] * 2)) / Projectile.ai[0] / 2.5f;
-            //    percent = Math.Clamp(percent, 0, 1);
-            //    for(int i = 0; i < 6; i++)
-            //    {
-            //        Vector2 c = new Vector2(24 * (1 - percent), 0).RotatedBy(MathHelper.TwoPi / 6f * i + MathHelper.ToRadians(SOTSWorld.GlobalCounter));
-            //        Main.spriteBatch.Draw(textureIceOnly, drawPos + c, null, color * MathF.Sin(percent * MathHelper.Pi) * 0.175f, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-            //    }
-            //    if(counter > Projectile.ai[0] * 3.5f)
-            //    {
-            //        percent = (counter - (Projectile.ai[0] * 3.5f)) / Projectile.ai[0];
-            //        Main.spriteBatch.Draw(textureIceOnly, drawPos, null, lightColor * percent * 1f, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction * Projectile.spriteDirection != 1 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-            //    }
-            //}
             return false;
         }
         public void DrawPlagueBalls()
