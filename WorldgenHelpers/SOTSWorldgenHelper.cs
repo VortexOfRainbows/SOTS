@@ -1,10 +1,8 @@
 using Terraria.ID;
-using System.Diagnostics;
 using Terraria;
 using Terraria.ModLoader;
 using SOTS.Items.Planetarium;
 using SOTS.Items.Pyramid;
-using SOTS.Items.ChestItems;
 using System;
 using SOTS.Items;
 using SOTS.Items.Pyramid.PyramidWalls;
@@ -25,7 +23,6 @@ using SOTS.Items.Earth.Glowmoth;
 using Terraria.DataStructures;
 using SOTS.Items.Conduit;
 using Terraria.WorldBuilding;
-using System.Runtime.Versioning;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -5202,5 +5199,25 @@ namespace SOTS.WorldgenHelpers
 				}
 			}
 		}
-	}
+		/// <summary>
+		/// Generates a test room on the cursor. For testing purposes (obviously).
+		/// </summary>
+		public static void GenerateTestRoom()
+		{
+			int x = (int)Main.MouseWorld.X / 16;
+			int y = (int)Main.MouseWorld.Y / 16;
+
+			for(int i = 0; i < 100; i++)
+			{
+                for (int j = 0; j < 50; j++)
+                {
+					int x2 = x + i;
+					int y2 = y + j;
+					WorldGen.PlaceWall(x2, y2, WallID.DiamondGemspark, true);
+					Tile t = Main.tile[x2, y2];
+					t.WallColor = PaintID.ShadowPaint;
+                }
+            }
+        }
+    }
 }

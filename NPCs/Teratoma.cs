@@ -28,6 +28,10 @@ namespace SOTS.NPCs
         {
             return !mushForm;
         }
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[NPC.type] = 7;
+        }
         public override void SetDefaults()
 		{
 			NPC.aiStyle = 3;
@@ -41,7 +45,6 @@ namespace SOTS.NPCs
 			NPC.knockBackResist = 0.1f;
 			NPC.HitSound = SoundID.NPCHit19;
 			NPC.DeathSound = SoundID.NPCDeath1;
-			Main.npcFrameCount[NPC.type] = 7;
 			NPC.noTileCollide = false;
 			Banner = NPC.type;
 			BannerItem = ItemType<TeratomaBanner>();

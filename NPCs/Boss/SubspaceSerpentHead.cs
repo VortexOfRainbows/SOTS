@@ -51,9 +51,18 @@ namespace SOTS.NPCs.Boss
         Vector2 directVelo;
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             Main.npcFrameCount[NPC.type] = 8;
-            NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                CustomTexturePath = "SOTS/BossCL/SubspaceBestiary",
+                Position = new Vector2(80, 14),
+                Scale = 1f,
+                PortraitScale = 1f,
+                PortraitPositionXOverride = 40,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public override void SetDefaults()
         {

@@ -45,6 +45,10 @@ using SOTS.NPCs.Anomaly;
 using SOTS.NPCs.Tide;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.NPCs.Chaos;
+using SOTS.NPCs.AbandonedVillage;
+using SOTS.NPCs.Gizmos;
+using SOTS.NPCs.Boss.Curse;
+using SOTS.NPCs.Boss.Advisor;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -861,9 +865,11 @@ namespace SOTS.Common.GlobalNPCs
             ModBiomeBestiaryInfoElement Planetarium = ModContent.GetInstance<PlanetariumBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Pyramid = ModContent.GetInstance<PyramidBiome>().ModBiomeBestiaryInfoElement;
 			ModBiomeBestiaryInfoElement Anomaly = ModContent.GetInstance<AnomalyBiome>().ModBiomeBestiaryInfoElement;
-			if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || 
+            ModBiomeBestiaryInfoElement AbandonedVillage = ModContent.GetInstance<AbandonedVillageBiome>().ModBiomeBestiaryInfoElement;
+            if (npc.type == ModContent.NPCType<HoloSlime>() || npc.type == ModContent.NPCType<HoloBlade>() || npc.type == ModContent.NPCType<HoloEye>() || 
 				npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() 
-				|| npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PhaseEye>() || npc.type == ModContent.NPCType<OtherworldlySpirit>())
+				|| npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PhaseEye>() || npc.type == ModContent.NPCType<OtherworldlySpirit>()
+                || npc.type == ModContent.NPCType<TheAdvisorHead>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.HoloSlime");
 
@@ -879,8 +885,9 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.OtherworldlyConstructHead");
 				if (npc.type == ModContent.NPCType<OtherworldlySpirit>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.OtherworldlySpirit");
-
-				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                if (npc.type == ModContent.NPCType<TheAdvisorHead>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Advisor");
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Planetarium,
 					flavorText
 				});
@@ -897,7 +904,8 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<LostSoul>() || npc.type == ModContent.NPCType<Snake>() || npc.type == ModContent.NPCType<SnakePot>() || npc.type == ModContent.NPCType<WallMimic>() || npc.type == ModContent.NPCType<Teratoma>() || npc.type == ModContent.NPCType<Ghast>() || npc.type == ModContent.NPCType<Maligmor>())
+			if (npc.type == ModContent.NPCType<LostSoul>() || npc.type == ModContent.NPCType<Snake>() || npc.type == ModContent.NPCType<SnakePot>() || 
+				npc.type == ModContent.NPCType<WallMimic>() || npc.type == ModContent.NPCType<Teratoma>() || npc.type == ModContent.NPCType<Ghast>() || npc.type == ModContent.NPCType<Maligmor>() || npc.type == ModContent.NPCType<NPCs.Boss.Curse.PharaohsCurse>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.LostSoul");
 				if (npc.type == ModContent.NPCType<Snake>())
@@ -912,7 +920,9 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Ghast");
 				if (npc.type == ModContent.NPCType<Maligmor>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Maligmor");
-				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                if (npc.type == ModContent.NPCType<NPCs.Boss.Curse.PharaohsCurse>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PharaohsCurse");
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Pyramid,
 					flavorText
 				});
@@ -939,14 +949,16 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>() || npc.type == ModContent.NPCType<NatureConstruct>())
+			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>() || npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<NatureSlime>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PP");
 				if(npc.type == ModContent.NPCType<BlueSlimer>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.BlueSlimer");
 				if (npc.type == ModContent.NPCType<NatureConstruct>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.NatureConstruct");
-				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                if (npc.type == ModContent.NPCType<NatureSlime>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.NatureSlime");
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Surface,
 					flavorText
 				});
@@ -969,11 +981,15 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<Lux>() || npc.type == ModContent.NPCType<ChaosConstruct>())
+			if (npc.type == ModContent.NPCType<Lux>() || npc.type == ModContent.NPCType<ChaosConstruct>() || npc.type == ModContent.NPCType<ChaosRubble>() || npc.type == ModContent.NPCType<Chimera>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Lux");
 				if(npc.type == ModContent.NPCType<ChaosConstruct>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.ChaosConstruct");
+                if (npc.type == ModContent.NPCType<ChaosRubble>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.ChaosConstructChassis");
+                if (npc.type == ModContent.NPCType<Chimera>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Chimera");
                 bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					TheHallow,
 					flavorText
@@ -991,10 +1007,12 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if(npc.type == ModContent.NPCType<InfernoConstruct>())
+			if(npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<SubspaceSerpentHead>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.InfernoConstruct");
-				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                if (npc.type == ModContent.NPCType<SubspaceSerpentHead>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SubspaceSerpent");
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					TheUnderworld,
 					flavorText
 				});
@@ -1010,6 +1028,20 @@ namespace SOTS.Common.GlobalNPCs
 					Anomaly,
 					flavorText
 				});
+            }
+            if (npc.type == ModContent.NPCType<Famished>() || npc.type == ModContent.NPCType<EarthenGizmo>() || npc.type == ModContent.NPCType<Throe>() || npc.type == ModContent.NPCType<CorpseBloom>())
+            {
+                FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Famished");
+                if (npc.type == ModContent.NPCType<EarthenGizmo>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.EarthenGizmo");
+                if (npc.type == ModContent.NPCType<Throe>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Throe");
+                if (npc.type == ModContent.NPCType<CorpseBloom>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.CorpseBloom");
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                    AbandonedVillage,
+                    flavorText
+                });
             }
             if (npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<PhantarayBig>() || npc.type == ModContent.NPCType<PhantarayCore>())
             {

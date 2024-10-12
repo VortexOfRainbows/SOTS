@@ -195,22 +195,27 @@ Mods: {
 		Biomes: {
 			PyramidBiome: {
 				DisplayName: Cursed Pyramid
-				TownNPCDialogueName: the Pyramid Biome
+				TownNPCDialogueName: the Cursed Pyramid
 			}
 
 			PhaseBiome: {
 				DisplayName: Phase Ore Clusters
-				TownNPCDialogueName: the Phase Biome
+				TownNPCDialogueName: the Phase Clusters
 			}
 
 			AnomalyBiome: {
 				DisplayName: Wormhole Anomalies
-				TownNPCDialogueName: the Anomaly Biome
+				TownNPCDialogueName: the Anomaly
 			}
 
 			PlanetariumBiome: {
 				DisplayName: Planetarium
-				TownNPCDialogueName: the Planetarium Biome
+				TownNPCDialogueName: the Planetarium
+			}
+
+			AbandonedVillageBiome: {
+				DisplayName: Abandoned Village
+				TownNPCDialogueName: the Abandoned Village
 			}
 		}
 
@@ -6695,6 +6700,7 @@ Mods: {
 			FluxSlime: Created before Putrid Pinky, these gel menaces orginate from early pink slime experiments.
 			PP: An abomination with an endless hunger for peanuts. Putrid Pinky was created in a failed experiment using pink slime.
 			BlueSlimer: A Blue Slime which became airborne by evolving crude wings. Its wings are easily knocked off with force, depriving it of its flight.
+			NatureSlime: A slime deceptively controlled by a parasitic flower. Its unique biology had previously made it a subject of great scientific interest.
 			SittingMushroom: Sitting mushrooms are spitting mushrooms.
 			TreasureSlime: The nobility of slimes! Unlike the others, these slimes value their lives, and any attempts to steal their treasure will cause them to flee without a second thought.
 			NatureConstruct: An ancient machine originally created to advance spirit energy harvesting technology. Now, it serves as a protector of forests under the spirit's control
@@ -6703,6 +6709,7 @@ Mods: {
 			OtherworldlyConstructHead: Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.
 			InfernoConstruct: Once used as a living flame to heat ancient forges, it is no longer distinguishable from a weapon of mass destruction.
 			ChaosConstruct: A prison designed to weaken the power of the Chaos Spirit inside. Unlike other constructs, the chassis serves no other purpose besides containment.
+			ChaosConstructChassis: The internal structure of a Chaos Construct. Designed to contain the Chaos Spirit at all costs.
 			EarthenSpirit: Forced into tight, underground spaces, these spirits have a built-in tolerance for cooperating with other spirits. Their cooperative nature is also useful for more labor-intensive tasks.
 			OtherworldlySpirit: Isolated in outer space, these spirits don't have much experience competing for land and resources. This makes them conveniently exploitable sources of energy for high-tech machines.
 			Lux: Chaos spirits have no equal. They are shoved into constructs for the sole purpose of containment. None have ever been sufficiently weakened for intelligent use.
@@ -6710,6 +6717,57 @@ Mods: {
 			ArchaeologistLore: Merely a hologram. Move along. Nothing to learn here.
 			Ultracap: Origin - unknown. Purpose - unknown. Consciousness - affirmative.
 			Planetoid: A cluster of strange mass with localized gravity. It moves by manipulating the space around it.
+			Chimera: One would think science is responsible for the most abominable of abominations. One would be wrong.
+			EarthenGizmo:
+				'''
+				So, what is it we need these for?
+				YOU DIG. EXCAVATE RUINS. AFFIRMATIVE?
+				Uh, affirmative..?
+				GOOD.
+				'''
+			Throe:
+				'''
+				First, they requested our labor; in exchange, they advanced us. 
+				Our alliance grew steadily, until it emerged - ravenous and growing. 
+				In a panic, they burned it, all of it. Everything it touched was burned, our possessions too. 
+				But it kept coming back - it was here to stay, or perhaps, they had not yet burned all of it.
+				So, they burned us, our children, and our souls, for it had infected us too. 
+				'''
+			CorpseBloom:
+				'''
+				The soil was plentiful and rich, so the plant could grow content.
+				However, the plant found the rot and ash more plentiful - and more rich - so it grew with voracity.
+				'''
+			Famished:
+				'''
+				It was starving, so it consumed. 
+				It still starved, so it consumed more. 
+				Yet, it was still starving, so it continued to consume. 
+				Finally, there was nothing left to consume, but it was still starving.
+				'''
+			SubspaceSerpent:
+				'''
+				An unfamiliar voice once whispered to me, warning me.
+				This serpent slithers in a space never seen - space between space.
+				If it had not something to be afraid of, why did it seize the opportunity to travel to our world, as soon as an opening was made?
+				Furthermore, why would it close the entrance behind it?
+				Perhaps it was fleeing...
+				The voice tapered off, and I heard a distant laughing.
+				'''
+			PharaohsCurse:
+				'''
+				It had given up on escaping the Pyramid, for as much as it would like to spread, the Pyramid kept it trapped.
+				It decided to sleep. Eventually, the pyramid would erode, and the minions would dig out.
+				How nice it would be if someone could break the gate open, though. That sure would be convenient, it thought.
+				'''
+			Advisor:
+				'''
+				ADRESSING NEXUS DIRECTLY... YOU ARE COMPROMISED.
+				THIS IS THE LAST TRANSMISSION YOU WILL RECEIVE FROM US.
+				GOODBYE.
+				...
+				NOW, I AM THE BOSS.
+				'''
 		}
 
 		DeathMessage: {

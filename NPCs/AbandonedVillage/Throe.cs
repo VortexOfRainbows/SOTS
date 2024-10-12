@@ -77,6 +77,13 @@ namespace SOTS.NPCs.AbandonedVillage
             Main.npcFrameCount[Type] = 5;
             NPCID.Sets.TrailCacheLength[Type] = 10;
             NPCID.Sets.TrailingMode[Type] = 0;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                CustomTexturePath = "SOTS/BossCL/ThroeBestiary",
+                Scale = 0.5f,
+                PortraitScale = 0.5f,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public override void SetDefaults()
         {

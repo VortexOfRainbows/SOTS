@@ -2,11 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using System;
 using SOTS.WorldgenHelpers;
-using SOTS.Items.Earth.Glowmoth;
-using SOTS.Items.Earth;
-using SOTS.Items.Invidia;
 
 namespace SOTS.Items.Tools
 {
@@ -27,7 +23,7 @@ namespace SOTS.Items.Tools
 		{
 			player.rulerGrid = true;
 		}
-		int x = 0;
+		private int x = 0;
 		public override bool? UseItem(Player player)
 		{
 			//Main.NewText(SOTSWorld.AmberKeySlotted);
@@ -40,10 +36,11 @@ namespace SOTS.Items.Tools
             int y2 = (int)tileLocation.Y;
 			//WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
 
+			SOTSWorldgenHelper.GenerateTestRoom();
             //AbandonedVillageWorldgenHelper.PrepareUnderground(new Rectangle(x2, y2, 250, 250));
             //AVHouseWorldgenHelper.GenerateHouse0(x2, y2);
             //AbandonedVillageWorldgenHelper.GenerateNewMineEntrance(x2, y2);
-            AbandonedVillageWorldgenHelper.PlaceStairDecor(x2, y2, 5);
+            //AbandonedVillageWorldgenHelper.PlaceStairDecor(x2, y2, 5);
             //AbandonedVillageWorldgenHelper.DesignateAVRectangle(x2, y2, 400, 320);
             //AbandonedVillageWorldgenHelper.GenerateTunnel(ref x2, ref y2, 0, doRopesPlatforms: false);
 

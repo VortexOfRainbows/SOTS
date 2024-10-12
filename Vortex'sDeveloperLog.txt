@@ -87,12 +87,17 @@ N/A
 
 Daily Log:
 
-10/10/24 to 10/11/24
+10/10/24 to 10/12/24
 1. More WIP Famished... Needs:
 	1. Special screenshot for the bestiary including both evil variants since they are technically the same enemy.
 2. Famished Gore, Polish, and Ai Changes, Still seems to work great in multiplayer!!
-3. Spawn Method for the Famished, seems to work in Multiplayer!
+3. Spawn Method for the Famished, seems to work in Multiplayer! Famish is less common the more that exist
 4. Fix bug here conduit conversion worked even for non complete conduits
+5. Added Famished Banner!
+6. Bestiary Entries:
+	1. Flowering Slime, Throe, Corpsebloom, Earthen Gizmo, Famished, Chimera
+	2. Subspace, Pharaoh's Curse, Advisor, Chaos Construct Chassis
+7. Abandoned Village is now a biome?
 
 10/3/24 to 10/5/24
 1. Improvements to Ghost Pepper visuals and code

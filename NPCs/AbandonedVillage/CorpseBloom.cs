@@ -20,7 +20,7 @@ namespace SOTS.NPCs.AbandonedVillage
 
 			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = new NPCID.Sets.NPCBestiaryDrawModifiers()
 			{
-				Frame = 6
+				Frame = 8
             };
 
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;

@@ -739,11 +739,16 @@ namespace SOTS.NPCs.AbandonedVillage
             NPCID.Sets.TrailCacheLength[NPC.type] = FamishedCarrier.MaxLength;
             NPCID.Sets.TrailingMode[NPC.type] = 0;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
-			{
-				Hide = false
-			};
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-		}
+            {
+                CustomTexturePath = "SOTS/BossCL/FamishedBestiary",
+                Position = new Vector2(1, 2),
+                Scale = 0.3f,
+                PortraitScale = 0.6275f, // Portrait refers to the full picture when clicking on the icon in the bestiary
+                PortraitPositionYOverride = 1f,
+                PortraitPositionXOverride = 1f
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+        }
 		public override void SetDefaults()
         {
             NPC.aiStyle = -1;
@@ -1061,7 +1066,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 if(!Main.rand.NextBool(4) && NPC.velocity.LengthSquared() > 0.5f)
                     PixelDust.Spawn(NPC.Center - NPC.velocity * 4f, 0, 0, Main.rand.NextVector2Circular(1, 1) + NPC.velocity * 0.5f, GlowColor * 0.5f, 5).scale = Main.rand.NextFloat(0.5f, 1.25f);
                 NPC.ai[3]++;
-                if (NPC.ai[3] % 10 == 0 && Vines.Count < 3 && Main.netMode != NetmodeID.Server)
+                if (NPC.ai[3] % 10 == 0 && Vines.Count < 3 && Main.netMode != NetmodeID.Server && targetPosition != Vector2.Zero)
                 {
                     SOTSUtils.PlaySound(SoundID.NPCDeath9, NPC.Center, 1.9f, -0.1f, 0.05f);
                     Vines.Add(new FamishVine(NPC, NPC.Center, targetPosition, Main.rand.NextVector2Circular(1, 1) * 1.5f, true));

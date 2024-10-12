@@ -219,6 +219,7 @@ namespace SOTS
 		public static int SecretFoundMusicTimer = 0;
         public static int planetarium = 0;
 		public static int pyramidBiome = 0;
+		public static int AVBiome = 0;
 		public static int phaseBiome = 0;
 
 		public static bool downedGlowmoth = false;
@@ -731,7 +732,8 @@ namespace SOTS
 			planetarium = tileCounts[ModContent.TileType<DullPlatingTile>()] + tileCounts[ModContent.TileType<AvaritianPlatingTile>()];// - 50 * tileCounts[ModContent.TileType<Items.Gems.SOTSGemLockTiles>()];
 			phaseBiome = tileCounts[ModContent.TileType<PhaseOreTile>()];
 			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()] + tileCounts[ModContent.TileType<AcediaGatewayTile>()];
-		}
+			AVBiome = tileCounts[ModContent.TileType<SootBlockTile>()] + tileCounts[ModContent.TileType<CrimsonSoot.CrimsonSootTile>()] + tileCounts[ModContent.TileType<CorruptionSoot.CorruptionSootTile>()];
+        }
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {
             base.ModifyHardmodeTasks(list);
