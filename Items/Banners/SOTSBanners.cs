@@ -696,6 +696,9 @@ namespace SOTS.Items.Banners
                     case 21:
                         type = NPCType<Throe>();
                         break;
+                    case 22:
+                        type = NPCType<Famished>();
+                        break;
                     default:
 						return;
 				}
@@ -886,6 +889,14 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners2>();
             Item.placeStyle = 21;
+        }
+    }
+    public class FamishedBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 22;
         }
     }
 }

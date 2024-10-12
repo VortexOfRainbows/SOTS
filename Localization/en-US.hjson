@@ -5792,6 +5792,11 @@ Mods: {
 				DisplayName: Crimbody Block
 				Tooltip: "'Smells of blood and rot'"
 			}
+
+			FamishedBanner: {
+				DisplayName: Famished Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

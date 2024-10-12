@@ -384,7 +384,7 @@ namespace SOTS
             bool validForEvil = (item.type == ModContent.ItemType<DreamLamp>() && SOTSWorld.DreamLampSolved) || (item.type == ModContent.ItemType<CursedApple>() && SOTSWorld.GoldenAppleSolved);
             foreach (ConduitCounterTE tileEntity in TileEntity.ByID.Values.OfType<ConduitCounterTE>())
             {
-                if (tileEntity.ConduitTile != null)
+                if (tileEntity.ConduitTile != null && tileEntity.tileCountDissolving >= 20)
                 {
                     int type = tileEntity.ConduitTile.DissolvingTileType;
                     bool worksForNature = type == ModContent.TileType<DissolvingNatureTile>() && validForNature;
@@ -415,9 +415,11 @@ namespace SOTS
             //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(ConduitTransformTimer + ", " + ConduitTransformType), Color.Red);
             //else
             //    Main.NewText(ConduitTransformTimer + ", " + ConduitTransformType, Color.Green);
-            if (MyConduit == null)
+            if (MyConduit == null || MyConduit.tileCountDissolving < 20)
             {
                 ResetVars(item);
+                if(SOTSWorld.GlobalCounter % 5 == 0)
+                    CheckForNearbyConduits(item);
             }
             else
             {

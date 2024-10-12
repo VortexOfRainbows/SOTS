@@ -87,12 +87,12 @@ N/A
 
 Daily Log:
 
-10/10/2024
+10/10/24 to 10/11/24
 1. More WIP Famished... Needs:
-	1. Banner, Spawn method, maybe a ranged attack?
-	2. Special screenshot for the bestiary including both evil variants since they are technically the same enemy.
+	1. Special screenshot for the bestiary including both evil variants since they are technically the same enemy.
 2. Famished Gore, Polish, and Ai Changes, Still seems to work great in multiplayer!!
-3. WIP Spawn method for Famished. Currently 50% chance that it infects Corpsebloom
+3. Spawn Method for the Famished, seems to work in Multiplayer!
+4. Fix bug here conduit conversion worked even for non complete conduits
 
 10/3/24 to 10/5/24
 1. Improvements to Ghost Pepper visuals and code
