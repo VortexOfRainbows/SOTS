@@ -6,13 +6,16 @@ using SOTS.Helpers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
+using SOTS.Projectiles.AbandonedVillage;
 using SOTS.WorldgenHelpers;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static SOTS.SOTS;
@@ -26,8 +29,7 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             get
             {
-                Color c = WorldGen.crimson ? ColorHelper.AVIchorLight.ToColor() : ColorHelper.AVCursedLight.ToColor();
-                c.A = 0;
+                Color c = WorldGen.crimson ? new Color(255, 185, 81, 0) : new Color(169, 202, 44, 0);
                 return c;
             }
         }
@@ -116,6 +118,7 @@ namespace SOTS.NPCs.AbandonedVillage
             writer.Write(CurrentBlocks);
             writer.Write(TotalBlocks);
             writer.Write(QueueHurtFromOtherSource);
+            writer.Write(ShootCounter);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -124,6 +127,7 @@ namespace SOTS.NPCs.AbandonedVillage
             CurrentBlocks = reader.ReadInt32();
             TotalBlocks = reader.ReadInt32();
             QueueHurtFromOtherSource = reader.ReadSingle();
+            ShootCounter = reader.ReadSingle();
         }
         public void ReceiveBlockData(BinaryReader reader)
         {
@@ -758,7 +762,7 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.knockBackResist = 0.5f;
             NPC.width = NPC.height = 46;
             NPC.value = Item.buyPrice(0, 0, 5, 0);
-            NPC.npcSlots = 2.0f;
+            NPC.npcSlots = 1.5f;
 			NPC.noGravity = true;
             NPC.dontTakeDamage = true;
             NPC.noTileCollide = true;
@@ -849,12 +853,12 @@ namespace SOTS.NPCs.AbandonedVillage
             {
                 DrawBezierCurves(vine, spriteBatch, screenPos, false, false);
             }
+            Texture2D pixelGradient = Request<Texture2D>("SOTS/Assets/LongGradient").Value;
             if (!foundSeedableLocation && targetPosition != Vector2.Zero)
             {
                 float percent = MathF.Sin(Math.Min(1, NPC.ai[3] / armingTime) * MathHelper.Pi);
-                Texture2D pixel = Request<Texture2D>("SOTS/Assets/LongGradient").Value;
                 Vector2 toTarget = targetPosition - NPC.Center;
-                spriteBatch.Draw(pixel, NPC.Center - screenPos, null, GlowColor * percent * 0.75f, toTarget.ToRotation(), new Vector2(0, 1), new Vector2(toTarget.Length() / pixel.Width, 1), SpriteEffects.None, 0f);
+                spriteBatch.Draw(pixelGradient, NPC.Center - screenPos, null, GlowColor * percent * 0.75f, toTarget.ToRotation(), new Vector2(0, 1), new Vector2(toTarget.Length() / pixelGradient.Width, 1), SpriteEffects.None, 0f);
             }
             Texture2D texture = Request<Texture2D>(BlockTexture).Value;
             Texture2D textureGlow = Request<Texture2D>(BlockTexture + "Glow").Value;
@@ -992,9 +996,19 @@ namespace SOTS.NPCs.AbandonedVillage
             if(!isSeed)
             {
                 float eyeRecoil = ChaseQueuedHealing < 0 ? ChaseQueuedHealing : 0;
-                Vector2 toLocalPlayer = Main.player[NPC.target].Center - NPC.Center;
-                toLocalPlayer = toLocalPlayer.SNormalize() * (2 + eyeRecoil * 4 / MaxChaseHealing) * squashAndStretch;
-                spriteBatch.Draw(textureHeartGlow, drawPos + toLocalPlayer, null, Color.White, NPC.rotation, drawOrigin, NPC.scale * squashAndStretch, SpriteEffects.None, 0f);
+                Vector2 toPlayer = new Vector2(1, 0).RotatedBy(ToPlayerAngle);
+                toPlayer = toPlayer * (2 + MathF.Min(5, eyeRecoil * 4f / MaxChaseHealing - 5 * ShootRecoil)) * squashAndStretch;
+                if (ChargeLaserPercent > 0)
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Vector2 circular = new Vector2(8 * (1 - ChargeLaserPercent), 0).RotatedBy(i / 6f * MathHelper.TwoPi + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 0.4f));
+                        spriteBatch.Draw(textureHeartGlow, drawPos + circular + toPlayer, null, GlowColor * ChargeLaserPercent * 0.5f, NPC.rotation, drawOrigin, NPC.scale * squashAndStretch * new Vector2(1 + 0.5f * ChargeLaserPercent, 1 - 0.25f * ChargeLaserPercent), SpriteEffects.None, 0f);
+                    }
+                    float toTarget = (Main.player[NPC.target].Center - NPC.Center).Length() + 64;
+                    spriteBatch.Draw(pixelGradient, drawPos + toPlayer, null, GlowColor * 0.75f * ChargeLaserPercent, ToPlayerAngle, new Vector2(0, 1), new Vector2(toTarget / pixelGradient.Width, 3 * ChargeLaserPercent), SpriteEffects.None, 0f);
+                }
+                spriteBatch.Draw(textureHeartGlow, drawPos + toPlayer, null, Color.White, NPC.rotation, drawOrigin, NPC.scale * squashAndStretch * new Vector2(1 + 0.5f * ChargeLaserPercent, 1 - 0.25f * ChargeLaserPercent), SpriteEffects.None, 0f);
             }
             return false;
 		}
@@ -1011,6 +1025,11 @@ namespace SOTS.NPCs.AbandonedVillage
         public float QueueHurtFromOtherSource = 0;
         public int QueueDamageHealingTimer = 0;
         public Vector2 groundedPosition;
+        public float ShootCounter = -300;
+        private float ToPlayerAngle = -1000;
+        private float ShootRecoil = 0;
+        private float chargeLaserTime = 120f;
+        public float ChargeLaserPercent => MathF.Max(0, ShootCounter / chargeLaserTime);
         private bool SeedAI()
         {
             NPC.rotation += NPC.velocity.X * 0.01f;
@@ -1261,6 +1280,49 @@ namespace SOTS.NPCs.AbandonedVillage
                     DrawBezierCurves(vine, null, Vector2.Zero, true, true);
                 }
             }
+            if(foundSeedableLocation)
+            {
+                Player player = Main.player[NPC.target];
+                Vector2 toPlayer = (player.Center - NPC.Center).SNormalize() * 32;
+                bool canSeePlayer = player.Center.Distance(NPC.Center) < 800 && (ChargeLaserPercent > 0.6f || Collision.CanHitLine(NPC.Center + toPlayer, 0, 0, player.position, player.width, player.height) 
+                    || Collision.CanHitLine(NPC.Center + toPlayer - new Vector2(0, 16), 0, 0, player.position, player.width, player.height) 
+                    || Collision.CanHitLine(NPC.Center + toPlayer + new Vector2(0, 16), 0, 0, player.position, player.width, player.height)
+                    || Collision.CanHitLine(NPC.Center + toPlayer - new Vector2(16, 0), 0, 0, player.position, player.width, player.height)
+                    || Collision.CanHitLine(NPC.Center + toPlayer + new Vector2(16, 0), 0, 0, player.position, player.width, player.height));
+                if (ToPlayerAngle < -100)
+                    ToPlayerAngle = toPlayer.ToRotation();
+                else
+                {
+                    float aimPercent = MathHelper.Clamp(1 - ChargeLaserPercent, 0, 1);
+                    ToPlayerAngle = SOTSUtils.AngularLerp(ToPlayerAngle, toPlayer.ToRotation(), 0.07f * aimPercent);
+                }
+                toPlayer = new Vector2(1, 0).RotatedBy(ToPlayerAngle);
+                if (canSeePlayer && QueueHurtFromOtherSource < 0.05f && ChaseQueuedHealingDelayed > -0.05f)
+                {
+                    ShootCounter++;
+                    if (ShootCounter > chargeLaserTime)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            Vector2 predictPlayerLocation = toPlayer * (player.Center - NPC.Center).Length();
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + toPlayer * 16, toPlayer, ProjectileType<FamishedLaser>(), NPC.GetBaseDamage() / 2, 0, Main.myPlayer, NPC.Center.X + predictPlayerLocation.X, NPC.Center.Y + predictPlayerLocation.Y);
+                        }
+                        ShootRecoil = 1f;
+                        ShootCounter -= chargeLaserTime;
+                    }
+                }
+                else if (ShootCounter > 0)
+                {
+                    ShootCounter--;
+                    if (ShootCounter < 0)
+                        ShootCounter = 0;
+                }
+                float percent = ShootCounter == 0 ? 1 : ChargeLaserPercent;
+                ShootRecoil = MathHelper.Lerp(ShootRecoil, 0, 0.07f * percent);
+                ShootRecoil -= 0.02f * percent;
+                if (ShootRecoil < 0)
+                    ShootRecoil = 0;
+            }
         }
         public override void HitEffect(NPC.HitInfo hit)
 		{
@@ -1298,6 +1360,7 @@ namespace SOTS.NPCs.AbandonedVillage
             }
             else if(hit.HitDirection != 0)
             {
+                ShootCounter *= 0.9f;
                 QueueHurtFromOtherSource += hit.Damage * 0.2f;
                 ChaseQueuedHealing -= hit.Damage * 0.2f;
                 ChaseQueuedHealingDelayed -= hit.Damage * 0.1f;

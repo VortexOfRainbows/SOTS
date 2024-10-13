@@ -6765,8 +6765,6 @@ Mods: {
 				ADRESSING NEXUS DIRECTLY... YOU ARE COMPROMISED.
 				THIS IS THE LAST TRANSMISSION YOU WILL RECEIVE FROM US.
 				GOODBYE.
-				...
-				NOW, I AM THE BOSS.
 				'''
 		}
 
@@ -7576,6 +7574,8 @@ Mods: {
 			MagmaLaser.DisplayName: Magma Laser
 			FortressCrasher.DisplayName: Fortress Crasher
 			ConduitParticleProjectile.DisplayName: Conduit Particle Projectile
+			FamishedLaser.DisplayName: Famished Laser
+			FamishedDeadzone.DisplayName: Famished Deadzone
 		}
 
 		DamageClasses: {

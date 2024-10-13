@@ -23,6 +23,7 @@ using SOTS.Items.Pyramid.PyramidWalls;
 using Terraria.DataStructures;
 using SOTS.Items.AbandonedVillage;
 using SOTS.NPCs.AbandonedVillage;
+using SOTS.WorldgenHelpers;
 
 namespace SOTS
 {
@@ -349,7 +350,7 @@ namespace SOTS
         }
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            if (Famished.CheckForListeners(i, j, true)) //Don't break tiles that famished are on top of
+            if (Famished.CheckForListeners(i, j, !effectOnly)) //Don't break tiles that famished are on top of
                 fail = true;
         }
         public override bool PreDraw(int i, int j, int type, SpriteBatch spriteBatch)
@@ -594,6 +595,169 @@ namespace SOTS
                     Item.NewItem(new EntitySource_TileBreak(i, j), left * 16, top * 16, 32, 32, ItemType<SwallowedPenny>());
                 }
             }
+        }
+        public static Vector2? GetWorldPositionOnTile(int i, int j, int side, float offsetX, float offsetY) //Taken from Catalyst
+        {
+            Tile tile = Main.tile[i, j];
+            Vector2 tileWorld = new Vector2(i * 16, j * 16);
+            int x = 0;
+            int y = 0;
+            if (side == 0)
+                y = -1;
+            if (side == 1)
+                y = 1;
+            if (side == 2)
+                x = -1;
+            if (side == 3)
+                x = 1;
+            bool validTile = SOTSWorldgenHelper.TrueTileSolid(i, j) && !SOTSWorldgenHelper.TrueTileSolid(i + x, j + y);
+            if (!validTile)
+            {
+                return null;
+            }
+            SlopeType s = tile.Slope;
+            if(s == SlopeType.SlopeDownLeft) //     |\
+            {
+                if(side == 0)
+                {
+                    tileWorld.X += offsetX;
+                    tileWorld.Y += offsetX;
+                }
+                if(side == 1)
+                {
+                    tileWorld.Y += 16;
+                    tileWorld.X += offsetX;
+                }
+                if(side == 2)
+                {
+                    tileWorld.X += 0;
+                    tileWorld.Y += offsetY;
+                }
+                if (side == 3)
+                {
+                    tileWorld.X += offsetY;
+                    tileWorld.Y += offsetY;
+                }
+            }
+            else if (s == SlopeType.SlopeDownRight) //   /|
+            {
+                if(side == 0)
+                {
+                    tileWorld.X += offsetX;
+                    tileWorld.Y += 16 - offsetX;
+                }
+                if (side == 1)
+                {
+                    tileWorld.Y += 16;
+                    tileWorld.X += offsetX;
+                }
+                if (side == 2)
+                {
+                    tileWorld.X += 16 - offsetY;
+                    tileWorld.Y += offsetY;
+                }
+                if (side == 3)
+                {
+                    tileWorld.X += 0;
+                    tileWorld.Y += offsetY;
+                }
+            }
+            else if (s == SlopeType.SlopeUpLeft) //       |/
+            {
+                if (side == 0)
+                {
+                    tileWorld.X += offsetX;
+                    tileWorld.Y += 0;
+                }
+                if (side == 1)
+                {
+                    tileWorld.X += offsetX;
+                    tileWorld.Y += 16 - offsetX;
+                }
+                if (side == 2)
+                {
+                    tileWorld.X += 16 - offsetY;
+                    tileWorld.Y += offsetY;
+                }
+                if (side == 3)
+                {
+                    tileWorld.X += 16;
+                    tileWorld.Y += offsetY;
+                }
+            }
+            else if (s == SlopeType.SlopeUpRight) //     \|
+            {
+                if (side == 0)
+                {
+                    tileWorld.X += offsetX;
+                    tileWorld.Y += 0;
+                }
+                if (side == 1)
+                {
+                    tileWorld.X += offsetX;
+                    tileWorld.Y += offsetX;
+                }
+                if (side == 2)
+                {
+                    tileWorld.X += offsetX;
+                    tileWorld.Y += offsetY;
+                }
+                if (side == 3)
+                {
+                    tileWorld.X += 0;
+                    tileWorld.Y += offsetY;
+                }
+            }
+            else if (tile.IsHalfBlock)
+            {
+                if (side == 0)
+                {
+                    tileWorld.X += offsetX;
+                    if (tile.IsHalfBlock)
+                        tileWorld.Y += 8f;
+                }
+                if (side == 1)
+                {
+                    tileWorld.X += offsetX;
+                    if (tile.IsHalfBlock)
+                        tileWorld.Y += 16f;
+                }
+                if (side == 2)
+                {
+                    tileWorld.X += 0;
+                    if (tile.IsHalfBlock)
+                        tileWorld.Y += 8f + offsetY * 0.5f;
+                }
+                if (side == 3)
+                {
+                    tileWorld.X += 16;
+                    if (tile.IsHalfBlock)
+                        tileWorld.Y += 8f + offsetY * 0.5f;
+                }
+            }
+            else
+            {
+                if(side == 0)
+                {
+                    tileWorld.X += offsetX;
+                }
+                if (side == 1)
+                {
+                    tileWorld.X += offsetX;
+                    tileWorld.Y += 16;
+                }
+                if (side == 2)
+                {
+                    tileWorld.X += 0;
+                    tileWorld.Y += offsetY;
+                }
+                if (side == 3)
+                {
+                    tileWorld.X += 16;
+                    tileWorld.Y += offsetY;
+                }
+            }
+            return tileWorld;
         }
     }
 }
