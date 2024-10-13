@@ -41,9 +41,9 @@ namespace SOTS.NPCs.Gizmos
         public override void SetDefaults()
         {
             NPC.aiStyle = -1; 
-            NPC.lifeMax = 60;   
+            NPC.lifeMax = 55;   
             NPC.damage = 20; 
-            NPC.defense = 10;  
+            NPC.defense = 8;  
             NPC.knockBackResist = .6f;
             NPC.width = 32; //Has to be smaller than the sprite size to allow jumping over blocks properly
             NPC.height = 40; //Has to be shorter than the sprite height to prevent falling through platforms erroneously 

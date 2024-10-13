@@ -218,7 +218,7 @@ namespace SOTS.NPCs.AbandonedVillage
         private Queue<FamishBlock> floodFillQueue = new Queue<FamishBlock>();
         public const int MaxRadius = 14;
         public int MaxSize => MaxRadius * MaxRadius * 4;
-        public int LifePerBlock => Main.masterMode ? 15 : Main.expertMode ? 10 : 5;
+        public static int LifePerBlock => Main.masterMode ? 15 : Main.expertMode ? 10 : 5;
         public void UpdateConnections()
         {
             foreach (FamishBlock fb in Block)
@@ -1156,7 +1156,13 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     NPC.netUpdate = true;
                     NPC.ai[0] -= rate;
-                    bool success = GrowBlockDirect(MaxRadius, MaxRadius); //Try growing a block from the center first
+                    bool success = false;
+                    int attempts = 4;
+                    while(!success && attempts > 0)
+                    {
+                        success = GrowBlockDirect(MaxRadius + Main.rand.Next(-1, 2), MaxRadius + Main.rand.Next(-1, 2)); //Try growing a block from the center first
+                        attempts--;
+                    }
                     if (!success)
                         success = GrowBlock(); //If you couldn't grow a block from the center, try elsewhere
                     if (!success && validPoints.Count <= 0) //If we've run out of points to grow blocks from, try adding some new points to grow blocks from

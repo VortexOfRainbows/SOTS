@@ -19,6 +19,9 @@ using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
 using SOTS.Items.Planetarium.Blocks;
 using Steamworks;
+using rail;
+using SOTS.Items.Whips;
+using SOTS.Items.ChestItems;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -3928,6 +3931,17 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+        }
+        public static void PlaceLootInChests()
+        {
+            List<int> Tier1Items = [ModContent.ItemType<FizzleStar>(), ModContent.ItemType<VisionAmulet>(), ItemID.MiningHelmet, ModContent.ItemType<AncientSteelSword>(), ModContent.ItemType<AncientSteelLongbow>()];
+            List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(), ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>()];
+            List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>()];
+            List<int> Tier4Items = [ModContent.ItemType<StarshardSaber>(), ModContent.ItemType<Icebreaker>(), ModContent.ItemType<SandstormPouch>(), ModContent.ItemType<PlagueSpitter>(), ModContent.ItemType<JarOfPineapple>()];
+            //Melee:  Halberd, Sword, Starshard Saber, Guardian Greatsword(Void), Pickaxe(Void), Hamaxe (6)
+            //Ranged: Longbow, Hand Cannon, Soot Spewer, Backup Bow, Fortress Crasher, Ice Breaker, Sandstorm Pouch(Void) (7)
+            //Magic:  Fizzle Star, Magma Concentrator(Void), Blongus/Acid Belcher (3)
+            //Summon: Lantern, Fresh Greeny, Little Woes (3)
         }
     }
 }

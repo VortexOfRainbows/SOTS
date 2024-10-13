@@ -20,13 +20,13 @@ namespace SOTS.Items.AbandonedVillage
         }
 		public override void SetDefaults()
 		{
-            Item.damage = 14; 
+            Item.damage = 15; 
             Item.DamageType = DamageClass.Ranged;  
             Item.width = 40;   
             Item.height = 28;
             Item.useTime = 20; 
             Item.useAnimation = 20;
-            Item.reuseDelay = 20;
+            Item.reuseDelay = 16;
             Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 3f;
             Item.value = Item.sellPrice(0, 1, 0, 0);
@@ -57,7 +57,7 @@ namespace SOTS.Items.AbandonedVillage
         {
             for(int i = -1; i <= 1; i++)
             {
-                float damageMult = 0.5f;
+                float damageMult = 0.75f;
                 Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(15 * i));
                 if (i == 0)
                 {

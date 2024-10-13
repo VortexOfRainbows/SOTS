@@ -14,7 +14,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
  
 namespace SOTS.NPCs.Boss
-{[AutoloadBossHead]
+{
+    [AutoloadBossHead]
     public class SubspaceSerpentHead : ModNPC
     {
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)

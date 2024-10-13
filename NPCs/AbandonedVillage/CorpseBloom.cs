@@ -29,7 +29,7 @@ namespace SOTS.NPCs.AbandonedVillage
 		{
 			NPC.lifeMax = 50;
             NPC.damage = 35;
-            NPC.defense = 16;
+            NPC.defense = 14;
 			NPC.width = 46;
 			NPC.height = 66;
             NPC.npcSlots = 1f;
@@ -46,8 +46,8 @@ namespace SOTS.NPCs.AbandonedVillage
         {
 			if(Closed)
             {
-                modifiers.SourceDamage *= 0.4f;
-                modifiers.FlatBonusDamage += -12;
+                modifiers.SourceDamage *= 0.6f;
+                modifiers.FlatBonusDamage += -7;
             }
         }
         public override void FindFrame(int frameHeight)

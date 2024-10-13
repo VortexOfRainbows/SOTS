@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.NPCs.AbandonedVillage;
+using SOTS.NPCs.Gizmos;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -83,7 +84,8 @@ namespace SOTS.Common.GlobalNPCs
         {
             if(lateInstantiation)
             {
-                bool validNPC = entity.type == ModContent.NPCType<CorpseBloom>();
+                bool validNPC = entity.type == ModContent.NPCType<CorpseBloom>()
+                    || entity.type == ModContent.NPCType<EarthenGizmo>();
                 return validNPC;
             }
             return false;
@@ -105,19 +107,23 @@ namespace SOTS.Common.GlobalNPCs
                 RunOnce = false;
                 if(Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int chanceToBeInfected = 4;
-                    int totalFamishedInTheWorld = 0;
-                    for (int i = 0; i < Main.maxNPCs; i++)
+                    bool underground = npc.Center.Y > Main.rockLayer * 16 - 240;
+                    if (underground)
                     {
-                        NPC npc2 = Main.npc[i];
-                        if (npc2.active && (npc2.type == ModContent.NPCType<Famished>() || (npc2.TryGetGlobalNPC(out FamishedCarrier fc) && fc.Infected)))
+                        int chanceToBeInfected = 4;
+                        int totalFamishedInTheWorld = 0;
+                        for (int i = 0; i < Main.maxNPCs; i++)
                         {
-                            totalFamishedInTheWorld++;
+                            NPC npc2 = Main.npc[i];
+                            if (npc2.active && (npc2.type == ModContent.NPCType<Famished>() || (npc2.TryGetGlobalNPC(out FamishedCarrier fc) && fc.Infected)))
+                            {
+                                totalFamishedInTheWorld++;
+                            }
                         }
+                        chanceToBeInfected = (int)MathF.Pow(chanceToBeInfected, 1 + 0.5f * totalFamishedInTheWorld) + totalFamishedInTheWorld;
+                        Infected = Main.rand.NextBool(chanceToBeInfected);
+                        npc.netUpdate = true;
                     }
-                    chanceToBeInfected = (int)MathF.Pow(chanceToBeInfected, 1 + 0.5f * totalFamishedInTheWorld) + totalFamishedInTheWorld;
-                    Infected = Main.rand.NextBool(chanceToBeInfected);
-                    npc.netUpdate = true;
                 }
             }
             if(Infected)
@@ -150,6 +156,22 @@ namespace SOTS.Common.GlobalNPCs
                         d.scale *= 0.6f + 0.1f * Sinusoid;
                         d.velocity *= 0.25f;
                     }
+                    if(MyCounter % 120 == 0 && npc.life < npc.lifeMax)
+                    {
+                        npc.life += Famished.LifePerBlock;
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            SOTSUtils.PlaySound(SoundID.Item177, SeedPos, 0.8f, -0.4f);
+                            CombatText.NewText(npc.Hitbox, CombatText.HealLife, Famished.LifePerBlock, false, true);
+                            Vector2 toNpc = npc.Center - SeedPos;
+                            for(float i = 0; i < 0.9f; i += 0.025f)
+                            {
+                                Vector2 pos = Vector2.Lerp(SeedPos, npc.Center, i);
+                                PixelDust.Spawn(pos, 0, 0, Main.rand.NextVector2Circular(0.3f, 0.3f) + toNpc.SNormalize() *  Main.rand.NextFloat(), Famished.GlowColor, 8).scale = Main.rand.NextFloat(1f, 1.5f);
+                                PixelDust.Spawn(npc.position, npc.width, npc.height, Main.rand.NextVector2Circular(0.75f, 0.75f) + npc.velocity, Famished.GlowColor, 10).scale = Main.rand.NextFloat(1f, 1.5f);
+                            }
+                        }
+                    }
                 }
             }
             return true;
@@ -159,7 +181,7 @@ namespace SOTS.Common.GlobalNPCs
             if (Main.netMode != NetmodeID.MultiplayerClient && Infected)
             {
                 NPC npc2 = NPC.NewNPCDirect(npc.GetSource_Death(), (int)SeedPos.X, (int)SeedPos.Y, ModContent.NPCType<Famished>());
-                npc2.velocity += Main.rand.NextVector2Circular(4, 4) + myVelo.SNormalize() * Main.rand.NextFloat(2f, 8f);
+                npc2.velocity += Main.rand.NextVector2Circular(5, 5) + myVelo.SNormalize() * Main.rand.NextFloat(3f, 9f) + new Vector2(0, -2);
                 npc2.netUpdate = true;
             }
             if(Infected && OldPositions != null)

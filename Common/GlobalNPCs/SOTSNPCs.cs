@@ -47,7 +47,6 @@ using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.NPCs.Chaos;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.NPCs.Gizmos;
-using SOTS.NPCs.Boss.Curse;
 using SOTS.NPCs.Boss.Advisor;
 
 namespace SOTS.Common.GlobalNPCs
@@ -531,22 +530,28 @@ namespace SOTS.Common.GlobalNPCs
         }
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
 		{
-			if (player.GetModPlayer<SOTSPlayer>().PhaseBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
+			SOTSPlayer sPlayer = player.SOTSPlayer();
+			if (sPlayer.PhaseBiome)
 			{
 				spawnRate = (int)(spawnRate * 1.0f);
 				maxSpawns = (int)(maxSpawns * 0.9f); //slightly less maximum spawns
 			}
-			if (player.GetModPlayer<SOTSPlayer>().PyramidBiome)
+			if (sPlayer.PyramidBiome)
 			{
 				spawnRate = (int)(spawnRate * 0.175f); //basically setting to 105
 				maxSpawns = (int)(maxSpawns * 1.5f);
-			}
-			if (player.GetModPlayer<SOTSPlayer>().PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
+            }
+            else if (sPlayer.AbandonedVillageBiome)
+            {
+                spawnRate = (int)(spawnRate * 0.8f); //Increase spawn rates
+                maxSpawns = (int)(maxSpawns * 1.5f); //Increase spawn rate cap
+            }
+            if (sPlayer.PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
 				spawnRate = (int)(spawnRate * 0.08f); //essentially setting it to 48
 				maxSpawns = (int)(maxSpawns * 1.5f);
 			}
-			if(player.HasBuff(ModContent.BuffType<IntimidatingPresence>()))
+			if(player.HasBuff<IntimidatingPresence>())
             {
 				spawnRate = (int)(spawnRate * 10); //makes thing spawn at 1/10th the speed
 				maxSpawns = (int)(maxSpawns * 0.5f); //cut max spawns in half
@@ -581,8 +586,13 @@ namespace SOTS.Common.GlobalNPCs
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
 			Player player = spawnInfo.Player;
+			SOTSPlayer sPlayer = player.SOTSPlayer();
 			float constructRateMultiplier = 1f;
-			if (SOTSPlayer.ModPlayer(player).noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
+            bool ZoneForest = SOTSPlayer.ZoneForest(player);
+            bool ZonePlanetarium = sPlayer.PlanetariumBiome;
+			bool ZonePyramid = sPlayer.PyramidBiome;
+			bool ZoneAV = sPlayer.AbandonedVillageBiome;
+            if (sPlayer.noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
 				constructRateMultiplier = 0f;
 			if(Main.invasionType != InvasionID.None || NPC.AnyNPCs(NPCID.DD2EterniaCrystal))
             {
@@ -594,9 +604,7 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if (spawnInfo.PlayerInTown)
 				constructRateMultiplier *= 0.1f;
-			bool ZoneForest = SOTSPlayer.ZoneForest(player);
-			bool ZonePlanetarium = spawnInfo.Player.GetModPlayer<SOTSPlayer>().PlanetariumBiome;
-			if (spawnInfo.Player.GetModPlayer<SOTSPlayer>().PyramidBiome)
+			if (ZonePyramid)
 			{
 				int tileWall = Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1].WallType;
 				bool isValidTile = spawnInfo.SpawnTileType == ModContent.TileType<PyramidSlabTile>() || spawnInfo.SpawnTileType == ModContent.TileType<PyramidBrickTile>() || spawnInfo.SpawnTileType == ModContent.TileType<TrueSandstoneTile>();
@@ -674,14 +682,35 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			else if (player.ZoneCorrupt || player.ZoneCrimson)
 			{
+				bool corrupt = player.ZoneCorrupt;
+				bool crimson = player.ZoneCrimson;
 				if (SOTSWorld.downedPinky && player.ZoneOverworldHeight)
 				{
-					pool.Add(ModContent.NPCType<FluxSlime>(), 0.075f);
+					pool.Add(ModContent.NPCType<FluxSlime>(), ZoneAV ? 0.025f : 0.075f);
 				}
-				if(player.ZoneCrimson)
+				if(crimson)
 					pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.05f);
-				if (player.ZoneCorrupt)
+				if (corrupt)
 					pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.05f);
+				if(ZoneAV)
+				{
+					bool underground = player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight;
+                    if (underground)
+						pool[0] *= underground ? 0.1f : 0.5f; //Decrease spawnrates of vanilla NPCs, especially in the underground
+                    pool.Add(ModContent.NPCType<Throe>(), (underground ? 0.45f : 0.05f) / (1f + NPC.CountNPCS(ModContent.NPCType<Throe>()))); //Spawn throes less often the more of them there are
+                    pool.Add(ModContent.NPCType<CorpseBloom>(), (corrupt ? 0.75f : 0.1f) * (underground ? 0.3f : 1f));
+					if(underground)
+						pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.5f / (1f + NPC.CountNPCS(ModContent.NPCType<EarthenGizmo>()))); //Spawn gizmos less often the more of them there area
+
+					if(underground && Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2].WallType == WallID.None)
+					{
+						if(!Main.rand.NextBool(10)) //Do not spawn enemies where there are no walls 90% of the time. This forces enemies to spawn in the cooridors in the abandoned village rather than the offshoot caves.
+						{
+							pool.Clear();
+							return;
+						}
+					}
+                }
 			}
 			else if (player.ZoneHallow && Main.hardMode)
 			{
@@ -828,7 +857,7 @@ namespace SOTS.Common.GlobalNPCs
 				if(!ZonePlanetarium)
 					pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
 			}
-			if (spawnInfo.Player.GetModPlayer<SOTSPlayer>().AnomalyBiome)
+			if (sPlayer.AnomalyBiome)
 			{
 				if (NPC.CountNPCS(ModContent.NPCType<Ultracap>()) < 2) //First two to spawn are more common
 					pool.Add(ModContent.NPCType<Ultracap>(), 0.15f);

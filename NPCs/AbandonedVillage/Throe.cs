@@ -101,6 +101,7 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.DeathSound = SoundID.NPCDeath6;
             NPC.alpha = 150;
             NPC.scale = 0.9f;
+            NPC.npcSlots = 0.5f;
 			Banner = NPC.type;
 			BannerItem = ItemType<ThroeBanner>();
 		}
@@ -329,10 +330,6 @@ namespace SOTS.NPCs.AbandonedVillage
             //spriteBatch.Draw(texture, drawPos, new Rectangle(0, NPC.frame.Y, 48, 56), Color.White, NPC.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
             return false;
         }
-        public void TeleportToAdjacentArea()
-		{
-
-		}
 		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
 		{
             if (!Aggressive || NPC.ai[3] >= 0)
@@ -402,6 +399,10 @@ namespace SOTS.NPCs.AbandonedVillage
             {
                 Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, NPC.velocity, ProjectileType<ThroeProj>(), 0, MyHorizontalFrame, Main.myPlayer, (int)NPC.frameCounter, 0, 64);
             }
+        }
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = NPC.lifeMax * 4 / 5;
         }
     }
     public class ThroeProj : ModProjectile

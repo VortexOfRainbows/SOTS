@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items
+namespace SOTS.Items.AbandonedVillage
 {
 	public class BackupBow : ModItem
 	{

@@ -23,7 +23,7 @@ namespace SOTS.Biomes
 		public override string MapBackground => BackgroundPath;
         public override bool IsBiomeActive(Player player)
         {
-            return SOTSWorld.AVBiome > 0 && (player.ZoneCorrupt || player.ZoneCrimson);
+            return SOTSWorld.AVBiome > 100 && (player.ZoneCorrupt || player.ZoneCrimson);
         }
     }
 }

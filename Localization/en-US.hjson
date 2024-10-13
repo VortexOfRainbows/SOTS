@@ -5237,7 +5237,7 @@ Mods: {
 				DisplayName: Hand Cannon
 				Tooltip:
 					'''
-					Launches three bullets: the middle bullet deals 100% damage and side bullets deal 50% damage
+					Launches three bullets: the middle bullet deals 100% damage and side bullets deal 75% damage
 					Converts musket balls into explosive bullets
 					'''
 			}
@@ -6735,8 +6735,8 @@ Mods: {
 				'''
 			CorpseBloom:
 				'''
-				The soil was plentiful and rich, so the plant could grow content.
-				However, the plant found the rot and ash more plentiful - and more rich - so it grew with voracity.
+				The soil was plentiful and rich. At first the plant was content.
+				However, the plant found the rot and ash more plentiful - and more rich - so it delicately laid itself upon the piled corpses instead, and there it found solace.
 				'''
 			Famished:
 				'''
