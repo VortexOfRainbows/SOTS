@@ -585,6 +585,8 @@ namespace SOTS.Common.GlobalNPCs
         }
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
 		{
+			if (SOTS.InSubworld())
+				return;
 			Player player = spawnInfo.Player;
 			SOTSPlayer sPlayer = player.SOTSPlayer();
 			float constructRateMultiplier = 1f;

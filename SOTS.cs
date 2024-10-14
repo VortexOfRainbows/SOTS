@@ -60,7 +60,32 @@ namespace SOTS
             }				
 			return false;
 		}
-		public static bool SOTSTexturePackEnabled = false;
+		private static Mod SubworldLibrary;
+		public static void SetSubworld()
+		{
+            ModLoader.TryGetMod("SubworldLibrary", out SubworldLibrary);
+        }
+        public static bool InSubworld()
+        {
+            if (SubworldLibrary == null)
+            {
+                return false;
+            }
+            foreach (Mod mod in ModLoader.Mods)
+            {
+                if (mod.Name.Equals(SubworldLibrary.Name))
+                {
+                    continue;
+                }
+                bool anySubworldForMod = (SubworldLibrary.Call("AnyActive", mod) as bool?) ?? false;
+                if (anySubworldForMod)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public static bool SOTSTexturePackEnabled = false;
 		public static bool SOTSTexturePackEnabledWithTiles => SOTSTexturePackEnabled && Config.additionalTexturePackVisuals;
 		public static bool SOTSTexturePackEnabledAudio => false; //SOTSTexturePackEnabled && Config.playAmbientAudio;
 		public static PrimTrailManager primitives;
@@ -106,6 +131,7 @@ namespace SOTS
 			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.MFM").ToString(), "C");
             SlowFlightHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.SlowFlight").ToString(), "LeftShift");
             SOTSWorld.LoadUI();
+			SetSubworld();
 			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)
 			{
@@ -198,6 +224,7 @@ namespace SOTS
 			BlinkHotKey = null;
 			ArmorSetHotKey = null;
 			MachinaBoosterHotKey = null;
+			SubworldLibrary = null;
 			SOTSDetours.Unload();
 		}
 		public static Vector2 CalculateBezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)

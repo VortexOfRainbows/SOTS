@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Items.Furniture.Earthen;
 using SOTS.Items.Pyramid;
 using System;
 using System.Linq;
@@ -25,5 +26,6 @@ namespace SOTS.Biomes
         {
             return SOTSWorld.AVBiome > 100 && (player.ZoneCorrupt || player.ZoneCrimson);
         }
+        public override int BiomeTorchItemType => ModContent.ItemType<EarthenPlatingTorch>();
     }
 }

@@ -88,7 +88,7 @@ N/A
 
 Daily Log:
 
-10/10/24 to 10/12/24
+10/10/24 to 10/14/24
 1. Finished the Famished (FINALLY)
 2. Famished Gore, Polish, and Ai Changes, Still seems to work great in multiplayer!!
 3. Spawn Method for the Famished, seems to work in Multiplayer! Famish is less common the more that exist
@@ -102,6 +102,7 @@ Daily Log:
 	2. Buffed Hand Cannon damage 14 -> 15, reuse delay 20 -> 16, spread damage 50% -> 75%
 8. Famish Carriers now heal (5, 10, 15) life every 2 seconds
 9. Famished now has a laser attack (Works in Multiplayer)
+10. WIP AV particles
 
 10/3/24 to 10/5/24
 1. Improvements to Ghost Pepper visuals and code

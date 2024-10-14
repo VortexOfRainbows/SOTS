@@ -596,7 +596,7 @@ namespace SOTS
                 }
             }
         }
-        public static Vector2? GetWorldPositionOnTile(int i, int j, int side, float offsetX, float offsetY) //Taken from Catalyst
+        public static Vector2? GetWorldPositionOnTile(int i, int j, int side, float offsetX, float offsetY, bool allowAir = false) //Taken from Catalyst
         {
             Tile tile = Main.tile[i, j];
             Vector2 tileWorld = new Vector2(i * 16, j * 16);
@@ -610,9 +610,14 @@ namespace SOTS
                 x = -1;
             if (side == 3)
                 x = 1;
-            bool validTile = SOTSWorldgenHelper.TrueTileSolid(i, j) && !SOTSWorldgenHelper.TrueTileSolid(i + x, j + y);
+            bool hasTile = SOTSWorldgenHelper.TrueTileSolid(i, j);
+            bool validTile = hasTile && !SOTSWorldgenHelper.TrueTileSolid(i + x, j + y);
             if (!validTile)
             {
+                if(allowAir && !hasTile)
+                {
+                    return tileWorld + new Vector2(offsetX, offsetY);
+                }
                 return null;
             }
             SlopeType s = tile.Slope;

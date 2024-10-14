@@ -1,14 +1,9 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Items;
-using SOTS.Items.Permafrost;
-using SOTS.Items.Planetarium;
 using SOTS.Items.Wings;
 using SOTS.Items.Planetarium.FromChests;
 using SOTS.Items.Pyramid;
-using SOTS.Items.Earth;
-using SOTS.NPCs.Boss;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Base;
@@ -16,7 +11,6 @@ using SOTS.Projectiles.Planetarium;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -29,7 +23,6 @@ using SOTS.Projectiles.Pyramid;
 using SOTS.Projectiles.Minions;
 using SOTS.Projectiles.Permafrost;
 using SOTS.Items.Celestial;
-using SOTS.Items.Fragments;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Nature;
 using SOTS.Items.Crushers;
@@ -46,9 +39,7 @@ using SOTS.NPCs.Boss.Lux;
 using SOTS.Items.Tools;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Buffs.DilationSickness;
-using Terraria.Audio;
 using static SOTS.SOTS;
-using SOTS.Items.Invidia;
 using SOTS.Projectiles.Lightning;
 using SOTS.Projectiles.Camera;
 using Terraria.Localization;
@@ -59,8 +50,6 @@ using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.Buffs.ConduitBoosts;
 using SOTS.Items.Chaos;
 using SOTS.Buffs.Debuffs;
-using System.Security.Permissions;
-using Terraria.Chat;
 using SOTS.Helpers;
 
 namespace SOTS
@@ -2075,6 +2064,3 @@ namespace SOTS
 		}
     }
 }
-
-
-
