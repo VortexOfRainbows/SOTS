@@ -1,11 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items;
 using SOTS.NPCs.Boss.Curse;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,10 +12,6 @@ namespace SOTS.Projectiles
 {
 	public class BackupBowVisual : ModProjectile
 	{
-        public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Backup Bow Visual");
-		}
 		public sealed override void SetDefaults()
 		{
 			Projectile.width = 32;
@@ -79,14 +73,13 @@ namespace SOTS.Projectiles
 			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 			SOTS.VisionShader.Parameters["progress"].SetValue(itemAlpha);
 			SOTS.VisionShader.Parameters["lightColor"].SetValue(color.ToVector4());
-			SOTS.VisionShader.Parameters["colorMod"].SetValue(GetColor().ToVector4());
+			SOTS.VisionShader.Parameters["colorMod"].SetValue(MyColor.ToVector4());
 			SOTS.VisionShader.Parameters["uImageSize0"].SetValue(new Vector2(texture.Width, texture.Height));
 			SOTS.VisionShader.Parameters["uSourceRect"].SetValue(new Vector4(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount));
 			SOTS.VisionShader.CurrentTechnique.Passes[0].Apply();
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + new Vector2(0, player.gfxOffY), rectangleFrame, color, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			Main.spriteBatch.End();
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullCounterClockwise, null, Main.GameViewMatrix.TransformationMatrix);
-			GetColor();
 		}
 		public void SpawnDust(Texture2D texture, int rate, float percent, float rotation)
 		{
@@ -123,9 +116,9 @@ namespace SOTS.Projectiles
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Dusts/CopyDust4");
+			Texture2D texture = ModContent.Request<Texture2D>("SOTS/Dusts/CopyDust4").Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height / 6);
-			Color color2 = GetColor();
+			Color color2 = MyColor;
 			color2.A = 0;
 			for (int i = 0; i < particleList.Count; i++)
 			{
@@ -135,10 +128,7 @@ namespace SOTS.Projectiles
 			}
 			return false;
 		}
-		public Color GetColor()
-		{
-			return Color.Silver;
-        }
+		public Color MyColor => Color.Silver;
 		float itemAlpha = 0;
 		int ticksPerFrame = 0;
 		int frameCounter = 0;
@@ -150,12 +140,12 @@ namespace SOTS.Projectiles
 			float rotation = 0f;
 			if(mousePos.X > 0 && mousePos.Y > 0)
             {
-				rotation = (mousePos - Projectile.Center).ToRotation();
+				rotation = (Projectile.Center - mousePos).ToRotation();
             }
 			Player player = Main.player[Projectile.owner];
 			if (Main.myPlayer != Projectile.owner)
 				Projectile.timeLeft = 20;
-			Vector2 idlePosition = new Vector2(-24, 0).RotatedBy(rotation);
+			Vector2 idlePosition = new Vector2(24, 0).RotatedBy(rotation);
 			if(player.direction < 0)
 			{
 				if(idlePosition.X < 8)
@@ -168,9 +158,8 @@ namespace SOTS.Projectiles
 			}
 			Projectile.spriteDirection = player.direction;
 			//Projectile.ai[0]++;
-			Projectile.rotation = idlePosition.ToRotation() - (Projectile.spriteDirection == 1 ? MathHelper.Pi : 0);
+			Projectile.rotation = rotation - (Projectile.spriteDirection == 1 ? MathHelper.Pi : 0);
 			idlePosition = player.Center + idlePosition;
-			idlePosition.Y -= 2;
 			Projectile.Center = idlePosition;
 		}
 		public override void AI()
@@ -202,11 +191,19 @@ namespace SOTS.Projectiles
 				if (SOTSWorld.GlobalCounter % 5 == 0)
 					Projectile.netUpdate = true;
             }
-			/*if (player.itemAnimation > 0)
-			{
-				itemAlpha = -0.48f;
-			}*/
-			if (itemAlpha < 2)
+			bool usingBow = player.HeldItem.active && player.HeldItem.useAmmo == AmmoID.Arrow;
+			if (!usingBow)
+            {
+                if (itemAlpha > 0)
+                {
+                    if (Main.netMode != NetmodeID.Server)
+                    {
+                        SpawnDust(Terraria.GameContent.TextureAssets.Projectile[Type].Value, 15, itemAlpha, Projectile.rotation);
+                    }
+                    itemAlpha -= 0.05f;
+                }
+			}
+			else if (itemAlpha < 2)
 			{
 				if (Main.netMode != NetmodeID.Server)
 				{
@@ -216,7 +213,9 @@ namespace SOTS.Projectiles
 			}
 			if (itemAlpha > 2)
 				itemAlpha = 2;
-			Lighting.AddLight(Projectile.Center, GetColor().ToVector3() * 0.3f);
+			if (itemAlpha < 0)
+				itemAlpha = 0;
+			Lighting.AddLight(Projectile.Center, MyColor.ToVector3() * 0.1f);
 		}
 	}
 }

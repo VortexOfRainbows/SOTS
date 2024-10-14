@@ -887,23 +887,21 @@ namespace SOTS
 				dust.fadeIn = 0.1f;
 			}
 		}
+		private static bool SpawningProjectile = false;
 		public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
 			if(!Main.gameMenu && !Main.gameInactive)
             {
 				Player player = Main.player[projectile.owner];
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-				if (projectile.arrow && modPlayer.backUpBow && source is EntitySource_ItemUse_WithAmmo)
+                if (Main.myPlayer == projectile.owner && projectile.arrow && modPlayer.backUpBow && !SpawningProjectile)
                 {
-					if(projectile.arrow)
-                    {
-						if(Main.myPlayer == projectile.owner)
-                        {
-							Projectile.NewProjectile(projectile.GetSource_FromThis(), player.Center, -projectile.velocity * 0.9f, projectile.type, (int)(projectile.damage * 0.5f), projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
-                        }
-                    }
-				}
-				if(projectile.CountsAsClass(DamageClass.Ranged) && modPlayer.AmmoRegather && source is EntitySource_ItemUse_WithAmmo withAmmo)
+                    Vector2 positionRelativeToPlayer = player.Center - projectile.Center;
+                    SpawningProjectile = true;
+                    Projectile.NewProjectile(projectile.GetSource_FromThis(), player.Center + positionRelativeToPlayer, new Vector2(-projectile.velocity.X, -projectile.velocity.Y) * 0.9f, projectile.type, (int)(projectile.damage * 0.5f), projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
+                    SpawningProjectile = false;
+                }
+                if (projectile.CountsAsClass(DamageClass.Ranged) && modPlayer.AmmoRegather && source is EntitySource_ItemUse_WithAmmo withAmmo)
                 {
 					int ammoType = withAmmo.AmmoItemIdUsed;
 					if(ammoType == ItemID.FallenStar && Main.dayTime)
