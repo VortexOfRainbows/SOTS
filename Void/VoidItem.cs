@@ -4,7 +4,6 @@ using SOTS.Items.Celestial;
 using SOTS.Items.Earth;
 using SOTS.Items.Planetarium;
 using SOTS.Items.Permafrost;
-using SOTS.Items.Secrets;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -14,9 +13,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using SOTS.Items.Tide;
 using SOTS.Items;
-using System.Diagnostics;
 using SOTS.Items.AbandonedVillage;
-using SOTS.Biomes;
 
 namespace SOTS.Void
 {
@@ -251,5 +248,17 @@ namespace SOTS.Void
                 vPlayer.StoredLifeHeals = healAmount % 1f;
             }
         }
-	}
+        public override bool MagicPrefix()
+        {
+            return Item.CountsAsClass<VoidSummon>() || Item.CountsAsClass<VoidMagic>();
+        }
+        public override bool RangedPrefix()
+        {
+            return Item.CountsAsClass<VoidRanged>();
+        }
+		public override bool MeleePrefix()
+        {
+            return Item.CountsAsClass<VoidMelee>();
+        }
+    }
 }

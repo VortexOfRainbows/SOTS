@@ -22,6 +22,7 @@ Acknowledged But Likely Delayed:
 12. Banners to work on platforms (should be fairly easy), and to have proper tooltip text
 13. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 14. Ammo Pouch + Infinity Pouch leads to some crazy combos...
+15. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
 
 Update Objectives:
 1. Ghost Town! (In Progress)	
@@ -87,7 +88,7 @@ N/A
 
 Daily Log:
 
-10/10/24 to 10/14/24
+10/10/24 to 10/15/24
 1. Finished the Famished (FINALLY)
 2. Famished Gore, Polish, and Ai Changes, Still seems to work great in multiplayer!!
 3. Spawn Method for the Famished, seems to work in Multiplayer! Famish is less common the more that exist
@@ -106,6 +107,7 @@ Daily Log:
 	1. Apart from a niche interaction with Charged Hardlight arrows, it seems to work pretty well.
 	2. Works in multiplayer
 12. Vision Amulet looks less blurry
+13. Fix reforging bug with void minions introduced by TMOALDOAELRL
 
 10/3/24 to 10/5/24
 1. Improvements to Ghost Pepper visuals and code
