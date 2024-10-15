@@ -1,14 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items;
-using SOTS.Items.ChestItems;
 using SOTS.Items.Conduit;
 using SOTS.Items.Earth;
 using SOTS.Items.Evil;
 using SOTS.Items.Secrets;
 using SOTS.Items.Temple;
 using SOTS.NPCs.Boss.Curse;
-using SOTS.Projectiles.Blades;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -90,7 +88,7 @@ namespace SOTS.Projectiles
 					scale = item.scale;
                 }
 				Main.spriteBatch.End();
-				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 				SOTS.VisionShader.Parameters["progress"].SetValue(itemAlpha);
 				SOTS.VisionShader.Parameters["lightColor"].SetValue(color.ToVector4());
 				SOTS.VisionShader.Parameters["colorMod"].SetValue(GetColor().ToVector4());
@@ -155,13 +153,13 @@ namespace SOTS.Projectiles
 			Player player = Main.player[Projectile.owner];
 			return SOTSPlayer.VisionColor(player);
         }
-		int lastItem = -1;
-		float itemAlpha = 0;
-		int itemType = -1;
-		int ticksPerFrame = 0;
-		int frameCounter = 0;
-		int frameCount = 1;
-		int frame = 0;
+		private int lastItem = -1;
+		private float itemAlpha = 0;
+		private int itemType = -1;
+		private int ticksPerFrame = 0;
+		private int frameCounter = 0;
+		private int frameCount = 1;
+		private int frame = 0;
 		public void FindPosition()
 		{
 			Player player = Main.player[Projectile.owner];
@@ -176,13 +174,17 @@ namespace SOTS.Projectiles
 			Projectile.Center = idlePosition;
 			Projectile.rotation = (Projectile.oldPosition.X - Projectile.position.X) * -0.05f;
 		}
+		public static bool VisualActive(Item item)
+		{
+			return !item.IsAir && item.active && item.createTile == -1 && item.createWall == -1 && item.useStyle != ItemUseStyleID.None;
+        }
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
 			Item item = player.HeldItem;
 			FindPosition();
 			catalogueParticles();
-			if (!item.IsAir && item.active && item.createTile == -1 && item.createWall == -1 && item.useStyle != ItemUseStyleID.None)
+			if (VisualActive(item))
 			{
 				DrawAnimation anim = Main.itemAnimations[item.type];
 				if(anim != null)

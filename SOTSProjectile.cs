@@ -31,6 +31,8 @@ using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.AbandonedVillage;
 using System.Collections;
 using SOTS.Helpers;
+using System.Threading;
+using System.Drawing.Printing;
 
 namespace SOTS
 {
@@ -104,12 +106,18 @@ namespace SOTS
 			if (projectile.arrow || projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
 				FrostFlakeUnit(projectile, frostFlake - 2);
 			AffixUnit(projectile);
-			/*if(projectile.ContinuouslyUpdateDamage)
+			if(myClonedArrow != null)
+            {
+				myClonedArrow.friendly = projectile.friendly;
+				myClonedArrow.tileCollide = projectile.tileCollide;
+                myClonedArrow = null;
+            }
+            /*if(projectile.ContinuouslyUpdateDamage)
             {
    				Main.NewText("Projectile Type: " + projectile.type);
 				Main.NewText("Projectile Index: " + projectile.whoAmI);
 			}*/
-		}
+        }
 		public int timeFrozen = 0;
 		public bool netUpdateTime = false;
 		public bool frozen = false;
@@ -152,7 +160,7 @@ namespace SOTS
 		}
 		public static bool UpdateWhileFrozen(Projectile proj, int i)
 		{
-			bool success = proj.TryGetGlobalProjectile<SOTSProjectile>(out SOTSProjectile instancedProjectile);
+			bool success = proj.TryGetGlobalProjectile(out SOTSProjectile instancedProjectile);
 			if (!success)
 				return true;
 			if (instancedProjectile.timeFrozen > 0 || instancedProjectile.frozen)
@@ -235,8 +243,20 @@ namespace SOTS
 			if(affixID < 0)
             {
 				affixID = -affixID;
-				if (Main.myPlayer == projectile.owner && Main.netMode == NetmodeID.MultiplayerClient)
-					SendClientChanges(Main.player[projectile.owner], projectile);
+				if (Main.myPlayer == projectile.owner)
+                {
+					if(Main.netMode == NetmodeID.MultiplayerClient)
+						SendClientChanges(Main.player[projectile.owner], projectile);
+					if(myClonedArrow != null)
+                    {
+                        if (myClonedArrow.TryGetGlobalProjectile(out SOTSProjectile sProjectile))
+                        {
+                            sProjectile.affixID = affixID;
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
+                                SendClientChanges(Main.player[projectile.owner], myClonedArrow);
+                        }
+                    }
+                }
 			}
 			if(affixID > 0) //not else if
             {
@@ -400,10 +420,22 @@ namespace SOTS
 			else if(level <= 0)
             {
 				frostFlake += 2;
-				if (Main.myPlayer == projectile.owner && Main.netMode == NetmodeID.MultiplayerClient)
-					SendClientChanges(Main.player[projectile.owner], projectile);
+				if (Main.myPlayer == projectile.owner)
+                {
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        SendClientChanges(Main.player[projectile.owner], projectile);
+                    if (myClonedArrow != null)
+                    {
+                        if (myClonedArrow.TryGetGlobalProjectile(out SOTSProjectile sProjectile))
+                        {
+                            sProjectile.frostFlake = frostFlake;
+                            if (Main.netMode == NetmodeID.MultiplayerClient)
+                                SendClientChanges(Main.player[projectile.owner], myClonedArrow);
+                        }
+                    }
+                }
             }
-			if (projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>())
+			if (projectile.type == ModContent.ProjectileType<ChargedHardlightArrow>() || !projectile.active)
 				return;
 			AffixAI0 += projectile.velocity.Length() * MathHelper.ToRadians(0.75f) * projectile.direction;
 			if (level == 1)
@@ -419,9 +451,10 @@ namespace SOTS
 			}
 			else if(level == 2)
 			{
-				for(int i = 0; i < 5; i++)
+				float increment = SOTS.Config.lowFidelityMode ? 0.25f : .2f;
+				for(float i = 0; i < 1; i += increment)
 				{
-					Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.2f);
+					Vector2 spawnPos = projectile.Center - projectile.velocity * i; //Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, increment);
 					Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
 					dust.noGravity = true;
 					dust.scale = 1.2f;
@@ -888,18 +921,37 @@ namespace SOTS
 			}
 		}
 		private static bool SpawningProjectile = false;
+		private Projectile myClonedArrow = null;
+		private static bool CountsAsArrow(Projectile projectile)
+		{
+			int t = projectile.type;
+			return t == ModContent.ProjectileType<ChargedHardlightArrow>() || t == ModContent.ProjectileType<PlasmaphobiaBolt>() || t == ModContent.ProjectileType<ChaosArrow1>() || t == ModContent.ProjectileType<ChaosArrow2>() || t == ProjectileID.PulseBolt || t == ModContent.ProjectileType<Projectiles.Pyramid.Snake>();
+        }
 		public override void OnSpawn(Projectile projectile, IEntitySource source)
         {
 			if(!Main.gameMenu && !Main.gameInactive)
             {
 				Player player = Main.player[projectile.owner];
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-                if (Main.myPlayer == projectile.owner && projectile.arrow && modPlayer.backUpBow && !SpawningProjectile)
+                if (Main.myPlayer == projectile.owner && (projectile.arrow || CountsAsArrow(projectile)) && modPlayer.backUpBow && !SpawningProjectile)
                 {
-                    Vector2 positionRelativeToPlayer = player.Center - projectile.Center;
-                    SpawningProjectile = true;
-                    Projectile.NewProjectile(projectile.GetSource_FromThis(), player.Center + positionRelativeToPlayer, new Vector2(-projectile.velocity.X, -projectile.velocity.Y) * 0.9f, projectile.type, (int)(projectile.damage * 0.5f), projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
-                    SpawningProjectile = false;
+					bool canSpawn = true;
+					if(source is EntitySource_Parent e && e.Entity is Projectile p) //If my source is a projectile
+                    {
+						canSpawn = player.SOTSPlayer().oldHeldProj == p.whoAmI || player.heldProj == p.whoAmI;
+					}
+					if(canSpawn)
+					{
+                        Vector2 positionRelativeToPlayer = player.Center - projectile.Center;
+                        SpawningProjectile = true;
+                        Vector2 velo = -projectile.velocity;
+                        if (projectile.TryGetGlobalProjectile(out SOTSProjectile sProj))
+                        {
+                            sProj.myClonedArrow = Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), player.MountedCenter + new Vector2(-15 * player.direction, -4) + positionRelativeToPlayer - velo, velo, projectile.type, (int)(projectile.damage * 0.5f + 0.5f), projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1]);
+                            sProj.myClonedArrow.friendly = sProj.myClonedArrow.tileCollide = false;
+                        }
+                        SpawningProjectile = false;
+                    }
                 }
                 if (projectile.CountsAsClass(DamageClass.Ranged) && modPlayer.AmmoRegather && source is EntitySource_ItemUse_WithAmmo withAmmo)
                 {

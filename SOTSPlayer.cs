@@ -51,6 +51,7 @@ using SOTS.Buffs.ConduitBoosts;
 using SOTS.Items.Chaos;
 using SOTS.Buffs.Debuffs;
 using SOTS.Helpers;
+using SOTS.Projectiles.AbandonedVillage;
 
 namespace SOTS
 {
@@ -497,10 +498,10 @@ namespace SOTS
 				CreativeFlightButtonPressed = false;
 			}
 		}
-		private int[] probes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
-		private int[] probesAqueduct = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
-		private int[] probesTinyPlanet = new int[] { -1, -1, -1, -1, -1, -1, -1, -1};
-        private int[] ArtifactProbes = new int[] { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+		private int[] probes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+		private int[] probesAqueduct = [-1, -1, -1, -1, -1, -1, -1, -1];
+		private int[] probesTinyPlanet = [-1, -1, -1, -1, -1, -1, -1, -1];
+        private int[] ArtifactProbes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
         public int aqueductNum = 0;
 		public int aqueductDamage = -1;
         public int artifactProbeDamage = -1;
@@ -776,16 +777,12 @@ namespace SOTS
 			if (petFreeWisp >= 0)
 				runPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
 			if (VisionVanity)
-			{
 				runPets(ref probes[8], ModContent.ProjectileType<VisionWeapon>());
-			}
-			else if (backUpBowVisual)
-			{
-				runPets(ref probes[8], ModContent.ProjectileType<BackupBowVisual>());
-			}
+			if ((!VisionVanity || Player.ItemAnimationActive || !VisionWeapon.VisualActive(Player.HeldItem)) && backUpBowVisual) // || (backUpBow && Player.ItemAnimationActive)))
+				runPets(ref probes[9], ModContent.ProjectileType<BackupBowVisual>());
 			if (PlasmaShrimp)
 			{
-				runPets(ref probes[9], ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>());
+				runPets(ref probes[10], ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>());
 			}
 			doPlanetAqueduct();
 			if (rippleEffect)

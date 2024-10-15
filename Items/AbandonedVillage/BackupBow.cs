@@ -23,7 +23,7 @@ namespace SOTS.Items.AbandonedVillage
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.backUpBow = true;
-			modPlayer.backUpBowVisual = true;
+			modPlayer.backUpBowVisual = !hideVisual;
 		}
 	}
 }

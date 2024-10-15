@@ -48,7 +48,6 @@ Update Objectives:
 	5. Make mines not last as long
 14. Boss balancing configs
 15. Item that combines Botanical Symbiote and Bundle of Snakes
-16. Rework backup bow
 
 ---WIP List---
 Abandoned village generation
@@ -103,6 +102,10 @@ Daily Log:
 8. Famish Carriers now heal (5, 10, 15) life every 2 seconds
 9. Famished now has a laser attack (Works in Multiplayer)
 10. WIP AV particles
+11. Backup Bow rework
+	1. Apart from a niche interaction with Charged Hardlight arrows, it seems to work pretty well.
+	2. Works in multiplayer
+12. Vision Amulet looks less blurry
 
 10/3/24 to 10/5/24
 1. Improvements to Ghost Pepper visuals and code

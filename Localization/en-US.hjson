@@ -4239,7 +4239,7 @@ Mods: {
 
 			BackupBow: {
 				DisplayName: Backup Bow
-				Tooltip: Attaches a bow to your back which fires arrows behind you for 50% damage
+				Tooltip: Bows fire additional arrows behind you for 50% damage
 			}
 
 			Baguette: {
