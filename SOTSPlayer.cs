@@ -821,7 +821,7 @@ namespace SOTS
 			ReplaceCritWithDamage();
             StatShare();
         }
-		public void ReplaceCritWithDamage()
+        public void ReplaceCritWithDamage()
 		{
 			if(InverseDiamondRing)
             {

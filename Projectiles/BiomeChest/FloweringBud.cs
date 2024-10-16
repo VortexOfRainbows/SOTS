@@ -1,20 +1,14 @@
-using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using Terraria;
 using Terraria.ModLoader;
-using static SOTS.SOTS;
 
 namespace SOTS.Projectiles.BiomeChest
 {    
     public class FloweringBud : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Flowering Bud");
-		}
         public override void SetDefaults()
         {
 			Projectile.width = 20;
@@ -25,7 +19,6 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.tileCollide = true;
 			Projectile.hostile = false;
 			Projectile.DamageType = DamageClass.Magic;
-			// Projectile.ranged = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.alpha = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)

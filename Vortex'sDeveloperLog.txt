@@ -88,6 +88,10 @@ N/A
 
 Daily Log:
 
+10/16/24
+1. WIP Blongus, needs: Visuals, Polish, MP Syncing, Balance
+2. WIP Lungrot, needs: Balance
+
 10/10/24 to 10/15/24
 1. Finished the Famished (FINALLY)
 2. Famished Gore, Polish, and Ai Changes, Still seems to work great in multiplayer!!

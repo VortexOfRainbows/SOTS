@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Buffs.Debuffs;
 using SOTS.Dusts;
 using SOTS.Helpers;
 using Terraria;
@@ -10,12 +11,33 @@ namespace SOTS.Common.ModPlayers
     {
         public bool InVillage => Player.SOTSPlayer().AbandonedVillageBiome;
         public bool InUnderground => Player.ZoneRockLayerHeight || Player.ZoneDirtLayerHeight;
+        private bool Moving => Player.velocity.X > 1 || Player.velocity.Y > 1 || Player.velocity.X < -1 || Player.velocity.Y < -1; //Basically, am I moving a sufficient amount?
         public override void PostUpdateMiscEffects()
         {
-            if (Main.myPlayer != Player.whoAmI)
-                return;
-            if(InVillage)
-                SpawnAmbientParticles();
+            if (Player.HasBuff<LungRot>())
+            {
+                if (Moving)
+                {
+                    Player.lifeRegen = (int)(Player.lifeRegen * LungRot.LifeRegenWhileMoving);
+                    Player.VoidPlayer().voidRegenSpeed += 0.4f;
+                }
+            }
+            if (InVillage)
+            {
+                Player.AddBuff(ModContent.BuffType<LungRot>(), 6, true);
+                if (Main.myPlayer == Player.whoAmI)
+                    SpawnAmbientParticles();
+            }
+        }
+        public override void NaturalLifeRegen(ref float regen)
+        {
+            if (Player.HasBuff<LungRot>())
+            {
+                if (Moving)
+                {
+                    regen *= LungRot.LifeRegenWhileMoving;
+                }
+            }
         }
         private void SpawnAmbientParticles()
         {

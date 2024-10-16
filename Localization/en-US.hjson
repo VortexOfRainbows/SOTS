@@ -5802,6 +5802,11 @@ Mods: {
 				DisplayName: Famished Banner
 				Tooltip: ""
 			}
+
+			Blongus: {
+				DisplayName: Blongus
+				Tooltip: "Toss a swarm of hungry mosquitos that home and latch onto enemies before exploding, dealing increased damage based on the target's health and bleed status "
+			}
 		}
 
 		ItemTooltip: {
@@ -6240,6 +6245,16 @@ Mods: {
 			FreshGreenyBuff: {
 				DisplayName: Fresh Greeny
 				Description: "'Putrid Pinky's worst nightmare'"
+			}
+
+			LungRot: {
+				DisplayName: Lung Rot
+				Description:
+				'''
+				Vile air coats your lungs
+				Dramatically reduced life regeneration while moving
+				Increases void regeneration speed by 40% while moving
+				'''
 			}
 		}
 
@@ -7576,6 +7591,7 @@ Mods: {
 			ConduitParticleProjectile.DisplayName: Conduit Particle Projectile
 			FamishedLaser.DisplayName: Famished Laser
 			FamishedDeadzone.DisplayName: Famished Deadzone
+			BlongusProj.DisplayName: Blongus Proj
 		}
 
 		DamageClasses: {
