@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using SOTS.Projectiles.BiomeChest;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.ChestItems
 {
@@ -15,12 +16,12 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 7;
+			Item.damage = 6;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 54;
 			Item.height = 64;
-			Item.useTime = 30;
-			Item.useAnimation = 30;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 2.5f;
             Item.value = Item.sellPrice(0, 5, 0, 0);
@@ -28,13 +29,16 @@ namespace SOTS.Items.ChestItems
             Item.UseSound = SoundID.Item1;
 			Item.autoReuse = Item.noMelee = true;       
 			Item.shoot = ModContent.ProjectileType<BlongusProj>(); 
-            Item.shootSpeed = 5f;
-			Item.mana = 20;
-		}
+            Item.shootSpeed = 7f;
+			Item.mana = 10;
+            if (!Main.dedServ)
+            {
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/ChestItems/BlongusGlow").Value;
+            }
+        }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			for(int i = 0; i < 3; i++)
-				Projectile.NewProjectile(source, position, velocity * Main.rand.NextFloat(0.9f, 1.1f) + Main.rand.NextVector2Circular(2, 2), type, damage, knockback, player.whoAmI, -1);
+			Projectile.NewProjectile(source, position, velocity * Main.rand.NextFloat(0.8f, 1.2f) + Main.rand.NextVector2Circular(1, 1), type, damage, knockback, player.whoAmI, -1);
 			return false; 
 		}
 	}

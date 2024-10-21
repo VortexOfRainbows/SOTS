@@ -45,7 +45,7 @@ namespace SOTS.Common.ModPlayers
             float w = Main.screenWidth;
             float h = Main.screenHeight;
             Vector2 center = Main.screenPosition + new Vector2(w * 0.5f, h * 0.5f);
-            float targetParticleCount = 10 / Main.GameZoomTarget;
+            float targetParticleCount = 10 / Main.GameZoomTarget * (SOTS.Config.lowFidelityMode ? 0.5f : 1f);
             Vector2 windDirection = new Vector2(Main.windSpeedCurrent * (InUnderground ? 0.2f : 1f), 0) * 2f;
             for(int a = 0; a < targetParticleCount; a++)
             {

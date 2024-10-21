@@ -36,7 +36,7 @@ Music: BananaLizard
 
 [b]~Minor Contributors~[/b]
 Art: Arcri, Naka, DeJuiceTD, Nomis
-Testing/Misc: Mushnib~, DreadSoul, Crimsonkeep, Bman, TheoR, Sovregi
+Testing/Misc: Mushnib~, DreadSoul, Crimsonkeep, Bman, TheoR, Sovergi
 Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T., Ramen
 Art, Testing/Misc: Astrobit
 [quote=tModLoader]Developed By Vortex Of Rainbows[/quote]

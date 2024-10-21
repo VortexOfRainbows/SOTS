@@ -5805,7 +5805,7 @@ Mods: {
 
 			Blongus: {
 				DisplayName: Blongus
-				Tooltip: "Toss a swarm of hungry mosquitos that home and latch onto enemies before exploding, dealing increased damage based on the target's health and bleed status "
+				Tooltip: Unleash a swarm of hungry mosquitos that home and latch onto enemies before exploding, dealing increased damage based on the target's health and bleed status
 			}
 		}
 
@@ -6250,11 +6250,11 @@ Mods: {
 			LungRot: {
 				DisplayName: Lung Rot
 				Description:
-				'''
-				Vile air coats your lungs
-				Dramatically reduced life regeneration while moving
-				Increases void regeneration speed by 40% while moving
-				'''
+					'''
+					Vile air coats your lungs
+					Dramatically reduced life regeneration while moving
+					Increases void regeneration speed by 40% while moving
+					'''
 			}
 		}
 
