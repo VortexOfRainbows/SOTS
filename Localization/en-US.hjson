@@ -5807,6 +5807,11 @@ Mods: {
 				DisplayName: Blongus
 				Tooltip: Unleash a swarm of hungry mosquitos that home and latch onto enemies before exploding, dealing increased damage based on the target's health and bleed status
 			}
+
+			SteelerWheeler: {
+				DisplayName: Steeler Wheeler
+				Tooltip: Increases movement speed by 5% and reduces damage taken by 3%
+			}
 		}
 
 		ItemTooltip: {

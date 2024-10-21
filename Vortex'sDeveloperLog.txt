@@ -1,4 +1,4 @@
-Order Of Gems (and order of "sins"): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
+Order Of Gems (and order of "sins", 50/50 I will include melancholy or vainglory): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 The following is my development plans :D
 1. After Void Anomaly is extracted through the tainted keystone, the other portal now leads to a secret area containing the Superbia Portal Base and the Suspicious Stopwatch. The room cannot be entered until it is unlocked from the inside. It is unlocked by breaking the suspicious stopwatch, which can only happen if the Void Anomaly is equipped. The blocks comprising the room appear invisible, similar to Phase Ore. It appears in the Top Right of the sky, opposite the diamond structure, and is not visited by the Archaeologist.
 1a. Suspicious Stopwatch can be powered by the Chaos Conduit, breaking into Time Shards and a Broken Watch; these can be used with the Voidmage Incubator to craft a Timekeeper's Stopwatch 
@@ -10,7 +10,7 @@ The following is my development plans :D
 Acknowledged But Likely Delayed:
 1. Earthen Plating starter house.
 2. Need a mechanic for spawning a portal once a Gateway is fully powered.
-3. Smart cursor doesn't work with dressers.
+3. Smart cursor doesn't work with dressers (and other features of furniture are outdated, such as unsittable sofas).
 4. Most Void Minions do not work with whip debuffs
 5. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
 6. Boss Trophies
@@ -19,7 +19,7 @@ Acknowledged But Likely Delayed:
 9. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 10. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
 11. Scroll wheel with challenger's ring
-12. Banners to work on platforms (should be fairly easy), and to have proper tooltip text
+12. Banners/Lanterns to work on platforms (should be fairly easy), and to have proper tooltip text
 13. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 14. Ammo Pouch + Infinity Pouch leads to some crazy combos...
 15. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
@@ -38,7 +38,7 @@ Update Objectives:
 7. Upgrade to Code Corruptor: Dolphin Blaster (?)
 8. Shimmer Item that upgrades the store for Archaeologist
 9. Fish Bomb
-10. Fix generation bug with Infernum and Leviathan area, potentially fix remnants compatability
+10. Fix generation bug with Infernum and Leviathan area, potentially fix remnants and secret seeed compatability
 11. Upgrade item to the Hydrokinetic Antennae
 12. Update Elemental Amulet sprite to include modern genshin visions
 13. Polaris Nerfs and Reworks... 
@@ -48,9 +48,8 @@ Update Objectives:
 	4. Prevent chasis from spinning, making the laser attack purely cardinal, and thus more predictable (for the bullet spam attack)
 	5. Make mines not last as long
 14. Boss balancing configs
-15. Item that combines Botanical Symbiote and Bundle of Snakes
+15. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
 16. Plating Platforms to become lava immune and plating torches to become water immune
-17. Graveyard like visuals for abandoned village
 
 ---WIP List---
 Abandoned village generation
@@ -92,9 +91,11 @@ N/A
 
 Daily Log:
 
-10/16/24 and 10/20/24
+10/16/24 and 10/20/24 to 10/21/24
 1. Added Blongus, works in Multiplayer
 2. Added Lungrot
+3. Abandoned Village now has some graveyard visuals (not sure if I want these active underground, but they will be for now)
+4. Added Steeler Wheeler
 
 10/10/24 to 10/15/24
 1. Finished the Famished (FINALLY)

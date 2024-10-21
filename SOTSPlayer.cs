@@ -1922,7 +1922,11 @@ namespace SOTS
 				for (int i = 0; i < Player.buffTime.Length; i++)
 				{
 					int type = Player.buffType[i];
-					if (Player.HasBuff(type) && Main.debuff[type] && type != ModContent.BuffType<DilationSickness>() && type != BuffID.PotionSickness && type != BuffID.Chilled)
+					if (Player.HasBuff(type) && Main.debuff[type] && type != ModContent.BuffType<DilationSickness>()
+						&& type != ModContent.BuffType<Buffs.PharaohsCurse>()
+						&& type != ModContent.BuffType<LungRot>()
+						&& type != BuffID.PotionSickness
+						&& type != BuffID.Chilled)
 					{
 						if(Player.buffTime[i] > 30) 
                         {

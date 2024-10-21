@@ -120,6 +120,8 @@ namespace SOTS
 
 			On_Projectile.CanExplodeTile += On_Projectile_CanExplodeTile;
 
+			On_AmbientWindSystem.Update += On_AmbientWindSystem_Update;
+
             if (!Main.dedServ)
 				ResizeTargets();
 		}
@@ -1075,6 +1077,15 @@ namespace SOTS
 			if (Famished.CheckForListeners(x, y, false))
 				return true; //Allow exploding the tile, since it will just result in breaking the famish anyways
             return orig(self, x, y);
+        }
+		private static void On_AmbientWindSystem_Update(On_AmbientWindSystem.orig_Update orig, AmbientWindSystem self)
+		{
+			bool isInAV = Main.LocalPlayer.SOTSPlayer().AbandonedVillageBiome && !Main.LocalPlayer.ZoneGraveyard;
+			if (isInAV) //Abandoned village should create fog effects similar to the graveyard without inducing graveyard spawns.
+				Main.LocalPlayer.ZoneGraveyard = true;
+            orig(self);
+            if (isInAV)
+                Main.LocalPlayer.ZoneGraveyard = false;
         }
     }
 }
