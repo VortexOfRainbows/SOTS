@@ -66,7 +66,7 @@ Conduit powering code for the two portals
 If the Abandoned Village particles fail to generate for weaker computers, or potentially optimization mods, it may be worth making a custom system for them instead of using dusts.
 
 ---Balance Needed List (by Severity, -weak, +strong)---
-5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot
+5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot, +Little Woes
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. Earthen Gizmo, Corpsebloom, Throe, Famished
 2. +++Soot Extractinator loot, +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
@@ -94,6 +94,8 @@ Daily Log:
 4. Added Steeler Wheeler
 5. Plating platforms no longer die from lava and plating torches are not killed by water
 6. Fix issue where Vertebraeker, Tooth Ache, and Vorpal Knife could be thrown through walls to the right..?
+7. Added Little Woes. A pretty basic summon accessory that can seriously increase damage for melee minions
+	1. Needs Multiplayer Syncing testing
 
 10/10/24 to 10/15/24
 1. Finished the Famished (FINALLY)

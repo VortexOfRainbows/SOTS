@@ -5812,6 +5812,15 @@ Mods: {
 				DisplayName: Steeler Wheeler
 				Tooltip: Increases movement speed by 5% and reduces damage taken by 3%
 			}
+
+			LittleWoes: {
+				DisplayName: Little Woes
+				Tooltip:
+					'''
+					Increases void gain by 1 during the night
+					Attaches a Little Woe to all minions
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7597,6 +7606,7 @@ Mods: {
 			FamishedLaser.DisplayName: Famished Laser
 			FamishedDeadzone.DisplayName: Famished Deadzone
 			BlongusProj.DisplayName: Blongus Proj
+			WoeBall.DisplayName: Little Woe
 		}
 
 		DamageClasses: {

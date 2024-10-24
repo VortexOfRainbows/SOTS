@@ -13,7 +13,7 @@ namespace SOTS.Projectiles.Blades
     public class VertebraekerThrow : ModProjectile 
     {
 		public override string Texture => "SOTS/Projectiles/Blades/VertebraekerSlash";
-        float rotation = 0;
+        private float rotation = 0;
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(Projectile.tileCollide);
@@ -61,9 +61,9 @@ namespace SOTS.Projectiles.Blades
 		{
 			modifiers.HitDirectionOverride = initialDirection;
 		}
-		bool runOnce = true;
-		Vector2 initialVelo;
-		Vector2 initialCenter;
+		private bool runOnce = true;
+		private Vector2 initialVelo;
+		private Vector2 initialCenter;
 		public int initialDirection = 0;
         public override bool PreAI()
 		{

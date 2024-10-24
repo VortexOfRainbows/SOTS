@@ -17,7 +17,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 15;
+			Item.damage = 10;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 1f;
             Item.width = 38;     

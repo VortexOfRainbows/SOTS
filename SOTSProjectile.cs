@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Planetarium.FromChests;
-using SOTS.NPCs;
 using SOTS.Projectiles;
 using SOTS.Projectiles.Blades;
 using SOTS.Projectiles.Chaos;
@@ -29,10 +26,7 @@ using Terraria.ModLoader;
 using static SOTS.SOTS;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.AbandonedVillage;
-using System.Collections;
 using SOTS.Helpers;
-using System.Threading;
-using System.Drawing.Printing;
 
 namespace SOTS
 {
@@ -134,7 +128,7 @@ namespace SOTS
 		public int petAdvisorID = -1;
 		private float AffixAI0 = 0;
 		public bool hasFrostBloomed = false;
-		public int bloomingHookAssignment = -1, SnakeAssignment = -1;
+		public int bloomingHookAssignment = -1, SnakeAssignment = -1, WoeAssignment = -1;
 		private Vector2 initialVelo = Vector2.Zero;
 		public static void SetTimeFreeze(Player player, Projectile proj, int time)
 		{
@@ -623,6 +617,7 @@ namespace SOTS
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 				CoMinion(projectile, modPlayer.symbioteDamage, ModContent.ProjectileType<BloomingHookMinion>(), ref bloomingHookAssignment);
                 CoMinion(projectile, modPlayer.BundleSnakeDamage, ModContent.ProjectileType<BundleSnakeMinion>(), ref SnakeAssignment);
+                CoMinion(projectile, modPlayer.LittleWoeDamage, ModContent.ProjectileType<WoeBall>(), ref WoeAssignment);
             }
         }
         public override void OnKill(Projectile projectile, int timeLeft)

@@ -54,7 +54,7 @@ namespace SOTS.Projectiles.BiomeChest
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 Vector2 toPrev = previous - center;
-                Main.spriteBatch.Draw(pixel, center - Main.screenPosition + veloOffset, null, Lighting.GetColor((int)center.X / 16, (int)center.Y / 16, ColorHelper.SandstormPouchColor) * perc * 1.0f * alphaMult, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 3.75f * perc * scaleMod), Projectile.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(pixel, center - Main.screenPosition + veloOffset, null, Lighting.GetColor((int)center.X / 16, (int)center.Y / 16, ColorHelper.SandstormPouchColor) * perc * 1.0f * alphaMult, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 3.75f * perc * scaleMod), SpriteEffects.None, 0f);
                 previous = center;
             }
             Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + veloOffset, null, lightColor * alphaMult, Projectile.rotation, drawOrigin, 0.75f * scaleMod, SpriteEffects.None, 0f);
