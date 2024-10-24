@@ -47,7 +47,6 @@ namespace SOTS.Items.Furniture.Permafrost
 			Main.tileSolid[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileTable[Type] = true;
-			Main.tileLavaDeath[Type] = true;
 			TileObjectData.newTile.CoordinateHeights = new[]{ 16 };
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
@@ -55,8 +54,9 @@ namespace SOTS.Items.Furniture.Permafrost
 			TileObjectData.newTile.StyleMultiplier = 27;
 			TileObjectData.newTile.StyleWrapLimit = 27;
 			TileObjectData.newTile.UsesCustomCanPlace = false;
-			TileObjectData.addTile(19);
-			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
+            TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.addTile(Type);
+            AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 			AddMapEntry(SOTSTile.PermafrostPlatingColor);
 			DustType = DustID.Silver;
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PermafrostPlatingPlatform>();

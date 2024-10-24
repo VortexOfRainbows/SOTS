@@ -53,7 +53,8 @@ namespace SOTS
 			On_Player.TryUpdateChannel += Player_TryUpdateChannel;
 			On_Player.TryCancelChannel += Player_TryCancelChannel;
 			On_Player.CanVisuallyHoldItem += Player_CanVisuallyHoldItem;
-            //The following is for Time Freeze
+            
+			//The following is for Time Freeze
             //order of updates: player, NPC, gore, projectile, item, dust, time
             On_Player.Update += Player_Update;
 			On_NPC.UpdateNPC_Inner += NPC_UpdateNPC_Inner;
@@ -62,6 +63,8 @@ namespace SOTS
 			On_Item.UpdateItem += Item_UpdateItem;
 			On_Dust.UpdateDust += Dust_UpdateDust;
 			On_Main.UpdateTime += Main_UpdateTime;
+
+
 			On_Item.GetPrefixCategory += Item_GetPrefixCategory;
 			On_PlayerDrawLayers.DrawPlayer_27_HeldItem += On_PlayerDrawLayers_DrawPlayer_27_HeldItem;
             On_PlayerDrawLayers.DrawPlayer_30_BladedGlove += On_PlayerDrawLayers_DrawPlayer_30_BladedGlove;

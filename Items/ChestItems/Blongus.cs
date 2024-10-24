@@ -9,8 +9,15 @@ using Microsoft.Xna.Framework.Graphics;
 namespace SOTS.Items.ChestItems
 {
 	public class Blongus : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Items/ChestItems/BlongusGlow").Value;
+            Color color = Color.White;
+            Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+            Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+        }
+        public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
 		}

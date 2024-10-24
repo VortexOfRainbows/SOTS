@@ -17,8 +17,9 @@ namespace SOTS.Items.Furniture.Permafrost
 		{
 			this.SetResearchCost(100);
 			ItemID.Sets.Torches[Type] = true;
-		}
-		public override void SetDefaults()
+			ItemID.Sets.WaterTorches[Type] = true;
+        }
+        public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.Torch);
 			Item.Size = new Vector2(14, 14);
@@ -69,18 +70,22 @@ namespace SOTS.Items.Furniture.Permafrost
 			TileID.Sets.FramesOnKillWall[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleTorch);
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.WaterDeath = false;
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
 			TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
 			TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
+			TileObjectData.newAlternate.WaterDeath = false;
 			TileObjectData.addAlternate(1);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
+            TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
 			TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide | AnchorType.Tree | AnchorType.AlternateTile, TileObjectData.newTile.Height, 0);
 			TileObjectData.newAlternate.AnchorAlternateTiles = new[] { 124 };
+			TileObjectData.newAlternate.WaterDeath = false;
 			TileObjectData.addAlternate(2);
-			TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
+            TileObjectData.newAlternate.CopyFrom(TileObjectData.StyleTorch);
 			TileObjectData.newAlternate.AnchorWall = true;
+			TileObjectData.newAlternate.WaterDeath = false;
 			TileObjectData.addAlternate(0);
-			TileObjectData.addTile(Type);
+            TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(SOTSTile.PermafrostPlatingLight * 3), name);

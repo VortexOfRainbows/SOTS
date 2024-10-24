@@ -214,8 +214,7 @@ namespace SOTS
 		public bool petAdvisor = false;
 		public int petPinky = -1;
 		public int petFreeWisp = -1;
-		public int symbioteDamage = -1;
-        public int BundleSnakeDamage = -1;
+		public int symbioteDamage = -1, BundleSnakeDamage = -1, LittleWoeDamage = -1;
         public bool rippleEffect = false;
 		public int rippleTimer = 0;
 		public int rippleBonusDamage = 0;
@@ -1113,7 +1112,7 @@ namespace SOTS
 			BlinkType = 0;
 			VisionVanity = backUpBowVisual = rippleEffect = false;
 			rippleBonusDamage = 0;
-			symbioteDamage = BundleSnakeDamage = - 1;
+			symbioteDamage = BundleSnakeDamage = LittleWoeDamage = -1;
 			petPinky = -1;
 			petFreeWisp = -1;
 			petPepper = petAdvisor = rainbowGlowmasks = HoloEyeIsVanity = HoloEye = false;

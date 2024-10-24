@@ -21,7 +21,7 @@ namespace SOTS.Projectiles.Blades
 		public static Color VorpalColor1 = new Color(56, 159, 135);
 		public static Color VorpalColor2 = new Color(86, 226, 100);
 		public override string Texture => "SOTS/Projectiles/Blades/VorpalKnifeSlash";
-        float rotation = 0;
+        private float rotation = 0;
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(Projectile.timeLeft);
@@ -29,10 +29,6 @@ namespace SOTS.Projectiles.Blades
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			Projectile.timeLeft = reader.ReadInt32();
-		}
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Vertebraeker");
 		}
         public override void SetDefaults()
         {
@@ -70,12 +66,12 @@ namespace SOTS.Projectiles.Blades
 		{
 			modifiers.HitDirectionOverride = initialDirection;
 		}
-		bool runOnce = true;
-		Vector2 initialVelo;
-		Vector2 initialCenter;
+		private bool runOnce = true;
+		private Vector2 initialVelo;
+		private Vector2 initialCenter;
 		public int initialDirection = 0;
-		int soundCounter = 0;
-		bool runOnce2 = true;
+		private int soundCounter = 0;
+		private bool runOnce2 = true;
 		public Vector2 newCenter;
         public override bool PreAI()
 		{
@@ -119,7 +115,7 @@ namespace SOTS.Projectiles.Blades
 				ovalArea.Y += ovalArea2.Y;
 				Vector2 goTo = initialCenter + ovalArea;
 				float dist = (Projectile.Center - goTo).Length();
-				Vector2 circular = new Vector2(-(dist > 18 ? 18 : dist), 0).RotatedBy((Projectile.Center - goTo).ToRotation());
+				Vector2 circular = new Vector2(-MathF.Min(dist, 18), 0).RotatedBy((Projectile.Center - goTo).ToRotation());
 				Projectile.velocity = circular + new Vector2(0, -1.7f);
 				newCenter = Projectile.Center;
 			}
@@ -199,7 +195,7 @@ namespace SOTS.Projectiles.Blades
 				circular = circular.RotateRandom(Projectile.rotation) * Main.rand.NextFloat(0.9f, 1.2f);
 				float dustScale = 1.0f;
 				float rand = Main.rand.NextFloat(0.9f, 1.1f);
-				int type = ModContent.DustType<Dusts.CopyDust4>();
+				int type = ModContent.DustType<CopyDust4>();
 				if (Main.rand.NextBool(5))
 					type = DustID.GreenTorch;
 				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + circular, 0, 0, type);
@@ -209,12 +205,16 @@ namespace SOTS.Projectiles.Blades
 				dust.scale *= 0.2f / rand;
 				dust.scale += 1.2f / rand * dustScale;
 				dust.fadeIn = 0.1f;
-				if (type == ModContent.DustType<Dusts.CopyDust4>())
+				if (type == ModContent.DustType<CopyDust4>())
 					dust.color = Color.Lerp(VorpalColor1, VorpalColor2, Main.rand.NextFloat(1f) * Main.rand.NextFloat(1f));
 			}				
 			if (Projectile.timeLeft >= 110)
-				Projectile.Center += Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
-			else
+			{
+				Vector2 postTileCollision = Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
+				if(postTileCollision.X != 16 || Projectile.velocity.X == 16)
+					Projectile.Center += postTileCollision;
+            }
+            else
 				Projectile.Center += Projectile.velocity;
 			foreach (PrimTrail trail in SOTS.primitives._trails.ToArray())
 			{

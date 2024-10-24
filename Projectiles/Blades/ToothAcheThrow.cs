@@ -26,10 +26,6 @@ namespace SOTS.Projectiles.Blades
 			Projectile.velocity.X = reader.ReadSingle();
 			Projectile.velocity.Y = reader.ReadSingle();
 		}
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Tooth Ache");
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 84;
@@ -170,7 +166,11 @@ namespace SOTS.Projectiles.Blades
 					dust.color = Color.Lerp(ToothAcheSlash.toothAcheGreen, ToothAcheSlash.toothAcheLime, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
 			}
 			if (Projectile.timeLeft >= 110)
-				Projectile.Center += Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
+            {
+                Vector2 postTileCollision = Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
+                if (postTileCollision.X != 16 || Projectile.velocity.X == 16)
+                    Projectile.Center += postTileCollision;
+            }
 			else
 				Projectile.Center += Projectile.velocity;
 

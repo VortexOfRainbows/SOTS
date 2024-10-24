@@ -49,7 +49,6 @@ Update Objectives:
 	5. Make mines not last as long
 14. Boss balancing configs
 15. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
-16. Plating Platforms to become lava immune and plating torches to become water immune
 
 ---WIP List---
 Abandoned village generation
@@ -69,7 +68,7 @@ If the Abandoned Village particles fail to generate for weaker computers, or pot
 ---Balance Needed List (by Severity, -weak, +strong)---
 5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
-3. Earthen Gizmo, Corpsebloom, Throe
+3. Earthen Gizmo, Corpsebloom, Throe, Famished
 2. +++Soot Extractinator loot, +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
 1. ++++Tesseract, +++Voidmage Incubator, +++Voidspace Aura Staff, +++Challenger's Ring
 
@@ -82,20 +81,19 @@ N/A
 ---Content Needed---
 Look down for Abandoned Village todo and progress...
 	1. Needs: Generate Ancient Steel and Chests on corridors occasionally
-	2. Needs: Flesh Block clumps, which spawn on the soot... Appear more frequently as you get deeper...
-		1. Should deal contact damage. Also spawns enemies on top of it.
-	3. Ash particles in the air
 
 ---Items To Make Work With Tesseract---
 N/A
 
 Daily Log:
 
-10/16/24 and 10/20/24 to 10/21/24
+10/16/24 and 10/20/24 to 10/23/24
 1. Added Blongus, works in Multiplayer
 2. Added Lungrot
 3. Abandoned Village now has some graveyard visuals (not sure if I want these active underground, but they will be for now)
 4. Added Steeler Wheeler
+5. Plating platforms no longer die from lava and plating torches are not killed by water
+6. Fix issue where Vertebraeker, Tooth Ache, and Vorpal Knife could be thrown through walls to the right..?
 
 10/10/24 to 10/15/24
 1. Finished the Famished (FINALLY)

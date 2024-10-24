@@ -6,7 +6,6 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using SOTS.Projectiles.Blades;
 using System;
-using SOTS.Projectiles.Lightning;
 
 namespace SOTS.Items.Invidia
 {

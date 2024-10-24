@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Void;
-using SOTS.Common.GlobalNPCs;
 using System.IO;
 using SOTS.Prim.Trails;
 using SOTS.Prim;
@@ -28,10 +25,6 @@ namespace SOTS.Projectiles.Blades
 			Projectile.tileCollide = reader.ReadBoolean();
 			Projectile.velocity.X = reader.ReadSingle();
 			Projectile.velocity.Y = reader.ReadSingle();
-		}
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Vertebraeker");
 		}
         public override void SetDefaults()
         {
@@ -163,8 +156,12 @@ namespace SOTS.Projectiles.Blades
 				}
 			}				
 			if (Projectile.timeLeft >= 110)
-				Projectile.Center += Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
-			else
+            {
+                Vector2 postTileCollision = Collision.TileCollision(Projectile.Center - new Vector2(12, 12), Projectile.velocity, 24, 24, true);
+                if (postTileCollision.X != 16 || Projectile.velocity.X == 16)
+                    Projectile.Center += postTileCollision;
+            }
+            else
 				Projectile.Center += Projectile.velocity;
 			foreach (PrimTrail trail in SOTS.primitives._trails.ToArray())
 			{

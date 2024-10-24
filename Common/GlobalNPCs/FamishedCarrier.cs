@@ -158,11 +158,12 @@ namespace SOTS.Common.GlobalNPCs
                     }
                     if(MyCounter % 120 == 0 && npc.life < npc.lifeMax)
                     {
-                        npc.life += Famished.LifePerBlock;
+                        int maxGainableHealth = Math.Min(npc.lifeMax - npc.life, Famished.LifePerBlock);
+                        npc.life += maxGainableHealth;
                         if (Main.netMode != NetmodeID.Server)
                         {
                             SOTSUtils.PlaySound(SoundID.Item177, SeedPos, 0.8f, -0.4f);
-                            CombatText.NewText(npc.Hitbox, CombatText.HealLife, Famished.LifePerBlock, false, true);
+                            CombatText.NewText(npc.Hitbox, CombatText.HealLife, maxGainableHealth, false, true);
                             Vector2 toNpc = npc.Center - SeedPos;
                             for(float i = 0; i < 0.9f; i += 0.025f)
                             {

@@ -55,7 +55,7 @@ namespace SOTS.Common.ModPlayers
         private void SpawnAmbientParticles()
         {
             float percent = VillageCounter / VillageTransitionTime;
-            float target = percent * 0.3f;
+            float target = percent * 0.5f;
             if (Main.GraveyardVisualIntensity < target)
                 Main.GraveyardVisualIntensity = target;
             //This is where dust spawning will go
