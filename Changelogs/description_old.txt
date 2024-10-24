@@ -10,26 +10,33 @@ Wiki has been moved to wiki.gg
 
 [b]!! This mod is in development !![/b]
 [b]!! A large world is recommended to avoid major structures overlapping !![/b]
-[b]!! Worldgen may not work on special seeds !![/b]
 
 This mod contains:
-8 entirely new bosses with unique attacks
-800+ new items with many interesting effects, and 3 new ores with unique mechanics
-3 new dungeons: the Planetarium, Pyramid, and Abandoned Village
+7 entirely new bosses with unique attacks
+700+ new items with many interesting effects, and 3 new ores with unique mechanics
+2 new dungeons: the Planetarium and Pyramid with more planned!
 Many new mini structures that add life to Terraria
-A new damage class, Void, which lets you utilize the power of your soul
+A new mechanic, Void, which lets you utilize the power of your soul
 Warriors, Rangers, Mages, and Summoners can all have void weapons at their disposal
 
 [b]~Developers~[/b]
 Code, Direction, Art: Vortex
 Direction, Art: Taco
-Code: DylanDoe21, apotofkoolaid
-Art: Petaniks, kekcroc
-Music: BananaLizard, YuriO
-Music, SFX, Art: Heart Plus Up!
+Music, SFX, Direction, Art: Heart Plus Up!
+Music: YuriO
+Code, SFX: apotofkoolaid
+Art: Petaniks, Cloud
 
-[b]~Special Thanks To~[/b]
-Blasfah, Mochi, HugeKraken, Arcri, Lunatix, Cloud, SpicySpaceSnake, Pokerface, Moonseer, Lacewing, Linnnnnna, 
-ENNWAY, Ramen, Mushnib~, Astrobit, Dreadsoul, Crimsonkeep, Bman, TheorR, Sovergi
+[b]~Major Contributors and Past Developers~[/b]
+Art: Blasfah, Mochi, HugeKraken, Lunatix, SpicySpaceSnake, Pokerface
+Art, Code: Moonseer
+Localization: Lacewing, Linnnnnna
+Misc, Direction: FlameFreezer
+Music: BananaLizard
 
+[b]~Minor Contributors~[/b]
+Art: Arcri, Naka, DeJuiceTD, Nomis
+Testing/Misc: Mushnib~, DreadSoul, Crimsonkeep, Bman, TheoR, Sovergi
+Code: Graydee, ENNWAY, Qwerty3.14, OS, Nalyd T., Ramen
+Art, Testing/Misc: Astrobit
 [quote=tModLoader]Developed By Vortex Of Rainbows[/quote]

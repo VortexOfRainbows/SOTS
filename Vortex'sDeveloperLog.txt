@@ -58,7 +58,6 @@ Vibrant Geode to spawn Wishing Star/ Shattered Dreams
 Make enemies spawn in the AV and Mines
 Should Wishing Star only change the gem color, or also the border?
 Fix Archaeologist Shop (for the new items, such as Wishing Star)!
-Update Contributor Lists...
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
