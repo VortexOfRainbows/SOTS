@@ -25,7 +25,7 @@ namespace SOTS.Items.Planetarium.FromChests
 			Item.damage = 20;
 			Item.knockBack = 2f;
 			Item.mana = 12;
-			Item.width = 38;
+			Item.width = 42;
 			Item.height = 40;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
