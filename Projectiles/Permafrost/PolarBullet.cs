@@ -24,7 +24,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.tileCollide = true;
 			Projectile.hostile = true;
 		}
-		Vector2[] trailPos = new Vector2[8];
+		private Vector2[] trailPos = new Vector2[8];
         public override Color? GetAlpha(Color lightColor)
         {
             return Color.White;
@@ -59,11 +59,10 @@ namespace SOTS.Projectiles.Permafrost
                 {
                     break;
                 }
-                Color color = new Color(100, 100, 100, 0);
-				Vector2 drawPos;
+                Color color = new Color(100, 100, 100, 0) * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
+                Vector2 drawPos;
                 Vector2 currentPos = trailPos[k];
                 Vector2 betweenPositions = currentPos - previousPosition;
-                color = color * ((trailPos.Length - k) / (float)trailPos.Length) * 0.5f;
                 drawPos = previousPosition - Main.screenPosition;
 				if (trailPos[k] != Projectile.Center)
 					Main.spriteBatch.Draw(textureTrail, drawPos, null, color, betweenPositions.ToRotation(), drawOriginTrail, new Vector2(betweenPositions.Length() / textureTrail.Width * 2f, scale), SpriteEffects.None, 0f);
@@ -77,8 +76,8 @@ namespace SOTS.Projectiles.Permafrost
             }
 			return false;
 		}
-		bool runOnce = true;
-		float acceleration = 0.3f;
+		private bool runOnce = true;
+		private float acceleration = 0.3f;
 		public override bool PreAI()
 		{
 			int dustAmtMult = 3;
@@ -94,8 +93,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.ai[0]--;
 				for (int i = 0; i < 3 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
-					Dust dust = Main.dust[num1];
+                    Dust dust = Dust.NewDustDirect(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					dust.velocity *= 0.2f;
 					dust.velocity += Projectile.velocity * 0.225f;
 					dust.noGravity = true;
@@ -113,8 +111,7 @@ namespace SOTS.Projectiles.Permafrost
 				Projectile.position += Projectile.velocity * 2;
 				for (int i = 0; i < 1.5 * dustAmtMult; i++)
 				{
-					int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
-					Dust dust = Main.dust[num1];
+					Dust dust = Dust.NewDustDirect(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 					dust.velocity *= 0.1f;
 					dust.velocity += Projectile.velocity * 0.5f;
 					dust.noGravity = true;

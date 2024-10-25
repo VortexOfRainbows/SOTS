@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             counter++;
             if (Projectile.owner == Main.myPlayer)
             {
-                if (counter % 2 == 0)
+                if (counter % 180 == 0)
                     Projectile.netUpdate = true;
                 if (owner == null || !owner.active || player.dead || !player.active || Projectile.damage != modPlayer.LittleWoeDamage)
                 {

@@ -3,15 +3,13 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using FullSerializer.Internal;
 using System;
-using static Humanizer.In;
-using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace SOTS.Projectiles.Permafrost
 {    
     public class PolarisMines : ModProjectile 
     {
+        public const int TimeLeftMax = 480;
         public override void SetStaticDefaults()
 		{
 			Main.projFrames[Type] = 2;
@@ -24,7 +22,7 @@ namespace SOTS.Projectiles.Permafrost
 			Projectile.penetrate = -1;
 			Projectile.friendly = false;
 			Projectile.hostile = true;
-			Projectile.timeLeft = 600;
+			Projectile.timeLeft = TimeLeftMax;
 			Projectile.tileCollide = true;
 			Projectile.netImportant = true;
 		}
@@ -43,12 +41,12 @@ namespace SOTS.Projectiles.Permafrost
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
-            Texture2D textureG = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Permafrost/PolarisMinesGlow");
+            Texture2D textureG = ModContent.Request<Texture2D>("SOTS/Projectiles/Permafrost/PolarisMinesGlow").Value;
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Width / 2);
             for (int i = 0; i < 4; i++)
             {
-                Vector2 circular = new Vector2(2 + Projectile.ai[1] / 200f, 0).RotatedBy(i * MathHelper.PiOver2 + Projectile.rotation);
-                circular *= 1 + -1 * (float)Math.Cos((float)Math.Pow(Projectile.ai[1] / 600f, 4f) * MathHelper.TwoPi * 4f);
+                Vector2 circular = new Vector2(2 + Projectile.ai[1] / TimeLeftMax * 3f, 0).RotatedBy(i * MathHelper.PiOver2 + Projectile.rotation);
+                circular *= 1 + -1 * (float)Math.Cos((float)Math.Pow(Projectile.ai[1] / TimeLeftMax, 4f) * MathHelper.TwoPi * 4f);
                 Main.spriteBatch.Draw(texture, Projectile.Center + circular - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle(0, 38 * Projectile.frame, 36, 36), new Color(100, 100, 100, 0), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
             }
             Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), new Rectangle(0, 38 * Projectile.frame, 36, 36), lightColor, Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
@@ -57,8 +55,8 @@ namespace SOTS.Projectiles.Permafrost
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
-            if (Projectile.ai[1] < 590)
-                Projectile.ai[1] = 590;
+            if (Projectile.ai[1] < TimeLeftMax - 10)
+                Projectile.ai[1] = TimeLeftMax - 10;
         }
         bool runOnce = true;
         public override bool PreAI()
@@ -84,7 +82,7 @@ namespace SOTS.Projectiles.Permafrost
                 Projectile.frame = 1;
             }
             Projectile.velocity *= 0.97f;
-            if (Projectile.ai[1] > 600)
+            if (Projectile.ai[1] > TimeLeftMax)
             {
                 Projectile.Kill();
             }
@@ -107,7 +105,7 @@ namespace SOTS.Projectiles.Permafrost
                 }
             }
             Projectile.ai[1]++;
-            if (Projectile.ai[1] > 600)
+            if (Projectile.ai[1] > TimeLeftMax)
                 Projectile.Kill();
             return true;
         }
