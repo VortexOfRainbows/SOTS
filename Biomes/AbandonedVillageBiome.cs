@@ -1,8 +1,5 @@
 using Microsoft.Xna.Framework;
 using SOTS.Items.Furniture.Earthen;
-using SOTS.Items.Pyramid;
-using System;
-using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -13,8 +10,7 @@ namespace SOTS.Biomes
 		//public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("ExampleMod/ExampleWaterStyle"); // Sets a water style for when inside this biome
 		//public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("ExampleMod/ExampleSurfaceBackgroundStyle");
 		//public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Crimson;
-
-		//public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CursedPyramid");
+		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/BananaLizard/AVSurface");
 		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
 		// Populate the Bestiary Filter

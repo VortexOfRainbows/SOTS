@@ -28,6 +28,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			Item.height = 32;
 			Item.shoot = ModContent.ProjectileType<Projectiles.Earth.Glowmoth.TorchBomb>();
 			Item.shootSpeed += 1.5f;
+			Item.ammo = Type;
 		}
 		public override void AddRecipes()
 		{

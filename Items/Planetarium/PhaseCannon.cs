@@ -38,7 +38,6 @@ namespace SOTS.Items.Planetarium
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -2;
 				Item.GetGlobalItem<ItemUseGlow>().glowOffsetY = 1;
 			}
-
 		}
         public override Vector2? HoldoutOffset()
         {

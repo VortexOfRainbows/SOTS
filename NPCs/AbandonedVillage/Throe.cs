@@ -392,7 +392,7 @@ namespace SOTS.NPCs.AbandonedVillage
 		{
 			npcLoot.Add(ItemDropRule.Common(ItemType<LittleWoes>(), 250, 1, 1));
 			npcLoot.Add(ItemDropRule.Common(ItemType<SootBlock>(), 1, 1, 2));
-            npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEarth>(), 5, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEarth>(), 10, 1, 1));
         }
         public override void OnKill()
         {

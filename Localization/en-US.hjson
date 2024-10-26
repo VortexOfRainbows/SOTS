@@ -5821,6 +5821,16 @@ Mods: {
 					Attaches a Little Woe to all minions
 					'''
 			}
+
+			TorchGunMk2: {
+				DisplayName: Torch Gun Mk2
+				Tooltip:
+					'''
+					Launches a torch cluster bomb that explodes into homing torches
+					Right click to launch smaller torch bombs, consuming neither ammo nor void
+					Uses torch bombs for ammo
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7607,6 +7617,8 @@ Mods: {
 			FamishedDeadzone.DisplayName: Famished Deadzone
 			BlongusProj.DisplayName: Blongus Proj
 			WoeBall.DisplayName: Little Woe
+			TorchBombMk2.DisplayName: Torch Bomb Mk2
+			TorchEmberMk2.DisplayName: Torch Ember Mk2
 		}
 
 		DamageClasses: {

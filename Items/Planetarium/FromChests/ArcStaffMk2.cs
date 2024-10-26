@@ -10,10 +10,7 @@ namespace SOTS.Items.Planetarium.FromChests
 {
 	public class ArcStaffMk2 : VoidItem
 	{
-		public override void SetStaticDefaults()
-		{
-			this.SetResearchCost(1);
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 120;

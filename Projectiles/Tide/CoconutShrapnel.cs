@@ -7,10 +7,6 @@ namespace SOTS.Projectiles.Tide
 {    
     public class CoconutShrapnel : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Coconut Shrapnel");
-		}
         public override void SetDefaults()
         {
 			Projectile.CloneDefaults(616);
@@ -27,12 +23,8 @@ namespace SOTS.Projectiles.Tide
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
-			target.immune[Projectile.owner] = 0;
 			if (Main.rand.NextBool(5))
-			{
 				target.AddBuff(BuffID.OnFire, 300); //fire for 5 seconds
-			}
 		}
 		public override void AI()
 		{
@@ -40,24 +32,24 @@ namespace SOTS.Projectiles.Tide
 				AIType = 0;
 			Projectile.velocity.Y += 0.09f;
 			Projectile.alpha = 255;
-			int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, DustID.BubbleBurst_White);
-			Main.dust[num1].noGravity = true;
-			Main.dust[num1].velocity *= 0.1f;
+			Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.BubbleBurst_White);
+			dust.noGravity = true;
+            dust.velocity *= 0.1f;
 			if(Main.rand.NextBool(3))
 			{
-				num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, DustID.Torch);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.8f;
-				Main.dust[num1].velocity += Projectile.velocity * -0.1f;
+                dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.Torch);
+				dust.noGravity = true;
+				dust.velocity *= 0.8f;
+                dust.velocity += Projectile.velocity * -0.1f;
 			}
 		}
         public override void OnKill(int timeLeft)
 		{
 			for(int i = 0; i < 10; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, DustID.BubbleBurst_White);
-				Main.dust[num1].noGravity = false;
-				Main.dust[num1].velocity += -2f * Projectile.velocity.SafeNormalize(Vector2.Zero);
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, DustID.BubbleBurst_White);
+				dust.noGravity = false;
+                dust.velocity += -2f * Projectile.velocity.SafeNormalize(Vector2.Zero);
 			}
 		}
     }

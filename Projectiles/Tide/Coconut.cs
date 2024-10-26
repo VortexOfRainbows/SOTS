@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Tide
 		{
 			if (Main.rand.NextBool(3))
 			{
-				target.AddBuff(BuffID.OnFire, 600); //fire for 10 seconds
+				target.AddBuff(BuffID.OnFire, 600);
 			}
 		}
 		public override void SetDefaults()
@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.Tide
         {
 			return false;
         }
-		bool runOnce = true;
+		private bool runOnce = true;
         public override bool PreAI()
 		{
 			if(runOnce)
@@ -75,10 +75,10 @@ namespace SOTS.Projectiles.Tide
 			for(int i = 0; i < 2; i++)
 			{
 				Vector2 circularPos = new Vector2(7, -7).RotatedBy(Projectile.rotation) * Projectile.scale;
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) + circularPos - new Vector2(5), 0, 0, DustID.Torch);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity *= 0.1f;
-				Main.dust[num1].scale = Projectile.scale + 0.2f;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X, Projectile.Center.Y) + circularPos - new Vector2(5), 0, 0, DustID.Torch);
+				dust.noGravity = true;
+				dust.velocity *= 0.1f;
+                dust.scale = Projectile.scale + 0.2f;
 			}
 		}
 		public override void OnKill(int timeLeft)
@@ -89,21 +89,21 @@ namespace SOTS.Projectiles.Tide
 			int RandMod = (int)Projectile.ai[0];
 			for (int i = 0; i < 10 + RandMod * 2; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.Torch);
-				Main.dust[num1].velocity *= 1.8f * (0.2f + 0.7f * Projectile.scale);
-				Main.dust[num1].scale = Projectile.scale + 0.6f;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.Torch);
+                dust.velocity *= 1.8f * (0.2f + 0.7f * Projectile.scale);
+                dust.scale = Projectile.scale + 0.6f;
 			}
 			for (int i = 0; i < 10 + RandMod * 2; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, 212);
-				Main.dust[num1].velocity *= 1.6f * (0.2f + 0.7f * Projectile.scale);
-				Main.dust[num1].scale = Projectile.scale * 0.8f + 0.5f;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, 212);
+				dust.velocity *= 1.6f * (0.2f + 0.7f * Projectile.scale);
+                dust.scale = Projectile.scale * 0.8f + 0.5f;
 			}
 			for (int i = 0; i < 5 + RandMod; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.t_BorealWood);
-				Main.dust[num1].velocity *= 1.4f * (0.2f + 0.6f * Projectile.scale);
-				Main.dust[num1].scale = Projectile.scale * 0.8f + 0.5f;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5), Projectile.width, Projectile.height, DustID.t_BorealWood);
+				dust.velocity *= 1.4f * (0.2f + 0.6f * Projectile.scale);
+                dust.scale = Projectile.scale * 0.8f + 0.5f;
 			}
 			if (Projectile.owner == Main.myPlayer)
 			{

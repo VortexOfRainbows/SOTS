@@ -33,16 +33,16 @@ Update Objectives:
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items (pending)
 4. Starmap
-5. Torch Bomb Upgrade Item
-6. House Cube Accessory that can generate a temporary house
-7. Upgrade to Code Corruptor: Dolphin Blaster (?)
-8. Shimmer Item that upgrades the store for Archaeologist
-9. Fish Bomb
-10. Fix generation bug with Infernum and Leviathan area, potentially fix remnants and secret seeed compatability
-11. Upgrade item to the Hydrokinetic Antennae
-12. Update Elemental Amulet sprite to include modern genshin visions
-13. Boss balancing configs
-14. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
+5. House Cube Accessory that can generate a temporary house
+6. Upgrade to Code Corruptor: Dolphin Blaster (?)
+7. Shimmer Item that upgrades the store for Archaeologist
+8. Fish Bomb
+9. Fix generation bug with Infernum and Leviathan area, potentially fix remnants and secret seeed compatability
+10. Upgrade item to the Hydrokinetic Antennae
+11. Update Elemental Amulet sprite to include modern genshin visions
+12. Boss balancing configs
+13. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
+14. Music Boxes for AV
 
 ---WIP List---
 Abandoned village generation
@@ -79,6 +79,13 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+10/25/24 to 10/26/24
+1. Torch Gun Mk2: should be somewhat balanced + works in multiplayer. Incredible utility weapon with a chance to be very annoying.
+	1. Right click is very strong, but not too overpowered
+	2. Left click is beyond broken, so it costs a lot of void
+	3. In general, it is competitive with Stormbow, Onyx Blaster, etc. (Though perhaps a bit stronger)
+2. Epic Abandoned Village theme! BananaLizard!!!!
 
 10/24/24
 1. More Polaris Nerfs:
