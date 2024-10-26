@@ -4,13 +4,10 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Utilities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using rail;
 using SOTS.Items.Banners;
-//using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
 {

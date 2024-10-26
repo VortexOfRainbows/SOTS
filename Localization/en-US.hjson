@@ -5831,6 +5831,11 @@ Mods: {
 					Uses torch bombs for ammo
 					'''
 			}
+
+			AVMusicBox: {
+				DisplayName: Abandoned Village Surface Music Box
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6494,12 +6499,13 @@ Mods: {
 			PlanetariumCrateTile.MapEntry: Planetarium Crate
 			ChaosConduitTile.MapEntry: Chaos Conduit
 			OtherworldConduitTile.MapEntry: Otherworld Conduit
-			EvilConduitTile.MapEntry: Evil Conduit Tile
-			InfernoConduitTile.MapEntry: Inferno Conduit Tile
-			PermafrostConduitTile.MapEntry: Permafrost Conduit Tile
-			TidalConduitTile.MapEntry: Tidal Conduit Tile
-			GulaGatewayTile.MapEntry: Gula Gateway Tile
+			EvilConduitTile.MapEntry: Evil Conduit
+			InfernoConduitTile.MapEntry: Inferno Conduit
+			PermafrostConduitTile.MapEntry: Permafrost Conduit
+			TidalConduitTile.MapEntry: Tidal Conduit
+			GulaGatewayTile.MapEntry: Gula Gateway
 			AVPots.MapEntry: Pot
+			AVMusicBoxTile.MapEntry: Abandoned Village Surface Music Box
 		}
 
 		WorldGeneration: {

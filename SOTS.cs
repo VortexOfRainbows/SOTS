@@ -174,8 +174,9 @@ namespace SOTS
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/KnucklesTheme"), ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Lux"), ModContent.ItemType<LuxMusicBox>(), ModContent.TileType<LuxMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PharaohsCurse"), ModContent.ItemType<CurseMusicBox>(), ModContent.TileType<CurseMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/BananaLizard/AVSurface"), ModContent.ItemType<AVMusicBox>(), ModContent.TileType<AVMusicBoxTile>());
 			SOTSItem.LoadArrays();
-			SOTSTile.LoadArrays();
+            SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();
 			SOTSPlayer.LoadArrays();
 			SOTSProjectile.LoadArrays();
