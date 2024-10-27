@@ -6722,6 +6722,8 @@ Mods: {
 			EarthenGizmo.DisplayName: Earthen Gizmo
 			Throe.DisplayName: Throe
 			Famished.DisplayName: Famished
+			BallOGuts.DisplayName: Ball O Guts
+			BallOWorms.DisplayName: Ball O Worms
 		}
 
 		Bestiary: {
