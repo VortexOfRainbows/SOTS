@@ -3934,14 +3934,66 @@ namespace SOTS.WorldgenHelpers
         }
         public static void PlaceLootInChests()
         {
+            int bestC = BestEvilBiome();
+            CorruptionRectangle cR = Corruptions[bestC];
+            int tier1 = 0, tier2 = 0, tier3 = 0, tier4 = 0;
             List<int> Tier1Items = [ModContent.ItemType<FizzleStar>(), ModContent.ItemType<VisionAmulet>(), ItemID.MiningHelmet, ModContent.ItemType<AncientSteelSword>(), ModContent.ItemType<AncientSteelLongbow>(), ModContent.ItemType<SteelerWheeler>()];
             List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(), ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>()];
             List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>()];
-            List<int> Tier4Items = [ModContent.ItemType<StarshardSaber>(), ModContent.ItemType<Icebreaker>(), ModContent.ItemType<SandstormPouch>(), ModContent.ItemType<PlagueSpitter>(), ModContent.ItemType<Blongus>(), ModContent.ItemType<JarOfPineapple>()];
+            List<int> Tier4Items = [ModContent.ItemType<StarshardSaber>(), ModContent.ItemType<Icebreaker>(), ModContent.ItemType<SandstormPouch>(), ModContent.ItemType<PlagueSpitter>(), ModContent.ItemType<JarOfPineapple>()];
             //Melee:  Halberd, Sword, Starshard Saber, Guardian Greatsword(Void), Pickaxe(Void), Hamaxe (6)
             //Ranged: Longbow, Hand Cannon, Soot Spewer, Backup Bow, Fortress Crasher, Ice Breaker, Sandstorm Pouch(Void) (7)
             //Magic:  Fizzle Star, Magma Concentrator(Void), Blongus/Acid Belcher (3)
             //Summon: Lantern, Fresh Greeny, Little Woes (3)
+            foreach (Chest chest in Main.chest.Where(c => c != null))
+            {
+                // Get a chest
+                int i = chest.x;
+                int j = chest.y;
+                if(!AVSweepRect.Contains(i, j) && !cR.rect.Contains(i, j))
+                    continue;
+                Tile tile = Main.tile[i, j]; // the chest tile 
+                int itemType = ItemID.BreathingReed;
+                int slot = 0;
+                bool alreadyHasItem = chest.item[slot].type == ItemID.None;
+                if (tile.TileType == TileID.Containers || alreadyHasItem)
+                {
+                    //Tier 0 items (for chests and barrels that spawn in the abandoned village that aren't modded or don't have existing loot
+
+                }
+                else if(tile.TileType == ModContent.TileType<RuinedChestTile>())
+                {
+                    //Tier 1 items
+                    itemType = Tier1Items[tier1++ % Tier1Items.Count];
+                }
+                else if(tile.TileType == ModContent.TileType<EarthenPlatingStorageTile>())
+                {
+                    //Tier 2 items
+                    itemType = Tier2Items[tier2++ % Tier2Items.Count];
+                }
+                else if(tile.TileType == ModContent.TileType<GulaVaultTile>())
+                {
+                    if (tile.TileFrameX >= 108) //If it is a triple locked chest
+                    {
+                        //Tier 4 items
+                        itemType = Tier4Items[tier4++ % Tier4Items.Count];
+                        if(itemType == ModContent.ItemType<PlagueSpitter>() && WorldGen.crimson)
+                        {
+                            itemType = ModContent.ItemType<Blongus>();
+                        }
+                    }
+                    else
+                    {
+                        //Tier 3 items
+                        itemType = Tier3Items[tier3++ % Tier3Items.Count];
+                    }
+                }
+                if(!alreadyHasItem)
+                {
+                    chest.item[slot].SetDefaults(itemType);
+                    slot++;
+                }
+            }
         }
     }
 }

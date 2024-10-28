@@ -124,8 +124,9 @@ namespace SOTS.Items.ChestItems
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.Orange;
 			Item.accessory = true;
-		}
-		public override void UpdateAccessory(Player player, bool hideVisual)
+			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);
+        }
+        public override void UpdateAccessory(Player player, bool hideVisual)
 		{
             SetOverridenName();
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);

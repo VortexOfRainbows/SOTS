@@ -1,9 +1,6 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -21,22 +18,21 @@ namespace SOTS.Projectiles.Celestial
             Projectile.width = 0;
             Projectile.height = 0;
             Projectile.timeLeft = 1200;
-            Projectile.hide = true; // Prevents projectile from being drawn normally. Use in conjunction with DrawBehind.
+            Projectile.hide = true; 
         }
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
             overWiresUI.Add(index);
         }
-        private int fadeInTimer = 0;
-        bool runOnce = true;
+        private int FadeInTimer = 0;
+        private bool RunOnce = true;
         public override void AI()
         {
-            //Main.NewText(Projectile.timeLeft);
-            if(runOnce)
+            if(RunOnce)
             {
                 if(Projectile.knockBack == 1)
                    Projectile.timeLeft = 1400;
-                runOnce = false;
+                RunOnce = false;
             }
             NPC master = Main.npc[(int)Projectile.ai[0]];
             if (master.active && (master.type == ModContent.NPCType<NPCs.Boss.SubspaceEye>() || master.type == ModContent.NPCType<NPCs.Boss.SubspaceSerpentHead>()) && (master.ai[3] != -1 || Math.Abs(Projectile.ai[1]) <= 1))
@@ -52,25 +48,25 @@ namespace SOTS.Projectiles.Celestial
             }
             if (Projectile.timeLeft < 255)
             {
-                if (fadeInTimer > 0)
+                if (FadeInTimer > 0)
                 {
-                    fadeInTimer -= 20;
-                    if (fadeInTimer <= 0)
+                    FadeInTimer -= 20;
+                    if (FadeInTimer <= 0)
                         Projectile.Kill();
                 }
             }
             else
             {
-                if (fadeInTimer < 255)
+                if (FadeInTimer < 255)
                 {
-                    fadeInTimer++;
+                    FadeInTimer++;
                     if (Math.Abs(Projectile.ai[1]) > 1)
-                        fadeInTimer++;
+                        FadeInTimer++;
                 }
-                if (fadeInTimer > 255)
-                    fadeInTimer = 255;
+                if (FadeInTimer > 255)
+                    FadeInTimer = 255;
             }
-            Projectile.alpha = fadeInTimer;
+            Projectile.alpha = FadeInTimer;
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 Projectile.netUpdate = true;
@@ -117,8 +113,8 @@ namespace SOTS.Projectiles.Celestial
                 }
             }
         }
-        bool runOnce2 = true;
-        Texture2D ShadowTexture = null;
+        private bool runOnce2 = true;
+        private Texture2D ShadowTexture = null;
         public override bool PreDraw(ref Color lightColor)
         {
             if (!Projectile.active)
@@ -160,7 +156,7 @@ namespace SOTS.Projectiles.Celestial
             {
                 offset -= Main.screenWidth + 800;
             }
-            Main.spriteBatch.Draw(ShadowTexture, new Vector2(Projectile.Center.X + Projectile.ai[1] + offset - Main.screenPosition.X, 0), null, new Color(fadeInTimer, fadeInTimer, fadeInTimer, fadeInTimer), 0, new Vector2(0, 0), scale, SpriteEffects.None, .2f);
+            Main.spriteBatch.Draw(ShadowTexture, new Vector2(Projectile.Center.X + Projectile.ai[1] + offset - Main.screenPosition.X, 0), null, new Color(FadeInTimer, FadeInTimer, FadeInTimer, FadeInTimer), 0, new Vector2(0, 0), scale, SpriteEffects.None, .2f);
             screenHeightOld = Main.screenHeight;
             return false;
         }

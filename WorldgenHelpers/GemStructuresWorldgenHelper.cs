@@ -21,6 +21,7 @@ using SOTS.Items.Fragments;
 using SOTS.Items.Void;
 using SOTS.Items.Whips;
 using Terraria.WorldBuilding;
+using SOTS.Items.Tools;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -3215,11 +3216,11 @@ namespace SOTS.WorldgenHelpers
 						miscItemType = ItemID.GreaterManaPotion;
 						isSpecialChest = true;
 					}
-					if (tileBelowLeft.TileType == ModContent.TileType<SootBlockTile>() && tileBelowRight.TileType == ModContent.TileType<SootBlockTile>() && (tile.WallType == WallID.IronBrick || tile.WallType == WallID.LeadBrick)) //This is the Ruby Ruined Chest
+					if (tileBelowLeft.TileType == ModContent.TileType<EvilPlatingTile>() && Main.tile[chest.x - 15, chest.y - 10].TileType == ModContent.TileType<SOTSGemLockTiles>() && (tile.WallType == ModContent.WallType<EarthenPlatingPanelWallWall>())) //This is the Ruby Ruined Chest
 					{
 						SpecialItem = ModContent.ItemType<SyntheticLiver>();
 						fragmentItem = ModContent.ItemType<FragmentOfEvil>();
-						miscItemType = ItemID.Bomb;
+						miscItemType = ModContent.ItemType<MinersPickaxe>();
 						isSpecialChest = true;
 					}
 					if (tileBelowLeft.TileType == ModContent.TileType<EvostoneBrickTile>() && tileBelowRight.TileType == ModContent.TileType<EvostoneBrickTile>() && tile.WallType == WallID.LeadBrick) //This is the Amber Ruined Chest
@@ -3239,7 +3240,7 @@ namespace SOTS.WorldgenHelpers
 						slot++;
 
 						chest.item[slot].SetDefaults(potionItem);
-						chest.item[slot].stack = WorldGen.genRand.Next(4) + 6; //6-9
+						chest.item[slot].stack = WorldGen.genRand.Next(4) + 6; //6-9 potions
 						slot++;
 
 						chest.item[slot].SetDefaults(fragmentItem);
@@ -3248,22 +3249,15 @@ namespace SOTS.WorldgenHelpers
 
 						chest.item[slot].SetDefaults(miscItemType);
 						chest.item[slot].stack = WorldGen.genRand.Next(21) + 30; //30-50 misc items of the chest type
-						if(miscItemType == ItemID.Bomb)
+						if(miscItemType == ModContent.ItemType<MinersPickaxe>())
 						{
-							chest.item[slot].stack /= 3; //10-16 bombs
+							chest.item[slot].stack /= 3; //10-16 throwing bombs
 						}
 						slot++;
 
 						if (WorldGen.genRand.NextBool(2))
 						{
-							if (WorldGen.genRand.NextBool(2))
-							{
-								chest.item[slot].SetDefaults(ItemID.LifeCrystal);
-							}
-							else
-							{
-								chest.item[slot].SetDefaults(ItemID.ManaCrystal);
-							}
+							chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(2) ? ItemID.LifeCrystal : ItemID.ManaCrystal);
 						}
 						else
 						{
@@ -3271,7 +3265,6 @@ namespace SOTS.WorldgenHelpers
 							chest.item[slot].stack = 5;
 						}
 						slot++;
-
 						if (!WorldGen.genRand.NextBool(3))
 						{
 							chest.item[slot].SetDefaults(ItemID.SilverCoin);

@@ -742,23 +742,24 @@ namespace SOTS
 		{
 			string worldName = Main.worldName;
 
-			List<int> starItemPool2 = new List<int>() { ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(), ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>() };
-			List<int> lightItemPool2 = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>() };
-			List<int> fireItemPool2 = new List<int>() { ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>() };
+			List<int> starItemPool2 = [ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(), ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>()];
+			List<int> lightItemPool2 = [ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>()];
+			List<int> fireItemPool2 = [ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>()];
 
-			List<int> starItemPool = new List<int>() { ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(),ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>() };
-			List<int> lightItemPool = new List<int>() { ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>() };
-			List<int> fireItemPool = new List<int>() { ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>() };
+			List<int> starItemPool = [ModContent.ItemType<SkywareBattery>(), ModContent.ItemType<Poyoyo>(), ModContent.ItemType<SupernovaHammer>(), ModContent.ItemType<StarshotCrossbow>(),ModContent.ItemType<LashesOfLightning>(), ModContent.ItemType<Starbelt>(), ModContent.ItemType<TwilightAssassinsCirclet>()];
+			List<int> lightItemPool = [ModContent.ItemType<HardlightQuiver>(), ModContent.ItemType<CodeCorrupter>(), ModContent.ItemType<PlatformGenerator>(), ModContent.ItemType<Calculator>(), ModContent.ItemType<TwilightAssassinsLeggings>(), ModContent.ItemType<TwilightFishingPole>(), ModContent.ItemType<ChainedPlasma>(), ModContent.ItemType<OtherworldlySpiritStaff>()];
+			List<int> fireItemPool = [ModContent.ItemType<BlinkPack>(), ModContent.ItemType<FlareDetonator>(), ModContent.ItemType<VibrancyModule>(), ModContent.ItemType<CataclysmMusketPouch>(), ModContent.ItemType<TerminatorAcorns>(), ModContent.ItemType<TwilightAssassinsChestplate>(), ModContent.ItemType<InfernoHook>()];
 
-			List<int> LihzahrdItems2 = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>() };
-			List<int> LihzahrdItems = new List<int>() { ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>() };
+			List<int> LihzahrdItems2 = [ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>()];
+			List<int> LihzahrdItems = [ModContent.ItemType<LihzahrdTail>(), ModContent.ItemType<Revolution>(), ModContent.ItemType<SupernovaScatter>(), ModContent.ItemType<Helios>(), ModContent.ItemType<Pyrocide>()];
 
-			List<int> PyramidPoolGuaranteed = new List<int>() { ModContent.ItemType<Aten>(), ModContent.ItemType<EmeraldBracelet>(), ModContent.ItemType<ImperialPike>(), ModContent.ItemType<PharaohsCane>(), 
+			List<int> PyramidPoolGuaranteed = [ModContent.ItemType<Aten>(), ModContent.ItemType<EmeraldBracelet>(), ModContent.ItemType<ImperialPike>(), ModContent.ItemType<PharaohsCane>(), 
 				ModContent.ItemType<PitatiLongbow>(), ModContent.ItemType<RoyalMagnum>(), ModContent.ItemType<SandstoneEdge>(), ModContent.ItemType<SandstoneWarhammer>(), ModContent.ItemType<ShiftingSands>(),
-				ModContent.ItemType<SunlightAmulet>(), ItemID.FlyingCarpet, ItemID.SandstorminaBottle };
+				ModContent.ItemType<SunlightAmulet>(), ItemID.FlyingCarpet, ItemID.SandstorminaBottle ];
 			List<int> PyramidPoolAfter = new List<int>(PyramidPoolGuaranteed);
             // Iterate chests
             GemStructureWorldgenHelper.FillChestsWithLoot();
+			AbandonedVillageWorldgenHelper.PlaceLootInChests();
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest
@@ -945,9 +946,9 @@ namespace SOTS
 						chest.item[slot].stack = Main.rand.Next(3) + 3; // 3 to 5
 						slot++;
 					}
-					else if (tile2.TileType == ModContent.TileType<EarthenPlatingTile>() && tile.TileFrameX < 36)
+					else if (tile2.TileType == ModContent.TileType<EarthenPlatingTile>() && tile.TileFrameX < 36 && chest.item[slot].type == ItemID.None)
 					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<VisionAmulet>());
+						chest.item[slot].SetDefaults(ModContent.ItemType<WishingStar>());
 						slot++;
 						if(Main.rand.NextBool(2))
                         {

@@ -532,7 +532,7 @@ namespace SOTS.NPCs.Town
                 .Add<Baguette>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain && NPC.downedBoss3))
                 .Add(new Item(ItemID.Terragrim), new Condition(ShopKey, () => currentLocationType == ImportantTileID.damoclesChain))
 				.Add<PerfectStar>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal && NPC.downedBoss1))
-				.Add<VisionAmulet>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal))
+				.Add<WishingStar>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal))
 				.Add<TorchBomb>(Condition.PlayerCarriesItem(ModContent.ItemType<TorchGun>()));
             npcShop.Register(); // Name of this shop tab
 		}
