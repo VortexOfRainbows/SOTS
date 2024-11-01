@@ -4,9 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.IO;
-using SOTS.Void;
-using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.Helpers;
 
@@ -16,11 +13,11 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Otherworldly Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
         public sealed override void SetDefaults()
 		{
 			SetSpiritMinionDefaults();
@@ -80,9 +77,9 @@ namespace SOTS.Projectiles.Minions
 		{
 			return true;
 		}
-		bool runOnce = true;
-		Vector2[] orbLocations = new Vector2[4];
-		float[] orbCounter = new float[4];
+		private bool runOnce = true;
+		private Vector2[] orbLocations = new Vector2[4];
+		private float[] orbCounter = new float[4];
 		public void rotateOrbs(Vector2 npcCenter)
 		{
 			if (runOnce)
@@ -115,7 +112,6 @@ namespace SOTS.Projectiles.Minions
 							toLocation = new Vector2(rotationalVelo.X, 0).RotatedBy(toLocation.ToRotation());
 							if (currentAI >= 30)
 							{
-								//Terraria.Audio.SoundEngine.PlaySound(2, (int)Projectile.Center.X, (int)Projectile.Center.Y, 43, 0.4f);
 								if (Main.myPlayer == Projectile.owner)
 								{
 									Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), orbLocations[i], new Vector2(1, 0).RotatedBy(toLocation.ToRotation()) * 12, ModContent.ProjectileType<OtherworldLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0);

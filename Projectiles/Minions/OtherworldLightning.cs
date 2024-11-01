@@ -10,17 +10,17 @@ using SOTS.Helpers;
 namespace SOTS.Projectiles.Minions
 {    
     public class OtherworldLightning : ModProjectile
-	{
-		public override void SetStaticDefaults()
+    {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SetDefaults()
 		{
-			// DisplayName.SetDefault("Otherworld Lightning");
-		}
-		public override void SetDefaults()
-		{
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.width = 12;
-			Projectile.height = 12;
+            Projectile.height = 12;
 			Projectile.friendly = true;
-			//Projectile.magic = true;
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -31,7 +31,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			return false;
 		}
-		Vector2[] trailPos = new Vector2[250];
+		private Vector2[] trailPos = new Vector2[250];
 		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
@@ -75,12 +75,12 @@ namespace SOTS.Projectiles.Minions
 		{
 			return false;
 		}
-		bool runOnce = true;
-		Vector2 addPos = Vector2.Zero;
-		Vector2 originalVelo = Vector2.Zero;
-		Vector2 originalPos = Vector2.Zero;
-		int[] randStorage = new int[250];
-		int dist = 250;
+		private bool runOnce = true;
+		private Vector2 addPos = Vector2.Zero;
+		private Vector2 originalVelo = Vector2.Zero;
+		private Vector2 originalPos = Vector2.Zero;
+		private int[] randStorage = new int[250];
+		private int dist = 250;
 		public override void AI()
 		{
 			if (runOnce)
@@ -100,14 +100,13 @@ namespace SOTS.Projectiles.Minions
 				runOnce = false;
 				for(int i = 0; i < 20; i++)
 				{
-					int dust3 = Dust.NewDust(Projectile.Center - new Vector2(12, 12) - new Vector2(5), 24, 24, ModContent.DustType<CopyDust4>());
-					Dust dust4 = Main.dust[dust3];
-					dust4.velocity *= 0.55f;
-					dust4.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * -2f;
-					dust4.color = ColorHelper.OtherworldColor;
-					dust4.noGravity = true;
-					dust4.fadeIn = 0.1f;
-					dust4.scale *= 2.75f;
+					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(12, 12) - new Vector2(5), 24, 24, ModContent.DustType<CopyDust4>());
+					dust.velocity *= 0.55f;
+					dust.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * -2f;
+					dust.color = ColorHelper.OtherworldColor;
+					dust.noGravity = true;
+					dust.fadeIn = 0.1f;
+					dust.scale *= 2.75f;
 				}
 			}
 

@@ -24,7 +24,7 @@ namespace SOTS.Items.SpiritStaves
 		public override void SafeSetDefaults() 
 		{
 			Item.damage = 33;
-			Item.knockBack = 4f;
+			Item.knockBack = 3f;
 			Item.width = 34;
 			Item.height = 44;
 			Item.useTime = 30;

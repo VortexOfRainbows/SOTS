@@ -10,17 +10,17 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles.Minions
 {
 	public class ThunderRing : ModProjectile
-	{
-		public override void SetStaticDefaults()
+    {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SetDefaults()
 		{
-			// DisplayName.SetDefault("Thunder Ring");
-		}
-		public override void SetDefaults()
-		{
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.width = 48;
-			Projectile.height = 48;
+            Projectile.height = 48;
 			Projectile.friendly = true;
-			// Projectile.melee = false /* tModPorter - this is redundant, for more info see https://github.com/tModLoader/tModLoader/wiki/Update-Migration-Guide#damage-classes */ ;
 			Projectile.timeLeft = 40;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -32,8 +32,8 @@ namespace SOTS.Projectiles.Minions
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;
 		}
-		float[] variance = new float[20];
-		bool runOnce = true;
+		private float[] variance = new float[20];
+		private bool runOnce = true;
 		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)

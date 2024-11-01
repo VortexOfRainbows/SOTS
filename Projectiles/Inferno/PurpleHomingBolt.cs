@@ -12,11 +12,11 @@ namespace SOTS.Projectiles.Inferno
     {
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Purple Homing Bolt");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 20;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
-		}
-		public override bool PreDraw(ref Color lightColor)
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -39,15 +39,16 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetDefaults()
 		{
+			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 			Projectile.height = 12;
-			Projectile.width = 12;
+            Projectile.width = 12;
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 1800;
 			Projectile.tileCollide = false;
 			Projectile.extraUpdates = 3;
 		}
-		bool runOnce = true;
+		private bool runOnce = true;
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			UpdateEnd();
@@ -70,8 +71,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
-				Dust dust = Main.dust[num2];
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Color color2 = new Color(160, 95, 198, 0);
 				dust.color = color2;
 				dust.noGravity = true;
@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Inferno
 				dust.velocity += Projectile.velocity * 0.2f;
 			}
 		}
-		bool end = false;
+		private bool end = false;
 		public void UpdateEnd()
 		{
 			if (Projectile.timeLeft > 40)
@@ -99,7 +99,6 @@ namespace SOTS.Projectiles.Inferno
 			writer.Write(Projectile.friendly);
 			writer.Write(end);
 			writer.Write(Projectile.extraUpdates);
-			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
@@ -107,7 +106,6 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.friendly = reader.ReadBoolean();
 			end = reader.ReadBoolean();
 			Projectile.extraUpdates = reader.ReadInt32();
-			base.ReceiveExtraAI(reader);
 		}
 		public override bool PreAI()
 		{
@@ -120,8 +118,7 @@ namespace SOTS.Projectiles.Inferno
 				Projectile.timeLeft = 40;
 			if ((Main.rand.NextBool(2) && end) || Main.rand.NextBool(22))
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
-				Dust dust = Main.dust[num2];
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(4, 4), Projectile.width, Projectile.height, ModContent.DustType<Dusts.CopyDust4>());
 				Color color2 = new Color(160, 95, 198, 0);
 				dust.color = color2;
 				dust.noGravity = true;

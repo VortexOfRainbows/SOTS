@@ -1,12 +1,9 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using System.IO;
-using SOTS.Void;
-using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
 
 namespace SOTS.Projectiles.Minions
@@ -15,12 +12,12 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Tidal Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
-		public sealed override void SetDefaults()
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public sealed override void SetDefaults()
 		{
 			SetSpiritMinionDefaults();
 			Projectile.width = 34;
@@ -31,11 +28,6 @@ namespace SOTS.Projectiles.Minions
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.ignoreWater = true;
 			Projectile.localNPCHitCooldown = 10;
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
-			target.immune[Projectile.owner] = 0;
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -80,26 +72,26 @@ namespace SOTS.Projectiles.Minions
 					Main.spriteBatch.Draw(texture2, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * reticleAlpha, MathHelper.ToRadians((Projectile.ai[0] + 2) * 6f), drawOrigin, Projectile.scale * reticleAlpha, SpriteEffects.None, 0f);
 			}
 		}
-		bool readyToFight = false;
+		private bool readyToFight = false;
 		public void dustSound()
 		{
 			if(Main.myPlayer == Projectile.owner)
 			{
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, new Vector2(8f, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<Tide.RippleWaveSummon>(), Projectile.damage, 0f, Projectile.owner, 1, 0);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Projectile.Center - Main.player[Projectile.owner].Center).SafeNormalize(Vector2.UnitX) * 8f, ModContent.ProjectileType<Tide.RippleWaveSummon>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 1, 0, Main.rand.NextFloat(MathHelper.TwoPi));
 			}
 			SOTSUtils.PlaySound(SoundID.Item14, (int)(Projectile.Center.X), (int)(Projectile.Center.Y), 0.5f, -0.1f);
 			for (int i = 0; i < 360; i += 24)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4.5f, 6f), 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 221);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].scale = 1.2f;
-				Main.dust[num1].velocity = circularLocation * 0.25f + new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21)) * 0.1f;
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.FireworkFountain_Blue);
+				dust.noGravity = true;
+				dust.scale = 1.2f;
+				dust.velocity = circularLocation * 0.25f + new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21)) * 0.1f;
 
-				num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 221);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].scale = 1.5f;
-				Main.dust[num1].velocity = circularLocation * 0.45f + new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21)) * 0.2f;
+				dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.FireworkFountain_Blue);
+				dust.noGravity = true;
+				dust.scale = 1.5f;
+				dust.velocity = circularLocation * 0.45f + new Vector2(Main.rand.Next(-20, 21), Main.rand.Next(-20, 21)) * 0.2f;
 			}
 		}
 		public override void AI()

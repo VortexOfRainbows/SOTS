@@ -29,8 +29,9 @@ namespace SOTS.Projectiles.Minions
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
-		public override void SetDefaults()
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SetDefaults()
 		{
 			SetSpiritMinionDefaults();
 			Projectile.width = 34;
@@ -50,8 +51,8 @@ namespace SOTS.Projectiles.Minions
 		{
 			return true;
 		}
-		float[] rotations = new float[2] { 1.56f, 0 };
-		float[] compressions = new float[2] { 0.5f, 0.5f };
+		private float[] rotations = [1.56f, 0];
+		private float[] compressions = [0.5f, 0.5f];
 		public override bool PreDraw(ref Color lightColor)
 		{
 			Player player = Main.player[Projectile.owner];
@@ -84,19 +85,21 @@ namespace SOTS.Projectiles.Minions
 			texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/ChaosSpiritWing").Value;
 			float bonusSpread = .205f * postChargeCounter;
 			for (int j = 0; j < 2; j++)
-				for (int i = 0; i < 3; i++)
-				{
-					Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-					Vector2 toPosition = new Vector2((44 - i * 4) * (j * 2 - 1), -20).RotatedBy(MathHelper.ToRadians((i * (21.5f + bonusSpread - i) - wingHeight) * (j * 2 - 1)));
-					toPosition = toPosition.RotatedBy(Projectile.rotation);
-					for (int k = 0; k < 6; k++)
-					{
-						float scale = 1.0f - 0.25f * i;
-						Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
-						Vector2 modi = new Vector2(2f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
-						Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + toPosition + modi, null, new Color(color.R, color.G, color.B, 0), toPosition.ToRotation(), origin, scale, SpriteEffects.None, 0f);
-					}
-				}
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
+                    Vector2 toPosition = new Vector2((44 - i * 4) * (j * 2 - 1), -20).RotatedBy(MathHelper.ToRadians((i * (21.5f + bonusSpread - i) - wingHeight) * (j * 2 - 1)));
+                    toPosition = toPosition.RotatedBy(Projectile.rotation);
+                    for (int k = 0; k < 6; k++)
+                    {
+                        float scale = 1.0f - 0.25f * i;
+                        Color color = ColorHelper.Pastel(MathHelper.ToRadians(k * 60));
+                        Vector2 modi = new Vector2(2f * scale, 0).RotatedBy(MathHelper.ToRadians(k * 60 + Main.GameUpdateCount));
+                        Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + toPosition + modi, null, new Color(color.R, color.G, color.B, 0), toPosition.ToRotation(), origin, scale, SpriteEffects.None, 0f);
+                    }
+                }
+            }
 			return false;
 		}
 		public override void PostDraw(Color lightColor)
@@ -111,14 +114,14 @@ namespace SOTS.Projectiles.Minions
 				Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + modi, null, new Color(color.R, color.G, color.B, 0), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
-		float postChargeCounter = 0;
-		int charging = 0;
-		float wingHeight = 0;
-		float counter = 0;
-		float[] nextRotations = new float[2];
-		float[] nextCompressions = new float[2];
-		float[] prevRotations = new float[2];
-		float[] prevCompressions = new float[2];
+		private float postChargeCounter = 0;
+		private int charging = 0;
+		private float wingHeight = 0;
+		private float counter = 0;
+		private float[] nextRotations = new float[2];
+		private float[] nextCompressions = new float[2];
+		private float[] prevRotations = new float[2];
+		private float[] prevCompressions = new float[2];
 		public void RingStuff()
 		{
 			if (counter == 0 || charging == -1)
@@ -167,15 +170,14 @@ namespace SOTS.Projectiles.Minions
         {
 			return point * scale + point2 * (1f - scale);
         }
-		float counter2 = 0;
-		float lastWingHeight = 0;
-		int targetID = -1;
-		int targetType = -1;
+		private float counter2 = 0;
+		private float lastWingHeight = 0;
+		private int targetID = -1;
+		private int targetType = -1;
 		public void WingStuff()
         {
 			counter2 += 5;
 			float dipAndRise = new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(counter2)).X;
-			//dipAndRise *= (float)Math.sqrt(dipAndRise);
 			wingHeight = dipAndRise * 30;
 			lastWingHeight = wingHeight;
 		}

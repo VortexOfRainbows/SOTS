@@ -7,10 +7,6 @@ namespace SOTS.Projectiles.Planetarium
 {    
     public class CataclysmDamage : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Cataclysm Collapse");
-		}
         public override void SetDefaults()
         {
             Projectile.width = 196;
@@ -19,7 +15,7 @@ namespace SOTS.Projectiles.Planetarium
             Projectile.penetrate = -1; 
             Projectile.friendly = true; 
             Projectile.tileCollide = false;
-			Projectile.DamageType = DamageClass.Melee;
+			Projectile.DamageType = DamageClass.Ranged;
             Projectile.aiStyle = 0; 
 			Projectile.alpha = 255;
 			Projectile.usesLocalNPCImmunity = true;
@@ -30,7 +26,7 @@ namespace SOTS.Projectiles.Planetarium
 			if (Main.rand.NextBool(2))
 				target.AddBuff(BuffID.OnFire, 1200, false);
 		}
-		int randseed = -1;
+		private int randseed = -1;
 		public override void AI() //The projectile's AI/ what the projectile does
 		{
 			if(randseed == -1)

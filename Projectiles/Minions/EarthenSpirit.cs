@@ -5,6 +5,7 @@ using Terraria.ID;
 using System.IO;
 using SOTS.Buffs.MinionBuffs;
 using Terraria.ModLoader;
+using System;
 
 namespace SOTS.Projectiles.Minions
 {
@@ -12,13 +13,12 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Earthen Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
-		
-		public override void SetDefaults()
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SetDefaults()
 		{
 			SetSpiritMinionDefaults();
 			Projectile.width = 34;
@@ -31,22 +31,15 @@ namespace SOTS.Projectiles.Minions
 			Projectile.netImportant = true;
 			Projectile.ignoreWater = true;
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
-			target.immune[Projectile.owner] = 0;
-		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(Projectile.alpha);
 			writer.Write(readyToFight);
-			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			Projectile.alpha = reader.ReadInt32();
 			readyToFight = reader.ReadBoolean();
-			base.ReceiveExtraAI(reader);
 		}
 		public override bool? CanCutTiles()
 		{
@@ -79,7 +72,7 @@ namespace SOTS.Projectiles.Minions
 					Main.spriteBatch.Draw(texture2, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * reticleAlpha, MathHelper.ToRadians((Projectile.ai[0] + 2) * 6f), drawOrigin, Projectile.scale * reticleAlpha, SpriteEffects.None, 0f);
 			}
 		}
-		bool readyToFight = false;
+		private bool readyToFight = false;
 		public void dustSound()
 		{
 			SOTSUtils.PlaySound(SoundID.Item14, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.4f);
@@ -264,5 +257,9 @@ namespace SOTS.Projectiles.Minions
 				Projectile.netUpdate = true;
 			}
 		}
-	}
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+			modifiers.HitDirectionOverride = -Math.Sign(Main.player[Projectile.owner].Center.X - Projectile.Center.X);
+        }
+    }
 }

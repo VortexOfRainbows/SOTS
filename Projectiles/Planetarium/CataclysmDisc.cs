@@ -1,9 +1,5 @@
 using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -15,7 +11,6 @@ namespace SOTS.Projectiles.Planetarium
     {	
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Cataclysm Disc");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 12;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;    
 		}
@@ -33,7 +28,7 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 7;
 		}
-		int helixRot = 0;
+		private int helixRot = 0;
 		public override void AI()
 		{
 			Player player = Main.player[Projectile.owner];
@@ -71,8 +66,7 @@ namespace SOTS.Projectiles.Planetarium
 			Vector2 helixPos4 = new Vector2(22f, 0).RotatedBy(rad - MathHelper.ToRadians(90));
 			helixPos3 *= Projectile.scale;
 			helixPos4 *= Projectile.scale;
-			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
-			Dust dust = Main.dust[num2];
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 			dust.color = Color.Lerp(new Color(220, 60, 10, 40), new Color(255, 250, 130, 40), new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.localAI[0])).X + 0.5f);
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
@@ -80,8 +74,7 @@ namespace SOTS.Projectiles.Planetarium
 			dust.velocity = helixPos3 * 0.065f + Projectile.velocity * 0.35f;
 			dust.alpha = Projectile.alpha;
 
-			num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
-			dust = Main.dust[num2];
+			dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, ModContent.DustType<Dusts.CopyDust4>());
 			dust.color = Color.Lerp(new Color(220, 60, 10, 40), new Color(255, 250, 130, 40), -new Vector2(0.5f, 0).RotatedBy(MathHelper.ToRadians(Projectile.localAI[0])).X + 0.5f);
 			dust.noGravity = true;
 			dust.fadeIn = 0.1f;
@@ -127,6 +120,11 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.tileCollide = false;
 			return false;
 		}
-	}
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+			width = height = 24;
+            return true;
+        }
+    }
 }
 		

@@ -1,20 +1,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Dusts;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Tide
 {    
     public class RippleWave : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Ripple Wave");
-		}
         public override void SetDefaults()
         {
 			Projectile.penetrate = -1;
@@ -59,9 +55,9 @@ namespace SOTS.Projectiles.Tide
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);
 			Projectile.rotation += 0.04f;
 		}
-		float length = 0;
-		const float finalDegree = 0f;
-		List<Vector2> ParticlePos = new List<Vector2>();
+		private float length = 0;
+		private const float finalDegree = 0f;
+		private List<Vector2> ParticlePos = new List<Vector2>();
 		public void UpdateList()
 		{
 			Player player = Main.player[Projectile.owner];
@@ -77,7 +73,7 @@ namespace SOTS.Projectiles.Tide
 					float waveValue = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 8 + Projectile.ai[1])).X;
 					Vector2 drawArea = origin + new Vector2(length + waveValue, 0).RotatedBy(MathHelper.ToRadians(i) + rotation);
 					if(i <= 360)
-					ParticlePos.Add(drawArea);
+						ParticlePos.Add(drawArea);
 				}
 			}
 		}
@@ -105,16 +101,17 @@ namespace SOTS.Projectiles.Tide
 		}
 	}
 	public class RippleWaveSummon : ModProjectile
-	{
-		public override string Texture => "SOTS/Projectiles/Tide/RippleWave";
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Ripple Wave");
-		}
+    {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override string Texture => "SOTS/Projectiles/Tide/RippleWave";
 		public override void SetDefaults()
 		{
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.penetrate = -1;
-			Projectile.width = 24;
+            Projectile.width = 24;
 			Projectile.height = 24;
 			Projectile.timeLeft = 20;
 			Projectile.hostile = false;
@@ -128,7 +125,7 @@ namespace SOTS.Projectiles.Tide
 		{
 			return false;
 		}
-		bool runOnce = true;
+		private bool runOnce = true;
 		public override bool ShouldUpdatePosition()
 		{
 			return false;
@@ -147,15 +144,15 @@ namespace SOTS.Projectiles.Tide
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.15f / 255f, (255 - Projectile.alpha) * 0.25f / 255f, (255 - Projectile.alpha) * 0.65f / 255f);
 			Projectile.rotation += 0.04f;
 		}
-		float length = 0;
-		List<Vector2> ParticlePos = new List<Vector2>();
+		private float length = 0;
+		private List<Vector2> ParticlePos = new List<Vector2>();
 		public void UpdateList()
 		{
 			if ((int)Projectile.ai[0] >= 0)
 			{
 				ParticlePos = new List<Vector2>();
 				Vector2 origin = Projectile.Center;
-				float rotation = Projectile.velocity.ToRotation();
+				float rotation = Projectile.ai[2];
 				float C = 2 * (float)Math.PI * length;
 				float oneLength = 360f / C * 10;
 				for (float i = 0; i < 360; i += oneLength)

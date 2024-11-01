@@ -12,12 +12,12 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
-		public override void SendExtraAI(BinaryWriter writer)
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(ofTotal2);
 		}

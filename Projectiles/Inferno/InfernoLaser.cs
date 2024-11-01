@@ -12,7 +12,11 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles.Inferno
 {
 	public class InfernoLaser : ModProjectile
-	{
+    {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(hasHit);
@@ -21,14 +25,11 @@ namespace SOTS.Projectiles.Inferno
         {
 			hasHit = reader.ReadBoolean();
         }
-        public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Lava Laser");
-		}
 		public override void SetDefaults()
 		{
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.width = 16;
-			Projectile.height = 16;
+            Projectile.height = 16;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
 			Projectile.extraUpdates = 4;
@@ -36,7 +37,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 		}
-        Vector2[] trailPos = new Vector2[60];
+        private Vector2[] trailPos = new Vector2[60];
 		public void cataloguePos()
 		{
 			Vector2 current = Projectile.Center;
@@ -95,7 +96,6 @@ namespace SOTS.Projectiles.Inferno
 			if (runOnce)
 			{
 				runOnce = false;
-				//Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 60, 0.8f, -0.1f);
 			}
 			if(Main.rand.NextBool(40) || (hasHit && Main.rand.NextBool(8)))
             {
@@ -151,7 +151,6 @@ namespace SOTS.Projectiles.Inferno
 			if (Projectile.owner == Main.myPlayer)
 			{
 				Projectile.netUpdate = true;
-				//Projectile.NewProjectile(Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<VibrantRing>(), Projectile.damage, Projectile.knockBack * 0.1f, Main.myPlayer);
 			}
 		}
 	}

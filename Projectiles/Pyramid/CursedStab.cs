@@ -3,23 +3,22 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.NPCs.Boss.Curse;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Pyramid;
 using System;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Pyramid
 {    
-    public class CursedStab : ModProjectile 
-    {	          
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Gas Slash");
-		}
+    public class CursedStab : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
         public override void SetDefaults()
         {
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.width = 40;
-			Projectile.height = 40;
+            Projectile.height = 40;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 75;
 			Projectile.hostile = false;
@@ -31,7 +30,6 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.localNPCHitCooldown = 3;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.minion = false;
-			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox)
         {
@@ -69,7 +67,7 @@ namespace SOTS.Projectiles.Pyramid
 			else //If the npc would die to the attack, make that attack a crit (for synergy purposes)
 				modifiers.SetCrit();
 		}
-        bool runOnce = true;
+        private bool runOnce = true;
         public override bool ShouldUpdatePosition()
         {
             return false;
@@ -78,7 +76,7 @@ namespace SOTS.Projectiles.Pyramid
         {
             return false;
         }
-		int counter = 0;
+		private int counter = 0;
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];

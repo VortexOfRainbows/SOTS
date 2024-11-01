@@ -11,18 +11,17 @@ Acknowledged But Likely Delayed:
 1. Earthen Plating starter house.
 2. Need a mechanic for spawning a portal once a Gateway is fully powered.
 3. Smart cursor doesn't work with dressers (and other features of furniture are outdated, such as unsittable sofas).
-4. Most Void Minions do not work with whip debuffs
-5. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
-6. Boss Trophies
-7. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
-8. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
-9. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
-10. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
-11. Scroll wheel with challenger's ring
-12. Banners/Lanterns to work on platforms (should be fairly easy), and to have proper tooltip text
-13. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
-14. Ammo Pouch + Infinity Pouch leads to some crazy combos...
-15. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
+4. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
+5. Boss Trophies
+6. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
+7. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
+8. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
+9. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
+10. Scroll wheel with challenger's ring
+11. Banners/Lanterns to work on platforms (should be fairly easy), and to have proper tooltip text
+12. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
+13. Ammo Pouch + Infinity Pouch leads to some crazy combos...
+14. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
 
 Update Objectives:
 1. Ghost Town! (In Progress)	
@@ -76,10 +75,20 @@ N/A
 
 Daily Log:
 
-10/28/24
+10/28/24 and 10/30/24 and 11/1/24
 1. Wishing stars spawns in the vibrant geode instead of the vision amulet
 2. Ruby Gemlock should be spawning the synthetic liver again
 3. WIP spawning loot in chests 
+4. Fix bug where Catacylsm disc dealt melee damage with the explosion. Also reduced tile collide hitbox so it doesn't bounce weirdly off tiles
+5. Fixed bug where Inferno Spirit staff wasn't dealing knockback (knockback of weapon 4 -> 1.5, technically 0 -> 1.5)
+6. Fixed bug where Tidal Spirit staff wasn't dealing knockback (knockback of weapon 4 -> 3, technically 0 -> 3)
+	1. Always will knock enemies away from the player
+	2. Earthen Spirit staff will also now always knock enemies away from the player, instead of rightward
+7. Fixed bug where all wisp minions always dealt 1 knockback with their projectiles. Now deals the same as the wisp contact damage (3 for Book of Virtues, 2.5 for Lemegeton, 0 for Wisp in a Jar)
+	1. Wisps now always knock enemies away from the player with knockback from contact damage
+8. All void minions should now deal "Void Summon" damage, and they will be affected by whips and such.
+	1. Except Tesseract, for obvious reasons
+9. Evil Spirit staff should now properly deal knockback (4) on shot darts
 
 10/25/24 to 10/26/24
 1. Torch Gun Mk2: should be somewhat balanced + works in multiplayer. Incredible utility weapon with a chance to be very annoying.

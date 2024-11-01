@@ -1,21 +1,23 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Permafrost
 {    
-    public class FrostSpear : ModProjectile 
-    {	
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Frost Spear");	
-		}
+    public class FrostSpear : ModProjectile
+    {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
         public override void SetDefaults()
         {
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.penetrate = -1;
-			Projectile.friendly = true;
+            Projectile.friendly = true;
 			Projectile.alpha = 0;
 			Projectile.width = 14;
 			Projectile.height = 22;
@@ -73,8 +75,7 @@ namespace SOTS.Projectiles.Permafrost
 			for (int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
-				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowMk2);
-				Dust dust = Main.dust[dust2];
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowMk2);
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
 				dust.color = new Color(180 - Main.rand.Next(50), 190 - Main.rand.Next(50), 250, 150);

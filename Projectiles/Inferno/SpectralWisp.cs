@@ -7,22 +7,13 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Projectiles.Celestial;
 using System.Collections.Generic;
-using SOTS.Buffs;
-using SOTS.Projectiles.Planetarium;
-using SOTS.Projectiles.Pyramid;
 using SOTS.Buffs.MinionBuffs;
+using SOTS.Projectiles.Base;
 
 namespace SOTS.Projectiles.Inferno
 {
 	public class SpectralWisp : WispMinion
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Spectral Wisp");
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
 		public override void SafeSetDefaults()
 		{
 			Projectile.usesLocalNPCImmunity = true;
@@ -70,15 +61,19 @@ namespace SOTS.Projectiles.Inferno
 			return false;
 		}
 	}
-	public abstract class WispMinion : ModProjectile 
-    {	
-		public override void SetStaticDefaults()
+	public abstract class WispMinion : ModProjectile
+    {
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = -Math.Sign(Main.player[Projectile.owner].Center.X - Projectile.Center.X);
+        }
+        public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Spectral Wisp");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
         public sealed override void SetDefaults()
         {
 			Projectile.width = 12;
@@ -271,7 +266,7 @@ namespace SOTS.Projectiles.Inferno
 		public float midCounterMult = 0.25f;
 		public virtual void DoAttack(Vector2 toNPC)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 40, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), Projectile.damage, 1f, Main.myPlayer, 0, 0);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 40, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0);
 		}
 		public sealed override void AI()
 		{
@@ -398,12 +393,9 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Lemegeton Wisp");
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			base.SetStaticDefaults(); //required
 			attackCounterSpeed = 5f;
-			attackCounterCooldown = 90f;
+            attackCounterCooldown = 90f;
 			midCounterMult = 0.75f;
 			enemyRange = 480f;
 		}
@@ -418,12 +410,13 @@ namespace SOTS.Projectiles.Inferno
 			int heal = 1;
 			if (player.whoAmI == Main.myPlayer)
 			{
-				Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center.X, Projectile.Center.Y, 0, 0, Mod.Find<ModProjectile>("HealProj").Type, 0, 0, player.whoAmI, heal, -1);
+				Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center.X, Projectile.Center.Y, 0, 0, ModContent.ProjectileType<HealProj>(), 0, 0, player.whoAmI, heal, -1);
 			}
 		}
         public override void DoAttack(Vector2 toNPC)
         {
 			//doing nothing here
+			//Purpoosefully getting rid of the base class use case (this one will not fire projectiles)
 		}
 		public override Vector2 FindAttackPosition(ref Vector2 goTo, ref Vector2 toLocation, int targetID)
 		{
@@ -492,10 +485,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Lemegeton Wisp");
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			base.SetStaticDefaults(); //required
 			attackCounterSpeed = 6f;
 			attackCounterCooldown = 30f;
 			midCounterMult = 0.8f;
@@ -526,7 +516,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), Projectile.damage, 1f, Main.myPlayer, -1, 0);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<SpectralWispLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1, 0);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -581,12 +571,9 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Lemegeton Wisp");
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			base.SetStaticDefaults(); //required
 			attackCounterSpeed = 2.5f;
-			attackCounterCooldown = 120f;
+            attackCounterCooldown = 120f;
 			midCounterMult = 0.33f;
 			enemyRange = 720f;
 		}
@@ -618,7 +605,7 @@ namespace SOTS.Projectiles.Inferno
 			for(int i = -1; i <= 1; i++)
 			{
 				Vector2 rotateVelo = toNPC.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.ToRadians(10 * i));
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, rotateVelo * 4.5f, ModContent.ProjectileType<PurpleHomingBolt>(), Projectile.damage, 1f, Main.myPlayer);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, rotateVelo * 4.5f, ModContent.ProjectileType<PurpleHomingBolt>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 			}
 		}
 		public override bool PreDraw(ref Color lightColor)
@@ -675,12 +662,9 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Will o'");
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = false;
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 8;
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			base.SetStaticDefaults(); //required
 			normalSpeed = 20f;
-			attackCounterSpeed = 8f;
+            attackCounterSpeed = 8f;
 			attackCounterCooldown = 6f;
 			midCounterMult = 0.1f;
 		}
@@ -710,7 +694,7 @@ namespace SOTS.Projectiles.Inferno
 		}
 		public override void DoAttack(Vector2 toNPC)
 		{
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<OrangeWispLaser>(), Projectile.damage, 1f, Main.myPlayer, -1, 0);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + toNPC.SafeNormalize(Vector2.Zero) * 24, toNPC.SafeNormalize(Vector2.Zero) * 5, ModContent.ProjectileType<OrangeWispLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, -1, 0);
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{

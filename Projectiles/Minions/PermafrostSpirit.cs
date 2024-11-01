@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.Projectiles.Permafrost;
 using Terraria;
@@ -14,12 +13,12 @@ namespace SOTS.Projectiles.Minions
 	{
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Permafrost Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 7;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
-		public sealed override void SetDefaults()
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public sealed override void SetDefaults()
 		{
 			SetSpiritMinionDefaults();
 			Projectile.width = 34;
@@ -35,13 +34,6 @@ namespace SOTS.Projectiles.Minions
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Minions/PermafrostSpiritBand").Value;
 			float alpha = (48 - Projectile.ai[0]) / 48f;
 			Color color = new Color(90, 90, 90, 0) * alpha;
-		
-			/*for (int k = 0; k < 9; k++)
-			{
-				float x = Main.rand.Next(-10, 11) * 0.25f;
-				float y = Main.rand.Next(-10, 11) * 0.25f;
-				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color, 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
-			}*/
 			
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, 26);
 			for (int k = 0; k < 5; k++)
@@ -172,8 +164,7 @@ namespace SOTS.Projectiles.Minions
 					for (int i = 0; i < 360; i += 10)
 					{
 						Vector2 circularLocation = new Vector2(-Main.rand.NextFloat(9, 10), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
-						int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowMk2);
-						Dust dust = Main.dust[dust2];
+                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowMk2);
 						dust.velocity = circularLocation * 0.35f;
 						dust.color = new Color(190 - Main.rand.Next(50), 220 - Main.rand.Next(50), 250, 150);
 						dust.noGravity = true;

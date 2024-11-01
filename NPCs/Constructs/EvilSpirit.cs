@@ -25,18 +25,21 @@ namespace SOTS.NPCs.Constructs
 			NPCID.Sets.TrailCacheLength[NPC.type] = 5;  
 			NPCID.Sets.TrailingMode[NPC.type] = 0;
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            ProjectileID.Sets.MinionShot[Type] = true;
         }
-		public override void SendExtraAI(BinaryWriter writer)
+        public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(phase);
 			writer.Write(counter);
-		}
+            base.SendExtraAI(writer);
+        }
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			phase = reader.ReadInt32();
 			counter = reader.ReadInt32();
-		}
-		public override void SetDefaults()
+			base.ReceiveExtraAI(reader);
+        }
+        public override void SetDefaults()
 		{
 			NPC.aiStyle = 10;
             NPC.lifeMax = 3000; 
@@ -61,16 +64,16 @@ namespace SOTS.NPCs.Constructs
 			NPC.damage = (int)(NPC.damage * 29 / 32);
 			NPC.lifeMax = (int)(NPC.lifeMax * 5 / 6);
 		}
-		List<EvilEye> eyes = new List<EvilEye>();
+		private List<EvilEye> eyes = new List<EvilEye>();
 		private int InitiateHealth = 10000;
 		private float ExpertHealthMult = 1.45f; //14500
 		private float MasterHealthMult = 2.0f; //20000
-		int phase = 1;
-		int counter = 0;
-		int counter2 = 0;
+		private int phase = 1;
+		private int counter = 0;
+		private int counter2 = 0;
 		public int startEyes = 0;
 		public const int range = 96;
-		float lastDistMult = 1f;
+		private float lastDistMult = 1f;
 		public void UpdateEyes(Vector2 screenPos, bool draw = false, int ring = -2, float distMult = 1f)
 		{
 			Player player = Main.player[NPC.target];
@@ -427,8 +430,8 @@ namespace SOTS.NPCs.Constructs
 							Vector2 toPosition = fireTo - trueOffset - center;
 							if(owner is NPC)
 								Projectile.NewProjectile(owner.GetSource_FromAI(), center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, 0, Main.myPlayer, ai0);
-							if(owner is Projectile)
-								Projectile.NewProjectile(owner.GetSource_FromThis(), center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, 0, Main.myPlayer, ai0);
+							if(owner is Projectile proj)
+								Projectile.NewProjectile(owner.GetSource_FromThis(), center + trueOffset, toPosition.SafeNormalize(Vector2.Zero) * speed, type, damage, proj.knockBack, Main.myPlayer, ai0);
 						}
 						firing = false;
 					}

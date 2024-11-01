@@ -1,21 +1,24 @@
+using Microsoft.Build.Execution;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Helpers;
 using SOTS.Void;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Nature
 {    
     public class NatureBeam : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Nature Beam");
-		}
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
         {
+			ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SetDefaults()
+        {
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.width = 16;
 			Projectile.height = 16;
 			Projectile.penetrate = -1;
@@ -23,7 +26,6 @@ namespace SOTS.Projectiles.Nature
 			Projectile.timeLeft = 32;
 			Projectile.tileCollide = false;
 			Projectile.hostile = false;
-			Projectile.netImportant = true;
 			Projectile.alpha = 0;
 			Projectile.extraUpdates = 0;
 		}
@@ -37,12 +39,12 @@ namespace SOTS.Projectiles.Nature
 			height = 8;
             return true;
         }
-		float scaleMod = 0.4f;
-		int counter = 0;
-		bool hasHit = false;
-		Vector2 ogPos = new Vector2(0, 0);
-		bool runOnce = true;
-		List<Vector2> drawPoints = new List<Vector2>();
+		private float scaleMod = 0.4f;
+		private int counter = 0;
+		private bool hasHit = false;
+		private Vector2 ogPos = new Vector2(0, 0);
+		private bool runOnce = true;
+		private List<Vector2> drawPoints = new List<Vector2>();
 		public override bool PreAI()
 		{
 			Player player  = Main.player[Projectile.owner];

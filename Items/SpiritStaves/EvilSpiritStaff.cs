@@ -1,9 +1,5 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
-using SOTS.Items.Planetarium;
-using SOTS.Items.Planetarium.FromChests;
 using SOTS.Projectiles.Minions;
 using SOTS.Void;
 using Terraria;

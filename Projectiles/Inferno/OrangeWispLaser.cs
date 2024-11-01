@@ -9,12 +9,12 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles.Inferno
 {
 	public class OrangeWispLaser : ModProjectile
-	{
-		public override void SetStaticDefaults() 
-		{
-			// DisplayName.SetDefault("Orange Wisp Laser");
-		}
-		public override void SetDefaults() 
+    {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SetDefaults() 
 		{
 			Projectile.width = 16;
 			Projectile.height = 16;

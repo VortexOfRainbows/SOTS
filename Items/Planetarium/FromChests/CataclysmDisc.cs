@@ -9,10 +9,7 @@ namespace SOTS.Items.Planetarium.FromChests
 {
 	public class CataclysmDisc : VoidItem
 	{
-		public override void SetStaticDefaults()
-		{
-			this.SetResearchCost(1);
-		}
+		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SafeSetDefaults()
 		{
 			Item.damage = 32;

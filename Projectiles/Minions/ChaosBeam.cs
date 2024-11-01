@@ -4,23 +4,23 @@ using SOTS.Dusts;
 using SOTS.Helpers;
 using SOTS.Void;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Minions
 {    
-    public class ChaosBeam : ModProjectile 
+    public class ChaosBeam : ModProjectile
     {
         public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Chaos Beam");
-		}
-		public override void SetDefaults()
         {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SetDefaults()
+        {
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.width = 20;
-			Projectile.height = 20;
+            Projectile.height = 20;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 25;
@@ -32,11 +32,6 @@ namespace SOTS.Projectiles.Minions
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			Player player = Main.player[Projectile.owner];
-			target.immune[player.whoAmI] = 0;
-		}
 		public override bool ShouldUpdatePosition()
         {
             return false; 
@@ -47,12 +42,12 @@ namespace SOTS.Projectiles.Minions
 			height = 8;
             return true;
         }
-		float scaleMod = 0.4f;
-		int counter = 0;
-		List<Vector2> drawPoints = new List<Vector2>();
-		Vector2 ogPos = Vector2.Zero;
-		bool runOnce = true;
-		bool stop = false;
+		private float scaleMod = 0.4f;
+		private int counter = 0;
+		private List<Vector2> drawPoints = new List<Vector2>();
+		private Vector2 ogPos = Vector2.Zero;
+		private bool runOnce = true;
+		private bool stop = false;
 		public override bool PreAI()
 		{
 			if (runOnce)

@@ -12,14 +12,15 @@ namespace SOTS.Projectiles.Minions
     {	
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Umbra Spear");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
         public override void SetDefaults()
         {
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.penetrate = -1;
-			Projectile.friendly = true;
+            Projectile.friendly = true;
 			Projectile.hostile = false;
 			Projectile.alpha = 0;
 			Projectile.width = 24;
@@ -67,12 +68,12 @@ namespace SOTS.Projectiles.Minions
 			}
 			return false;
 		}
-		bool runOnce = true;
+		private bool runOnce = true;
 		public override void AI()
 		{
 			if (runOnce)
 			{
-				SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/StarLaser"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
+				SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/StarLaser"), Projectile.Center, 0.6f, 0.2f + Main.rand.NextFloat(-0.1f, 0.1f));
 				DustOut();
 				Projectile.scale = 0.1f;
 				Projectile.alpha = 0;
@@ -121,8 +122,7 @@ namespace SOTS.Projectiles.Minions
 			for (int i = 0; i < 360; i += 40)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
-				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowMk2);
-				Dust dust = Main.dust[dust2];
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, DustID.RainbowMk2);
 				dust.velocity = circularLocation * 0.4f;
 				dust.velocity += Projectile.velocity * 0.2f;
 				dust.color = ColorHelper.EvilColor * 1.5f;

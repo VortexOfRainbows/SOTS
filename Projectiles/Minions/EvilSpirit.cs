@@ -35,11 +35,11 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Evil Spirit");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
         public sealed override void SetDefaults()
 		{
 			SetSpiritMinionDefaults();

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using SOTS.Projectiles.Pyramid;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs.Boss.Curse;
-using Terraria.Audio;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -16,17 +16,17 @@ namespace SOTS.Projectiles.Minions
     {
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Cursed Blade");
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-		}
-		public sealed override void SetDefaults()
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public sealed override void SetDefaults()
 		{
+			Projectile.DamageType = ModContent.GetInstance<VoidSummon>();
 			Projectile.width = 22;
-			Projectile.height = 22;
+            Projectile.height = 22;
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.DamageType = ModContent.GetInstance<Void.VoidSummon>();
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.ignoreWater = true;
@@ -38,9 +38,9 @@ namespace SOTS.Projectiles.Minions
         }
         public override bool PreDraw(ref Color lightColor)
 		{
-			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladeHilt");
-			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladePart");
-			Texture2D texture3 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladeEnd");
+			Texture2D texture = ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladeHilt").Value;
+			Texture2D texture2 = ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladePart").Value;
+			Texture2D texture3 = ModContent.Request<Texture2D>("SOTS/Projectiles/Minions/CursedBladeEnd").Value;
 			Vector2 drawPos = Projectile.Center- Main.screenPosition;
 			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
 			int length = (int)(13f * (1 - Projectile.ai[0] / attackTimerMax));
@@ -73,8 +73,6 @@ namespace SOTS.Projectiles.Minions
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
-			target.immune[Projectile.owner] = 0;
 			canAttack = false;
 			Projectile.netUpdate = true;
 			Projectile.NewProjectile(Projectile.GetSource_OnHit(target), target.Center, Vector2.Zero, ModContent.ProjectileType<CursedStab>(), Projectile.damage, 0, Main.myPlayer, 0, target.whoAmI);
@@ -142,11 +140,11 @@ namespace SOTS.Projectiles.Minions
 			Projectile.velocity = newGoTo * dist;
 			Projectile.rotation = Projectile.velocity.X * 0.04f + MathHelper.Pi/2;
 		}
-		bool foundTarget = false;
-		int targetWhoAmI = -1;
-		bool canAttack = true;
-		bool canDoDashSounds = true;
-		int counter = 0;
+		private bool foundTarget = false;
+		private int targetWhoAmI = -1;
+		private bool canAttack = true;
+		private bool canDoDashSounds = true;
+		private int counter = 0;
 		public void DoDusts()
 		{
 			float dustMult = (Projectile.ai[0] / (attackTimerMax - 30));

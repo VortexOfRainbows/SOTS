@@ -4,9 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.IO;
-using SOTS.Void;
-using SOTS.Buffs;
 using System.Linq;
 using SOTS.Projectiles.Inferno;
 using SOTS.Buffs.MinionBuffs;
@@ -21,7 +18,8 @@ namespace SOTS.Projectiles.Minions
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 10;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-		}
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
         public sealed override void SetDefaults()
 		{
 			SetSpiritMinionDefaults();
@@ -48,7 +46,7 @@ namespace SOTS.Projectiles.Minions
 			}
 			return false;
 		}
-		float[] recoilMult = new float[7];
+		private float[] recoilMult = new float[7];
 		public override void PostDraw(Color lightColor)
 		{
 			Player player = Main.player[Projectile.owner];
@@ -86,7 +84,7 @@ namespace SOTS.Projectiles.Minions
 		{
 			return true;
 		}
-		bool runOnce = true;
+		private bool runOnce = true;
 		public int[] UpdateTargets(int initialTarget = -1)
 		{
 			for (int i = 0; i < 7; i++)
@@ -151,7 +149,7 @@ namespace SOTS.Projectiles.Minions
 					if (toHit.active)
 					{
 						Vector2 normal = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(arm * 360f / 7 + modPlayer.orbitalCounter));
-							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + normal * 24, normal * speed + Main.rand.NextVector2Circular(0.2f, 0.2f), ModContent.ProjectileType<InfernoLaser>(), Projectile.damage, 0, Main.myPlayer, target, Main.rand.NextFloat(360));
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + normal * 24, normal * speed + Main.rand.NextVector2Circular(0.2f, 0.2f), ModContent.ProjectileType<InfernoLaser>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, target, Main.rand.NextFloat(360));
 						return true;
 					}
 				}

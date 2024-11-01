@@ -9,12 +9,12 @@ using Terraria.ModLoader;
 namespace SOTS.Projectiles.Inferno
 {
 	public class SpectralWispLaser : ModProjectile
-	{
-		public override void SetStaticDefaults() 
-		{
-			// DisplayName.SetDefault("Spectral Wisp Laser");
-		}
-		public override void SetDefaults() 
+    {
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.MinionShot[Type] = true;
+        }
+        public override void SetDefaults() 
 		{
 			Projectile.width = 16;
 			Projectile.height = 16;
@@ -36,7 +36,7 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
 			target.immune[Projectile.owner] = 0;
 		}
-		bool green = false;
+		private bool green = false;
         public override bool PreAI()
         {
 			if(Projectile.ai[0] == -1)
@@ -47,8 +47,8 @@ namespace SOTS.Projectiles.Inferno
             }
             return base.PreAI();
         }
-        List<Vector2> posList = new List<Vector2>();
-		List<FireParticle> particleList = new List<FireParticle>();
+        private List<Vector2> posList = new List<Vector2>();
+		private List<FireParticle> particleList = new List<FireParticle>();
 		public void cataloguePos()
 		{
 			for (int i = 0; i < particleList.Count; i++)
@@ -88,8 +88,8 @@ namespace SOTS.Projectiles.Inferno
 				}
 			}
         }
-		bool runOnce = false;
-		int counter = 0;
+		private bool runOnce = false;
+		private int counter = 0;
 		public override void AI() 
 		{
 			Projectile.rotation += MathHelper.ToRadians(8);
@@ -118,12 +118,10 @@ namespace SOTS.Projectiles.Inferno
 				SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.75f, 0.4f);
 				Laser();
 				runOnce = false;
-				//Projectile.friendly = true;
 				Projectile.friendly = true;
             }
 			if(counter >= 5)
 			{
-				//Projectile.friendly = false;
 				Projectile.friendly = false;
 			}
 			Lighting.AddLight(Projectile.Center, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f, (255 - Projectile.alpha) * 0.8f / 255f);
