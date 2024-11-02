@@ -23,7 +23,7 @@ namespace SOTS.Items.AbandonedVillage
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<CharredWood>(12).AddIngredient(ItemID.Silk, 5).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient<CharredWood>(12).AddIngredient(ItemID.Silk, 5).AddTile(TileID.Loom).Register();
         }
     }
 }
