@@ -13,7 +13,7 @@ namespace SOTS.Items.Planetarium.FromChests
 		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 120;
+			Item.damage = 100;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 44;
 			Item.height = 44;

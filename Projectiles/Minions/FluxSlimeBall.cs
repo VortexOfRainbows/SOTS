@@ -11,10 +11,6 @@ namespace SOTS.Projectiles.Minions
 {    
     public class FluxSlimeBall : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Flux Slime Ball");
-		}
         public override void SetDefaults()
 		{
 			Projectile.netImportant = true;
@@ -30,10 +26,10 @@ namespace SOTS.Projectiles.Minions
 			Projectile.ignoreWater = true;
 		}
 		private int shader = 0;
-		float counter2 = 0;
-		float randMult = 1f;
-		float[] counterArr = new float[6];
-		float[] randSeed1 = new float[6];
+		private float counter2 = 0;
+		private float randMult = 1f;
+		private float[] counterArr = new float[6];
+		private float[] randSeed1 = new float[6];
 		public int targetID = -1;
 		public bool hasHit = false;
         public override bool? CanCutTiles()
@@ -147,11 +143,11 @@ namespace SOTS.Projectiles.Minions
         {
 			behindProjectiles.Add(index);
 		}
-		bool instant = false;
-		Vector2 baseVelo = Vector2.Zero;
-		bool runOnce = true;
-		int direction = 0;
-		int aiCounter = 0;
+		private bool instant = false;
+		private Vector2 baseVelo = Vector2.Zero;
+		private bool runOnce = true;
+		private int direction = 0;
+		private int aiCounter = 0;
 		public override void AI()
 		{
 			if (runOnce)

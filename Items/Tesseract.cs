@@ -1,17 +1,9 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
 using SOTS.FakePlayer;
 using SOTS.Helpers;
-using SOTS.Items.OreItems;
-using SOTS.Items.Planetarium.FromChests;
-using SOTS.Items.Planetarium.Furniture;
 using SOTS.Items.SpiritStaves;
-using SOTS.Projectiles.Minions;
 using SOTS.Void;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -30,7 +22,7 @@ namespace SOTS.Items
 		}
 		public override void SafeSetDefaults() 
 		{
-			Item.damage = 100;
+			Item.damage = 1000000;
 			Item.knockBack = 5f;
 			Item.width = 52;
 			Item.height = 52;

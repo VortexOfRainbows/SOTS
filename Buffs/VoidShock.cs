@@ -20,6 +20,10 @@ namespace SOTS.Buffs
 			if (player.endurance > 0)
 				player.endurance = 0;
 			player.endurance -= 2f;
+			if(player.SOTSPlayer().MrBurns)
+			{
+				player.endurance += 1f;
+			}
 			if(player.buffTime[buffIndex] <= 6 || voidPlayer.voidMeter > 0)
 			{
 				if(player.buffTime[buffIndex] <= 6)
@@ -28,6 +32,5 @@ namespace SOTS.Buffs
                 buffIndex--;
 			}
 		}
-
     }
 }

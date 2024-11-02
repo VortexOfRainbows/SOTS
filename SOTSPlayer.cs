@@ -104,12 +104,12 @@ namespace SOTS
 		public static void LoadArrays()
 		{
 			FakePlayerHelper.Initialize();
-			typhonBlacklist = new int[] { ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), 
+			typhonBlacklist = [ ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), 
 				ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), 
-				ModContent.ProjectileType<BlazingArrow>(), ModContent.ProjectileType<DimensionShredderLightning>() };
-			symbioteBlacklist = new int[] { ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter, ModContent.ProjectileType<FreshGreenyCounter>() };
-			typhonWhitelist = new int[] { ModContent.ProjectileType<HardlightArrow>() };
-			harmonyWhitelist = new int[] { BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge };
+				ModContent.ProjectileType<BlazingArrow>(), ModContent.ProjectileType<DimensionShredderLightning>() ];
+			symbioteBlacklist = [ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter, ModContent.ProjectileType<FreshGreenyCounter>()];
+			typhonWhitelist = [ModContent.ProjectileType<HardlightArrow>()];
+			harmonyWhitelist = [BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge];
 		}
 		public int UniqueVisionNumber = -1;
 		public static Color VoidMageColor(Player player, bool sourceTimeFreeze = true)
@@ -200,7 +200,7 @@ namespace SOTS
 		public bool oldTimeFreezeImmune = false;
 		public bool TimeFreezeImmune = true;
 		public bool VoidAnomaly = false;
-		public bool VMincubator = false;
+		public bool VMincubator = false, MrBurns = false;
 		public bool normalizedGravity = false;
 		public bool VisionVanity = false;
 		public float PotionBuffDegradeRate = 1f;
@@ -1020,7 +1020,7 @@ namespace SOTS
                 }
             }
 			VoidAnomaly = false;
-			VMincubator = false;
+			VMincubator = MrBurns = false;
 			zoneLux = zonePolaris = false;
 			if (NPC.AnyNPCs(ModContent.NPCType<Lux>()) || NPC.AnyNPCs(ModContent.NPCType<NewPolaris>()))
 			{

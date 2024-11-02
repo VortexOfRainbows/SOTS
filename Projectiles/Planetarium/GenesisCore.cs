@@ -1,36 +1,25 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Planetarium
 {    
     public class GenesisCore : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Genesis Core");
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 30;
 			Projectile.width = 30;
-			Projectile.DamageType = DamageClass.Magic;
+			Projectile.DamageType = ModContent.GetInstance<VoidMagic>();
 			Projectile.timeLeft = 7200;
 			Projectile.friendly = false;
 			Projectile.hostile = false;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 100;
-		}
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-			modifiers.DisableCrit();
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{
@@ -50,9 +39,9 @@ namespace SOTS.Projectiles.Planetarium
 			return false;
 		}
 		public float DistanceMult = 1f;
-		int num = 0;
-		int counter = 0;
-		int counter2 = 0;
+		private int num = 0;
+		private int counter = 0;
+		private int counter2 = 0;
 		public override void AI()
 		{
 			counter++;
@@ -79,10 +68,10 @@ namespace SOTS.Projectiles.Planetarium
 				DistanceMult += 0.015f;
 			if(counter % 5 == 0)
             {
-				if (num < 24)
+				if (num < 24 && Projectile.owner == Main.myPlayer)
 				{
 					Vector2 velo = Projectile.velocity.SafeNormalize(new Vector2(1, 0)) * 6;
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velo, ModContent.ProjectileType<GenesisArc>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.whoAmI, 0);
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velo, ModContent.ProjectileType<GenesisArc>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.identity);
 				}
 				num++;
 			}
@@ -106,45 +95,45 @@ namespace SOTS.Projectiles.Planetarium
 				for (int i = 0; i < 72; i++)
 				{
 					resetVector2(ref circularLocation, i);
-					int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
-					Main.dust[dust].velocity = circularLocation;
-					Main.dust[dust].velocity *= Main.rand.NextFloat(4.5f, 15.5f) * j;
-					Main.dust[dust].scale *= 2f - (j - 1);
-					Main.dust[dust].noGravity = true;
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
+					dust.velocity = circularLocation;
+					dust.velocity *= Main.rand.NextFloat(4.5f, 15.5f) * j;
+					dust.scale *= 2f - (j - 1);
+                    dust.noGravity = true;
 
 					if (Main.rand.NextBool(2))
 					{
 						resetVector2(ref circularLocation, i);
-						dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
-						Main.dust[dust].velocity = circularLocation;
-						Main.dust[dust].velocity *= Main.rand.NextFloat(0.4f, 2.1f) * j;
-						Main.dust[dust].scale *= 6f - (j - 1);
-						Main.dust[dust].noGravity = true;
+						dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
+						dust.velocity = circularLocation;
+						dust.velocity *= Main.rand.NextFloat(0.4f, 2.1f) * j;
+						dust.scale *= 6f - (j - 1);
+                        dust.noGravity = true;
 					}
 
 					if (Main.rand.NextBool(2))
 					{
 						resetVector2(ref circularLocation, i);
-						dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
-						Main.dust[dust].velocity = circularLocation;
-						Main.dust[dust].velocity *= Main.rand.NextFloat(1.5f, 4.5f) * j;
-						Main.dust[dust].scale *= 5f - (j - 1);
-						Main.dust[dust].noGravity = true;
+						dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
+						dust.velocity = circularLocation;
+						dust.velocity *= Main.rand.NextFloat(1.5f, 4.5f) * j;
+						dust.scale *= 5f - (j - 1);
+                        dust.noGravity = true;
 					}
 
 					resetVector2(ref circularLocation, i);
-					dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
-					Main.dust[dust].velocity = circularLocation;
-					Main.dust[dust].velocity *= Main.rand.NextFloat(2.25f, 7.5f) * j;
-					Main.dust[dust].scale *= 4f - (j - 1);
-					Main.dust[dust].noGravity = true;
+					dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
+					dust.velocity = circularLocation;
+					dust.velocity *= Main.rand.NextFloat(2.25f, 7.5f) * j;
+					dust.scale *= 4f - (j - 1);
+                    dust.noGravity = true;
 
 					resetVector2(ref circularLocation, i);
-					dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
-					Main.dust[dust].velocity = circularLocation;
-					Main.dust[dust].velocity *= Main.rand.NextFloat(3.75f, 12.5f) * j;
-					Main.dust[dust].scale *= 3f - (j - 1);
-					Main.dust[dust].noGravity = true;
+					dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, 235);
+					dust.velocity = circularLocation;
+					dust.velocity *= Main.rand.NextFloat(3.75f, 12.5f) * j;
+					dust.scale *= 3f - (j - 1);
+                    dust.noGravity = true;
 				}
 			}
 			if (Projectile.owner == Main.myPlayer)
@@ -181,7 +170,7 @@ namespace SOTS.Projectiles.Planetarium
 					NPC npc = Main.npc[npcIndex];
 					if (npc.CanBeChasedBy())
 					{
-						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center.X, Projectile.Center.Y, 0, 0, LightningType, damage, 0, Projectile.owner, npc.whoAmI);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, LightningType, damage, Projectile.knockBack, Projectile.owner, npc.whoAmI);
 					}
 				}
 			}

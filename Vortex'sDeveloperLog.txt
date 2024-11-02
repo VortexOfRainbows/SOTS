@@ -27,8 +27,6 @@ Update Objectives:
 1. Ghost Town! (In Progress)	
 	1. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
 	2. Fill the Rectangle with blocks and generation that is related to the AVM instead of just being in the natural underground
-	3. Find out how to better integrate the idea of the place infected by evil (potentially change tile/wall types)
-	4. Make sure all walls are using unsafe variants and doesn't merge with underground
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items (pending)
 4. Starmap
@@ -47,6 +45,7 @@ Abandoned village generation
 Vault Room to spawn loot
 Make enemies spawn in the AV and Mines
 Fix Archaeologist Shop (for the new items)!
+Add AV items to Evil Treasure Slimes
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -75,8 +74,27 @@ N/A
 
 Daily Log:
 
+11/2/24
+1. Mr. Burns (should be a decent item, not overpowered but good at the niche it serves). Makes void shock ~50% weaker
+	1. BURNS: void shock + recovery damage ~ 116 with 500 max hp
+	2. BASE: void shock + recovery damage ~ 237 with 500 max hp
+	3. Reduces duration of void shock by 50%, damage of recovery by 50%, damage while under shock 3x -> 2x
+	4. And increases max void by 20
+2. Rocking Horse: increased movement speed and void gain
+3. Coconut Gun damage 20 -> 17
+4. Armageddon damage 200 -> 190, void cost 8 -> 10
+5. Fixed bug where Arc Staff Mk2 wasn't inheriting void damage type (specifically effects critical strike chances)
+6. Arc Staff Mk2 now deals knockback equal to item knockback for lightning, Vorpal Knife now deals knockback equal to item knockback for lightning
+	1. Rather than 3 (3.0-> 3.5), (3.0 -> 1.5)
+7. Arc Staff Mk2 damage multiplier against non-bosses 250% -> 200%
+	1. Damage 120 -> 100
+8. Tesseract internal damage 100 -> 1000000 (should make it appear first in damage sorting from mod lists)
+	1. Tesseract now deals 100% -> 70% damage
+9. Arc Staff Mk2 should now have better MP syncing and slightly reduced draw iteration (should help reduce some lag). Tested in MP!
+10. Increased range of Vorpal Knife lightning to better match visuals 176 -> 200
+
 10/28/24 and 10/30/24 and 11/1/24
-1. Wishing stars spawns in the vibrant geode instead of the vision amulet
+d
 2. Ruby Gemlock should be spawning the synthetic liver again
 3. WIP spawning loot in chests 
 4. Fix bug where Catacylsm disc dealt melee damage with the explosion. Also reduced tile collide hitbox so it doesn't bounce weirdly off tiles

@@ -1,11 +1,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
 using SOTS.Void;
 using SOTS.Items.Pyramid;
-using SOTS.Projectiles.Celestial;
 using SOTS.Projectiles.Chaos;
 using Terraria.DataStructures;
 
@@ -19,7 +17,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 200;
+			Item.damage = 190;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 28;
 			Item.height = 26;
@@ -54,7 +52,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override int GetVoid(Player player)
 		{
-			return 8;
+			return 10;
 		}
 	}
 }

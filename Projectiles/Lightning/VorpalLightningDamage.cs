@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
-using System;
 using SOTS.Projectiles.Blades;
 
 namespace SOTS.Projectiles.Lightning
@@ -9,10 +8,6 @@ namespace SOTS.Projectiles.Lightning
     public class VorpalLightningDamage : ModProjectile 
     {
 		public override string Texture => "SOTS/Projectiles/Lightning/PurpleLightningDamage";
-        public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Origin Thunder");
-		}
         public override void SetDefaults()
 		{
 			Projectile.height = 24;

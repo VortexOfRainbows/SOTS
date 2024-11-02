@@ -222,11 +222,15 @@ namespace SOTS.Void
 				Player.lifeRegenTime = 0;
 				Player.lifeRegen -= 20;
 				Player.lifeRegen -= Player.statLifeMax2 / 20;
-				if (sPlayer.VMincubator || sPlayer.VoidAnomaly)
-                {
-					if(Player.lifeRegen < 0)
+                if (Player.lifeRegen < 0)
+				{
+                    if (sPlayer.VMincubator || sPlayer.VoidAnomaly)
                     {
-						Player.lifeRegen = (int)(Player.lifeRegen * 1.25f); //simply 1.25x the hp loss as normal
+                        Player.lifeRegen = (int)(Player.lifeRegen * 1.25f); //simply 1.25x the hp loss as normal
+                    }
+                    if (sPlayer.MrBurns)
+                    {
+                        Player.lifeRegen = (int)(Player.lifeRegen * .5f);
                     }
                 }
 				if (Player.statLife <= 0 && Player.whoAmI == Main.myPlayer)
@@ -234,7 +238,7 @@ namespace SOTS.Void
 					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1 + Main.rand.Next(5))), 10.0, 0, false);
 				}
 			}
-		}
+        }
 		//float standingTimer = 1;
 		//public float maxStandingTimer = 2;
 		/*public void ApplyDynamicMultiplier()
@@ -508,7 +512,9 @@ namespace SOTS.Void
 					int time = 600;
 					if (sPlayer.VMincubator || sPlayer.VoidAnomaly)
 						time = 1200;
-					Player.AddBuff(ModContent.BuffType<VoidShock>(), time);
+					if (sPlayer.MrBurns)
+						time /= 2;
+					Player.AddBuff(BuffType<VoidShock>(), time);
 					if (Player.whoAmI == Main.LocalPlayer.whoAmI)
 						SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Void/Void_Shock"), (int)Player.Center.X, (int)Player.Center.Y, 0.9f);
 					//if(time < 120) time = 120;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
@@ -14,7 +13,6 @@ namespace SOTS.Projectiles.Minions
     {
         public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Pinky Pet");
 			Main.projFrames[Projectile.type] = 1;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.LightPet[Projectile.type] = false;
@@ -23,13 +21,11 @@ namespace SOTS.Projectiles.Minions
 		{
 			writer.Write(fireToX);
 			writer.Write(fireToY);
-			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
 			fireToX = reader.ReadSingle();
 			fireToY = reader.ReadSingle();
-			base.ReceiveExtraAI(reader);
 		}
 		public override void SetDefaults()
         {
@@ -64,8 +60,8 @@ namespace SOTS.Projectiles.Minions
 			shader = player.cPet;
 			return true;
         }
-		bool runOnce = true;
-		int[] hooks = new int[6];
+		private bool runOnce = true;
+		private int[] hooks = new int[6];
         public override bool PreDraw(ref Color lightColor)
 		{
 			Player player = Main.player[Projectile.owner];

@@ -3,29 +3,27 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.Planetarium
 {
 	public class GenesisArc: ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Genesis Arc");
-		}
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;
 			Projectile.height = 14;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Magic;
+			Projectile.DamageType = ModContent.GetInstance<VoidMagic>();
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.alpha = 120;
 			Projectile.scale = 1f;
 		}
-		Vector2[] trailPos = new Vector2[10];
+		private Vector2[] trailPos = new Vector2[10];
 		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce)
@@ -50,7 +48,7 @@ namespace SOTS.Projectiles.Planetarium
 				for (int i = 0; i < max; i++)
 				{
 					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 4; j++)
+					for (int j = 0; j < 3; j++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.1f * scale;
 						float y = Main.rand.Next(-10, 11) * 0.1f * scale;
@@ -60,14 +58,14 @@ namespace SOTS.Projectiles.Planetarium
 							y = 0;
 						}
 						if (trailPos[k] != Projectile.Center)
-							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
+							Main.spriteBatch.Draw(texture, drawPos + new Vector2(x, y), null, color * 1.5f, betweenPositions.ToRotation() + MathHelper.ToRadians(90), drawOrigin, scale, SpriteEffects.None, 0f);
 					}
 				}
 				previousPosition = currentPos;
 			}
 			return false;
 		}
-		bool runOnce = true;
+		private bool runOnce = true;
 		public void cataloguePos()
 		{
 			Vector2 current = Projectile.Center;
@@ -84,32 +82,26 @@ namespace SOTS.Projectiles.Planetarium
 			Vector2 current = Projectile.Center;
 			for (int i = 0; i < trailPos.Length; i++)
 			{
-				Vector2 previousPosition = trailPos[i];
-				if (current == previousPosition)
+				if (current == trailPos[i])
 				{
 					iterator++;
 				}
 			}
 			if (endHow == 1 && endHow != 2 && Main.rand.NextBool(3))
 			{
-				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, 235);
-				Main.dust[dust].scale *= 1f * (trailPos.Length - iterator) / (float)trailPos.Length;
-				Main.dust[dust].velocity *= 1f;
-				Main.dust[dust].noGravity = true;
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.LifeDrain);
+				dust.scale *= 1f * (trailPos.Length - iterator) / (float)trailPos.Length;
+				dust.velocity *= 1f;
+                dust.noGravity = true;
 			}
 			if (iterator >= trailPos.Length)
 				Projectile.Kill();
 		}
-		int endHow = 0;
-		public override bool OnTileCollide(Vector2 oldVelocity)
-		{
-			triggerStop();
-			return false;
-		}
-		int counter = 0;
-		int counter2 = 0;
-		Vector2 originalVelo = Vector2.Zero;
-		Vector2 rotPos = Vector2.Zero;
+		private int endHow = 0;
+		private int counter = 0;
+		private int counter2 = 0;
+		private Vector2 originalVelo = Vector2.Zero;
+		private Vector2 rotPos = Vector2.Zero;
 		public override void AI()
 		{
 			if (Projectile.timeLeft < 220)
@@ -134,7 +126,6 @@ namespace SOTS.Projectiles.Planetarium
 			bool found = false;
 			int ofTotal = 0;
 			int total = 0;
-			//int projID = -1;
 			for (int i = 0; i < Main.projectile.Length; i++)
 			{
 				Projectile proj = Main.projectile[i];
@@ -150,8 +141,18 @@ namespace SOTS.Projectiles.Planetarium
 				}
 			}
 
-			int owner = (int)Projectile.ai[0];
-			if(owner >= 0)
+			int identity = (int)Projectile.ai[0];
+			int owner = -1;
+            for (short i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (proj.active && proj.owner == Projectile.owner && proj.identity == (int)Projectile.ai[0])
+                {
+					owner = i;
+                    break;
+                }
+            }
+            if (owner >= 0)
             {
 				Projectile proj = Main.projectile[owner];
 				if(proj.type == ModContent.ProjectileType<GenesisCore>() && proj.owner == Projectile.owner && proj.active && total >= 1)
@@ -186,10 +187,10 @@ namespace SOTS.Projectiles.Planetarium
 				endHow = 2;
 				Projectile.tileCollide = false;
 				Projectile.velocity *= 0f;
-			}
-
+                cataloguePos();
+            }
 		}
-		float nextRot = 0f;
+		private float nextRot = 0f;
 		public void triggerStop()
 		{
 			endHow = 1;
@@ -204,7 +205,6 @@ namespace SOTS.Projectiles.Planetarium
 			writer.Write(Projectile.friendly);
 			writer.Write(endHow);
 			writer.Write(nextRot);
-			base.SendExtraAI(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader)
 		{
@@ -212,7 +212,6 @@ namespace SOTS.Projectiles.Planetarium
 			Projectile.friendly = reader.ReadBoolean();
 			endHow = reader.ReadInt32();
 			nextRot = reader.ReadSingle();
-			base.ReceiveExtraAI(reader);
 		}
 	}
 }

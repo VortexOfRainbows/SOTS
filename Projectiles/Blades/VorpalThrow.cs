@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Void;
-using SOTS.Common.GlobalNPCs;
 using System.IO;
 using SOTS.Prim.Trails;
 using SOTS.Prim;
@@ -138,7 +135,7 @@ namespace SOTS.Projectiles.Blades
 					{
 						for (int j = -1; j <= 1; j++)
 							Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + new Vector2(0, 24 + Main.rand.NextFloat(-8, 8)), new Vector2(j * 0.3f + Main.rand.NextFloat(-0.1f, 0.1f), -1), ModContent.ProjectileType<GreenLightning2>(), 0, 0, Main.myPlayer, -1);
-                        Planetarium.GenesisCore.LaunchLightningAtNearbyEnemies(Projectile, ModContent.ProjectileType<VorpalLightning>(), 8, 176, Projectile.damage);
+                        Planetarium.GenesisCore.LaunchLightningAtNearbyEnemies(Projectile, ModContent.ProjectileType<VorpalLightning>(), 8, 200, Projectile.damage);
 					}
 					for (int i = 0; i < 360; i += 2)
 					{

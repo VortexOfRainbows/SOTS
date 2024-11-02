@@ -172,7 +172,7 @@ namespace SOTS
 			DarkGrayRarity = [ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()]; //Very Dark gray
 			BrightGreenRarity = [ItemType<DreamLamp>()];
 
-			DedicatedOrange = [ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>()]; //friends
+			DedicatedOrange = [ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>(), ItemType<TorchGunMk2>()]; //friends
 			DedicatedBlue = [ItemType<Calculator>()]; //friends 2
 			DedicatedPurpleRed = [ItemType<CursedApple>(), ItemType<ArcStaffMk2>()]; //James
 			DedicatedPastelPink = []; //Tris
@@ -425,6 +425,9 @@ namespace SOTS
                     damage.Base += baseD;
                     damage *= multi;
                     damage += add;
+
+					//Tesseract nerf (temp)
+					damage *= 0.7f;
                 }
             }
         }

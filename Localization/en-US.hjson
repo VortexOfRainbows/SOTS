@@ -2544,7 +2544,7 @@ Mods: {
 				Tooltip:
 					'''
 					Launch a massive sphere of lightning
-					Detonates at the end of its lifespan, doing 250% damage to low health, non-boss enemies, but only 100% to bosses
+					Detonates at the end of its lifespan, doing 200% damage to low health, non-boss enemies, but only 100% to bosses
 					'''
 			}
 
@@ -5362,7 +5362,7 @@ Mods: {
 					Starting with the item in the bottom-left inventory slot and ending with the bottom-right slot, each Clone uses a different item
 					When first summoned, the Clone will await a command for how it should use the item (left or right click) and for how long (for charge items)
 					After the first usage of the item, the Clone will now automatically use the item as specified
-					Items used by Clones are affected by Void and Summon damage bonuses
+					Items used by Clones are affected by Void and Summon damage bonuses but have damage reduced by 30% multiplicatively
 					'''
 			}
 
@@ -5835,6 +5835,20 @@ Mods: {
 			AVMusicBox: {
 				DisplayName: Abandoned Village Surface Music Box
 				Tooltip: ""
+			}
+
+			MrBurns: {
+				DisplayName: Mr. Burns
+				Tooltip:
+					'''
+					Increases max void by 20
+					Decreases the potency of Void Shock and Void Recovery
+					'''
+			}
+
+			RockingHorse: {
+				DisplayName: Rocking Horse
+				Tooltip: Increases movement speed by 5% and void gain 2
 			}
 		}
 

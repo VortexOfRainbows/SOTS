@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -7,16 +8,12 @@ namespace SOTS.Projectiles.Planetarium
 {
 	public class OriginLightningZap : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Origin Thunder");
-		}
 		public override void SetDefaults()
 		{
 			Projectile.width = 14;
 			Projectile.height = 14;
 			Projectile.friendly = true;
-			Projectile.DamageType = DamageClass.Magic;
+			Projectile.DamageType = ModContent.GetInstance<VoidMagic>();
 			Projectile.timeLeft = 3600;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
@@ -27,7 +24,7 @@ namespace SOTS.Projectiles.Planetarium
 		{
 			return false;
 		}
-		Vector2[] trailPos = new Vector2[200];
+		private Vector2[] trailPos = new Vector2[200];
 		public override bool PreDraw(ref Color lightColor)
 		{
 			if (runOnce || !hit)
@@ -72,15 +69,15 @@ namespace SOTS.Projectiles.Planetarium
 		{
 			return false;
 		}
-		bool runOnce = true;
-		Vector2 addPos = Vector2.Zero;
-		Vector2 originalVelo = Vector2.Zero;
-		Vector2 originalPos = Vector2.Zero;
-		Vector2 nextPos = Vector2.Zero;
-		int[] randStorage = new int[200];
-		int dist = 200;
-		int counter = 0;
-		bool hit = false;
+		private bool runOnce = true;
+		private Vector2 addPos = Vector2.Zero;
+		private Vector2 originalVelo = Vector2.Zero;
+		private Vector2 originalPos = Vector2.Zero;
+		private Vector2 nextPos = Vector2.Zero;
+		private int[] randStorage = new int[200];
+		private int dist = 200;
+		private int counter = 0;
+		private bool hit = false;
 		public override void AI()
 		{
 			NPC target = Main.npc[(int)Projectile.ai[0]];
@@ -120,7 +117,7 @@ namespace SOTS.Projectiles.Planetarium
 				if (npc.active && npc.Hitbox.Intersects(new Rectangle((int)addPos.X - 12, (int)addPos.Y - 12, 24, 24)) && !npc.friendly)
 				{
 					if (Projectile.owner == Main.myPlayer && Projectile.friendly)
-						Projectile.NewProjectile(Projectile.GetSource_FromThis(), addPos.X, addPos.Y, Projectile.velocity.X, Projectile.velocity.Y, ModContent.ProjectileType<OriginLightningDamage>(), Projectile.damage, 3f, Main.myPlayer, (int)Projectile.knockBack, Projectile.ai[1] - 1);
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), addPos, Projectile.velocity, ModContent.ProjectileType<OriginLightningDamage>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
 					if(Projectile.friendly)
                     {
 						hit = true;
