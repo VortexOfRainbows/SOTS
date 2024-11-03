@@ -958,14 +958,16 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<ArcticGoblin>() || npc.type == ModContent.NPCType<Polaris>() || npc.type == ModContent.NPCType<NewPolaris>() || npc.type == ModContent.NPCType<PermafrostConstruct>())
+			if (npc.type == ModContent.NPCType<ArcticGoblin>() || npc.type == ModContent.NPCType<Polaris>() || npc.type == ModContent.NPCType<NewPolaris>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<PermafrostSpirit>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.ArcticGoblin");
 				if (npc.type == ModContent.NPCType<Polaris>() || npc.type == ModContent.NPCType<NewPolaris>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Polaris");
 				if (npc.type == ModContent.NPCType<PermafrostConstruct>())
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PermafrostConstruct");
-				bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                if (npc.type == ModContent.NPCType<PermafrostSpirit>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PermafrostSpirit");
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					SurfaceSnow,
 					flavorText
 				});
@@ -980,7 +982,7 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>() || npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<NatureSlime>())
+			if (npc.type == ModContent.NPCType<PutridPinkyPhase2>() || npc.type == ModContent.NPCType<BlueSlimer>() || npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<NatureSlime>() || npc.type == ModContent.NPCType<NatureSpirit>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PP");
 				if(npc.type == ModContent.NPCType<BlueSlimer>())
@@ -989,6 +991,8 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.NatureConstruct");
                 if (npc.type == ModContent.NPCType<NatureSlime>())
                     flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.NatureSlime");
+                if (npc.type == ModContent.NPCType<NatureSpirit>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.NatureSpirit");
                 bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					Surface,
 					flavorText
@@ -1038,11 +1042,13 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if(npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<SubspaceSerpentHead>())
+			if(npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<SubspaceSerpentHead>() || npc.type == ModContent.NPCType<InfernoSpirit>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.InfernoConstruct");
                 if (npc.type == ModContent.NPCType<SubspaceSerpentHead>())
                     flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SubspaceSerpent");
+                if (npc.type == ModContent.NPCType<InfernoSpirit>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.InfernoSpirit");
                 bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 					TheUnderworld,
 					flavorText

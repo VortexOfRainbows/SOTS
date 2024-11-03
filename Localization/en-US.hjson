@@ -6744,7 +6744,7 @@ Mods: {
 			HoloSlime: A holographic mimic of an average slime. Its source of energy is unknown.
 			HoloBlade: A holographic mimic of a sword. Its source of energy is unknown.
 			HoloEye: A holographic mimic of an eyeball. Its source of energy is unknown.
-			PhaseEye: A mindless sphere of energy that protects the Planetarium, created with exclusively to be used as a puppet for The Advisor.
+			PhaseEye: A mindless sphere of energy that protects the Planetarium, created exclusively to be used as a puppet for The Advisor.
 			TwilightDevil: A mindless drone that protects the Planetarium. It seems to be controlled centrally, as nothing hides behind its cloak.
 			PhaseSpeeder: It's fast. It's deadly. It's origin is unknown, but it certainly wants you dead. Uses the fabric of existence as its shield.
 			TwilightScouter: A mindless drone that collects data for the Planetarium. Its internal circuitry is not particularly complex.
@@ -6764,15 +6764,29 @@ Mods: {
 			NatureSlime: A slime deceptively controlled by a parasitic flower. Its unique biology had previously made it a subject of great scientific interest.
 			SittingMushroom: Sitting mushrooms are spitting mushrooms.
 			TreasureSlime: The nobility of slimes! Unlike the others, these slimes value their lives, and any attempts to steal their treasure will cause them to flee without a second thought.
-			NatureConstruct: An ancient machine originally created to advance spirit energy harvesting technology. Now, it serves as a protector of forests under the spirit's control
+			NatureConstruct: An ancient machine originally created to advance spirit energy harvesting technology. Under the spirit's control, it also serves as a protector of forests.
+			EarthenConstruct: As Earthen Spirits are known for traveling in groups, the chasis of the construct was designed to allow easy movement of the contained spirits within thin the chassis. Earlier, more compact designs proved too unstable for housing groups of spirits.
 			PermafrostConstruct: An ancient machine that uses spirit energy to allow easy traversal through deep snow. The spirit, now in control, uses the device to defend its cold home.
-			EarthenConstruct: As earthen spirits are known for traveling in groups, the chasis of the construct was designed to allow easy movement of the contained spirits within thin the chassis. Earlier, more compact designs proved too unstable for housing groups of spirits.
 			OtherworldlyConstructHead: Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.
 			InfernoConstruct: Once used as a living flame to heat ancient forges, it is no longer distinguishable from a weapon of mass destruction.
 			ChaosConstruct: A prison designed to weaken the power of the Chaos Spirit inside. Unlike other constructs, the chassis serves no other purpose besides containment.
 			ChaosConstructChassis: The internal structure of a Chaos Construct. Designed to contain the Chaos Spirit at all costs.
+			NatureSpirit:
+				'''
+				Quite a useful specimen: not too dangerous, good source of power, and it has a natural desire to patrol.
+				Perhaps we can use it to monitor the planet's surface?
+				Quite possibly. In fact, I already have an idea...
+				'''
 			EarthenSpirit: Forced into tight, underground spaces, these spirits have a built-in tolerance for cooperating with other spirits. Their cooperative nature is also useful for more labor-intensive tasks.
+			PermafrostSpirit: Harnessing energy from this spirit - one that removes energy from its surroundings - is not as difficult as it seems.
 			OtherworldlySpirit: Isolated in outer space, these spirits don't have much experience competing for land and resources. This makes them conveniently exploitable sources of energy for high-tech machines.
+			InfernoSpirit:
+				'''
+				I'm starting to think your ideas aren't very original, Mammon. Look, even the Umbra are using Spirits for energy.
+				But their cages are primitive - with limited utility. My constructs can think.
+				I'm pretty sure Spirits can already think.
+				But their thinking is... primitive.
+				'''
 			Lux: Chaos spirits have no equal. They are shoved into constructs for the sole purpose of containment. None have ever been sufficiently weakened for intelligent use.
 			Glowmoth: An otherworldly creature that makes its home in glowing mushroom caves. Although one might assume that it lives there due the trait it shares with the mushrooms, bioluminescence, its main motive is the biome's relatively easy to access void energy.
 			ArchaeologistLore: Merely a hologram. Move along. Nothing to learn here.
@@ -6796,8 +6810,8 @@ Mods: {
 				'''
 			CorpseBloom:
 				'''
-				The soil was plentiful and rich. At first the plant was content.
-				However, the plant found the rot and ash more plentiful - and more rich - so it delicately laid itself upon the piled corpses instead, and there it found solace.
+				The soil was plentiful and rich. At first, the plant was content.
+				However, the plant found bodies more plentiful - and more rich - so it laid itself upon the piled corpses, and there it found solace.
 				'''
 			Famished:
 				'''
@@ -6823,7 +6837,7 @@ Mods: {
 				'''
 			Advisor:
 				'''
-				ADRESSING NEXUS DIRECTLY... YOU ARE COMPROMISED.
+				ADDRESSING NEXUS DIRECTLY... YOU ARE COMPROMISED.
 				THIS IS THE LAST TRANSMISSION YOU WILL RECEIVE FROM US.
 				GOODBYE.
 				'''
