@@ -22,6 +22,7 @@ using Steamworks;
 using rail;
 using SOTS.Items.Whips;
 using SOTS.Items.ChestItems;
+using SOTS.Items.Tools;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -3938,13 +3939,13 @@ namespace SOTS.WorldgenHelpers
             CorruptionRectangle cR = Corruptions[bestC];
             int tier1 = 0, tier2 = 0, tier3 = 0, tier4 = 0;
             List<int> Tier1Items = [ModContent.ItemType<FizzleStar>(), ModContent.ItemType<VisionAmulet>(), ItemID.MiningHelmet, ModContent.ItemType<AncientSteelSword>(), ModContent.ItemType<AncientSteelLongbow>(), ModContent.ItemType<SteelerWheeler>(), ModContent.ItemType<RockingHorse>(), ModContent.ItemType<MrBurns>()];
-            List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(), ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>()];
-            List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>()];
+            List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(), ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>(), ModContent.ItemType<AncientSteelLantern>()];
+            List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>(), ModContent.ItemType<AncientSteelGreatPickaxe>(), ModContent.ItemType<AncientSteelGreatHamaxe>()];
             List<int> Tier4Items = [ModContent.ItemType<StarshardSaber>(), ModContent.ItemType<Icebreaker>(), ModContent.ItemType<SandstormPouch>(), ModContent.ItemType<PlagueSpitter>(), ModContent.ItemType<JarOfPineapple>()];
-            //Melee:  Halberd, Sword, Starshard Saber, Guardian Greatsword(Void), Pickaxe(Void), Hamaxe (6)
-            //Ranged: Longbow, Hand Cannon, Soot Spewer, Backup Bow, Fortress Crasher, Ice Breaker, Sandstorm Pouch(Void) (7)
-            //Magic:  Fizzle Star, Magma Concentrator(Void), Blongus/Acid Belcher (3)
-            //Summon: Lantern, Fresh Greeny, Little Woes (3)
+            //Melee:  Halberd, Sword, Starshard Saber, Guardian Greatsword(Void), Pickaxe(Void), Hamaxe, Ancient Steel pickaxe and hamaxe, (8)
+            //Ranged: Longbow, Hand Cannon, Soot Spewer, Backup Bow, Fortress Crasher, Ice Breaker, Sandstorm Pouch(Void), (7)
+            //Magic:  Fizzle Star, Magma Concentrator(Void), Blongus/Acid Belcher, (3)
+            //Summon: Lantern, Fresh Greeny, Little Woes, (3)
             foreach (Chest chest in Main.chest.Where(c => c != null))
             {
                 // Get a chest

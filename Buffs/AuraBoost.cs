@@ -9,9 +9,8 @@ namespace SOTS.Buffs
         public override void SetStaticDefaults()
         {
             Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = false;
+            Main.buffNoTimeDisplay[Type] = true;
         }
- 
 		public override void Update(Player player, ref int buffIndex)
 		{
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);

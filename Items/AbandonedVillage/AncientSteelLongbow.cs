@@ -1,6 +1,4 @@
-using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -42,7 +40,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 12).AddRecipeGroup(RecipeGroupID.Wood, 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 12).AddIngredient<CharredWood>(20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

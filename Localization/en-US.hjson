@@ -649,10 +649,9 @@ Mods: {
 				DisplayName: Voidspace Aura Staff
 				Tooltip:
 					'''
-					Summons a voidspace cell on your cursor that releases flames at nearby enemies
+					Summons a Voidspace Cell on your cursor that releases flames at all nearby enemies
 					Grants stat boosts while in the radius of the cell
 					Void regeneration speed increases by 4%, life regeneration by 4, defense by 4, and reduces damage taken by 4%
-					Damages all enemies within range
 					Range scales with summon damage
 					'''
 			}
@@ -5850,6 +5849,15 @@ Mods: {
 				DisplayName: Rocking Horse
 				Tooltip: Increases movement speed by 5% and void gain 2
 			}
+
+			AncientSteelLantern: {
+				DisplayName: Ancient Steel Lantern
+				Tooltip:
+					'''
+					Summons a Steel Lantern on your cursor that releases flames at all nearby enemies
+					Range scales with summon damage
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -5971,7 +5979,7 @@ Mods: {
 
 			FluidCurse: {
 				DisplayName: Fluid Curse
-				Description: Mods.SOTS.BuffDescription.FluidCurse
+				Description: "'An out-of-body experience!'"
 			}
 
 			Frenzy: {
@@ -7543,7 +7551,7 @@ Mods: {
 			VoidLock.DisplayName: Void Lock
 			VoidRing.DisplayName: Void Ring
 			VoidspaceCell.DisplayName: Voidspace Cell
-			VoidspaceExplosion.DisplayName: Voidspace Explosion
+			VoidspaceExplosion.DisplayName: Lantern Explosion
 			WaveBlast.DisplayName: Wave Blast
 			Webbing.DisplayName: Webbing
 			WebBolt.DisplayName: Web Bolt
@@ -7655,6 +7663,7 @@ Mods: {
 			WoeBall.DisplayName: Little Woe
 			TorchBombMk2.DisplayName: Torch Bomb Mk2
 			TorchEmberMk2.DisplayName: Torch Ember Mk2
+			AncientSteelLantern.DisplayName: Steel Lantern
 		}
 
 		DamageClasses: {

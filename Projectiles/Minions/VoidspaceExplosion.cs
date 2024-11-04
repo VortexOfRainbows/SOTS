@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Dusts;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 
 namespace SOTS.Projectiles.Minions
 {    
@@ -11,7 +12,7 @@ namespace SOTS.Projectiles.Minions
         {
 			Projectile.height = 24;
 			Projectile.width = 24;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 1;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 2;
 			Projectile.tileCollide = false;
@@ -23,34 +24,50 @@ namespace SOTS.Projectiles.Minions
         {
 			modifiers.DisableCrit();
         }
+        public override bool? CanHitNPC(NPC target)
+        {
+            return target.whoAmI == (int)Projectile.ai[0];
+        }
+        public override bool ShouldUpdatePosition()
+        {
+            return false;
+        }
         public override void OnKill(int timeLeft)
 		{
-			for (int i = 0; i < 360; i += 20)
+            int type = (int)Projectile.ai[1];
+			bool AncientSteel = type == ModContent.ProjectileType<AncientSteelLantern>();
+			int secondDust = AncientSteel ? DustID.Torch : DustID.TerraBlade;
+            Color c = AncientSteel ? Helpers.ColorHelper.InfernoColorGradient(0.25f) : new Color(75, 255, 30);
+			c.A = 0;
+			Vector2 safe = Projectile.velocity.SNormalize();
+			float length = Projectile.velocity.Length();
+			for(int i = 32; i < length - 12; i += 4)
 			{
-				Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i));
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, 107);
+				float percent = i / length;
+				Vector2 position = Projectile.Center - Projectile.velocity * percent;
+				PixelDust.Spawn(position, 0, 0, safe * Main.rand.NextFloat(1, 2) + Main.rand.NextVector2Circular(.5f, .5f) * (0.5f + 0.5f * percent), c * (0.5f + 0.3f * Main.rand.NextFloat(percent)), 7).scale = 1f + 0.5f * percent;
+			}
+			for (int i = 0; i < 12; i++)
+            {
+                Vector2 circularLocation = new Vector2(12, 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
+                Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation - new Vector2(4), 0, 0, secondDust);
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;
-				dust.velocity += circularLocation * 0.25f;
-				dust.scale *= 1.25f;
+				dust.velocity += circularLocation * Main.rand.NextFloat(0.25f);
+				dust.scale = 1.0f + dust.scale * 0.25f;
 			}
-			for (int i = 0; i < 360; i += 40)
+			for (int i = 0; i < 8; i++)
 			{
-				Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i));
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+				Vector2 circularLocation = new Vector2(12, 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
+				Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation - new Vector2(4), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.noGravity = true;
 				dust.velocity *= 0.5f;
 				dust.velocity += circularLocation * 0.125f;
-				dust.scale *= 2.5f;
+				dust.scale = 1.0f;
 				dust.fadeIn = 0.1f;
-				dust.color = new Color(33, 100, 33);
+				dust.color = c;
 			}
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            target.immune[Projectile.owner] = 0;
-			Projectile.friendly = false;
-        }
 	}
 }
 		

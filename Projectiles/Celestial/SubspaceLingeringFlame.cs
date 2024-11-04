@@ -247,5 +247,20 @@ namespace SOTS.Projectiles.Celestial
 			if (scale <= 0.05f)
 				active = false;	
 		}
+		public void AlternateUpdate()
+        {
+            counter++;
+            float veloMult = 0.6f + 0.4f * counter / 15f;
+            if (veloMult > 1)
+                veloMult = 1f;
+            position += velocity * veloMult;
+            velocity.Y *= 0.976f;
+            velocity.X *= 0.976f;
+            scale *= 0.95f;
+            if (counter < 31f)
+                rotation += nextRotation / 30f;
+            if (scale <= 0.05f)
+                active = false;
+        }
 	}
 }

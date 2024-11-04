@@ -1,7 +1,4 @@
-using Microsoft.Xna.Framework;
-using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
-using SOTS.Items.Permafrost;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,7 +33,7 @@ namespace SOTS.Items.Tools
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 20).AddRecipeGroup(RecipeGroupID.Wood, 20).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ModContent.ItemType<AncientSteelBar>(), 20).AddIngredient<CharredWood>(20).AddTile(TileID.Anvils).Register();
 		}
 	}
 }

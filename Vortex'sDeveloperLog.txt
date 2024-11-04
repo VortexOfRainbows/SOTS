@@ -38,6 +38,7 @@ Update Objectives:
 11. Update Elemental Amulet sprite to include modern genshin visions
 12. Boss balancing configs
 13. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
+14. Ancient Steel Lantern
 
 ---WIP List---
 Abandoned village generation
@@ -57,7 +58,7 @@ Bestiary setup organization.
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. Earthen Gizmo, Corpsebloom, Throe, Famished
 2. +++Soot Extractinator loot, +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
-1. ++++Tesseract, +++Voidmage Incubator, +++Voidspace Aura Staff, +++Challenger's Ring
+1. +++Voidmage Incubator, +++Challenger's Ring
 
 ---Visual Upgrade Needed---
 N/A
@@ -74,8 +75,21 @@ N/A
 
 Daily Log:
 
-11/3/24
+11/3/24 to 11/4/24
 1. Bestiary for Nature, Permafrost, Inferno Spirits
+2. Voidspace Aura staff buff duration 5 seconds => .1 seconds, now grants campfire buff in radius as well
+	1. Reduced radius and radius scaling (105 + 300 * summon damage) -> (320 + 80 * summon damage)
+	2. Knockback should now be more consistent, also buffed knockback 1 -> 3
+	3. Attack speed 45 -> 30
+	4. Damage 90 -> 54
+	5. DPS is the same on average at 60 (so this is essentially a 10% nerf); faster attacks also mean it is worse for higher defense enemies.
+	6. Adjusted visuals, lighting, and code (should look better and be more performant/optimized now)
+	7. Fix bug where it would attempt to attack critters
+3. WIP Ancient Steel Lantern (needs: Multiplayer Syncing)
+	1. Grants campfire buff while in radius
+	2. Deals 16 dps. Tier 1 OOA Summon (lightning auro) deals 8 dpsd but pierces armor.
+	3. This item is generally quite a lot stronger than lightning aura, given the bonus range and higher kb
+4. Replaced Wood with Charred Wood for ancient steel recipes
 
 11/2/24
 1. Mr. Burns (should be a decent item, not overpowered but good at the niche it serves). Makes void shock ~50% weaker
