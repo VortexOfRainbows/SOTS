@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Minions
 		}
 		public override void PostDraw(Color lightColor)
         {
-            if (Main.myPlayer == Projectile.owner && Main.LocalPlayer.Distance(Projectile.Center) < Radius + 4)
+            if (Main.LocalPlayer.Distance(Projectile.Center) < Radius + 4)
                 Main.SceneMetrics.HasCampfire = true;
             Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/SubspaceLingeringFlame");
 			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
@@ -127,7 +127,7 @@ namespace SOTS.Projectiles.Minions
 			float widthMult = !IsVoidSpaceLantern ? 1f : 0.9f;
 			float height = 16;
 			float timer = SOTSWorld.GlobalCounter;
-			int maxLength = 20;
+			int maxLength = IsVoidSpaceLantern ? 20 : 12;
 			for (int j2 = 1; j2 < maxLength; j2++)
 			{
 				Tile tile2 = Framing.GetTileSafely(i, j - j2);

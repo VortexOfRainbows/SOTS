@@ -38,7 +38,6 @@ Update Objectives:
 11. Update Elemental Amulet sprite to include modern genshin visions
 12. Boss balancing configs
 13. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
-14. Ancient Steel Lantern
 
 ---WIP List---
 Abandoned village generation
@@ -75,7 +74,7 @@ N/A
 
 Daily Log:
 
-11/3/24 to 11/4/24
+11/3/24 to 11/4/24 and 11/9/24
 1. Bestiary for Nature, Permafrost, Inferno Spirits
 2. Voidspace Aura staff buff duration 5 seconds => .1 seconds, now grants campfire buff in radius as well
 	1. Reduced radius and radius scaling (105 + 300 * summon damage) -> (320 + 80 * summon damage)
@@ -85,7 +84,7 @@ Daily Log:
 	5. DPS is the same on average at 60 (so this is essentially a 10% nerf); faster attacks also mean it is worse for higher defense enemies.
 	6. Adjusted visuals, lighting, and code (should look better and be more performant/optimized now)
 	7. Fix bug where it would attempt to attack critters
-3. WIP Ancient Steel Lantern (needs: Multiplayer Syncing)
+3. Ancient Steel Lantern: works in multiplayer
 	1. Grants campfire buff while in radius
 	2. Deals 16 dps. Tier 1 OOA Summon (lightning auro) deals 8 dpsd but pierces armor.
 	3. This item is generally quite a lot stronger than lightning aura, given the bonus range and higher kb
