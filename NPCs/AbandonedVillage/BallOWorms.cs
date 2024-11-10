@@ -1,26 +1,24 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
 using ReLogic.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
-using System.Linq;
-using System.Collections.Generic;
+using SOTS.Items.Banners;
+using System.Security.AccessControl;
+using SOTS.Dusts;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
     public class BallOWorms : ModNPC  
     {
-        float addedStretch = 0f;
-		float stretchRecoil = 0f;
+        private float addedStretch = 0f;
+        private float stretchRecoil = 0f;
 
-        bool hasCollidedWithWall = false;
+        private bool hasCollidedWithWall = false;
 
         private static Asset<Texture2D> NPCTexture;
         private static Asset<Texture2D> PieceOfBallTexture;
@@ -29,12 +27,10 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             writer.Write(hasCollidedWithWall);
         }
-
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             hasCollidedWithWall = reader.ReadBoolean();
         }
-
         public override void SetDefaults()
 		{
             NPC.lifeMax = 100;
@@ -50,6 +46,8 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath11;
             NPC.aiStyle = 26;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<BallOWormsBanner>();
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -161,14 +159,33 @@ namespace SOTS.NPCs.AbandonedVillage
 
         public override void HitEffect(NPC.HitInfo hit) 
         {
-            //TODO: spawn gores
-			if (NPC.life <= 0) 
+            if (Main.netMode == NetmodeID.Server)
+                return;
+			if (NPC.life <= 0)
             {
-                for (int numGores = 1; numGores <= 6; numGores++)
+                for(int i = 0; i < 3; ++i)
                 {
-                    if (Main.netMode != NetmodeID.Server) 
-                    {
-                    }
+                    Vector2 circular = Main.rand.NextVector2CircularEdge(10, 10);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(9, 9), circular * 0.135f, ModGores.GoreType("Gores/Ball/BallOWormsGore1"), .9f);
+                }
+                for (int i = 0; i < 2; ++i)
+                {
+                    Vector2 circular = Main.rand.NextVector2CircularEdge(10, 10);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(13, 7), circular * 0.125f, ModGores.GoreType("Gores/Ball/BallOWormsGore3"), .9f);
+                }
+                Gore.NewGore(NPC.GetSource_Death(), NPC.Center - new Vector2(19, 16), new Vector2(hit.HitDirection, -1), ModGores.GoreType("Gores/Ball/BallOWormsGore2"), .9f);
+                for (int i = 0; i < 30; i++)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<FamishedDustCorruption>(), hit.HitDirection, -1f, NPC.alpha);
+                }
+            }
+            else
+            {
+                int num = 0;
+                while (num < hit.Damage / (float)NPC.lifeMax * 60)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<FamishedDustCorruption>(), hit.HitDirection, -1f, NPC.alpha);
+                    num++;
                 }
             }
         }

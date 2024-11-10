@@ -14,10 +14,10 @@ using static Terraria.ModLoader.ModContent;
 namespace SOTS.NPCs
 {
 	public class FluxSlime : ModNPC
-	{	int initiateSize = 1;
+	{	
+		private int initiateSize = 1;
 		public override void SetDefaults()
 		{
-			//npc.CloneDefaults(NPCID.BlackSlime);
 			NPC.aiStyle = 1;
             NPC.lifeMax = 100;  
             NPC.damage = 24; 
@@ -92,8 +92,8 @@ namespace SOTS.NPCs
 			}
 			return true;
 		}
-		float[] counterArr = new float[7];
-		float[] randSeed1 = new float[7];
+		private float[] counterArr = new float[7];
+		private float[] randSeed1 = new float[7];
 		public override bool PreAI()
 		{
 			NPC.TargetClosest(true);
@@ -115,7 +115,7 @@ namespace SOTS.NPCs
 			}
 			return true;
 		}
-		int counter = 0;
+		private int counter = 0;
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(counter);

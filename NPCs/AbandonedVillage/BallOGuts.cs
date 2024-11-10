@@ -1,26 +1,23 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
 using ReLogic.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
-using System.Linq;
-using System.Collections.Generic;
+using SOTS.Items.Banners;
+using SOTS.Dusts;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
     public class BallOGuts : ModNPC  
     {
-        float addedStretch = 0f;
-		float stretchRecoil = 0f;
+        private float addedStretch = 0f;
+        private float stretchRecoil = 0f;
 
-        bool hasCollidedWithWall = false;
+        private bool hasCollidedWithWall = false;
 
         private static Asset<Texture2D> NPCTexture;
         private static Asset<Texture2D> PieceOfBallTexture;
@@ -50,6 +47,8 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath11;
             NPC.aiStyle = 26;
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<BallOGutsBanner>();
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -159,16 +158,29 @@ namespace SOTS.NPCs.AbandonedVillage
             }
         }
 
-        public override void HitEffect(NPC.HitInfo hit) 
+        public override void HitEffect(NPC.HitInfo hit)
         {
-            //TODO: spawn gores
-			if (NPC.life <= 0) 
+            if (Main.netMode == NetmodeID.Server)
+                return;
+            if (NPC.life <= 0)
             {
-                for (int numGores = 1; numGores <= 6; numGores++)
+                for (int i = 1; i <= 6; i++)
                 {
-                    if (Main.netMode != NetmodeID.Server) 
-                    {
-                    }
+                    Vector2 circular = new Vector2(0, -16).RotatedBy(MathHelper.ToRadians(i * 60));
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(9, 9), circular * 0.15f, ModGores.GoreType("Gores/Ball/BallOGutsGore" + i), .9f);
+                }
+                for (int i = 0; i < 30; i++)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<FamishedDustCrimson>(), hit.HitDirection, -1f, NPC.alpha);
+                }
+            }
+            else
+            {
+                int num = 0;
+                while (num < hit.Damage / (float)NPC.lifeMax * 60)
+                {
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<FamishedDustCrimson>(), hit.HitDirection, -1f, NPC.alpha);
+                    num++;
                 }
             }
         }

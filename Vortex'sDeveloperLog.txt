@@ -89,6 +89,7 @@ Daily Log:
 	2. Deals 16 dps. Tier 1 OOA Summon (lightning auro) deals 8 dpsd but pierces armor.
 	3. This item is generally quite a lot stronger than lightning aura, given the bonus range and higher kb
 4. Replaced Wood with Charred Wood for ancient steel recipes
+5. Gore and Banner for Ball O' Guts and Ball O' Worms
 
 11/2/24
 1. Mr. Burns (should be a decent item, not overpowered but good at the niche it serves). Makes void shock ~50% weaker

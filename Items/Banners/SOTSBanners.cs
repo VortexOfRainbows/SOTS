@@ -699,9 +699,18 @@ namespace SOTS.Items.Banners
                     case 22:
                         type = NPCType<Famished>();
                         break;
+                    case 23:
+                        type = NPCType<BallOWorms>();
+                        break;
+                    case 24:
+                        type = NPCType<BallOGuts>();
+                        break;
+                    //case 25:
+                    //    type = NPCType<Cow>();
+                    //    break;
                     default:
-						return;
-				}
+                        return;
+                }
 				Main.SceneMetrics.hasBanner = true;
 				Main.SceneMetrics.NPCBannerBuff[type] = true;
 			}
@@ -897,6 +906,30 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners2>();
             Item.placeStyle = 22;
+        }
+    }
+    public class BallOWormsBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 23;
+        }
+    }
+    public class BallOGutsBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 24;
+        }
+    }
+    public class CowBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 25;
         }
     }
 }
