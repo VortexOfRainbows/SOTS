@@ -647,7 +647,7 @@ namespace SOTS.Items.Furniture.Functional
 				{
 					types.Add(TileID.Obsidian, 0.2);
 					types.Add(TileID.Meteorite, 0.5);
-					types.Add(ModContent.TileType<FrigidIceTile>(), 0.75);
+					types.Add(ModContent.TileType<FrigidIceTileSafe>(), 0.75);
 				}
 				if (NPC.downedBoss3 || SOTSWorld.downedAdvisor)
 				{
@@ -684,7 +684,7 @@ namespace SOTS.Items.Furniture.Functional
 				return t == TileID.Copper || t == TileID.Tin || t == TileID.Iron || t == TileID.Lead
 					 || t == TileID.Silver || t == TileID.Tungsten || t == TileID.Gold || t == TileID.Platinum || t == TileID.Meteorite || t == TileID.Demonite || t == TileID.Crimtane || t == TileID.Obsidian
 					 || t == TileID.Hellstone || t == TileID.Cobalt || t == TileID.Palladium || t == TileID.Mythril || t == TileID.Orichalcum || t == TileID.Adamantite || t == TileID.Titanium
-					 || t == TileID.Chlorophyte || t == TileID.LunarOre || t == ModContent.TileType<FrigidIceTile>() || t == ModContent.TileType<FrigidIceTileSafe>() || t == ModContent.TileType<FrigidIceTile>()
+					 || t == TileID.Chlorophyte || t == TileID.LunarOre || t == ModContent.TileType<FrigidIceTile>() || t == ModContent.TileType<FrigidIceTileSafe>()
 					 || t == ModContent.TileType<PhaseOreTile>() || t == ModContent.TileType<VibrantOreTile>();
 			}
 			public static Point16? findPositionFrom3x3Square(Point16 center)

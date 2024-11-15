@@ -74,6 +74,9 @@ N/A
 
 Daily Log:
 
+11/15/25
+1. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)
+
 11/3/24 to 11/4/24 and 11/9/24
 1. Bestiary for Nature, Permafrost, Inferno Spirits
 2. Voidspace Aura staff buff duration 5 seconds => .1 seconds, now grants campfire buff in radius as well
