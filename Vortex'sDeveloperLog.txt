@@ -74,8 +74,15 @@ N/A
 
 Daily Log:
 
-11/15/25
+11/15/24 to 11/16/24
 1. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)
+2. Ball O' Worms now has a worm tail that deals 50% contact damage (should works in MP)
+3. Ball O' Guts now drops Pile O' Guts when hurt, which deal half the damage of the ball (should works in MP)
+4. Both Balls now have item drops, reduced max movement speed, reduced stats, bonus visual fidelity, can spawn with famished carriers, and spawn in the AV (Common surface and underground)
+5. Fix bug where Famished was killing town NPCs when it was alive, no matter where the town NPC was
+6. Famished now drop keys 25% of the time
+7. Slightly reduced bonus spawns in AV
+8. Slightly improved visuals for Storm Spell, and knocks back in the direction fired instead of to the right always
 
 11/3/24 to 11/4/24 and 11/9/24
 1. Bestiary for Nature, Permafrost, Inferno Spirits

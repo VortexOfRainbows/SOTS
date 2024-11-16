@@ -543,8 +543,8 @@ namespace SOTS.Common.GlobalNPCs
             }
             else if (sPlayer.AbandonedVillageBiome)
             {
-                spawnRate = (int)(spawnRate * 0.8f); //Increase spawn rates
-                maxSpawns = (int)(maxSpawns * 1.5f); //Increase spawn rate cap
+                spawnRate = (int)(spawnRate * 0.825f); //Increase spawn rates
+                maxSpawns = (int)(maxSpawns * 1.4f); //Increase spawn rate cap
             }
             if (sPlayer.PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
@@ -701,7 +701,8 @@ namespace SOTS.Common.GlobalNPCs
 						pool[0] *= underground ? 0.1f : 0.5f; //Decrease spawnrates of vanilla NPCs, especially in the underground
                     pool.Add(ModContent.NPCType<Throe>(), (underground ? 0.45f : 0.05f) / (1f + NPC.CountNPCS(ModContent.NPCType<Throe>()))); //Spawn throes less often the more of them there are
                     pool.Add(ModContent.NPCType<CorpseBloom>(), (corrupt ? 0.75f : 0.1f) * (underground ? 0.3f : 1f));
-					if(underground)
+					pool.Add(corrupt ? ModContent.NPCType<BallOWorms>() : ModContent.NPCType<BallOGuts>(), 0.4f);
+                    if (underground)
 						pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.5f / (1f + NPC.CountNPCS(ModContent.NPCType<EarthenGizmo>()))); //Spawn gizmos less often the more of them there area
 
 					if(underground && Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2].WallType == WallID.None)

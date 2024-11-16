@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace SOTS
 {
-    public static class ModGores //From Aequus 1.4 - Thanks NALYDDD
+    public static class ModGores //From Aequus 1.4
     {
         public static int GoreType(string name)
         {

@@ -596,7 +596,7 @@ namespace SOTS
                 }
             }
         }
-        public static Vector2? GetWorldPositionOnTile(int i, int j, int side, float offsetX, float offsetY, bool allowAir = false) //Taken from Catalyst
+        public static Vector2? GetWorldPositionOnTile(int i, int j, int side, float offsetX, float offsetY, bool allowAir = false) //Taken from Catalyst, then modified considerably
         {
             Tile tile = Main.tile[i, j];
             Vector2 tileWorld = new Vector2(i * 16, j * 16);

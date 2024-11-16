@@ -6761,6 +6761,7 @@ Mods: {
 			Famished.DisplayName: Famished
 			BallOGuts.DisplayName: Ball O' Guts
 			BallOWorms.DisplayName: Ball O' Worms
+			BallOGutsPile.DisplayName: Pile O' Guts
 		}
 
 		Bestiary: {
@@ -7571,7 +7572,7 @@ Mods: {
 			Webbing.DisplayName: Webbing
 			WebBolt.DisplayName: Web Bolt
 			WingedKnife.DisplayName: Winged Knife
-			WispOrange.DisplayName: Will o'
+			WispOrange.DisplayName: Will O'
 			WorldgenCapture_Highlight.DisplayName: Worldgen Capture Visual
 			WormBullet.DisplayName: Wormwood Bullet
 			WormWoodCrusher.DisplayName: Wormwood Arm

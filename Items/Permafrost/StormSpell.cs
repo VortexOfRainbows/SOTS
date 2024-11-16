@@ -45,8 +45,7 @@ namespace SOTS.Items.Permafrost
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Vector2 toPos = Main.MouseWorld;
-			Projectile.NewProjectile(source, toPos.X, toPos.Y, 0, 0, type, damage, knockback, player.whoAmI);
+			Projectile.NewProjectile(source, Main.MouseWorld, velocity, type, damage, knockback, player.whoAmI);
 			return false;
 		}
     }

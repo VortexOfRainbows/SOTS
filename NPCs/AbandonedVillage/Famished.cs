@@ -1382,20 +1382,19 @@ namespace SOTS.NPCs.AbandonedVillage
 		}
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
         {
-            npcHitbox = victimHitbox;
-            return false;
-        }
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
-        {
-            if (Block == null)
-                return false;
-            foreach (FamishBlock fB in Block)
+            if (Block != null)
             {
-                if (fB != null)
+                foreach (FamishBlock fB in Block)
                 {
-                    Rectangle blockHitbox = new Rectangle(fB.i * 16 - 1, fB.j * 16 - 1, 18, 18);
-                    if (target.Hitbox.Intersects(blockHitbox))
-                        return true;
+                    if (fB != null)
+                    {
+                        Rectangle blockHitbox = new Rectangle(fB.i * 16 - 1, fB.j * 16 - 1, 18, 18);
+                        if (victimHitbox.Intersects(blockHitbox))
+                        {
+                            npcHitbox = victimHitbox;
+                            break;
+                        }
+                    }
                 }
             }
             return false;
@@ -1404,7 +1403,8 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             LeadingConditionRule worldCrimson = new LeadingConditionRule(new Conditions.IsCrimson());
             LeadingConditionRule worldCorrupt = new LeadingConditionRule(new Conditions.IsCorruption());
-            npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEvil>(), 1, 1, 1));
+            npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEvil>()));
+            npcLoot.Add(ItemDropRule.Common(ItemType<OldKey>(), 4));
             worldCrimson.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCrimson>(), 1, 20, 40));
             worldCorrupt.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCorruption>(), 1, 20, 40));
             npcLoot.Add(worldCrimson);

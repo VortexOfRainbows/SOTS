@@ -8,21 +8,70 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using SOTS.Items.Banners;
-using System.Security.AccessControl;
 using SOTS.Dusts;
+using System.Collections.Generic;
+using SOTS.WorldgenHelpers;
+using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Fragments;
+using Terraria.GameContent.ItemDropRules;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
-    public class BallOWorms : ModNPC  
+    public class BallOWorms : BallOGuts
     {
-        private float addedStretch = 0f;
-        private float stretchRecoil = 0f;
-
-        private bool hasCollidedWithWall = false;
-
         private static Asset<Texture2D> NPCTexture;
         private static Asset<Texture2D> PieceOfBallTexture;
-
+        private Vector2 WormTrailStartPos => NPC.Center + new Vector2(0, 16);
+        private List<Vector2> segments = new List<Vector2>();
+        private void UpdateSegments()
+        {
+            while(segments.Count < 10)
+            {
+                segments.Add(WormTrailStartPos + new Vector2(1 * NPC.direction, 0.1f) * segments.Count);
+            }
+            Vector2 prev = WormTrailStartPos;
+            float wormingAmount = 11;
+            for (int i = 0; i < segments.Count; i++)
+            {
+                float percent = 1f - (float)i / segments.Count;
+                Vector2 toPrev = prev - segments[i];
+                float normalMovement = toPrev.Length() * 0.6f - wormingAmount;
+                if (normalMovement > 0)
+                    segments[i] += toPrev.SNormalize() * normalMovement;
+                segments[i] = Vector2.Lerp(segments[i], prev, 0.035f);
+                segments[i] += new Vector2(0, 0.3f + 0.02f * i + NPC.velocity.Y * percent * 0.3f);
+                int x = (int)segments[i].X / 16;
+                int y = (int)segments[i].Y / 16;
+                if(SOTSWorldgenHelper.TrueTileSolid(x, y))
+                {
+                    Vector2? tileCollidePos = SOTSTile.GetWorldPositionOnTile(x, y, 0, segments[i].X - x * 16, segments[i].Y - y * 16, true);
+                    if(tileCollidePos != null && tileCollidePos.Value.Y < segments[i].Y)
+                    {
+                        segments[i] = Vector2.Lerp(segments[i], tileCollidePos.Value, 0.3f);
+                    }
+                }
+                prev = segments[i];
+            }
+        }
+        private void DrawSegments(SpriteBatch spriteBatch, Vector2 screenPos)
+        {
+            Texture2D worm = ModContent.Request<Texture2D>("SOTS/NPCs/AbandonedVillage/BallWorm").Value;
+            Vector2 origin = new Vector2(4, worm.Height / 2);
+            Vector2 prev = WormTrailStartPos;
+            Rectangle frame = new Rectangle(0, 0, worm.Width - 4, worm.Height);
+            for (int i = 0; i < segments.Count; i++)
+            {
+                float percent = 1f - (float)i / segments.Count;
+                Vector2 toPrev = prev - segments[i];
+                Vector2 position = segments[i] - screenPos + new Vector2(0, -2);
+                float r = toPrev.ToRotation();
+                float Dist = toPrev.Length();
+                int x = (int)segments[i].X / 16;
+                int y = (int)segments[i].Y / 16;
+                spriteBatch.Draw(worm, position, frame, Lighting.GetColor(x, y), r, origin, new Vector2(Dist / (frame.Width - 4), 1.0f + 0.3f * percent), toPrev.X < 0 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+                prev = segments[i];
+            }
+        }
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(hasCollidedWithWall);
@@ -31,43 +80,38 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             hasCollidedWithWall = reader.ReadBoolean();
         }
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers)
+        {
+            if(!target.Hitbox.Intersects(NPC.Hitbox)) //Basically, if the player is hit by the tail and not the main body
+            {
+                modifiers.SourceDamage *= 0.5f;
+            }
+        }
         public override void SetDefaults()
 		{
-            NPC.lifeMax = 100;
-            NPC.damage = 25;
-            NPC.defense = 10;
-            NPC.width = 44;
-			NPC.height = 46;
-            NPC.npcSlots = 1f;
-			NPC.knockBackResist = 0.5f;
-            NPC.noGravity = false;
-            NPC.noTileCollide = false;
-            NPC.value = Item.buyPrice(0, 0, 2, 0);
-            NPC.HitSound = SoundID.NPCHit13;
-			NPC.DeathSound = SoundID.NPCDeath11;
-            NPC.aiStyle = 26;
+            base.SetDefaults(); //DO NOT REMOVE THIS
+            NPC.lifeMax -= 5;
+            NPC.defense += 2;
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<BallOWormsBanner>();
         }
-
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            DrawSegments(spriteBatch, screenPos);
             NPCTexture ??= ModContent.Request<Texture2D>(Texture);
             PieceOfBallTexture ??= ModContent.Request<Texture2D>("SOTS/NPCs/AbandonedVillage/BallOWormsPieces");
 
-			float stretch = 0f;
+            float stretch = 0f;
 
 			stretch = Math.Abs(stretch) - addedStretch;
 			
-			//limit how much it can stretch
-			if (stretch > 0.5f)
-			{
+			if (stretch > 0.5f) //limit how much it can stretch
+            {
 				stretch = 0.5f;
 			}
 
-			//limit how much it can squish
-			if (stretch < -0.5f)
-			{
+			if (stretch < -0.5f) //limit how much it can squish
+            {
 				stretch = -0.5f;
 			}
 
@@ -101,82 +145,55 @@ namespace SOTS.NPCs.AbandonedVillage
 
 			return false;
 		}
-        
-        public override void AI()
-		{
-            NPC.TargetClosest();
-            Player player = Main.player[NPC.target];
-
-			NPC.spriteDirection = NPC.direction;
-
-            NPC.rotation += 0.05f * (float)NPC.direction + (NPC.velocity.X / 40);
-
-            //stretch stuff
-            if (stretchRecoil > 0)
-			{
-				stretchRecoil -= 0.1f;
-			}
-			else
-			{
-				stretchRecoil = 0;
-			}
-
-			addedStretch = -stretchRecoil;
-
-            //only run screenshake code if the player is close enough
-            //probably should add screenshake here eventually
-            if (player.Distance(NPC.Center) < 250f)
-            {
-                //collide with walls if traveling at maximum speed
-                if ((NPC.velocity.X >= 6 || NPC.velocity.X <= -6) && player.velocity.Y == 0 && Collision.SolidCollision(NPC.Center, NPC.width, NPC.height))
-                {
-                    hasCollidedWithWall = false;
-                }
-
-                //collide with walls and play a sound
-                if (!hasCollidedWithWall && (NPC.oldVelocity.X >= 5 || NPC.oldVelocity.X <= -5) && NPC.collideX)
-                {
-                    SoundEngine.PlaySound(SoundID.Item177 with { Volume = SoundID.Item177.Volume * 0.35f }, NPC.Center);
-                    stretchRecoil = 0.8f;
-
-                    //set timer to slow down the npc after hitting a wall
-                    NPC.localAI[0] = 60;
-
-                    //set velocity to zero
-                    NPC.velocity = Vector2.Zero;
-
-                    hasCollidedWithWall = true;
-                }
-            }
-
-            if (NPC.localAI[0] > 0)
-            {
-                NPC.localAI[0]--;
-
-                NPC.velocity.X *= 0.2f;
-            }
+        public override bool PreAI()
+        {
+            UpdateSegments();
+            return true;
         }
-
+        public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
+        {
+            bool colliding = NPC.Hitbox.Intersects(victimHitbox);
+            if (colliding)
+                return true;
+            for (int i = 0; i < segments.Count; i++)
+            {
+                Rectangle hitBox = new Rectangle((int)segments[i].X - 5, (int)segments[i].Y - 3, 10, 6);
+                if (hitBox.Intersects(victimHitbox))
+                {
+                    npcHitbox = victimHitbox;
+                    break;
+                }
+            }
+            return false;
+        }
         public override void HitEffect(NPC.HitInfo hit) 
         {
             if (Main.netMode == NetmodeID.Server)
                 return;
 			if (NPC.life <= 0)
             {
-                for(int i = 0; i < 3; ++i)
+                for(int i = 0; i < 5; ++i)
                 {
                     Vector2 circular = Main.rand.NextVector2CircularEdge(10, 10);
-                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(9, 9), circular * 0.135f, ModGores.GoreType("Gores/Ball/BallOWormsGore1"), .9f);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(9, 9), circular * 0.135f, ModGores.GoreType("Gores/Ball/BallOWormsGore1"), 1f);
                 }
-                for (int i = 0; i < 2; ++i)
+                for (int i = 0; i < 3; ++i)
                 {
                     Vector2 circular = Main.rand.NextVector2CircularEdge(10, 10);
-                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(13, 7), circular * 0.125f, ModGores.GoreType("Gores/Ball/BallOWormsGore3"), .9f);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.Center + circular - new Vector2(13, 7), circular * 0.125f, ModGores.GoreType("Gores/Ball/BallOWormsGore3"), 1f);
                 }
-                Gore.NewGore(NPC.GetSource_Death(), NPC.Center - new Vector2(19, 16), new Vector2(hit.HitDirection, -1), ModGores.GoreType("Gores/Ball/BallOWormsGore2"), .9f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.Center - new Vector2(19, 16), new Vector2(hit.HitDirection, -1), ModGores.GoreType("Gores/Ball/BallOWormsGore2"), 1f);
                 for (int i = 0; i < 30; i++)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<FamishedDustCorruption>(), hit.HitDirection, -1f, NPC.alpha);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<FamishedDustCorruption>(), hit.HitDirection, -1f, NPC.alpha, Scale: 1.25f);
+                }
+                if(segments != null)
+                {
+                    for (int i = 0; i < segments.Count; i++)
+                    {
+                        float percent = 1f - (float)i / segments.Count;
+                        Gore.NewGore(NPC.GetSource_Death(), segments[i] - new Vector2(11, 5), new Vector2(hit.HitDirection, -Main.rand.NextFloat()), ModGores.GoreType("Gores/Ball/BallWorm"), .8f + 0.3f * percent);
+                    }
                 }
             }
             else
@@ -184,10 +201,16 @@ namespace SOTS.NPCs.AbandonedVillage
                 int num = 0;
                 while (num < hit.Damage / (float)NPC.lifeMax * 60)
                 {
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<FamishedDustCorruption>(), hit.HitDirection, -1f, NPC.alpha);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<FamishedDustCorruption>(), hit.HitDirection, -1, NPC.alpha, Scale: 1.25f);
                     num++;
                 }
             }
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 100));
         }
     }
 }
