@@ -3942,8 +3942,8 @@ namespace SOTS.WorldgenHelpers
             List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(), ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>(), ModContent.ItemType<AncientSteelLantern>()];
             List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>(), ModContent.ItemType<AncientSteelGreatPickaxe>(), ModContent.ItemType<AncientSteelGreatHamaxe>()];
             List<int> Tier4Items = [ModContent.ItemType<StarshardSaber>(), ModContent.ItemType<Icebreaker>(), ModContent.ItemType<SandstormPouch>(), ModContent.ItemType<PlagueSpitter>(), ModContent.ItemType<JarOfPineapple>()];
-            //Melee:  Halberd, Sword, Starshard Saber, Guardian Greatsword(Void), Pickaxe(Void), Hamaxe, Ancient Steel pickaxe and hamaxe, (8)
-            //Ranged: Longbow, Hand Cannon, Soot Spewer, Backup Bow, Fortress Crasher, Ice Breaker, Sandstorm Pouch(Void), (7)
+            //Melee:  Halberd, Sword, Starshard Saber, Guardian Greatsword(Void), Pickaxe(Void), Hamaxe, Ancient Steel Pickaxe(Void) and Hamaxe, (8)
+            //Ranged: Longbow, Hand Cannon, Soot Spewer (Void), Backup Bow, Fortress Crasher, Ice Breaker, Sandstorm Pouch(Void), Pint O' Punch (8)
             //Magic:  Fizzle Star, Magma Concentrator(Void), Blongus/Acid Belcher, (3)
             //Summon: Lantern, Fresh Greeny, Little Woes, (3)
             foreach (Chest chest in Main.chest.Where(c => c != null))

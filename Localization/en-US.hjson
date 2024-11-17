@@ -5873,6 +5873,16 @@ Mods: {
 				DisplayName: Cow Banner
 				Tooltip: ""
 			}
+
+			PintOPunch: {
+				DisplayName: Pint O' Punch
+				Tooltip:
+					'''
+					Deals 500% critical strike damage
+					Critical strikes spawn hearts
+					'This pint packs a punch!'
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7680,6 +7690,7 @@ Mods: {
 			TorchBombMk2.DisplayName: Torch Bomb Mk2
 			TorchEmberMk2.DisplayName: Torch Ember Mk2
 			AncientSteelLantern.DisplayName: Steel Lantern
+			PintOPunch.DisplayName: Pint O Punch
 		}
 
 		DamageClasses: {

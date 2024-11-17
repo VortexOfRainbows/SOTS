@@ -9,6 +9,7 @@ namespace SOTS.Helpers
 {
     public static class ColorHelper
     {
+        public static Color PintOPunch = new Color(255, 33, 71);
         public static Vector3 AVIchorLight = new Vector3(0.85f, 0.81f, .22f);
         public static Vector3 AVCursedLight = new Vector3(1.28f, 0.93f, .4f);
         public static Color AVDustColor => new Color(117, 120, 132);

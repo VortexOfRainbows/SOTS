@@ -72,7 +72,7 @@ namespace SOTS.NPCs.AbandonedVillage
 
 			Vector2 scaleStretch = new Vector2(1f + stretch, 1f - stretch);
 
-            Vector2 drawPosition = new Vector2(NPC.Center.X, NPC.Center.Y) - Main.screenPosition + new Vector2(0, NPC.gfxOffY + 4);
+            Vector2 drawPosition = new Vector2(NPC.Center.X, NPC.Center.Y) - screenPos + new Vector2(0, NPC.gfxOffY + 4);
 
             //draw npc manually for stretching
             spriteBatch.Draw(NPCTexture.Value, drawPosition, NPC.frame, drawColor, NPC.rotation, NPC.frame.Size() / 2f, scaleStretch, SpriteEffects.None, 0f);
@@ -193,6 +193,7 @@ namespace SOTS.NPCs.AbandonedVillage
             npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, 2));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 100));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PintOPunch>(), 100));
         }
     }
     public class BallOGutsPile : ModNPC

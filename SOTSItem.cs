@@ -163,8 +163,9 @@ namespace SOTS
 		public static int[] DedicatedRainbow;
 		public static int[] DedicatedBlasfah;
 		public static int[] DedicatedHeartPlus;
+		public static int[] DedicatedKoolaid;
 		public static int[] DedicatedTaco;
-		public static int[] PiscesFishItems;
+        public static int[] PiscesFishItems;
 		public static void LoadArrays() //called in SOTS.Load()
 		{
 			DarkBlueRarity = [ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>()]; //Dark Blue
@@ -181,8 +182,9 @@ namespace SOTS
 			DedicatedBlasfah = [ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>()]; //Blasfah
 			DedicatedHeartPlus = [ItemType<DigitalDaito>(), ItemType<Items.Evil.ToothAche>()]; //Heart Plus Up
 			DedicatedTaco = [ItemType<Baguette>(), ItemType<Taco>()]; //Coolio/Taco
+            DedicatedKoolaid = [ItemType<PintOPunch>()]; //Koolaid
 
-			PiscesFishItems = [-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
+            PiscesFishItems = [-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
 			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
 			ItemID.MutantFlinxfin, ItemID.Pengfish, ItemID.Pixiefish, ItemID.Slimefish, ItemID.Spiderfish, ItemID.TropicalBarracuda, ItemID.TundraTrout, ItemID.UnicornFish, ItemID.Wyverntail, ItemID.ZombieFish, ItemID.ArmoredCavefish, ItemID.AtlanticCod, ItemID.Bass, ItemID.BlueJellyfish, ItemID.ChaosFish, ItemID.CrimsonTigerfish,
 			ItemID.Damselfish, ItemID.DoubleCod, ItemID.Ebonkoi, ItemID.FlarefinKoi, ItemID.FrostMinnow, ItemID.GoldenCarp, ItemID.GreenJellyfish, ItemID.Hemopiranha, ItemID.Honeyfin, ItemID.NeonTetra, ItemID.Obsidifish, ItemID.PinkJellyfish, ItemID.PrincessFish, ItemID.Prismite, ItemID.RedSnapper, ItemID.Salmon, ItemID.Shrimp, ItemID.SpecularFish,
@@ -292,6 +294,8 @@ namespace SOTS
 				dedicatedColor = new Color(90, 12, 240);
 			if (DedicatedHeartPlus.Contains(item.type))
 				dedicatedColor = new Color(255, 123, 123);
+			if (DedicatedKoolaid.Contains(item.type))
+				dedicatedColor = ColorHelper.PintOPunch;
 			if (DedicatedTaco.Contains(item.type))
 				dedicatedColor = new Color(252, 254, 56);
             if (rarityColor != Color.White)
