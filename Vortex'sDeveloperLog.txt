@@ -86,6 +86,7 @@ Daily Log:
 9. Soot Sprayer damage 9 -> 12
 10. Added Pint O' Punch, an item that drops from Ball O' Guts and Ball O' Worms (works in multiplayer)
 	1. Finally add dedicated item for Koolaid
+11. Slight optimization for DebuffNPC that should reduce lag
 
 11/3/24 to 11/4/24 and 11/9/24
 1. Bestiary for Nature, Permafrost, Inferno Spirits

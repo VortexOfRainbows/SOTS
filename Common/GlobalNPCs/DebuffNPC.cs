@@ -47,6 +47,13 @@ namespace SOTS.Common.GlobalNPCs
 {
     public class DebuffNPC : GlobalNPC
     {
+        private static int FluxSlimeBall;
+        private static int Doomhook;
+        private static int PlatinumDart;
+        private static int Rebar;
+        private static int FloweringBud;
+        private static int ProjEvilGrowth;
+        private static int HydroBubble;
         public static int[] nerfBeeNPC;
         public static int[] nerfBeeBoss;
         public static int[] nerfBeeProj;
@@ -60,28 +67,36 @@ namespace SOTS.Common.GlobalNPCs
         public static int[] Zombies;
         public static void LoadArrays()
         {
-            vanillaNPCHasVoidDamage = new int[] { NPCID.BigCrimera, NPCID.LittleCrimera, NPCID.HeavySkeleton, NPCID.BigEater, NPCID.LittleEater, NPCID.BlackSlime, NPCID.BabySlime, NPCID.Slimer2, NPCID.Slimeling, NPCID.EaterofSouls, NPCID.DevourerHead, NPCID.EaterofWorldsHead, NPCID.MotherSlime, NPCID.ChaosBall, NPCID.ArmoredSkeleton, NPCID.DarkMummy, NPCID.Wraith, NPCID.Corruptor, NPCID.SeekerHead,
+            vanillaNPCHasVoidDamage = [ NPCID.BigCrimera, NPCID.LittleCrimera, NPCID.HeavySkeleton, NPCID.BigEater, NPCID.LittleEater, NPCID.BlackSlime, NPCID.BabySlime, NPCID.Slimer2, NPCID.Slimeling, NPCID.EaterofSouls, NPCID.DevourerHead, NPCID.EaterofWorldsHead, NPCID.MotherSlime, NPCID.ChaosBall, NPCID.ArmoredSkeleton, NPCID.DarkMummy, NPCID.Wraith, NPCID.Corruptor, NPCID.SeekerHead,
                 NPCID.Werewolf, NPCID.Slimer, NPCID.PossessedArmor, NPCID.VampireBat, NPCID.Vampire, NPCID.SwampThing, NPCID.Crimera, NPCID.Reaper, NPCID.BlueArmoredBones, NPCID.BlueArmoredBonesMace, NPCID.BlueArmoredBonesNoPants, NPCID.BlueArmoredBonesSword, NPCID.Necromancer, NPCID.NecromancerArmored, NPCID.DungeonSpirit, NPCID.Ghost, NPCID.MourningWood, NPCID.Splinterling, NPCID.Pumpking, NPCID.Poltergeist,
                 NPCID.Everscream, NPCID.IceQueen, NPCID.StardustCellBig, NPCID.StardustCellSmall, NPCID.CultistBoss, NPCID.CultistDragonHead, NPCID.BloodZombie, NPCID.Drippler
-            };
-            Constructs = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<InfernoConstruct>(), NPCType<EvilConstruct>(), NPCType<ChaosConstruct>() };
-            spirits = new int[] { NPCType<NPCs.Constructs.NatureSpirit>(), NPCType<NPCs.Constructs.EarthenSpirit>(), NPCType<NPCs.Constructs.PermafrostSpirit>(), NPCType<NPCs.Constructs.TidalSpirit>(), NPCType<NPCs.Constructs.EvilSpirit>(), NPCType<NPCs.Constructs.InfernoSpirit>(), NPCType<NPCs.Constructs.ChaosSpirit>(), NPCType<Lux>(), NPCType<FakeLux>() };
-            intimidating = new int[] { NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(), NPCType<ChaosConstruct>(),
-                NPCType<PutridPinkyPhase2>(), NPCType<NPCs.Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<NewPolaris>(), NPCType<Polaris>(), NPCType<SubspaceSerpentHead>(), NPCType<NPCs.Boss.Glowmoth.Glowmoth>()};
-            vanillaBoss = new int[] { NPCID.KingSlime, NPCID.EyeofCthulhu, NPCID.EaterofWorldsHead, NPCID.BrainofCthulhu, NPCID.QueenBee, NPCID.SkeletronHead, NPCID.WallofFlesh, NPCID.Spazmatism,
-                NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime, NPCID.Plantera, NPCID.Golem, NPCID.DukeFishron, NPCID.CultistBoss, NPCID.MoonLordCore, NPCID.HallowBoss, NPCID.QueenSlimeBoss};
-            miniBosses = new int[] { NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex };
-            nerfBeeNPC = new int[] { NPCType<PutridHook>() };
-            nerfBeeBoss = new int[] { NPCType<PutridPinkyPhase2>(), NPCType<NPCs.Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>() };
-            nerfBeeProj = new int[] { ProjectileID.Bee, ProjectileID.GiantBee };
-            isSubspaceSerpent = new int[] { NPCType<SubspaceSerpentBody>(), NPCType<SubspaceSerpentHead>(), NPCType<SubspaceSerpentTail>() };
-            Zombies = new int[] { NPCID.Zombie, NPCID.ZombieDoctor, NPCID.ZombieElf, NPCID.ZombieElfBeard,
+            ];
+            Constructs = [NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<InfernoConstruct>(), NPCType<EvilConstruct>(), NPCType<ChaosConstruct>()];
+            spirits = [NPCType<NPCs.Constructs.NatureSpirit>(), NPCType<NPCs.Constructs.EarthenSpirit>(), NPCType<NPCs.Constructs.PermafrostSpirit>(), NPCType<NPCs.Constructs.TidalSpirit>(), NPCType<NPCs.Constructs.EvilSpirit>(), NPCType<NPCs.Constructs.InfernoSpirit>(), NPCType<NPCs.Constructs.ChaosSpirit>(), NPCType<Lux>(), NPCType<FakeLux>()];
+            intimidating = [ NPCType<NatureConstruct>(), NPCType<EarthenConstruct>(), NPCType<PermafrostConstruct>(), NPCType<OtherworldlyConstructHead>(), NPCType<TidalConstruct>(), NPCType<EvilConstruct>(), NPCType<InfernoConstruct>(), NPCType<ChaosConstruct>(),
+                NPCType<PutridPinkyPhase2>(), NPCType<NPCs.Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>(), NPCType<NewPolaris>(), NPCType<Polaris>(), NPCType<SubspaceSerpentHead>(), NPCType<NPCs.Boss.Glowmoth.Glowmoth>()];
+            vanillaBoss = [ NPCID.KingSlime, NPCID.EyeofCthulhu, NPCID.EaterofWorldsHead, NPCID.BrainofCthulhu, NPCID.QueenBee, NPCID.SkeletronHead, NPCID.WallofFlesh, NPCID.Spazmatism,
+                NPCID.Retinazer, NPCID.TheDestroyer, NPCID.SkeletronPrime, NPCID.Plantera, NPCID.Golem, NPCID.DukeFishron, NPCID.CultistBoss, NPCID.MoonLordCore, NPCID.HallowBoss, NPCID.QueenSlimeBoss];
+            miniBosses = [NPCID.Mothron, NPCID.IceQueen, NPCID.SantaNK1, NPCID.Everscream, NPCID.MourningWood, NPCID.Pumpking, NPCID.GoblinSummoner, NPCID.MartianSaucerCore, NPCID.LunarTowerSolar, NPCID.LunarTowerNebula, NPCID.LunarTowerStardust, NPCID.LunarTowerVortex];
+            nerfBeeNPC = [NPCType<PutridHook>()];
+            nerfBeeBoss = [NPCType<PutridPinkyPhase2>(), NPCType<NPCs.Boss.Curse.PharaohsCurse>(), NPCType<TheAdvisorHead>()];
+            nerfBeeProj = [ProjectileID.Bee, ProjectileID.GiantBee];
+            isSubspaceSerpent = [NPCType<SubspaceSerpentBody>(), NPCType<SubspaceSerpentHead>(), NPCType<SubspaceSerpentTail>()];
+            Zombies = [ NPCID.Zombie, NPCID.ZombieDoctor, NPCID.ZombieElf, NPCID.ZombieElfBeard,
                 NPCID.ZombieElfGirl, NPCID.ZombieEskimo, NPCID.ZombieMushroom, NPCID.ZombieMushroomHat, NPCID.ZombiePixie, NPCID.ZombieRaincoat,
                 NPCID.ZombieSuperman, NPCID.ZombieSweater, NPCID.ZombieXmas, NPCID.ArmedZombie, NPCID.ArmedZombieCenx, NPCID.ArmedZombieEskimo,
                 NPCID.ArmedZombiePincussion, NPCID.ArmedZombieSlimed, NPCID.ArmedZombieSwamp, NPCID.ArmedZombieTwiggy, NPCID.BaldZombie, NPCID.BigBaldZombie, NPCID.BigFemaleZombie,
                 NPCID.BigPincushionZombie, NPCID.BigRainZombie, NPCID.BigSlimedZombie, NPCID.BigSwampZombie, NPCID.BigTwiggyZombie, NPCID.BigZombie,
                 NPCID.FemaleZombie, NPCID.PincushionZombie, NPCID.SlimedZombie, NPCID.SmallBaldZombie, NPCID.SmallFemaleZombie, NPCID.SmallPincushionZombie,
-                NPCID.SmallRainZombie, NPCID.SmallSlimedZombie, NPCID.SmallSwampZombie, NPCID.SmallTwiggyZombie, NPCID.SmallZombie, NPCID.SwampZombie, NPCID.TwiggyZombie};
+                NPCID.SmallRainZombie, NPCID.SmallSlimedZombie, NPCID.SmallSwampZombie, NPCID.SmallTwiggyZombie, NPCID.SmallZombie, NPCID.SwampZombie, NPCID.TwiggyZombie];
+
+            FluxSlimeBall = ProjectileType<Projectiles.Minions.FluxSlimeBall>();
+            Doomhook = ProjectileType<Doomhook>();
+            PlatinumDart = ProjectileType<Projectiles.Ores.PlatinumDart>();
+            Rebar = ProjectileType<Rebar>();
+            FloweringBud = ProjectileType<FloweringBud>();
+            ProjEvilGrowth = ProjectileType<EvilGrowth>();
+            HydroBubble = ProjectileType<HydroBubble>();
         }
         public override bool InstancePerEntity => true;
         public int PlatinumCurse = 0;
@@ -492,8 +507,8 @@ namespace SOTS.Common.GlobalNPCs
                     StackDebuff(npc, player, ref BleedingCurse, 1, 0);
             }
         }
-        bool hitByRay = false;
-        bool lastHitWasCrit = false;
+        private bool hitByRay = false;
+        private bool lastHitWasCrit = false;
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
             Player player = Main.player[projectile.owner];
@@ -642,8 +657,8 @@ namespace SOTS.Common.GlobalNPCs
             }
             return amt;
         }
-        bool pinkied = false;
-        bool shattered = false;
+        private bool pinkied = false;
+        private bool shattered = false;
         public override void PostAI(NPC npc)
         {
             if (CrystalCurse > 0)
@@ -767,7 +782,7 @@ namespace SOTS.Common.GlobalNPCs
             for (int i = 0; i < Main.projectile.Length; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Minions.FluxSlimeBall>())
+                if (proj.friendly && proj.active && proj.type == FluxSlimeBall)
                 {
                     Projectiles.Minions.FluxSlimeBall slimeBall = proj.ModProjectile as Projectiles.Minions.FluxSlimeBall;
                     if (slimeBall != null)
@@ -788,7 +803,7 @@ namespace SOTS.Common.GlobalNPCs
                         }
                     }
                 }
-                if (proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Doomhook>())
+                if (proj.friendly && proj.active && proj.type == Doomhook)
                 {
                     Projectiles.Doomhook hook = proj.ModProjectile as Projectiles.Doomhook;
                     if (hook != null)
@@ -823,11 +838,11 @@ namespace SOTS.Common.GlobalNPCs
                         }
                     }
                 }
-                if (!proj.friendly && proj.active && proj.type == ProjectileType<Projectiles.Ores.PlatinumDart>() && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && proj.type == PlatinumDart && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
                 {
                     impaledDarts++;
                 }
-                if (!proj.friendly && proj.active && proj.type == ProjectileType<Rebar>() && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && proj.type == Rebar && (int)proj.ai[1] == npc.whoAmI && proj.timeLeft < 8998)
                 {
                     if (Main.rand.NextBool(3))
                     {
@@ -847,7 +862,7 @@ namespace SOTS.Common.GlobalNPCs
                         proj.ai[0] = -1;
                     }
                 }
-                if (!proj.friendly && proj.active && (proj.type == ProjectileType<FloweringBud>() || proj.type == ProjectileType<EvilGrowth>()) && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && (proj.type == FloweringBud || proj.type == ProjEvilGrowth) && proj.timeLeft < 8998)
                 {
                     bool contains = false;
                     int index = -1;
@@ -906,7 +921,7 @@ namespace SOTS.Common.GlobalNPCs
                         }
                     }
                 }
-                if(proj.active && proj.type == ProjectileType<HydroBubble>() && (int)proj.ai[1] == npc.whoAmI)
+                if(proj.active && proj.type == HydroBubble && (int)proj.ai[1] == npc.whoAmI)
                 {
                     if(proj.ModProjectile is HydroBubble hydroBubble)
                     {
