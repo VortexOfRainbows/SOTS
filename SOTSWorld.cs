@@ -1074,84 +1074,6 @@ namespace SOTS
 						chest.item[slot].SetDefaults(ItemID.CopperHammer);
 						slot++;
 					}
-					else if(tile2.TileType == TileID.GrayBrick && tile.WallType == WallID.StoneSlab)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<AncientSteelBar>());
-						chest.item[slot].stack = WorldGen.genRand.Next(6) + 7; //7-12
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.EmptyBucket);
-						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.CanOfWorms);
-						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.GillsPotion);
-						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
-						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<NightmarePotion>());
-						chest.item[slot].stack = 1;
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.RestorationPotion);
-						chest.item[slot].stack = WorldGen.genRand.Next(4) + 4; //4-7
-						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<FragmentOfTide>());
-						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
-						slot++;
-						chest.item[slot].SetDefaults(ModContent.ItemType<FragmentOfEvil>());
-						chest.item[slot].stack = WorldGen.genRand.Next(3) + 3; //3-5
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.SilverCoin);
-						chest.item[slot].stack = WorldGen.genRand.Next(40, 91); //40-90
-						slot++;
-					}
-					else if (tile2.TileType == TileID.Stone && tile.WallType == WallID.GrayBrick)
-					{
-						chest.item[slot].SetDefaults(ModContent.ItemType<AncientSteelBar>());
-						chest.item[slot].stack = WorldGen.genRand.Next(7) + 8; //8-14
-						slot++;
-						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(3) ? ItemID.Glowstick : ItemID.Torch);
-						chest.item[slot].stack = WorldGen.genRand.Next(41) + 40; //40-80
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.MiningPotion);
-						chest.item[slot].stack = WorldGen.genRand.Next(3) + 2; //2-4
-						slot++;
-						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(3) ? ItemID.StickyBomb : ItemID.Bomb);
-						chest.item[slot].stack = WorldGen.genRand.Next(6) + 6; //6-11
-						slot++;
-						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(3) ? ItemID.StickyDynamite : ItemID.Dynamite);
-						chest.item[slot].stack = WorldGen.genRand.Next(3) + 3; //3-5
-						slot++;
-						chest.item[slot].SetDefaults(ItemID.RestorationPotion);
-						chest.item[slot].stack = WorldGen.genRand.Next(2) + 2; //2-3
-						slot++;
-						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(3) ? ModContent.ItemType<FragmentOfEarth>() : ModContent.ItemType<FragmentOfEvil>());
-						chest.item[slot].stack = WorldGen.genRand.Next(3) + 4; //4-6
-						slot++;
-						if (WorldGen.genRand.NextBool(3))
-						{
-							chest.item[slot].SetDefaults(!WorldGen.genRand.NextBool(3) ? ModContent.ItemType<AncientSteelGreatPickaxe>() : ItemID.GoldPickaxe);
-							chest.item[slot].stack = 1;
-							slot++;
-						}
-						if (WorldGen.genRand.NextBool(6))
-						{
-							chest.item[slot].SetDefaults(ItemID.MiningHelmet);
-							chest.item[slot].stack = 1;
-							slot++;
-						}
-						if (WorldGen.genRand.NextBool(6))
-						{
-							chest.item[slot].SetDefaults(ItemID.MiningShirt);
-							chest.item[slot].stack = 1;
-							slot++;
-						}
-						if (WorldGen.genRand.NextBool(6))
-						{
-							chest.item[slot].SetDefaults(ItemID.MiningPants);
-							chest.item[slot].stack = 1;
-							slot++;
-						}
-					}
 				}
 				if (tile.TileType == ModContent.TileType<PyramidChestTile>())
 				{
@@ -1475,14 +1397,7 @@ namespace SOTS
 					}
 					if(WorldGen.genRand.NextBool(25))
 					{
-						if(WorldGen.genRand.NextBool(2))
-						{
-							chest.item[slot].SetDefaults(ModContent.ItemType<ShieldofDesecar>());
-						}
-						else
-						{
-							chest.item[slot].SetDefaults(ModContent.ItemType<ShieldofStekpla>());
-						}
+						chest.item[slot].SetDefaults(WorldGen.genRand.NextBool(2) ? ModContent.ItemType<ShieldofDesecar>() : ModContent.ItemType<ShieldofStekpla>());
 						slot++;
 					}
 					if(WorldGen.genRand.NextBool(5) && (chest.item[0].type == ItemID.ShoeSpikes || chest.item[0].type == ItemID.ClimbingClaws))

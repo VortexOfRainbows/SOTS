@@ -23,6 +23,8 @@ using rail;
 using SOTS.Items.Whips;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Tools;
+using Terraria.Graphics.Renderers;
+using SOTS.Items.Potions;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -3937,11 +3939,13 @@ namespace SOTS.WorldgenHelpers
         {
             int bestC = BestEvilBiome();
             CorruptionRectangle cR = Corruptions[bestC];
-            int tier1 = 0, tier2 = 0, tier3 = 0, tier4 = 0;
             List<int> Tier1Items = [ModContent.ItemType<FizzleStar>(), ModContent.ItemType<VisionAmulet>(), ItemID.MiningHelmet, ModContent.ItemType<AncientSteelSword>(), ModContent.ItemType<AncientSteelLongbow>(), ModContent.ItemType<SteelerWheeler>(), ModContent.ItemType<RockingHorse>(), ModContent.ItemType<MrBurns>()];
             List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(), ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>(), ModContent.ItemType<AncientSteelLantern>()];
             List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>(), ModContent.ItemType<AncientSteelGreatPickaxe>(), ModContent.ItemType<AncientSteelGreatHamaxe>()];
             List<int> Tier4Items = [ModContent.ItemType<StarshardSaber>(), ModContent.ItemType<Icebreaker>(), ModContent.ItemType<SandstormPouch>(), ModContent.ItemType<PlagueSpitter>(), ModContent.ItemType<JarOfPineapple>()];
+            int tier1 = WorldGen.genRand.Next(Tier1Items.Count), 
+                tier2 = WorldGen.genRand.Next(Tier2Items.Count), 
+                tier3 = WorldGen.genRand.Next(Tier3Items.Count);
             //Melee:  Halberd, Sword, Starshard Saber, Guardian Greatsword(Void), Pickaxe(Void), Hamaxe, Ancient Steel Pickaxe(Void) and Hamaxe, (8)
             //Ranged: Longbow, Hand Cannon, Soot Spewer (Void), Backup Bow, Fortress Crasher, Ice Breaker, Sandstorm Pouch(Void), Pint O' Punch (8)
             //Magic:  Fizzle Star, Magma Concentrator(Void), Blongus/Acid Belcher, (3)
@@ -3951,48 +3955,118 @@ namespace SOTS.WorldgenHelpers
                 // Get a chest
                 int i = chest.x;
                 int j = chest.y;
-                if(!AVSweepRect.Contains(i, j) && !cR.rect.Contains(i, j))
-                    continue;
-                Tile tile = Main.tile[i, j]; // the chest tile 
-                int itemType = ItemID.BreathingReed;
                 int slot = 0;
-                bool alreadyHasItem = chest.item[slot].type == ItemID.None;
-                if (tile.TileType == TileID.Containers || alreadyHasItem)
+                if(!AVSweepRect.Contains(i, j) && !cR.rect.Contains(i, j))
                 {
-                    //Tier 0 items (for chests and barrels that spawn in the abandoned village that aren't modded or don't have existing loot
-
+                    continue;
                 }
-                else if(tile.TileType == ModContent.TileType<RuinedChestTile>())
+                Tile tile = Main.tile[i, j]; // the chest tile 
+                int mainItem = -1;
+                bool alreadyHasItem = chest.item[slot].type == ItemID.None;
+                int potionType = ItemID.LesserHealingPotion;
+                if(tile.TileType == ModContent.TileType<RuinedChestTile>())
                 {
                     //Tier 1 items
-                    itemType = Tier1Items[tier1++ % Tier1Items.Count];
+                    mainItem = Tier1Items[tier1++ % Tier1Items.Count];
                 }
                 else if(tile.TileType == ModContent.TileType<EarthenPlatingStorageTile>())
                 {
                     //Tier 2 items
-                    itemType = Tier2Items[tier2++ % Tier2Items.Count];
+                    mainItem = Tier2Items[tier2++ % Tier2Items.Count];
+                    potionType = ItemID.HealingPotion;
                 }
-                else if(tile.TileType == ModContent.TileType<GulaVaultTile>())
+                else if(tile.TileType == ModContent.TileType<GulaVaultTile>() && Tier4Items.Count > 0)
                 {
                     if (tile.TileFrameX >= 108) //If it is a triple locked chest
                     {
                         //Tier 4 items
-                        itemType = Tier4Items[tier4++ % Tier4Items.Count];
-                        if(itemType == ModContent.ItemType<PlagueSpitter>() && WorldGen.crimson)
+                        mainItem = Main.rand.NextFromCollection(Tier4Items);
+                        Tier4Items.Remove(mainItem);
+                        if(mainItem == ModContent.ItemType<PlagueSpitter>() && WorldGen.crimson)
                         {
-                            itemType = ModContent.ItemType<Blongus>();
+                            mainItem = ModContent.ItemType<Blongus>();
                         }
+                        potionType = ItemID.GreaterHealingPotion;
                     }
                     else
                     {
                         //Tier 3 items
-                        itemType = Tier3Items[tier3++ % Tier3Items.Count];
+                        mainItem = Tier3Items[tier3++ % Tier3Items.Count];
+                        potionType = ItemID.RestorationPotion;
                     }
                 }
-                if(!alreadyHasItem)
+                else if(tile.TileType == TileID.Containers && !alreadyHasItem) 
                 {
-                    chest.item[slot].SetDefaults(itemType);
-                    slot++;
+                    //Loot for unrelated chests that happen to be in the biome
+                }
+                if (mainItem != -1)
+                {
+                    int secondItem = ModContent.ItemType<AncientSteelBar>();
+                    int secondAmt = 1;
+                    int fragmentDrop = WorldGen.genRand.NextBool(3) ? ModContent.ItemType<FragmentOfEvil>() : ModContent.ItemType<FragmentOfEarth>();
+                    int fragmentAmt = WorldGen.genRand.Next(4, 7);
+                    if (mainItem == ModContent.ItemType<PlagueSpitter>())
+                    {
+                        secondItem = ItemID.CorruptionKey;
+                        fragmentDrop = ModContent.ItemType<FragmentOfEvil>();
+                        fragmentAmt += 6;
+                    }
+                    else if (mainItem == ModContent.ItemType<Blongus>())
+                    {
+                        secondItem = ItemID.CrimsonKey;
+                        fragmentDrop = ModContent.ItemType<FragmentOfEvil>();
+                        fragmentAmt += 6;
+                    }
+                    else if (mainItem == ModContent.ItemType<StarshardSaber>())
+                    {
+                        secondItem = ItemID.HallowedKey;
+                        fragmentDrop = ModContent.ItemType<FragmentOfChaos>();
+                        fragmentAmt += 6;
+                    }
+                    else if (mainItem == ModContent.ItemType<SandstormPouch>())
+                    {
+                        secondItem = ItemID.DungeonDesertKey;
+                        fragmentDrop = ModContent.ItemType<FragmentOfEarth>();
+                        fragmentAmt += 6;
+                    }
+                    else if (mainItem == ModContent.ItemType<JarOfPineapple>())
+                    {
+                        secondItem = ItemID.JungleKey;
+                        fragmentDrop = ModContent.ItemType<FragmentOfNature>();
+                        fragmentAmt += 6;
+                    }
+                    else if (mainItem == ModContent.ItemType<Icebreaker>())
+                    {
+                        secondItem = ItemID.FrozenKey;
+                        fragmentDrop = ModContent.ItemType<FragmentOfPermafrost>();
+                        fragmentAmt += 6;
+                    }
+                    else
+                    {
+                        secondAmt = WorldGen.genRand.Next(5, 13);
+                    }
+                    if(WorldGen.genRand.NextBool(3))
+                    {
+                        potionType = WorldGen.genRand.NextFromList(ItemID.Bomb, ItemID.StickyBomb, ModContent.ItemType<MinersPickaxe>());
+                    }
+                    chest.AddItemToChest(mainItem, ref slot, 1);
+                    chest.AddItemToChest(secondItem, ref slot, secondAmt);
+                    if (WorldGen.genRand.NextBool(4))
+                        chest.AddItemToChest(WorldGen.genRand.NextFromList(ModContent.ItemType<FrigidBar>(), ModContent.ItemType<VibrantBar>(), WorldGen.crimson ? ItemID.CrimtaneBar : ItemID.DemoniteBar), ref slot, WorldGen.genRand.Next(4, 9));
+                    if (WorldGen.genRand.NextBool(10))
+                        chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.EmptyBucket, ItemID.CanOfWorms, ItemID.HerbBag), ref slot, 1);
+                    chest.AddItemToChest(fragmentDrop, ref slot, fragmentAmt);
+                    if (WorldGen.genRand.NextBool())
+                        chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.ThrowingKnife, ModContent.ItemType<ExplosiveKnife>()), ref slot, WorldGen.genRand.Next(25, 51));
+                     chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.MiningPotion, WorldGen.crimson ? ItemID.RagePotion : ItemID.WrathPotion, 
+                        ModContent.ItemType<NightmarePotion>(), 
+                        ItemID.ThornsPotion, 
+                        ItemID.HeartreachPotion), ref slot, WorldGen.genRand.Next(1, 4));
+                    chest.AddItemToChest(potionType, ref slot, WorldGen.genRand.Next(3, 7));
+                    chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.Torch, WorldGen.crimson ? ItemID.CrimsonTorch : ItemID.CorruptTorch,
+                        ModContent.ItemType<EarthenPlatingTorch>(),
+                        ItemID.Glowstick), ref slot, WorldGen.genRand.Next(15, 31));
+                    chest.AddItemToChest(ItemID.GoldCoin, ref slot);
                 }
             }
         }

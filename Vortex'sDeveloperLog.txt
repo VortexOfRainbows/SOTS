@@ -36,8 +36,7 @@ Update Objectives:
 9. Fix generation bug with Infernum and Leviathan area, potentially fix remnants and secret seeed compatability
 10. Upgrade item to the Hydrokinetic Antennae
 11. Update Elemental Amulet sprite to include modern genshin visions
-12. Boss balancing configs
-13. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
+12. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
 
 ---WIP List---
 Abandoned village generation
@@ -73,6 +72,9 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+11/19/24
+1.Some changes to chest loot in the AV
 
 11/15/24 to 11/17/24
 1. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)

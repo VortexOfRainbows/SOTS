@@ -158,6 +158,12 @@ namespace SOTS
 		public static Color ToColor(this Vector3 v3)
 		{
 			return new Color(v3.X, v3.Y, v3.Z);
-		}
+        }
+        public static void AddItemToChest(this Chest chest, int type, ref int slot, int count = 1)
+        {
+            chest.item[slot].SetDefaults(type);
+			chest.item[slot].stack = count;
+            slot++;
+        }
     }
 }
