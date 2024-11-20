@@ -6772,6 +6772,7 @@ Mods: {
 			BallOGuts.DisplayName: Ball O' Guts
 			BallOWorms.DisplayName: Ball O' Worms
 			BallOGutsPile.DisplayName: Pile O' Guts
+			Fistfull.DisplayName: Fistfull
 		}
 
 		Bestiary: {
