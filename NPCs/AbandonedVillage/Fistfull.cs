@@ -3,10 +3,13 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Fragments;
+using SOTS.WorldgenHelpers;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI.ResourceSets;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -27,7 +30,64 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         private Vector2 fistPosition;
         private Vector2 fistVelo;
-		private static int DustType => Main.rand.NextBool() ? DustType<FamishedDustCorruption>() : DustType<FamishedDustCrimson>();
+        private Vector2 WormTrailStartPos => NPC.Center;
+        private List<Vector2> segments = new List<Vector2>();
+        private bool SegmentsNearCenter = false;
+        private void UpdateSegments()
+        {
+            while (segments.Count < 15)
+            {
+                segments.Add(WormTrailStartPos + new Vector2(1 * NPC.direction, 0.1f) * segments.Count);
+            }
+
+            SegmentsNearCenter = true;
+            List<Vector2> temp = new List<Vector2>();
+            for (int i = 0; i < segments.Count; i++)
+                temp.Add(new Vector2(segments[i].X, segments[i].Y));
+            Vector2 prev = WormTrailStartPos;
+            segments[0] = NPC.Center;
+            float Next = NPC.localAI[3] < 280 ? 0.5f : 0.37f;
+            float Prev = NPC.localAI[3] < 280 ? 0.5f : 0.63f;
+            for (int i = 1; i < segments.Count; i++)
+            {
+                if (NPC.localAI[3] < 60)
+                {
+                    segments[i] = NPC.Center;
+                    continue;
+                }
+                Vector2 next = i >= segments.Count - 1 ? fistPosition : temp[i + 1];
+                Vector2 toNext = next - temp[i];
+                Vector2 toPrev = prev - temp[i];
+                segments[i] += toNext * Next + toPrev * Prev;
+                prev = temp[i];
+                if(SegmentsNearCenter && segments[i].Distance(NPC.Center) > 6)
+                {
+                    SegmentsNearCenter = false;
+                }
+            }
+        }
+        private void DrawSegments(SpriteBatch spriteBatch, Vector2 screenPos)
+        {
+            Texture2D chaine = Request<Texture2D>(Texture + "Chain").Value;
+            Vector2 origin = new Vector2(0, chaine.Height / 2);
+            Vector2 prev = fistPosition;
+            for (int i = segments.Count - 1; i >= 0; i--)
+            {
+                float fromCenter = 1 - Math.Min(1, segments[i].Distance(NPC.Center) / 40f);
+                float percent = 1f - (float)i / segments.Count;
+                Vector2 toPrev = prev - segments[i];
+                Vector2 position = segments[i] - screenPos;
+                float r = toPrev.ToRotation();
+                float Dist = toPrev.Length();
+                int x = (int)segments[i].X / 16;
+                int y = (int)segments[i].Y / 16;
+                spriteBatch.Draw(chaine, position, null, Lighting.GetColor(x, y, Color.Lerp(Color.White, Color.Black, percent * percent * percent + 0.5f * fromCenter)), r, origin, 
+                    new Vector2((Dist + 2) / chaine.Width, 1.0f - MathHelper.Clamp(Dist / chaine.Width / 1.5f - 1.5f, 0, .2f) - 0.3f * percent - fromCenter * 0.2f), 
+                    toPrev.X < 0 ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+                prev = segments[i];
+            }
+        }
+        private static int DustType => Main.rand.NextBool() ? DustType<FamishedDustCorruption>() : DustType<FamishedDustCrimson>();
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 5;
@@ -61,11 +121,14 @@ namespace SOTS.NPCs.AbandonedVillage
 			Rectangle frame = new Rectangle(0, NPC.frame.Y, texture.Width, height);
             if (fistPosition != NPC.Center && !runOnce && NPC.localAI[3] > 60)
             {
+                float fromCenter = Math.Min(1, fistPosition.Distance(NPC.Center) / 40f);
                 spriteBatch.Draw(textureIdle, drawPos, null, drawColor, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
                 Player player = Main.player[NPC.target];
                 Vector2 toPlayer = player.Center - fistPosition;
-                float scale = 0.75f + 0.25f * Math.Min(1, fistPosition.Distance(NPC.Center) / 80f);
-                spriteBatch.Draw(textureF, fistPosition - screenPos, null, Lighting.GetColor((int)fistPosition.X / 16, (int)fistPosition.Y / 16), toPlayer.ToRotation() + MathF.PI / 2f, textureF.Size() / 2, NPC.scale * scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                float scale = 0.5f + 0.4f * fromCenter;
+                DrawSegments(spriteBatch, screenPos);
+                spriteBatch.Draw(textureF, fistPosition - screenPos, null, Lighting.GetColor((int)fistPosition.X / 16, (int)fistPosition.Y / 16, Color.Lerp(Color.Black, Color.White, 0.5f + 0.5f * fromCenter))
+                    , toPlayer.ToRotation() + MathF.PI / 2f, textureF.Size() / 2, NPC.scale * scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
             else
             {
@@ -78,6 +141,7 @@ namespace SOTS.NPCs.AbandonedVillage
         private bool runOnce = true;
         public override bool PreAI()
         {
+            UpdateSegments();
             NPC.TargetClosest(true);
             Player player = Main.player[NPC.target];
             if (runOnce)
@@ -90,9 +154,11 @@ namespace SOTS.NPCs.AbandonedVillage
             if (NPC.localAI[3] > 60)
             {
                 float speedM = MathF.Min(1, (NPC.localAI[3] - 60f) / 30f);
-                NPC.velocity.X *= 0.1f;
+                if(NPC.velocity.Y < 0)
+                    NPC.velocity.Y *= 0.0f;
+                NPC.velocity.X *= 0.01f;
                 Vector2 toPlayer = player.Center - fistPosition;
-                fistVelo *= 0.925f;
+                fistVelo *= 0.93f;
                 fistVelo += toPlayer.SNormalize() * 0.2f * speedM;
                 Vector2 toNPC = NPC.Center - fistPosition;
                 fistPosition = Vector2.Lerp(fistPosition, NPC.Center, 0.012f);
@@ -101,18 +167,18 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     if (NPC.localAI[3] % 60 == 0)
                     {
-                        fistVelo += toPlayer * 0.0125f + toPlayer.SNormalize() * 7f;
+                        fistVelo += toPlayer * 0.0125f + toPlayer.SNormalize() * 8f;
                     }
                     if (NPC.localAI[3] > 90 && NPC.localAI[3] % 60 > 30)
                     {
                         speedM = MathF.Sin(NPC.localAI[3] % 60 / 60f * MathF.PI);
-                        fistVelo += toNPC * 0.0015f * speedM + toNPC.SNormalize() * 0.12f;
+                        fistVelo += toNPC * 0.00175f * speedM + toNPC.SNormalize() * 0.12f;
                     }
                 }
                 else
                 {
-                    fistPosition = Vector2.Lerp(fistPosition, NPC.Center, (NPC.localAI[3] - 280) / 120f);
-                    if(fistPosition.Distance(NPC.Center) < 10)
+                    fistPosition = Vector2.Lerp(fistPosition, NPC.Center, (NPC.localAI[3] - 280) / 150f);
+                    if(fistPosition.Distance(NPC.Center) < 6 && SegmentsNearCenter)
                     {
                         NPC.localAI[3] = -30;
                     }
