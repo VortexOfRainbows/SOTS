@@ -73,8 +73,9 @@ N/A
 
 Daily Log:
 
-11/19/24
-1.Some changes to chest loot in the AV
+11/19/24 to 1/20/24
+1. Some changes to chest loot in the AV
+2. WIP Fistfull
 
 11/15/24 to 11/17/24
 1. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)

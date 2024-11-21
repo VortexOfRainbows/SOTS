@@ -2,10 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
-using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
-using SOTS.Items.Pyramid;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -16,6 +15,18 @@ namespace SOTS.NPCs.AbandonedVillage
 {
 	public class Fistfull : ModNPC
 	{
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.WriteVector2(fistPosition);
+            writer.WriteVector2(fistVelo);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            fistPosition = reader.ReadVector2();
+            fistVelo = reader.ReadVector2();
+        }
+        private Vector2 fistPosition;
+        private Vector2 fistVelo;
 		private static int DustType => Main.rand.NextBool() ? DustType<FamishedDustCorruption>() : DustType<FamishedDustCrimson>();
         public override void SetStaticDefaults()
         {
@@ -24,9 +35,9 @@ namespace SOTS.NPCs.AbandonedVillage
         public override void SetDefaults()
 		{
 			NPC.aiStyle = 3;
-			NPC.width = 32;
-			NPC.height = 60;
-			//Very similar stats to face monster
+            NPC.width = 24; //Has to be smaller than the sprite size to allow jumping over blocks properly
+            NPC.height = 40; //Has to be shorter than the sprite height to prevent falling through platforms erroneously 
+            //Very similar stats to face monster
             NPC.damage = 25;
             NPC.lifeMax = 70;
 			NPC.defense = 10;
@@ -42,17 +53,75 @@ namespace SOTS.NPCs.AbandonedVillage
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+            Texture2D textureF = Request<Texture2D>(this.Texture + "Hand").Value;
+            Texture2D textureIdle = Request<Texture2D>(this.Texture + "Punch").Value;
 			int height = texture.Height / Main.npcFrameCount[NPC.type];
-			Vector2 drawOrigin = new Vector2(texture.Width / 2, height / 2);
+            Vector2 drawOrigin = new Vector2(texture.Width / 2, height / 2 + 8);
 			Vector2 drawPos = NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY);
 			Rectangle frame = new Rectangle(0, NPC.frame.Y, texture.Width, height);
-			spriteBatch.Draw(texture, drawPos, frame, drawColor, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-			//texture = GetTexture("SOTS/NPCs/TeratomaGlow");
-			//spriteBatch.Draw(texture, drawPos, frame, Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
-			return false;
+            if (fistPosition != NPC.Center && !runOnce && NPC.localAI[3] > 60)
+            {
+                spriteBatch.Draw(textureIdle, drawPos, null, drawColor, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                Player player = Main.player[NPC.target];
+                Vector2 toPlayer = player.Center - fistPosition;
+                float scale = 0.75f + 0.25f * Math.Min(1, fistPosition.Distance(NPC.Center) / 80f);
+                spriteBatch.Draw(textureF, fistPosition - screenPos, null, Lighting.GetColor((int)fistPosition.X / 16, (int)fistPosition.Y / 16), toPlayer.ToRotation() + MathF.PI / 2f, textureF.Size() / 2, NPC.scale * scale, NPC.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            }
+            else
+            {
+			    spriteBatch.Draw(texture, drawPos, frame, drawColor, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            }
+            //texture = GetTexture("SOTS/NPCs/TeratomaGlow");
+            //spriteBatch.Draw(texture, drawPos, frame, Color.White, npc.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
+            return false;
 		}
+        private bool runOnce = true;
         public override bool PreAI()
         {
+            NPC.TargetClosest(true);
+            Player player = Main.player[NPC.target];
+            if (runOnce)
+            {
+                fistPosition = NPC.Center;
+                runOnce = false;
+            }
+            fistPosition += fistVelo + NPC.velocity * 0.5f;
+            NPC.localAI[3]++;
+            if (NPC.localAI[3] > 60)
+            {
+                float speedM = MathF.Min(1, (NPC.localAI[3] - 60f) / 30f);
+                NPC.velocity.X *= 0.1f;
+                Vector2 toPlayer = player.Center - fistPosition;
+                fistVelo *= 0.925f;
+                fistVelo += toPlayer.SNormalize() * 0.2f * speedM;
+                Vector2 toNPC = NPC.Center - fistPosition;
+                fistPosition = Vector2.Lerp(fistPosition, NPC.Center, 0.012f);
+                fistVelo += toNPC * 0.00005f * NPC.localAI[3] / 120f;
+                if (NPC.localAI[3] < 280)
+                {
+                    if (NPC.localAI[3] % 60 == 0)
+                    {
+                        fistVelo += toPlayer * 0.0125f + toPlayer.SNormalize() * 7f;
+                    }
+                    if (NPC.localAI[3] > 90 && NPC.localAI[3] % 60 > 30)
+                    {
+                        speedM = MathF.Sin(NPC.localAI[3] % 60 / 60f * MathF.PI);
+                        fistVelo += toNPC * 0.0015f * speedM + toNPC.SNormalize() * 0.12f;
+                    }
+                }
+                else
+                {
+                    fistPosition = Vector2.Lerp(fistPosition, NPC.Center, (NPC.localAI[3] - 280) / 120f);
+                    if(fistPosition.Distance(NPC.Center) < 10)
+                    {
+                        NPC.localAI[3] = -30;
+                    }
+                }
+            }
+            else
+            {
+                fistPosition = NPC.Center;
+            }
             return base.PreAI();
         }
         public override void AI()
@@ -64,15 +133,14 @@ namespace SOTS.NPCs.AbandonedVillage
 				dust.noGravity = true;
 				NPC.velocity.X *= 0.97125f;
 			}
-			NPC.spriteDirection = NPC.direction;
-			NPC.TargetClosest(true);
+            NPC.spriteDirection = NPC.direction;
 		}
 		public override void FindFrame(int frameHeight)
         {
-            NPC.frameCounter++;
-            if (NPC.frameCounter >= 6f)
+            NPC.frameCounter += 0.5f + MathF.Sqrt(MathF.Abs(NPC.velocity.X * 0.5f));
+            if (NPC.frameCounter >= 8f)
             {
-                NPC.frameCounter -= 6f;
+                NPC.frameCounter -= 8f;
                 NPC.frame.Y += frameHeight;
                 if (NPC.frame.Y >= Main.npcFrameCount[NPC.type] * frameHeight)
                 {
@@ -82,25 +150,35 @@ namespace SOTS.NPCs.AbandonedVillage
         }
 		public override void HitEffect(NPC.HitInfo hit)
 		{
+			if (Main.netMode == NetmodeID.Server)
+				return;
 			if (NPC.life > 0)
-			{
-				int num = 0;
-				if (Main.netMode != NetmodeID.Server)
-					while (num < hit.Damage / NPC.lifeMax * 40.0)
-					{
-						Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.4f * hit.HitDirection), -2f, 0, default, 1.6f);
-						num++;
-					}
-			}
+            {
+                for (int num = 0; num < hit.Damage / NPC.lifeMax * 40f; num++)
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.4f * hit.HitDirection), -2f, 0, default, 1.6f);
+            }
 			else
             {
-                if (Main.netMode != NetmodeID.Server)
-                    for (int k = 0; k < 45; k++)
-                    {
-                        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.4f * hit.HitDirection), -2.1f, 0, default, 1.6f);
-                    }
+                for (int k = 0; k < 45; k++)
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.4f * hit.HitDirection), -2.1f, 0, default, 1.6f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position - new Vector2(0, 20), NPC.velocity, ModGores.GoreType("Gores/Fistfull/FistfullGore1"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 4), NPC.velocity, ModGores.GoreType("Gores/Fistfull/FistfullGore2"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(6, 24), NPC.velocity, ModGores.GoreType("Gores/Fistfull/FistfullGore3"), 1f);
             }
-		}
+        }
+        public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
+        {
+            bool colliding = NPC.Hitbox.Intersects(victimHitbox);
+            if (colliding)
+                return true;
+            int width = 32;
+            Rectangle hitBox = new Rectangle((int)fistPosition.X - width/2, (int)fistPosition.Y - width/2, width, width);
+            if (hitBox.Intersects(victimHitbox))
+            {
+                npcHitbox = victimHitbox;
+            }
+            return false;
+        }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, 5));
