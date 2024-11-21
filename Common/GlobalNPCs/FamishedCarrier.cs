@@ -87,7 +87,8 @@ namespace SOTS.Common.GlobalNPCs
                 bool validNPC = entity.type == ModContent.NPCType<CorpseBloom>()
                     || entity.type == ModContent.NPCType<EarthenGizmo>()
                     || entity.type == ModContent.NPCType<BallOGuts>()
-                    || entity.type == ModContent.NPCType<BallOWorms>();
+                    || entity.type == ModContent.NPCType<BallOWorms>()
+                    || entity.type == ModContent.NPCType<Fistfull>();
                 return validNPC;
             }
             return false;

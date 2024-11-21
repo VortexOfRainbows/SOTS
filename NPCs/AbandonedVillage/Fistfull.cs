@@ -22,11 +22,13 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             writer.WriteVector2(fistPosition);
             writer.WriteVector2(fistVelo);
+            writer.Write(NPC.localAI[3]);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             fistPosition = reader.ReadVector2();
             fistVelo = reader.ReadVector2();
+            NPC.localAI[3] = reader.ReadSingle();
         }
         private Vector2 fistPosition;
         private Vector2 fistVelo;
@@ -147,12 +149,22 @@ namespace SOTS.NPCs.AbandonedVillage
             if (runOnce)
             {
                 fistPosition = NPC.Center;
+                NPC.netUpdate = true;
                 runOnce = false;
             }
             fistPosition += fistVelo + NPC.velocity * 0.5f;
-            NPC.localAI[3]++;
+            if(Collision.CanHitLine(NPC.Center, 0, 0, player.position, player.width, player.height) || NPC.localAI[3] > 60)
+                NPC.localAI[3]++;
+            else if (NPC.localAI[3] > 0)
+            {
+                NPC.localAI[3]--;
+            }
             if (NPC.localAI[3] > 60)
             {
+                if ((int)NPC.localAI[3] == 61)
+                {
+				    SOTSUtils.PlaySound(SoundID.NPCDeath1, NPC.Center, 0.9f, -0.25f);
+                }
                 float speedM = MathF.Min(1, (NPC.localAI[3] - 60f) / 30f);
                 if(NPC.velocity.Y < 0)
                     NPC.velocity.Y *= 0.0f;
@@ -171,6 +183,7 @@ namespace SOTS.NPCs.AbandonedVillage
                     }
                     if (NPC.localAI[3] > 90 && NPC.localAI[3] % 60 > 30)
                     {
+                        SOTSUtils.PlaySound(SoundID.Item175, fistPosition, 1.0f, -0.3f);
                         speedM = MathF.Sin(NPC.localAI[3] % 60 / 60f * MathF.PI);
                         fistVelo += toNPC * 0.00175f * speedM + toNPC.SNormalize() * 0.12f;
                     }
@@ -180,7 +193,8 @@ namespace SOTS.NPCs.AbandonedVillage
                     fistPosition = Vector2.Lerp(fistPosition, NPC.Center, (NPC.localAI[3] - 280) / 150f);
                     if(fistPosition.Distance(NPC.Center) < 6 && SegmentsNearCenter)
                     {
-                        NPC.localAI[3] = -30;
+                        NPC.localAI[3] = -Main.rand.Next(60, 180);
+                        NPC.netUpdate = true;
                     }
                 }
             }
@@ -221,15 +235,34 @@ namespace SOTS.NPCs.AbandonedVillage
 			if (NPC.life > 0)
             {
                 for (int num = 0; num < hit.Damage / NPC.lifeMax * 40f; num++)
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.4f * hit.HitDirection), -2f, 0, default, 1.6f);
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.0f * hit.HitDirection), -1.4f, 0, default, 1.5f);
             }
 			else
             {
-                for (int k = 0; k < 45; k++)
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.4f * hit.HitDirection), -2.1f, 0, default, 1.6f);
+                for (int k = 0; k < 20; k++)
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.1f * hit.HitDirection), -1.4f, 0, default, 1.55f);
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position - new Vector2(0, 20), NPC.velocity, ModGores.GoreType("Gores/Fistfull/FistfullGore1"), 1f);
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 4), NPC.velocity, ModGores.GoreType("Gores/Fistfull/FistfullGore2"), 1f);
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(6, 24), NPC.velocity, ModGores.GoreType("Gores/Fistfull/FistfullGore3"), 1f);
+                if (NPC.localAI[3] > 60)
+                {
+                    for(int i = 0; i < segments.Count; i++)
+                    {
+                        for (int k = 0; k < 4; k++)
+                        {
+                            Dust d = Dust.NewDustDirect(segments[i] - new Vector2(4) - new Vector2(5, 5), 10, 10, DustType, (float)(1.0f * hit.HitDirection), -1.0f, 0, default, 1.4f);
+                            d.velocity *= 0.4f;
+                        }
+                    }
+                    for(int i = 0; i < Main.rand.Next(1, 5); i++)
+                    {
+                        Gore.NewGore(NPC.GetSource_Death(), fistPosition - new Vector2(16 * Main.rand.NextFloat(1), 16 * Main.rand.NextFloat(1)), fistVelo, ModGores.GoreType("Gores/Fistfull/FistfullGore4"), Main.rand.NextFloat(0.66f, 1f));
+                    }
+                    for (int i = 0; i < Main.rand.Next(1, 5); i++)
+                    {
+                        Gore.NewGore(NPC.GetSource_Death(), fistPosition - new Vector2(16 * Main.rand.NextFloat(1), 16 * Main.rand.NextFloat(1)), fistVelo, ModGores.GoreType("Gores/Fistfull/FistfullGore5"), Main.rand.NextFloat(0.66f, 1f));
+                    }
+                }
             }
         }
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)

@@ -75,8 +75,8 @@ Daily Log:
 
 11/19/24 to 1/21/24
 1. Some changes to chest loot in the AV
-2. WIP Fistfull
-	1. Needs: Behavior adjustments (dont attack through walls, slower, etc), Banner, Visuals, Sounds, Gore for the visuals
+2. WIP Fistfull (Works in multiplayer!)
+	1. Needs: Banner, Visuals, Sound Adjustments
 
 11/15/24 to 11/17/24
 1. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)
