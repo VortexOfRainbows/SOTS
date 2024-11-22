@@ -132,6 +132,10 @@ namespace SOTS.Items.AbandonedVillage
                 case 4: //Fontaine
 					modPlayer.StatShareAll = true;
                     break;
+				case 5: //Natlan
+					break;
+				case 6: //Snezhnaya
+					break;
             }
         }
 		public string GetTooltip(int gem, int frame)

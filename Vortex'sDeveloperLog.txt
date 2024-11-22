@@ -33,7 +33,12 @@ Update Objectives:
 6. Upgrade to Code Corruptor: Dolphin Blaster (?)
 7. Shimmer Item that upgrades the store for Archaeologist
 8. Fish Bomb
-9. Fix generation bug with Infernum and Leviathan area, potentially fix remnants and secret seeed compatability
+9. Fix cross-compatibility generation bugs. 
+	1. Infernum: fix way the leviathan area is generated
+	2. Remnants and secret seed Compatibility: requires overhaul of generation
+	3. Thorium: Move amber gem structure to bottom of oceanic depths
+	4. Sand Floating Islands: Make pyramid start the desert check lower to the ground
+	5. Fargo's: Fix pyramid interference with Fargo's new pyramid
 10. Upgrade item to the Hydrokinetic Antennae
 11. Update Elemental Amulet sprite to include modern genshin visions
 12. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
@@ -73,10 +78,11 @@ N/A
 
 Daily Log:
 
-11/19/24 to 1/21/24
+11/19/24 to 11/22/24
 1. Some changes to chest loot in the AV
 2. WIP Fistfull (Works in multiplayer!)
 	1. Needs: Banner, Visuals, Sound Adjustments
+3. WIP Elemental Amulet expansion (2 more borders)
 
 11/15/24 to 11/17/24
 1. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)

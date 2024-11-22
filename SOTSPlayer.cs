@@ -111,6 +111,7 @@ namespace SOTS
 			typhonWhitelist = [ModContent.ProjectileType<HardlightArrow>()];
 			harmonyWhitelist = [BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge];
 		}
+		public const int TotalVisionNumber = 56;
 		public int UniqueVisionNumber = -1;
 		public static Color VoidMageColor(Player player, bool sourceTimeFreeze = true)
         {
@@ -704,7 +705,7 @@ namespace SOTS
         }
 		public void ResetVisionID(bool serverCommand = false)
         {
-			UniqueVisionNumber = Main.rand.Next(40);
+			UniqueVisionNumber = Main.rand.Next(TotalVisionNumber);
 			if(NetmodeID.Server == Main.netMode && serverCommand)
 			{
                 var packet = Mod.GetPacket();

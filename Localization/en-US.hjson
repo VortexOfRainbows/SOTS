@@ -6966,6 +6966,16 @@ Mods: {
 
 				Increases all damage by 50% of the increases received to any other damage type from other sources
 				'''
+			5:
+				'''
+
+				Efficacy of enemy defense is reduced by 50% (NOT YET IMPLEMENTED)
+				'''
+			6:
+				'''
+
+				Increases void damage by 10% and void gain by 20% (NOT YET IMPLEMENTED)
+				'''
 		}
 
 		VoidmageIncubatorTextList: {
