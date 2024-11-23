@@ -6969,12 +6969,12 @@ Mods: {
 			5:
 				'''
 
-				Efficacy of enemy defense is reduced by 50% (NOT YET IMPLEMENTED)
+				Efficacy of enemy defense is reduced by 50%
 				'''
 			6:
 				'''
 
-				Increases void damage by 10% and void gain by 20% (NOT YET IMPLEMENTED)
+				Increases void damage by 10% and void gain by 20%
 				'''
 		}
 

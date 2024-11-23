@@ -81,8 +81,10 @@ Daily Log:
 11/19/24 to 11/22/24
 1. Some changes to chest loot in the AV
 2. WIP Fistfull (Works in multiplayer!)
-	1. Needs: Banner, Visuals, Sound Adjustments
-3. WIP Elemental Amulet expansion (2 more borders)
+	1. Needs: Banner
+3. Added remaining Elemental Amulet effects (subject to change)
+	1. Right now, one gives you scaling armor penetration, which ranges from good to barely noticeable
+	2. The other gives an assortment of void stat bonuses, including a rare void gain multiplier
 
 11/15/24 to 11/17/24
 1. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)

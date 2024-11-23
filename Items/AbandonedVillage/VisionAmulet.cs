@@ -133,8 +133,11 @@ namespace SOTS.Items.AbandonedVillage
 					modPlayer.StatShareAll = true;
                     break;
 				case 5: //Natlan
+					modPlayer.ScalingArmorPenetration = true;
 					break;
 				case 6: //Snezhnaya
+					vPlayer.voidGainMultiplier += 0.2f;
+					player.GetDamage<VoidGeneric>() += 0.1f;
 					break;
             }
         }

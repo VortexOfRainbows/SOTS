@@ -337,7 +337,8 @@ namespace SOTS
         public bool InverseDiamondRing = false;
         public bool AmethystRing = false;
 		public bool LazyCrafterAmulet = false;
-		public int bonusPickaxePower = 0;
+        public bool ScalingArmorPenetration = false;
+        public int bonusPickaxePower = 0;
 		public int previousDefense = 0;
 		public float AmmoConsumptionModifier = 0.0f;
 		public bool AmmoRegather = false;
@@ -1323,7 +1324,7 @@ namespace SOTS
 					InverseTopazRingCD--;
 				}
             }
-			RubyRing = AmberRing = TopazRing = EmeraldRing = AmethystRing = LazyCrafterAmulet = InverseTopazRing = false;
+			RubyRing = AmberRing = TopazRing = EmeraldRing = AmethystRing = LazyCrafterAmulet = InverseTopazRing = ScalingArmorPenetration = false;
 			AmmoConsumptionModifier = DamageGenerateMoney = 0.0f;
 			bonusPickaxePower = 0;
 			AmmoRegather = PotionStacking = SparkleDamage = ConduitBelt = GoldenTrowel = false;
@@ -1700,6 +1701,10 @@ namespace SOTS
             {
                 modifiers.CritDamage.Flat += CritBonusDamage;
             }
+			if(ScalingArmorPenetration)
+			{
+				modifiers.DefenseEffectiveness *= 0.5f;
+			}
 		}
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{

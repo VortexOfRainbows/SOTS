@@ -48,8 +48,8 @@ namespace SOTS.NPCs.AbandonedVillage
                 temp.Add(new Vector2(segments[i].X, segments[i].Y));
             Vector2 prev = WormTrailStartPos;
             segments[0] = NPC.Center;
-            float Next = NPC.localAI[3] < 280 ? 0.5f : 0.37f;
-            float Prev = NPC.localAI[3] < 280 ? 0.5f : 0.63f;
+            float Next = NPC.localAI[3] < 280 ? 0.5f : 0.36f;
+            float Prev = NPC.localAI[3] < 280 ? 0.5f : 0.64f;
             for (int i = 1; i < segments.Count; i++)
             {
                 if (NPC.localAI[3] < 60)
@@ -99,10 +99,10 @@ namespace SOTS.NPCs.AbandonedVillage
 			NPC.aiStyle = 3;
             NPC.width = 24; //Has to be smaller than the sprite size to allow jumping over blocks properly
             NPC.height = 40; //Has to be shorter than the sprite height to prevent falling through platforms erroneously 
-            //Very similar stats to face monster
-            NPC.damage = 25;
-            NPC.lifeMax = 70;
-			NPC.defense = 10;
+            //Very similar stats to face monster, but with extra defense (2) and life (5), but less damage (-3)
+            NPC.damage = 22;
+            NPC.lifeMax = 75;
+			NPC.defense = 12;
             NPC.knockBackResist = 0.4f;
             NPC.value = Item.buyPrice(0, 0, 2, 50);
 			NPC.scale = 1.0f;
@@ -153,7 +153,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 runOnce = false;
             }
             fistPosition += fistVelo + NPC.velocity * 0.5f;
-            if(Collision.CanHitLine(NPC.Center, 0, 0, player.position, player.width, player.height) || NPC.localAI[3] > 60)
+            if((Collision.CanHitLine(NPC.Center, 0, 0, player.position, player.width, player.height) && NPC.Distance(player.Center) < 256) || NPC.localAI[3] > 60) //Fistfull can only hit the player from about 16 blocks = 256 units away
                 NPC.localAI[3]++;
             else if (NPC.localAI[3] > 0)
             {
@@ -163,29 +163,30 @@ namespace SOTS.NPCs.AbandonedVillage
             {
                 if ((int)NPC.localAI[3] == 61)
                 {
-				    SOTSUtils.PlaySound(SoundID.NPCDeath1, NPC.Center, 0.9f, -0.25f);
+				    SOTSUtils.PlaySound(SoundID.NPCDeath1, NPC.Center, 0.856f, -0.4f);
                 }
                 float speedM = MathF.Min(1, (NPC.localAI[3] - 60f) / 30f);
                 if(NPC.velocity.Y < 0)
                     NPC.velocity.Y *= 0.0f;
                 NPC.velocity.X *= 0.01f;
                 Vector2 toPlayer = player.Center - fistPosition;
-                fistVelo *= 0.93f;
-                fistVelo += toPlayer.SNormalize() * 0.2f * speedM;
+                fistVelo *= 0.9325f;
+                fistVelo += toPlayer.SNormalize() * 0.21f * speedM;
                 Vector2 toNPC = NPC.Center - fistPosition;
                 fistPosition = Vector2.Lerp(fistPosition, NPC.Center, 0.012f);
-                fistVelo += toNPC * 0.00005f * NPC.localAI[3] / 120f;
+                fistVelo += toNPC * 0.00002f * NPC.localAI[3] / 150f;
                 if (NPC.localAI[3] < 280)
                 {
                     if (NPC.localAI[3] % 60 == 0)
                     {
-                        fistVelo += toPlayer * 0.0125f + toPlayer.SNormalize() * 8f;
+                        SOTSUtils.PlaySound(SoundID.Item175, fistPosition, 0.6f, -0.55f);
+                        fistVelo += toPlayer * 0.02f + toPlayer.SNormalize() * 8.75f;
                     }
                     if (NPC.localAI[3] > 90 && NPC.localAI[3] % 60 > 30)
                     {
-                        SOTSUtils.PlaySound(SoundID.Item175, fistPosition, 1.0f, -0.3f);
                         speedM = MathF.Sin(NPC.localAI[3] % 60 / 60f * MathF.PI);
-                        fistVelo += toNPC * 0.00175f * speedM + toNPC.SNormalize() * 0.12f;
+                        speedM *= speedM;
+                        fistVelo += toNPC * 0.0035f * speedM + toNPC.SNormalize() * 0.15f * speedM;
                     }
                 }
                 else
