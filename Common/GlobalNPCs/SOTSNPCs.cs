@@ -698,11 +698,11 @@ namespace SOTS.Common.GlobalNPCs
 				{
 					bool underground = player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight;
                     if (underground)
-						pool[0] *= underground ? 0.1f : 0.5f; //Decrease spawnrates of vanilla NPCs, especially in the underground
+						pool[0] *= underground ? 0.1f : 0.45f; //Decrease spawnrates of vanilla NPCs, especially in the underground
                     pool.Add(ModContent.NPCType<Throe>(), (underground ? 0.45f : 0.05f) / (1f + NPC.CountNPCS(ModContent.NPCType<Throe>()))); //Spawn throes less often the more of them there are
                     pool.Add(ModContent.NPCType<CorpseBloom>(), (corrupt ? 0.75f : 0.1f) * (underground ? 0.3f : 1f));
 					pool.Add(corrupt ? ModContent.NPCType<BallOWorms>() : ModContent.NPCType<BallOGuts>(), 0.4f);
-                    pool.Add(ModContent.NPCType<Fistfull>(), 0.24f + (underground ? 0.06f : 0.0f) + (crimson ? 0.1f : 0.0f));
+                    pool.Add(ModContent.NPCType<Fistfull>(), 0.3f + (underground ? 0.1f : 0.0f) + (crimson ? 0.1f : 0.0f));
                     if (underground)
 						pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.5f / (1f + NPC.CountNPCS(ModContent.NPCType<EarthenGizmo>()))); //Spawn gizmos less often the more of them there area
 

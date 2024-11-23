@@ -285,6 +285,7 @@ namespace SOTS.NPCs.AbandonedVillage
             npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 5));
             npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEvil>(), 5));
             npcLoot.Add(ItemDropRule.Common(ItemType<OldKey>(), 100));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PintOPunch>(), 200));
         }
-	}
+    }
 }

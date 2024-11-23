@@ -200,7 +200,7 @@ namespace SOTS.NPCs.AbandonedVillage
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<FragmentOfEvil>(), ModContent.ItemType<FragmentOfEarth>()));
-            npcLoot.Add(ItemDropRule.OneFromOptions(5, ItemID.Deathweed, ItemID.DeathweedSeeds));
+            npcLoot.Add(ItemDropRule.OneFromOptions(1, ItemID.Deathweed, ItemID.DeathweedSeeds));
         }
     }
 }

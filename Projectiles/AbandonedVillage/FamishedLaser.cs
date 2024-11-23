@@ -7,7 +7,6 @@ using SOTS.Dusts;
 using SOTS.NPCs.AbandonedVillage;
 using System;
 using SOTS.WorldgenHelpers;
-using Humanizer;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {

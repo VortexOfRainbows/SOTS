@@ -10,7 +10,7 @@ namespace SOTS.Dusts
     {
 		public static Dust Spawn(Vector2 pos, int w, int h, Vector2 velo, Color c, int decaySpeed = 5)
 		{
-			Dust d = Dust.NewDustDirect(pos - new Vector2(5, 5), w, h, ModContent.DustType<PixelDust>());
+			Dust d = Dust.NewDustDirect(pos - new Vector2(4, 4), w, h, ModContent.DustType<PixelDust>());
 			d.velocity = velo;
 			d.fadeIn = decaySpeed;
 			d.color = c;

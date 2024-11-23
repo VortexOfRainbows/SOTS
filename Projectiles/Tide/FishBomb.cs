@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Tide
                 for (int i = 0; i < 16; i++)
                 {
                     Vector2 velocity = Main.rand.NextVector2CircularEdge(3, 3) + new Vector2(0, -2f);
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + velocity.SNormalize() * Main.rand.NextFloat(16, 24), velocity * Main.rand.NextFloat(.5f, 1f), ModContent.ProjectileType<FishBlood>(), Projectile.damage, Projectile.damage, Main.myPlayer);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + velocity.SNormalize() * Main.rand.NextFloat(16, 24), velocity * Main.rand.NextFloat(.5f, 1f), ModContent.ProjectileType<FishBlood>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
                 }
             }
             Player player = Main.player[Projectile.owner];
