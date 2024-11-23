@@ -7,13 +7,12 @@ namespace SOTS.Projectiles
     {	
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Pink Explosion");
-		}
+            Main.projFrames[Projectile.type] = 5;
+        }
         public override void SetDefaults()
         {
 			Projectile.height = 105;
 			Projectile.width = 105;
-            Main.projFrames[Projectile.type] = 5;
 			Projectile.penetrate = -1;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 36;

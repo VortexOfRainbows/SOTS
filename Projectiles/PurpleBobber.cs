@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -12,7 +11,7 @@ namespace SOTS.Projectiles
 {
     public class PurpleBobber : ModProjectile
     {	
-		int rodBobberType = -1;
+		private int rodBobberType = -1;
         public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = 1;

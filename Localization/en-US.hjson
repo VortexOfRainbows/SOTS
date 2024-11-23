@@ -5883,6 +5883,15 @@ Mods: {
 					'This pint packs a punch!'
 					'''
 			}
+
+			FishBomb: {
+				DisplayName: Fish Bomb
+				Tooltip:
+					'''
+					Catches fish by exploding in liquid
+					50% fishing power
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7702,6 +7711,8 @@ Mods: {
 			TorchEmberMk2.DisplayName: Torch Ember Mk2
 			AncientSteelLantern.DisplayName: Steel Lantern
 			PintOPunch.DisplayName: Pint O Punch
+			FishBomb.DisplayName: Fish Bomb
+			FishBlood.DisplayName: Fish Blood
 		}
 
 		DamageClasses: {

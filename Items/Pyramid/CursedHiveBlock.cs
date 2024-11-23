@@ -71,7 +71,7 @@ namespace SOTS.Items.Pyramid
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient && !noItem && Main.rand.NextBool(24) && !fail && !effectOnly)
 			{
-				Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), Vector2.Zero, ModContent.ProjectileType<SpawnEnemyProj>(), 0, 0, Main.myPlayer);
+				Projectile.NewProjectile(new EntitySource_TileBreak(i, j), new Vector2(i * 16 + 8, j * 16 + 8), Vector2.Zero, ModContent.ProjectileType<SpawnEnemyProj>(), 0, 0, Main.myPlayer, -3);
 				noItem = true;
 			}
 		}
@@ -126,7 +126,7 @@ namespace SOTS.Items.Pyramid
 					}
 				}
 			}
-			else
+			else if (Projectile.ai[0] == -3)
             {
 				if (Main.netMode != NetmodeID.MultiplayerClient)
 				{
@@ -185,6 +185,14 @@ namespace SOTS.Items.Pyramid
 					}
 				}
 			}
+			else
+            {
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    NPC npc = NPC.NewNPCDirect(Projectile.GetSource_FromThis(), (int)Projectile.position.X + Projectile.width / 2, (int)Projectile.position.Y + Projectile.height, (int)Projectile.ai[0]);
+                    npc.netUpdate = true;
+                }
+            }
 		}
 	}
 }

@@ -96,9 +96,9 @@ namespace SOTS.NPCs
 			drawPos.Y += shootToY;
 			spriteBatch.Draw(texture, drawPos, null, drawColor, NPC.rotation, drawOrigin, 0.9f, SpriteEffects.None, 0f);
 		}
-		bool hasMoved = false;
-		bool ready = false;
-		bool dropSpecial = false;
+		private bool hasMoved = false;
+		private bool ready = false;
+		private bool dropSpecial = false;
 		public override bool PreAI()
 		{
 			Player player = Main.player[NPC.target];

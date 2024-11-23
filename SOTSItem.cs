@@ -49,13 +49,15 @@ namespace SOTS
 		public int extraVoid;
 		public int extraVoidGain;
 		public float voidCostMultiplier;
+		public bool FloatsInWater;
 		public PrefixItem()
 		{
 			InventorySlotID = -1;
 			extraVoidGain = 0;
 			extraVoid = 0;
 			voidCostMultiplier = 1;
-		}
+			FloatsInWater = false;
+        }
 		public override GlobalItem Clone(Item item, Item itemClone)
 		{
 			PrefixItem myClone = (PrefixItem)base.Clone(item, itemClone);
@@ -63,6 +65,7 @@ namespace SOTS
 			myClone.extraVoidGain = extraVoidGain;
 			myClone.extraVoid = extraVoid;
             myClone.InventorySlotID = InventorySlotID;
+            myClone.FloatsInWater = FloatsInWater;
             return myClone;
 		}
 		public override int ChoosePrefix(Item item, UnifiedRandom rand)
@@ -137,16 +140,49 @@ namespace SOTS
 			writer.Write(extraVoidGain);
 			writer.Write(extraVoid);
 			writer.Write(voidCostMultiplier);
-		}
-		public override void NetReceive(Item item, BinaryReader reader)
+			writer.Write(FloatsInWater);
+			if(FloatsInWater)
+			{
+				writer.Write(item.alpha);
+			}
+        }
+        public override void NetReceive(Item item, BinaryReader reader)
 		{
 			extraVoidGain = reader.ReadInt32();
 			extraVoid = reader.ReadInt32();
 			voidCostMultiplier = reader.ReadSingle();
-		}
+			FloatsInWater = reader.ReadBoolean();
+			if (FloatsInWater)
+				item.alpha = reader.ReadInt32();
+        }
 		public static void SetInventorySlot(Item item, int slot)
         {
 			item.GetGlobalItem<PrefixItem>().InventorySlotID = slot;
+        }
+        public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
+        {
+			if(FloatsInWater)
+			{
+				item.alpha = Math.Max(0, item.alpha - 10);
+				int i = (int)item.Center.X / 16;
+				int j = (int)item.Center.Y / 16;
+				if (WorldGen.InWorld(i, j) && Main.tile[i, j].LiquidAmount > 100)
+				{
+					gravity *= -0.5f;
+					if (item.velocity.Y > 0)
+						item.velocity.Y *= 0.9f;
+				}
+			}
+        }
+        public override void UpdateInventory(Item item, Player player)
+        {
+			if(FloatsInWater)
+            {
+				int prevStack = item.stack;
+                item.SetDefaults(item.type); //This is just in case the alpha goes below where it is intended for transparent items that may be fished
+				item.stack = prevStack;
+                FloatsInWater = false;
+            }
         }
     }
 	public class SOTSItem : GlobalItem

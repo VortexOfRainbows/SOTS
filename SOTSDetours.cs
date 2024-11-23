@@ -36,8 +36,9 @@ namespace SOTS
     public static class SOTSDetours
 	{
 		public static bool DrawingProjectileFromCache = false;
+		public static bool UsingFishBomb = false;
 		public static RenderTarget2D TargetProj;
-		public static void Initialize()
+        public static void Initialize()
 		{
 			On_NetMessage.SendData += NetMessage_SendData;
 
@@ -124,6 +125,9 @@ namespace SOTS
 			On_Projectile.CanExplodeTile += On_Projectile_CanExplodeTile;
 
 			On_AmbientWindSystem.Update += On_AmbientWindSystem_Update;
+
+			//For fish bomb
+			On_Player.GetFishingConditions += On_Player_GetFishingConditions;
 
             if (!Main.dedServ)
 				ResizeTargets();
@@ -1090,5 +1094,17 @@ namespace SOTS
             if (isInAV)
                 Main.LocalPlayer.ZoneGraveyard = false;
         }
+		private static PlayerFishingConditions On_Player_GetFishingConditions(On_Player.orig_GetFishingConditions orig, Player self)
+		{
+			if(UsingFishBomb)
+            {
+                PlayerFishingConditions result = default;
+				int fakeFishingPower = 50;
+                int num2 = fakeFishingPower + self.fishingSkill;
+                result.FinalFishingLevel = num2;
+                return result;
+            }
+			return orig(self);
+		}
     }
 }

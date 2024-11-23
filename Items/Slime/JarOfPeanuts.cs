@@ -30,7 +30,7 @@ namespace SOTS.Items.Slime
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.Bottle, 1).AddIngredient<Peanut>(15).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient(ItemID.Bottle, 1).AddIngredient<Peanut>(15).Register();
 		}
 		public override bool CanUseItem(Player player)
 		{
