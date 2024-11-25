@@ -94,6 +94,6 @@ namespace SOTS.Items.MusicBoxes
 					Main.spriteBatch.Draw(Mod.Assets.Request<Texture2D>("Items/MusicBoxes/PlanetariumMusicBoxGlow").Value, new Vector2(i * 16 - Main.screenPosition.X + x, j * 16 - Main.screenPosition.Y + y + 2) + zero, new Rectangle(frameX * 18, frameY * 18, 16, 16), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 				}
 			}
-		}
-	}
+        }
+    }
 }

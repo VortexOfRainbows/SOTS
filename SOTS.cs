@@ -175,6 +175,7 @@ namespace SOTS
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Lux"), ModContent.ItemType<LuxMusicBox>(), ModContent.TileType<LuxMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PharaohsCurse"), ModContent.ItemType<CurseMusicBox>(), ModContent.TileType<CurseMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/BananaLizard/AVSurface"), ModContent.ItemType<AVMusicBox>(), ModContent.TileType<AVMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/BananaLizard/AVUnderground"), ModContent.ItemType<AVMinesMusicBox>(), ModContent.TileType<AVMinesMusicBoxTile>());
 			SOTSItem.LoadArrays();
             SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();

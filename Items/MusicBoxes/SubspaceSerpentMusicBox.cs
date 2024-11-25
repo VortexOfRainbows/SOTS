@@ -32,15 +32,6 @@ namespace SOTS.Items.MusicBoxes
 			Item.value = Item.sellPrice(0, 2, 0, 0);
 			Item.accessory = true;
 		}
-		/*public override void AddRecipes()
-		{
-			ModRecipe recipe = new ModRecipe(mod);
-			recipe.AddIngredient(null, "SubspaceSerpentTrophy", 1);
-			recipe.AddIngredient(ItemID.MusicBox);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}*/
 	}
 	public class SubspaceSerpentMusicBoxTile : ModTile
     {

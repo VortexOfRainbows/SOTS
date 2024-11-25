@@ -1867,7 +1867,7 @@ Mods: {
 			}
 
 			TidePlating: {
-				DisplayName: Tide Plating
+				DisplayName: Tidal Plating
 				Tooltip: ""
 			}
 
@@ -4564,7 +4564,7 @@ Mods: {
 			}
 
 			EarthenPlatingBulb: {
-				DisplayName: Earthen Plating Bulb
+				DisplayName: Earthen Plating Candle
 				Tooltip: ""
 			}
 
@@ -4705,7 +4705,7 @@ Mods: {
 			}
 
 			NaturePlatingBulb: {
-				DisplayName: Nature Plating Bulb
+				DisplayName: Nature Plating Candle
 				Tooltip: ""
 			}
 
@@ -4796,7 +4796,7 @@ Mods: {
 			}
 
 			PermafrostPlatingBulb: {
-				DisplayName: Permafrost Plating Bulb
+				DisplayName: Permafrost Plating Candle
 				Tooltip: ""
 			}
 
@@ -5892,6 +5892,116 @@ Mods: {
 					50% fishing power
 					'''
 			}
+
+			TidalPlatingWall: {
+				DisplayName: Tidal Plating Wall
+				Tooltip: ""
+			}
+
+			TidalPlatingBathtub: {
+				DisplayName: Tidal Plating Bathtub
+				Tooltip: ""
+			}
+
+			TidalPlatingBed: {
+				DisplayName: Tidal Plating Bed
+				Tooltip: ""
+			}
+
+			TidalPlatingBlastDoor: {
+				DisplayName: Tidal Plating Blast Door
+				Tooltip: ""
+			}
+
+			TidalPlatingBookcase: {
+				DisplayName: Tidal Plating Bookcase
+				Tooltip: ""
+			}
+
+			TidalPlatingCandle: {
+				DisplayName: Tidal Plating Candle
+				Tooltip: ""
+			}
+
+			TidalPlatingChair: {
+				DisplayName: Tidal Plating Chair
+				Tooltip: ""
+			}
+
+			TidalPlatingChandelier: {
+				DisplayName: Tidal Plating Chandelier
+				Tooltip: ""
+			}
+
+			TidalPlatingChest: {
+				DisplayName: Tidal Plating Storage
+				Tooltip: ""
+			}
+
+			TidalPlatingClock: {
+				DisplayName: Tidal Plating Clock
+				Tooltip: ""
+			}
+
+			TidalPlatingDresser: {
+				DisplayName: Tidal Plating Dresser
+				Tooltip: ""
+			}
+
+			TidalPlatingLamp: {
+				DisplayName: Tidal Plating Lamp
+				Tooltip: ""
+			}
+
+			TidalPlatingLantern: {
+				DisplayName: Tidal Plating Lantern
+				Tooltip: ""
+			}
+
+			TidalPlatingPiano: {
+				DisplayName: Tidal Plating Piano
+				Tooltip: ""
+			}
+
+			TidalPlatingPlatform: {
+				DisplayName: Tidal Plating Platform
+				Tooltip: ""
+			}
+
+			TidalPlatingSink: {
+				DisplayName: Tidal Plating Sink
+				Tooltip: ""
+			}
+
+			TidalPlatingSofa: {
+				DisplayName: Tidal Plating Sofa
+				Tooltip: ""
+			}
+
+			TidalPlatingTable: {
+				DisplayName: Tidal Plating Table
+				Tooltip: ""
+			}
+
+			TidalPlatingToilet: {
+				DisplayName: Tidal Plating Toilet
+				Tooltip: ""
+			}
+
+			TidalPlatingTorch: {
+				DisplayName: Tidal Plating Torch
+				Tooltip: ""
+			}
+
+			TidalPlatingWorkBench: {
+				DisplayName: Tidal Plating Work Bench
+				Tooltip: ""
+			}
+
+			AVMinesMusicBox: {
+				DisplayName: Abandoned Village Underground Music Box
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6562,6 +6672,16 @@ Mods: {
 			GulaGatewayTile.MapEntry: Gula Gateway
 			AVPots.MapEntry: Pot
 			AVMusicBoxTile.MapEntry: Abandoned Village Surface Music Box
+			TidalPlatingBlastDoorTileClosed.MapEntry: Tidal Plating Blast Door Closed
+			TidalPlatingBlastDoorTileOpen.MapEntry: Tidal Plating Blast Door Open
+
+			TidalPlatingChestTile: {
+				MapEntry0: Tidal Plating Storage
+				MapEntry1: Locked Tidal Plating Storage
+			}
+
+			TidalPlatingTorchTile.MapEntry: Tidal Plating Torch
+			AVMinesMusicBoxTile.MapEntry: A V Mines Music Box Tile
 		}
 
 		WorldGeneration: {

@@ -166,5 +166,31 @@ namespace SOTS.Items.Fragments
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<PermafrostPlatingWall>();
 			AddMapEntry(Color.Lerp(SOTSTile.PermafrostPlatingColor, Color.Black, 0.2f));
 		}
-	}
+    }
+    public class TidalPlatingWall : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(400);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneWall);
+            Item.width = 28;
+            Item.height = 28;
+            Item.rare = ItemRarityID.Blue;
+            Item.createWall = ModContent.WallType<TidalPlatingWallWall>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<TidePlating>(1).AddTile(TileID.WorkBenches).Register();
+            Recipe.Create(ModContent.ItemType<TidePlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
+        }
+    }
+    public class TidalPlatingWallWall : ModWall
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
+            DustType = DustID.Lead;
+            AddMapEntry(Color.Lerp(SOTSTile.TidePlatingColor, Color.Black, 0.2f));
+        }
+    }
 }

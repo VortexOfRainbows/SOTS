@@ -5,12 +5,8 @@ using SOTS.Items.Fragments;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Planetarium;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 
 namespace SOTS.Items.Furniture.Earthen
 {
@@ -23,7 +19,6 @@ namespace SOTS.Items.Furniture.Earthen
             Item.Size = new Vector2(32, 24);
             Item.rare = ItemRarityID.Blue;
             Item.createTile = ModContent.TileType<EarthenPlatingStorageTile>();
-            //Item.placeStyle = 1;
         }
         public override void AddRecipes()
         {

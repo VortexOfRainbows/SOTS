@@ -45,6 +45,10 @@ namespace SOTS.Items.MusicBoxes
 	}
 	public class LuxMusicBoxTile : ModTile
     {
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
             yield return new Item(ModContent.ItemType<LuxMusicBox>());

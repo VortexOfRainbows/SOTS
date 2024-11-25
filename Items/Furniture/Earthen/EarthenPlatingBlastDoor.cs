@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 
 namespace SOTS.Items.Furniture.Earthen
 {
@@ -11,7 +10,6 @@ namespace SOTS.Items.Furniture.Earthen
 	{
 		public override void SetStaticDefaults()
 		{
-			//Tooltip.SetDefault("Cannot be opened by NPCs");
 			this.SetResearchCost(1);
 		}
 		public override void SetDefaults()

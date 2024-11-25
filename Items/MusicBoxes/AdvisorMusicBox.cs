@@ -51,7 +51,11 @@ namespace SOTS.Items.MusicBoxes
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(191, 142, 111), name);
-		}
+        }
+        public override bool CreateDust(int i, int j, ref int type)
+        {
+            return false;
+        }
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
 			yield return new Item(ModContent.ItemType<AdvisorMusicBox>());
