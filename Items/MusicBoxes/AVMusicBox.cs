@@ -128,7 +128,7 @@ namespace SOTS.Items.MusicBoxes
                 {
                     zero = Vector2.Zero;
                 }
-                Main.spriteBatch.Draw(glowmask, new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y + 2) + zero, new Rectangle(frameX * 18, frameY * 18, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(glowmask, new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y) + zero, new Rectangle(frameX * 18, frameY * 18, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
         }
     }
