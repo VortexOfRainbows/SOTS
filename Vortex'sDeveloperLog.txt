@@ -41,14 +41,15 @@ Update Objectives:
 9. Upgrade item to the Hydrokinetic Antennae
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
 11. Glowmoth Gore and Buffs
-12. Heart in a Jar  is causing enemies to glow..? Maybe also nerf (check effects in AV)
+12. Earthen Armor for AV
+13. Wormhole upgrade for the Catalcysm Disc
 
 ---WIP List---
 Abandoned village generation
 Vault Room to spawn loot
 Make enemies spawn in the AV and Mines
 Fix Archaeologist Shop (for the new items)!
-Add AV items to Evil Treasure Slimes
+Update treasure slime loot tables
 Made all available conduits spawn on worldgen
 Throes to Void damage on hit
 
@@ -80,7 +81,7 @@ N/A
 
 Daily Log:
 
-11/24/24 to  11/25/24
+11/24/24 to  11/27/24
 1. Tidal Plating Furniture Sprites by Me!
 2. Rename "Tide Plating" to "Tidal Plating"
 3. Added Tidal Plating Walls!
@@ -88,6 +89,11 @@ Daily Log:
 5. Rename plating furniture "Bulb" to "Candle"
 6. AV Mines Music Box
 7. Fix issue where some music boxes released dust when broken. Also adjusted dust types of some tiles.
+8. Can no longer tile replace Hard Ice Bricks until after Polaris
+9. Each piece of frost artifact armor now costs 4 less absolute alloy (set cost 60 -> 48)
+	1. Frost artifact helmet damage boost 14% melee/range -> 20% melee/range
+	2. Frost artifact chestplate critical strike boost 16% melee/range -> 20% melee/range
+10. Fix bug where Heart in a Jar was causing enemies to glow strangely, and slightly modified dust visuals
 
 11/19/24 to 11/24/24
 1. Some changes to chest loot in the AV
@@ -101,6 +107,7 @@ Daily Log:
 6. Abandoned Village Underground OST by BANANALIZARD!
 7. Adjusted homing of flying knife, visuals and more appropriate sound
 	1. Reduced max pierce from 6 -> 5. Reduced lifetime 6000 -> 1200 (20 seconds)
+8. Twilight Devil now drops Jar of Souls again as intended.
 
 11/15/24 to 11/17/24
 1. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)

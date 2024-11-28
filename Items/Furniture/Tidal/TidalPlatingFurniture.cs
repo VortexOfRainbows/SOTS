@@ -654,7 +654,7 @@ namespace SOTS.Items.Furniture.Tidal
         public override bool CreateDust(int i, int j, ref int type)
         {
             Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16) - new Vector2(5), 16, 16, DustID.RainbowMk2);
-            dust.color = new Color(255, 191, 0);
+            dust.color = new Color(64, 72, 178);
             dust.noGravity = true;
             dust.fadeIn = 0.1f;
             dust.scale *= 1.8f;

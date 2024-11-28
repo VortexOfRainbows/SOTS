@@ -2974,12 +2974,12 @@ Mods: {
 
 			FrostArtifactChestplate: {
 				DisplayName: Frost Artifact Breastplate
-				Tooltip: 16% increased melee and ranged critical strike chance
+				Tooltip: 20% increased melee and ranged critical strike chance
 			}
 
 			FrostArtifactHelmet: {
 				DisplayName: Frost Artifact Helmet
-				Tooltip: 14% increased melee and ranged damage
+				Tooltip: 20% increased melee and ranged damage
 			}
 
 			FrostArtifactTrousers: {

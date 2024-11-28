@@ -58,13 +58,13 @@ namespace SOTS.NPCs.Constructs
 			NPC.damage = NPC.damage * 2 / 3;
 			NPC.lifeMax = NPC.lifeMax * 25 / 32;
 		}
-		Vector2 projectileVelo = Vector2.Zero;
+        private Vector2 projectileVelo = Vector2.Zero;
 		private int InitiateHealth = 3000;
 		private float ExpertHealthMult = 1.25f;
 		private float MasterHealthMult = 1.5f;
-		int phase = 1;
-		int counter = 0;
-		int direction = 1;
+		private int phase = 1;
+		private int counter = 0;
+        private int direction = 1;
 		public override void AI()
 		{
 			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 255f, (255 - NPC.alpha) * 0.25f / 255f, (255 - NPC.alpha) * 0.65f / 255f);

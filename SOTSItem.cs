@@ -163,7 +163,6 @@ namespace SOTS
         {
 			if(FloatsInWater)
 			{
-				item.alpha = Math.Max(0, item.alpha - 10);
 				int i = (int)item.Center.X / 16;
 				int j = (int)item.Center.Y / 16;
 				if (WorldGen.InWorld(i, j) && Main.tile[i, j].LiquidAmount > 100)
@@ -183,6 +182,11 @@ namespace SOTS
 				item.stack = prevStack;
                 FloatsInWater = false;
             }
+        }
+        public override void PostUpdate(Item item)
+        {
+            if (FloatsInWater)
+                item.alpha = Math.Max(0, item.alpha - 10);
         }
     }
 	public class SOTSItem : GlobalItem

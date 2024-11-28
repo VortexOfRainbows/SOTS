@@ -25,12 +25,12 @@ namespace SOTS.Items.Permafrost
         }
 		public override void UpdateEquip(Player player)
 		{
-			player.GetCritChance(DamageClass.Melee) += 16;
-			player.GetCritChance(DamageClass.Ranged) += 16;
+			player.GetCritChance(DamageClass.Melee) += 20;
+			player.GetCritChance(DamageClass.Ranged) += 20;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.FrostBreastplate, 1).AddIngredient<AbsoluteBar>(24).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ItemID.FrostBreastplate, 1).AddIngredient<AbsoluteBar>(20).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

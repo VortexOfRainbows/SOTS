@@ -25,25 +25,27 @@ namespace SOTS.Items.Pyramid
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.CurseAura = true;
-			if(!hideVisual)
-				for(int j = 0; j < 90; j++)
-				{
-					Vector2 circular = new Vector2(270, 0).RotatedBy(MathHelper.ToRadians(j * 4 + modPlayer.orbitalCounter * 0.3f));
-					int i2 = (int)(circular.X + player.Center.X) / 16;
-					int j2 = (int)(circular.Y + player.Center.Y) / 16;
-					bool disable = false;
-					if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].HasTile && Main.tileSolidTop[Main.tile[i2, j2].TileType] == false && Main.tileSolid[Main.tile[i2, j2].TileType] == true)
-						disable = true;
-					if (!disable)
-					{
-						Dust dust = Dust.NewDustDirect(player.Center + circular - new Vector2(5), 0, 0, ModContent.DustType<ShortlivedCurseDust>());
-						dust.velocity *= 0f;
-						dust.scale = 1.25f;
-						dust.noGravity = true;
-						dust.color = new Color(150, 100, 130, 0);
-						dust.alpha = 210;
-					}
-				}
+			if(!hideVisual && player.whoAmI == Main.myPlayer) //Only draw the dust circle for the owner
+            {
+                for (int j = 0; j < 90; j++)
+                {
+                    Vector2 circular = new Vector2(270, 0).RotatedBy(MathHelper.ToRadians(j * 4 + modPlayer.orbitalCounter * 0.3f));
+                    int i2 = (int)(circular.X + player.Center.X) / 16;
+                    int j2 = (int)(circular.Y + player.Center.Y) / 16;
+                    bool disable = false;
+                    if (!WorldGen.InWorld(i2, j2, 20) || Main.tile[i2, j2].HasTile && Main.tileSolidTop[Main.tile[i2, j2].TileType] == false && Main.tileSolid[Main.tile[i2, j2].TileType] == true)
+                        disable = true;
+                    if (!disable)
+                    {
+                        Dust dust = Dust.NewDustDirect(player.Center + circular - new Vector2(5), 0, 0, ModContent.DustType<ShortlivedCurseDust>());
+                        dust.velocity = player.velocity * 0.9f;
+                        dust.scale = 1.25f;
+                        dust.noGravity = true;
+                        dust.color = new Color(150, 100, 130, 0);
+                        dust.alpha = 210;
+                    }
+                }
+            }
 			player.statLifeMax2 += 20;
 		}
 	}

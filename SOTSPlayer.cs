@@ -575,7 +575,7 @@ namespace SOTS
 			lastArtifactMax = artifactProbeNum;
             artifactProbeDamage = artifactProbeNum = 0;
         }
-		public void doCurseAura()
+		public void DoCurseAura()
         {
 			if(CurseAura || CurseVision)
 			{
@@ -598,6 +598,8 @@ namespace SOTS
 							npc.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 120);
 					}
 				}
+				if (!CurseVision)
+					return;
 				float mult = (1 - 1f * curseVisionCounter / 60f);
 				if (mult < 0) 
 					mult = 0;
@@ -764,7 +766,7 @@ namespace SOTS
 				return;
             }
 			TrailStuff();
-			doCurseAura();
+			DoCurseAura();
 			if (petAdvisor)
 				runPets(ref probes[0], ModContent.ProjectileType<AdvisorPet>());
 			if (petPepper)

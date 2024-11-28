@@ -1,4 +1,3 @@
-
 using Microsoft.Xna.Framework;
 using SOTS.Dusts;
 using Terraria;
@@ -19,7 +18,6 @@ namespace SOTS.Items.Permafrost
 			MinPick = 100;
 			MineResist = 2.0f;
 			DustType = ModContent.DustType<ModIceDust>();
-			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<HardIceBrick>();
 			AddMapEntry(new Color(67, 139, 228));
 			HitSound = SoundID.Tink;
 		}
@@ -35,7 +33,11 @@ namespace SOTS.Items.Permafrost
 		{
 			return SOTSWorld.downedAmalgamation;
 		}
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        public override bool CanReplace(int i, int j, int tileTypeBeingPlaced)
+        {
+            return SOTSWorld.downedAmalgamation;
+        }
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
 			SOTS.MergeWithFrame(i, j, Type, TileID.SnowBlock, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
 			return false;

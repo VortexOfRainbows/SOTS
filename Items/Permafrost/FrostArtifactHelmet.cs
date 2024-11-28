@@ -32,12 +32,12 @@ namespace SOTS.Items.Permafrost
 		}
 		public override void UpdateEquip(Player player)
 		{
-			player.GetDamage(DamageClass.Melee) += 0.14f;
-			player.GetDamage(DamageClass.Ranged) += 0.14f;
+			player.GetDamage(DamageClass.Melee) += 0.20f;
+			player.GetDamage(DamageClass.Ranged) += 0.20f;
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ItemID.FrostHelmet, 1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 16).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient(ItemID.FrostHelmet, 1).AddIngredient(ModContent.ItemType<AbsoluteBar>(), 12).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }
