@@ -40,9 +40,8 @@ Update Objectives:
 	5. Fargo's: Fix pyramid interference with Fargo's new pyramid
 9. Upgrade item to the Hydrokinetic Antennae
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
-11. Glowmoth Gore and Buffs
-12. Earthen Armor for AV
-13. Wormhole upgrade for the Catalcysm Disc
+11. Earthen Armor for AV
+12. Wormhole upgrade for the Catalcysm Disc
 
 ---WIP List---
 Abandoned village generation
@@ -94,6 +93,9 @@ Daily Log:
 	1. Frost artifact helmet damage boost 14% melee/range -> 20% melee/range
 	2. Frost artifact chestplate critical strike boost 16% melee/range -> 20% melee/range
 10. Fix bug where Heart in a Jar was causing enemies to glow strangely, and slightly modified dust visuals
+11. Glowmoth Gore added. 
+	1. Also buffed HP (2400, 3360, 4284) -> (2800, 4200, 5355)
+	2. Damage unchanged
 
 11/19/24 to 11/24/24
 1. Some changes to chest loot in the AV

@@ -1,18 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Earth.Glowmoth;
-using SOTS.Items.Pyramid;
 using SOTS.Projectiles.Earth.Glowmoth;
-using SOTS.Projectiles.Pyramid;
-using SOTS.WorldgenHelpers;
 using System;
 using System.IO;
 using Terraria;
-using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
@@ -32,7 +27,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		public const int GlowBombPhase = 3;
 		public const int SparklePhase = 4;
 		public float SinusoidalCounter = 0;
-		int despawn = 0;
+		private int despawn = 0;
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(NPC.dontTakeDamage);
@@ -75,7 +70,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
         }
 		public override void SetDefaults()
 		{
-			NPC.lifeMax = 2400;
+			NPC.lifeMax = 2800;
 			NPC.aiStyle = -1;
 			NPC.damage = 28;
 			NPC.defense = 10;
@@ -99,7 +94,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 		}
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
 		{
-			NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 14 / 20); //140%, 210%
+			NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 15 / 20);
 			NPC.damage = (int)(NPC.damage * 0.75f); //150%, 225%
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -597,10 +592,25 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Silk, (float)(2 * hit.HitDirection), -2f);
-				}
-			}
-		}
+					Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, DustID.Silk, (float)(2 * hit.HitDirection), -2f);
+					dust.velocity *= 1.5f;
+                    dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(8, 8), ColorHelper.VibrantColorGradient(Main.rand.NextFloat(360)), 2);
+					dust.scale *= 2.5f;
+					dust.color.A = 0;
+                    dust = PixelDust.Spawn(NPC.position, NPC.width, NPC.height, Main.rand.NextVector2Circular(12, 12), ColorHelper.VibrantColorGradient(Main.rand.NextFloat(360)), 2);
+                    dust.scale *= 1.5f;
+                    dust.color.A = 0;
+                }
+				NPC.width = 95; //190 (sprite size) / 2
+				NPC.position.X += -NPC.width + 32; 
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/Glowmoth/GlowmothGore1"), NPC.scale);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width, 10), NPC.velocity, ModGores.GoreType("Gores/Glowmoth/GlowmothGore2"), NPC.scale);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width + 2, NPC.height - 20), NPC.velocity, ModGores.GoreType("Gores/Glowmoth/GlowmothGore3"), NPC.scale);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width - 14, NPC.height - 20), NPC.velocity, ModGores.GoreType("Gores/Glowmoth/GlowmothGore4"), NPC.scale);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width - 14, 0), NPC.velocity, ModGores.GoreType("Gores/Glowmoth/GlowmothGore5"), NPC.scale);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width - 10, NPC.height - 20), NPC.velocity, ModGores.GoreType("Gores/Glowmoth/GlowmothGore6"), NPC.scale);
+            }
+        }
 		public override void OnKill()
 		{
 			SOTSWorld.downedGlowmoth = true;
