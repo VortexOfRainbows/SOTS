@@ -19,6 +19,7 @@ using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.FakePlayer;
 using SOTS.Projectiles.Laser;
 using SOTS.Helpers;
+using SOTS.Items.Fragments;
 
 namespace SOTS.Void
 {
@@ -636,7 +637,8 @@ namespace SOTS.Void
 				lootingSouls = 0;
 			voidMeterMax2 -= lootingSouls;
 
-			if (frozenMaxDuration > 0)
+
+            if (frozenMaxDuration > 0)
 			{
 				if (frozenDuration > 0)
                 {
@@ -859,7 +861,11 @@ namespace SOTS.Void
 		}
 		public void ApplyVoidMeterMax2Bonuses()
         {
-			return;
+            DissolvingElementsPlayer dePlayer = DissolvingElementsPlayer.ModPlayer(Player);
+            if (dePlayer.DissolvingUmbra != 0)
+                dePlayer.UmbraEffects();
+            dePlayer.DissolvingUmbra = 0;
+            return;
         }
 		public void ResetAllVoidBonuses()
         {

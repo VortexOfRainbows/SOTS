@@ -292,8 +292,6 @@ namespace SOTS.Items.Fragments
 			AuroraEffects();
 			if (DissolvingDeluge != 0)
 				DelugeEffects();
-			if (DissolvingUmbra != 0)
-				UmbraEffects();
 			BrillianceEffects();
 			PolarizeNature = false;
 			PolarizeEarth = false;
@@ -309,7 +307,6 @@ namespace SOTS.Items.Fragments
 			DissolvingDeluge = 0;
 			DissolvingAether = 0;
 			DissolvingBrilliance = 0;
-			DissolvingUmbra = 0;
 		}
 		public void NatureEffects()
 		{

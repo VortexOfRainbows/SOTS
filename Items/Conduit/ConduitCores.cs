@@ -9,6 +9,7 @@ using SOTS.Items.Secrets;
 using SOTS.Void;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics;
@@ -17,6 +18,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using static System.Net.WebRequestMethods;
 
 namespace SOTS.Items.Conduit
 {
@@ -389,7 +391,7 @@ namespace SOTS.Items.Conduit
 				return;
 			ConduitCounterTE entity = (ConduitCounterTE)TileEntity.ByID[index];
 			Vector2 location = new Vector2(i * 16, j * 16) + new Vector2(8, 8) + zero;
-			float dissolving = (float)entity.tileCountDissolving;
+			float dissolving = entity.DissolvingTileCount;
 			float colorMultiplier = dissolving / 20f;
 			Color colorWhite = Color.White * colorMultiplier;
 			Color colorGlow = new Color(100, 100, 100, 0) * colorMultiplier;
@@ -459,18 +461,18 @@ namespace SOTS.Items.Conduit
 				return;
 			ConduitCounterTE entity = (ConduitCounterTE)TileEntity.ByID[index];
 			int Chassis = entity.tileCountChassis;
-			int dissolving = entity.tileCountDissolving;
+			int dissolving = entity.DissolvingTileCount;
 			entity.NearbyClientUpdate(i, j);
-			if (Chassis != entity.tileCountChassis || dissolving != entity.tileCountDissolving)
+			if (Chassis != entity.tileCountChassis || dissolving != entity.DissolvingTileCount)
 			{
-				if (dissolving < entity.tileCountDissolving)
+				if (dissolving < entity.DissolvingTileCount)
 				{
-					if (entity.tileCountDissolving == 20 && dissolving >= 18)
+					if (entity.DissolvingTileCount == 20 && dissolving >= 18)
 					{
 						SOTSUtils.PlaySound(SoundID.Item37, i * 16, j * 16, 0.75f, 0.1f);
 					}
 					else if (dissolving != -1)
-						SOTSUtils.PlaySound(SoundID.Item35, i * 16, j * 16, 0.50f + 0.01f * entity.tileCountDissolving, 0.2f - 0.01f * entity.tileCountDissolving);
+						SOTSUtils.PlaySound(SoundID.Item35, i * 16, j * 16, 0.50f + 0.01f * entity.DissolvingTileCount, 0.2f - 0.01f * entity.DissolvingTileCount);
 				}
 				else if (Chassis < entity.tileCountChassis)
 				{
@@ -483,7 +485,7 @@ namespace SOTS.Items.Conduit
 				}
 				//Main.NewText("D: " + entity.tileCountDissolving + "\nC: " + entity.tileCountChassis);
 			}
-			if (entity.tileCountDissolving >= 20)
+			if (entity.DissolvingTileCount >= 20)
 			{
                 Player myPlayer = Main.LocalPlayer;
                 float distance = Vector2.Distance(myPlayer.Center, new Vector2(i * 16 + 8, j * 16 + 8));
@@ -520,9 +522,48 @@ namespace SOTS.Items.Conduit
 	}
 	public class ConduitCounterTE : ModTileEntity
 	{
-		private ConduitTile CTile = ModContent.GetInstance<ConduitTile>();
+        private ConduitTile CTile = ModContent.GetInstance<ConduitTile>();
 		public ConduitTile ConduitTile => CTile == null ? ModContent.GetInstance<ConduitTile>() : CTile;
-		public int tileCountDissolving = -1;
+		public int DissolvingTileCount
+		{
+			get
+			{
+				if(Main.netMode == NetmodeID.Server)
+                {
+					tileCountDissolving = 0;
+                    int i = Position.X;
+					int j = Position.Y;
+					Tile tile = Main.tile[i, j];
+                    for (int k = -2; k <= 2; k++)
+                    {
+                        for (int h = -2; h <= 2; h++)
+                        {
+                            if (Math.Abs(h) != 2 || Math.Abs(k) != 2) //will not check outer 4 corners
+                            {
+                                if (k != 0 || h != 0) //will not check the very center
+                                {
+                                    int x = i + k;
+                                    int y = j + h;
+                                    Tile residualTile = Main.tile[x, y];
+                                    if (tile.TileFrameY != 0)
+                                    {
+                                        if (residualTile.HasTile)
+                                        {
+                                            if (residualTile.TileType == ConduitTile.DissolvingTileType)
+                                            {
+                                                tileCountDissolving++;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+				return tileCountDissolving;
+            }
+		}
+		protected int tileCountDissolving = -1;
 		public int tileCountChassis = -1;
 		public void DrawConduitAura(int i, int j)
         {
@@ -583,6 +624,7 @@ namespace SOTS.Items.Conduit
 		}
 		public void NearbyClientUpdate(int i, int j) //Normally, TileEntity.Update() is run for singleplayer/server... This will be run for singleplayer/client, and syncing is made that way thusly.
 		{
+			int prevCountD = tileCountDissolving;
 			tileCountDissolving = 0;
 			tileCountChassis = 0;
 			Tile tile = Main.tile[i, j];

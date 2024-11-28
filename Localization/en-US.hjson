@@ -6002,6 +6002,15 @@ Mods: {
 				DisplayName: Abandoned Village Underground Music Box
 				Tooltip: ""
 			}
+
+			DissolvingNihility: {
+				DisplayName: Essence of Emptiness
+				AltDisplayName: Dissolving Nihility
+				Tooltip: "'...'"
+				RareTooltip1: "'Trapped within voidspace...'"
+				RareTooltip2: "'... save me from this prison...'"
+				RareTooltip3: "'... and I shall gift you the world...'"
+			}
 		}
 
 		ItemTooltip: {

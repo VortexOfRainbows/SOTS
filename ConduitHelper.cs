@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.ModPlayers;
 using SOTS.Common.Systems;
+using SOTS.Dusts;
 using SOTS.Helpers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Conduit;
@@ -65,7 +66,7 @@ namespace SOTS
 							bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, acediaPortal, 1f, ColorHelper.AcediaColor);
 							if (nature && !hasDrawnToAcediaPortalNature && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
 							{
-								float Percent = tileEntity.tileCountDissolving / 20f;
+								float Percent = tileEntity.DissolvingTileCount / 20f;
 								Percent *= Percent;
 								hasDrawnToAcediaPortalNature = true;
                                 DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
@@ -73,7 +74,7 @@ namespace SOTS
 							}
 							if (earthen && !hasDrawnToAcediaPortalEarth && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
 							{
-								float Percent = tileEntity.tileCountDissolving / 20f;
+								float Percent = tileEntity.DissolvingTileCount / 20f;
 								Percent *= Percent;
 								hasDrawnToAcediaPortalEarth = true;
                                 DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
@@ -95,7 +96,7 @@ namespace SOTS
                             bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, avaritiaPortal, 1f, ColorHelper.OtherworldColor);
                             if (otherworld && !hasDrawnToAvaritiaPortalOtherworld && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
                             {
-                                float Percent = tileEntity.tileCountDissolving / 20f;
+                                float Percent = tileEntity.DissolvingTileCount / 20f;
                                 Percent *= Percent;
                                 hasDrawnToAvaritiaPortalOtherworld = true;
                                 DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
@@ -103,7 +104,7 @@ namespace SOTS
                             }
                             if (chaos && !hasDrawnToAvaritiaPortalChaos && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
                             {
-                                float Percent = tileEntity.tileCountDissolving / 20f;
+                                float Percent = tileEntity.DissolvingTileCount / 20f;
                                 Percent *= Percent;
                                 hasDrawnToAvaritiaPortalChaos = true;
                                 DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
@@ -125,7 +126,7 @@ namespace SOTS
                             bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, gulaPortal, 1f, ColorHelper.RedEvilColor);
                             if (earth && !hasDrawnToGulaPortalEarth && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
                             {
-                                float Percent = tileEntity.tileCountDissolving / 20f;
+                                float Percent = tileEntity.DissolvingTileCount / 20f;
                                 Percent *= Percent;
                                 hasDrawnToGulaPortalEarth = true;
                                 DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
@@ -133,7 +134,7 @@ namespace SOTS
                             }
                             if (evil && !hasDrawnToGulaPortalEvil && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
                             {
-                                float Percent = tileEntity.tileCountDissolving / 20f;
+                                float Percent = tileEntity.DissolvingTileCount / 20f;
                                 Percent *= Percent;
                                 hasDrawnToGulaPortalEvil = true;
                                 DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
@@ -290,14 +291,17 @@ namespace SOTS
         public override void NetReceive(Item item, BinaryReader reader)
         {
             RunOnce = reader.ReadBoolean();
-            ConduitTransformTimer = reader.ReadInt32();
+            ConduitTransformTimer = reader.ReadSingle();
             ConduitTransformType = reader.ReadInt32();
             ConduitX = reader.ReadInt32();
             ConduitY = reader.ReadInt32();
         }
         public override bool AppliesToEntity(Item entity, bool lateInstantiation)
         {
-            bool validItem = entity.type == ModContent.ItemType<DreamLamp>() || entity.type == ModContent.ItemType<CursedApple>(); //Plan to expand this system more thoroughly in the future. For now, we will just check the 2 items that it effects
+            bool validItem = entity.type == ModContent.ItemType<DreamLamp>() || 
+                entity.type == ModContent.ItemType<CursedApple>() ||
+                entity.type == ModContent.ItemType<DissolvingNihility>();
+            //Plan to expand this system more thoroughly in the future. For now, we will just check the 3 items that it effects
             return lateInstantiation && validItem;
         }
         public static Color ConduitColor(int i)
@@ -338,8 +342,7 @@ namespace SOTS
         {
             get
             {
-                bool success = TileEntity.ByPosition.TryGetValue(new Point16(ConduitX, ConduitY), out TileEntity te);
-                if(success && te is ConduitCounterTE ccte)
+                if(TileEntity.ByPosition.TryGetValue(new Point16(ConduitX, ConduitY), out TileEntity te) && te is ConduitCounterTE ccte)
                 {
                     return ccte;
                 }
@@ -380,24 +383,42 @@ namespace SOTS
         }
         public void CheckForNearbyConduits(Item item)
         {
+            float bestDist = 640;
+            bool validForAny = item.type == ModContent.ItemType<DissolvingNihility>();
             bool validForNature = (item.type == ModContent.ItemType<DreamLamp>() && !SOTSWorld.DreamLampSolved) || (item.type == ModContent.ItemType<CursedApple>() && !SOTSWorld.GoldenAppleSolved);
             bool validForEvil = (item.type == ModContent.ItemType<DreamLamp>() && SOTSWorld.DreamLampSolved) || (item.type == ModContent.ItemType<CursedApple>() && SOTSWorld.GoldenAppleSolved);
             foreach (ConduitCounterTE tileEntity in TileEntity.ByID.Values.OfType<ConduitCounterTE>())
             {
-                if (tileEntity.ConduitTile != null && tileEntity.tileCountDissolving >= 20)
+                if (tileEntity.ConduitTile != null && tileEntity.DissolvingTileCount >= 20)
                 {
                     int type = tileEntity.ConduitTile.DissolvingTileType;
                     bool worksForNature = type == ModContent.TileType<DissolvingNatureTile>() && validForNature;
                     bool worksForEvil = type == ModContent.TileType<DissolvingUmbraTile>() && validForEvil;
-                    if (worksForNature || worksForEvil)
+                    if (worksForNature || worksForEvil || validForAny)
                     {
                         float distance = Vector2.Distance(tileEntity.Position.ToVector2() * 16 + new Vector2(8, 8), item.Center);
-                        if (distance <= 640)
+                        if (distance <= bestDist)
                         {
                             ConduitX = tileEntity.Position.X;
                             ConduitY = tileEntity.Position.Y;
-                            ConduitTransformType = worksForEvil ? 5 : 0;
-                            break;
+                            if (type == ModContent.TileType<DissolvingNatureTile>())
+                                ConduitTransformType = 0;
+                            if (type == ModContent.TileType<DissolvingEarthTile>())
+                                ConduitTransformType = 1;
+                            if (type == ModContent.TileType<DissolvingAuroraTile>())
+                                ConduitTransformType = 2;
+                            if (type == ModContent.TileType<DissolvingAetherTile>())
+                                ConduitTransformType = 3;
+                            if (type == ModContent.TileType<DissolvingDelugeTile>())
+                                ConduitTransformType = 4;
+                            if (type == ModContent.TileType<DissolvingUmbraTile>())
+                                ConduitTransformType = 5;
+                            if (type == ModContent.TileType<DissolvingNetherTile>())
+                                ConduitTransformType = 6;
+                            if (type == ModContent.TileType<DissolvingBrillianceTile>())
+                                ConduitTransformType = 7;
+                            bestDist = distance;
+                            //ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("F: " + ", " + ConduitTransformTimer + ", " + ConduitTransformType + ": (" + ConduitX + ", " + ConduitY + ")"), Color.Red);
                         }
                     }
                 }
@@ -412,10 +433,10 @@ namespace SOTS
                 RunOnce = false;
             }
             //if (Main.netMode == NetmodeID.Server)
-            //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(ConduitTransformTimer + ", " + ConduitTransformType), Color.Red);
+            //    ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(ConduitTransformTimer + ", " + ConduitTransformType + ": (" + ConduitX + ", " + ConduitY + ")"), Color.Red);
             //else
-            //    Main.NewText(ConduitTransformTimer + ", " + ConduitTransformType, Color.Green);
-            if (MyConduit == null || MyConduit.tileCountDissolving < 20)
+            //    Main.NewText(ConduitTransformTimer + ", " + ConduitTransformType + ": (" + ConduitX + ", " + ConduitY + ")", Color.Green);
+            if (MyConduit == null || MyConduit.DissolvingTileCount < 20)
             {
                 ResetVars(item);
                 if(SOTSWorld.GlobalCounter % 5 == 0)
@@ -433,34 +454,61 @@ namespace SOTS
                     ConduitTransformTimer++;
                 if (ConduitTransformTimer > 150)
                 {
-                    if (ConduitTransformType == 0)
+                    if(item.type == ModContent.ItemType<DissolvingNihility>())
                     {
-                        if (item.type == ModContent.ItemType<DreamLamp>())
-                        {
-                            SOTSWorld.DreamLampSolved = true;
-                            if (Main.netMode != NetmodeID.SinglePlayer)
-                                SOTSWorld.SyncGemLocks(Main.LocalPlayer);
-                        }
-                        if (item.type == ModContent.ItemType<CursedApple>())
-                        {
-                            SOTSWorld.GoldenAppleSolved = true;
-                            if (Main.netMode != NetmodeID.SinglePlayer)
-                                SOTSWorld.SyncGemLocks(Main.LocalPlayer);
-                        }
+                        int itemToGenerate = ModContent.ItemType<DissolvingAether>();
+                        if (ConduitTransformType == 0)
+                            itemToGenerate = ModContent.ItemType<DissolvingNature>();
+                        if (ConduitTransformType == 1)
+                            itemToGenerate = ModContent.ItemType<DissolvingEarth>();
+                        if (ConduitTransformType == 2)
+                            itemToGenerate = ModContent.ItemType<DissolvingAurora>();
+                        if (ConduitTransformType == 4)
+                            itemToGenerate = ModContent.ItemType<DissolvingDeluge>();
+                        if (ConduitTransformType == 5)
+                            itemToGenerate = ModContent.ItemType<DissolvingUmbra>();
+                        if (ConduitTransformType == 6)
+                            itemToGenerate = ModContent.ItemType<DissolvingNether>();
+                        if (ConduitTransformType == 7)
+                            itemToGenerate = ModContent.ItemType<DissolvingBrilliance>();
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Item.NewItem(new EntitySource_Misc("SOTS:ConduitTransform"), item.Hitbox, itemToGenerate, item.stack, false, 0, false, false);
+                        // the above line may need to happen before the item is deleted (below line)!
+                        item.ChangeItemType(ItemID.None);
+                        if (Main.netMode == NetmodeID.Server)
+                            NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item.whoAmI);
                     }
-                    if (ConduitTransformType == 5)
+                    else
                     {
-                        if (item.type == ModContent.ItemType<DreamLamp>())
+                        if (ConduitTransformType == 0)
                         {
-                            SOTSWorld.DreamLampSolved = false;
-                            if (Main.netMode != NetmodeID.SinglePlayer)
-                                SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                            if (item.type == ModContent.ItemType<DreamLamp>())
+                            {
+                                SOTSWorld.DreamLampSolved = true;
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                    SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                            }
+                            if (item.type == ModContent.ItemType<CursedApple>())
+                            {
+                                SOTSWorld.GoldenAppleSolved = true;
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                    SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                            }
                         }
-                        if (item.type == ModContent.ItemType<CursedApple>())
+                        if (ConduitTransformType == 5)
                         {
-                            SOTSWorld.GoldenAppleSolved = false;
-                            if (Main.netMode != NetmodeID.SinglePlayer)
-                                SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                            if (item.type == ModContent.ItemType<DreamLamp>())
+                            {
+                                SOTSWorld.DreamLampSolved = false;
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                    SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                            }
+                            if (item.type == ModContent.ItemType<CursedApple>())
+                            {
+                                SOTSWorld.GoldenAppleSolved = false;
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                    SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                            }
                         }
                     }
                     EndingDust(item);
@@ -473,7 +521,7 @@ namespace SOTS
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                Projectile.NewProjectile(new EntitySource_Misc("SOTS:ConduitTransform"), item.Center, Vector2.Zero, ModContent.ProjectileType<ConduitParticleProjectile>(), 0, 0, Main.myPlayer, ConduitTransformType, ConduitX, ConduitY);
+                Projectile.NewProjectile(new EntitySource_Misc("SOTS:ConduitTransform"), item.Center, Vector2.Zero, ModContent.ProjectileType<ConduitParticleProjectile>(), 0, item.type, Main.myPlayer, ConduitTransformType, ConduitX, ConduitY);
             }
         }
     }
@@ -521,6 +569,15 @@ namespace SOTS
                     dust.velocity *= 0.5f;
                     dust.fadeIn = 0.1f;
                     dust.noGravity = true;
+                }
+                if((int)Projectile.knockBack == ModContent.ItemType<DissolvingNihility>())
+                {
+                    for(int i = 0; i < 70; i++)
+                    {
+                        float veloMult = Main.rand.NextFloat();
+                        Dust d = PixelDust.Spawn(Projectile.Center, 0, 0, Main.rand.NextVector2CircularEdge(3, 5) * veloMult, i % 3 == 0 ? Color.Black : Color.White, 4);
+                        d.scale *= 1.5f - veloMult * 0.5f; 
+                    }
                 }
             }
         }

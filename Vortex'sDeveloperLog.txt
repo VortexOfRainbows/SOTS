@@ -25,9 +25,9 @@ Acknowledged But Likely Delayed:
 
 Update Objectives:
 1. Ghost Town! (In Progress)	
-	1. Also add Ruined Barrels that don't require keys to unlock, and sometimes contain keys themselves
+	1. Existing chests and generated barrels that don't require keys to unlock still need loot
 2. More Bestiary entries (and visual fixes)
-3. Unique Archaeologist tooltips for items (pending)
+3. Unique Archaeologist tooltips for items, which can give hints related to lore and secrets (Up next)
 4. Starmap
 5. House Cube Accessory that can generate a temporary house
 6. Upgrade to Code Corruptor: Dolphin Blaster (?)
@@ -38,16 +38,17 @@ Update Objectives:
 	3. Thorium: Move amber gem structure to bottom of oceanic depths
 	4. Sand Floating Islands: Make pyramid start the desert check lower to the ground
 	5. Fargo's: Fix pyramid interference with Fargo's new pyramid
-9. Upgrade item to the Hydrokinetic Antennae
-10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium
-11. Earthen Armor for AV
-12. Wormhole upgrade for the Catalcysm Disc
+9. Upgrade item to the Hydrokinetic Antennae (Pending)
+10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
+11. Earthen Armor for AV (Up next)
+12. Wormhole upgrade for the Catalcysm Disc (Pending)
+13. Add Fistfull Banner (Up next)
 
 ---WIP List---
 Abandoned village generation
 Vault Room to spawn loot
 Make enemies spawn in the AV and Mines
-Fix Archaeologist Shop (for the new items)!
+Fix Archaeologist Shop (for the new items)! Includes conduits, av loot, etc.
 Update treasure slime loot tables
 Made all available conduits spawn on worldgen
 Throes to Void damage on hit
@@ -80,7 +81,7 @@ N/A
 
 Daily Log:
 
-11/24/24 to  11/27/24
+11/24/24 to  11/28/24
 1. Tidal Plating Furniture Sprites by Me!
 2. Rename "Tide Plating" to "Tidal Plating"
 3. Added Tidal Plating Walls!
@@ -96,6 +97,10 @@ Daily Log:
 11. Glowmoth Gore added. 
 	1. Also buffed HP (2400, 3360, 4284) -> (2800, 4200, 5355)
 	2. Damage unchanged
+12. Dissolving Umbra effect in inventory unchanged, but should now display its effect properly
+13. New Item: Dissolving Nihility/ Essence of Emptiness. Can be obtained by wormhole converting a dissolving element.
+	1. Can be turned into any element through conduits. WORKS IN MULTIPLAYER!
+14. Fix bug where items would occassionally inherit secret item names, such as Dreaming Lamp, Forgotten Lamp, Golden Apple, etc.
 
 11/19/24 to 11/24/24
 1. Some changes to chest loot in the AV

@@ -44,6 +44,10 @@ namespace SOTS
 {
 	public class PrefixItem : GlobalItem
 	{
+        public override void SetDefaults(Item entity)
+        {
+			entity.ClearNameOverride(); //Sometimes this value persists after an item is killed, causing items to have erroneously chosen name overrides
+        }
         public override bool InstancePerEntity => true;
 		public int InventorySlotID;
 		public int extraVoid;
@@ -423,7 +427,18 @@ namespace SOTS
                 ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
                 return false;
             }
-			if(item.type == ModContent.ItemType<WishingStar>() && (line.Name == "ItemName" || line.Name == "Tooltip1") && WishingStar.IsAlternate)
+			if(item.type == ItemType<DissolvingNihility>() && (line.Name == "ItemName" || line.Name == "Tooltip0"))
+            {
+                Color outer = Color.White;
+                Color inner = Color.Black;
+                TextSnippet[] snippets = ChatManager.ParseMessage(line.Text, inner).ToArray();
+                ChatManager.ConvertNormalSnippets(snippets);
+                ChatManager.DrawColorCodedStringShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y), outer, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+                int outSnip;
+                ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
+				return false;
+            }
+            if (item.type == ItemType<WishingStar>() && (line.Name == "ItemName" || line.Name == "Tooltip1") && WishingStar.IsAlternate)
             {
                 Color outer = line.OverrideColor ?? line.Color;
                 Color inner = Color.Black;
@@ -968,8 +983,9 @@ namespace SOTS
                 new WormholeRecipe(ItemType<BagOfAmmoGathering>(), ItemType<InfinityPouch>()),
                 new WormholeRecipe(ItemType<AlmondMilk>(), ItemType<Taco>()),
 				new WormholeRecipe(ItemType<WishingStar>(), ItemType<WishingStar>()),
+				new WormholeRecipe("SOTS:DissolvingElement", ItemType<DissolvingNihility>()),
             };
-		}
+        }
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
         {
 			foreach(WormholeRecipe wormRecipe in WormholeRecipes)
@@ -1044,6 +1060,19 @@ namespace SOTS
 							ItemID.Amber,
 						};
                     }
+                    if (RecipeGroupInput.Equals("SOTS:DissolvingElement"))
+                    {
+                        items = new List<int> {
+							ItemType<DissolvingAether>(),
+							ItemType<DissolvingNature>(),
+							ItemType<DissolvingEarth>(),
+							ItemType<DissolvingAurora>(),
+							ItemType<DissolvingDeluge>(),
+							ItemType<DissolvingUmbra>(),
+							ItemType<DissolvingBrilliance>(),
+							ItemType<DissolvingNether>()
+                        };
+                    }
                 }
 				return items.Contains(itemID);
             }
@@ -1080,6 +1109,14 @@ namespace SOTS
 				return ColorHelper.PastelRainbow;
             }
 		}
+        public override int GetPrefixedRarity(int offset, float valueMult)
+        {
+            return Type;
+        }
+    }
+    public class StrangeWhiteRarity : ModRarity
+    {
+        public override Color RarityColor => Color.White;
         public override int GetPrefixedRarity(int offset, float valueMult)
         {
             return Type;
