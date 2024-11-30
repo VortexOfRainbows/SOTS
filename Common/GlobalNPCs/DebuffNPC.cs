@@ -42,6 +42,7 @@ using SOTS.Projectiles;
 using Terraria.GameContent;
 using System.Drawing.Drawing2D;
 using SOTS.Helpers;
+using SOTS.NPCs.AbandonedVillage;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -185,6 +186,11 @@ namespace SOTS.Common.GlobalNPCs
             if (npc.type == NPCType<Planetoid>())
             {
                 int vDamage = 15;
+                VoidPlayer.VoidDamage(Mod, target, vDamage);
+            }
+            if (npc.type == NPCType<Throe>())
+            {
+                int vDamage = Main.expertMode ? 10 : 5;
                 VoidPlayer.VoidDamage(Mod, target, vDamage);
             }
         }

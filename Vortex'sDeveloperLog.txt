@@ -50,7 +50,6 @@ Make enemies spawn in the AV and Mines
 Fix Archaeologist Shop (for the new items)! Includes conduits, av loot, etc.
 Update treasure slime loot tables
 Made all available conduits spawn on worldgen
-Throes to Void damage on hit
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -84,6 +83,7 @@ Daily Log:
 1. Big phantarays have 60% reduced spawnrate in towns
 2. Subspace Flames debuff from Voidspace Ranger's Armor should no longer occasionally effect town NPCs
 3. Fistfull Banner
+4. Throes do (5, 10) void damage
 
 11/24/24 to  11/28/24
 1. Tidal Plating Furniture Sprites by Me!
