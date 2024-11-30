@@ -629,7 +629,7 @@ namespace SOTS.Common.GlobalNPCs
         }
         public void ApplyVoidspaceCurse(NPC npc, Player player)
         {
-            if (OwnerOfVoidspaceCurseDamage < 0)
+            if (OwnerOfVoidspaceCurseDamage < 0 && !npc.friendly)
             {
                 OwnerOfVoidspaceCurseDamage = player.whoAmI;
                 if (Main.myPlayer == player.whoAmI && Main.netMode == NetmodeID.MultiplayerClient)
@@ -1085,6 +1085,8 @@ namespace SOTS.Common.GlobalNPCs
             }
             if (OwnerOfVoidspaceCurseDamage >= 0)
             {
+                if (npc.friendly)
+                    OwnerOfVoidspaceCurseDamage = -1;
                 npc.lifeRegen -= 20;
                 VoidspaceCurse += 1 / 6f;
                 if (Main.rand.NextBool(5))

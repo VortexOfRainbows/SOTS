@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
 using System;
@@ -109,8 +110,8 @@ namespace SOTS.NPCs.AbandonedVillage
 			NPC.HitSound = SoundID.NPCHit19;
 			NPC.DeathSound = SoundID.NPCDeath1;
 			NPC.noTileCollide = false;
-			//Banner = NPC.type;
-			//BannerItem = ItemType<TeratomaBanner>();
+			Banner = NPC.type;
+			BannerItem = ItemType<FistfullBanner>();
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {

@@ -705,9 +705,9 @@ namespace SOTS.Items.Banners
                     case 24:
                         type = NPCType<BallOGuts>();
                         break;
-                    //case 25:
-                    //    type = NPCType<Cow>();
-                    //    break;
+                    case 26:
+                        type = NPCType<Fistfull>();
+                        break;
                     default:
                         return;
                 }
@@ -930,6 +930,14 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners2>();
             Item.placeStyle = 25;
+        }
+    }
+    public class FistfullBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 26;
         }
     }
 }

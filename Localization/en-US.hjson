@@ -6011,6 +6011,11 @@ Mods: {
 				RareTooltip2: "'... save me from this prison...'"
 				RareTooltip3: "'... and I shall gift you the world...'"
 			}
+
+			FistfullBanner: {
+				DisplayName: Fistfull Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

@@ -57,7 +57,7 @@ namespace SOTS.Items.Conduit
 		}
         private void DrawTrail(Vector2 position, float scale, float rotation, bool Inventory = false, bool front = true)
         {
-            Vector2 drawOriginTrail = new Vector2(Trail.Width * 0.5f, Trail.Height * 0.5f);
+            Vector2 drawOriginTrail = new Vector2(0, Trail.Height * 0.5f);
             int trailCount = 30;
             if (Inventory)
                 trailCount = 20;
@@ -81,7 +81,7 @@ namespace SOTS.Items.Conduit
                     Vector2 toPreviousPosition = previous - mainOffset;
                     float rot = toPreviousPosition.ToRotation();
                     float scale2 = toPreviousPosition.Length();
-                    Main.spriteBatch.Draw(Trail, pos, null, Color.Black * (1f - j / (float)trailCount), rot + rotation, drawOriginTrail, scale * new Vector2(scale2, 2f), SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(Trail, pos, null, Color.Black * (1f - j / (float)trailCount), rot + rotation, drawOriginTrail, scale * new Vector2(scale2 + (j == 0 ? 0.5f : 0), 2f), SpriteEffects.None, 0f);
                     Main.spriteBatch.Draw(Trail, pos, null, Color.White * (1f - j / (float)trailCount), rot + rotation, drawOriginTrail, scale * new Vector2(scale2, 1), SpriteEffects.None, 0f);
                 }
             }

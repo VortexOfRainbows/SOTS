@@ -765,13 +765,16 @@ namespace SOTS.Common.GlobalNPCs
                 }
 				else
                 {
+					float chanceMult = 1f;
+					if (spawnInfo.PlayerInTown)
+						chanceMult = 0.4f;
                     if (NPC.CountNPCS(ModContent.NPCType<PhantarayBig>()) < 1) //can only spawn one big boy
-                        pool.Add(ModContent.NPCType<PhantarayBig>(), SpawnCondition.OceanMonster.Chance * 0.1f);
+                        pool.Add(ModContent.NPCType<PhantarayBig>(), SpawnCondition.OceanMonster.Chance * 0.1f * chanceMult);
                     if (NPC.CountNPCS(ModContent.NPCType<PhantarayCore>()) < 2)
-                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.125f);
+                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.125f * chanceMult);
 					else
                     {
-                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.05f);
+                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.05f * chanceMult);
                     }
                 }
             }

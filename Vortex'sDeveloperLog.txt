@@ -42,7 +42,6 @@ Update Objectives:
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 11. Earthen Armor for AV (Up next)
 12. Wormhole upgrade for the Catalcysm Disc (Pending)
-13. Add Fistfull Banner (Up next)
 
 ---WIP List---
 Abandoned village generation
@@ -60,7 +59,7 @@ If the Abandoned Village particles fail to generate for weaker computers, or pot
 Bestiary setup organization.
 
 ---Balance Needed List (by Severity, -weak, +strong)---
-5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Spore Sprayer, +Lungrot, +Little Woes
+5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Spore Sprayer, +Lungrot, +Little Woes, ++Worldly Polarizer
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. Earthen Gizmo, Corpsebloom, Throe, Famished
 2. +++Soot Extractinator loot, +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
@@ -80,6 +79,11 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+11/29/24
+1. Big phantarays have 60% reduced spawnrate in towns
+2. Subspace Flames debuff from Voidspace Ranger's Armor should no longer occasionally effect town NPCs
+3. Fistfull Banner
 
 11/24/24 to  11/28/24
 1. Tidal Plating Furniture Sprites by Me!
@@ -104,8 +108,7 @@ Daily Log:
 
 11/19/24 to 11/24/24
 1. Some changes to chest loot in the AV
-2. WIP Fistfull (Works in multiplayer!)
-	1. Needs: Banner
+2. Fistfull (Works in multiplayer!)
 3. Added remaining Elemental Amulet effects (subject to change)
 	1. Right now, one gives you scaling armor penetration, which ranges from good to barely noticeable
 	2. The other gives an assortment of void stat bonuses, including a rare void gain multiplier
