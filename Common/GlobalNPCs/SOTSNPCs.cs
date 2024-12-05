@@ -594,6 +594,7 @@ namespace SOTS.Common.GlobalNPCs
             bool ZonePlanetarium = sPlayer.PlanetariumBiome;
 			bool ZonePyramid = sPlayer.PyramidBiome;
 			bool ZoneAV = sPlayer.AbandonedVillageBiome;
+			bool ZoneTown = spawnInfo.PlayerInTown;
             if (sPlayer.noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
 				constructRateMultiplier = 0f;
 			if(Main.invasionType != InvasionID.None || NPC.AnyNPCs(NPCID.DD2EterniaCrystal))
@@ -604,7 +605,7 @@ namespace SOTS.Common.GlobalNPCs
             {
 				constructRateMultiplier = 0f;
 			}
-			if (spawnInfo.PlayerInTown)
+			if (ZoneTown)
 				constructRateMultiplier *= 0.1f;
 			if (ZonePyramid)
 			{
@@ -724,10 +725,11 @@ namespace SOTS.Common.GlobalNPCs
 				if(player.ZoneOverworldHeight)
                 {
                     pool.Add(ModContent.NPCType<ChaosConstruct>(), 0.006f * constructRateMultiplier * rateMult);
+					float townMult = ZoneTown ? 0.25f : 1f;
                     if (NPC.CountNPCS(ModContent.NPCType<Chimera>()) < 1)
-                        pool.Add(ModContent.NPCType<Chimera>(), 0.07f);
+                        pool.Add(ModContent.NPCType<Chimera>(), 0.07f * townMult);
 					else
-						pool.Add(ModContent.NPCType<Chimera>(), 0.02f );
+						pool.Add(ModContent.NPCType<Chimera>(), 0.02f * townMult);
                 }
 				pool.Add(ModContent.NPCType<HallowTreasureSlime>(), 0.0075f);
 			}
@@ -765,16 +767,14 @@ namespace SOTS.Common.GlobalNPCs
                 }
 				else
                 {
-					float chanceMult = 1f;
-					if (spawnInfo.PlayerInTown)
-						chanceMult = 0.4f;
+					float townMult = spawnInfo.PlayerInTown ? 0.25f : 1f;
                     if (NPC.CountNPCS(ModContent.NPCType<PhantarayBig>()) < 1) //can only spawn one big boy
-                        pool.Add(ModContent.NPCType<PhantarayBig>(), SpawnCondition.OceanMonster.Chance * 0.1f * chanceMult);
+                        pool.Add(ModContent.NPCType<PhantarayBig>(), SpawnCondition.OceanMonster.Chance * 0.1f * townMult);
                     if (NPC.CountNPCS(ModContent.NPCType<PhantarayCore>()) < 2)
-                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.125f * chanceMult);
+                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.125f * townMult);
 					else
                     {
-                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.05f * chanceMult);
+                        pool.Add(ModContent.NPCType<PhantarayCore>(), SpawnCondition.OceanMonster.Chance * 0.05f * townMult);
                     }
                 }
             }

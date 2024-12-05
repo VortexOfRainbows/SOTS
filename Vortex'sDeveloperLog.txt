@@ -33,7 +33,7 @@ Update Objectives:
 6. Upgrade to Code Corruptor: Dolphin Blaster (?)
 7. Shimmer Item that upgrades the store for Archaeologist
 8. Fix cross-compatibility generation bugs. Also make eternity mode not suffocate otherworld enemies.
-	1. Infernum: fix way the leviathan area is generated
+	1. Infernum: fix way the Leviathan area is generated
 	2. Remnants and secret seed Compatibility: requires overhaul of generation
 	3. Thorium: Move amber gem structure to bottom of oceanic depths
 	4. Sand Floating Islands: Make pyramid start the desert check lower to the ground
@@ -43,6 +43,7 @@ Update Objectives:
 11. Earthen Armor for AV (Up next)
 12. Wormhole upgrade for the Catalcysm Disc (Pending)
 13. Putrid Pinky Vat
+14. Add Solar Bulb item that spawns in the Leviathan area, can be charged with inferno conduit. "Bring it to where it needs to be... but you best be careful not to drop it."
 
 ---WIP List---
 Abandoned village generation
@@ -80,8 +81,8 @@ N/A
 
 Daily Log:
 
-11/29/24
-1. Big phantarays have 60% reduced spawnrate in towns
+11/29/24 to 12/5/24
+1. Big phantarays and chimeras have 75% reduced spawnrate in towns
 2. Subspace Flames debuff from Voidspace Ranger's Armor should no longer occasionally effect town NPCs
 3. Fistfull Banner
 4. Throes do (5, 10) void damage
