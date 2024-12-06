@@ -25,11 +25,9 @@ namespace SOTS.Items.Earth.Glowmoth
 		{
 			if(player.whoAmI == Main.myPlayer)
             {
-				SOTSWorld.lightingChange = 1.0525f;
-				if (player.HasBuff(BuffID.NightOwl))
-					SOTSWorld.lightingChange = 1.038f;
+				SOTSWorld.lightingChange += 0.077625f;
             }
-			player.GetDamage<VoidGeneric>() += 0.05f;
+            player.GetDamage<VoidGeneric>() += 0.05f;
 		}
 	}
 }

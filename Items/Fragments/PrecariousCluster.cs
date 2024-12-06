@@ -214,9 +214,9 @@ namespace SOTS.Items.Fragments
 			Item.width = 66;
 			Item.height = 66;
 			Item.value = Item.sellPrice(0, 10, 0, 0);
-			Item.rare = ItemRarityID.Yellow;
+			Item.rare = ModContent.RarityType<DarkGrayRarity>();
 			Item.maxStack = 9999;
-			ItemID.Sets.ItemNoGravity[Item.type] = true;
+            ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
 		public override void AddRecipes()
 		{

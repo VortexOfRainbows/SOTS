@@ -1012,6 +1012,7 @@ namespace SOTS
 			{
 				return;
 			}
+			SOTSWorld.lightingChange = 0f;
 			BlazingQuiver = WishingStar = AcidInject = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;

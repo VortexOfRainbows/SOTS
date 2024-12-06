@@ -43,7 +43,7 @@ Update Objectives:
 11. Earthen Armor for AV (Up next)
 12. Wormhole upgrade for the Catalcysm Disc (Pending)
 13. Putrid Pinky Vat
-14. Add Solar Bulb item that spawns in the Leviathan area, can be charged with inferno conduit. "Bring it to where it needs to be... but you best be careful not to drop it."
+14. Add Solar Bulb item that spawns in the Leviathan area, can be charged with inferno conduit. 
 
 ---WIP List---
 Abandoned village generation
@@ -55,7 +55,7 @@ Made all available conduits spawn on worldgen
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
-Conduit powering code for the two portals
+Conduit powering code for the two portals. Conduit recipe code should be more robust and better!
 If the Abandoned Village particles fail to generate for weaker computers, or potentially optimization mods, it may be worth making a custom system for them instead of using dusts.
 Bestiary setup organization.
 
@@ -81,7 +81,7 @@ N/A
 
 Daily Log:
 
-12/5/24
+12/5/24 to 12/6/24
 1. Fix bug where putrid pinky laser appeared to be stopped by bubble block
 	1. Some other projectiles or interactions regarding bubble block should also be fixed now
 2. Shatter shards now trigger 10 -> 20 frames of immunity, but these are now local immunity frames
@@ -89,6 +89,11 @@ Daily Log:
 	2. Limit on allowed shards per player 60 -> 50
 	3. Max pierce 5 -> 8, no longer reduces lifetime when hitting an enemy
 3. Shatter Blade now uses a better dust color
+4. WIP Sunbulb
+	1. Needs: drawcode and better visuals for the glass transparency, and switching to broken mode, MP testing
+	2. Broken mode is permanent, and it should happen after dying (with a cool shatter effect, maybe release some dust and gore)
+5. Dark Gray is now an appropriate mod rarity instead of legacy rarity implementation. Void Anomaly now uses the correct rarity
+6. Slightly modified formula for increased lighting from Glowmoth expert drop Illuminant Lantern.
 
 11/29/24 to 12/5/24
 1. Big phantarays and chimeras have 75% reduced spawnrate in towns

@@ -4,7 +4,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Fragments;
 
 namespace SOTS.Items.Pyramid
 {
@@ -22,7 +21,7 @@ namespace SOTS.Items.Pyramid
 			Item.useAnimation = 15;
 			Item.useTime = 10;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ModContent.RarityType<DarkGrayRarity>();
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<TaintedKeystoneShardTile>();
 		}

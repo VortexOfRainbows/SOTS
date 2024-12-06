@@ -240,8 +240,10 @@ namespace SOTS
 		public static bool AmberKeySlotted = false;
 		public static bool DreamLampSolved = false;
 		public static bool GoldenAppleSolved = false;
+		public static bool SunbulbSolved = false;
+		public static bool SunbulbFailed = false;
 		public void ResetWorldVariables()
-		{
+        {
 			GlobalCounter = 0;
 			GlobalTimeFreeze = 0;
 			GlobalFrozen = false;
@@ -264,6 +266,9 @@ namespace SOTS
 			AmberKeySlotted = false;
 			DreamLampSolved = false;
 			GoldenAppleSolved = false;
+
+            SunbulbSolved = false;
+            SunbulbFailed = false;
         }
 		public override void OnWorldLoad()
 		{
@@ -294,8 +299,11 @@ namespace SOTS
 			tag["AmberKey"] = AmberKeySlotted;
 			tag["DreamLamp"] = DreamLampSolved;
 			tag["GoldenApple"] = GoldenAppleSolved;
-		}
-		public override void LoadWorldData(TagCompound tag)
+
+			tag["SunbulbSolved"] = SunbulbSolved;
+			tag["SunbulbFailed"] = SunbulbFailed;
+        }
+        public override void LoadWorldData(TagCompound tag)
 		{
 			downedGlowmoth = tag.GetBool("DownedGlowmoth");
 			downedPinky = tag.GetBool("DownedPinky");
@@ -314,6 +322,10 @@ namespace SOTS
 			AmberKeySlotted = tag.GetBool("AmberKey");
 			DreamLampSolved = tag.GetBool("DreamLamp");
             GoldenAppleSolved = tag.GetBool("GoldenApple");
+
+
+            SunbulbSolved = tag.GetBool("SunbulbSolved");
+            SunbulbFailed = tag.GetBool("SunbulbFailed");
         }
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
@@ -339,7 +351,10 @@ namespace SOTS
 			writer.Write(gemFlags);
 			writer.Write(GlobalCounter);
 			writer.Write(GoldenAppleSolved);
-		}
+
+            writer.Write(SunbulbSolved);
+            writer.Write(SunbulbFailed);
+        }
 		public override void NetReceive(BinaryReader reader) {
 			BitsByte flags = reader.ReadByte();
 			downedPinky = flags[0];
@@ -362,7 +377,10 @@ namespace SOTS
 
 			GlobalCounter = reader.ReadInt32();
 			GoldenAppleSolved = reader.ReadBoolean();
-		}
+
+            SunbulbSolved = reader.ReadBoolean();
+            SunbulbFailed = reader.ReadBoolean();
+        }
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
 		{
 			int desert = tasks.FindIndex(genpass => genpass.Name.Equals("Full Desert"));
@@ -1460,7 +1478,7 @@ namespace SOTS
 		}
 		private static UserInterface _VoidUserInterface;
 		internal static VoidUI VoidUI;
-		public static float lightingChange = 1f;
+		public static float lightingChange = 0f;
 		private static Vector2 _lastScreenSize;
 		private static Vector2 _lastViewSize;
 		public override void PreUpdateEntities()
@@ -1567,8 +1585,15 @@ namespace SOTS
 		}
 		public override void ModifyLightingBrightness(ref float scale)
 		{
-			scale += lightingChange - 1;
-			lightingChange = 1;
+			float diff = MathF.Sqrt(1 + lightingChange);
+			float end = diff - 1;
+			if(Main.LocalPlayer.HasBuff(BuffID.NightOwl) && end > 0)
+			{
+				end -= 0.02f;
+			}
+			scale += end;
+
+			lightingChange = 0;
 		}
 		public static float LuxLightingFadeIn = 0;
 		public static float PlanetariumLightingFadeIn = 0;

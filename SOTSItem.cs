@@ -39,6 +39,7 @@ using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.Helpers;
+using SOTS.Items.Invidia;
 
 namespace SOTS
 {
@@ -197,7 +198,6 @@ namespace SOTS
 	{
 		public static int[] DarkBlueRarity;
 		public static int[] DarkRedRarity;
-		public static int[] DarkGrayRarity;
 		public static int[] BrightGreenRarity;
 		public static int[] DedicatedOrange;
 		public static int[] DedicatedBlue;
@@ -214,7 +214,6 @@ namespace SOTS
 		{
 			DarkBlueRarity = [ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>()]; //Dark Blue
 			DarkRedRarity = [ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>()]; //Dark Red
-			DarkGrayRarity = [ItemType<TaintedKeystoneShard>(), ItemType<TerminalCluster>(), ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()]; //Very Dark gray
 			BrightGreenRarity = [ItemType<DreamLamp>()];
 
 			DedicatedOrange = [ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>(), ItemType<TorchGunMk2>()]; //friends
@@ -313,8 +312,6 @@ namespace SOTS
 				rarityColor = new Color(0, 130, 235, 255);
 			if (DarkRedRarity.Contains(item.type))
                 rarityColor = new Color(210, 0, 0);
-			if (DarkGrayRarity.Contains(item.type))
-                rarityColor = new Color(60, 60, 60);
             if (BrightGreenRarity.Contains(item.type) || GoldenApple)
                 rarityColor = (DreamLamp.IsItemForgotten && !GoldenApple) ? new Color(95, 85, 105) : new Color(66, 226, 75);
             if (DedicatedPastelPink.Contains(item.type))
@@ -1117,6 +1114,22 @@ namespace SOTS
     public class StrangeWhiteRarity : ModRarity
     {
         public override Color RarityColor => Color.White;
+        public override int GetPrefixedRarity(int offset, float valueMult)
+        {
+            return Type;
+        }
+    }
+    public class DarkGrayRarity : ModRarity
+    {
+        public override Color RarityColor => new Color(60, 60, 60);
+        public override int GetPrefixedRarity(int offset, float valueMult)
+        {
+            return Type;
+        }
+    }
+    public class SunbulbRarity : ModRarity
+    {
+        public override Color RarityColor => !Sunbulb.IsPowered ? new Color(95, 85, 105) : new Color(203, 143, 8);
         public override int GetPrefixedRarity(int offset, float valueMult)
         {
             return Type;

@@ -7,6 +7,7 @@ using SOTS.Helpers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Conduit;
 using SOTS.Items.Fragments;
+using SOTS.Items.Invidia;
 using SOTS.Items.Planetarium;
 using SOTS.Items.Pyramid;
 using SOTS.Items.Secrets;
@@ -300,7 +301,8 @@ namespace SOTS
         {
             bool validItem = entity.type == ModContent.ItemType<DreamLamp>() || 
                 entity.type == ModContent.ItemType<CursedApple>() ||
-                entity.type == ModContent.ItemType<DissolvingNihility>();
+                entity.type == ModContent.ItemType<DissolvingNihility>() ||
+                entity.type == ModContent.ItemType<Sunbulb>();
             //Plan to expand this system more thoroughly in the future. For now, we will just check the 3 items that it effects
             return lateInstantiation && validItem;
         }
@@ -386,15 +388,19 @@ namespace SOTS
             float bestDist = 640;
             bool validForAny = item.type == ModContent.ItemType<DissolvingNihility>();
             bool validForNature = (item.type == ModContent.ItemType<DreamLamp>() && !SOTSWorld.DreamLampSolved) || (item.type == ModContent.ItemType<CursedApple>() && !SOTSWorld.GoldenAppleSolved);
+            bool validForPermafrost = item.type == ModContent.ItemType<Sunbulb>() && SOTSWorld.SunbulbSolved && !SOTSWorld.SunbulbFailed;
             bool validForEvil = (item.type == ModContent.ItemType<DreamLamp>() && SOTSWorld.DreamLampSolved) || (item.type == ModContent.ItemType<CursedApple>() && SOTSWorld.GoldenAppleSolved);
+            bool validForInferno = item.type == ModContent.ItemType<Sunbulb>() && !SOTSWorld.SunbulbSolved && !SOTSWorld.SunbulbFailed;
             foreach (ConduitCounterTE tileEntity in TileEntity.ByID.Values.OfType<ConduitCounterTE>())
             {
                 if (tileEntity.ConduitTile != null && tileEntity.DissolvingTileCount >= 20)
                 {
                     int type = tileEntity.ConduitTile.DissolvingTileType;
                     bool worksForNature = type == ModContent.TileType<DissolvingNatureTile>() && validForNature;
+                    bool worksForPermafrost = type == ModContent.TileType<DissolvingAuroraTile>() && validForPermafrost;
                     bool worksForEvil = type == ModContent.TileType<DissolvingUmbraTile>() && validForEvil;
-                    if (worksForNature || worksForEvil || validForAny)
+                    bool worksForInferno = type == ModContent.TileType<DissolvingNetherTile>() && validForInferno;
+                    if (worksForNature || worksForPermafrost || worksForEvil || worksForInferno || validForAny)
                     {
                         float distance = Vector2.Distance(tileEntity.Position.ToVector2() * 16 + new Vector2(8, 8), item.Center);
                         if (distance <= bestDist)
@@ -495,6 +501,15 @@ namespace SOTS
                                     SOTSWorld.SyncGemLocks(Main.LocalPlayer);
                             }
                         }
+                        if(ConduitTransformType == 2)
+                        {
+                            if (item.type == ModContent.ItemType<Sunbulb>())
+                            {
+                                SOTSWorld.SunbulbSolved = false;
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                    SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                            }
+                        }
                         if (ConduitTransformType == 5)
                         {
                             if (item.type == ModContent.ItemType<DreamLamp>())
@@ -506,6 +521,15 @@ namespace SOTS
                             if (item.type == ModContent.ItemType<CursedApple>())
                             {
                                 SOTSWorld.GoldenAppleSolved = false;
+                                if (Main.netMode != NetmodeID.SinglePlayer)
+                                    SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+                            }
+                        }
+                        if(ConduitTransformType == 6)
+                        {
+                            if (item.type == ModContent.ItemType<Sunbulb>())
+                            {
+                                SOTSWorld.SunbulbSolved = true;
                                 if (Main.netMode != NetmodeID.SinglePlayer)
                                     SOTSWorld.SyncGemLocks(Main.LocalPlayer);
                             }
