@@ -52,11 +52,13 @@ namespace SOTS.WorldgenHelpers
 		}
 		public static bool TrueTileSolid(int i, int j, bool includeActuated = false)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j].TileType] == false && Main.tileSolid[Main.tile[i, j].TileType] == true && (Main.tile[i, j].HasUnactuatedTile || includeActuated));
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j].TileType] == false
+				&& Main.tileSolid[Main.tile[i, j].TileType] == true && (Main.tile[i, j].HasUnactuatedTile || includeActuated)) && Main.tile[i, j].TileType != TileID.Bubble;
 		}
 		public static bool TileTopCapable(int i, int j)
 		{
-			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && (Main.tileSolidTop[Main.tile[i, j].TileType] || Main.tileSolid[Main.tile[i, j].TileType]) && Main.tile[i, j].HasUnactuatedTile);
+			return (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile &&
+				(Main.tileSolidTop[Main.tile[i, j].TileType] || Main.tileSolid[Main.tile[i, j].TileType]) && Main.tile[i, j].HasUnactuatedTile);
 		}
 		public static void GenerateAcediaRoom(int x, int y, Mod mod, int direction = 1)
 		{

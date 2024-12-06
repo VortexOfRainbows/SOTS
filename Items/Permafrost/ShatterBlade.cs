@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
 using SOTS.Projectiles.Permafrost;
 using Terraria.DataStructures;
 
@@ -11,9 +10,9 @@ namespace SOTS.Items.Permafrost
 {
 	public class ShatterBlade : ModItem
 	{
-		int counterResetter = 0;
-		int counter = 0;
-		int broken = 0;
+		private int counterResetter = 0;
+		private int counter = 0;
+		private int broken = 0;
 		public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);

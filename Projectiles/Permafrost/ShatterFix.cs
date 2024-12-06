@@ -10,14 +10,13 @@ namespace SOTS.Projectiles.Permafrost
     {	
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Shatter Fix");
-		}
+			Main.projFrames[Projectile.type] = 11;
+        }
         public override void SetDefaults()
         {
 			Projectile.width = 42;
 			Projectile.height = 46;
 			Projectile.penetrate = -1;
-			Main.projFrames[Projectile.type] = 11;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 16;
 			Projectile.tileCollide = false;
@@ -27,39 +26,43 @@ namespace SOTS.Projectiles.Permafrost
 		public void Bang(float pos1, float pos2)
 		{
 			Vector2 atLoc = new Vector2(Projectile.Center.X + pos1, Projectile.Center.Y + pos2);
-			SOTSUtils.PlaySound(SoundID.Item30, (int)(atLoc.X), (int)(atLoc.Y), 0.3f);
-			for (int i = 0; i < 360; i += 5)
+			SOTSUtils.PlaySound(SoundID.Item30, atLoc, 0.3f);
+			for (int i = 0; i < 360; i += 6)
 			{
 				Vector2 circularLocation = new Vector2(30, 0).RotatedBy(MathHelper.ToRadians(i));
 				if (i < 90)
 				{
 					circularLocation -= new Vector2(30, 30);
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = 0.1f * -circularLocation;
-				}
-				else if (i < 180)
+					Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<ModIceDust>());
+					dust.noGravity = true;
+                    dust.velocity = 0.1f * -circularLocation;
+					dust.scale = 1;
+                }
+                else if (i < 180)
 				{
 					circularLocation -= new Vector2(-30, 30);
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = 0.1f * -circularLocation;
-				}
-				else if (i < 270)
+                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<ModIceDust>());
+					dust.noGravity = true;
+					dust.velocity = 0.1f * -circularLocation;
+					dust.scale = 1;
+                }
+                else if (i < 270)
 				{
 					circularLocation -= new Vector2(-30, -30);
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = 0.1f * -circularLocation;
+                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<ModIceDust>());
+                    dust.noGravity = true;
+					dust.velocity = 0.1f * -circularLocation;
+					dust.scale = 1;
 				}
 				else
 				{
 					circularLocation -= new Vector2(30, -30);
-					int num1 = Dust.NewDust(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyIceDust>());
-					Main.dust[num1].noGravity = true;
-					Main.dust[num1].velocity = 0.1f * -circularLocation;
-				}
-			}
+                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<ModIceDust>());
+                    dust.noGravity = true;
+					dust.velocity = 0.1f * -circularLocation;
+					dust.scale = 1;
+                }
+            }
 		}
 		public override bool PreAI()
 		{

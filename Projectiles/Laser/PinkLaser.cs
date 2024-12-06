@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using SOTS.WorldgenHelpers;
 
 namespace SOTS.Projectiles.Laser
 {
@@ -11,10 +12,8 @@ namespace SOTS.Projectiles.Laser
 	{
 		public override void SetStaticDefaults() 
 		{
-			// DisplayName.SetDefault("Pinky Laser");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
-
 		public override void SetDefaults() 
 		{
 			Projectile.width = 8;
@@ -49,7 +48,7 @@ namespace SOTS.Projectiles.Laser
 				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
-				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].HasUnactuatedTile)
+				if(SOTSWorldgenHelper.TrueTileSolid(i, j))
 				{
 					break;
 				}
@@ -81,9 +80,9 @@ namespace SOTS.Projectiles.Laser
 				Vector2 position = Projectile.Center + unit * Distance;	
 				int i = (int)(position.X / 16);
 				int j =	(int)(position.Y / 16);
-				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true && Main.tile[i, j].HasUnactuatedTile)
-				{
-					break;
+				if(SOTSWorldgenHelper.TrueTileSolid(i, j))
+                {
+                        break;
 				}
 				float size = 0.4f + (Projectile.timeLeft/150f);
 				if(Distance < 180)
