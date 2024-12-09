@@ -61,7 +61,7 @@ namespace SOTS
 		public static float GlobalSpeedMultiplier = 1;
 		public static bool IsFrozenThisFrame = false;
 		public static LightMode LastLightingMode;
-		public static void SyncGemLocks(Player clientSender)
+		public static void SyncGemLocks(Player clientSender, int toClient = - 1, int fromClient = -1)
 		{
 			int playerWhoAmI = clientSender != null ? clientSender.whoAmI : -1;
 			var packet = Instance.GetPacket();
@@ -76,7 +76,9 @@ namespace SOTS
 			packet.Write(AmberKeySlotted);
 			packet.Write(DreamLampSolved);
 			packet.Write(GoldenAppleSolved);
-			packet.Send();
+            packet.Write(SunbulbSolved);
+            packet.Write(SunbulbFailed);
+            packet.Send(toClient, fromClient);
 		}
 		public static void SyncTimeFreeze(Player clientSender)
 		{

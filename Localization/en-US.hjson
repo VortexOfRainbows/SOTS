@@ -6023,22 +6023,23 @@ Mods: {
 				BrokenDisplayName: Ruinbulb
 				Tooltip: temp
 				DefaultTooltip:
-				'''
-				Increases damage, critical strike chance, and endurance by 1%
-				'Cold'
-				'''
+					'''
+					Increases damage, critical strike chance, and endurance by 1%
+					'Cold'
+					'''
 				AltTooltip:
-				'''
-				Increases damage, critical strike chance, and endurance by 15%
-				Greatly increases the intensity of lighting
-				'Bring it to where it needs to be... but you best be careful not to drop it'
-				'''
+					'''
+					Increases damage, critical strike chance, and endurance by 15%
+					Greatly increases the intensity of lighting
+					'Bring it to where it needs to be... but you best be careful not to drop it'
+					'''
 				BrokenTooltip:
-				'''
-				Increases damage taken by 100%
-				Greatly decreases the intensity of lighting
-				'You had one shot, and you dropped it'
-				'''
+					'''
+					Increases void damage by 20%
+					Increases damage taken by 100%
+					Greatly increases the intensity of darkness
+					'You had one shot, and you dropped it'
+					'''
 			}
 		}
 

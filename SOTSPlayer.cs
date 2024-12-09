@@ -359,7 +359,7 @@ namespace SOTS
 		public bool KeepersBox = false;
         public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
-		public bool AcidInject = false, Earthdrive = false;
+		public bool AcidInject = false, Earthdrive = false, Sunbulb = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -1013,7 +1013,7 @@ namespace SOTS
 				return;
 			}
 			SOTSWorld.lightingChange = 0f;
-			BlazingQuiver = WishingStar = AcidInject = false;
+			BlazingQuiver = WishingStar = AcidInject = Sunbulb = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
 			if(VMincubator)
@@ -2071,5 +2071,21 @@ namespace SOTS
                 Projectile.NewProjectile(player.GetSource_Misc("SOTS:WishingStar"), spawnPos, Main.rand.NextVector2Circular(32, 32), ModContent.ProjectileType<WishingStarProj>(), damage, 1f, Main.myPlayer, position.X, position.Y, Items.ChestItems.WishingStar.IsAlternate ? -1 : 0);
 			}
 		}
+        public override void UpdateDead()
+        {
+			if(Sunbulb && !SOTSWorld.SunbulbFailed)
+            {
+                SOTSUtils.PlaySound(SoundID.Shatter, Player.Center, 2.0f, -0.1f);
+				for(int i = 0; i < 60; i++)
+				{
+					Dust d = Dust.NewDustDirect(Player.position - new Vector2(5), Player.width, Player.height, DustID.YellowTorch, 0, 0, 0, default, 2.4f);
+					d.velocity = Main.rand.NextVector2Circular(6, 6);
+					d.velocity /= d.scale;
+                }
+                SOTSWorld.SunbulbFailed = true;
+                if (Main.netMode != NetmodeID.SinglePlayer)
+                    SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+            }
+        }
     }
 }

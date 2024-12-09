@@ -25,7 +25,10 @@ namespace SOTS.Items.Tools
 		}
 		public override bool? UseItem(Player player)
 		{
-			player.SOTSPlayer().ResetVisionID(true);
+			//player.SOTSPlayer().ResetVisionID(true);
+
+			SOTSWorld.SunbulbFailed = false;
+
 			//AbandonedVillageWorldgenHelper.FlattenEvilBiome(1);
 
 			//for(int j = 0; j < 50; j++)

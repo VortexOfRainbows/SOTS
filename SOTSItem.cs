@@ -219,7 +219,7 @@ namespace SOTS
 			DedicatedOrange = [ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>(), ItemType<TorchGunMk2>()]; //friends
 			DedicatedBlue = [ItemType<Calculator>()]; //friends 2
 			DedicatedPurpleRed = [ItemType<CursedApple>(), ItemType<ArcStaffMk2>()]; //James
-			DedicatedPastelPink = []; //Tris
+			DedicatedPastelPink = [ItemType<Sunbulb>()]; //Tris
 			DedicatedMinez = [ItemType<DoorPants>(), ItemType<BandOfDoor>()]; //Minez
 			DedicatedRainbow = [ItemType<SubspaceLocket>(), ItemType<DreamLamp>()]; //Vortex
 			DedicatedBlasfah = [ItemType<Doomstick>(), ItemType<TheBlaspha>(), ItemType<BookOfVirtues>()]; //Blasfah
@@ -315,10 +315,7 @@ namespace SOTS
             if (BrightGreenRarity.Contains(item.type) || GoldenApple)
                 rarityColor = (DreamLamp.IsItemForgotten && !GoldenApple) ? new Color(95, 85, 105) : new Color(66, 226, 75);
             if (DedicatedPastelPink.Contains(item.type))
-            {
-                dedicatedColor = new Color(255, 158, 235);
-                rarityColor = new Color(211, 0, 194);
-            }
+                dedicatedColor = !Sunbulb.IsPowered ? new Color(55, 35, 50) : new Color(255, 158, 235);
 			if (DedicatedOrange.Contains(item.type))
 				dedicatedColor = new Color(255, 115, 0);
 			if (DedicatedBlue.Contains(item.type))

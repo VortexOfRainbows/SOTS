@@ -484,21 +484,11 @@ namespace SOTS
 					SOTSWorld.AmberKeySlotted = reader.ReadBoolean();
 					SOTSWorld.DreamLampSolved = reader.ReadBoolean();
                     SOTSWorld.GoldenAppleSolved = reader.ReadBoolean();
+                    SOTSWorld.SunbulbSolved = reader.ReadBoolean();
+                    SOTSWorld.SunbulbFailed = reader.ReadBoolean();
                     if (Main.netMode == NetmodeID.Server)
 					{
-						var packet = GetPacket();
-						packet.Write((byte)SOTSMessageType.SyncGlobalGemLocks);
-						packet.Write(playernumber2);
-						packet.Write(SOTSWorld.RubyKeySlotted);
-						packet.Write(SOTSWorld.SapphireKeySlotted);
-						packet.Write(SOTSWorld.EmeraldKeySlotted);
-						packet.Write(SOTSWorld.TopazKeySlotted);
-						packet.Write(SOTSWorld.AmethystKeySlotted);
-						packet.Write(SOTSWorld.DiamondKeySlotted);
-						packet.Write(SOTSWorld.AmberKeySlotted);
-						packet.Write(SOTSWorld.DreamLampSolved);
-                        packet.Write(SOTSWorld.GoldenAppleSolved);
-                        packet.Send(-1, playernumber2);
+						SOTSWorld.SyncGemLocks(Main.player[playernumber2], -1, playernumber2);
 					}
 					break;
                 case (int)SOTSMessageType.SyncGlobalNPC2:
