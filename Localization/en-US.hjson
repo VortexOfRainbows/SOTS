@@ -60,6 +60,7 @@ Mods: {
 			GeneratingAPyramid: Generating A Pyramid
 			GeneratingGemStructures: Generating Gem Structures
 			GeneratingPeanuts: Placing Peanuts
+			GeneratingSanctuary: Generating Sanctuary
 		}
 
 		AdjacentDesertGeneration.SEverywhere: Sand is irritating and gets everywhere!

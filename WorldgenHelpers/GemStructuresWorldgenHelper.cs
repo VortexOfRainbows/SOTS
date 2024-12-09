@@ -29,47 +29,9 @@ namespace SOTS.WorldgenHelpers
     {
 		private static void PlaceAndGenerateEmerald()
 		{
-			int underworldHeight = Main.UnderworldLayer + 39;
+			int underworldHeight = Main.UnderworldLayer + 65;
 			int rightSideOfWorld = Main.maxTilesX * 11 / 12;
-			int chosenX = -1000;
-			int chosenY = -1;
-			int mostLava = -1;
-			for (int xOffset = -100; xOffset <= 100; xOffset++)
-			{
-				int tempY = -1;
-				int tempLava = 0;
-				for (int yOffset = 0; yOffset < 500; yOffset++)
-				{
-					Tile tile = Framing.GetTileSafely(rightSideOfWorld + xOffset, underworldHeight + yOffset);
-					if (!tile.HasTile && tile.LiquidType == LiquidID.Lava && tile.LiquidAmount > 50)
-					{
-						if (tempY == -1)
-							tempY = yOffset;
-						if (yOffset + underworldHeight < Main.maxTilesY - 105)
-							tempLava++;
-						else
-						{
-							break;
-						}
-					}
-					else if (tempLava > 3)
-					{
-						break;
-					}
-				}
-				if (mostLava < tempLava)
-				{
-					chosenX = xOffset;
-					chosenY = tempY;
-					mostLava = tempLava;
-				}
-			}
-			if (chosenX == -1000)
-				chosenX = 0;
-			if (chosenY == -1)
-				chosenY = 0;
-			int length = mostLava;
-			GenerateEmeraldVoidRuins(rightSideOfWorld + chosenX, underworldHeight + chosenY - 20, length + 20);
+			GenerateEmeraldVoidRuins(rightSideOfWorld, underworldHeight - 20, 50);
 		}
 		private static void PlaceAndGenerateDiamond()
 		{
@@ -354,7 +316,7 @@ namespace SOTS.WorldgenHelpers
 		public static void GenerateGemStructures()
 		{
 			PlaceAndGenerateDiamond();
-			PlaceAndGenerateEmerald();
+			///PlaceAndGenerateEmerald();
 			PlaceAndGenerateTopaz();
 			PlaceAndGenerateSapphire();
 			PlaceAndGenerateAmber();

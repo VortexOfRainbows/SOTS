@@ -5135,25 +5135,24 @@ namespace SOTS.WorldgenHelpers
 			}
 		}
 		/// <summary>
-		/// Attempts to clean up floating trees by updating their tile frames.
+		/// Attempts to clean up floating trees
 		/// Not sure if this works
 		/// </summary>
 		public static void CleanUpFloatingTrees()
 		{
-			//WorldGen.SkipFramingBecauseOfGen = false;
-			for (int i = 50; i < Main.maxTilesX - 50; i++)
+			for (int i = 100; i < Main.maxTilesX - 100; i++)
 			{
-				for (int j = (int)GenVars.worldSurface; j > 50; j--)
+				for (int j = (int)GenVars.worldSurface; j > 100; j--)
 				{
 					Tile tile = Main.tile[i, j];
 					Tile tileD = Main.tile[i, j + 1];
-					if (tile.HasTile && (WorldGen.IsTreeType(tile.TileType) || tile.TileType == TileID.PalmTree) && !tileD.HasTile)
+					ModTile tileBelowModtile = ModContent.GetModTile(tile.TileType);
+					if (tile.HasTile && tile.TileType == TileID.PalmTree && (!tileD.HasTile || tileBelowModtile == null || tileBelowModtile.Mod != SOTS.Instance))
 					{
-						WorldGen.SquareTileFrame(i, j);
+						tile.ClearTile();
 					}
                 }
 			}
-			//WorldGen.SkipFramingBecauseOfGen = true;
 		}
 		public static void PlacePeanuts()
 		{

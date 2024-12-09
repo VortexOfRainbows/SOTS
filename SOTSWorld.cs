@@ -625,10 +625,15 @@ namespace SOTS
 				PyramidWorldgenHelper.GenerateSOTSPyramid(Mod);
 				SOTSWorldgenHelper.SpamCrystals(false);
 			}));
-			tasks.Add(new PassLegacy("SOTS: Abandoned Village", delegate (GenerationProgress progress, GameConfiguration configuration)
+			tasks.Add(new PassLegacy("SOTS: AbandonedVillage", delegate (GenerationProgress progress, GameConfiguration configuration)
             {
                 progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingAbandonedVillage");
                 AbandonedVillageWorldgenHelper.PlaceAbandonedVillage();
+            }));
+            tasks.Add(new PassLegacy("SOTS: Sanctuary", delegate (GenerationProgress progress, GameConfiguration configuration)
+            {
+                progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingSanctuary");
+				SanctuaryWorldgenHelper.GenerateSanctuary();
             }));
             tasks.Add(new PassLegacy("SOTS: GemStructures", delegate (GenerationProgress progress, GameConfiguration configuration)
 			{
