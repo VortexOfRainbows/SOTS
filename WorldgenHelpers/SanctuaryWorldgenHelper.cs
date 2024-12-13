@@ -36,7 +36,17 @@ namespace SOTS.WorldgenHelpers
         public static int SideOfWorld => Main.maxTilesX * 11 / 12;
         public static void PrepareUnderworldArea(int x, int y, int endX, int endY)
         {
+            float height = endY - y;
+            float length = endX - x;
+            for (int i = x; i <= endX; i++)
+            {
+                float percentX = 1f - (endX - i) / length;
+                for (int j = y; j <= endY; j++)
+                {
+                    float percentY = 1f - (endY - j) / height;
 
+                }
+            }
         }
         public static void GenerateSanctuary()
         {

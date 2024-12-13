@@ -6042,6 +6042,11 @@ Mods: {
 					'You had one shot, and you dropped it'
 					'''
 			}
+
+			PinkyTestTubeItem: {
+				DisplayName: Failed Experiment
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6722,6 +6727,7 @@ Mods: {
 
 			TidalPlatingTorchTile.MapEntry: Tidal Plating Torch
 			AVMinesMusicBoxTile.MapEntry: A V Mines Music Box Tile
+			PinkyTestTube.MapEntry: Failed Experiment
 		}
 
 		WorldGeneration: {

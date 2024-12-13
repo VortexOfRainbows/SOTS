@@ -347,6 +347,10 @@ namespace SOTS
             {
                 return false;
             }
+            if (tileAbove.TileType == (ushort)TileType<PinkyTestTube>())
+            {
+                return false;
+            }
             return true;
         }
         public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem)

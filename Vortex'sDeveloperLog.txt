@@ -42,8 +42,7 @@ Update Objectives:
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 11. Earthen Armor for AV (Up next)
 12. Wormhole upgrade for the Catalcysm Disc (Pending)
-13. Putrid Pinky Vat
-14. Add Solar Bulb item in the Leviathan area
+13. Add Solar Bulb item in the Leviathan area
 
 ---WIP List---
 Abandoned village generation
@@ -81,9 +80,10 @@ N/A
 
 Daily Log:
 
-12/8/24 to 12/11/24
+12/8/24 to 12/12/24
 1. Try to fix error where palm trees on top of the pyramid would not disappear
 2. Very basic WIP Sanctuary
+3. Added Pinky Test Tube, needs: Item sprite and spawning on worldgen
 
 12/5/24 to 12/8/24
 1. Fix bug where putrid pinky laser appeared to be stopped by bubble block
