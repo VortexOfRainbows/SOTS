@@ -80,7 +80,7 @@ N/A
 
 Daily Log:
 
-12/8/24 to 12/12/24
+12/8/24 to 12/13/24
 1. Try to fix error where palm trees on top of the pyramid would not disappear
 2. Very basic WIP Sanctuary
 3. Added Pinky Test Tube, needs: Item sprite and spawning on worldgen
