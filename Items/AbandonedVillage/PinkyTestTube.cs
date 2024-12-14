@@ -1,8 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Dusts;
-using SOTS.NPCs.Boss;
-using SOTS.Projectiles.Blades;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -57,7 +54,7 @@ namespace SOTS.Items.AbandonedVillage
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.newTile.StyleHorizontal = false;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16, 16, 16, 18 };
-			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 8, 0);
+			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 10, 0);
 			TileObjectData.newTile.Origin = new Point16(5, 7);
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();

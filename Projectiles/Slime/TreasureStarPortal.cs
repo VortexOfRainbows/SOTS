@@ -39,7 +39,9 @@ namespace SOTS.Projectiles.Slime
 			}
 			if (type == 9)
 				return DungeonTreasureSlime.color;
-			return Color.White;
+            if (type == 10)
+                return new Color(222, 73, 170, 100);
+            return Color.White;
         }
         public override void SetDefaults()
         {

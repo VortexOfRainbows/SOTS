@@ -39,7 +39,6 @@ namespace SOTS.NPCs.TreasureSlimes
 			items = new List<TreasureSlimeItem>()
 			{
 				new TreasureSlimeItem(ItemType<OldKey>(), 1, 1, 1f), //guaranteed
-				new TreasureSlimeItem(ItemType<AncientSteelBar>(), 9, 15, 1f),
 				new TreasureSlimeItem(ItemID.Shadewood, 60, 300, 1),
 				new TreasureSlimeItem(ItemID.CrimtaneOre, 30, 60, 1f),
 				new TreasureSlimeItem(ItemID.Vertebrae, 30, 60, 0.25f),
@@ -59,8 +58,6 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<ZombieHand>(), 1, 1, 0.2f),
 				new TreasureSlimeItem(ItemType<FragmentOfEvil>(), 3, 6, 0.3f),
 				new TreasureSlimeItem(ItemType<FoulConcoction>(), 5, 5, 0.3f),
-
-				new TreasureSlimeItem(ItemType<Items.AbandonedVillage.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
 		public override void ModifyAdditionalLoot(NPCLoot npcLoot)

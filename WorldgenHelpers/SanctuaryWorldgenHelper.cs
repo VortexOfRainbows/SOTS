@@ -2,29 +2,7 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using System;
-using SOTS.Items.AbandonedVillage;
-using Microsoft.Xna.Framework;
-using System.Collections.Generic;
-using SOTS.Items.Fragments;
-using SOTS.Items.Furniture.Earthen;
-using SOTS.Items.Furniture.Functional;
-using Terraria.DataStructures;
-using SOTS.Items;
-using SOTS.Items.Earth;
-using SOTS.Items.Permafrost;
-using System.Linq;
-using Terraria.WorldBuilding;
-using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
-using SOTS.Items.Gems;
-using SOTS.Items.Planetarium.Blocks;
-using Steamworks;
-using rail;
-using SOTS.Items.Whips;
-using SOTS.Items.ChestItems;
-using SOTS.Items.Tools;
-using Terraria.Graphics.Renderers;
-using SOTS.Items.Potions;
 
 namespace SOTS.WorldgenHelpers
 {

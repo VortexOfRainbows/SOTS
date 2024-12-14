@@ -76,7 +76,7 @@ namespace SOTS.NPCs.TreasureSlimes
 				for (int i = 0; i < LootAmt; i++)
 				{
 					int rand = Main.rand.Next(items.Count);
-					if(possibleItems.Count() == 0 && (NPC.type == NPCType<CorruptionTreasureSlime>() || NPC.type == NPCType<CrimsonTreasureSlime>()))
+					if(possibleItems.Count() == 0 && (NPC.type == NPCType<CorruptionTreasureSlime>() || NPC.type == NPCType<CrimsonTreasureSlime>() || NPC.type == NPCType<MutagenTreasureSlime>()))
                     {
 						rand = 0;
                     }
@@ -203,7 +203,9 @@ namespace SOTS.NPCs.TreasureSlimes
 							type = 8;
 						if (NPC.type == NPCType<DungeonTreasureSlime>())
 							type = 9;
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
+                        if (NPC.type == NPCType<MutagenTreasureSlime>())
+                            type = 10;
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
 					}
 					runAwayDelay++;
 					if(runAwayDelay >= 70)
@@ -330,7 +332,8 @@ namespace SOTS.NPCs.TreasureSlimes
         public sealed override void ModifyNPCLoot(NPCLoot npcLoot)
         {
 			npcLoot.Add(ItemDropRule.Common(ItemType<Peanut>(), 1, 10, 20));
-			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 5, 10));
+			if(Type != NPCType<MutagenTreasureSlime>())
+				npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 5, 10));
 			ModifyAdditionalLoot(npcLoot);
         }
 		public virtual void ModifyAdditionalLoot(NPCLoot npcLoot)
