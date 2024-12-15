@@ -19,8 +19,8 @@ namespace SOTS.Items.AbandonedVillage
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.width = 26;
-			Item.height = 32;
+			Item.width = 92;
+			Item.height = 90;
 			Item.rare = ItemRarityID.Blue;
 			Item.createTile = ModContent.TileType<PinkyTestTube>();
 		}
