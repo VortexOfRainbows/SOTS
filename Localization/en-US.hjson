@@ -6047,6 +6047,11 @@ Mods: {
 				DisplayName: Failed Experiment
 				Tooltip: ""
 			}
+
+			MutagenTreasureSlimeBanner: {
+				DisplayName: Mutagen Treasure Slime Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

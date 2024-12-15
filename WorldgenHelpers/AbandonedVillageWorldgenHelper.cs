@@ -25,6 +25,9 @@ using SOTS.Items.ChestItems;
 using SOTS.Items.Tools;
 using Terraria.Graphics.Renderers;
 using SOTS.Items.Potions;
+using SOTS.Items.Void;
+using Microsoft.Xna.Framework.Input;
+using Mono.Cecil;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -3434,6 +3437,39 @@ namespace SOTS.WorldgenHelpers
             //int biomeType = !WorldGen.crimson ? BiomeConversionID.Corruption : BiomeConversionID.Crimson;
             int extraVerticalRangeToRemoveTrees = 10;
             CorruptionRectangle cR = Corruptions[evilBiome];
+
+            foreach (Point16 stair in StairDecorPoints)
+            {
+                if (!WorldGen.genRand.NextBool(3))
+                {
+                    for(int attempts = 8; attempts > 0; attempts--)
+                    {
+                        int i = stair.X + WorldGen.genRand.Next(-8, 9);
+                        int j = stair.Y + WorldGen.genRand.Next(-6, 7);
+                        int size = Math.Max(WorldGen.genRand.Next(7, 15), WorldGen.genRand.Next(5, 20));
+                        int i2 = i + size / 2;
+                        int t = Framing.GetTileSafely(i2, j).WallType;
+                        bool tunnelWallType = t == ModContent.WallType<EarthenPlatingBeamWall>() || t == ModContent.WallType<EarthenPlatingWallWall>() || t == ModContent.WallType<EarthenPlatingPanelWallWall>() || t == ModContent.WallType<GulaPlatingWallWall>();
+                        if (tunnelWallType)
+                        {
+                            if (!Framing.GetTileSafely(i2, j - 3).HasTile
+                                && !Framing.GetTileSafely(i2, j - 2).HasTile
+                                && !Framing.GetTileSafely(i2, j - 1).HasTile
+                                && !Framing.GetTileSafely(i2, j).HasTile
+                                && !Framing.GetTileSafely(i2, j + 1).HasTile
+                                && !Framing.GetTileSafely(i2, j + 2).HasTile
+                                && (!Framing.GetTileSafely(i2, j - 4).HasTile || WorldGen.genRand.NextBool(2)))
+                            {
+                                PlaceStairDecor(i, j, size);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            StairDecorPoints = null;
+            TryPlacingImportantTiles(evilBiome);
+            //Surface cleanup pass
             for (int passNum = 0; passNum <= 3; passNum++)
             {
                 for (int i = cR.rect.Left; i <= cR.rect.Right; i++)
@@ -3517,37 +3553,8 @@ namespace SOTS.WorldgenHelpers
                 }
             }
 
-            foreach (Point16 stair in StairDecorPoints)
-            {
-                if (!WorldGen.genRand.NextBool(3))
-                {
-                    for(int attempts = 8; attempts > 0; attempts--)
-                    {
-                        int i = stair.X + WorldGen.genRand.Next(-8, 9);
-                        int j = stair.Y + WorldGen.genRand.Next(-6, 7);
-                        int size = Math.Max(WorldGen.genRand.Next(7, 15), WorldGen.genRand.Next(5, 20));
-                        int i2 = i + size / 2;
-                        int t = Framing.GetTileSafely(i2, j).WallType;
-                        bool tunnelWallType = t == ModContent.WallType<EarthenPlatingBeamWall>() || t == ModContent.WallType<EarthenPlatingWallWall>() || t == ModContent.WallType<EarthenPlatingPanelWallWall>() || t == ModContent.WallType<GulaPlatingWallWall>();
-                        if (tunnelWallType)
-                        {
-                            if (!Framing.GetTileSafely(i2, j - 3).HasTile
-                                && !Framing.GetTileSafely(i2, j - 2).HasTile
-                                && !Framing.GetTileSafely(i2, j - 1).HasTile
-                                && !Framing.GetTileSafely(i2, j).HasTile
-                                && !Framing.GetTileSafely(i2, j + 1).HasTile
-                                && !Framing.GetTileSafely(i2, j + 2).HasTile
-                                && (!Framing.GetTileSafely(i2, j - 4).HasTile || WorldGen.genRand.NextBool(2)))
-                            {
-                                PlaceStairDecor(i, j, size);
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-            StairDecorPoints = null;
-
+            //Underground passes
+            ushort pinkyTestTube = (ushort)ModContent.TileType<PinkyTestTube>();
             Rectangle rect = AVSweepRect;
             for(int passNum = 0; passNum <= 0; passNum++)
             {
@@ -3557,7 +3564,13 @@ namespace SOTS.WorldgenHelpers
                     {
                         if (passNum == 0)
                         {
+                            Tile t = Main.tile[i, j];
                             TryPlacingAmbientTiles(i, j, true);
+                            if (t.TileType == pinkyTestTube)
+                            {
+                                t.Slope = 0;
+                                t.IsHalfBlock = false;
+                            }
                         }
                     }
                 }
@@ -3574,7 +3587,6 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-            CorruptPathRects = null;
             PrepareUnderground(cR.rect, 60, 0.1f, 1);
             PrepareUnderground(AVSweepRect, 50, 0.1f, 1);
         }
@@ -3725,6 +3737,122 @@ namespace SOTS.WorldgenHelpers
                         }
                     }
                 }
+            }
+        }
+        public static void TryPlacingImportantTiles(int evilBiome)
+        {
+            CorruptionRectangle cR = Corruptions[evilBiome];
+            ushort gula = (ushort)ModContent.TileType<GulaPlatingTile>();
+            ushort gulaWall = (ushort)ModContent.WallType<UnsafeGulaPlatingWall>();
+            ushort earth = (ushort)ModContent.TileType<EarthenPlatingTile>();
+            ushort earthPlatform = (ushort)ModContent.TileType<EarthenPlatingPlatformTile>();
+            ushort charred = (ushort)ModContent.TileType<CharredWoodTile>();
+            ushort soot = (ushort)ModContent.TileType<SootBlockTile>();
+            ushort sootSlab = (ushort)ModContent.TileType<SootSlabTile>();
+            int ruinedChests = 10;
+            int earthenChests = 10;
+            int gulaChests = 6;
+            int forceBreak = 13000;
+            bool hasPlacedPinkyTestTube = false;
+            while((ruinedChests > 0 || earthenChests > 0 || gulaChests > 0) && forceBreak > 0)
+            {
+                Rectangle rect = forceBreak % 6 == 0 ? cR.rect : AVSweepRect;
+                int randX = WorldGen.genRand.Next(rect.Left, rect.Right);
+                int randY = WorldGen.genRand.Next(rect.Top, rect.Bottom);
+                float percent = forceBreak / 12000f;
+                if(WorldGen.genRand.NextFloat() > percent)
+                {
+                    int tryLarger = WorldGen.genRand.Next(rect.Top, rect.Bottom);
+                    if (tryLarger > randY)
+                        randY = tryLarger;
+                }
+                Tile tBL = Main.tile[randX, randY];
+                int goDown = 50;
+                while (!Main.tileSolid[tBL.TileType] && goDown > 0)
+                {
+                    randY++;
+                    tBL = Main.tile[randX, randY];
+                    goDown--;
+                }
+                Tile tBR = Main.tile[randX + 1, randY];
+                Tile tBL2 = Main.tile[randX, randY + 1];
+                Tile tBR2 = Main.tile[randX + 1, randY + 1];
+                Tile tTL = Main.tile[randX, randY - 1];
+                Tile tTR = Main.tile[randX + 1, randY - 1];
+                Tile tTL2 = Main.tile[randX, randY - 2];
+                Tile tTR2 = Main.tile[randX + 1, randY - 2];
+                bool hasGround = Main.tileSolid[tBL.TileType] && Main.tileSolid[tBR.TileType] && tBL.Slope == 0 && tBR.Slope == 0 & !tBL.IsHalfBlock && !tBR.IsHalfBlock;
+                bool hasAirSpace = !tTL.HasTile && !tTR.HasTile && !tTL2.HasTile && !tTR2.HasTile;
+                bool hasWalls = tTL.WallType != 0 && tTR.WallType != 0 && tTL2.WallType != 0 && tTR2.WallType != 0;
+                List<byte> viableTypes = new List<byte>();
+                bool canBeGula = tBL.TileType == gula || tBR.TileType == gula || tBL2.TileType == gula || tBR2.TileType == gula;
+                if (!hasPlacedPinkyTestTube && canBeGula)
+                {
+                    WorldGen.PlaceTile(randX, randY - 1, ModContent.TileType<PinkyTestTube>());
+                    if (tTL.TileType == ModContent.TileType<PinkyTestTube>())
+                    {
+                        hasPlacedPinkyTestTube = true;
+                        continue;
+                    }
+                }
+                if(hasGround && hasAirSpace && (hasWalls || WorldGen.genRand.NextBool(3)))
+                {
+                    bool canBeEarth = true;
+                    if (canBeGula || tTL.WallType == gulaWall || tTR.WallType == gulaWall)
+                    {
+                        viableTypes.Add(2);
+                        if (WorldGen.genRand.NextBool(2))
+                            canBeEarth = false;
+                    }
+                    if (canBeEarth && (tBL.TileType == earth || tBR.TileType == earth || tBL.TileType == earthPlatform || tBR.TileType == earthPlatform) && (tBL2.TileType != gula || tBR2.TileType != gula))
+                    {
+                        viableTypes.Add(1);
+                    }
+                    if (tBL.TileType == charred || tBL.TileType == soot || tBL.TileType == sootSlab || tBR.TileType == charred || tBR.TileType == soot || tBR.TileType == sootSlab || (viableTypes.Count == 0 && WorldGen.genRand.NextBool(3)))
+                    {
+                        viableTypes.Add(0);
+                    }
+                    if (viableTypes.Count > 0)
+                    {
+                        byte type = viableTypes[WorldGen.genRand.Next(viableTypes.Count)];
+                        int tileType = 0;
+                        int style = 1;
+                        if (type == 0)
+                        {
+                            tileType = ModContent.TileType<RuinedChestTile>();
+                            //Once we have placed all ruined chests, make placing more rarer
+                            if (ruinedChests <= 0 && !WorldGen.genRand.NextBool(3 - ruinedChests))
+                                continue;
+                        }
+                        if (type == 1)
+                        {
+                            tileType = ModContent.TileType<EarthenPlatingStorageTile>();
+                            //Once we have placed all earthen chests, make placing more rarer
+                            if (earthenChests <= 0 && !WorldGen.genRand.NextBool(5 - earthenChests * 2))
+                                continue;
+                        }
+                        if (type == 2)
+                        {
+                            tileType = ModContent.TileType<GulaVaultTile>();
+                            //Once we have placed all gula chests, make placing more rarer
+                            if (gulaChests <= 0 && !WorldGen.genRand.NextBool(2 - gulaChests))
+                                continue;
+                        }
+                        WorldGen.PlaceTile(randX, randY - 1, tileType, style: style);
+                        if (tTL.TileType == tileType)
+                        {
+                            if (type == 0)
+                                ruinedChests--;
+                            if (type == 1)
+                                earthenChests--;
+                            if (type == 2)
+                                gulaChests--;
+                            tTR.Slope = tTL.Slope = tTR2.Slope = tTL2.Slope = 0;
+                            tTR.IsHalfBlock = tTL.IsHalfBlock = tTR2.IsHalfBlock = tTL2.IsHalfBlock = false;
+                        }
+                    }
+                }
+                forceBreak--;
             }
         }
         public static void PrepareUnderground(Rectangle rect, float paddingZone = 50, float noiseWormMult = 0.2f, int passNum = 0)
@@ -3939,9 +4067,12 @@ namespace SOTS.WorldgenHelpers
         {
             int bestC = BestEvilBiome();
             CorruptionRectangle cR = Corruptions[bestC];
-            List<int> Tier1Items = [ModContent.ItemType<FizzleStar>(), ModContent.ItemType<VisionAmulet>(), ItemID.MiningHelmet, ModContent.ItemType<AncientSteelSword>(), ModContent.ItemType<AncientSteelLongbow>(), ModContent.ItemType<SteelerWheeler>(), ModContent.ItemType<RockingHorse>(), ModContent.ItemType<MrBurns>()];
-            List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(), ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>(), ModContent.ItemType<AncientSteelLantern>()];
-            List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>(), ModContent.ItemType<AncientSteelGreatPickaxe>(), ModContent.ItemType<AncientSteelGreatHamaxe>()];
+            List<int> Tier1Items = [ModContent.ItemType<FizzleStar>(), ModContent.ItemType<SteelerWheeler>(), ModContent.ItemType<VisionAmulet>(), ItemID.MiningHelmet, ModContent.ItemType<AncientSteelSword>(), 
+                ModContent.ItemType<RockingHorse>(), ModContent.ItemType<MrBurns>(), ModContent.ItemType<AncientSteelLongbow>()];
+            List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(),
+                ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>(), ModContent.ItemType<AncientSteelLantern>()];
+            List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>(), 
+                ModContent.ItemType<AncientSteelGreatPickaxe>(), ModContent.ItemType<AncientSteelGreatHamaxe>()];
             List<int> Tier4Items = [ModContent.ItemType<StarshardSaber>(), ModContent.ItemType<Icebreaker>(), ModContent.ItemType<SandstormPouch>(), ModContent.ItemType<PlagueSpitter>(), ModContent.ItemType<JarOfPineapple>()];
             int tier1 = WorldGen.genRand.Next(Tier1Items.Count), 
                 tier2 = WorldGen.genRand.Next(Tier2Items.Count), 
@@ -3958,13 +4089,24 @@ namespace SOTS.WorldgenHelpers
                 int slot = 0;
                 if(!AVSweepRect.Contains(i, j) && !cR.rect.Contains(i, j))
                 {
-                    continue;
+                    bool kill = false;
+                    foreach (Rectangle rect2 in CorruptPathRects)
+                    {
+                        if(!rect2.Contains(i, j))
+                        {
+                            kill = true;
+                            break;
+                        }
+                    }
+                    if(kill)
+                        continue;
                 }
                 Tile tile = Main.tile[i, j]; // the chest tile 
                 int mainItem = -1;
-                bool alreadyHasItem = chest.item[slot].type == ItemID.None;
+                int reduceItemChances = 1;
+                //bool alreadyHasItem = chest.item[slot].type == ItemID.None;
                 int potionType = ItemID.LesserHealingPotion;
-                if(tile.TileType == ModContent.TileType<RuinedChestTile>())
+                if(tile.TileType == ModContent.TileType<RuinedChestTile>() && Main.tile[i, j + 1].TileType != ModContent.TileType<EvilPlatingTile>())
                 {
                     //Tier 1 items
                     mainItem = Tier1Items[tier1++ % Tier1Items.Count];
@@ -3975,12 +4117,12 @@ namespace SOTS.WorldgenHelpers
                     mainItem = Tier2Items[tier2++ % Tier2Items.Count];
                     potionType = ItemID.HealingPotion;
                 }
-                else if(tile.TileType == ModContent.TileType<GulaVaultTile>() && Tier4Items.Count > 0)
+                else if(tile.TileType == ModContent.TileType<GulaVaultTile>())
                 {
-                    if (tile.TileFrameX >= 108) //If it is a triple locked chest
+                    if (tile.TileFrameX >= 108 && Tier4Items.Count > 0) //If it is a triple locked chest
                     {
                         //Tier 4 items
-                        mainItem = Main.rand.NextFromCollection(Tier4Items);
+                        mainItem = WorldGen.genRand.NextFromCollection(Tier4Items);
                         Tier4Items.Remove(mainItem);
                         if(mainItem == ModContent.ItemType<PlagueSpitter>() && WorldGen.crimson)
                         {
@@ -3995,9 +4137,16 @@ namespace SOTS.WorldgenHelpers
                         potionType = ItemID.RestorationPotion;
                     }
                 }
-                else if(tile.TileType == TileID.Containers && !alreadyHasItem) 
+                else if((tile.TileType == TileID.Containers || tile.TileType == TileID.Containers2)) 
                 {
                     //Loot for unrelated chests that happen to be in the biome
+                    mainItem = ModContent.ItemType<OldKey>();
+                    while (chest.item[slot].type != ItemID.None && slot < 40)
+                    {
+                        reduceItemChances++;
+                        slot++;
+                    }
+                    reduceItemChances++;
                 }
                 if (mainItem != -1)
                 {
@@ -4050,25 +4199,32 @@ namespace SOTS.WorldgenHelpers
                         potionType = WorldGen.genRand.NextFromList(ItemID.Bomb, ItemID.StickyBomb, ModContent.ItemType<MinersPickaxe>());
                     }
                     chest.AddItemToChest(mainItem, ref slot, 1);
-                    chest.AddItemToChest(secondItem, ref slot, secondAmt);
-                    if (WorldGen.genRand.NextBool(4))
+                    if(WorldGen.genRand.NextBool(reduceItemChances))
+                        chest.AddItemToChest(secondItem, ref slot, secondAmt);
+                    if (WorldGen.genRand.NextBool(4) && WorldGen.genRand.NextBool(reduceItemChances))
                         chest.AddItemToChest(WorldGen.genRand.NextFromList(ModContent.ItemType<FrigidBar>(), ModContent.ItemType<VibrantBar>(), WorldGen.crimson ? ItemID.CrimtaneBar : ItemID.DemoniteBar), ref slot, WorldGen.genRand.Next(4, 9));
-                    if (WorldGen.genRand.NextBool(10))
+                    if (WorldGen.genRand.NextBool(10) && WorldGen.genRand.NextBool(reduceItemChances))
                         chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.EmptyBucket, ItemID.CanOfWorms, ItemID.HerbBag), ref slot, 1);
-                    chest.AddItemToChest(fragmentDrop, ref slot, fragmentAmt);
-                    if (WorldGen.genRand.NextBool())
+                    if (WorldGen.genRand.NextBool(reduceItemChances))
+                        chest.AddItemToChest(fragmentDrop, ref slot, fragmentAmt);
+                    if (WorldGen.genRand.NextBool() && WorldGen.genRand.NextBool(reduceItemChances))
                         chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.ThrowingKnife, ModContent.ItemType<ExplosiveKnife>()), ref slot, WorldGen.genRand.Next(25, 51));
-                     chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.MiningPotion, WorldGen.crimson ? ItemID.RagePotion : ItemID.WrathPotion, 
-                        ModContent.ItemType<NightmarePotion>(), 
-                        ItemID.ThornsPotion, 
-                        ItemID.HeartreachPotion), ref slot, WorldGen.genRand.Next(1, 4));
-                    chest.AddItemToChest(potionType, ref slot, WorldGen.genRand.Next(3, 7));
-                    chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.Torch, WorldGen.crimson ? ItemID.CrimsonTorch : ItemID.CorruptTorch,
-                        ModContent.ItemType<EarthenPlatingTorch>(),
-                        ItemID.Glowstick), ref slot, WorldGen.genRand.Next(15, 31));
-                    chest.AddItemToChest(ItemID.GoldCoin, ref slot);
+                    if (WorldGen.genRand.NextBool(reduceItemChances))
+                        chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.MiningPotion, WorldGen.crimson ? ItemID.RagePotion : ItemID.WrathPotion, 
+                            ModContent.ItemType<NightmarePotion>(), 
+                            ItemID.ThornsPotion, 
+                            ItemID.HeartreachPotion), ref slot, WorldGen.genRand.Next(1, 4));
+                    if (WorldGen.genRand.NextBool(reduceItemChances))
+                        chest.AddItemToChest(potionType, ref slot, WorldGen.genRand.Next(3, 7));
+                    if (WorldGen.genRand.NextBool(reduceItemChances))
+                        chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.Torch, WorldGen.crimson ? ItemID.CrimsonTorch : ItemID.CorruptTorch,
+                            ModContent.ItemType<EarthenPlatingTorch>(),
+                            ItemID.Glowstick), ref slot, WorldGen.genRand.Next(15, 31));
+                    if (WorldGen.genRand.NextBool(reduceItemChances))
+                        chest.AddItemToChest(ItemID.GoldCoin, ref slot);
                 }
             }
+            CorruptPathRects = null;
         }
     }
 }

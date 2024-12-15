@@ -46,7 +46,6 @@ Update Objectives:
 
 ---WIP List---
 Abandoned village generation
-Vault Room to spawn loot
 Make enemies spawn in the AV and Mines
 Fix Archaeologist Shop (for the new items)! Includes conduits, av loot, etc.
 Update treasure slime loot tables (look at old and new treasure slimes)
@@ -83,10 +82,11 @@ Daily Log:
 12/8/24 to 12/14/24
 1. Try to fix error where palm trees on top of the pyramid would not disappear
 2. Very basic WIP Sanctuary
-3. Added Pinky Test Tube, needs: Item sprite and spawning on worldgen
+3. Added Pinky Test Tube, should spawn during worldgen, needs: Item sprite
 4. Evil Treasure slime no longer drops ancient steel or elemental amulet
 	1. Corruption treasure slime defense 16 - 12
-5. Added Mutagen Treasure Slime. Needs: Banner, Multiplayer Testing, Gore (add eyeball to gore)
+5. Added Mutagen Treasure Slime! Has banner and bestiary
+6. Chest generation in AV and more loot spawning
 
 12/5/24 to 12/8/24
 1. Fix bug where putrid pinky laser appeared to be stopped by bubble block

@@ -35,8 +35,8 @@ namespace SOTS.Items.Tools
 			int x2 = (int)tileLocation.X;
             int y2 = (int)tileLocation.Y;
 			//WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
-
-			SanctuaryWorldgenHelper.GenerateSanctuary();
+			//AbandonedVillageWorldgenHelper.TryPlacingImportantTiles(0);
+			//SanctuaryWorldgenHelper.GenerateSanctuary();
 			//SOTSWorldgenHelper.GenerateTestRoom();
             //AbandonedVillageWorldgenHelper.PrepareUnderground(new Rectangle(x2, y2, 250, 250));
             //AVHouseWorldgenHelper.GenerateHouse0(x2, y2);

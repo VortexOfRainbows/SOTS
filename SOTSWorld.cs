@@ -784,7 +784,7 @@ namespace SOTS
 			List<int> PyramidPoolAfter = new List<int>(PyramidPoolGuaranteed);
             // Iterate chests
             GemStructureWorldgenHelper.FillChestsWithLoot();
-			AbandonedVillageWorldgenHelper.PlaceLootInChests();
+            AbandonedVillageWorldgenHelper.PlaceLootInChests();
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest

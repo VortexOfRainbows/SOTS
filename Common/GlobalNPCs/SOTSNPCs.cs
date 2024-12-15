@@ -691,10 +691,6 @@ namespace SOTS.Common.GlobalNPCs
 				{
 					pool.Add(ModContent.NPCType<FluxSlime>(), ZoneAV ? 0.025f : 0.075f);
 				}
-				if(crimson)
-					pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.05f);
-				if (corrupt)
-					pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.05f);
 				if(ZoneAV)
 				{
 					bool underground = player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight;
@@ -707,7 +703,13 @@ namespace SOTS.Common.GlobalNPCs
                     if (underground)
 						pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.5f / (1f + NPC.CountNPCS(ModContent.NPCType<EarthenGizmo>()))); //Spawn gizmos less often the more of them there area
 
-					if(underground && Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2].WallType == WallID.None)
+					pool.Add(ModContent.NPCType<MutagenTreasureSlime>(), 0.05f);
+                    if (crimson)
+                        pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.01f);
+                    if (corrupt)
+                        pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.01f);
+
+                    if (underground && Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2].WallType == WallID.None)
 					{
 						if(!Main.rand.NextBool(10)) //Do not spawn enemies where there are no walls 90% of the time. This forces enemies to spawn in the cooridors in the abandoned village rather than the offshoot caves.
 						{
@@ -715,6 +717,13 @@ namespace SOTS.Common.GlobalNPCs
 							return;
 						}
 					}
+                }
+				else
+                {
+                    if (crimson)
+                        pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.05f);
+                    if (corrupt)
+                        pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.05f);
                 }
 			}
 			else if (player.ZoneHallow && Main.hardMode)
@@ -1099,8 +1108,14 @@ namespace SOTS.Common.GlobalNPCs
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 						Surface
 					});
-				}
-				if (npc.type == ModContent.NPCType<CorruptionTreasureSlime>())
+                }
+                if (npc.type == ModContent.NPCType<MutagenTreasureSlime>())
+                {
+                    bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                        AbandonedVillage,
+                    });
+                }
+                if (npc.type == ModContent.NPCType<CorruptionTreasureSlime>())
 				{
 					bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
 						Corruption,

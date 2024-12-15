@@ -708,6 +708,9 @@ namespace SOTS.Items.Banners
                     case 26:
                         type = NPCType<Fistfull>();
                         break;
+                    case 27:
+                        type = NPCType<MutagenTreasureSlime>();
+                        break;
                     default:
                         return;
                 }
@@ -938,6 +941,14 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners2>();
             Item.placeStyle = 26;
+        }
+    }
+    public class MutagenTreasureSlimeBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners2>();
+            Item.placeStyle = 27;
         }
     }
 }
