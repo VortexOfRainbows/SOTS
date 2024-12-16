@@ -43,6 +43,8 @@ Update Objectives:
 11. Earthen Armor for AV (Up next)
 12. Wormhole upgrade for the Catalcysm Disc (Pending)
 13. Add Solar Bulb item in the Leviathan area
+14. Sanctuary! (In Progress)
+	1. Tiles: Overgrown Vespera Brick, Vespera Rune Brick, Invidia Plating Block, 
 
 ---WIP List---
 Abandoned village generation
@@ -87,6 +89,7 @@ Daily Log:
 	1. Corruption treasure slime defense 16 - 12
 5. Added Mutagen Treasure Slime! Has banner and bestiary
 6. Chest generation in AV and more loot spawning
+7. WIP Sanctuary Tiles
 
 12/5/24 to 12/8/24
 1. Fix bug where putrid pinky laser appeared to be stopped by bubble block

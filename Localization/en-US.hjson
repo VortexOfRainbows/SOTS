@@ -6052,6 +6052,11 @@ Mods: {
 				DisplayName: Mutagen Treasure Slime Banner
 				Tooltip: ""
 			}
+
+			OvergrownEvostoneBrick: {
+				DisplayName: Overgrown Evostone Brick
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
