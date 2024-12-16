@@ -3795,7 +3795,7 @@ namespace SOTS.WorldgenHelpers
                         continue;
                     }
                 }
-                if(hasGround && hasAirSpace && (hasWalls || WorldGen.genRand.NextBool(3)))
+                if(hasGround && hasAirSpace && (hasWalls || WorldGen.genRand.NextBool(5)))
                 {
                     bool canBeEarth = true;
                     if (canBeGula || tTL.WallType == gulaWall || tTR.WallType == gulaWall)
@@ -3808,7 +3808,7 @@ namespace SOTS.WorldgenHelpers
                     {
                         viableTypes.Add(1);
                     }
-                    if (tBL.TileType == charred || tBL.TileType == soot || tBL.TileType == sootSlab || tBR.TileType == charred || tBR.TileType == soot || tBR.TileType == sootSlab || (viableTypes.Count == 0 && WorldGen.genRand.NextBool(3)))
+                    if (tBL.TileType == charred || tBL.TileType == soot || tBL.TileType == sootSlab || tBR.TileType == charred || tBR.TileType == soot || tBR.TileType == sootSlab || (viableTypes.Count == 0 && WorldGen.genRand.NextBool(2)))
                     {
                         viableTypes.Add(0);
                     }

@@ -79,10 +79,10 @@ N/A
 
 Daily Log:
 
-12/8/24 to 12/14/24
+12/8/24 to 12/15/24
 1. Try to fix error where palm trees on top of the pyramid would not disappear
 2. Very basic WIP Sanctuary
-3. Added Pinky Test Tube, should spawn during worldgen, needs: Item sprite
+3. Added Pinky Test Tube, should spawn during worldgen
 4. Evil Treasure slime no longer drops ancient steel or elemental amulet
 	1. Corruption treasure slime defense 16 - 12
 5. Added Mutagen Treasure Slime! Has banner and bestiary

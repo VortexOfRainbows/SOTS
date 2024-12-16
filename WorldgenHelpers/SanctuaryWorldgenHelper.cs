@@ -82,10 +82,11 @@ namespace SOTS.WorldgenHelpers
         public static void GenerateSanctuary()
         {
             int size = 5;
-            int spread = 70;
+            int spread = 80;
             int left = SideOfWorld - size * spread;
             int right = SideOfWorld + size * spread;
             int outcropSize = 180;
+            GenerateRectangle(left, Ceiling + 5, right, Bottom - 50, -1);
             PrepareUnderworldArea(left - 2, Ceiling + 5, right + 2, Bottom - 65, 0);
             left -= 10;
             right += 10;
@@ -95,17 +96,42 @@ namespace SOTS.WorldgenHelpers
             GeneratePillar(SideOfWorld + size * spread, UnderworldHeight);
             GeneratePillar(SideOfWorld - size * spread, UnderworldHeight);
 
-            GenerateRectangle(SideOfWorld - size * spread - 5, Ceiling, SideOfWorld + size * spread + 5, Ceiling + 15);
+            GenerateRectangle(SideOfWorld - size * spread - 5, Ceiling - 15, SideOfWorld + size * spread + 5, Ceiling + 5);
 
-            for(int i = -1; i <= 1; i ++)
+            for(int i = -3; i <= 3; i ++)
             {
-                int x = SideOfWorld + size * spread * i * 3 / 5;
-                int centerPillarSize = i == 0 ? 60 : WorldGen.genRand.Next(40, 51);
-                int heightOffset = i == 0 ? 25 : WorldGen.genRand.Next(15, 26);
-                PrepareUnderworldArea(x - centerPillarSize - outcropSize, Ceiling + 60, x - centerPillarSize, Bottom - 4, -2, heightOffset - 2);
-                PrepareUnderworldArea(x + centerPillarSize, Ceiling + 60, x + outcropSize + centerPillarSize, Bottom - 4, 2, heightOffset - 2);
-                GenerateRectangle(x - centerPillarSize, UnderworldHeight + heightOffset, x + centerPillarSize, Bottom, 0);
+                int x = SideOfWorld + i * 115;
+                int centerPillarSize = i == 0 ? 60 : WorldGen.genRand.Next(44, 49);
+                int heightOffset = i == 0 ? 25 : WorldGen.genRand.Next(15, 21);
+                if(i % 2 == 0)
+                {
+                    PrepareUnderworldArea(x - centerPillarSize - outcropSize, Ceiling + 60, x - centerPillarSize, Bottom - 4, -2, heightOffset - 2);
+                    PrepareUnderworldArea(x + centerPillarSize, Ceiling + 60, x + outcropSize + centerPillarSize, Bottom - 4, 2, heightOffset - 2);
+                    GenerateRectangle(x - centerPillarSize, UnderworldHeight + heightOffset, x + centerPillarSize, Bottom, 0);
+                }
+                else
+                {
+                    int y = UnderworldHeight;
+                    if (MathF.Abs(i) == 1)
+                    {
+                        y += WorldGen.genRand.Next(19, 23);
+                        x += i * 4;
+                    }
+                    else
+                    {
+                        y += WorldGen.genRand.Next(6, 10);
+                        x -= i * 2;
+                    }
+                    GenerateRectangle(x - 20, Ceiling, x + 20, Bottom, 1);
+                    GeneratePlatform(x, y, 0);
+                    if (MathF.Abs(i) == 1)
+                        GeneratePlatform(x, UnderworldHeight - WorldGen.genRand.Next(23, 28), 0);
+                }
             }
+
+            GenerateRectangle(left, UnderworldHeight + 37, right, Bottom, 2);
+            GenerateRectangle(right - 150, UnderworldHeight + 25, right, Bottom, 2);
+            GenerateRectangle(left, UnderworldHeight + 25, left + 150, Bottom, 2);
 
             left -= outcropSize / 2;
             right += outcropSize / 2;
@@ -113,8 +139,8 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GeneratePillar(int i, int j)
         {
-            GenerateRectangle(i - 10, j - 30 - 1, i + 10, j + 1, -1);
-            GenerateRectangle(i - 10, Ceiling, i + 10, j - 30);
+            GenerateRectangle(i - 10, j - 30 - 1, i + 10, j + 1, 1);
+            GenerateRectangle(i - 10, Ceiling - 15, i + 10, j - 30);
             GenerateRectangle(i - 10, j, i + 10, Bottom);
         }
         public static void GenerateRectangle(int x, int y, int endX, int endY, int style = 0)
@@ -126,16 +152,113 @@ namespace SOTS.WorldgenHelpers
                 for (int j = y; j <= endY; j++)
                 {
                     Tile t = Main.tile[i, j];
-                    t.ClearTile();
-                    if (style == 0)
+                    if(style == 2)
                     {
-                        t.TileType = Evostone;
-                        t.HasTile = true;
-                        WorldGen.TileFrame(i, j);
+                        if(!t.HasTile)
+                        {
+                            t.LiquidType = LiquidID.Lava;
+                            t.LiquidAmount = 255;
+                        }
                     }
-                    if (i > x && i < endX && j > y && j < endY)
+                    else
                     {
-                        t.WallType = EvostoneWall;
+                        if (style == 0 || style == -1)
+                        {
+                            t.ClearTile();
+                            if (style == 0)
+                            {
+                                t.TileType = Evostone;
+                                t.HasTile = true;
+                                t.LiquidAmount = 0;
+                                WorldGen.TileFrame(i, j);
+                            }
+                            else
+                            {
+                                t.WallType = WallID.None;
+                                continue;
+                            }
+                        }
+                        if (i > x && i < endX && j > y && j < endY)
+                        {
+                            t.WallType = EvostoneWall;
+                        }
+                    }
+                }
+            }
+        }
+        public static void GeneratePlatform(int x, int y, int style = 0)
+        {
+            int[,] _structure;
+            if(style == 0)
+            {
+                _structure = new int[,] {
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,1,0},
+                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,0},
+                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0},
+                    {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0}
+                };
+            }
+            else
+            {
+                _structure = new int[,] {
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,1,0},
+                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,0},
+                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0},
+                    {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0}
+                };
+            }
+            int len = _structure.GetLength(1) - 1;
+            int PosX = x - len;  //spawnX and spawnY is where you want the anchor to be when this generates
+            int PosY = y;
+            for (int i = 0; i < _structure.GetLength(0); i++)
+            {
+                for (int j = len; j >= 0; j--)
+                {
+                    int k = PosX + j;
+                    int k2 = PosX - j + len * 2;
+                    int l = PosY + i;
+                    if (WorldGen.InWorld(k, l, 30))
+                    {
+                        Tile tile = Framing.GetTileSafely(k, l);
+                        Tile tile2 = Framing.GetTileSafely(k2, l);
+                        switch (_structure[i, j])
+                        {
+                            case 0:
+                                tile.HasTile = true;
+                                tile.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
+                                tile.Slope = 0;
+                                tile.IsHalfBlock = false;
+
+                                tile2.HasTile = true;
+                                tile2.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
+                                tile2.Slope = 0;
+                                tile2.IsHalfBlock = false;
+                                break;
+                        }
                     }
                 }
             }
