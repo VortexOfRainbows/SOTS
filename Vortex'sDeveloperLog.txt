@@ -44,7 +44,7 @@ Update Objectives:
 12. Wormhole upgrade for the Catalcysm Disc (Pending)
 13. Add Solar Bulb item in the Leviathan area
 14. Sanctuary! (In Progress)
-	1. Tiles: Overgrown Vespera Brick, Vespera Rune Brick, Invidia Plating Block, 
+	1. Tiles: Overgrown Vespera Brick, Vespera Rune Brick, Invidia Plating Block, Invidia Portal Plating
 
 ---WIP List---
 Abandoned village generation

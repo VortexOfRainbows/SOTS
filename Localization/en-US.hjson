@@ -6057,6 +6057,11 @@ Mods: {
 				DisplayName: Overgrown Evostone Brick
 				Tooltip: ""
 			}
+
+			RunicEvostoneBrick: {
+				DisplayName: Runic Evostone Brick
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

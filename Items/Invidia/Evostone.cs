@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -127,5 +128,37 @@ namespace SOTS.Items.Invidia
 		{
 			CreateRecipe(1).AddIngredient(ModContent.ItemType<EvostoneBrick>(), 2).AddTile(TileID.Hellforge).Register();
 		}
-	}
+    }
+    public class RunicEvostoneBrickTile : ModTile
+    {
+        public override string Texture => "SOTS/Items/Invidia/EvostoneBrickTile";
+		public static Texture2D rune = null;
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+			if(rune == null)
+				rune = ModContent.Request<Texture2D>("SOTS/Items/Invidia/Runes", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			SOTSTile.DrawSlopedGlowMask(i, j, Type, rune, Color.White, Vector2.Zero, true);
+        }
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileLighted[Type] = false;
+            Main.tileBlendAll[Type] = true;
+            Main.tileBrick[Type] = true;
+            DustType = DustID.Obsidian;
+            AddMapEntry(new Color(46, 63, 77));
+            HitSound = SoundID.Tink;
+        }
+    }
+    public class RunicEvostoneBrick : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(100);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.rare = ItemRarityID.Green;
+            Item.createTile = ModContent.TileType<RunicEvostoneBrickTile>();
+        }
+    }
 }
