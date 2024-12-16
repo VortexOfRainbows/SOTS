@@ -48,11 +48,28 @@ using Terraria.DataStructures;
 using SOTS.Items.Furniture.Functional;
 using SOTS.Items.Conduit;
 using Terraria.Graphics.Light;
+using Terraria.Enums;
 
 namespace SOTS
 {
     public class SOTSWorld : ModSystem
 	{
+		private static int MoonPhase = 0;
+		private static float PrevMoonProgress = 0;
+		public static float MoonPhasePercent;
+        public static float SantuaryMoonPhase()
+		{
+			float moonSwitch = 19.5f;
+			float progressToTheNextMoon = (Utils.GetDayTimeAs24FloatStartingFromMidnight() + moonSwitch) % 24 / 24f;
+			if (PrevMoonProgress > 0.98f && progressToTheNextMoon < 0.02f)
+			{
+				MoonPhase++;
+			}
+			else
+				MoonPhase = Main.moonPhase;
+            PrevMoonProgress = progressToTheNextMoon;
+            return 1 - MathF.Abs(MathF.Sin((MoonPhase + progressToTheNextMoon - moonSwitch / 24f) / 8f * MathF.PI));
+		}
 		public static int GlobalCounter = 0;
 		public const float GlobalFreezeStartup = 30f;
 		public static int GlobalTimeFreeze = 0;
@@ -188,6 +205,7 @@ namespace SOTS
         {
 			if(!IsFrozenThisFrame)
 				ParticleHelper.Update();
+            //Main.NewText(MoonPhasePercent);
         }
         public static void Update()
         {
@@ -198,7 +216,8 @@ namespace SOTS
 					SyncGlobalCounter();
             }
 			LastLightingMode = Lighting.Mode;
-		}
+            MoonPhasePercent = SantuaryMoonPhase();
+        }
 		public override void PreSaveAndQuit()
 		{
 			SOTSConfig.voidBarNeedsLoading = 0;

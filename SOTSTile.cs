@@ -29,6 +29,12 @@ namespace SOTS
 {
     public class SOTSTile : GlobalTile
     {
+        public static float PlanetariumLightingColorMultiplier(int i, int j)
+        {
+            float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
+            float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
+            return alphaMult;
+        }
         /// <summary>
         /// Gets the texture of a tile and applies paint to it. Adapted from Vanilla code.
         /// </summary>
@@ -393,17 +399,12 @@ namespace SOTS
                 HardlightBlockTile.Draw(i - 1, j, spriteBatch);
             base.PostDraw(i, j, type, spriteBatch);
         }
-        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset, bool overrideTileFrame = false)
+        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset, int frameX, int frameY)
         {
             Tile tile = Main.tile[i, j];
-            int TileFrameX = tile.TileFrameX;
-            int TileFrameY = tile.TileFrameY;
-            if (overrideTileFrame)
-            {
-                TileFrameX = 0;
-                TileFrameY = 0;
-            }
-            if(type == TileType<FamishedBlockCorruption.FamishedTileCorruption>() || type == TileType<FamishedBlockCrimson.FamishedTileCrimson>())
+            int TileFrameX = frameX;
+            int TileFrameY = frameY;
+            if (type == TileType<FamishedBlockCorruption.FamishedTileCorruption>() || type == TileType<FamishedBlockCrimson.FamishedTileCrimson>())
             {
                 TileFrameY += (i + j) % 2 == 1 ? 90 : 0;
             }
@@ -479,6 +480,13 @@ namespace SOTS
                     Main.spriteBatch.Draw(texture, drawPos, TileFrame, drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0.0f);
                 }
             }
+        }
+        public static void DrawSlopedGlowMask(int i, int j, int type, Texture2D texture, Color drawColor, Vector2 positionOffset, bool overrideTileFrame = false)
+        {
+            Tile tile = Main.tile[i, j];
+            int TileFrameX = tile.TileFrameX;
+            int TileFrameY = tile.TileFrameY;
+            DrawSlopedGlowMask(i, j, type, texture, drawColor, positionOffset, TileFrameX, TileFrameY);
         }
         public override void ModifyLight(int i, int j, int type, ref float r, ref float g, ref float b)
         {

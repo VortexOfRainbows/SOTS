@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -133,21 +134,59 @@ namespace SOTS.Items.Invidia
     {
         public override string Texture => "SOTS/Items/Invidia/EvostoneBrickTile";
 		public static Texture2D rune = null;
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            Tile t = Main.tile[i, j];
+            int tFrameX = t.TileFrameX / 18;
+            int tFrameY = t.TileFrameY / 18;
+            bool valid = (tFrameX >= 1 && tFrameX <= 3 && tFrameY == 1) ||
+                (tFrameX >= 6 && tFrameX <= 8 && (tFrameY == 1 || tFrameY == 2)) ||
+                (tFrameY >= 0 && tFrameY <= 2 && (tFrameX == 10 || tFrameX == 11));
+            if (!valid)
+                return;
+			float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.9f + 0.1f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
+			float mult = fillPercent * fillPercent * 1.5f;
+			r = .168f * mult;
+			g = .443f * mult;
+			b = .196f * mult;
+        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
 			if(rune == null)
 				rune = ModContent.Request<Texture2D>("SOTS/Items/Invidia/Runes", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-			SOTSTile.DrawSlopedGlowMask(i, j, Type, rune, Color.White, Vector2.Zero, true);
+			Tile t = Main.tile[i, j];
+			int tFrameX = t.TileFrameX / 18;
+			int tFrameY = t.TileFrameY / 18;
+			bool valid = (tFrameX >= 1 && tFrameX <= 3 && tFrameY == 1) || 
+				(tFrameX >= 6 && tFrameX <= 8 && (tFrameY == 1 || tFrameY == 2)) ||
+                (tFrameY >= 0 && tFrameY <= 2 && (tFrameX == 10 || tFrameX == 11));
+			if (!valid)
+				return;
+            int frame = (i * 3 + j * 11) % 20;
+            int x = frame % 4;
+			int y = frame / 4;
+			Color lC = Lighting.GetColor(i, j);
+            SOTSTile.DrawSlopedGlowMask(i, j, Type, rune, lC, Vector2.Zero, 2 + 18 * x, 2 + 18 * y);
+			float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.9f + 0.1f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
+            Color runeColor = Color.Lerp(lC, Color.White, fillPercent * fillPercent) * fillPercent;
+			runeColor.A = 0;
+			int c = SOTS.Config.lowFidelityMode ? 3 : 6;
+			int d = SOTS.Config.lowFidelityMode ? 120 : 60;
+            for (int a = 0; a < c; a++)
+            {
+                SOTSTile.DrawSlopedGlowMask(i, j, Type, rune, runeColor * 0.23f * fillPercent, new Vector2(.4f + 1.8f * SOTSWorld.MoonPhasePercent, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 2 + 18 * (x + 4), 2 + 18 * y);
+            }
+			SOTSTile.DrawSlopedGlowMask(i, j, Type, rune, runeColor, Vector2.Zero, 2 + 18 * (x + 4), 2 + 18 * y);
         }
         public override void SetStaticDefaults()
         {
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
-            Main.tileLighted[Type] = false;
+            Main.tileLighted[Type] = true;
             Main.tileBlendAll[Type] = true;
             Main.tileBrick[Type] = true;
             DustType = DustID.Obsidian;
-            AddMapEntry(new Color(46, 63, 77));
+            AddMapEntry(Color.Lerp(new Color(14, 53, 4), new Color(46, 63, 77), 0.5f));
             HitSound = SoundID.Tink;
         }
     }

@@ -49,12 +49,12 @@ namespace SOTS.Items.AbandonedVillage
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			float uniquenessCounter = Main.GlobalTimeWrappedHourly * -100 + (i + j) * 5;
+			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			Tile tile = Main.tile[i, j];
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/AbandonedVillage/GulaPlatingTileGlow").Value;
 			Color color;
 			color = WorldGen.paintColor((int)Main.tile[i, j].TileColor) * (100f / 255f);
 			color.A = 0;
-			float alphaMult = 0.55f + 0.45f * (float)Math.Sin(MathHelper.ToRadians(uniquenessCounter));
 			for (int k = 0; k < 3; k++)
 			{
 				Vector2 offset = new Vector2(Main.rand.NextFloat(-1, 1f), Main.rand.NextFloat(-1, 1f)) * 0.25f * k;
