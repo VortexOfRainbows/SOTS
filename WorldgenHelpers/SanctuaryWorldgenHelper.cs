@@ -3,6 +3,8 @@ using Terraria;
 using Terraria.ModLoader;
 using System;
 using SOTS.Items.Invidia;
+using SOTS.Items.AbandonedVillage;
+using System.Security.Cryptography;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -11,14 +13,11 @@ namespace SOTS.WorldgenHelpers
         public static FastNoiseLite genNoise = null;
         public static void SetNoise()
         {
-            if (genNoise == null)
-            {
-                genNoise = new FastNoiseLite();
-                genNoise.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
-                genNoise.SetFractalType(FastNoiseLite.FractalType.PingPong);
-                genNoise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.EuclideanSq);
-                genNoise.SetSeed(WorldGen.genRand.Next(500, 1500));
-            }
+            genNoise = new FastNoiseLite();
+            genNoise.SetNoiseType(FastNoiseLite.NoiseType.Cellular);
+            genNoise.SetFractalType(FastNoiseLite.FractalType.PingPong);
+            genNoise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.EuclideanSq);
+            genNoise.SetSeed(WorldGen.genRand.Next(500, 1500));
         }
         public static int Ceiling => Main.UnderworldLayer;
         public static int Bottom => Main.maxTilesY - 1;
@@ -135,7 +134,9 @@ namespace SOTS.WorldgenHelpers
 
             left -= outcropSize / 2;
             right += outcropSize / 2;
+            CleanUp(left, right, Ceiling - 30, Bottom);
             SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<EvostoneTile>());
+
         }
         public static void GeneratePillar(int i, int j)
         {
@@ -189,7 +190,7 @@ namespace SOTS.WorldgenHelpers
         public static void GeneratePlatform(int x, int y, int style = 0)
         {
             int[,] _structure;
-            if(style == 0)
+            if (style == 0)
             {
                 _structure = new int[,] {
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -258,6 +259,44 @@ namespace SOTS.WorldgenHelpers
                                 tile2.Slope = 0;
                                 tile2.IsHalfBlock = false;
                                 break;
+                        }
+                    }
+                }
+            }
+        }
+        public static void CleanUp(int left, int right, int top, int bottom)
+        {
+            ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
+            ushort RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
+            SetNoise();
+            float paddingZone = 30f;
+            float noiseWormMult = 0.08f;
+            for (int i = left; i <= right; i++)
+            {
+                for (int j = top; j <= bottom; j++)
+                {
+                    float fromLeft = MathF.Abs(i - left);
+                    float fromRight = MathF.Abs(i - right);
+                    float fromTop = MathF.Abs(j - top);
+                    float fromBottom = MathF.Abs(j - bottom);
+                    float percent = 1;
+                    if (fromLeft < paddingZone || fromRight < paddingZone ||
+                       fromTop < paddingZone || fromBottom < paddingZone)
+                    {
+                        float smallest = MathF.Min(MathF.Min(fromLeft, fromRight), MathF.Min(fromTop, fromBottom));
+                        percent = smallest / paddingZone;
+                    }
+                    float noise = genNoise.GetNoise(i * 5, j * 5, 0);
+                    Tile t = Main.tile[i, j];
+                    bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
+                    if (noiseWorm && !WorldGen.genRand.NextBool(5))
+                    {
+                        if (t.HasTile)
+                        {
+                            if (t.TileType == EvostoneBrick)
+                            {
+                                t.TileType = RuneBrick;
+                            }
                         }
                     }
                 }

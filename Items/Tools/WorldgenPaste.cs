@@ -37,7 +37,7 @@ namespace SOTS.Items.Tools
 			//WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
 			//AbandonedVillageWorldgenHelper.TryPlacingImportantTiles(0);
 			Main.moonPhase = 0;
-			//SanctuaryWorldgenHelper.GenerateSanctuary();
+			SanctuaryWorldgenHelper.GenerateSanctuary();
 			//SanctuaryWorldgenHelper.GeneratePlatform(x2, y2);
 			//SOTSWorldgenHelper.GenerateTestRoom();
             //AbandonedVillageWorldgenHelper.PrepareUnderground(new Rectangle(x2, y2, 250, 250));
