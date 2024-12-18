@@ -6062,6 +6062,16 @@ Mods: {
 				DisplayName: Runic Evostone Brick
 				Tooltip: ""
 			}
+
+			RunicEvostone: {
+				DisplayName: Runic Evostone
+				Tooltip: ""
+			}
+
+			InvidiaPlating: {
+				DisplayName: Invidia Plating
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

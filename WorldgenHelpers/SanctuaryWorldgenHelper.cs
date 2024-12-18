@@ -106,7 +106,7 @@ namespace SOTS.WorldgenHelpers
                 {
                     PrepareUnderworldArea(x - centerPillarSize - outcropSize, Ceiling + 60, x - centerPillarSize, Bottom - 4, -2, heightOffset - 2);
                     PrepareUnderworldArea(x + centerPillarSize, Ceiling + 60, x + outcropSize + centerPillarSize, Bottom - 4, 2, heightOffset - 2);
-                    GenerateRectangle(x - centerPillarSize, UnderworldHeight + heightOffset, x + centerPillarSize, Bottom, 0);
+                    GenerateRectangle(x - centerPillarSize, UnderworldHeight + heightOffset, x + centerPillarSize, Bottom, 3);
                 }
                 else
                 {
@@ -146,6 +146,10 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenerateRectangle(int x, int y, int endX, int endY, int style = 0)
         {
+            bool topLayer = style == 3;
+            if (style == 3)
+                style = 0;
+            ushort Invidia = (ushort)ModContent.TileType<InvidiaPlatingTile>();
             ushort Evostone = (ushort)ModContent.TileType<EvostoneBrickTile>();
             ushort EvostoneWall = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
             for (int i = x; i <= endX; i++)
@@ -168,10 +172,12 @@ namespace SOTS.WorldgenHelpers
                             t.ClearTile();
                             if (style == 0)
                             {
-                                t.TileType = Evostone;
+                                if(topLayer && j <= y + 1 && i != x && i != endX)
+                                    t.TileType = Invidia;
+                                else
+                                    t.TileType = Evostone;
                                 t.HasTile = true;
                                 t.LiquidAmount = 0;
-                                WorldGen.TileFrame(i, j);
                             }
                             else
                             {
@@ -189,18 +195,21 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GeneratePlatform(int x, int y, int style = 0)
         {
+            ushort Invidia = (ushort)ModContent.TileType<InvidiaPlatingTile>();
+            ushort Evostone = (ushort)ModContent.TileType<EvostoneBrickTile>();
+            ushort Grass = (ushort)ModContent.TileType<OvergrownEvostoneBrickTile>();
             int[,] _structure;
             if (style == 0)
             {
                 _structure = new int[,] {
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,1,0},
-                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,0},
-                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0},
-                    {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-                    {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
+                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,3,3,3,1,1,1,3},
+                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,3,1,1,1,1,1,3},
+                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1,1,3},
+                    {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0},
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0},
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0},
@@ -214,14 +223,14 @@ namespace SOTS.WorldgenHelpers
             else
             {
                 _structure = new int[,] {
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0,0,1,1,1,0},
-                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,0},
-                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0},
-                    {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-                    {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
+                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,3,3,3,1,1,1,3},
+                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,3,1,1,1,1,1,3},
+                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1,1,3},
+                    {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0},
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0},
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0},
@@ -249,15 +258,22 @@ namespace SOTS.WorldgenHelpers
                         switch (_structure[i, j])
                         {
                             case 0:
-                                tile.HasTile = true;
-                                tile.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
-                                tile.Slope = 0;
-                                tile.IsHalfBlock = false;
-
-                                tile2.HasTile = true;
-                                tile2.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
-                                tile2.Slope = 0;
-                                tile2.IsHalfBlock = false;
+                                tile.HasTile = tile2.HasTile = true;
+                                tile.TileType = tile2.TileType = Evostone;
+                                tile.Slope = tile2.Slope = 0;
+                                tile.IsHalfBlock = tile2.IsHalfBlock = false;
+                                break;
+                            case 2:
+                                tile.HasTile = tile2.HasTile = true;
+                                tile.TileType = tile2.TileType = Grass;
+                                tile.Slope = tile2.Slope = 0;
+                                tile.IsHalfBlock = tile2.IsHalfBlock = false;
+                                break;
+                            case 3:
+                                tile.HasTile = tile2.HasTile = true;
+                                tile.TileType = tile2.TileType = Invidia;
+                                tile.Slope = tile2.Slope = 0;
+                                tile.IsHalfBlock = tile2.IsHalfBlock = false;
                                 break;
                         }
                     }
@@ -266,6 +282,8 @@ namespace SOTS.WorldgenHelpers
         }
         public static void CleanUp(int left, int right, int top, int bottom)
         {
+            ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
+            ushort Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
             ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
             ushort RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
             SetNoise();
@@ -289,16 +307,17 @@ namespace SOTS.WorldgenHelpers
                     float noise = genNoise.GetNoise(i * 5, j * 5, 0);
                     Tile t = Main.tile[i, j];
                     bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
-                    if (noiseWorm && !WorldGen.genRand.NextBool(5))
+                    if (noiseWorm && !WorldGen.genRand.NextBool(8))
                     {
                         if (t.HasTile)
                         {
                             if (t.TileType == EvostoneBrick)
-                            {
                                 t.TileType = RuneBrick;
-                            }
+                            if (t.TileType == Evostone)
+                                t.TileType = Rune;
                         }
                     }
+                    WorldGen.TileFrame(i, j);
                 }
             }
         }

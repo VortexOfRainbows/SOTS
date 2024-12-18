@@ -2,6 +2,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -186,8 +187,47 @@ namespace SOTS.Items.Invidia
             Main.tileBlendAll[Type] = true;
             Main.tileBrick[Type] = true;
             DustType = DustID.Obsidian;
-            AddMapEntry(Color.Lerp(new Color(14, 53, 4), new Color(46, 63, 77), 0.5f));
+            AddMapEntry(Color.Lerp(new Color(14, 53, 4), new Color(46, 63, 77), 0.6f));
             HitSound = SoundID.Tink;
+        }
+    }
+    public class RunicEvostone : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(100);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.rare = ItemRarityID.Green;
+            Item.createTile = ModContent.TileType<RunicEvostoneTile>();
+        }
+    }
+    public class RunicEvostoneTile : RunicEvostoneBrickTile
+    {
+        public override string Texture => "SOTS/Items/Invidia/EvostoneTile";
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileLighted[Type] = true;
+            Main.tileBlendAll[Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<EvostoneTile>()] = true;
+            Main.tileMerge[ModContent.TileType<EvostoneTile>()][Type] = true;
+            Main.tileMerge[Type][TileID.Marble] = true;
+            Main.tileMerge[TileID.Marble][Type] = true;
+            Main.tileMerge[Type][TileID.Mud] = true;
+            Main.tileMerge[TileID.Mud][Type] = true;
+            Main.tileMerge[Type][TileID.MushroomGrass] = true;
+            Main.tileMerge[TileID.MushroomGrass][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<EvostoneBrickTile>()] = true;
+            Main.tileMerge[ModContent.TileType<EvostoneBrickTile>()][Type] = true;
+            DustType = DustID.Obsidian;
+            AddMapEntry(Color.Lerp(new Color(14, 53, 4), new Color(31, 39, 57), 0.6f));
+            HitSound = SoundID.Tink;
+        }
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        {
+            SOTS.MergeWithFrame(i, j, Type, TileID.Marble, forceSameDown: false, forceSameUp: false, forceSameLeft: false, forceSameRight: false, resetFrame);
+            return false;
         }
     }
     public class RunicEvostoneBrick : ModItem
@@ -198,6 +238,106 @@ namespace SOTS.Items.Invidia
             Item.CloneDefaults(ItemID.StoneBlock);
             Item.rare = ItemRarityID.Green;
             Item.createTile = ModContent.TileType<RunicEvostoneBrickTile>();
+        }
+    }
+    public class InvidiaPlating : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(100);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.rare = ItemRarityID.LightRed;
+            Item.createTile = ModContent.TileType<InvidiaPlatingTile>();
+        }
+    }
+    public class InvidiaPlatingTile : ModTile
+    {
+        public static Texture2D glow = null;
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.6f + 0.4f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
+            float mult = fillPercent * fillPercent;
+            r = .168f * mult;
+            g = .443f * mult;
+            b = .196f * mult;
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Texture2D tileTexture = TextureAssets.Tile[Type].Value;
+            if (glow == null)
+                glow = ModContent.Request<Texture2D>("SOTS/Items/Invidia/InvidiaPlatingTileGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Tile t = Main.tile[i, j];
+            Color lC = Lighting.GetColor(i, j);
+            float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.6f + 0.4f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
+            Color color = Color.Lerp(lC, Color.White, fillPercent * fillPercent) * fillPercent;
+            color.A = 0;
+            int c = SOTS.Config.lowFidelityMode ? 3 : 6;
+            int d = SOTS.Config.lowFidelityMode ? 120 : 60;
+			float moonDist = .4f + 1.8f * SOTSWorld.MoonPhasePercent;
+            bool top = Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].Slope == 0 || Main.tile[i, j - 1].TopSlope);
+            bool bot = Main.tile[i, j + 1].HasTile && (Main.tile[i, j + 1].Slope == 0 || Main.tile[i, j + 1].BottomSlope);
+            bool left = Main.tile[i - 1, j].HasTile && (Main.tile[i - 1, j].Slope == 0 || Main.tile[i - 1, j].LeftSlope);
+            bool right = Main.tile[i + 1, j].HasTile && (Main.tile[i + 1, j].Slope == 0 || Main.tile[i - 1, j].RightSlope);
+            bool topLeft = Main.tile[i - 1, j - 1].HasTile && (Main.tile[i - 1, j - 1].Slope == SlopeType.SlopeDownRight || Main.tile[i - 1, j - 1].Slope == 0);
+            bool topRight = Main.tile[i + 1, j - 1].HasTile && (Main.tile[i + 1, j - 1].Slope == SlopeType.SlopeDownLeft || Main.tile[i + 1, j - 1].Slope == 0);
+            bool botLeft = Main.tile[i - 1, j + 1].HasTile && (Main.tile[i - 1, j + 1].Slope == SlopeType.SlopeUpRight || Main.tile[i - 1, j + 1].Slope == 0);
+            bool botRight = Main.tile[i + 1, j + 1].HasTile && (Main.tile[i + 1, j + 1].Slope == SlopeType.SlopeUpLeft || Main.tile[i + 1, j + 1].Slope == 0);
+            bool drawTopLeft = top && left && !topLeft;
+            bool drawTopRight = top && right && !topRight;
+            bool drawBotLeft = bot && left && !botLeft;
+            bool drawBotRight = bot && right && !botRight;
+            if (drawTopLeft && drawTopRight && drawBotLeft && drawBotRight)
+            {
+                SOTSTile.DrawSlopedGlowMask(i, j, Type, tileTexture, lC, Vector2.Zero, 216, 72);
+                for (int a = 0; a < c; a++)
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color * 0.23f * fillPercent, new Vector2(moonDist, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 216, 72);
+                SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color, Vector2.Zero, 216, 72);
+            }
+            else
+            {
+                if (drawTopLeft)
+                {
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, tileTexture, lC, Vector2.Zero, 162, 72);
+                    for (int a = 0; a < c; a++)
+                        SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color * 0.23f * fillPercent, new Vector2(moonDist, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 162, 72);
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color, Vector2.Zero, 162, 72);
+                }
+                if (drawTopRight)
+                {
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, tileTexture, lC, Vector2.Zero, 180, 72);
+                    for (int a = 0; a < c; a++)
+                        SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color * 0.23f * fillPercent, new Vector2(moonDist, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 180, 72);
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color, Vector2.Zero, 180, 72);
+                }
+                if (drawBotLeft)
+                {
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, tileTexture, lC, Vector2.Zero, 198, 72);
+                    for (int a = 0; a < c; a++)
+                        SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color * 0.23f * fillPercent, new Vector2(moonDist, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 198, 72);
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color, Vector2.Zero, 198, 72);
+                }
+                if (drawBotRight)
+                {
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, tileTexture, lC, Vector2.Zero, 216, 54);
+                    for (int a = 0; a < c; a++)
+                        SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color * 0.23f * fillPercent, new Vector2(moonDist, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 216, 54);
+                    SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color, Vector2.Zero, 216, 54);
+                }
+            }
+            for (int a = 0; a < c; a++)
+                SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color * 0.23f * fillPercent, new Vector2(moonDist, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)));
+            SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, color, Vector2.Zero);
+        }
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileLighted[Type] = true;
+            Main.tileBlendAll[Type] = true;
+            Main.tileBrick[Type] = true;
+            DustType = DustID.Obsidian;
+            AddMapEntry(new Color(14, 53, 4));
+            HitSound = SoundID.Tink;
         }
     }
 }
