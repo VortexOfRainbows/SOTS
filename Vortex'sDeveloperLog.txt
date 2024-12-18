@@ -33,7 +33,7 @@ Update Objectives:
 6. Upgrade to Code Corruptor: Dolphin Blaster (?)
 7. Shimmer Item that upgrades the store for Archaeologist
 8. Fix cross-compatibility generation bugs. Also make eternity mode not suffocate otherworld enemies.
-	1. Infernum: fix way the Leviathan area is generated
+	1. Infernum: fix gen with Sanctuary
 	2. Remnants and secret seed Compatibility: requires overhaul of generation
 	3. Thorium: Move amber gem structure to bottom of oceanic depths
 	4. Sand Floating Islands: Make pyramid start the desert check lower to the ground
