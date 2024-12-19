@@ -5,6 +5,9 @@ using System;
 using SOTS.Items.Invidia;
 using SOTS.Items.AbandonedVillage;
 using System.Security.Cryptography;
+using Steamworks;
+using System.Text;
+using Terraria.Utilities;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -172,7 +175,7 @@ namespace SOTS.WorldgenHelpers
                             t.ClearTile();
                             if (style == 0)
                             {
-                                if(topLayer && j <= y + 1 && i != x && i != endX)
+                                if(topLayer && j <= y && i != x && i != endX)
                                     t.TileType = Invidia;
                                 else
                                     t.TileType = Evostone;
@@ -204,10 +207,10 @@ namespace SOTS.WorldgenHelpers
                 _structure = new int[,] {
                     {0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
-                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,3,3,3,1,1,1,3},
-                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,3,1,1,1,1,1,3},
-                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1,1,3},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,0,0,3,3,3,1,1},
+                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1,3,3,3,3,1,1,1,3},
+                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,1,1,1,3,3,3,1,1,1,1,1,3},
+                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,0,3,3,3,1,1,1,3},
                     {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
                     {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0},
@@ -225,10 +228,10 @@ namespace SOTS.WorldgenHelpers
                 _structure = new int[,] {
                     {0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2},
                     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
-                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
-                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,3,3,3,1,1,1,3},
-                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,3,1,1,1,1,1,3},
-                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1,1,3},
+                    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,3,3,0,0,3,3,3,1,1},
+                    {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,1,1,1,1,1,3,3,3,3,1,1,1,3},
+                    {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,1,1,1,3,3,3,1,1,1,1,1,3},
+                    {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,0,3,3,3,1,1,1,3},
                     {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
                     {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
                     {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0},
@@ -288,26 +291,86 @@ namespace SOTS.WorldgenHelpers
             ushort RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
             SetNoise();
             float paddingZone = 30f;
-            float noiseWormMult = 0.08f;
-            for (int i = left; i <= right; i++)
+            float noiseWormMult = 0.25f;
+            int gridRate = 15;
+            for(int pass = 0; pass <= 2; pass++)
             {
-                for (int j = top; j <= bottom; j++)
+                for (int i = left; i <= right; i++)
                 {
-                    float fromLeft = MathF.Abs(i - left);
-                    float fromRight = MathF.Abs(i - right);
-                    float fromTop = MathF.Abs(j - top);
-                    float fromBottom = MathF.Abs(j - bottom);
-                    float percent = 1;
-                    if (fromLeft < paddingZone || fromRight < paddingZone ||
-                       fromTop < paddingZone || fromBottom < paddingZone)
+                    for (int j = top; j <= bottom; j++)
                     {
-                        float smallest = MathF.Min(MathF.Min(fromLeft, fromRight), MathF.Min(fromTop, fromBottom));
-                        percent = smallest / paddingZone;
+                        float fromLeft = MathF.Abs(i - left);
+                        float fromRight = MathF.Abs(i - right);
+                        float fromTop = MathF.Abs(j - top);
+                        float fromBottom = MathF.Abs(j - bottom);
+                        float percent = 1;
+                        if (fromLeft < paddingZone || fromRight < paddingZone ||
+                           fromTop < paddingZone || fromBottom < paddingZone)
+                        {
+                            float smallest = MathF.Min(MathF.Min(fromLeft, fromRight), MathF.Min(fromTop, fromBottom));
+                            percent = smallest / paddingZone;
+                        }
+                        Tile t = Main.tile[i, j];
+                        if (pass == 2 || pass == 1)
+                        {
+                            if(i % gridRate == 0 && j % gridRate == 0)
+                            {
+                                if(pass == 2)
+                                {
+                                    float noise = genNoise.GetNoise(i * 4f, j * 4f, 0);
+                                    bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
+                                    int edges = 0;
+                                    if (Main.tile[i, j - 1].TileType == RuneBrick || Main.tile[i, j - 1].TileType == Rune)
+                                        edges++;
+                                    if (Main.tile[i, j + 1].TileType == RuneBrick || Main.tile[i, j + 1].TileType == Rune)
+                                        edges++;
+                                    if (Main.tile[i - 1, j].TileType == RuneBrick || Main.tile[i - 1, j].TileType == Rune)
+                                        edges++;
+                                    if (Main.tile[i + 1, j].TileType == RuneBrick || Main.tile[i + 1, j].TileType == Rune)
+                                        edges++;
+                                    if (noiseWorm || edges == 1)// && !WorldGen.genRand.NextBool(8))
+                                    {
+                                        if (t.TileType == RuneBrick || t.TileType == Rune)
+                                            PlaceCircle(i, j, WorldGen.genRand.Next(3, 6));
+                                    }
+                                }
+                                if(WorldGen.genRand.NextBool(3) && pass == 1)
+                                {
+                                    KillLine(i, j, 1, 0);
+                                    KillLine(i, j, -1, 0);
+                                    KillLine(i, j, 0, 1);
+                                    KillLine(i, j, 0, -1);
+                                }
+                            }
+                        }
+                        if(pass == 0)
+                        {
+                            if (i % gridRate == 0 || j % gridRate == 0)
+                            {
+                                if (t.TileType == EvostoneBrick)
+                                    t.TileType = RuneBrick;
+                                if (t.TileType == Evostone)
+                                    t.TileType = Rune;
+                            }
+                        }
+                        WorldGen.TileFrame(i, j);
                     }
-                    float noise = genNoise.GetNoise(i * 5, j * 5, 0);
+                }
+            }
+        }
+        public static void PlaceCircle(int x, int y, int r)
+        {
+            ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
+            ushort Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
+            ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
+            ushort RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
+            for (int i = x - r; i <= x + r; i++)
+            {
+                for(int j = y - r; j <= y + r; j++)
+                {
+                    float dist = MathF.Sqrt((i - x) * (i - x) + (j - y) * (j - y));
                     Tile t = Main.tile[i, j];
-                    bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
-                    if (noiseWorm && !WorldGen.genRand.NextBool(8))
+                    if(dist <= r + 0.45f && dist >= r - 0.45f)
                     {
                         if (t.HasTile)
                         {
@@ -317,7 +380,38 @@ namespace SOTS.WorldgenHelpers
                                 t.TileType = Rune;
                         }
                     }
-                    WorldGen.TileFrame(i, j);
+                    else if (t.HasTile)
+                    {
+                        if (t.TileType == RuneBrick)
+                            t.TileType = EvostoneBrick;
+                        if (t.TileType == Rune)
+                            t.TileType = Evostone;
+                    }
+                }
+            }
+        }
+        public static void KillLine(int x, int y, int dirX = 1, int dirY = 0)
+        {
+            ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
+            ushort Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
+            ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
+            ushort RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
+            Tile t = Main.tile[x, y];
+            while (t.HasTile && WorldGen.InWorld(x, y))
+            {
+                t = Main.tile[x, y];
+                if (t.TileType == RuneBrick)
+                    t.TileType = EvostoneBrick;
+                if (t.TileType == Rune)
+                    t.TileType = Evostone;
+                x += dirX;
+                y += dirY;
+                Tile perpendicularT1 = Main.tile[x + dirY, y + dirX];
+                Tile perpendicularT2 = Main.tile[x - dirY, y - dirX];
+                if (perpendicularT1.TileType == RuneBrick || perpendicularT2.TileType == RuneBrick
+                    || perpendicularT1.TileType == Rune || perpendicularT2.TileType == Rune)
+                {
+                    break;
                 }
             }
         }

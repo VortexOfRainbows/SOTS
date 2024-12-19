@@ -146,7 +146,7 @@ namespace SOTS.Items.Invidia
             if (!valid)
                 return;
 			float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.9f + 0.1f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
-			float mult = fillPercent * fillPercent * 1.5f;
+			float mult = fillPercent * 1.5f;
 			r = .168f * mult;
 			g = .443f * mult;
 			b = .196f * mult;
@@ -169,7 +169,7 @@ namespace SOTS.Items.Invidia
 			Color lC = Lighting.GetColor(i, j);
             SOTSTile.DrawSlopedGlowMask(i, j, Type, rune, lC, Vector2.Zero, 2 + 18 * x, 2 + 18 * y);
 			float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.9f + 0.1f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
-            Color runeColor = Color.Lerp(lC, Color.White, fillPercent * fillPercent) * fillPercent;
+            Color runeColor = Color.Lerp(lC, Color.White, fillPercent) * fillPercent;
 			runeColor.A = 0;
 			int c = SOTS.Config.lowFidelityMode ? 3 : 6;
 			int d = SOTS.Config.lowFidelityMode ? 120 : 60;
@@ -256,7 +256,7 @@ namespace SOTS.Items.Invidia
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.6f + 0.4f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
-            float mult = fillPercent * fillPercent;
+            float mult = fillPercent;
             r = .168f * mult;
             g = .443f * mult;
             b = .196f * mult;
@@ -269,7 +269,7 @@ namespace SOTS.Items.Invidia
             Tile t = Main.tile[i, j];
             Color lC = Lighting.GetColor(i, j);
             float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.6f + 0.4f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
-            Color color = Color.Lerp(lC, Color.White, fillPercent * fillPercent) * fillPercent;
+            Color color = Color.Lerp(lC, Color.White, fillPercent) * fillPercent;
             color.A = 0;
             int c = SOTS.Config.lowFidelityMode ? 3 : 6;
             int d = SOTS.Config.lowFidelityMode ? 120 : 60;

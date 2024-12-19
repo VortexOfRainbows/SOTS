@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.WorldgenHelpers;
+using SOTS.Buffs.Debuffs;
 
 namespace SOTS.Items.Tools
 {
@@ -36,8 +37,9 @@ namespace SOTS.Items.Tools
             int y2 = (int)tileLocation.Y;
 			//WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
 			//AbandonedVillageWorldgenHelper.TryPlacingImportantTiles(0);
-			Main.moonPhase = Main.rand.Next(8);
-			SanctuaryWorldgenHelper.GenerateSanctuary();
+			Main.moonPhase = ++Main.moonPhase % 8;
+			player.AddBuff(ModContent.BuffType<SanctuarySilence>(), 36000);
+			//SanctuaryWorldgenHelper.GenerateSanctuary();
 			//SanctuaryWorldgenHelper.GeneratePlatform(x2, y2);
 			//SOTSWorldgenHelper.GenerateTestRoom();
             //AbandonedVillageWorldgenHelper.PrepareUnderground(new Rectangle(x2, y2, 250, 250));

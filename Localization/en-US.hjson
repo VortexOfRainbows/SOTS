@@ -6521,6 +6521,19 @@ Mods: {
 					Increases void regeneration speed by 40% while moving
 					'''
 			}
+
+			SanctuarySilence: {
+				Prefix0: "Deafening "
+				Prefix1: "Dreadful "
+				Prefix2: "Sorrowful "
+				Prefix3: "Hopeful "
+				Prefix4: "Blissful "
+				Prefix5: "Whispering "
+				Prefix6: "Creeping "
+				Prefix7: "Crippling "
+				DisplayName: Silence
+				Description: Reduced spawnrates by {0}%
+			}
 		}
 
 		ArmorSetBonus: {

@@ -48,6 +48,8 @@ using SOTS.NPCs.Chaos;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.NPCs.Gizmos;
 using SOTS.NPCs.Boss.Advisor;
+using SOTS.Buffs.Debuffs;
+using System;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -555,6 +557,13 @@ namespace SOTS.Common.GlobalNPCs
             {
 				spawnRate = (int)(spawnRate * 10); //makes thing spawn at 1/10th the speed
 				maxSpawns = (int)(maxSpawns * 0.5f); //cut max spawns in half
+            }
+			if(player.HasBuff<SanctuarySilence>())
+			{
+				float moonPercent = MathHelper.Clamp(1 - SOTSWorld.MoonPhasePercent, 0.01f, 1f);
+				float multiplier = 1 / moonPercent;
+				spawnRate = (int)(spawnRate * multiplier);
+                maxSpawns = (int)(maxSpawns / multiplier);
             }
 			if (spawnRate < 1)
 				spawnRate = 1;
