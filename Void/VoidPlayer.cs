@@ -683,7 +683,7 @@ namespace SOTS.Void
 				frozenVoidCount = voidMeter;
 				if(!isFull)
 				{
-					if (Player.whoAmI == Main.LocalPlayer.whoAmI && !frozenVoid)
+					if (Player.whoAmI == Main.LocalPlayer.whoAmI && !frozenVoid && voidMeterMax2 < 10000)
 						SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Void/Void_Full"), (int)Player.Center.X, (int)Player.Center.Y, 1.4f);
 					isFull = true;
 				}

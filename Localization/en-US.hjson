@@ -6072,6 +6072,15 @@ Mods: {
 				DisplayName: Invidia Plating
 				Tooltip: ""
 			}
+
+			AccretionDisc: {
+				DisplayName: Accretion Disc
+				Tooltip:
+					'''
+					Deals more damage at the peak of its trajectory
+					Ignores enemy immunity frames
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7918,6 +7927,7 @@ Mods: {
 			PintOPunch.DisplayName: Pint O Punch
 			FishBomb.DisplayName: Fish Bomb
 			FishBlood.DisplayName: Fish Blood
+			AccretionDisc.DisplayName: Accretion Disc
 		}
 
 		DamageClasses: {

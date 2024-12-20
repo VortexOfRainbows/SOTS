@@ -35,6 +35,8 @@ namespace SOTS.Helpers
         public static Color Inferno1 = new Color(213, 68, 13);
         public static Color Inferno2 = new Color(255, 210, 155);
         public static Color VoidAnomaly = new Color(160, 120, 180);
+        public static Color VoidAnomalyBlue = new Color(130, 192, 236);
+        public static Color VoidAnomalyPink = new Color(203, 70, 224);
         public static int SoulColorCounter = 0;
         public static void ColorUpdate()
         {

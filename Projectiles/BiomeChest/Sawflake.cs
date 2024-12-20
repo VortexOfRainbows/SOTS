@@ -1,19 +1,15 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using SOTS.Void;
-using SOTS.Common.GlobalNPCs;
 using System.IO;
 
 namespace SOTS.Projectiles.BiomeChest
 {    
     public class Sawflake : ModProjectile 
     {
-		float rotation = 0;
+		private float rotation = 0;
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(Projectile.tileCollide);
@@ -25,10 +21,6 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.tileCollide = reader.ReadBoolean();
 			Projectile.velocity.X = reader.ReadSingle();
 			Projectile.velocity.Y = reader.ReadSingle();
-		}
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Sawflake");
 		}
         public override void SetDefaults()
         {
@@ -75,11 +67,11 @@ namespace SOTS.Projectiles.BiomeChest
 				target.AddBuff(BuffID.Frostburn, 720);
 			}
 		}
-		bool runOnce = true;
-		Vector2[] trailPos = new Vector2[14];
-		Vector2[] trailPos2 = new Vector2[14];
-		Vector2[] trailPos3 = new Vector2[14];
-		Vector2[] trailPos4 = new Vector2[14];
+		private bool runOnce = true;
+		private Vector2[] trailPos = new Vector2[14];
+		private Vector2[] trailPos2 = new Vector2[14];
+		private Vector2[] trailPos3 = new Vector2[14];
+		private Vector2[] trailPos4 = new Vector2[14];
 		public void cataloguePos(Vector2 catalogue, Vector2[] trialArray, float rotation)
 		{
 			Vector2 current = catalogue;
@@ -114,9 +106,9 @@ namespace SOTS.Projectiles.BiomeChest
 			if (iterator >= trailPos.Length)
 				Projectile.Kill();
 		}
-		Vector2 initialVelo;
-		Vector2 initialCenter;
-		int initialDirection = 0;
+		private Vector2 initialVelo;
+		private Vector2 initialCenter;
+		private int initialDirection = 0;
         public override bool PreAI()
 		{
 			Player player = Main.player[Projectile.owner];
