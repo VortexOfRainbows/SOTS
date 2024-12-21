@@ -81,7 +81,7 @@ N/A
 
 Daily Log:
 
-12/8/24 to 12/20/24
+12/8/24 to 12/21/24
 1. Try to fix error where palm trees on top of the pyramid would not disappear
 2. Very basic WIP Sanctuary
 3. Added Pinky Test Tube, should spawn during worldgen
@@ -92,7 +92,8 @@ Daily Log:
 7. WIP Sanctuary Tiles (Overgrown, Runic Stone/Bricks, Invidia Plating)
 	1. Needs: dusts, color changes (grass), portal plating
 8. WIP Sanctuary Silence debuff
-9. WIP Accretion Disc, needs: more unique visuals and functionality (black hole effect on climax), balancing, multiplayer syncing
+9. WIP Accretion Disc, needs: better unique visuals and audio, release homing particles, balancing, multiplayer syncing
+	1. Balancing: right now it is slightly stronger than Rose Bow in a lot of situations, it is meant to be a good dps weapon, but it is very overtuned right now.
 
 12/5/24 to 12/8/24
 1. Fix bug where putrid pinky laser appeared to be stopped by bubble block

@@ -12,7 +12,6 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Death's Touch");
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 6;  
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;    
 		}

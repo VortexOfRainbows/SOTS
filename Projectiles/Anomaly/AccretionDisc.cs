@@ -8,7 +8,8 @@ using SOTS.Void;
 using System;
 using SOTS.Helpers;
 using SOTS.Dusts;
-using Humanizer;
+using System.Collections.Generic;
+using Terraria.GameContent.Bestiary;
 
 namespace SOTS.Projectiles.Anomaly
 {    
@@ -40,7 +41,7 @@ namespace SOTS.Projectiles.Anomaly
 			Projectile.alpha = 0;
 			Projectile.extraUpdates = 2;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 0;// 1 + Projectile.extraUpdates;
+            Projectile.localNPCHitCooldown = 6;
         }
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
@@ -104,7 +105,7 @@ namespace SOTS.Projectiles.Anomaly
                 }
                 if (Main.rand.NextBool(2))
                 {
-                    if (Projectile.ai[1] < 70 || Projectile.ai[1] > 210)
+                    if (Projectile.ai[1] < 70 || Projectile.ai[1] > 430)
                     {
                         Dust dust = PixelDust.Spawn(Projectile.Center, 0, 0, Main.rand.NextVector2Circular(1.2f, 1.2f) + Projectile.velocity * Main.rand.NextFloat(), c, 7);
                         dust.scale = Main.rand.NextFloat(1.5f, 2.5f);
@@ -114,11 +115,19 @@ namespace SOTS.Projectiles.Anomaly
             Projectile.ai[1]++;
             if (Projectile.ai[1] < 70)
             {
-                Projectile.velocity *= 0.977f;
+                Projectile.velocity *= 0.976f;
+                if (Projectile.ai[1] >= 30 && Projectile.owner == Main.myPlayer)
+                {
+                    if (Projectile.ai[2] >= 0)
+                    {
+                        Projectile.ai[2] = -1;
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity, ModContent.ProjectileType<AccretionSingularity>(), 5 * Projectile.damage, 0, Main.myPlayer, ai2: Projectile.identity);
+                    }
+                }
             }
-			else if (Projectile.ai[1] < 210)
+			else if (Projectile.ai[1] < 430)
 			{
-				Projectile.velocity *= 0.925f;
+				Projectile.velocity *= 0.88f;
 			}
 			else
 			{
@@ -220,7 +229,133 @@ namespace SOTS.Projectiles.Anomaly
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{
 			return null;
-		}
-	}
+        }
+    }
+    public class AccretionSingularity : ModProjectile
+    {
+        public static Texture2D Blue = null;
+        public static Texture2D Pink = null;
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindNPCs.Add(index);
+        }
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            DrawSingularity(0);
+            DrawSingularity(1);
+            float scale = MathF.Min(1, Projectile.ai[1] / 40f);
+            for(int i = 0; i < 6; i++)
+                Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Color.White, i / 12f * MathF.PI, texture.Size() / 2, scale, SpriteEffects.None, 0f);
+            DrawSingularity(2);
+            return false;
+        }
+        public void DrawSingularity(int style)
+        {
+            Texture2D Black = style == 3 ? null : Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            if (Blue == null && style != 3)
+                Blue = ModContent.Request<Texture2D>("SOTS/Projectiles/Anomaly/AccretionSingularityBlue", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            if (Pink == null && style != 3)
+                Pink = ModContent.Request<Texture2D>("SOTS/Projectiles/Anomaly/AccretionSingularityPink", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Color c = new Color(100, 100, 100, 0);
+            Vector2 origin = style == 0 ? new Vector2(0, Black.Height / 2) : new Vector2(0, Blue.Height / 2);
+            Vector2 one = new Vector2(1, 0);
+            Vector2 prev = Projectile.Center;
+            float cutoff = -0.1f;
+            float scaleB = MathF.Min(1, Projectile.ai[1] / 40f);
+            int count = SOTS.Config.lowFidelityMode ? 46 : 61;
+            for (int i = 0; i < count; i++)
+            {
+                float rad = i / ((float)count - 1) * 2 * MathF.PI + Projectile.ai[0] * .5f;
+                float sin = MathF.Sin(MathHelper.ToRadians(i / (float)(count - 1) * 2700f));
+                Vector2 circular = one.RotatedBy(rad);
+                float yCompress = 0.6f + Projectile.ai[0] / 600f;
+                circular.Y *= yCompress;
+                float scale = 1 + circular.Y * 0.5f;
+                bool skip = (circular.Y < cutoff && style == 2) || (circular.Y > cutoff && style == 1);
+                circular = circular.RotatedBy(MathHelper.ToRadians(15 * -Projectile.direction * MathF.Sin(MathHelper.ToRadians(Projectile.ai[0] * 3))));
+                circular *= Projectile.ai[1] + (style == 0 ? 4 : 0) + sin * 3;
+                if(style == 3)
+                {
+                    break;
+                }
+                if (!skip || style == 0)
+                {
+                    Vector2 toPrev = prev - circular;
+                    if (i != 0)
+                    {
+                        Vector2 toCenter = -circular;
+                        if(style == 0)
+                        {
+                            Main.spriteBatch.Draw(Black, Projectile.Center + circular - Main.screenPosition, null, Color.White * scaleB, (-circular).ToRotation(), origin, new Vector2(circular.Length() / Black.Width, 1 * scale), SpriteEffects.None, 0f);
+                        }
+                        else
+                        {
+                            Main.spriteBatch.Draw(Pink, Projectile.Center + circular - Main.screenPosition, null, c * 1.2f, toPrev.ToRotation(), origin, new Vector2(toPrev.Length() / Blue.Width * 3, scale), SpriteEffects.None, 0f);
+                            Main.spriteBatch.Draw(Blue, Projectile.Center + circular - Main.screenPosition, null, c * 0.5f, (-circular).ToRotation(), origin, new Vector2((circular.Length() - 20f * (1 - yCompress * MathF.Sin(rad))) / Pink.Width, 1 * scale), SpriteEffects.None, 0f);
+
+                        }
+                    }
+                }
+                prev = circular;
+            }
+        }
+        public override void SetStaticDefaults()
+        {
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = Projectile.height = 40;
+            Projectile.timeLeft = 2000618;
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 0;
+            Projectile.penetrate = -1;
+            Projectile.DamageType = ModContent.GetInstance<VoidRanged>();
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10000;
+            Projectile.extraUpdates = 1;
+            Projectile.hide = true;
+        }
+        public override bool PreAI()
+        {
+            Projectile parent = null;
+            for (short i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (proj.active && proj.owner == Projectile.owner && proj.identity == (int)Projectile.ai[2])
+                {
+                    parent = proj;
+                    break;
+                }
+            }
+            if(parent != null)
+            {
+                Projectile.Center = parent.Center + new Vector2(0, 8);
+            }
+            Projectile.velocity *= 0.94f;
+            Projectile.ai[0]++;
+            if (Projectile.ai[0] < 60)
+            {
+                float exp = 0.6f + Projectile.ai[0] / 24f;
+                Projectile.ai[1] = MathF.Min(Projectile.ai[1] + exp * exp, 120);
+            }
+            else
+            {
+                float exp = 0.2f + (Projectile.ai[0] - 80f) / 20f;
+                Projectile.ai[1] -= exp * exp;
+                if (Projectile.ai[1] < 0)
+                    Projectile.Kill();
+            }
+            return true;
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            float distX = MathF.Min(MathF.Abs(targetHitbox.Right - projHitbox.Left), MathF.Abs(targetHitbox.Left - projHitbox.Right));
+            float distY = MathF.Min(MathF.Abs(targetHitbox.Top - projHitbox.Bottom), MathF.Abs(targetHitbox.Bottom - projHitbox.Top)) * 1.3f;
+            float dist = MathF.Sqrt(distX * distX + distY * distY);
+            return dist < 10 + Projectile.ai[1] * 0.9f;
+        }
+    }
 }
-		

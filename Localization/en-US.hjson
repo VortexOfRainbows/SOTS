@@ -6077,8 +6077,8 @@ Mods: {
 				DisplayName: Accretion Disc
 				Tooltip:
 					'''
-					Deals more damage at the peak of its trajectory
-					Ignores enemy immunity frames
+					Deals more damage at the peak of its trajectory, creating a short-lived singularity for 500% damage
+					Scatters homing particles for 100% damage after the singularity collapses
 					'''
 			}
 		}
@@ -7928,6 +7928,7 @@ Mods: {
 			FishBomb.DisplayName: Fish Bomb
 			FishBlood.DisplayName: Fish Blood
 			AccretionDisc.DisplayName: Accretion Disc
+			AccretionSingularity.DisplayName: Accretion Singularity
 		}
 
 		DamageClasses: {

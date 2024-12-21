@@ -43,6 +43,7 @@ using Terraria.GameContent;
 using System.Drawing.Drawing2D;
 using SOTS.Helpers;
 using SOTS.NPCs.AbandonedVillage;
+using SOTS.Projectiles.Anomaly;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -55,6 +56,7 @@ namespace SOTS.Common.GlobalNPCs
         private static int FloweringBud;
         private static int ProjEvilGrowth;
         private static int HydroBubble;
+        private static int AccretionSingularity;
         public static int[] nerfBeeNPC;
         public static int[] nerfBeeBoss;
         public static int[] nerfBeeProj;
@@ -98,6 +100,7 @@ namespace SOTS.Common.GlobalNPCs
             FloweringBud = ProjectileType<FloweringBud>();
             ProjEvilGrowth = ProjectileType<EvilGrowth>();
             HydroBubble = ProjectileType<HydroBubble>();
+            AccretionSingularity = ModContent.ProjectileType<AccretionSingularity>();
         }
         public override bool InstancePerEntity => true;
         public int PlatinumCurse = 0;
@@ -779,8 +782,10 @@ namespace SOTS.Common.GlobalNPCs
                     dust.scale *= 2.25f;
                 }
             }
+            bool trueIsBoss = npc.boss || (npc.realLife >= 0 && Main.npc[npc.realLife].active && Main.npc[npc.realLife].boss);
             float impaledDarts = 0;
             float flowered = 0;
+            float singularitySlowdown = 0f;
             pinkied = false;
             bool hooked = false;
             bool darkArmed = false;
@@ -937,6 +942,23 @@ namespace SOTS.Common.GlobalNPCs
                         }
                     }
                 }
+                if(proj.active && proj.type == AccretionSingularity && !npc.dontTakeDamage)
+                {
+                    float attractDist = 48 + proj.ai[1] * 1.2f;
+                    float dist = npc.Distance(proj.Center);
+                    if (dist < attractDist)
+                    {
+                        if(Collision.CanHitLine(proj.position, proj.width, proj.height, npc.position, npc.width, npc.height))
+                        {
+                            singularitySlowdown = (1 - dist / attractDist) * MathF.Min(1, proj.ai[0] / 70f);
+                            npc.Center = Vector2.Lerp(npc.Center, proj.Center, singularitySlowdown * (trueIsBoss ? 0.05f : 0.22f));
+                            if(!npc.boss)
+                            {
+                                npc.velocity *= 1 - 0.5f * singularitySlowdown;
+                            }
+                        }
+                    }
+                }
             }
             if (flowered >= 1)
             {
@@ -978,6 +1000,7 @@ namespace SOTS.Common.GlobalNPCs
                 else
                     finalSlowdown *= 0.975f;
             }
+            finalSlowdown *= 1 - singularitySlowdown;
             bool DreamLamp = npc.HasBuff<DendroChain>();
             if(DreamLamp)
             {
@@ -1113,16 +1136,16 @@ namespace SOTS.Common.GlobalNPCs
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (!proj.friendly && proj.active && (proj.type == ProjectileType<FloweringBud>() || proj.type == ProjectileType<EvilGrowth>()) && proj.timeLeft < 8998)
+                if (!proj.friendly && proj.active && (proj.type == FloweringBud || proj.type == ProjEvilGrowth) && proj.timeLeft < 8998)
                 {
                     bool contains = false;
-                    if(proj.type == ProjectileType<FloweringBud>())
+                    if(proj.type == FloweringBud)
                     {
                         FloweringBud flower = proj.ModProjectile as FloweringBud;
                         if (flower.effected[npc.whoAmI])
                             contains = true;
                     }
-                    if(proj.type == ProjectileType<EvilGrowth>())
+                    if(proj.type == ProjEvilGrowth)
                     {
                         EvilGrowth evil = proj.ModProjectile as EvilGrowth;
                         if (evil.effected[npc.whoAmI])
@@ -1132,13 +1155,13 @@ namespace SOTS.Common.GlobalNPCs
                     {
                         Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/TangleGrowthVine").Value;
                         Color color = Color.White;
-                        if (proj.type == ProjectileType<EvilGrowth>())
+                        if (proj.type == ProjEvilGrowth)
                         {
                             color = new Color(ColorHelper.EvilColor.R, ColorHelper.EvilColor.G, ColorHelper.EvilColor.B);
                             texture2 = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilArm").Value;
                         }
                         float scale = proj.scale;
-                        if (proj.type == ProjectileType<FloweringBud>())
+                        if (proj.type == FloweringBud)
                             scale *= 0.7f;
                         else
                         {
@@ -1150,7 +1173,7 @@ namespace SOTS.Common.GlobalNPCs
                         for (int k = 0; k < max; k++)
                         {
                             drawPos = npc.Center + -betweenPositions * (k / max) - screenPos;
-                            if (k == 0 && proj.type == ProjectileType<EvilGrowth>())
+                            if (k == 0 && proj.type == ProjEvilGrowth)
                             {
                                 Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Evil/EvilHand").Value;
                                 Main.spriteBatch.Draw(texture3, drawPos, null, color, betweenPositions.ToRotation() + MathHelper.Pi/2, new Vector2(texture3.Width / 2, texture3.Height / 2), scale * 1.4f, SpriteEffects.None, 0f);
