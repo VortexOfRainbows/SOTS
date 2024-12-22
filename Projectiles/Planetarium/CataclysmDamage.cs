@@ -27,7 +27,7 @@ namespace SOTS.Projectiles.Planetarium
 				target.AddBuff(BuffID.OnFire, 1200, false);
 		}
 		private int randseed = -1;
-		public override void AI() //The projectile's AI/ what the projectile does
+		public override void AI() 
 		{
 			if(randseed == -1)
 			{

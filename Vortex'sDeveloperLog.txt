@@ -25,7 +25,6 @@ Acknowledged But Likely Delayed:
 
 Update Objectives:
 1. Ghost Town! (In Progress)	
-	1. Existing chests and generated barrels that don't require keys to unlock still need loot
 2. More Bestiary entries (and visual fixes)
 3. Unique Archaeologist tooltips for items, which can give hints related to lore and secrets (Up next)
 4. Starmap
@@ -60,7 +59,7 @@ If the Abandoned Village particles fail to generate for weaker computers, or pot
 Bestiary setup organization.
 
 ---Balance Needed List (by Severity, -weak, +strong)---
-5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Spore Sprayer, +Lungrot, +Little Woes, ++Worldly Polarizer
+5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Spore Sprayer, +Lungrot, +Little Woes, ++Worldly Polarizer, +Accretion Disc
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. Earthen Gizmo, Corpsebloom, Throe, Famished
 2. +++Soot Extractinator loot, +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
@@ -81,7 +80,7 @@ N/A
 
 Daily Log:
 
-12/8/24 to 12/21/24
+12/8/24 to 12/22/24
 1. Try to fix error where palm trees on top of the pyramid would not disappear
 2. Very basic WIP Sanctuary
 3. Added Pinky Test Tube, should spawn during worldgen
@@ -92,8 +91,8 @@ Daily Log:
 7. WIP Sanctuary Tiles (Overgrown, Runic Stone/Bricks, Invidia Plating)
 	1. Needs: dusts, color changes (grass), portal plating
 8. WIP Sanctuary Silence debuff
-9. WIP Accretion Disc, needs: better unique visuals and audio, release homing particles, balancing, multiplayer syncing
-	1. Balancing: right now it is slightly stronger than Rose Bow in a lot of situations, it is meant to be a good dps weapon, but it is very overtuned right now.
+9. WIP Accretion Disc, needs: multiplayer syncing
+	Balancing: it is slightly worse than rose bow in many situations, as high damage is generally better than high hit-rate, though it is faster again lower-defense fights. It is also quite a lot more costly, void wise. It occupies an earlier tier than rose bow, and it has lower range. It is probably in an okay state balance wise, but possibly overpowered...
 
 12/5/24 to 12/8/24
 1. Fix bug where putrid pinky laser appeared to be stopped by bubble block

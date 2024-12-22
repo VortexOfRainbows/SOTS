@@ -65,7 +65,8 @@ namespace SOTS.Items.Conduit
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<Helios>(1).AddIngredient(ItemID.DeathSickle).AddIngredient<SectionChiefsScythe>(1).AddIngredient<BetrayersKnife>(1).AddIngredient<SkipSoul>(30).AddIngredient<SkipShard>(15).AddIngredient<DissolvingUmbra>(1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<Helios>(1).AddIngredient(ItemID.DeathSickle).AddIngredient<SectionChiefsScythe>(1).AddIngredient<BetrayersKnife>(1)
+				.AddIngredient<SkipSoul>(30).AddIngredient<SkipShard>(15).AddIngredient<DissolvingUmbra>(1).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }

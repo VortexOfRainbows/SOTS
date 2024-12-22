@@ -17,12 +17,12 @@ namespace SOTS.Items.Conduit
 		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 50;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 48;
 			Item.height = 52;
-			Item.useTime = 40;
-			Item.useAnimation = 40;
+			Item.useTime = 48;
+			Item.useAnimation = 48;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 6f;
             Item.value = Item.sellPrice(0, 15, 0, 0);
@@ -36,11 +36,12 @@ namespace SOTS.Items.Conduit
         }
         public override int GetVoid(Player player)
         {
-            return 20;
+            return 24;
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<CataclysmDisc>(1).AddIngredient<EchoDisk>(1).AddIngredient<SkipSoul>(30).AddIngredient<SkipShard>(15).AddIngredient<SoulOfPlight>(5).AddIngredient(ItemID.Ectoplasm, 5).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<CataclysmDisc>().AddIngredient<EchoDisk>().AddIngredient<CoconutGun>()
+				.AddIngredient<SkipSoul>(30).AddIngredient<SkipShard>(15).AddIngredient<SoulOfPlight>(5).AddIngredient(ItemID.Ectoplasm, 5).AddTile(TileID.MythrilAnvil).Register();
         }
     }
 }

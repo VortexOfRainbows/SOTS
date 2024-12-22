@@ -216,7 +216,7 @@ namespace SOTS
 			DarkRedRarity = [ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>()]; //Dark Red
 			BrightGreenRarity = [ItemType<DreamLamp>()];
 
-			DedicatedOrange = [ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>(), ItemType<TorchGunMk2>()]; //friends
+			DedicatedOrange = [ItemType<AccretionDisc>(), ItemType<TerminatorAcorns>(), ItemType<PlasmaCutterButOnAChain>(), ItemType<CoconutGun>(), ItemType<TorchGunMk2>()]; //friends
 			DedicatedBlue = [ItemType<Calculator>()]; //friends 2
 			DedicatedPurpleRed = [ItemType<CursedApple>(), ItemType<ArcStaffMk2>()]; //James
 			DedicatedPastelPink = [ItemType<Sunbulb>()]; //Tris

@@ -62,16 +62,16 @@ namespace SOTS.Common.GlobalNPCs
         {
 			return (int)(npc.damage / (Main.GameModeInfo.EnemyDamageMultiplier * npc.strengthMultiplier));
         }
-		public static int FindTarget_Basic(Vector2 center, float minDistance = 2000f, object attacker = null, bool needsLOS = false)
+		public static int FindTarget_Basic(Vector2 center, float minDistance = 2000f, object attacker = null, bool needsLOS = false, int ignore = -1)
 		{
 			return FindTarget_Basic(center, out float _, minDistance, attacker, needsLOS);
 		}
-		public static int FindTarget_WithLos(Vector2 center, out float dist, int LosWidth = 16, float minDistance = 2000f, object attacker = null)
+		public static int FindTarget_WithLos(Vector2 center, out float dist, int LosWidth = 16, float minDistance = 2000f, object attacker = null, int ignore = -1)
         {
             int target = -1;
             for (int i = 0; i < Main.maxNPCs; i++)
             {
-                if (Main.npc[i].CanBeChasedBy(attacker))
+                if (i != ignore && Main.npc[i].CanBeChasedBy(attacker))
                 {
                     float distance = (center - Main.npc[i].Center).Length();
                     if (distance < minDistance && Collision.CanHitLine(center - new Vector2(LosWidth, LosWidth), LosWidth * 2, LosWidth * 2, Main.npc[i].position, Main.npc[i].width, Main.npc[i].height))
