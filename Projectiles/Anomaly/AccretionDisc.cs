@@ -3,17 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.IO;
 using SOTS.Void;
 using System;
 using SOTS.Helpers;
 using SOTS.Dusts;
 using System.Collections.Generic;
-using Terraria.GameContent.Bestiary;
-using SOTS.Projectiles.AbandonedVillage;
-using SOTS.Projectiles.Tide;
 using SOTS.Common.GlobalNPCs;
-using Microsoft.Build.Construction;
 
 namespace SOTS.Projectiles.Anomaly
 {    
@@ -24,14 +19,6 @@ namespace SOTS.Projectiles.Anomaly
             ProjectileID.Sets.TrailCacheLength[Type] = 50;
             ProjectileID.Sets.TrailingMode[Type] = 0;
         }
-		public override void SendExtraAI(BinaryWriter writer)
-		{
-
-		}
-		public override void ReceiveExtraAI(BinaryReader reader)
-		{
-
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 50;
@@ -69,10 +56,6 @@ namespace SOTS.Projectiles.Anomaly
         {
 			modifiers.HitDirectionOverride = SOTSUtils.SignNoZero(Projectile.Center.X - target.Center.X);
         }
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-
-		}
 		private bool runOnce = true;
 		private int initialDirection;
 		private Vector2 initialVelo;
@@ -389,7 +372,7 @@ namespace SOTS.Projectiles.Anomaly
                 for (int i = 0; i < 16; i++)
                 {
                     Vector2 velocity = new Vector2(1, 0).RotatedBy(i / 8f * MathF.PI);
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, velocity * (2 + i % 2) * Main.rand.NextFloat(0.9f, 1.1f), ModContent.ProjectileType<AccretionNova>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(), -1f);
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - Vector2.UnitY * 8, velocity * (2 + i % 2) * Main.rand.NextFloat(0.9f, 1.1f), ModContent.ProjectileType<AccretionNova>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, Main.rand.NextFloat(), -1f);
                 }
             }
         }
