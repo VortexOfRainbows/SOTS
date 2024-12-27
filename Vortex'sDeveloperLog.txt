@@ -79,6 +79,12 @@ N/A
 
 Daily Log:
 
+12/26/24
+1. Invidia Chest sprite
+
+12/25/24
+1. MERRY CHRISTMAS!
+
 12/8/24 to 12/24/24
 1. Try to fix error where palm trees on top of the pyramid would not disappear
 2. Very basic WIP Sanctuary
@@ -89,7 +95,7 @@ Daily Log:
 6. Chest generation in AV and more loot spawning
 7. WIP Sanctuary Tiles (Overgrown, Runic Stone/Bricks, Invidia Plating)
 	1. Needs: color changes (grass), portal plating
-8. WIP Sanctuary Silence debuff
+8. Sanctuary Silence debuff
 9. Accretion Disc, tested: works in multiplayer!
 	Balancing: it is slightly worse than rose bow in many situations, as high damage is generally better than high hit-rate, though it is faster again lower-defense fights. It is also quite a lot more costly, void wise. It occupies an earlier tier than rose bow, and it has lower range. It is probably in an okay state balance wise, but possibly overpowered...
 
