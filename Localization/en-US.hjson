@@ -6081,6 +6081,25 @@ Mods: {
 					Scatters homing particles after the singularity collapses
 					'''
 			}
+
+			EarthenChestplate: {
+				DisplayName: Earthen Chestplate
+				Tooltip: Increases void damage by 10% and ranged damage by 5%
+			}
+
+			EarthenHelmet: {
+				DisplayName: Earthen Helmet
+				Tooltip:
+					'''
+					Increases max void by 50
+					Increases ranged critical strike chance by 5%
+					'''
+			}
+
+			EarthenLeggings: {
+				DisplayName: Earthen Leggings
+				Tooltip: Decreased void usage by 10%
+			}
 		}
 
 		ItemTooltip: {
@@ -6592,6 +6611,11 @@ Mods: {
 				Enemies hit by the teleport will be frozen in time temporarily
 				Decreases cooldown on the teleport to 6 seconds and increases the range enemies will take damage from the teleport by 50%
 				Increases teleport damage based on void damage modifiers
+				'''
+			Earthen:
+				'''
+				Increases void gain by 2
+				Vibrant Pistol fires three shots at once at the cost of accuracy
 				'''
 		}
 

@@ -79,8 +79,9 @@ N/A
 
 Daily Log:
 
-12/26/24
+12/26/24 to 12/29/24
 1. Invidia Chest sprite
+2. WIP Earthen Armor
 
 12/25/24
 1. MERRY CHRISTMAS!
