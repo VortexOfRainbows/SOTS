@@ -1201,6 +1201,7 @@ namespace SOTS
 					PrefixItem.SetInventorySlot(item, i);
 				}
 			}
+			bool EarthHelmet = false;
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
 				Item item = Player.armor[i];
@@ -1230,6 +1231,10 @@ namespace SOTS
                 {
                     chaosPiecesWorn++;
                 }
+                if (item.type == ModContent.ItemType<EarthenHelmet>())
+                {
+					EarthHelmet = true;
+                }
                 /*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
@@ -1242,6 +1247,10 @@ namespace SOTS
             if (chaosPiecesWorn > 0)
             {
                 Lighting.AddLight(Player.Center, Vector3.Lerp(Vector3.One, ColorHelper.ChaosPink.ToVector3(), 0.5f) * chaosPiecesWorn * 0.5f);
+            }
+			if(EarthHelmet)
+			{
+                Lighting.AddLight(Player.Center, Vector3.One * 1.1f);
             }
             typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
             assassinateNum = 1;

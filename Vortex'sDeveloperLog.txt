@@ -79,9 +79,10 @@ N/A
 
 Daily Log:
 
-12/26/24 to 12/29/24
+12/26/24 to 12/30/24
 1. Invidia Chest sprite
 2. WIP Earthen Armor
+	1. Right now a slightly generalist + mining armor
 
 12/25/24
 1. MERRY CHRISTMAS!
