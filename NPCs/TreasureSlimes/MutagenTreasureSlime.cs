@@ -59,7 +59,10 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<BackupBow>(), 1, 1, 1f),
 				new TreasureSlimeItem(ItemType<PixelBlaster>(), 1, 1, 0.25f),
 				new TreasureSlimeItem(ItemType<AcidicInjection>(), 1, 1, 0.25f),
-			};
+                new TreasureSlimeItem(ItemType<EarthenHelmet>(), 1, 1, 0.25f),
+                new TreasureSlimeItem(ItemType<EarthenChestplate>(), 1, 1, 0.25f),
+                new TreasureSlimeItem(ItemType<EarthenLeggings>(), 1, 1, 0.25f),
+            };
         }
         public override void ModifyAdditionalLoot(NPCLoot npcLoot)
 		{

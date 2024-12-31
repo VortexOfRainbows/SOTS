@@ -81,7 +81,7 @@ Daily Log:
 
 12/26/24 to 12/30/24
 1. Invidia Chest sprite
-2. WIP Earthen Armor
+2. Add Earthen Armor (spawns across all 3 chest tiers in AV and treasure slime)
 	1. Right now a slightly generalist + mining armor
 
 12/25/24
