@@ -1021,7 +1021,7 @@ namespace SOTS
 				if(SOTSWorld.GlobalFrozen)
                 {
 					Player.AddBuff(ModContent.BuffType<VoidMetamorphosis>(), 30, true);
-					Player.AddBuff(ModContent.BuffType<DilationSickness>(), SOTSWorld.GlobalTimeFreeze * 2 + 600, true);
+					Player.AddBuff(ModContent.BuffType<DilationSickness>(), SOTSWorld.GlobalTimeFreeze * 3 + 1200, true);
                 }
             }
 			VoidAnomaly = false;

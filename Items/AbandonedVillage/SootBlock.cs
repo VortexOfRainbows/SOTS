@@ -48,30 +48,30 @@ namespace SOTS.Items.AbandonedVillage
 			{
 				return;
             }
-			else
+			else if(Main.rand.NextBool(5))
             {
 				resultStack = 1;
-				if (Main.rand.NextBool(7))
+				if (Main.rand.NextBool(10))
 				{
 					resultType = ModContent.ItemType<OldKey>();
 				}
-				else if(Main.rand.NextBool(6))
+				else if(Main.rand.NextBool(7))
 				{
 					resultType = ModContent.ItemType<MinersPickaxe>();
 					resultStack = Main.rand.Next(3) + 1;
 				}
-				else if(Main.rand.NextBool(5))
+				else if(Main.rand.NextBool(6))
 				{
 					resultType = ItemID.MusketBall;
 					resultStack = 10 + Main.rand.Next(15) + Main.rand.Next(15) + Main.rand.Next(15) + Main.rand.Next(15) + Main.rand.Next(15);
 				}
-				else if(Main.rand.NextBool(4))
+				else if(Main.rand.NextBool(5))
 				{
 					resultType = ItemID.Vertebrae;
 					if (Main.rand.NextBool(2))
 						resultType = ItemID.RottenChunk;
 					resultStack = 1 + Main.rand.Next(2);
-					if(Main.rand.NextBool(4))
+					if(Main.rand.NextBool(5))
                     {
 						resultStack += 2 + Main.rand.Next(2);
                     }
@@ -80,7 +80,7 @@ namespace SOTS.Items.AbandonedVillage
 				{
 					resultType = ModContent.ItemType<CharredWood>();
 					resultStack = 5 + Main.rand.Next(11);
-					if (Main.rand.NextBool(6))
+					if (Main.rand.NextBool(8))
 					{
 						resultStack += 2 + Main.rand.Next(8);
 					}

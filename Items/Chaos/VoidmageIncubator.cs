@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using SOTS.Void;
 using SOTS.Items.Fragments;
-using SOTS.Items.Pyramid;
 using Terraria.Localization;
 using SOTS.Items.Conduit;
 using System;
@@ -130,7 +129,7 @@ namespace SOTS.Items.Chaos
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<VoidAnomaly>(), 1).AddIngredient(ModContent.ItemType<DissolvingBrilliance>(), 1).AddIngredient(ModContent.ItemType<SkipShard>(), 100).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<VoidAnomaly>().AddIngredient<DissolvingBrilliance>(1).AddIngredient<SkipShard>(100).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 }
