@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Invidia;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -164,7 +165,7 @@ namespace SOTS.Items.Furniture
 				if (isLocked)
 				{
 					int key = ChestKey;
-                    if ((tile.TileType == ModContent.TileType<Gems.GemChestTile>() || player.ConsumeItem(key)) && Chest.Unlock(left, top))
+                    if ((tile.TileType == ModContent.TileType<InvidiaChestTile>() || tile.TileType == ModContent.TileType<Gems.GemChestTile>() || player.ConsumeItem(key)) && Chest.Unlock(left, top))
                     {
                         if (Main.netMode == NetmodeID.MultiplayerClient)
 						{
@@ -225,7 +226,7 @@ namespace SOTS.Items.Furniture
 				if (player.cursorItemIconText == defaultName)
 				{
 					player.cursorItemIconID = ChestDrop;
-					if (Main.tile[left, top].TileFrameX / 36 == 1 || (tile.TileType == ModContent.TileType<GulaVaultTile>() && tile.TileFrameX >= 36))
+					if (Main.tile[left, top].TileFrameX / 36 == 1 || ((tile.TileType == ModContent.TileType<GulaVaultTile>() || tile.TileType == ModContent.TileType<InvidiaChestTile>()) && tile.TileFrameX >= 36))
 					{
 						player.cursorItemIconID = ChestKey;
 					}

@@ -4080,7 +4080,7 @@ namespace SOTS.WorldgenHelpers
             //Melee:  Halberd, Sword, Starshard Saber, Guardian Greatsword(Void), Pickaxe(Void), Hamaxe, Ancient Steel Pickaxe(Void) and Hamaxe, (8)
             //Ranged: Longbow, Hand Cannon, Soot Spewer (Void), Backup Bow, Fortress Crasher, Ice Breaker, Sandstorm Pouch(Void), Pint O' Punch (8)
             //Magic:  Fizzle Star, Magma Concentrator(Void), Blongus/Acid Belcher, (3)
-            //Summon: Lantern, Fresh Greeny, Little Woes, (3)
+            //Summon: Brass Whip, Lantern, Fresh Greeny, Little Woes, (4)
             foreach (Chest chest in Main.chest.Where(c => c != null))
             {
                 // Get a chest

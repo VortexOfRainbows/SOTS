@@ -79,6 +79,12 @@ N/A
 
 Daily Log:
 
+1/1/25 to 1/3/25
+1. WIP Invidia Chest
+
+1/1/25
+1. NEW YEAR!!!
+
 12/31/24
 1. Voidmage Incubator minimum cooldown 10 seconds -> 20 seconds
 	1. Scaling cooldown factor 2 -> 3

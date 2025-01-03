@@ -6100,6 +6100,11 @@ Mods: {
 				DisplayName: Earthen Leggings
 				Tooltip: Increases mining speed and movement speed by 10%
 			}
+
+			InvidiaChest: {
+				DisplayName: Invidia Chest
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6661,6 +6666,19 @@ Mods: {
 				MapEntry1: Locked Gula Vault
 				MapEntry2: Double Locked Gula Vault
 				MapEntry3: Triple Locked Gula Vault
+			}
+
+			InvidiaChestTile: {
+				MapEntry0: Invidia Chest
+				MapEntry1: Locked Invidia Chest
+				MapEntry2: Locked New Moon Invidia Chest
+				MapEntry3: Locked Waxing Cresent Invidia Chest
+				MapEntry4: Locked First Quarter Invidia Chest
+				MapEntry5: Locked Waxing Gibbous Invidia Chest
+				MapEntry6: Locked Full Moon Invidia Chest
+				MapEntry7: Locked Waning Gibbous Invidia Chest
+				MapEntry8: Locked Third Quarter Invidia Chest
+				MapEntry9: Locked Waning Cresent Invidia Chest
 			}
 
 			HoloEyeBannerTile.MapEntry: Banner
