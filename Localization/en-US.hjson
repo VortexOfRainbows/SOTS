@@ -6145,6 +6145,11 @@ Mods: {
 				DisplayName: Waning Cresent Shard
 				Tooltip: ""
 			}
+
+			LunarClock: {
+				DisplayName: Lunar Clock
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
