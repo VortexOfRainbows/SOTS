@@ -322,7 +322,7 @@ namespace SOTS
 		public int CactusSpineDamage = 0;
 		public bool netUpdate = false;
 		public bool BlazingQuiver = false;
-		public bool SerpentSpine = false;
+		public bool SerpentSpine = false, MeleeShred = false;
 
 		public bool PlasmaShrimpVanity = false;
 		public bool PlasmaShrimp = false;
@@ -1311,7 +1311,7 @@ namespace SOTS
 				Player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
 			polarCannons = 0;
 			meleeItemScale = 1f;
-			SerpentSpine = false;
+			SerpentSpine = MeleeShred = false;
 			PlasmaShrimpVanity = false;
 			PlasmaShrimp = false;
 			if(LazyCrafterAmulet) //this needs to be done in both Detours and Here due to how the original recipe functions determine when to update recipes

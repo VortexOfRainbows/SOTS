@@ -2,10 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System.Collections.Generic;
-using System.Xml.Schema;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using Steamworks;
 using SOTS.Void;
 using static SOTS.SOTS;
 using System;
@@ -39,11 +37,10 @@ using SOTS.Projectiles.Tide;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.FakePlayer;
 using SOTS.Projectiles;
-using Terraria.GameContent;
-using System.Drawing.Drawing2D;
 using SOTS.Helpers;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.Projectiles.Anomaly;
+using MonoMod.Utils;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -100,7 +97,7 @@ namespace SOTS.Common.GlobalNPCs
             FloweringBud = ProjectileType<FloweringBud>();
             ProjEvilGrowth = ProjectileType<EvilGrowth>();
             HydroBubble = ProjectileType<HydroBubble>();
-            AccretionSingularity = ModContent.ProjectileType<AccretionSingularity>();
+            AccretionSingularity = ProjectileType<AccretionSingularity>();
         }
         public override bool InstancePerEntity => true;
         public int PlatinumCurse = 0;
@@ -111,6 +108,7 @@ namespace SOTS.Common.GlobalNPCs
         public int AnomalyCurse = 0;
         public int BlightCurse = 0;
         public int CrystalCurse = 0;
+        public int DamageCurse = 0;
         public float VoidspaceCurse = 0;
         public int OwnerOfVoidspaceCurseDamage = -1;
         public bool TriggeredCrystalCurse = false;
@@ -345,6 +343,7 @@ namespace SOTS.Common.GlobalNPCs
                 packet.Write(npc.whoAmI);
                 packet.Write(CrystalCurse);
                 packet.Write(TriggeredCrystalCurse);
+                packet.Write(DamageCurse);
                 packet.Send();
             }
         }
@@ -384,14 +383,15 @@ namespace SOTS.Common.GlobalNPCs
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             int height = 18;
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/PlatinumCurse").Value, ref PlatinumCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.SoulLootingColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Harvesting").Value, ref HarvestCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.DestabilizeColor, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Destabilized").Value, ref DestableCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 0, 0), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/Bleeding").Value, ref BleedingCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.VoidAnomaly, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.ToothAcheLime, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/BlightCurse").Value, ref BlightCurse, ref height);
-            DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Mod.Assets.Request<Texture2D>("Common/GlobalNPCs/CrystalCurse").Value, ref CrystalCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Request<Texture2D>("SOTS/Common/GlobalNPCs/PlatinumCurse").Value, ref PlatinumCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.SoulLootingColor, Request<Texture2D>("SOTS/Common/GlobalNPCs/Harvesting").Value, ref HarvestCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.DestabilizeColor, Request<Texture2D>("SOTS/Common/GlobalNPCs/Destabilized").Value, ref DestableCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 0, 0), Request<Texture2D>("SOTS/Common/GlobalNPCs/Bleeding").Value, ref BleedingCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, new Color(255, 200, 10), Request<Texture2D>("SOTS/Common/GlobalNPCs/BurntDefense").Value, ref BlazingCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.VoidAnomaly, Request<Texture2D>("SOTS/Common/GlobalNPCs/AnomalyCurse").Value, ref AnomalyCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, ColorHelper.ToothAcheLime, Request<Texture2D>("SOTS/Common/GlobalNPCs/BlightCurse").Value, ref BlightCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.White, Request<Texture2D>("SOTS/Common/GlobalNPCs/CrystalCurse").Value, ref CrystalCurse, ref height);
+            DrawPermanentDebuffs(npc, spriteBatch, screenPos, Color.Lerp(Color.White, ColorHelper.EarthColor, 0.66f), Request<Texture2D>("SOTS/Common/GlobalNPCs/DamageCurse").Value, ref DamageCurse, ref height);
         }
         public void StackDebuff(NPC npc, Player player, ref int Debuff, int amount = 1, int netType = 0)
         {
@@ -417,6 +417,14 @@ namespace SOTS.Common.GlobalNPCs
                 {
                     if (Main.rand.NextFloat(1) < 1f / ((BlazingCurse + 2f) * (BlazingCurse + 2f)))
                         StackDebuff(npc, player, ref BlazingCurse, 1, 0);
+                }
+            }
+            if(item.DamageType.CountsAsClass(DamageClass.Melee))
+            {
+                if (Main.myPlayer == player.whoAmI && SOTSPlayer.ModPlayer(player).MeleeShred)
+                {
+                    if (Main.rand.NextFloat(DamageCurse / 4f) < Main.rand.NextFloat(1f) && hit.SourceDamage > Main.rand.Next(20))
+                        StackDebuff(npc, player, ref DamageCurse, 1, 2);
                 }
             }
             if ((item.type == ItemType<AncientSteelSword>() || item.type == ItemType<AncientSteelGreatPickaxe>() || item.type == ItemType<AncientSteelGreatHamaxe>()) && hit.Crit)
@@ -514,6 +522,14 @@ namespace SOTS.Common.GlobalNPCs
                 }
                 if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse)) //1 in 10, drops lower ever time
                     StackDebuff(npc, player, ref BleedingCurse, 1, 0);
+            }
+            if (projectile.DamageType.CountsAsClass(DamageClass.Melee))
+            {
+                if (Main.myPlayer == player.whoAmI && SOTSPlayer.ModPlayer(player).MeleeShred)
+                {
+                    if(Main.rand.NextFloat(DamageCurse / 4f) < Main.rand.NextFloat(1f) && hit.SourceDamage > Main.rand.Next(20))
+                        StackDebuff(npc, player, ref DamageCurse, 1, 2);
+                }
             }
         }
         private bool hitByRay = false;
@@ -635,6 +651,11 @@ namespace SOTS.Common.GlobalNPCs
             }
             if(player.SOTSPlayer().VoidspaceFlames)
                 ApplyVoidspaceCurse(npc, player);
+        }
+        public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
+        {
+            if (DamageCurse > 0)
+                modifiers.FinalDamage.Base += DamageCurse;
         }
         public void ApplyVoidspaceCurse(NPC npc, Player player)
         {

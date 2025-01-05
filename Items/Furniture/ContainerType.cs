@@ -229,6 +229,10 @@ namespace SOTS.Items.Furniture
 					if (Main.tile[left, top].TileFrameX / 36 == 1 || ((tile.TileType == ModContent.TileType<GulaVaultTile>() || tile.TileType == ModContent.TileType<InvidiaChestTile>()) && tile.TileFrameX >= 36))
 					{
 						player.cursorItemIconID = ChestKey;
+						if(tile.TileType == ModContent.TileType<InvidiaChestTile>())
+						{
+							player.cursorItemIconID = InvidiaChestTile.GetChestKey(left, top);
+                        }
 					}
 
 					player.cursorItemIconText = "";

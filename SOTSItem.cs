@@ -40,6 +40,9 @@ using SOTS.Items.Permafrost;
 using SOTS.Projectiles.Pyramid.GhostPepper;
 using SOTS.Helpers;
 using SOTS.Items.Invidia;
+using System.Runtime.CompilerServices;
+using Terraria.GameContent.RGB;
+using SOTS.Items.Invidia.MoonShard;
 
 namespace SOTS
 {
@@ -421,10 +424,15 @@ namespace SOTS
                 ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
                 return false;
             }
-			if(item.type == ItemType<DissolvingNihility>() && (line.Name == "ItemName" || line.Name == "Tooltip0"))
+			if((item.rare == RarityType<StrangeWhiteRarity>() || item.rare == RarityType<StrangeGreenRarity>()) && (line.Name == "ItemName" || line.Name == "Tooltip0"))
             {
-                Color outer = Color.White;
+                Color outer = line.Color;
                 Color inner = Color.Black;
+				if(item.ModItem != null && item.ModItem is MoonShard ms)
+				{
+					outer = ms.OuterColor;
+					inner = ms.InnerColor;
+				}
                 TextSnippet[] snippets = ChatManager.ParseMessage(line.Text, inner).ToArray();
                 ChatManager.ConvertNormalSnippets(snippets);
                 ChatManager.DrawColorCodedStringShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y), outer, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
@@ -1111,6 +1119,14 @@ namespace SOTS
     public class StrangeWhiteRarity : ModRarity
     {
         public override Color RarityColor => Color.White;
+        public override int GetPrefixedRarity(int offset, float valueMult)
+        {
+            return Type;
+        }
+    }
+    public class StrangeGreenRarity : ModRarity
+    {
+        public override Color RarityColor => new Color(86, 226, 100);
         public override int GetPrefixedRarity(int offset, float valueMult)
         {
             return Type;

@@ -1,12 +1,9 @@
-using Microsoft.Build.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Helpers;
 using SOTS.Items.Furniture;
-using SOTS.Projectiles.Chaos;
+using SOTS.Items.Invidia.MoonShard;
 using System;
-using System.Text;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -160,8 +157,36 @@ namespace SOTS.Items.Invidia
             return true;
         }
         protected override int ChestDrop => ModContent.ItemType<InvidiaChest>();
-		protected override int ChestKey => ItemID.MoonGlobe; //Temporary
-		protected override int DustType => ModContent.DustType<EvostoneDust>();
+		protected override int ChestKey
+        {
+            get
+            {
+                return ModContent.ItemType<MoonShard1>();
+            }
+        }
+        public static int GetChestKey(int i, int j)
+        {
+            Tile tile = Main.tile[i, j];
+            int chestType = tile.TileFrameX / 36;
+            if(chestType == 2)
+                return ModContent.ItemType<MoonShard1>();
+            if (chestType == 3)
+                return ModContent.ItemType<MoonShard2>();
+            if (chestType == 4)
+                return ModContent.ItemType<MoonShard3>();
+            if (chestType == 5)
+                return ModContent.ItemType<MoonShard4>();
+            if (chestType == 6)
+                return ModContent.ItemType<MoonShard5>();
+            if (chestType == 7)
+                return ModContent.ItemType<MoonShard6>();
+            if (chestType == 8)
+                return ModContent.ItemType<MoonShard7>();
+            if (chestType == 9)
+                return ModContent.ItemType<MoonShard8>();
+            return ModContent.ItemType<MoonShard1>();
+        }
+        protected override int DustType => ModContent.DustType<EvostoneDust>();
 		protected override void AddMapEntires()
 		{
 			AddMapEntry(new Color(86, 226, 100), this.GetLocalization("MapEntry0"), MapChestName);

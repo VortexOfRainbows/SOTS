@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 using Steamworks;
 using System.Text;
 using Terraria.Utilities;
+using System.Linq;
+using SOTS.Items.Invidia.MoonShard;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -412,6 +414,36 @@ namespace SOTS.WorldgenHelpers
                     || perpendicularT1.TileType == Rune || perpendicularT2.TileType == Rune)
                 {
                     break;
+                }
+            }
+        }
+        public static void FillChestWithLoot()
+        {
+            foreach (Chest chest in Main.chest.Where(c => c != null))
+            {
+                Tile t = Main.tile[chest.x, chest.y];
+                if(t.TileType == ModContent.TileType<InvidiaChestTile>())
+                {
+                    int slot = 0;
+                    int chestType = t.TileFrameX / 36;
+                    int primaryItem = ModContent.ItemType<MoonShard1>();
+                    if(chestType == 2)
+                        primaryItem = ModContent.ItemType<MoonShard1>();
+                    if (chestType == 3)
+                        primaryItem = ModContent.ItemType<MoonShard2>();
+                    if (chestType == 4)
+                        primaryItem = ModContent.ItemType<MoonShard3>();
+                    if (chestType == 5)
+                        primaryItem = ModContent.ItemType<MoonShard4>();
+                    if (chestType == 6)
+                        primaryItem = ModContent.ItemType<MoonShard5>();
+                    if (chestType == 7)
+                        primaryItem = ModContent.ItemType<MoonShard6>();
+                    if (chestType == 8)
+                        primaryItem = ModContent.ItemType<MoonShard7>();
+                    if (chestType == 9)
+                        primaryItem = ModContent.ItemType<MoonShard8>();
+                    chest.AddItemToChest(primaryItem, ref slot, 1);
                 }
             }
         }

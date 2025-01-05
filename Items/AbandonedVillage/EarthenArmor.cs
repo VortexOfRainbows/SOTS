@@ -37,6 +37,7 @@ namespace SOTS.Items.AbandonedVillage
         {
 			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Earthen");
             SOTSPlayer.ModPlayer(player).attackSpeedMod += 0.20f;
+            SOTSPlayer.ModPlayer(player).MeleeShred = true;
         }
         public override void UpdateEquip(Player player)
         {

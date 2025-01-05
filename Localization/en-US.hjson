@@ -6105,6 +6105,46 @@ Mods: {
 				DisplayName: Invidia Chest
 				Tooltip: ""
 			}
+
+			MoonShard1: {
+				DisplayName: Luna Nova Shard
+				Tooltip: ""
+			}
+
+			MoonShard2: {
+				DisplayName: Waxing Cresent Shard
+				Tooltip: ""
+			}
+
+			MoonShard3: {
+				DisplayName: First Quarter Shard
+				Tooltip: ""
+			}
+
+			MoonShard4: {
+				DisplayName: Waxing Gibbous Shard
+				Tooltip: ""
+			}
+
+			MoonShard5: {
+				DisplayName: Luna Plena Shard
+				Tooltip: ""
+			}
+
+			MoonShard6: {
+				DisplayName: Waning Gibbous Shard
+				Tooltip: ""
+			}
+
+			MoonShard7: {
+				DisplayName: Third Quarter Shard
+				Tooltip: ""
+			}
+
+			MoonShard8: {
+				DisplayName: Waning Cresent Shard
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6617,7 +6657,11 @@ Mods: {
 				Decreases cooldown on the teleport to 6 seconds and increases the range enemies will take damage from the teleport by 50%
 				Increases teleport damage based on void damage modifiers
 				'''
-			Earthen: Increases attack speed by 20%
+			Earthen:
+				'''
+				Melee strikes have a chance to apply a stacking, permanent shred on enemies, making them take additional damage from all attacks
+				Increases attack speed by 20%
+				'''
 		}
 
 		Tiles: {

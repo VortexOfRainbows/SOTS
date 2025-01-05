@@ -497,6 +497,7 @@ namespace SOTS
 					debuffNPC = Main.npc[npcNumber].GetGlobalNPC<DebuffNPC>();
                     debuffNPC.CrystalCurse = reader.ReadInt32();
                     debuffNPC.TriggeredCrystalCurse = reader.ReadBoolean();
+                    debuffNPC.DamageCurse = reader.ReadInt32();
                     if (Main.netMode == NetmodeID.Server)
                     {
                         var packet = GetPacket();
@@ -505,6 +506,7 @@ namespace SOTS
                         packet.Write(npcNumber);
                         packet.Write(debuffNPC.CrystalCurse);
                         packet.Write(debuffNPC.TriggeredCrystalCurse);
+                        packet.Write(debuffNPC.DamageCurse);
                         packet.Send(-1, playernumber);
                     }
                     break;

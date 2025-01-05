@@ -18,16 +18,10 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Invidia;
 using SOTS.Items.Gems;
 using SOTS.Items.Planetarium.Blocks;
-using Steamworks;
-using rail;
 using SOTS.Items.Whips;
 using SOTS.Items.ChestItems;
 using SOTS.Items.Tools;
-using Terraria.Graphics.Renderers;
 using SOTS.Items.Potions;
-using SOTS.Items.Void;
-using Microsoft.Xna.Framework.Input;
-using Mono.Cecil;
 
 namespace SOTS.WorldgenHelpers
 {
