@@ -216,13 +216,14 @@ namespace SOTS.Items.Invidia.MoonShard
             Item.rare = ModContent.RarityType<StrangeGreenRarity>();
             Item.value = Item.sellPrice(1, 0, 0, 0);
             Item.shopCustomPrice = Item.buyPrice(8, 0, 0, 0);
-            Item.useTime = 6;
-            Item.useAnimation = 6;
+            Item.useTime = 60;
+            Item.useAnimation = 60;
             Item.autoReuse = false;
             Item.shoot = ModContent.ProjectileType<MoonClock>();
             Item.shootSpeed = 10;
             Item.noMelee = Item.noUseGraphic = Item.channel = true;
             Item.useStyle = ItemUseStyleID.Shoot;
+            Item.UseSound = SoundID.Item4;
         }
         public override bool? UseItem(Player player)
         {
@@ -249,19 +250,81 @@ namespace SOTS.Items.Invidia.MoonShard
     }
     public class MoonClock : ModProjectile
     {
+        private float accumulatedTime;
+        private bool canGoBackward = false;
         public float HourHand => MathHelper.WrapAngle(Utils.GetDayTimeAs24FloatStartingFromMidnight() / 12f * MathHelper.TwoPi);
         public float MinuteHand => MathHelper.WrapAngle(Utils.GetDayTimeAs24FloatStartingFromMidnight() % 1f * MathHelper.TwoPi);
+        private float Percent => MathF.Sin(MathHelper.PiOver2 * MathF.Sqrt(MathF.Min(1, Projectile.localAI[0] / 60f)));
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D hand = ModContent.Request<Texture2D>("SOTS/Items/Invidia/MoonShard/LunarClockHand").Value;
             Texture2D core = ModContent.Request<Texture2D>("SOTS/Items/Invidia/MoonShard/MoonClock").Value;
             Texture2D nums = ModContent.Request<Texture2D>("SOTS/Items/Invidia/MoonShard/Numerals").Value;
-            lightColor = Color.White;
-            Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height);
-            Main.EntitySpriteDraw(hand, Projectile.Center - Main.screenPosition, null, Color.White, MinuteHand, handOrigin, 1f, SpriteEffects.None, 0f);
-            int size = hand.Height - 14;
-            Main.EntitySpriteDraw(hand, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, hand.Width, size), Color.White, HourHand, new Vector2(hand.Width/ 2, size), 1f, SpriteEffects.None, 0f);
+            float normal = Percent;
+            float inverse = 1 - Percent;
+            float offsetRotation1 = MathF.PI * 1.5f * inverse;
+            float offsetRotation2 = offsetRotation1;
+            float offsetRotation3 = MathF.PI * 4.5f * inverse;
+            Vector2 numOrigin = new Vector2(nums.Width / 2, nums.Height / 24);
+            for(int i = 0; i < 2; i++)
+                DrawChains(Projectile.Center - Main.screenPosition, 0.125f, .1f, 34f * normal, i * MathHelper.Pi / 2f, 20f);
+            DrawChains(Projectile.Center - Main.screenPosition, 0f, -.08f, 52f * normal, 0f, 10f);
+            DrawChains(Projectile.Center - Main.screenPosition, 0f, .04f, 88f * normal, 0f, 8f);
+            for(int i = 0; i < 12; i++)
+            {
+                Rectangle frame = new Rectangle(0, nums.Height / 12 * i, nums.Width, nums.Height / 12);
+                float r = (i + 1) * MathF.PI / 6f + offsetRotation2;
+                float rad = MathHelper.WrapAngle(offsetRotation1);
+                float sinusoid = MathF.Cos(rad);
+                Vector2 circular = new Vector2(0, -70 * normal).RotatedBy(r - MathHelper.PiOver4);
+                circular.X *= sinusoid;
+                circular = circular.RotatedBy(rad + MathHelper.PiOver4);
+                Main.EntitySpriteDraw(nums, circular + Projectile.Center - Main.screenPosition, frame, new Color(166, 166, 166, 66) * normal, circular.ToRotation() + MathHelper.PiOver2, numOrigin, new Vector2(sinusoid * 0.3f + 0.4f, sinusoid * 0.3f + 0.4f) * normal, SpriteEffects.None, 0f);
+            }
+            lightColor = Color.White * normal;
+            Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height - 10);
+            Main.EntitySpriteDraw(hand, Projectile.Center - Main.screenPosition, null, Color.White * normal, MinuteHand - offsetRotation3, handOrigin, normal * 0.9f, SpriteEffects.None, 0f);
+            int size = hand.Height - 12;
+            Main.EntitySpriteDraw(hand, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, hand.Width, size), Color.White * normal, HourHand - offsetRotation1, new Vector2(hand.Width/ 2, size - 10) * 0.9f, normal, SpriteEffects.None, 0f);
             return true;
+        }
+        private void DrawChains(Vector2 pos, float speedModifier = 1f, float speedModifier2 = 1f, float size2 = 1f, float offset = 0f, float circleRate = 20f)
+        {
+            float completionPercent = Percent;
+            Color color = new Color(11, 142, 50, 0) * completionPercent;
+            Texture2D texture = SOTSUtils.WhitePixel;
+            Vector2 drawOrigin = new Vector2(0, texture.Height * 0.5f);
+            int increment = 3;
+            offset += MathF.PI * 1.5f * (1 - completionPercent);
+            for (int j = -1; j <= 1; j += 2)
+            {
+                for (int i = 0; i < 360; i += increment)
+                {
+                    Vector2 CP = circlePos(i + 90, j, speedModifier, speedModifier2, size2, offset, circleRate);
+                    Vector2 nextCP = circlePos(i + 90 + increment, j, speedModifier, speedModifier2, size2, offset, circleRate);
+                    Vector2 toNext = nextCP - CP;
+                    Main.spriteBatch.Draw(texture, pos + CP, null, color, toNext.ToRotation(), drawOrigin, new Vector2(toNext.Length() / 2, completionPercent), SpriteEffects.None, 0f);
+                }
+            }
+        }
+        private Vector2 circlePos(int i, int j, float speedModifier = 1f, float speedModifier2 = 1f, float size = 1, float offset = 0f, float chainRate = 20f)
+        {
+            float rotater = SOTSWorld.GlobalCounter + accumulatedTime * MathF.Abs(speedModifier2);
+            float rad = MathHelper.WrapAngle(offset + MathHelper.ToRadians(-rotater * speedModifier));
+            float jOffset = 0;
+            if(chainRate != 0)
+            {
+                float sin = MathF.Sin(i * MathF.PI / chainRate + MathHelper.ToRadians(rotater * MathF.Sign(speedModifier2) * 1.5f));
+                jOffset = j * sin;
+            }
+            float timer = MathHelper.ToRadians(-rotater * speedModifier) + rad;
+            float sinusoid = MathF.Cos(timer);
+            float radians = MathHelper.ToRadians(i);
+            Vector2 circular = new Vector2(size + jOffset * 2f, 0).RotatedBy(radians);
+            circular.X *= sinusoid;
+            circular += new Vector2(jOffset * 4f, 0).RotatedBy(radians);
+            circular = circular.RotatedBy(timer + MathHelper.PiOver4);
+            return circular;
         }
         public override void SetStaticDefaults()
         {
@@ -293,33 +356,51 @@ namespace SOTS.Items.Invidia.MoonShard
                     Projectile.ai[1] = Main.MouseWorld.Y;
                     Projectile.netUpdate = true;
                 }
+                if (Projectile.localAI[0] < 60 && Projectile.ai[2] >= 0)
+                    player.channel = true;
                 if(player.channel)
                 {
-                    Projectile.timeLeft = 30;
+                    Projectile.timeLeft = 60;
                 }
                 else
                 {
-                    Projectile.Kill();
+                    Projectile.ai[2] = -1;
+                    Projectile.netUpdate = true;
                 }
             }
             Vector2 mousePos = new Vector2(Projectile.ai[0], Projectile.ai[1]) - Projectile.Center;
             float angle = MathHelper.WrapAngle(mousePos.ToRotation() + MathHelper.PiOver2);
-            float nextAngle = MathHelper.WrapAngle(MinuteHand - SOTSUtils.AngularLerp(MinuteHand, angle, 0.95f));
+            float nextAngle = MathHelper.WrapAngle(MinuteHand - angle);
             double rateMod = -nextAngle * 60.0;
             if (Projectile.ai[2] > 6)
             {
                 rateMod = Math.Abs(rateMod);
             }
-            if (Projectile.ai[2] < -6)
+            if (!canGoBackward && rateMod < 0)
+                rateMod = 0;
+            //if (Projectile.ai[2] < -6 && canGoBackward)
+            //{
+            //    rateMod = -Math.Abs(rateMod);
+            //}
+            if (Projectile.ai[2] <= -1)
             {
-                rateMod = -Math.Abs(rateMod);
+                Projectile.localAI[0]--;
+                if (Projectile.localAI[0] <= 0)
+                    Projectile.Kill();
             }
-            SOTSWorld.TimeRateModify = rateMod;
-            Projectile.ai[2] += (float)rateMod * 0.1f;
-            Projectile.ai[2] *= 0.75f;
-            Main.NewText(Projectile.ai[2]);
-            SOTSWorld.TimeRateModify -= 1;
+            else
+            {
+                Projectile.ai[2] += (float)rateMod * 0.05f;
+                Projectile.ai[2] *= 0.7f;
+                if (Projectile.localAI[0] < 60)
+                    Projectile.localAI[0] += 1f;
+                SOTSWorld.TimeRateModify = rateMod;
+                accumulatedTime += (float)SOTSWorld.TimeRateModify;
+                SOTSWorld.TimeRateModify -= 1;
+            }
             UpdateHoldOut();
+            Projectile.rotation = MathF.PI * 1.5f * (1 - Percent);
+            Projectile.scale = Percent * 0.9f;
             return base.PreAI();
         }
         private void UpdateHoldOut()
@@ -328,15 +409,21 @@ namespace SOTS.Items.Invidia.MoonShard
             Player player = Main.player[Projectile.owner];
             if (mousePos != Vector2.Zero)
             {
-                Vector2 toMouse = mousePos - player.Center;
+                Vector2 handPos = Projectile.Center + new Vector2(0, -100).RotatedBy(MinuteHand);
+                Vector2 toMouse = handPos - player.Center;
+                Vector2 handPos2 = Projectile.Center + new Vector2(0, -60).RotatedBy(HourHand);
+                Vector2 toMouse2 = handPos2 - player.Center;
                 int direction = 1;
                 if (toMouse.X < 0)
                     direction = -1;
                 Projectile.alpha = 0;
                 player.ChangeDir(direction);
-                player.itemTime = 4;
-                player.itemAnimation = 4;
-                player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
+                if(player.itemTime < 4)
+                {
+                    player.itemTime = 4;
+                    player.itemAnimation = 4;
+                }
+                player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(player.gravDir * toMouse2.ToRotation() + MathHelper.ToRadians(-90)));
                 player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(player.gravDir * toMouse.ToRotation() + MathHelper.ToRadians(-90)));
             }
         }

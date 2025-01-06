@@ -6147,8 +6147,8 @@ Mods: {
 			}
 
 			LunarClock: {
-				DisplayName: Lunar Clock
-				Tooltip: ""
+				DisplayName: Temporal Astrolabe
+				Tooltip: "Allows control over the day-night cycle"
 			}
 		}
 
