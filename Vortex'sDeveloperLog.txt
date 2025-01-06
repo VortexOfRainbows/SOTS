@@ -84,7 +84,7 @@ Daily Log:
 2. Added Moon Shards (may need cool flavor text)
 3. Stacking debuff on Earthen Armor set bonus: works in MP
 	1. This is quite strong, particularly when combined with the Starshard Saber and Earthdrive (great inherent synergy)
-4. WIP Lunar Clock + sprites (right now, just draw code)
+4. More WIP Lunar Clock + sprites (right now, just draw code)
 	1. Subject to renaming
 
 1/1/25

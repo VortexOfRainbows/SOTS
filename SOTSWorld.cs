@@ -53,7 +53,13 @@ namespace SOTS
 {
     public class SOTSWorld : ModSystem
 	{
-		private static int MoonPhase = 0;
+		public static double TimeRateModify = 0;
+        public override void ModifyTimeRate(ref double timeRate, ref double tileUpdateRate, ref double eventUpdateRate)
+        {
+			timeRate += TimeRateModify;
+			TimeRateModify = 0;
+        }
+        private static int MoonPhase = 0;
 		private static float PrevMoonProgress = 0;
 		public static float MoonPhasePercent;
         public static float SantuaryMoonPhase(int moonPhaseOffset = 0)

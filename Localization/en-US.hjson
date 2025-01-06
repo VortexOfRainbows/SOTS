@@ -8017,6 +8017,7 @@ Mods: {
 			AccretionDisc.DisplayName: Accretion Disc
 			AccretionSingularity.DisplayName: Accretion Singularity
 			AccretionNova.DisplayName: Accretion Nova
+			MoonClock.DisplayName: Moon Clock
 		}
 
 		DamageClasses: {

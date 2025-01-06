@@ -1,9 +1,12 @@
 using Humanizer;
+using Microsoft.Build.Evaluation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using SOTS.Items.Planetarium.Furniture;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -139,7 +142,7 @@ namespace SOTS.Items.Invidia.MoonShard
                         if(passNum == 1)
                         {
                             float sin = 0.7f + 0.05f * MathF.Sin(rad + MathHelper.PiOver4);
-                            Vector2 circular = new Vector2(22 * scale).RotatedBy(rad);
+                            Vector2 circular = new Vector2(21 * scale).RotatedBy(rad);
                             circular.Y *= 0.8f;
                             circular = circular.RotatedBy(-MathHelper.PiOver4 + rotation);
                             float r = circular.X * 0.004f;
@@ -182,7 +185,7 @@ namespace SOTS.Items.Invidia.MoonShard
             float radians = MathHelper.ToRadians(i);
             float timer = MathHelper.ToRadians(-SOTSWorld.GlobalCounter * speedM) + rad;
             float sinusoid = MathF.Sin(timer);
-            Vector2 circular = new Vector2(26 + jOffset * 1.5f, 0).RotatedBy(radians) * size;
+            Vector2 circular = new Vector2(25 + jOffset * 1.5f, 0).RotatedBy(radians) * size;
             circular.X *= 0.8f;
             circular.X *= sinusoid;
             circular += new Vector2(jOffset * 2.5f, 0).RotatedBy(radians) * size;
@@ -200,14 +203,6 @@ namespace SOTS.Items.Invidia.MoonShard
             }
             return true;
         }
-        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
-        {
-
-        }
-        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
-        {
-
-        }
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ItemNoGravity[Type] = true;
@@ -221,6 +216,26 @@ namespace SOTS.Items.Invidia.MoonShard
             Item.rare = ModContent.RarityType<StrangeGreenRarity>();
             Item.value = Item.sellPrice(1, 0, 0, 0);
             Item.shopCustomPrice = Item.buyPrice(8, 0, 0, 0);
+            Item.useTime = 6;
+            Item.useAnimation = 6;
+            Item.autoReuse = false;
+            Item.shoot = ModContent.ProjectileType<MoonClock>();
+            Item.shootSpeed = 10;
+            Item.noMelee = Item.noUseGraphic = Item.channel = true;
+            Item.useStyle = ItemUseStyleID.Shoot;
+        }
+        public override bool? UseItem(Player player)
+        {
+            return true;
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            return base.Shoot(player, source, position, velocity, type, damage, knockback);
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            position = Main.MouseWorld;
+            velocity *= 0.01f;
         }
         public override Color? GetAlpha(Color lightColor)
         {
@@ -230,6 +245,100 @@ namespace SOTS.Items.Invidia.MoonShard
         {
 			CreateRecipe(1).AddIngredient<MoonShard1>().AddIngredient<MoonShard2>().AddIngredient<MoonShard3>().AddIngredient<MoonShard4>()
                 .AddIngredient<MoonShard5>().AddIngredient<MoonShard6>().AddIngredient<MoonShard7>().AddIngredient<MoonShard8>().AddTile<HardlightFabricatorTile>().Register();
+        }
+    }
+    public class MoonClock : ModProjectile
+    {
+        public float HourHand => MathHelper.WrapAngle(Utils.GetDayTimeAs24FloatStartingFromMidnight() / 12f * MathHelper.TwoPi);
+        public float MinuteHand => MathHelper.WrapAngle(Utils.GetDayTimeAs24FloatStartingFromMidnight() % 1f * MathHelper.TwoPi);
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D hand = ModContent.Request<Texture2D>("SOTS/Items/Invidia/MoonShard/LunarClockHand").Value;
+            Texture2D core = ModContent.Request<Texture2D>("SOTS/Items/Invidia/MoonShard/MoonClock").Value;
+            Texture2D nums = ModContent.Request<Texture2D>("SOTS/Items/Invidia/MoonShard/Numerals").Value;
+            lightColor = Color.White;
+            Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height);
+            Main.EntitySpriteDraw(hand, Projectile.Center - Main.screenPosition, null, Color.White, MinuteHand, handOrigin, 1f, SpriteEffects.None, 0f);
+            int size = hand.Height - 14;
+            Main.EntitySpriteDraw(hand, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, hand.Width, size), Color.White, HourHand, new Vector2(hand.Width/ 2, size), 1f, SpriteEffects.None, 0f);
+            return true;
+        }
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
+        public override void SetDefaults()
+        {
+            Projectile.friendly = false;
+            Projectile.hostile = false;
+            Projectile.tileCollide = false;
+            Projectile.ignoreWater = true;
+            Projectile.width = Projectile.height = 30;
+            Projectile.timeLeft = 30;
+        }
+        public override bool PreAI()
+        {
+            if (Projectile.ai[0] == 0)
+            {
+                Vector2 startingOffset = new Vector2(0, 1).RotatedBy(MinuteHand);
+                Projectile.Center += startingOffset;
+            }
+            Projectile.velocity = Vector2.Zero;
+            Player player = Main.player[Projectile.owner];
+            if(Main.myPlayer == Projectile.owner)
+            {
+                if (Projectile.ai[0] != Main.MouseWorld.X || Projectile.ai[1] != Main.MouseWorld.Y)
+                {
+                    Projectile.ai[0] = Main.MouseWorld.X;
+                    Projectile.ai[1] = Main.MouseWorld.Y;
+                    Projectile.netUpdate = true;
+                }
+                if(player.channel)
+                {
+                    Projectile.timeLeft = 30;
+                }
+                else
+                {
+                    Projectile.Kill();
+                }
+            }
+            Vector2 mousePos = new Vector2(Projectile.ai[0], Projectile.ai[1]) - Projectile.Center;
+            float angle = MathHelper.WrapAngle(mousePos.ToRotation() + MathHelper.PiOver2);
+            float nextAngle = MathHelper.WrapAngle(MinuteHand - SOTSUtils.AngularLerp(MinuteHand, angle, 0.95f));
+            double rateMod = -nextAngle * 60.0;
+            if (Projectile.ai[2] > 6)
+            {
+                rateMod = Math.Abs(rateMod);
+            }
+            if (Projectile.ai[2] < -6)
+            {
+                rateMod = -Math.Abs(rateMod);
+            }
+            SOTSWorld.TimeRateModify = rateMod;
+            Projectile.ai[2] += (float)rateMod * 0.1f;
+            Projectile.ai[2] *= 0.75f;
+            Main.NewText(Projectile.ai[2]);
+            SOTSWorld.TimeRateModify -= 1;
+            UpdateHoldOut();
+            return base.PreAI();
+        }
+        private void UpdateHoldOut()
+        {
+            Vector2 mousePos = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+            Player player = Main.player[Projectile.owner];
+            if (mousePos != Vector2.Zero)
+            {
+                Vector2 toMouse = mousePos - player.Center;
+                int direction = 1;
+                if (toMouse.X < 0)
+                    direction = -1;
+                Projectile.alpha = 0;
+                player.ChangeDir(direction);
+                player.itemTime = 4;
+                player.itemAnimation = 4;
+                player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.Full, 0f);
+                player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, MathHelper.WrapAngle(player.gravDir * toMouse.ToRotation() + MathHelper.ToRadians(-90)));
+            }
         }
     }
 }
