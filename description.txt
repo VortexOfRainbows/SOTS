@@ -8,14 +8,15 @@ Wiki has been moved to wiki.gg
 [url= https://terrariamods.wiki.gg/wiki/Secrets_Of_The_Shadows]Unfinished Wiki[/url]
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2843080273]SOTS Texture Pack[/url]
 
-[b]!! This mod is in development !![/b]
+[b]!! This mod is in development, and will continue to be supported for the foreseeable future !![/b]
 [b]!! A large world is recommended to avoid major structures overlapping !![/b]
 [b]!! Worldgen may not work on special seeds !![/b]
 
 This mod contains:
-8 entirely new bosses with unique attacks
-800+ new items with many interesting effects, and 3 new ores with unique mechanics
-3 new dungeons: the Planetarium, Pyramid, and Abandoned Village
+7 new bosses with unique attacks
+11 new armor sets with interesting set bonuses
+850+ new items with many interesting effects, and 3 new ores with unique mechanics
+4 new major structures to explore: the Planetarium, Pyramid, Abandoned Village, and Sanctuary
 Many new mini structures that add life to Terraria
 A new damage class, Void, which lets you utilize the power of your soul
 Warriors, Rangers, Mages, and Summoners can all have void weapons at their disposal

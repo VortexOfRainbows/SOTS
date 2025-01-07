@@ -365,7 +365,7 @@ namespace SOTS.Items.Invidia.MoonShard
             Projectile.hostile = false;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
-            Projectile.width = Projectile.height = 30;
+            Projectile.width = Projectile.height = 32;
             Projectile.timeLeft = 30;
             Projectile.localAI[0] = 0;
         }

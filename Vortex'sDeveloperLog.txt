@@ -87,6 +87,7 @@ Daily Log:
 	1. This is quite strong, particularly when combined with the Starshard Saber and Earthdrive (great inherent synergy)
 4. Added Temporal Astrolabe: works in MP
 5. Sanctuary is now considered a biome internally and gives the appropriate silence debuff
+6. Currently we are at: 9 more walls, 52 more tiles, 9 more NPCs, 101 new items, 2 new biomes
 
 1/1/25
 1. NEW YEAR!!!
