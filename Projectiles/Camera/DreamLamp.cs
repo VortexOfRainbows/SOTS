@@ -145,9 +145,5 @@ namespace SOTS.Projectiles.Camera
             }
             return false;
         }
-        public override void OnKill(int timeLeft)
-        {
-            Player player = Main.player[Projectile.owner];
-        }
     }
 }

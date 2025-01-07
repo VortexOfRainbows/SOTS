@@ -424,7 +424,7 @@ namespace SOTS
                 ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
                 return false;
             }
-			if((item.rare == RarityType<StrangeWhiteRarity>() || item.rare == RarityType<StrangeGreenRarity>()) && (line.Name == "ItemName" || line.Name == "Tooltip0"))
+			if((item.rare == RarityType<StrangeWhiteRarity>() || item.rare == RarityType<StrangeGreenRarity>()) && (line.Name == "ItemName" || (line.Name == "Tooltip0" && item.rare == RarityType<StrangeWhiteRarity>())))
             {
                 Color outer = line.Color;
                 Color inner = Color.Black;

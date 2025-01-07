@@ -6148,7 +6148,7 @@ Mods: {
 
 			LunarClock: {
 				DisplayName: Temporal Astrolabe
-				Tooltip: "Allows control over the day-night cycle"
+				Tooltip: Allows control over the day-night cycle
 			}
 		}
 
@@ -8018,6 +8018,7 @@ Mods: {
 			AccretionSingularity.DisplayName: Accretion Singularity
 			AccretionNova.DisplayName: Accretion Nova
 			MoonClock.DisplayName: Moon Clock
+			MoonClockHoldOut.DisplayName: Moon Clock Hold Out
 		}
 
 		DamageClasses: {

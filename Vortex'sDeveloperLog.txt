@@ -37,6 +37,7 @@ Update Objectives:
 	3. Thorium: Move amber gem structure to bottom of oceanic depths
 	4. Sand Floating Islands: Make pyramid start the desert check lower to the ground
 	5. Fargo's: Fix pyramid interference with Fargo's new pyramid
+	6. Calamity: See if void reforges can be included in the calamity reforge system
 9. Upgrade item to the Hydrokinetic Antennae (Pending)
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 11. Earthen Armor for AV (Up next)
@@ -84,8 +85,7 @@ Daily Log:
 2. Added Moon Shards (may need cool flavor text)
 3. Stacking debuff on Earthen Armor set bonus: works in MP
 	1. This is quite strong, particularly when combined with the Starshard Saber and Earthdrive (great inherent synergy)
-4. More WIP Lunar Clock ("Temporal Astrolabe") + sprites
-	1. Needs: visuals, MP testing (testing in general also)
+4. Added Temporal Astrolabe: works in MP
 
 1/1/25
 1. NEW YEAR!!!

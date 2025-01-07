@@ -2,21 +2,14 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.NPCs.Boss.Curse;
-using SOTS.Void;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static tModPorter.ProgressUpdate;
 
 namespace SOTS.Projectiles.Tide
 {    
     public class HydroBubble : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-
-		}
         public override void SetDefaults()
         {
 			Projectile.width = 24;
@@ -30,14 +23,6 @@ namespace SOTS.Projectiles.Tide
 			Projectile.hide = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 3;
-		}
-		public override void SendExtraAI(BinaryWriter writer) 
-		{
-
-		}
-		public override void ReceiveExtraAI(BinaryReader reader)
-		{	
-
 		}
         public override bool ShouldUpdatePosition()
         {
