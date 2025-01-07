@@ -218,6 +218,11 @@ Mods: {
 				DisplayName: Abandoned Village
 				TownNPCDialogueName: the Abandoned Village
 			}
+
+			SanctuaryBiome: {
+				DisplayName: Sanctuary Biome
+				TownNPCDialogueName: the Sanctuary Biome
+			}
 		}
 
 		DropCondition: {

@@ -48,6 +48,7 @@ using Terraria.DataStructures;
 using SOTS.Items.Furniture.Functional;
 using SOTS.Items.Conduit;
 using Terraria.Graphics.Light;
+using SOTS.Items.Invidia;
 
 namespace SOTS
 {
@@ -250,8 +251,9 @@ namespace SOTS
 		public static int pyramidBiome = 0;
 		public static int AVBiome = 0;
 		public static int phaseBiome = 0;
+        public static int SanctuaryBiome = 0;
 
-		public static bool downedGlowmoth = false;
+        public static bool downedGlowmoth = false;
 		public static bool downedPinky = false;
 		public static bool downedCurse = false;
 
@@ -785,6 +787,7 @@ namespace SOTS
 			phaseBiome = tileCounts[ModContent.TileType<PhaseOreTile>()];
 			pyramidBiome = tileCounts[ModContent.TileType<SarcophagusTile>()] + tileCounts[ModContent.TileType<RefractingCrystalBlockTile>()] + tileCounts[ModContent.TileType<AcediaGatewayTile>()];
 			AVBiome = tileCounts[ModContent.TileType<SootBlockTile>()] + tileCounts[ModContent.TileType<CrimsonSoot.CrimsonSootTile>()] + tileCounts[ModContent.TileType<CorruptionSoot.CorruptionSootTile>()];
+			SanctuaryBiome = tileCounts[ModContent.TileType<RunicEvostoneTile>()] + tileCounts[ModContent.TileType<RunicEvostoneBrickTile>()] + tileCounts[ModContent.TileType<InvidiaPlatingTile>()] + tileCounts[ModContent.TileType<OvergrownEvostoneBrickTile>()];
         }
         public override void ModifyHardmodeTasks(List<GenPass> list)
         {

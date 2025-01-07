@@ -80,12 +80,13 @@ N/A
 
 Daily Log:
 
-1/1/25 to 1/6/25
+1/1/25 to 1/7/25
 1. Added Invidia Chest
 2. Added Moon Shards (may need cool flavor text)
 3. Stacking debuff on Earthen Armor set bonus: works in MP
 	1. This is quite strong, particularly when combined with the Starshard Saber and Earthdrive (great inherent synergy)
 4. Added Temporal Astrolabe: works in MP
+5. Sanctuary is now considered a biome internally and gives the appropriate silence debuff
 
 1/1/25
 1. NEW YEAR!!!

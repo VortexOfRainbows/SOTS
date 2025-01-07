@@ -1103,6 +1103,12 @@ namespace SOTS.Common.GlobalNPCs
                     flavorText
                 });
             }
+            if (npc.type == ModContent.NPCType<Fistfull>() || npc.type == ModContent.NPCType<BallOWorms>() || npc.type == ModContent.NPCType<BallOGuts>())
+            {
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                    AbandonedVillage
+                });
+            }
             if (npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<PhantarayBig>() || npc.type == ModContent.NPCType<PhantarayCore>())
             {
                 bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
