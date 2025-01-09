@@ -6001,7 +6001,7 @@ Mods: {
 
 			TidalPlatingWorkBench: {
 				DisplayName: Tidal Plating Work Bench
-				Tooltip: ""
+				Tooltip: Also functions as an anvil
 			}
 
 			AVMinesMusicBox: {
@@ -6154,6 +6154,106 @@ Mods: {
 			LunarClock: {
 				DisplayName: Temporal Astrolabe
 				Tooltip: Allows control over the day-night cycle
+			}
+
+			OtherworldPlatingBathtub: {
+				DisplayName: Otherworld Plating Bathtub
+				Tooltip: ""
+			}
+
+			OtherworldPlatingBed: {
+				DisplayName: Otherworld Plating Bed
+				Tooltip: ""
+			}
+
+			OtherworldPlatingBlastDoor: {
+				DisplayName: Otherworld Plating Blast Door
+				Tooltip: ""
+			}
+
+			OtherworldPlatingBookcase: {
+				DisplayName: Otherworld Plating Bookcase
+				Tooltip: ""
+			}
+
+			OtherworldPlatingCandle: {
+				DisplayName: Otherworld Plating Candle
+				Tooltip: ""
+			}
+
+			OtherworldPlatingChair: {
+				DisplayName: Otherworld Plating Chair
+				Tooltip: ""
+			}
+
+			OtherworldPlatingChandelier: {
+				DisplayName: Otherworld Plating Chandelier
+				Tooltip: ""
+			}
+
+			OtherworldPlatingChest: {
+				DisplayName: Otherworld Plating Capsule
+				Tooltip: ""
+			}
+
+			OtherworldPlatingClock: {
+				DisplayName: Otherworld Plating Clock
+				Tooltip: ""
+			}
+
+			OtherworldPlatingDresser: {
+				DisplayName: Otherworld Plating Dresser
+				Tooltip: ""
+			}
+
+			OtherworldPlatingLamp: {
+				DisplayName: Otherworld Plating Lamp
+				Tooltip: ""
+			}
+
+			OtherworldPlatingLantern: {
+				DisplayName: Otherworld Plating Lantern
+				Tooltip: ""
+			}
+
+			OtherworldPlatingPiano: {
+				DisplayName: Otherworld Plating Piano
+				Tooltip: ""
+			}
+
+			OtherworldPlatingPlatform: {
+				DisplayName: Otherworld Plating Platform
+				Tooltip: ""
+			}
+
+			OtherworldPlatingSink: {
+				DisplayName: Otherworld Plating Sink
+				Tooltip: ""
+			}
+
+			OtherworldPlatingSofa: {
+				DisplayName: Otherworld Plating Sofa
+				Tooltip: ""
+			}
+
+			OtherworldPlatingTable: {
+				DisplayName: Otherworld Plating Table
+				Tooltip: ""
+			}
+
+			OtherworldPlatingToilet: {
+				DisplayName: Otherworld Plating Toilet
+				Tooltip: ""
+			}
+
+			OtherworldPlatingTorch: {
+				DisplayName: Otherworld Plating Torch
+				Tooltip: ""
+			}
+
+			OtherworldPlatingWorkBench: {
+				DisplayName: Otherworld Plating Work Bench
+				Tooltip: Also functions as an anvil
 			}
 		}
 
@@ -6865,8 +6965,17 @@ Mods: {
 			}
 
 			TidalPlatingTorchTile.MapEntry: Tidal Plating Torch
-			AVMinesMusicBoxTile.MapEntry: A V Mines Music Box Tile
+			AVMinesMusicBoxTile.MapEntry: Abandoned Village Mines Music Box Tile
 			PinkyTestTube.MapEntry: Failed Experiment
+			OtherworldPlatingBlastDoorTileClosed.MapEntry: Otherworld Plating Blast Door Tile Closed
+			OtherworldPlatingBlastDoorTileOpen.MapEntry: Otherworld Plating Blast Door Tile Open
+
+			OtherworldPlatingChestTile: {
+				MapEntry0: Otherworld Plating Capsule
+				MapEntry1: Locked Otherworld Plating Capsule
+			}
+
+			OtherworldPlatingTorchTile.MapEntry: Otherworld Plating Torch Tile
 		}
 
 		WorldGeneration: {

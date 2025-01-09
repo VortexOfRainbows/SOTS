@@ -1,13 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Planetarium.Furniture;
-using SOTS.Projectiles.Camera;
 using SOTS.Void;
 using System;
-using System.IO;
-using System.Runtime.InteropServices.ComTypes;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
