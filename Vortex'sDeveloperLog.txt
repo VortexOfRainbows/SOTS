@@ -8,20 +8,19 @@ The following is my development plans :D
 4. Give Tesseract the ability to do a "manual mode", where tesseracts attack only when you attack, and at your cursor.
 
 Acknowledged But Likely Delayed:
-1. Earthen Plating starter house.
-2. Need a mechanic for spawning a portal once a Gateway is fully powered.
-3. Smart cursor doesn't work with dressers (and other features of furniture are outdated, such as unsittable sofas).
-4. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
-5. Boss Trophies
-6. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
-7. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
-8. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
-9. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
-10. Scroll wheel with challenger's ring
-11. Banners/Lanterns to work on platforms (should be fairly easy), and to have proper tooltip text
-12. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
-13. Ammo Pouch + Infinity Pouch leads to some crazy combos...
-14. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
+1. Need a mechanic for spawning a portal once a Gateway is fully powered.
+2. Smart cursor doesn't work with dressers (and other features of furniture are outdated, such as unsittable sofas).
+3. Hydro servant wont attack in multiplayer, sometimes doesn't sync, and sometimes causes erroneous behaviors such as double item speed when other players are also using servants... Seems to be fixed on reload or after messing with resummoning fake players. Might be related to IDs for FakePlayers being desynced across clients..?
+4. Boss Trophies
+5. FakePlayers may sometime change the select item within their update loop if itemAnimation == 0 and a hotbar button is pressed. This doesn't seem to effect anything to my knowledge... but could be an issue.
+6. Tesseract Servant right click duration is not synced, which is a vanilla caused behavior (can also be observed when players use right click weapons)
+7. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
+8. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
+9. Scroll wheel with challenger's ring
+10. Banners/Lanterns to work on platforms (should be fairly easy), and to have proper tooltip text
+11. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
+12. Ammo Pouch + Infinity Pouch leads to some crazy combos...
+13. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
 
 Update Objectives:
 1. Ghost Town! (In Progress)	
@@ -45,6 +44,7 @@ Update Objectives:
 	1. Tiles: Overgrown Vespera Brick, Vespera Rune Brick, Invidia Plating Block, Invidia Portal Plating
 	2. Solar Bulb item in the chest
 13. Add Bridge Burner
+14. Add Achievements
 
 ---WIP List---
 Abandoned village generation
