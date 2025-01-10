@@ -21,6 +21,7 @@ Acknowledged But Likely Delayed:
 11. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 12. Ammo Pouch + Infinity Pouch leads to some crazy combos...
 13. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
+14. Tide structure that catches enemies (kinda like the hydraulic press)
 
 Update Objectives:
 1. Ghost Town! (In Progress)	
@@ -82,7 +83,8 @@ N/A
 Daily Log:
 
 1/7/25 to 1/9/25
-1. WIP Otherworld Plating furniture sprites
+1. Otherworld Plating furniture
+2. Otherworld Plating wall
 
 1/1/25 to 1/7/25
 1. Added Invidia Chest

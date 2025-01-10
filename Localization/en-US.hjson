@@ -6255,6 +6255,11 @@ Mods: {
 				DisplayName: Otherworld Plating Work Bench
 				Tooltip: Also functions as an anvil
 			}
+
+			OtherworldPlatingWall: {
+				DisplayName: Otherworld Plating Wall
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6956,8 +6961,8 @@ Mods: {
 			GulaGatewayTile.MapEntry: Gula Gateway
 			AVPots.MapEntry: Pot
 			AVMusicBoxTile.MapEntry: Abandoned Village Surface Music Box
-			TidalPlatingBlastDoorTileClosed.MapEntry: Tidal Plating Blast Door Closed
-			TidalPlatingBlastDoorTileOpen.MapEntry: Tidal Plating Blast Door Open
+			TidalPlatingBlastDoorTileClosed.MapEntry: Tidal Plating Blast Door
+			TidalPlatingBlastDoorTileOpen.MapEntry: Tidal Plating Blast Door
 
 			TidalPlatingChestTile: {
 				MapEntry0: Tidal Plating Storage
@@ -6965,17 +6970,17 @@ Mods: {
 			}
 
 			TidalPlatingTorchTile.MapEntry: Tidal Plating Torch
-			AVMinesMusicBoxTile.MapEntry: Abandoned Village Mines Music Box Tile
+			AVMinesMusicBoxTile.MapEntry: Abandoned Village Mines Music Box
 			PinkyTestTube.MapEntry: Failed Experiment
-			OtherworldPlatingBlastDoorTileClosed.MapEntry: Otherworld Plating Blast Door Tile Closed
-			OtherworldPlatingBlastDoorTileOpen.MapEntry: Otherworld Plating Blast Door Tile Open
+			OtherworldPlatingBlastDoorTileClosed.MapEntry: Otherworld Plating Blast Door
+			OtherworldPlatingBlastDoorTileOpen.MapEntry: Otherworld Plating Blast Door
 
 			OtherworldPlatingChestTile: {
 				MapEntry0: Otherworld Plating Capsule
 				MapEntry1: Locked Otherworld Plating Capsule
 			}
 
-			OtherworldPlatingTorchTile.MapEntry: Otherworld Plating Torch Tile
+			OtherworldPlatingTorchTile.MapEntry: Otherworld Plating Torch
 		}
 
 		WorldGeneration: {

@@ -193,4 +193,30 @@ namespace SOTS.Items.Fragments
             AddMapEntry(Color.Lerp(SOTSTile.TidePlatingColor, Color.Black, 0.2f));
         }
     }
+    public class OtherworldPlatingWall : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(400);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneWall);
+            Item.width = 28;
+            Item.height = 28;
+            Item.rare = ItemRarityID.Blue;
+            Item.createWall = ModContent.WallType<OtherworldPlatingWallWall>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<OtherworldPlating>(1).AddTile(TileID.WorkBenches).Register();
+            Recipe.Create(ModContent.ItemType<OtherworldPlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
+        }
+    }
+    public class OtherworldPlatingWallWall : ModWall
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
+            DustType = DustID.Lead;
+            AddMapEntry(Color.Lerp(SOTSTile.OtherworldPlatingColor, Color.Black, 0.2f));
+        }
+    }
 }
