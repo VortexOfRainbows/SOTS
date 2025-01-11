@@ -1901,7 +1901,7 @@ Mods: {
 				DisplayName: Worldly Polarizer
 				Tooltip:
 					'''
-					Increases damage, endurance, and movement speed by 3%
+					Increases damage, endurance, and movement speed by 2%
 					Changes the effects of worldly dissolving elements in your inventory
 					'''
 			}
@@ -1928,7 +1928,7 @@ Mods: {
 				DisplayName: Ultimate Polarizer
 				Tooltip:
 					'''
-					Increases damage, endurance, and movement speed by 3%
+					Increases damage, endurance, and movement speed by 2%
 					Increases max life, mana, and void by 20
 					Increases jump speed, life regeneration, and void gain by 2
 					Changes the effects of all dissolving elements in your inventory
@@ -4792,7 +4792,7 @@ Mods: {
 			}
 
 			PermafrostPlatingBench: {
-				DisplayName: Permafrost Plating Bench
+				DisplayName: Permafrost Plating Sofa
 				Tooltip: ""
 			}
 

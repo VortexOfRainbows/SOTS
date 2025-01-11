@@ -15,12 +15,12 @@ namespace SOTS.Items.Earth
         }
         public override void SetDefaults()
         {
-            Item.damage = 11;
+            Item.damage = 10;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 30;
             Item.height = 60;
-            Item.useTime = 18;
-            Item.useAnimation = 18;
+            Item.useTime = 19;
+            Item.useAnimation = 19;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.noMelee = true;
             Item.knockBack = 0.5f;
@@ -45,7 +45,7 @@ namespace SOTS.Items.Earth
             {
                 for (int i = 0; i < 3; i++) //This repeats the following thrice, changing the way an angle is modified each time
                 {
-                    if (!Main.rand.NextBool(3)) //This functions provides a roughly 2/3 computer-generated chance for the following to activate. This is because it inverses a 1/X chance function.
+                    if (Main.rand.NextBool(2))
                     {
                         Vector2 burstDirection = velocity.RotatedBy(MathHelper.ToRadians((7f + 35 * i) * j)); //Manipulate the velocity to angle the direction of the spore clouds
                         Projectile.NewProjectile(source, position, burstDirection, ModContent.ProjectileType<SporeCloudFriendly>(), (int)(damage * 0.66f), knockback, player.whoAmI);
@@ -54,7 +54,7 @@ namespace SOTS.Items.Earth
                     }
                 }
             }
-            if(field) //play spore-cloud sound (which would only not happen if the extremely low odds of (1/3)^6 are met)
+            if(field) //play spore-cloud sound (which would only not happen if the extremely low odds of (1/2)^6 are met)
                 SOTSUtils.PlaySound(SoundID.Item34, (int)position.X, (int)position.Y, 0.7f, -0.1f); //Helper method I made that calls related sound-producing functions
             return true; 
         }

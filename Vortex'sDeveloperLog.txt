@@ -40,12 +40,11 @@ Update Objectives:
 	6. Calamity: See if void reforges can be included in the calamity reforge system
 9. Upgrade item to the Hydrokinetic Antennae (Pending)
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
-11. Earthen Armor for AV (Up next): needs chestplate inventory sprite
-12. Sanctuary! (In Progress)
+11. Sanctuary! (In Progress)
 	1. Tiles: Overgrown Vespera Brick, Vespera Rune Brick, Invidia Plating Block, Invidia Portal Plating
 	2. Solar Bulb item in the chest
-13. Add Bridge Burner
-14. Add Achievements
+12. Add Bridge Burner
+13. Add Achievements
 
 ---WIP List---
 Abandoned village generation
@@ -61,7 +60,7 @@ If the Abandoned Village particles fail to generate for weaker computers, or pot
 Bestiary setup organization.
 
 ---Balance Needed List (by Severity, -weak, +strong)---
-5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Spore Sprayer, +Lungrot, +Little Woes, ++Worldly Polarizer, +Accretion Disc
+5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot, +Little Woes, +Accretion Disc
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. Earthen Gizmo, Corpsebloom, Throe, Famished
 2. +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
@@ -82,9 +81,16 @@ N/A
 
 Daily Log:
 
-1/7/25 to 1/9/25
+1/7/25 to 1/11/25
 1. Otherworld Plating furniture
 2. Otherworld Plating wall
+3. Earthen Chest plate inventory sprite
+4. All Polarizers are now slightly more expensive to craft (Unique bar count 2 -> 5)
+	1. Worldly Polarizer endurance, movespeed, and damage buff 3% -> 2% (this is really miniscule but I don't know how else to nerf this, plus 2% makes the numbers match better with the other polarizers, which use multiples of 2)\
+5. Spore Sprayer damage 11 -> 10, usetime 18 -> 19, spore rate 66% -> 50%
+	1. This item is not particularly overpowered, but was very good at keeping enemies away and dealing damage, so it is nerfed slightly
+6. Rename Permafrost Plating Bench into Permafrost Plating Sofa
+7. WIP Evil Plating Furniture Sprites
 
 1/1/25 to 1/7/25
 1. Added Invidia Chest

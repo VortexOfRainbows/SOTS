@@ -3,8 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using SOTS.Void;
 using SOTS.Items.Earth;
-using SOTS.Items.Pyramid;
-using SOTS.Items.ChestItems;
 using SOTS.Items.AbandonedVillage;
 
 namespace SOTS.Items.Fragments
@@ -26,9 +24,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetDamage(DamageClass.Generic) += 0.03f;
-			player.endurance += 0.03f;
-			player.moveSpeed += 0.03f;
+			player.GetDamage(DamageClass.Generic) += 0.02f;
+			player.endurance += 0.02f;
+			player.moveSpeed += 0.02f;
 			DissolvingElementsPlayer DEP = DissolvingElementsPlayer.ModPlayer(player);
 			DEP.PolarizeNature = true;
 			DEP.PolarizeEarth = true;
@@ -36,7 +34,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<DissolvingNature>(1).AddIngredient<DissolvingEarth>(1).AddIngredient<DissolvingDeluge>(1).AddIngredient<AncientSteelBar>(5).AddIngredient<VibrantBar>(2).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<DissolvingNature>(1).AddIngredient<DissolvingEarth>(1).AddIngredient<DissolvingDeluge>(1).AddIngredient<AncientSteelBar>(5).AddIngredient<VibrantBar>(5).AddTile(TileID.Anvils).Register();
 		}
 	}
 	public class ThermalPolarizer : ModItem
@@ -65,7 +63,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<DissolvingNether>(1).AddIngredient<DissolvingAurora>(1).AddIngredient<AncientSteelBar>(5).AddIngredient<Permafrost.FrigidBar>(2).AddIngredient(ItemID.HellstoneBar, 2).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<DissolvingNether>(1).AddIngredient<DissolvingAurora>(1).AddIngredient<AncientSteelBar>(5).AddIngredient<Permafrost.FrigidBar>(5).AddIngredient(ItemID.HellstoneBar, 5).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 	public class ExoticPolarizer : ModItem
@@ -95,7 +93,7 @@ namespace SOTS.Items.Fragments
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<DissolvingAether>(1).AddIngredient<DissolvingBrilliance>(1).AddIngredient<DissolvingUmbra>(1).AddIngredient<AncientSteelBar>(5).AddIngredient<Chaos.PhaseBar>(2).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<DissolvingAether>(1).AddIngredient<DissolvingBrilliance>(1).AddIngredient<DissolvingUmbra>(1).AddIngredient<AncientSteelBar>(5).AddIngredient<Chaos.PhaseBar>(5).AddTile(TileID.MythrilAnvil).Register();
 		}
 	}
 	public class UltimatePolarizer : ModItem
@@ -115,9 +113,9 @@ namespace SOTS.Items.Fragments
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			player.GetDamage(DamageClass.Generic) += 0.03f;
-			player.endurance += 0.03f;
-			player.moveSpeed += 0.03f;
+			player.GetDamage(DamageClass.Generic) += 0.02f;
+			player.endurance += 0.02f;
+			player.moveSpeed += 0.02f;
 			player.statLifeMax2 += 20;
 			player.statManaMax2 += 20;
 			VoidPlayer.ModPlayer(player).voidMeterMax2 += 20;
