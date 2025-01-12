@@ -50,6 +50,9 @@ Mods: {
 			NaturePlatingDresserTile: Nature Plating Dresser
 			EarthenPlatingDresserTile: Earthen Plating Dresser
 			PermafrostPlatingDresserTile: Permafrost Plating Dresser
+			TidalPlatingDresserTile: Tidal Plating Dresser
+			OtherworldPlatingDresser: Otherworld Plating Dresser
+			EvilPlatingDresserTile: Evil Plating Dresser
 			AncientGoldDresser: Ancient Gold Dresser
 		}
 
@@ -6260,6 +6263,111 @@ Mods: {
 				DisplayName: Otherworld Plating Wall
 				Tooltip: ""
 			}
+
+			EvilPlatingBathtub: {
+				DisplayName: Evil Plating Bathtub
+				Tooltip: ""
+			}
+
+			EvilPlatingBed: {
+				DisplayName: Evil Plating Bed
+				Tooltip: ""
+			}
+
+			EvilPlatingBlastDoor: {
+				DisplayName: Evil Plating Blast Door
+				Tooltip: ""
+			}
+
+			EvilPlatingBookcase: {
+				DisplayName: Evil Plating Bookcase
+				Tooltip: ""
+			}
+
+			EvilPlatingCandle: {
+				DisplayName: Evil Plating Candle
+				Tooltip: ""
+			}
+
+			EvilPlatingChair: {
+				DisplayName: Evil Plating Chair
+				Tooltip: ""
+			}
+
+			EvilPlatingChandelier: {
+				DisplayName: Evil Plating Chandelier
+				Tooltip: ""
+			}
+
+			EvilPlatingChest: {
+				DisplayName: Evil Plating Capsule
+				Tooltip: ""
+			}
+
+			EvilPlatingClock: {
+				DisplayName: Evil Plating Clock
+				Tooltip: ""
+			}
+
+			EvilPlatingDresser: {
+				DisplayName: Evil Plating Dresser
+				Tooltip: ""
+			}
+
+			EvilPlatingLamp: {
+				DisplayName: Evil Plating Lamp
+				Tooltip: ""
+			}
+
+			EvilPlatingLantern: {
+				DisplayName: Evil Plating Lantern
+				Tooltip: ""
+			}
+
+			EvilPlatingPiano: {
+				DisplayName: Evil Plating Piano
+				Tooltip: ""
+			}
+
+			EvilPlatingPlatform: {
+				DisplayName: Evil Plating Platform
+				Tooltip: ""
+			}
+
+			EvilPlatingSink: {
+				DisplayName: Evil Plating Sink
+				Tooltip: ""
+			}
+
+			EvilPlatingSofa: {
+				DisplayName: Evil Plating Sofa
+				Tooltip: ""
+			}
+
+			EvilPlatingTable: {
+				DisplayName: Evil Plating Table
+				Tooltip: ""
+			}
+
+			EvilPlatingToilet: {
+				DisplayName: Evil Plating Toilet
+				Tooltip: ""
+			}
+
+			EvilPlatingTorch: {
+				DisplayName: Evil Plating Torch
+				Tooltip: ""
+			}
+
+			EvilPlatingWorkBench: {
+				DisplayName: Evil Plating Work Bench
+				Tooltip: Also functions as an anvil
+			}
+
+			EvilPlatingWall: {
+				DisplayName: Evil Plating Wall
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -6981,6 +7089,15 @@ Mods: {
 			}
 
 			OtherworldPlatingTorchTile.MapEntry: Otherworld Plating Torch
+			EvilPlatingBlastDoorTileClosed.MapEntry: Evil Plating Blast Door
+			EvilPlatingBlastDoorTileOpen.MapEntry: Evil Plating Blast Door
+
+			EvilPlatingChestTile: {
+				MapEntry0: Evil Plating Capsule
+				MapEntry1: Locked Evil Plating Capsule
+			}
+
+			EvilPlatingTorchTile.MapEntry: Evil Plating Torch
 		}
 
 		WorldGeneration: {
@@ -7387,7 +7504,7 @@ Mods: {
 			3:
 				'''
 
-				Provides access to Workbench, Furnace, Anvil, and Alchemy Table crafting stations
+				Provides access to Work Bench, Furnace, Anvil, and Alchemy Table crafting stations
 				Increases max mana and mana received from potions by 40
 				'''
 			4:

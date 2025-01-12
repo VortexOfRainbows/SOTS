@@ -11,24 +11,24 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace SOTS.Items.Furniture.Otherworld
+namespace SOTS.Items.Furniture.Evil
 {
-	public class OtherworldPlatingBathtub : ModItem
+	public class EvilPlatingBathtub : ModItem
 	{
 		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.Size = new Vector2(38, 28);
+			Item.Size = new Vector2(36, 22);
 			Item.rare = ItemRarityID.Blue;
-			Item.createTile = ModContent.TileType<OtherworldPlatingBathtubTile>();
+			Item.createTile = ModContent.TileType<EvilPlatingBathtubTile>();
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<OtherworldPlating>(14).AddTile(TileID.Anvils).Register();
+			CreateRecipe(1).AddIngredient<EvilPlating>(14).AddTile(TileID.Anvils).Register();
 		}
 	}
-	public class OtherworldPlatingBathtubTile : Bathtub<OtherworldPlatingBathtub>
+	public class EvilPlatingBathtubTile : Bathtub<EvilPlatingBathtub>
 	{
 		public override bool CanExplode(int i, int j)
 		{
@@ -40,22 +40,22 @@ namespace SOTS.Items.Furniture.Otherworld
 			SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingBed : ModItem
+    public class EvilPlatingBed : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(32, 20);
+            Item.Size = new Vector2(40, 26);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingBedTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingBedTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 15).AddIngredient(ItemID.Silk, 5).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 15).AddIngredient(ItemID.Silk, 5).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingBedTile : Bed<OtherworldPlatingBed>
+    public class EvilPlatingBedTile : Bed<EvilPlatingBed>
     {
         public override bool CanExplode(int i, int j)
         {
@@ -67,7 +67,7 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingBlastDoor : ModItem
+    public class EvilPlatingBlastDoor : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -77,19 +77,19 @@ namespace SOTS.Items.Furniture.Otherworld
         {
             Item.CloneDefaults(ItemID.StoneBlock);
             Item.rare = ItemRarityID.Blue;
-            Item.width = 14;
-            Item.height = 34;
-            Item.createTile = ModContent.TileType<OtherworldPlatingBlastDoorTileClosed>();
+            Item.width = 16;
+            Item.height = 36;
+            Item.createTile = ModContent.TileType<EvilPlatingBlastDoorTileClosed>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 6).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 6).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingBlastDoorTileClosed : BlastDoorClosed
+    public class EvilPlatingBlastDoorTileClosed : BlastDoorClosed
     {
-        public override int DoorItemID => ModContent.ItemType<Otherworld.OtherworldPlatingBlastDoor>();
-        public override int OpenDoorTile => ModContent.TileType<Otherworld.OtherworldPlatingBlastDoorTileOpen>();
+        public override int DoorItemID => ModContent.ItemType<Evil.EvilPlatingBlastDoor>();
+        public override int OpenDoorTile => ModContent.TileType<Evil.EvilPlatingBlastDoorTileOpen>();
         public override string GetName()
         {
             return this.GetLocalizedValue("MapEntry");
@@ -100,10 +100,10 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingBlastDoorTileOpen : BlastDoorOpen
+    public class EvilPlatingBlastDoorTileOpen : BlastDoorOpen
     {
-        public override int DoorItemID => ModContent.ItemType<Otherworld.OtherworldPlatingBlastDoor>();
-        public override int ClosedDoorTile => ModContent.TileType<Otherworld.OtherworldPlatingBlastDoorTileClosed>();
+        public override int DoorItemID => ModContent.ItemType<Evil.EvilPlatingBlastDoor>();
+        public override int ClosedDoorTile => ModContent.TileType<Evil.EvilPlatingBlastDoorTileClosed>();
         public override string GetName()
         {
             return this.GetLocalizedValue("MapEntry");
@@ -114,22 +114,22 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingBookcase : ModItem
+    public class EvilPlatingBookcase : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(32, 34);
+            Item.Size = new Vector2(32, 40);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingBookcaseTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingBookcaseTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 20).AddIngredient(ItemID.Book, 10).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 20).AddIngredient(ItemID.Book, 10).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingBookcaseTile : Bookcase<OtherworldPlatingBookcase>
+    public class EvilPlatingBookcaseTile : Bookcase<EvilPlatingBookcase>
     {
         public override bool CanExplode(int i, int j)
         {
@@ -141,7 +141,7 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingCandle : ModItem
+    public class EvilPlatingCandle : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
@@ -149,45 +149,45 @@ namespace SOTS.Items.Furniture.Otherworld
             Item.CloneDefaults(ItemID.StoneBlock);
             Item.Size = new Vector2(16, 20);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingCandleTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingCandleTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 4).AddIngredient(ItemID.Torch, 1).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 4).AddIngredient(ItemID.Torch, 1).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingCandleTile : Candle<OtherworldPlatingCandle>
+    public class EvilPlatingCandleTile : Candle<EvilPlatingCandle>
     {
         public override bool CanExplode(int i, int j)
         {
             return false;
         }
-        protected override Vector3 LightClr => SOTSTile.OtherworldPlatingLight * 3f;
+        protected override Vector3 LightClr => SOTSTile.EvilPlatingLight * 3f;
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
-            for (int k = 0; k < 5; k++)
+            for (int k = 0; k < 4; k++)
             {
-                SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, new Color(100, 100, 100, 0), Main.rand.NextVector2Circular(1, 1) * (k * 0.25f));
+                SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, new Color(60, 50, 50, 0), Main.rand.NextVector2Circular(1, 1) * (k * 0.25f));
             }
         }
     }
-    public class OtherworldPlatingChair : ModItem
+    public class EvilPlatingChair : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(16, 20);
+            Item.Size = new Vector2(16, 34);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingChairTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingChairTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 4).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 4).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingChairTile : Chair<OtherworldPlatingChair>
+    public class EvilPlatingChairTile : Chair<EvilPlatingChair>
     {
         public override bool CanExplode(int i, int j)
         {
@@ -204,54 +204,54 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingChandelier : ModItem
+    public class EvilPlatingChandelier : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(30, 36);
+            Item.Size = new Vector2(38, 42);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingChandelierTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingChandelierTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 4).AddIngredient(ItemID.Torch, 4).AddIngredient(ItemID.Chain, 1).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 4).AddIngredient(ItemID.Torch, 4).AddIngredient(ItemID.Chain, 1).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingChandelierTile : Chandelier<OtherworldPlatingChandelier>
+    public class EvilPlatingChandelierTile : Chandelier<EvilPlatingChandelier>
     {
         public override bool CanExplode(int i, int j)
         {
             return false;
         }
-        protected override Vector3 LightClr => SOTSTile.OtherworldPlatingLight * 3f;
+        protected override Vector3 LightClr => SOTSTile.EvilPlatingLight * 3f;
 
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
-            for (int k = 0; k < 5; k++)
+            for (int k = 0; k < 4; k++)
             {
-                SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, new Color(100, 100, 100, 0), Main.rand.NextVector2Circular(1, 1) * (k * 0.25f));
+                SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, new Color(60, 50, 50, 0), Main.rand.NextVector2Circular(1, 1) * (k * 0.25f));
             }
         }
     }
-    public class OtherworldPlatingClock : ModItem
+    public class EvilPlatingClock : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(24, 46);
+            Item.Size = new Vector2(24, 50);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingClockTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingClockTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 20).AddIngredient(ItemID.Glass, 6).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 20).AddIngredient(ItemID.Glass, 6).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingClockTile : Clock<OtherworldPlatingClock>
+    public class EvilPlatingClockTile : Clock<EvilPlatingClock>
     {
         public override bool CanExplode(int i, int j)
         {
@@ -263,32 +263,32 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingDresser : ModItem
+    public class EvilPlatingDresser : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(40, 28);
+            Item.Size = new Vector2(38, 26);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingDresserTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingDresserTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 16).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 16).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingDresserTile : Dresser
+    public class EvilPlatingDresserTile : Dresser
     {
         public override bool CanExplode(int i, int j)
         {
             return false;
         }
-        protected override int DresserDrop => ModContent.ItemType<OtherworldPlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.OtherworldPlatingDresserTile");
+        protected override int DresserDrop => ModContent.ItemType<EvilPlatingDresser>();
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.EvilPlatingDresserTile");
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
         {
-            return Language.GetText("Mods.SOTS.ContainerName.OtherworldPlatingDresserTile");
+            return Language.GetText("Mods.SOTS.ContainerName.EvilPlatingDresserTile");
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -296,28 +296,28 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingLamp : ModItem
+    public class EvilPlatingLamp : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(14, 32);
+            Item.Size = new Vector2(14, 34);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingLampTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingLampTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 3).AddIngredient(ItemID.Torch, 1).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 3).AddIngredient(ItemID.Torch, 1).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingLampTile : Lamp<OtherworldPlatingLamp>
+    public class EvilPlatingLampTile : Lamp<EvilPlatingLamp>
     {
         public override bool CanExplode(int i, int j)
         {
             return false;
         }
-        protected override Vector3 LightClr => SOTSTile.OtherworldPlatingLight * 3f;
+        protected override Vector3 LightClr => SOTSTile.EvilPlatingLight * 3f;
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             int xFrameOffset = Main.tile[i, j].TileFrameX;
@@ -325,35 +325,35 @@ namespace SOTS.Items.Furniture.Otherworld
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
             Vector2 drawOffset = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
             Vector2 drawPosition = new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y) + drawOffset;
-            Color drawColour = new Color(100, 100, 100, 0);
-            for (int k = 0; k < 5; k++)
+            Color drawColour= new Color(60, 50, 50, 0);
+            for (int k = 0; k < 4; k++)
             {
                 spriteBatch.Draw(glowmask, drawPosition + Main.rand.NextVector2Circular(1, 1) * (k * 0.25f), new Rectangle(xFrameOffset, yFrameOffset, 16, 16), drawColour, 0.0f, Vector2.Zero, 1f, i % 2 == 1 ?  SpriteEffects.FlipHorizontally : SpriteEffects.None, 0.0f);
             }
         }
     }
-    public class OtherworldPlatingLantern : ModItem
+    public class EvilPlatingLantern : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(14, 32);
+            Item.Size = new Vector2(16, 32);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingLanternTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingLanternTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 6).AddIngredient(ItemID.Torch, 1).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 6).AddIngredient(ItemID.Torch, 1).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingLanternTile : Lantern<OtherworldPlatingLantern>
+    public class EvilPlatingLanternTile : Lantern<EvilPlatingLantern>
     {
         public override bool CanExplode(int i, int j)
         {
             return false;
         }
-        protected override Vector3 LightClr => SOTSTile.OtherworldPlatingLight * 3f;
+        protected override Vector3 LightClr => SOTSTile.EvilPlatingLight * 3f;
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             int xFrameOffset = Main.tile[i, j].TileFrameX;
@@ -361,35 +361,35 @@ namespace SOTS.Items.Furniture.Otherworld
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
             Vector2 drawOffset = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
             Vector2 drawPosition = new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y) + drawOffset;
-            Color drawColour = new Color(100, 100, 100, 0);
+            Color drawColour= new Color(60, 50, 50, 0);
             var effects = SpriteEffects.None;
             SetSpriteEffects(i, j, ref effects);
             if (effects.HasFlag(SpriteEffects.FlipHorizontally))
             {
                 drawPosition.X -= 0f;
             }
-            for (int k = 0; k < 5; k++)
+            for (int k = 0; k < 4; k++)
             {
                 spriteBatch.Draw(glowmask, drawPosition + Main.rand.NextVector2Circular(1, 1) * (k * 0.25f), new Rectangle(xFrameOffset, yFrameOffset, 16, 16), drawColour, 0.0f, Vector2.Zero, 1f, effects, 0.0f);
             }
         }
     }
-    public class OtherworldPlatingPiano : ModItem
+    public class EvilPlatingPiano : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(40, 26);
+            Item.Size = new Vector2(38, 30);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingPianoTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingPianoTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 15).AddIngredient(ItemID.Bone, 4).AddIngredient(ItemID.Book, 1).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 15).AddIngredient(ItemID.Bone, 4).AddIngredient(ItemID.Book, 1).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingPianoTile : Piano<OtherworldPlatingPiano>
+    public class EvilPlatingPianoTile : Piano<EvilPlatingPiano>
     {
         public override bool CanExplode(int i, int j)
         {
@@ -401,7 +401,7 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingPlatform : ModItem
+    public class EvilPlatingPlatform : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(200);
         public override void SetDefaults()
@@ -410,15 +410,15 @@ namespace SOTS.Items.Furniture.Otherworld
             Item.rare = ItemRarityID.Blue;
             Item.width = 26;
             Item.height = 16;
-            Item.createTile = ModContent.TileType<OtherworldPlatingPlatformTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingPlatformTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(2).AddIngredient(ModContent.ItemType<OtherworldPlating>()).Register();
-            Recipe.Create(ModContent.ItemType<OtherworldPlating>()).AddIngredient(this, 2).Register();
+            CreateRecipe(2).AddIngredient(ModContent.ItemType<EvilPlating>()).Register();
+            Recipe.Create(ModContent.ItemType<EvilPlating>()).AddIngredient(this, 2).Register();
         }
     }
-    public class OtherworldPlatingPlatformTile : ModTile
+    public class EvilPlatingPlatformTile : ModTile
     {
         public override bool CanExplode(int i, int j)
         {
@@ -447,9 +447,9 @@ namespace SOTS.Items.Furniture.Otherworld
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            AddMapEntry(SOTSTile.OtherworldPlatingColor);
+            AddMapEntry(SOTSTile.EvilPlatingColor);
             DustType = DustID.Lead;
-            //ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<OtherworldPlatingPlatform>();
+            //ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EvilPlatingPlatform>();
             AdjTiles = new int[] { TileID.Platforms };
             TileID.Sets.Platforms[Type] = true;
         }
@@ -462,22 +462,22 @@ namespace SOTS.Items.Furniture.Otherworld
             num = fail ? 1 : 3;
         }
     }
-    public class OtherworldPlatingSink : ModItem
+    public class EvilPlatingSink : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(28, 32);
+            Item.Size = new Vector2(32, 32);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingSinkTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingSinkTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 6).AddIngredient(ItemID.WaterBucket, 1).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 6).AddIngredient(ItemID.WaterBucket, 1).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingSinkTile : Sink<OtherworldPlatingSink>
+    public class EvilPlatingSinkTile : Sink<EvilPlatingSink>
     {
         public override bool CanExplode(int i, int j)
         {
@@ -489,55 +489,55 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingSofa : ModItem
+    public class EvilPlatingSofa : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(38, 28);
+            Item.Size = new Vector2(40, 26);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingSofaTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingSofaTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 5).AddIngredient(ItemID.Silk, 2).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 5).AddIngredient(ItemID.Silk, 2).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingSofaTile : Sofa<OtherworldPlatingSofa>
+    public class EvilPlatingSofaTile : Sofa<EvilPlatingSofa>
     {
         public override bool CanExplode(int i, int j)
         {
             return false;
         }
     }
-    public class OtherworldPlatingChest : ModItem
+    public class EvilPlatingChest : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(32, 32);
+            Item.Size = new Vector2(32, 34);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingChestTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingChestTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 20).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 20).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingChestTile : ContainerType
+    public class EvilPlatingChestTile : ContainerType
     {
         public override bool CanExplode(int i, int j)
         {
             return false;
         }
         protected override int ChestKey => ModContent.ItemType<OldKey>();
-        protected override int ChestDrop => ModContent.ItemType<OtherworldPlatingChest>();
+        protected override int ChestDrop => ModContent.ItemType<EvilPlatingChest>();
         protected override int DustType => DustID.Lead;
         protected override void AddMapEntires()
         {
-            Color color = Color.Lerp(SOTSTile.OtherworldPlatingColor, Color.Black, 0.17f);
+            Color color = Color.Lerp(SOTSTile.EvilPlatingColor, Color.Black, 0.17f);
             AddMapEntry(color, this.GetLocalization("MapEntry0"), MapChestName);
             AddMapEntry(color, this.GetLocalization("MapEntry1"), MapChestName);
         }
@@ -570,22 +570,22 @@ namespace SOTS.Items.Furniture.Otherworld
             }
         }
     }
-    public class OtherworldPlatingTable : ModItem
+    public class EvilPlatingTable : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.Size = new Vector2(38, 24);
+            Item.Size = new Vector2(40, 26);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingTableTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingTableTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 8).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 8).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingTableTile : Table<OtherworldPlatingTable>
+    public class EvilPlatingTableTile : Table<EvilPlatingTable>
     {
         public override bool CanExplode(int i, int j)
         {
@@ -597,7 +597,7 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingToilet : ModItem
+    public class EvilPlatingToilet : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
@@ -605,14 +605,14 @@ namespace SOTS.Items.Furniture.Otherworld
             Item.CloneDefaults(ItemID.StoneBlock);
             Item.Size = new Vector2(16, 32);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingToiletTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingToiletTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 8).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 8).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingToiletTile : Chair<OtherworldPlatingToilet>
+    public class EvilPlatingToiletTile : Chair<EvilPlatingToilet>
     {
         public override bool CanExplode(int i, int j)
         {
@@ -624,7 +624,7 @@ namespace SOTS.Items.Furniture.Otherworld
             SOTSTile.DrawSlopedGlowMask(i, j, -1, glowmask, Color.White, Vector2.Zero);
         }
     }
-    public class OtherworldPlatingTorch : ModItem
+    public class EvilPlatingTorch : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -635,28 +635,28 @@ namespace SOTS.Items.Furniture.Otherworld
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.Torch);
-            Item.Size = new Vector2(14, 18);
+            Item.Size = new Vector2(14, 16);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingTorchTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingTorchTile>();
         }
         public override void HoldItem(Player player)
         {
             Vector2 position = player.RotatedRelativePoint(new Vector2(player.itemLocation.X + 12f * player.direction + player.velocity.X, player.itemLocation.Y - 14f + player.velocity.Y), true);
-            Lighting.AddLight(position, SOTSTile.OtherworldPlatingLight * 2.7f);
+            Lighting.AddLight(position, SOTSTile.EvilPlatingLight * 2.7f);
         }
         public override void PostUpdate()
         {
             if (!Item.wet)
             {
-                Lighting.AddLight(new Vector2((Item.position.X + Item.width / 2) / 16f, (Item.position.Y + Item.height / 2) / 16f), SOTSTile.OtherworldPlatingLight * 2.7f);
+                Lighting.AddLight(new Vector2((Item.position.X + Item.width / 2) / 16f, (Item.position.Y + Item.height / 2) / 16f), SOTSTile.EvilPlatingLight * 2.7f);
             }
         }
         public override void AddRecipes()
         {
-            CreateRecipe(3).AddIngredient(ItemID.Torch, 3).AddIngredient(ModContent.ItemType<OtherworldPlating>()).Register();
+            CreateRecipe(3).AddIngredient(ItemID.Torch, 3).AddIngredient(ModContent.ItemType<EvilPlating>()).Register();
         }
     }
-    public class OtherworldPlatingTorchTile : ModTile
+    public class EvilPlatingTorchTile : ModTile
     {
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -665,7 +665,7 @@ namespace SOTS.Items.Furniture.Otherworld
         public override bool CreateDust(int i, int j, ref int type)
         {
             Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16) - new Vector2(5), 16, 16, DustID.RainbowMk2);
-            dust.color = ColorHelper.PurpleOtherworldColor;
+            dust.color = ColorHelper.RedEvilColor;
             dust.noGravity = true;
             dust.fadeIn = 0.1f;
             dust.scale *= 1.8f;
@@ -701,7 +701,7 @@ namespace SOTS.Items.Furniture.Otherworld
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(SOTSTile.OtherworldPlatingLight * 3), name);
+            AddMapEntry(new Color(SOTSTile.EvilPlatingLight * 3), name);
             DustType = DustID.GoldCoin;
             AdjTiles = new int[] { TileID.Torches };
             TileID.Sets.DisableSmartCursor[Type] = true;
@@ -713,7 +713,7 @@ namespace SOTS.Items.Furniture.Otherworld
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            Vector3 color = SOTSTile.OtherworldPlatingLight * 2.5f;
+            Vector3 color = SOTSTile.EvilPlatingLight * 2.5f;
             Tile tile = Main.tile[i, j];
             if (tile.TileFrameX < 66)
             {
@@ -724,7 +724,7 @@ namespace SOTS.Items.Furniture.Otherworld
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            Color color = new Color(100, 100, 100, 0);
+            Color color= new Color(60, 50, 50, 0);
             int frameX = Main.tile[i, j].TileFrameX;
             int frameY = Main.tile[i, j].TileFrameY;
             int width = 20;
@@ -735,13 +735,13 @@ namespace SOTS.Items.Furniture.Otherworld
                 zero = Vector2.Zero;
             }
             Vector2 drawPosition = new Vector2((float)(i * 16 - (int)Main.screenPosition.X) - (width - 16f) / 2f, (float)(j * 16 - (int)Main.screenPosition.Y)) + zero;
-            for (int k = 0; k < 5; k++)
+            for (int k = 0; k < 4; k++)
             {
                 Main.spriteBatch.Draw((Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow")), drawPosition + Main.rand.NextVector2Circular(1, 1) * (k * 0.25f), new Rectangle(frameX, frameY, width, height), color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
             }
         }
     }
-    public class OtherworldPlatingWorkBench : ModItem
+    public class EvilPlatingWorkBench : ModItem
     {
         public override void SetStaticDefaults()
         {
@@ -752,14 +752,14 @@ namespace SOTS.Items.Furniture.Otherworld
             Item.CloneDefaults(ItemID.StoneBlock);
             Item.Size = new Vector2(32, 18);
             Item.rare = ItemRarityID.Blue;
-            Item.createTile = ModContent.TileType<OtherworldPlatingWorkBenchTile>();
+            Item.createTile = ModContent.TileType<EvilPlatingWorkBenchTile>();
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient(ModContent.ItemType<OtherworldPlating>(), 10).AddTile(TileID.Anvils).Register();
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvilPlating>(), 10).AddTile(TileID.Anvils).Register();
         }
     }
-    public class OtherworldPlatingWorkBenchTile : Workbench<OtherworldPlatingWorkBench>
+    public class EvilPlatingWorkBenchTile : Workbench<EvilPlatingWorkBench>
     {
         public override bool CanExplode(int i, int j)
         {

@@ -90,7 +90,9 @@ Daily Log:
 5. Spore Sprayer damage 11 -> 10, usetime 18 -> 19, spore rate 66% -> 50%
 	1. This item is not particularly overpowered, but was very good at keeping enemies away and dealing damage, so it is nerfed slightly
 6. Rename Permafrost Plating Bench into Permafrost Plating Sofa
-7. WIP Evil Plating Furniture Sprites
+7. Added Evil Plating Furniture
+8. Resprite Tidal and Evil plating to be more conducive to supporting furniture sprites
+9. Added Evil Plating Wall
 
 1/1/25 to 1/7/25
 1. Added Invidia Chest

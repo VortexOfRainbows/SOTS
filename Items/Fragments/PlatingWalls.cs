@@ -219,4 +219,30 @@ namespace SOTS.Items.Fragments
             AddMapEntry(Color.Lerp(SOTSTile.OtherworldPlatingColor, Color.Black, 0.2f));
         }
     }
+    public class EvilPlatingWall : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(400);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneWall);
+            Item.width = 28;
+            Item.height = 28;
+            Item.rare = ItemRarityID.Blue;
+            Item.createWall = ModContent.WallType<EvilPlatingWallWall>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<EvilPlating>(1).AddTile(TileID.WorkBenches).Register();
+            Recipe.Create(ModContent.ItemType<EvilPlating>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
+        }
+    }
+    public class EvilPlatingWallWall : ModWall
+    {
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
+            DustType = DustID.Demonite;
+            AddMapEntry(Color.Lerp(SOTSTile.EvilPlatingColor, Color.Black, 0.2f));
+        }
+    }
 }

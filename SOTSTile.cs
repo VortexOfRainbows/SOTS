@@ -1,7 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.Collections.Generic;
 using SOTS.Items.Planetarium;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
@@ -19,7 +18,6 @@ using Terraria.GameContent;
 using SOTS.Items;
 using System;
 using SOTS.Items.Conduit;
-using SOTS.Items.Pyramid.PyramidWalls;
 using Terraria.DataStructures;
 using SOTS.Items.AbandonedVillage;
 using SOTS.NPCs.AbandonedVillage;
@@ -63,6 +61,7 @@ namespace SOTS
         public static Vector3 PermafrostPlatingLight = new Vector3(0.225f, 0.30f, 0.30f);
         public static Vector3 TidalPlatingLight = new Vector3(0.2f, 0.25f, 0.4f);
         public static Vector3 OtherworldPlatingLight = new Vector3(.3f, .2f, .312f);
+        public static Vector3 EvilPlatingLight = new Vector3(.5f, .2f, .2f);
         public static int[] pyramidTiles;
         public static void LoadArrays() //called in SOTS.Load()
         {
