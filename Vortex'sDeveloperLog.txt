@@ -46,6 +46,7 @@ Update Objectives:
 12. Add Bridge Burner
 13. Add Achievements
 14. Inferno and Chaos plating furnitures
+15. Generate Earthen Furniture in AV Mines
 
 ---WIP List---
 Abandoned village generation
@@ -81,6 +82,9 @@ Look down for Abandoned Village todo and progress...
 N/A
 
 Daily Log:
+
+1/15/24
+1. WIP Inferno Furniture
 
 1/7/25 to 1/11/25
 1. Otherworld Plating furniture
