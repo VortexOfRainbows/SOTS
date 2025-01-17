@@ -83,8 +83,8 @@ N/A
 
 Daily Log:
 
-1/14/24 to 1/16/24
-1. WIP Inferno Furniture
+1/14/24 to 1/17/24
+1. Added Inferno Furniture! (Still need Inferno Plating modifications + Inferno Plating wall!)
 
 1/7/25 to 1/11/25
 1. Otherworld Plating furniture

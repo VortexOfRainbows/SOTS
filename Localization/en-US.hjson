@@ -53,6 +53,7 @@ Mods: {
 			TidalPlatingDresserTile: Tidal Plating Dresser
 			OtherworldPlatingDresser: Otherworld Plating Dresser
 			EvilPlatingDresserTile: Evil Plating Dresser
+			InfernoPlatingDresserTile: Inferno Plating Dresser
 			AncientGoldDresser: Ancient Gold Dresser
 		}
 
@@ -6368,6 +6369,106 @@ Mods: {
 				DisplayName: Evil Plating Wall
 				Tooltip: ""
 			}
+
+			InfernoPlatingBathtub: {
+				DisplayName: Inferno Plating Bathtub
+				Tooltip: ""
+			}
+
+			InfernoPlatingBed: {
+				DisplayName: Inferno Plating Bed
+				Tooltip: ""
+			}
+
+			InfernoPlatingBlastDoor: {
+				DisplayName: Inferno Plating Blast Door
+				Tooltip: ""
+			}
+
+			InfernoPlatingBookcase: {
+				DisplayName: Inferno Plating Bookcase
+				Tooltip: ""
+			}
+
+			InfernoPlatingCandle: {
+				DisplayName: Inferno Plating Candle
+				Tooltip: ""
+			}
+
+			InfernoPlatingChair: {
+				DisplayName: Inferno Plating Chair
+				Tooltip: ""
+			}
+
+			InfernoPlatingChandelier: {
+				DisplayName: Inferno Plating Chandelier
+				Tooltip: ""
+			}
+
+			InfernoPlatingChest: {
+				DisplayName: Inferno Plating Chest
+				Tooltip: ""
+			}
+
+			InfernoPlatingClock: {
+				DisplayName: Inferno Plating Clock
+				Tooltip: ""
+			}
+
+			InfernoPlatingDresser: {
+				DisplayName: Inferno Plating Dresser
+				Tooltip: ""
+			}
+
+			InfernoPlatingLamp: {
+				DisplayName: Inferno Plating Lamp
+				Tooltip: ""
+			}
+
+			InfernoPlatingLantern: {
+				DisplayName: Inferno Plating Lantern
+				Tooltip: ""
+			}
+
+			InfernoPlatingPiano: {
+				DisplayName: Inferno Plating Piano
+				Tooltip: ""
+			}
+
+			InfernoPlatingPlatform: {
+				DisplayName: Inferno Plating Platform
+				Tooltip: ""
+			}
+
+			InfernoPlatingSink: {
+				DisplayName: Inferno Plating Sink
+				Tooltip: ""
+			}
+
+			InfernoPlatingSofa: {
+				DisplayName: Inferno Plating Sofa
+				Tooltip: ""
+			}
+
+			InfernoPlatingTable: {
+				DisplayName: Inferno Plating Table
+				Tooltip: ""
+			}
+
+			InfernoPlatingToilet: {
+				DisplayName: Inferno Plating Toilet
+				Tooltip: ""
+			}
+
+			InfernoPlatingTorch: {
+				DisplayName: Inferno Plating Torch
+				Tooltip: ""
+			}
+
+			InfernoPlatingWorkBench: {
+				DisplayName: Inferno Plating Work Bench
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7098,6 +7199,15 @@ Mods: {
 			}
 
 			EvilPlatingTorchTile.MapEntry: Evil Plating Torch
+			InfernoPlatingBlastDoorTileClosed.MapEntry: Inferno Plating Blast Door
+			InfernoPlatingBlastDoorTileOpen.MapEntry: Inferno Plating Blast Door
+
+			InfernoPlatingChestTile: {
+				MapEntry0: Inferno Plating Chest
+				MapEntry1: Locked Inferno Plating Chest
+			}
+
+			InfernoPlatingTorchTile.MapEntry: Inferno Plating Torch
 		}
 
 		WorldGeneration: {

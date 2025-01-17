@@ -62,8 +62,9 @@ namespace SOTS
         public static Vector3 TidalPlatingLight = new Vector3(0.2f, 0.25f, 0.4f);
         public static Vector3 OtherworldPlatingLight = new Vector3(.3f, .2f, .312f);
         public static Vector3 EvilPlatingLight = new Vector3(.5f, .2f, .2f);
-        public static int[] pyramidTiles;
-        public static void LoadArrays() //called in SOTS.Load()
+        public static Vector3 InfernoPlatingLight = new Vector3(0.426f, 0.136f, 0.026f);
+        public static int[] pyramidTiles;                       
+        public static void LoadArrays() //called in SOTS.Load() 
         {
             pyramidTiles = new int[] { TileType<CursedHive>(), TileType<PyramidBrickTile>(), TileType<PyramidSlabTile>(), TileType<OvergrownPyramidTile>(), TileType <CursedTumorTile>(), TileType<RuinedPyramidBrickTile>(), TileType<PyramidRubbleTile>() };
         }
@@ -418,7 +419,7 @@ namespace SOTS
             }
             Vector2 offsets = -Main.screenPosition + zero + positionOffset;
             Vector2 drawCoordinates = location + offsets;
-            if ((tile.Slope == 0 && !tile.IsHalfBlock) || (Main.tileSolid[tile.TileType] && Main.tileSolidTop[tile.TileType])) //second one should be for platforms
+            if ((tile.Slope == 0 && !tile.IsHalfBlock) || (Main.tileSolid[tile.TileType] && Main.tileSolidTop[tile.TileType] && !tile.IsHalfBlock)) //second one should be for platforms
             {
                 Main.spriteBatch.Draw(texture, drawCoordinates, new Rectangle(TileFrameX, TileFrameY, width, height), drawColor, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }

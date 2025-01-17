@@ -548,10 +548,10 @@ namespace SOTS.Items.Fragments
 		{
 			if (canGlow(i, j))
 			{
-				r = 0.213f;
-				g = 0.068f;
-				b = 0.013f;
-			}
+				r = SOTSTile.InfernoPlatingLight.X * 0.5f;
+				g = SOTSTile.InfernoPlatingLight.Y * 0.5f;
+				b = SOTSTile.InfernoPlatingLight.Z * 0.5f;
+            }
 			else
 			{
 				r = 0;
