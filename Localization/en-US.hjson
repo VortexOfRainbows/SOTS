@@ -54,6 +54,7 @@ Mods: {
 			OtherworldPlatingDresser: Otherworld Plating Dresser
 			EvilPlatingDresserTile: Evil Plating Dresser
 			InfernoPlatingDresserTile: Inferno Plating Dresser
+			ChaosPlatingDresserTile: Chaos Plating Dresser
 			AncientGoldDresser: Ancient Gold Dresser
 		}
 
@@ -6469,6 +6470,106 @@ Mods: {
 				DisplayName: Inferno Plating Work Bench
 				Tooltip: ""
 			}
+
+			ChaosPlatingBathtub: {
+				DisplayName: Chaos Plating Bathtub
+				Tooltip: ""
+			}
+
+			ChaosPlatingBed: {
+				DisplayName: Chaos Plating Bed
+				Tooltip: ""
+			}
+
+			ChaosPlatingBlastDoor: {
+				DisplayName: Chaos Plating Blast Door
+				Tooltip: ""
+			}
+
+			ChaosPlatingBookcase: {
+				DisplayName: Chaos Plating Bookcase
+				Tooltip: ""
+			}
+
+			ChaosPlatingCandle: {
+				DisplayName: Chaos Plating Candle
+				Tooltip: ""
+			}
+
+			ChaosPlatingChair: {
+				DisplayName: Chaos Plating Chair
+				Tooltip: ""
+			}
+
+			ChaosPlatingChandelier: {
+				DisplayName: Chaos Plating Chandelier
+				Tooltip: ""
+			}
+
+			ChaosPlatingChest: {
+				DisplayName: Chaos Plating Chest
+				Tooltip: ""
+			}
+
+			ChaosPlatingClock: {
+				DisplayName: Chaos Plating Clock
+				Tooltip: ""
+			}
+
+			ChaosPlatingDresser: {
+				DisplayName: Chaos Plating Dresser
+				Tooltip: ""
+			}
+
+			ChaosPlatingLamp: {
+				DisplayName: Chaos Plating Lamp
+				Tooltip: ""
+			}
+
+			ChaosPlatingLantern: {
+				DisplayName: Chaos Plating Lantern
+				Tooltip: ""
+			}
+
+			ChaosPlatingPiano: {
+				DisplayName: Chaos Plating Piano
+				Tooltip: ""
+			}
+
+			ChaosPlatingPlatform: {
+				DisplayName: Chaos Plating Platform
+				Tooltip: ""
+			}
+
+			ChaosPlatingSink: {
+				DisplayName: Chaos Plating Sink
+				Tooltip: ""
+			}
+
+			ChaosPlatingSofa: {
+				DisplayName: Chaos Plating Sofa
+				Tooltip: ""
+			}
+
+			ChaosPlatingTable: {
+				DisplayName: Chaos Plating Table
+				Tooltip: ""
+			}
+
+			ChaosPlatingToilet: {
+				DisplayName: Chaos Plating Toilet
+				Tooltip: ""
+			}
+
+			ChaosPlatingTorch: {
+				DisplayName: Chaos Plating Torch
+				Tooltip: ""
+			}
+
+			ChaosPlatingWorkBench: {
+				DisplayName: Chaos Plating Work Bench
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7208,6 +7309,15 @@ Mods: {
 			}
 
 			InfernoPlatingTorchTile.MapEntry: Inferno Plating Torch
+			ChaosPlatingTorchTile.MapEntry: Chaos Plating Torch
+
+			ChaosPlatingChestTile: {
+				MapEntry1: Chaos Plating Chest
+				MapEntry0: Locked Chaos Plating Chest
+			}
+
+			ChaosPlatingBlastDoorTileOpen.MapEntry: Chaos Plating Blast Door
+			ChaosPlatingBlastDoorTileClosed.MapEntry: Chaos Plating Blast Door
 		}
 
 		WorldGeneration: {

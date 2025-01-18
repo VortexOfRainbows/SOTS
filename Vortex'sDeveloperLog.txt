@@ -45,7 +45,7 @@ Update Objectives:
 	2. Solar Bulb item in the chest
 12. Add Bridge Burner
 13. Add Achievements
-14. Inferno and Chaos plating furnitures
+14. Inferno and Chaos plating walls!
 15. Generate Earthen Furniture in AV Mines
 
 ---WIP List---
@@ -83,8 +83,11 @@ N/A
 
 Daily Log:
 
-1/14/24 to 1/17/24
+1/14/24 to 1/18/24
 1. Added Inferno Furniture! (Still need Inferno Plating modifications + Inferno Plating wall!)
+2. Added Chaos Plating Furniture! (Still need Chaos Plating modifications + Chaos Plating wall!)
+3. Elemental Armor now requires either blink pack or particle relocator instead of both.
+4. Plague Spitter damage 15 -> 13
 
 1/7/25 to 1/11/25
 1. Otherworld Plating furniture

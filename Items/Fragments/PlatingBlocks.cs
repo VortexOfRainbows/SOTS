@@ -477,10 +477,10 @@ namespace SOTS.Items.Fragments
 		{
 			if (canGlow(i, j))
 			{
-				r = 0.23f;
-				g = 0.09f;
-				b = 0.20f;
-			}
+				r = SOTSTile.ChaosPlatingLight.X * 0.5f;
+				g = SOTSTile.ChaosPlatingLight.Y * 0.5f;
+				b = SOTSTile.ChaosPlatingLight.Z * 0.5f;
+            }
 			else
 			{
 				r = 0;

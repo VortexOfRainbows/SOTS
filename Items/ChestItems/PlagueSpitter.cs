@@ -14,7 +14,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 15;
+			Item.damage = 13;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 26;
 			Item.height = 36;

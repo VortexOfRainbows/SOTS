@@ -165,7 +165,8 @@ namespace SOTS.Items.Chaos
         }
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<PhaseBar>(20).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsChestplate>(1).AddIngredient<BlinkPack>().AddIngredient<ParticleRelocator>().AddTile(TileID.MythrilAnvil).Register();
-		}
-	}
+			CreateRecipe(1).AddIngredient<PhaseBar>(20).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsChestplate>(1).AddIngredient<BlinkPack>().AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<PhaseBar>(20).AddIngredient<FragmentOfChaos>(10).AddIngredient<TwilightAssassinsChestplate>(1).AddIngredient<ParticleRelocator>().AddTile(TileID.MythrilAnvil).Register();
+        }
+    }
 }
