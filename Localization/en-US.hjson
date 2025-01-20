@@ -6586,6 +6586,11 @@ Mods: {
 				DisplayName: Inferno Plating Wall
 				Tooltip: ""
 			}
+
+			ChaosPlatingWall: {
+				DisplayName: Chaos Plating Wall
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
