@@ -6570,6 +6570,22 @@ Mods: {
 				DisplayName: Chaos Plating Work Bench
 				Tooltip: ""
 			}
+
+			RotHeart: {
+				DisplayName: Rot Heart
+				Tooltip:
+					'''
+					Increases max life by 20
+					All boosts to life regeneration are converted into boosts to void gain
+					When using void, 10% of the void used is converted into life
+					'Yucky!'
+					'''
+			}
+
+			InfernoPlatingWall: {
+				DisplayName: Inferno Plating Wall
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

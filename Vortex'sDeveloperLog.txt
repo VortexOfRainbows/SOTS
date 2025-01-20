@@ -83,11 +83,13 @@ N/A
 
 Daily Log:
 
-1/14/24 to 1/18/24
-1. Added Inferno Furniture! (Still need Inferno Plating modifications + Inferno Plating wall!)
+1/14/24 to 1/19/24
+1. Added Inferno Furniture!
 2. Added Chaos Plating Furniture! (Still need Chaos Plating modifications + Chaos Plating wall!)
 3. Elemental Armor now requires either blink pack or particle relocator instead of both.
 4. Plague Spitter damage 15 -> 13
+5. Added Rot Heart, which can drop from Famished (4%)
+6. Inferno Plating wall and Inferno Plating sprite adjustments to make it better for building
 
 1/7/25 to 1/11/25
 1. Otherworld Plating furniture

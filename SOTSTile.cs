@@ -62,7 +62,7 @@ namespace SOTS
         public static Vector3 TidalPlatingLight = new Vector3(0.2f, 0.25f, 0.4f);
         public static Vector3 OtherworldPlatingLight = new Vector3(.3f, .2f, .312f);
         public static Vector3 EvilPlatingLight = new Vector3(.5f, .2f, .2f);
-        public static Vector3 InfernoPlatingLight = new Vector3(0.426f, 0.136f, 0.026f);
+        public static Vector3 InfernoPlatingLight = new Vector3(0.426f, 0.2f, 0.032f);
         public static Vector3 ChaosPlatingLight = new Vector3(0.46f, 0.18f, 0.40f);
         public static int[] pyramidTiles;                     
         public static void LoadArrays() //called in SOTS.Load() 

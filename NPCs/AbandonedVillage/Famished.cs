@@ -1408,6 +1408,7 @@ namespace SOTS.NPCs.AbandonedVillage
             npcLoot.Add(ItemDropRule.Common(ItemID.LifeCrystal, 10));
             worldCrimson.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCrimson>(), 1, 20, 40));
             worldCorrupt.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCorruption>(), 1, 20, 40));
+            npcLoot.Add(ItemDropRule.Common(ItemType<RotHeart>(), 25));
             npcLoot.Add(worldCrimson);
             npcLoot.Add(worldCorrupt);
         }

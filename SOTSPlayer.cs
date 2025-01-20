@@ -264,7 +264,7 @@ namespace SOTS
 
 		public Vector2 starCen;
 
-		public int mourningStarFire = 0;
+		public bool RotHeart = false;
 
 		public bool VoidspaceFlames = false;
 		public bool AutoReuseAnything = false;
@@ -1905,6 +1905,18 @@ namespace SOTS
 				screenShakeMultiplier = 0;
             }
 			base.ModifyScreenPosition();
+        }
+        public override void UpdateLifeRegen()
+        {
+			if (RotHeart)
+			{
+				if (Player.lifeRegen > 0)
+				{
+					VoidPlayer.ModPlayer(Player).bonusVoidGain += Player.lifeRegen;
+                    Player.lifeRegen = 0;
+                }
+			}
+			RotHeart = false;
         }
         public override void UpdateBadLifeRegen()
 		{
