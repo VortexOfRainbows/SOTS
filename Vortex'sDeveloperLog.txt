@@ -84,7 +84,7 @@ Daily Log:
 1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines
 2. Synthetic Liver should spawn again (for real this time)
 3. WIP Blink Blade
-	1. Needs: Right click effect, dedicated tooltip, mp syncing/testing
+	1. Needs: dedicated tooltip, mp syncing/testing
 
 1/14/25 to 1/19/25
 1. Added Inferno Furniture!

@@ -35,7 +35,7 @@ namespace SOTS.Items.Conduit
         {
             if(player.altFunctionUse == 2)
             {
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, -2 * SOTSUtils.SignNoZero(velocity.X) * player.gravDir, 0.4f);
+                Projectile.NewProjectile(source, position, velocity, type, damage * 3, knockback * 2.5f, player.whoAmI, -2 * SOTSUtils.SignNoZero(velocity.X) * player.gravDir, 0.25f);
             }
             else
                 Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1 * SOTSUtils.SignNoZero(velocity.X) * player.gravDir, Main.rand.NextFloat(0.9f, 1.1f));

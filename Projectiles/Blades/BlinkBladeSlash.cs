@@ -38,8 +38,8 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float MeleeSpeedMultiplier => 1.25f;
 		public override float OverAllSpeedMultiplier => 6f;
-		public override float MinSwipeDistance => thisSlashNumber == 2 ? 108 : 99;
-		public override float MaxSwipeDistance => thisSlashNumber == 2 ? 108 : 99;
+		public override float MinSwipeDistance => thisSlashNumber == 2 ? 112 : 99;
+		public override float MaxSwipeDistance => thisSlashNumber == 2 ? 112 : 99;
 		public override float ArcStartDegrees => 200;
 		public override float swipeDegreesTotal => 250f;
 		public override float swingSizeMult => 1.0f;
@@ -51,7 +51,15 @@ namespace SOTS.Projectiles.Blades
         public override void PostAI()
         {
 			base.PostAI();
+            if (thisSlashNumber ==2)
+            {
+                if (nextIntervalForProj >= 175 && nextIntervalForProj < 250)
+                {
+					nextIntervalForProj = 80;
+				}
+            }
 			Player p = Main.player[Projectile.owner];
+			bool activateDash = false;
 			if(timeLeftCounter > nextIntervalForProj)
             {
                 if (thisSlashNumber == 1)
@@ -64,17 +72,44 @@ namespace SOTS.Projectiles.Blades
 				}
 				else
 				{
-                    delayDeathTime = 40;
+                    delayDeathTime = 50;
+					activateDash = true;
                 }
                 nextIntervalForProj = 1000;
 			}
-			if(thisSlashNumber == 2 && timeLeftCounter < nextIntervalForProj && nextIntervalForProj != 1000)
+			if((thisSlashNumber == 2 && timeLeftCounter < nextIntervalForProj && nextIntervalForProj != 1000) || activateDash)
 			{
-				Vector2 warpDirection = Projectile.velocity.SNormalize() * 20f / (Projectile.extraUpdates + 1) * p.GetTotalAttackSpeed<VoidMelee>();
-                warpDirection = Collision.TileCollision(p.position, warpDirection, p.width, p.height, true, true, (int)p.gravDir);
-				p.position += warpDirection;
-				p.velocity.Y *= 0.95f;
-				p.velocity += warpDirection * 0.001f;
+				Vector2 sn = Projectile.oldVelocity.SNormalize();
+				if(activateDash)
+				{
+					p.velocity *= 0.9f;
+					p.velocity.X += sn.X * 12f;
+                    p.velocity.Y += sn.Y * 16f;
+					p.velocity.Y -= 2f;
+                    for (int i = 0; i < 50; i++)
+                    {
+                        Color c = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+                        c.A = 0;
+                        PixelDust.Spawn(p.Center - new Vector2(16), 32, 32, sn * Main.rand.NextFloat(8) + Main.rand.NextVector2Circular(5f, 5f), c, 8).scale = Main.rand.NextFloat(1.5f, 2.0f);
+                    }
+                }
+				else
+                {
+					for(int i = 0; i < 2; i++)
+                    {
+                        Vector2 warpDirection = sn * 9f / (Projectile.extraUpdates + 1) * p.GetTotalAttackSpeed<VoidMelee>();
+                        warpDirection = Collision.TileCollision(p.position, warpDirection, p.width, p.height, true, true, (int)p.gravDir);
+                        p.position += warpDirection;
+                        //Projectile.position += warpDirection;
+                        p.velocity *= 0.987f;
+                        p.velocity += warpDirection * 0.001f;
+                        Color c = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
+                        c.A = 0;
+                        PixelDust.Spawn(p.Center - p.velocity * (float)Projectile.numUpdates / (Projectile.extraUpdates + 1) - new Vector2(3, 3), 6, 6, sn * Main.rand.NextFloat(3) + Main.rand.NextVector2Circular(0.1f, 0.1f), c, 8).scale = Main.rand.NextFloat(1.25f, 1.6f);
+                    }
+					p.immune = true;
+					p.immuneTime = 10;
+                }
             }
         }
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
