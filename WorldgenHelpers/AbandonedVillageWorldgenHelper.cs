@@ -3282,7 +3282,6 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
-
             int x2 = pos.X;
             int y2 = pos.Y + 1;
             GenerateTunnel(ref x2, ref y2, 0, 7, 15);
@@ -3596,6 +3595,8 @@ namespace SOTS.WorldgenHelpers
                 return;
             if (firstType == ModContent.TileType<GulaPortalPlatingTile>() || secondType == ModContent.TileType<GulaPortalPlatingTile>())
                 return;
+            ushort EarthenPlating = (ushort)ModContent.TileType<EarthenPlatingTile>();
+            ushort GulaPlating = (ushort)ModContent.TileType<GulaPlatingTile>();
             if (WorldGen.genRand.NextBool(4) && !Main.tile[i, j - 1].HasTile && !Main.tile[i + 1, j - 1].HasTile && !Main.tile[i, j - 2].HasTile && !Main.tile[i + 1, j - 2].HasTile)
             {
                 Tile tileBottom = Framing.GetTileSafely(i, j + 1);
@@ -3605,7 +3606,7 @@ namespace SOTS.WorldgenHelpers
                 Main.tile[i, j - 2].ClearTile();
                 Main.tile[i + 1, j - 2].ClearTile();
                 List<int> validPotTypes = new List<int>();
-                if (tileBottom.TileType == ModContent.TileType<GulaPlatingTile>() || tileBottomLeft.TileType == ModContent.TileType<GulaPlatingTile>())
+                if (tileBottom.TileType == GulaPlating || tileBottomLeft.TileType == GulaPlating)
                 {
                     validPotTypes.Add(3);
                     validPotTypes.Add(4);
@@ -3613,7 +3614,7 @@ namespace SOTS.WorldgenHelpers
                 }
                 else
                 {
-                    if (firstType == ModContent.TileType<EarthenPlatingTile>() || secondType == ModContent.TileType<EarthenPlatingTile>() ||
+                    if (firstType == EarthenPlating || secondType == EarthenPlating ||
                         firstType == ModContent.TileType<EarthenPlatingPlatformTile>() || secondType == ModContent.TileType<EarthenPlatingPlatformTile>())
                     {
                         validPotTypes.Add(0);
@@ -3669,7 +3670,7 @@ namespace SOTS.WorldgenHelpers
                     {
                         bool tryingToDoTall = WorldGen.genRand.NextBool(3);
                         bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || third.TileType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(25) ||
-                            ((tryingToDoTall || WorldGen.genRand.NextBool(5)) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>() && third.TileType == ModContent.TileType<EarthenPlatingTile>());
+                            ((tryingToDoTall || WorldGen.genRand.NextBool(5)) && firstType == EarthenPlating && secondType == EarthenPlating && third.TileType == EarthenPlating);
                         if (correctTile && !WorldGen.genRand.NextBool(7))
                         {
                             if (tryingToDoTall)
@@ -3696,7 +3697,7 @@ namespace SOTS.WorldgenHelpers
                     if (tileRight.HasTile && !hasPlaced)
                     {
                         bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(15) ||
-                            (WorldGen.genRand.NextBool(5) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>());
+                            (WorldGen.genRand.NextBool(5) && firstType == EarthenPlating && secondType == EarthenPlating);
                         if (correctTile)
                         {
                             WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x1>(), true, true, -1, WorldGen.genRand.Next(4));
@@ -3709,7 +3710,7 @@ namespace SOTS.WorldgenHelpers
                     if (tileRight.HasTile)
                     {
                         bool correctTile = firstType == ModContent.TileType<SootBlockTile>() || secondType == ModContent.TileType<SootBlockTile>() || WorldGen.genRand.NextBool(15) ||
-                            (WorldGen.genRand.NextBool(4) && firstType == ModContent.TileType<EarthenPlatingTile>() && secondType == ModContent.TileType<EarthenPlatingTile>());
+                            (WorldGen.genRand.NextBool(4) && firstType == EarthenPlating && secondType == EarthenPlating);
                         if (correctTile)
                         {
                             WorldGen.PlaceTile(i, j - 1, ModContent.TileType<AVAmbientTile2x1>(), true, true, -1, WorldGen.genRand.Next(4));
@@ -3729,6 +3730,22 @@ namespace SOTS.WorldgenHelpers
                                 hasPlaced = true;
                             }
                         }
+                    }
+                }
+            } 
+            else if(WorldGen.genRand.NextBool(60) && firstType == EarthenPlating || (WorldGen.genRand.NextBool(4) && firstType == ModContent.TileType<EarthenPlatingPlatformTile>()))
+            {
+                if (!Main.tile[i, j - 1].HasTile && !Main.tile[i, j - 2].HasTile)
+                {
+                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<EarthenPlatingTableTile>(), true, true, -1, 0);
+                    if (Main.tile[i, j -1].HasTile && Main.tile[i, j - 1].TileType == ModContent.TileType<EarthenPlatingTableTile>())
+                    {
+                        if (!WorldGen.genRand.NextBool(3))
+                            WorldGen.PlaceTile(i + 2, j - 1, ModContent.TileType<EarthenPlatingChairTile>(), true, true, -1, 0);
+                        if (!WorldGen.genRand.NextBool(3))
+                            WorldGen.PlaceTile(i - 2, j - 1, ModContent.TileType<EarthenPlatingChairTile>(), true, true, -1, 1);
+                        if (WorldGen.genRand.NextBool(4))
+                            WorldGen.PlaceTile(i + WorldGen.genRand.Next(-1, 2), j - 3, ModContent.TileType<EarthenPlatingBulbTile>(), true, true, -1, 0);
                     }
                 }
             }
@@ -4100,7 +4117,7 @@ namespace SOTS.WorldgenHelpers
                 int reduceItemChances = 1;
                 //bool alreadyHasItem = chest.item[slot].type == ItemID.None;
                 int potionType = ItemID.LesserHealingPotion;
-                if(tile.TileType == ModContent.TileType<RuinedChestTile>() && Main.tile[i, j + 1].TileType != ModContent.TileType<EvilPlatingTile>())
+                if(tile.TileType == ModContent.TileType<RuinedChestTile>() && Main.tile[i, j + 2].TileType != ModContent.TileType<EvilPlatingTile>())
                 {
                     //Tier 1 items
                     mainItem = Tier1Items[tier1++ % Tier1Items.Count];

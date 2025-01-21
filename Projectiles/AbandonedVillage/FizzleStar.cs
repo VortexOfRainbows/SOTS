@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
-using System.Diagnostics;
 using SOTS.Dusts;
 using SOTS.Helpers;
 

@@ -41,11 +41,10 @@ Update Objectives:
 9. Upgrade item to the Hydrokinetic Antennae (Pending)
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 11. Sanctuary! (In Progress)
-	1. Tiles: Overgrown Vespera Brick, Vespera Rune Brick, Invidia Plating Block, Invidia Portal Plating
+	1. Tiles: Overgrown Vespera Brick, Invidia Portal Plating
 	2. Solar Bulb item in the chest
 12. Add Bridge Burner
 13. Add Achievements
-14. Generate Earthen Furniture in AV Mines
 
 ---WIP List---
 Abandoned village generation
@@ -74,15 +73,20 @@ N/A
 N/A
 
 ---Content Needed---
-Look down for Abandoned Village todo and progress...
-	1. Needs: Generate Ancient Steel, Chests, Earthen Furniture on corridors occasionally
+N/A
 
 ---Items To Make Work With Tesseract---
 N/A
 
 Daily Log:
 
-1/14/24 to 1/19/24
+1/20/25 to 1/21/25
+1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines
+2. Synthetic Liver should spawn again (for real this time)
+3. WIP Blink Blade
+	1. Needs: Right click effect, dedicated tooltip, mp syncing/testing
+
+1/14/25 to 1/19/25
 1. Added Inferno Furniture!
 2. Added Chaos Plating Furniture!
 3. Elemental Armor now requires either blink pack or particle relocator instead of both.

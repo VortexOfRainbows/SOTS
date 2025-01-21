@@ -165,5 +165,9 @@ namespace SOTS
 			chest.item[slot].stack = count;
             slot++;
         }
+		public static Vector2 RotatedByDegrees(this Vector2 spinningPoint, float degrees, Vector2 center = default)
+		{
+			return spinningPoint.RotatedBy(MathHelper.ToRadians(degrees), center);
+		}
     }
 }

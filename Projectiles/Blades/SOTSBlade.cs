@@ -278,6 +278,10 @@ namespace SOTS.Projectiles.Blades
                             distance = MaxSwipeDistance;
                     }
                     toCursor = cursorArea - PlayerCenter();
+                    if(Type == ModContent.ProjectileType<BlinkBladeSlash>())
+                    {
+                        toCursor = toCursor.RotatedByDegrees(Main.rand.NextFloat(-15, 15));
+                    }
                     spinSpeed = GetBaseSpeed(distance) * speedModifier * OverAllSpeedMultiplier * MeleeSpeedModifier / (1 + Projectile.extraUpdates); //add virtual/abstract variables for this
                 }
                 counterOffset = ArcStartDegrees; //add virtual/abstract variables for this

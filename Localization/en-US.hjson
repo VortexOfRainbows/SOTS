@@ -6591,6 +6591,16 @@ Mods: {
 				DisplayName: Chaos Plating Wall
 				Tooltip: ""
 			}
+
+			BlinkBlade: {
+				DisplayName: Blink Blade
+				Tooltip: 
+				'''
+				Releases a short-ranged burst of lightning with every swing
+				(WIP) Right click to blink forward a short distance with a 2 second cooldown that scales with attack speed
+				Receives 25% more attack speed from attack speed boosts
+				'''
+			}
 		}
 
 		ItemTooltip: {
@@ -8496,6 +8506,8 @@ Mods: {
 			AccretionNova.DisplayName: Accretion Nova
 			MoonClock.DisplayName: Moon Clock
 			MoonClockHoldOut.DisplayName: Moon Clock Hold Out
+			BlinkBladeSlash.DisplayName: Blink Blade Slash
+			BlinkLightning.DisplayName: Blink Lightning
 		}
 
 		DamageClasses: {
