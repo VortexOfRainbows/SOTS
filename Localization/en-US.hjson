@@ -6594,12 +6594,12 @@ Mods: {
 
 			BlinkBlade: {
 				DisplayName: Blink Blade
-				Tooltip: 
-				'''
-				Releases a short-ranged burst of lightning with every swing
-				(WIP) Right click to blink forward a short distance with a 2 second cooldown that scales with attack speed
-				Receives 25% more attack speed from attack speed boosts
-				'''
+				Tooltip:
+					'''
+					Left click to release a short-ranged burst of lightning
+					Right click to blink forward a short distance with a larger slash at triple the void cost
+					Receives 25% more attack speed from attack speed boosts
+					'''
 			}
 		}
 

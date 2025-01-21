@@ -278,7 +278,7 @@ namespace SOTS.Projectiles.Blades
                             distance = MaxSwipeDistance;
                     }
                     toCursor = cursorArea - PlayerCenter();
-                    if(Type == ModContent.ProjectileType<BlinkBladeSlash>())
+                    if(Type == ModContent.ProjectileType<BlinkBladeSlash>() && thisSlashNumber == 1)
                     {
                         toCursor = toCursor.RotatedByDegrees(Main.rand.NextFloat(-15, 15));
                     }
@@ -441,7 +441,8 @@ namespace SOTS.Projectiles.Blades
                 }
             }
             bool starshardRightClickFinalSlash = Projectile.type == ModContent.ProjectileType<StarshardSlash>() && AbsAI0 >= 4;
-            if (AbsAI0 == 0 || starshardRightClickFinalSlash)
+            bool blinkBladeAlt = Projectile.type == ModContent.ProjectileType<BlinkBladeSlash>();
+            if (AbsAI0 == 0 || starshardRightClickFinalSlash || blinkBladeAlt)
             {
                 if(starshardRightClickFinalSlash || player.itemTime != 4)
                     UpdateHoldOut();

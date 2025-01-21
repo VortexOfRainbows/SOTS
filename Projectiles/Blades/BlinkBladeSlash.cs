@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.Blades
 		{
 			Projectile.localNPCHitCooldown = 120;
 			Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
-			delayDeathTime = 2;
+			delayDeathTime = 1;
 			Projectile.extraUpdates = 7;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -38,32 +38,51 @@ namespace SOTS.Projectiles.Blades
 		}
 		public override float MeleeSpeedMultiplier => 1.25f;
 		public override float OverAllSpeedMultiplier => 6f;
-		public override float MinSwipeDistance => 99;
-		public override float MaxSwipeDistance => 99;
+		public override float MinSwipeDistance => thisSlashNumber == 2 ? 108 : 99;
+		public override float MaxSwipeDistance => thisSlashNumber == 2 ? 108 : 99;
 		public override float ArcStartDegrees => 200;
 		public override float swipeDegreesTotal => 250f;
 		public override float swingSizeMult => 1.0f;
-		public override float ArcOffsetFromPlayer => 0.55f;
-		public override float delayDeathSlowdownAmount => 0.5f;
+		public override float ArcOffsetFromPlayer => thisSlashNumber == 2 ? 0.2f : 0.55f;
+		public override float delayDeathSlowdownAmount => 0.7f;
 		public override Color? DrawColor => null;
 		private bool RunOnce = true;
 		private float nextIntervalForProj = 175;
         public override void PostAI()
         {
 			base.PostAI();
-			if(timeLeftCounter > nextIntervalForProj && thisSlashNumber == 1)
-			{
-                SOTSUtils.PlaySound(SoundID.Item72, Projectile.Center, 0.7f, 0.6f);
-				if(Main.myPlayer == Projectile.owner)
-                {
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - dustAway.SNormalize() * 5f, dustAway.SNormalize() * (1 + 4 * Main.player[Projectile.owner].GetTotalAttackSpeed<VoidMelee>()), ModContent.ProjectileType<BlinkLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0, 1);
+			Player p = Main.player[Projectile.owner];
+			if(timeLeftCounter > nextIntervalForProj)
+            {
+                if (thisSlashNumber == 1)
+				{
+					SOTSUtils.PlaySound(SoundID.Item72, Projectile.Center, 0.7f, 0.6f);
+					if (Main.myPlayer == Projectile.owner)
+					{
+						Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center - dustAway.SNormalize() * 5f, dustAway.SNormalize() * (1 + 4 * p.GetTotalAttackSpeed<VoidMelee>()), ModContent.ProjectileType<BlinkLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 0, 0, 1);
+					}
+				}
+				else
+				{
+                    delayDeathTime = 40;
                 }
                 nextIntervalForProj = 1000;
 			}
+			if(thisSlashNumber == 2 && timeLeftCounter < nextIntervalForProj && nextIntervalForProj != 1000)
+			{
+				Vector2 warpDirection = Projectile.velocity.SNormalize() * 20f / (Projectile.extraUpdates + 1) * p.GetTotalAttackSpeed<VoidMelee>();
+                warpDirection = Collision.TileCollision(p.position, warpDirection, p.width, p.height, true, true, (int)p.gravDir);
+				p.position += warpDirection;
+				p.velocity.Y *= 0.95f;
+				p.velocity += warpDirection * 0.001f;
+            }
         }
         public override Vector2 ModifySwingVector2(Vector2 original, float yDistanceCompression, int swingNumber)
 		{
-			original.Y *= 0.7f * yDistanceCompression;
+			if(thisSlashNumber == 2)
+                original.Y *= 0.8f * yDistanceCompression;
+            else
+				original.Y *= 0.7f * yDistanceCompression;
 			return original;
 		}
 		public override void SlashPattern(Player player, int slashNumber)

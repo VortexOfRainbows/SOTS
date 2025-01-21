@@ -12,6 +12,7 @@ namespace SOTS.Items.Conduit
 	{
 		public override void SetStaticDefaults()
 		{
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
@@ -32,8 +33,13 @@ namespace SOTS.Items.Conduit
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1 * SOTSUtils.SignNoZero(velocity.X) * player.gravDir, Main.rand.NextFloat(0.9f, 1.1f));
-			return false;
+            if(player.altFunctionUse == 2)
+            {
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, -2 * SOTSUtils.SignNoZero(velocity.X) * player.gravDir, 0.4f);
+            }
+            else
+                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1 * SOTSUtils.SignNoZero(velocity.X) * player.gravDir, Main.rand.NextFloat(0.9f, 1.1f));
+            return false;
         }
         public override void AddRecipes()
         {
@@ -42,7 +48,11 @@ namespace SOTS.Items.Conduit
         }
         public override int GetVoid(Player player)
         {
-            return 3;
+            return 3 * (player.altFunctionUse == 2 ? 3 : 1);
+        }
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
         }
     }
 }
