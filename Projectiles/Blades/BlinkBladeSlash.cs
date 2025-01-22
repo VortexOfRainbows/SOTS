@@ -19,9 +19,13 @@ namespace SOTS.Projectiles.Blades
 			delayDeathTime = 1;
 			Projectile.extraUpdates = 7;
 		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-
+			if (target.immortal || thisSlashNumber == 2 || Projectile.owner != Main.myPlayer)
+				return;
+			Player p = Main.player[Projectile.owner];
+			p.VoidPlayer().voidMeter += 1;
+            VoidPlayer.VoidEffect(p, 1);
         }
         public override float HitboxWidth => 20;
 		public override float AdditionalTipLength => 0;
