@@ -211,6 +211,7 @@ namespace SOTS
 		public static int[] DedicatedBlasfah;
 		public static int[] DedicatedHeartPlus;
 		public static int[] DedicatedKoolaid;
+		public static int[] DedicatedKekcroc;
 		public static int[] DedicatedTaco;
         public static int[] PiscesFishItems;
 		public static void LoadArrays() //called in SOTS.Load()
@@ -229,6 +230,7 @@ namespace SOTS
 			DedicatedHeartPlus = [ItemType<DigitalDaito>(), ItemType<Items.Evil.ToothAche>()]; //Heart Plus Up
 			DedicatedTaco = [ItemType<Baguette>(), ItemType<Taco>()]; //Coolio/Taco
             DedicatedKoolaid = [ItemType<PintOPunch>()]; //Koolaid
+            DedicatedKekcroc = [ItemType<BlinkBlade>()]; //Kekcroc
 
             PiscesFishItems = [-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
 			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
@@ -339,6 +341,8 @@ namespace SOTS
 				dedicatedColor = ColorHelper.PintOPunch;
 			if (DedicatedTaco.Contains(item.type))
 				dedicatedColor = new Color(252, 254, 56);
+			if (DedicatedKekcroc.Contains(item.type))
+				dedicatedColor = new Color(139, 63, 150);
             if (rarityColor != Color.White)
             {
                 foreach (TooltipLine line in tooltips)

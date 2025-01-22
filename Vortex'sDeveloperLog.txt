@@ -80,11 +80,12 @@ N/A
 
 Daily Log:
 
-1/20/25 to 1/21/25
+1/20/25 to 1/22/25
 1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines
 2. Synthetic Liver should spawn again (for real this time)
-3. WIP Blink Blade
-	1. Needs: dedicated tooltip, mp syncing/testing
+3. Added Blink Blade: works in Multiplayer (Except for some small trail differences that don't matter)
+	1. It's really strong and can basically allow flight, but it's very void cost heavy even when compared to other options like Spirit Surfer
+	2. It's really fun to use it in the air and alternate between hitting and missing.
 
 1/14/25 to 1/19/25
 1. Added Inferno Furniture!

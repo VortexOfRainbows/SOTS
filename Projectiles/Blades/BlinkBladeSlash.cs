@@ -84,8 +84,8 @@ namespace SOTS.Projectiles.Blades
 				{
 					p.velocity *= 0.9f;
 					p.velocity.X += sn.X * 12f;
-                    p.velocity.Y += sn.Y * 16f;
-					p.velocity.Y -= 2f;
+                    p.velocity.Y += sn.Y * 14f;
+					p.velocity.Y -= 1.5f;
                     for (int i = 0; i < 50; i++)
                     {
                         Color c = Color.Lerp(color1, color2, Main.rand.NextFloat(0.9f) * Main.rand.NextFloat(0.9f));
