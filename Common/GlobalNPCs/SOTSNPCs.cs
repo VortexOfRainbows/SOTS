@@ -50,6 +50,7 @@ using SOTS.NPCs.Gizmos;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.Buffs.Debuffs;
 using System;
+using SOTS.NPCs.Critters;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -552,6 +553,8 @@ namespace SOTS.Common.GlobalNPCs
 			{
 				spawnRate = (int)(spawnRate * 0.08f); //essentially setting it to 48
 				maxSpawns = (int)(maxSpawns * 1.5f);
+				if (player.townNPCs > 2f)
+					spawnRate *= 4; //Lower rates in town
 			}
 			if(player.HasBuff<IntimidatingPresence>())
             {
@@ -662,13 +665,20 @@ namespace SOTS.Common.GlobalNPCs
 				bool correctBlock = CorrectBlockBelowPlanetarium(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY, ref distanceDown);
 				if (correctBlock)
 				{
-					pool.Add(ModContent.NPCType<HoloSlime>(), 0.4f);
-					pool.Add(ModContent.NPCType<HoloEye>(), 0.1f);
-					pool.Add(ModContent.NPCType<HoloBlade>(), 0.175f);
-					pool.Add(ModContent.NPCType<TwilightDevil>(), 0.04f);
+					float townMult = ZoneTown ? 0.1f : 1.0f;
+					pool.Add(ModContent.NPCType<HoloSlime>(), 0.4f * townMult);
+					pool.Add(ModContent.NPCType<HoloEye>(), 0.1f * townMult);
+					pool.Add(ModContent.NPCType<HoloBlade>(), 0.175f * townMult);
+					pool.Add(ModContent.NPCType<TwilightDevil>(), 0.04f * townMult);
 					pool.Add(ModContent.NPCType<OtherworldlyConstructHead>(), 0.02f * constructRateMultiplier);
-					pool.Add(ModContent.NPCType<TwilightScouter>(), 0.01f);
-				}
+					pool.Add(ModContent.NPCType<TwilightScouter>(), 0.01f * townMult);
+
+					float tardigradeChance = ZoneTown ? 0.5f : 0.075f;
+                    pool.Add(ModContent.NPCType<TardigradeBrown>(), tardigradeChance * 0.4f);
+                    pool.Add(ModContent.NPCType<TardigradeBlue>(), tardigradeChance * 0.3f);
+                    pool.Add(ModContent.NPCType<TardigradeGreen>(), tardigradeChance * 0.2f);
+                    pool.Add(ModContent.NPCType<TardigradePink>(), tardigradeChance * 0.1f);
+                }
 			}
 			else if (ZoneForest)
 			{
@@ -879,10 +889,19 @@ namespace SOTS.Common.GlobalNPCs
 					if (NPC.CountNPCS(ModContent.NPCType<PhaseAssaulterHead>()) < 1) //only one assaulter max
 						pool.Add(ModContent.NPCType<PhaseAssaulterHead>(), SpawnCondition.Sky.Chance * 5f);
 				}
-				if(!ZonePlanetarium)
-					pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
-			}
-			if (sPlayer.AnomalyBiome)
+				float tardigradeChance = SpawnCondition.Sky.Chance * 0.2f;
+				if (!ZonePlanetarium)
+                {
+                    pool.Add(ModContent.NPCType<TwilightScouter>(), SpawnCondition.Sky.Chance * 0.4f);
+					if (ZoneTown)
+						tardigradeChance = .3f;
+                    pool.Add(ModContent.NPCType<TardigradeBrown>(), tardigradeChance * 0.4f);
+                    pool.Add(ModContent.NPCType<TardigradeBlue>(), tardigradeChance * 0.3f);
+                    pool.Add(ModContent.NPCType<TardigradeGreen>(), tardigradeChance * 0.2f);
+                    pool.Add(ModContent.NPCType<TardigradePink>(), tardigradeChance * 0.1f);
+                }
+            }
+            if (sPlayer.AnomalyBiome)
 			{
 				if (NPC.CountNPCS(ModContent.NPCType<Ultracap>()) < 2) //First two to spawn are more common
 					pool.Add(ModContent.NPCType<Ultracap>(), 0.15f);
@@ -946,7 +965,15 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
 			}
-			if (npc.type == ModContent.NPCType<PhaseSpeeder>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>() || npc.type == ModContent.NPCType<TwilightScouter>())
+			if(npc.ModNPC != null && npc.ModNPC is TardigradeBrown)
+			{
+                FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Tardigrade");
+                bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
+                    Planetarium,
+                    flavorText
+                });
+            }
+            if (npc.type == ModContent.NPCType<PhaseSpeeder>() || npc.type == ModContent.NPCType<PhaseAssaulterHead>() || npc.type == ModContent.NPCType<TwilightScouter>())
 			{
 				FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.PhaseSpeeder");
 				if (npc.type == ModContent.NPCType<TwilightScouter>())

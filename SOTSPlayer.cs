@@ -52,6 +52,8 @@ using SOTS.Items.Chaos;
 using SOTS.Buffs.Debuffs;
 using SOTS.Helpers;
 using SOTS.Projectiles.AbandonedVillage;
+using System.ComponentModel;
+using SOTS.NPCs.Critters;
 
 namespace SOTS
 {
@@ -1394,13 +1396,16 @@ namespace SOTS
 			}
 			else if (ScaleCatch2(power, 0, 200, 10, 100) && PyramidBiome && liquidType == 0)
 					itemDrop = ModContent.ItemType<PyramidCrate>(); 
-			else
-			{
-				bool cratePotion = Player.HasBuff(BuffID.Crate);
-                if (attempt.playerFishingConditions.PoleItemType == ModContent.ItemType<TwilightFishingPole>() && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
-                {
-                    itemDrop = Main.hardMode ? ModContent.ItemType<OtherworldCrate>() : ModContent.ItemType<PlanetariumCrate>();
-                }
+			
+			bool cratePotion = Player.HasBuff(BuffID.Crate);
+			bool canCatchPlanetariumCrate = attempt.playerFishingConditions.PoleItemType == ModContent.ItemType<TwilightFishingPole>()
+				|| (SOTSWorld.downedAdvisor && (attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<BrownTardigrade>() 
+				|| attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<BlueTardigrade>()
+                || attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<GreenTardigrade>()
+                || attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<PinkTardigrade>()));
+            if (canCatchPlanetariumCrate && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
+            {
+                itemDrop = Main.hardMode ? ModContent.ItemType<OtherworldCrate>() : ModContent.ItemType<PlanetariumCrate>();
             }
 
 		}

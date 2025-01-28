@@ -80,6 +80,10 @@ N/A
 
 Daily Log:
 
+1/28/25  
+1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
+2. Fixed bug where planetarium crates required crate potion to drop.
+
 1/20/25 to 1/22/25
 1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines
 2. Synthetic Liver should spawn again (for real this time)

@@ -6601,6 +6601,26 @@ Mods: {
 					Receives 25% more attack speed from attack speed boosts
 					'''
 			}
+
+			BlueTardigrade: {
+				DisplayName: Blue Tardigrade
+				Tooltip: Allows the catching of Planetarium Crates anywhere, but only after The Advisor has been defeated
+			}
+
+			BrownTardigrade: {
+				DisplayName: Brown Tardigrade
+				Tooltip: Allows the catching of Planetarium Crates anywhere, but only after The Advisor has been defeated
+			}
+
+			GreenTardigrade: {
+				DisplayName: Green Tardigrade
+				Tooltip: Allows the catching of Planetarium Crates anywhere, but only after The Advisor has been defeated
+			}
+
+			PinkTardigrade: {
+				DisplayName: Pink Tardigrade
+				Tooltip: Allows the catching of Planetarium Crates anywhere, but only after The Advisor has been defeated
+			}
 		}
 
 		ItemTooltip: {
@@ -7570,6 +7590,10 @@ Mods: {
 			BallOGutsPile.DisplayName: Pile O' Guts
 			Fistfull.DisplayName: Fistfull
 			MutagenTreasureSlime.DisplayName: Mutagen Treasure Slime
+			TardigradeBlue.DisplayName: Tardigrade
+			TardigradeBrown.DisplayName: Tardigrade
+			TardigradeGreen.DisplayName: Tardigrade
+			TardigradePink.DisplayName: Tardigrade
 		}
 
 		Bestiary: {
@@ -7673,6 +7697,7 @@ Mods: {
 				THIS IS THE LAST TRANSMISSION YOU WILL RECEIVE FROM US.
 				GOODBYE.
 				'''
+			Tardigrade: These water bears are able to survive the harsh combination of low pressure and intense radiation, allowing them to live in space.
 		}
 
 		DeathMessage: {
