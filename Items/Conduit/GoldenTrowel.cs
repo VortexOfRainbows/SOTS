@@ -23,7 +23,7 @@ namespace SOTS.Items.Conduit
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.GoldenTrowel = true;
-			player.tileSpeed += 0.05f;
-		}
-	}
+            player.tileSpeed -= 0.05f;
+        }
+    }
 }

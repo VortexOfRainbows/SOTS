@@ -28,7 +28,7 @@ namespace SOTS.Items
             modPlayer.KeepersBox = true;
             modPlayer.DamageGenerateMoney += 1;
             player.GetCritChance(DamageClass.Generic) += 5;
-            player.tileSpeed += 0.05f;
+            player.tileSpeed -= 0.05f;
         }
         public override void AddRecipes()
         {
