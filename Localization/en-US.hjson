@@ -6625,13 +6625,13 @@ Mods: {
 			GreedierRing: {
 				DisplayName: Greedier Ring
 				Tooltip:
-				'''
-				Increases mining speed by 5% and critical strike chance by 5%
-				Generate coins when hurt or when void is gained and don't lose coins upon death
-				Mining blocks has a chance to drop bonus resources, such as coins and silt
-				Increases coin pickup range and shops prices lowered by 20%
-				Hitting enemies will sometimes drop extra coins
-				'''
+					'''
+					Increases mining speed by 5% and critical strike chance by 5%
+					Generate coins when hurt or when void is gained and don't lose coins upon death
+					Mining blocks has a chance to drop bonus resources, such as coins and silt
+					Increases coin pickup range and shops prices lowered by 20%
+					Hitting enemies will sometimes drop extra coins
+					'''
 			}
 		}
 
@@ -7606,6 +7606,7 @@ Mods: {
 			TardigradeBrown.DisplayName: Tardigrade
 			TardigradeGreen.DisplayName: Tardigrade
 			TardigradePink.DisplayName: Tardigrade
+			Bridgeburner.DisplayName: Bridgeburner
 		}
 
 		Bestiary: {
