@@ -62,9 +62,9 @@ namespace SOTS.NPCs.Critters
                 {
                     gravityAdd = 0.15f;
                 }
-                NPC.velocity.Y += 0.8f * MathF.Sin(NPC.ai[2] * MathF.PI / 45f) + gravityAdd;
-                NPC.velocity.X += NPC.direction * 0.02f;
-                if (MathF.Abs(NPC.velocity.X) > 4)
+                NPC.velocity.Y += 0.7f * MathF.Sin(NPC.ai[2] * MathF.PI / 50f) + gravityAdd;
+                NPC.velocity.X += NPC.direction * 0.0175f;
+                if (MathF.Abs(NPC.velocity.X) > 3)
                     NPC.velocity.X *= 0.9f;
             }
             return true;
