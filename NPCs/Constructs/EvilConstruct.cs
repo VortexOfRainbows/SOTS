@@ -1,15 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Helpers;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.Evil;
-using SOTS.Void;
 using SOTS.WorldgenHelpers;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -212,10 +209,10 @@ namespace SOTS.NPCs.Constructs
 				}
 			}
 		}
-		Vector2 aimTo = new Vector2(-1, -1);
-		bool runOnce = true;
-		int currentArmID = -1;
-		int netcounter = 0;
+		private Vector2 aimTo = new Vector2(-1, -1);
+		private bool runOnce = true;
+		private int currentArmID = -1;
+		private int netcounter = 0;
 		public override bool PreAI()
 		{
 			netcounter++;

@@ -410,9 +410,10 @@ namespace SOTS.Common.GlobalNPCs
                     npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<PiscesPuncher>(), 30, 25));
                     type = ModContent.ItemType<TidePlating>();
                 }
-                if (npc.type == ModContent.NPCType<EvilConstruct>())
+                if (npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<Bridgeburner>())
                 {
-                    npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<DeathSpiral>(), 30, 25));
+					if(npc.type == ModContent.NPCType<EvilConstruct>())
+                        npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<DeathSpiral>(), 30, 25));
                     type = ModContent.ItemType<EvilPlating>();
                 }
                 if (npc.type == ModContent.NPCType<InfernoConstruct>())

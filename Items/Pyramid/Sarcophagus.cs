@@ -10,8 +10,8 @@ namespace SOTS.Items.Pyramid
 		public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SetDefaults()
 		{
-			Item.width = 32;
-			Item.height = 28;
+			Item.width = 48;
+			Item.height = 26;
 			Item.maxStack = 9999;
 			Item.useTurn = true;
 			Item.autoReuse = true;

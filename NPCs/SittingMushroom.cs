@@ -20,7 +20,7 @@ namespace SOTS.NPCs
         }
         public override void SetDefaults()
 		{
-            NPC.aiStyle =0; 
+            NPC.aiStyle = 0; 
             NPC.lifeMax = 40;   
             NPC.damage = 20; 
             NPC.defense = 6;  
@@ -151,24 +151,3 @@ namespace SOTS.NPCs
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

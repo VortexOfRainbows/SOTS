@@ -2,7 +2,10 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using SOTS.Items.Fragments;
+using SOTS.Projectiles.AbandonedVillage;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,15 +21,15 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void SetDefaults()
 		{
-			NPC.aiStyle = NPCAIStyleID.Unicorn;
-			NPC.lifeMax = 500;  
-			NPC.damage = 50; 
-			NPC.defense = 50;  
-			NPC.knockBackResist = 0.0f;
+			NPC.aiStyle = NPCAIStyleID.Fighter;
+            NPC.lifeMax = 3250;
+            NPC.damage = 60;
+            NPC.defense = 40;
+            NPC.knockBackResist = 0.0f;
 			NPC.width = 76;
 			NPC.height = 98;
-			NPC.value = 3330;
-			NPC.npcSlots = 3f;
+			NPC.value = Item.buyPrice(0, 6, 0, 0);
+			NPC.npcSlots = 4f;
 			NPC.boss = false;
 			NPC.lavaImmune = false;
 			NPC.noGravity = false;
@@ -36,9 +39,12 @@ namespace SOTS.NPCs.Constructs
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.rarity = 5;
 		}
+		private Vector2 armPosLeft => new Vector2(22 * NPC.spriteDirection, NPC.gfxOffY - 7);
+		private Vector2 armPosRight => new Vector2(-26 * NPC.spriteDirection, NPC.gfxOffY - 7);
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Player player = Main.player[NPC.target];
+			Vector2 toPlayer = (player.Center - NPC.Center).SNormalize();
 			Texture2D t = Terraria.GameContent.TextureAssets.Npc[Type].Value;
             Texture2D tHeadGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/BridgeburnerHeadGlow").Value;
             Texture2D tArmFrontGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Constructs/BridgeburnerArmFrontGlow").Value;
@@ -53,7 +59,7 @@ namespace SOTS.NPCs.Constructs
 			Vector2 ArmOrigin = new Vector2(!flip ? 36 : tArmFront.Width - 36, 10);
             Vector2 LegOrigin = new Vector2(!flip ? 14 : tLegFront.Width - 14, 8);
 			Vector2 drawPos = NPC.Center - screenPos;
-            float anim = MathHelper.ToRadians(NPC.localAI[0]);
+            float anim = NPC.localAI[0];
 			Vector2 leg1 = legPosition(anim);
 			Vector2 leg2 = legPosition(anim + MathF.PI);
             Vector2 bobbing = Vector2.Zero;
@@ -69,16 +75,19 @@ namespace SOTS.NPCs.Constructs
             }
 			//leg1 = leg2 = bobbing= Vector2.Zero;
 			float dir = NPC.spriteDirection;
-			float armRot = NPC.ai[0] + (!flip ? MathF.PI + MathHelper.PiOver4 : -MathHelper.PiOver4);
+			float armRot = NPC.localAI[3] + (!flip ? MathF.PI + MathHelper.PiOver4 : -MathHelper.PiOver4);
+			float armRot2 = NPC.localAI[2] + (!flip ? MathF.PI + MathHelper.PiOver4 : -MathHelper.PiOver4);
+			Vector2 armLeftRecoil = -toPlayer * fireRecoilLeft;
+			Vector2 armRightRecoil = -toPlayer * fireRecoilRight;
             bobbing.Y *= 0.5f;
-            spriteBatch.Draw(tArmBack, bobbing + drawPos + new Vector2(22 * dir, NPC.gfxOffY - 7), null, drawColor, armRot, ArmOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            spriteBatch.Draw(tArmBack, armLeftRecoil + bobbing + drawPos + armPosLeft, null, drawColor, armRot2, ArmOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(tLegBack, leg1 + drawPos + new Vector2(16 * dir, NPC.gfxOffY + 23), null, drawColor, 0, LegOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(t, bobbing + drawPos + new Vector2(0, NPC.gfxOffY), null, drawColor, 0, origin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(tHead, bobbing + drawPos + new Vector2(2 * dir, NPC.gfxOffY - 29), null, drawColor, 0, HeadOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(tHeadGlow, bobbing + drawPos + new Vector2(2 * dir, NPC.gfxOffY - 29), null, Color.White, 0, HeadOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(tLegFront, leg2 + drawPos + new Vector2(-22 * dir, NPC.gfxOffY + 23), null, drawColor, 0, LegOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            spriteBatch.Draw(tArmFront, bobbing + drawPos + new Vector2(-26 * dir, NPC.gfxOffY - 7), null, drawColor, armRot, ArmOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            spriteBatch.Draw(tArmFrontGlow, bobbing + drawPos + new Vector2(-26 * dir, NPC.gfxOffY - 7), null, Color.White, armRot, ArmOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            spriteBatch.Draw(tArmFront, armRightRecoil + bobbing + drawPos + armPosRight, null, drawColor, armRot, ArmOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            spriteBatch.Draw(tArmFrontGlow, armRightRecoil + bobbing + drawPos + armPosRight, null, Color.White, armRot, ArmOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
         }
         private Vector2 legPosition(float anim)
         {
@@ -86,8 +95,6 @@ namespace SOTS.NPCs.Constructs
             legOffset.X *= 0.25f * NPC.spriteDirection;
 			return legOffset;
         }
-
-        private float walkCounter = 0; //Counter for animation progress
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             return false;
@@ -129,26 +136,72 @@ namespace SOTS.NPCs.Constructs
 				NPC.frameCounter = 0;
 			}
 		}
+		private float fireRecoilLeft = 0;
+		private float fireRecoilRight = 0;
+		public void FireLaserAtPlayer(int type = 0)
+        {
+			ref float i = ref (type == 0 ? ref NPC.localAI[3] : ref NPC.localAI[2]);
+			Vector2 pos = NPC.Center + (type == 0 ? armPosRight : armPosLeft);
+			Vector2 dir = new Vector2(1, 0).RotatedBy(i);
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), pos + new Vector2(52, 0).RotatedBy(i), dir, ModContent.ProjectileType<BridgeburnerLaser>(), NPC.GetBaseDamage() / 2, 0, Main.myPlayer, NPC.Center.X + dir.X * 40, NPC.Center.Y + dir.Y * 40);
+            }
+			float rad = MathHelper.ToRadians(5);
+            i -= rad * NPC.spriteDirection;
+			if (type == 0)
+                fireRecoilRight += 10;
+			else
+                fireRecoilLeft += 10;
+			NPC.velocity.X -= dir.X;
+        }
 		public override void AI()
 		{
+			NPC.TargetClosest(true);
 			Player player = Main.player[NPC.target];
 			Vector2 toPlayer = player.Center - NPC.Center;
 			NPC.spriteDirection = NPC.direction;
 			NPC.velocity.X *= 0.825f;
 			if(NPC.velocity.Y < 0)
-				NPC.velocity.Y *= 0.99f;
-			NPC.localAI[0] += MathF.Sqrt(MathF.Abs(NPC.velocity.X)) * 7 + 1;
-			NPC.ai[0] = SOTSUtils.AngularLerp(NPC.ai[0], toPlayer.ToRotation(), 0.04f);
+				NPC.velocity.Y *= 0.9f;
+			NPC.localAI[0] += MathHelper.ToRadians(MathF.Sqrt(MathF.Abs(NPC.velocity.X)) * 7.5f);
+			NPC.localAI[0] = MathHelper.WrapAngle(NPC.localAI[0]);
+            NPC.localAI[1]++;
+			if (NPC.localAI[1] > 240)
+            {
+                NPC.localAI[0] = SOTSUtils.AngularLerp(NPC.localAI[0], MathHelper.ToRadians(90), 0.04f);
+                NPC.aiStyle = -1;
+                NPC.velocity.X *= 0.6f;
+				if (NPC.localAI[1] % 30 == 0 && NPC.localAI[1] > 300)
+                {
+					FireLaserAtPlayer((int)NPC.localAI[1] / 30 % 2);
+                }
+				if (NPC.localAI[1] > 550)
+                    NPC.localAI[1] = -60;
+				Vector2 toPlayerLeft = player.Center - NPC.Center - armPosLeft;
+				Vector2 toPlayerRight = player.Center - NPC.Center - armPosRight;
+                NPC.localAI[3] = SOTSUtils.AngularLerp(NPC.localAI[3], toPlayerRight.ToRotation(), 0.035f);
+                NPC.localAI[2] = SOTSUtils.AngularLerp(NPC.localAI[2], toPlayerLeft.ToRotation(), 0.035f);
+            }
+			else
+			{
+				NPC.aiStyle = NPCAIStyleID.Unicorn;
+
+                NPC.localAI[3] = SOTSUtils.AngularLerp(NPC.localAI[3], MathHelper.ToRadians(90 - 10 * NPC.spriteDirection + MathF.Sin(NPC.localAI[0]) * 20), 0.04f);
+                NPC.localAI[2] = SOTSUtils.AngularLerp(NPC.localAI[2], MathHelper.ToRadians(90 - 10 * NPC.spriteDirection - MathF.Sin(NPC.localAI[0]) * 20), 0.04f);
+            }
+			fireRecoilLeft *= 0.925f;
+			fireRecoilRight *= 0.925f;
         }
         public override void OnKill()
 		{
-			//int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<NatureSpirit>());
-			//Main.npc[n].velocity.Y = -10f;
-			//Main.npc[n].netUpdate = true;
+			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<EvilSpirit>());
+			Main.npc[n].velocity.Y = -10f;
+			Main.npc[n].netUpdate = true;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot)
 		{
-			//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfNature>(), 1, 4, 7));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 1, 4, 7));
 		}
 	}
 }

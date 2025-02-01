@@ -80,14 +80,14 @@ N/A
 
 Daily Log:
 
-1/28/25 to 1/31/25  
+1/28/25 to 2/1/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
 2. Fixed bug where planetarium crates required crate potion to drop.
 3. Fix bug where mining speed boosting items along the Golden Trowel chain accidentally decreased minespeed.
 4. Added Greedier Ring
 5. WIP Bridgeburner
 6. Planetarium spawn-rate nerfed considerable in towns.
-7. Update Sitting Mushroom gore
+7. Update Sitting Mushroom gore sprite, Sarcophagus sprite, and Frigid Ore Ice Shard sprite (Astrobit)
 
 1/20/25 to 1/22/25
 1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines

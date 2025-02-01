@@ -7,11 +7,14 @@ using SOTS.Dusts;
 using SOTS.NPCs.AbandonedVillage;
 using System;
 using SOTS.WorldgenHelpers;
+using SOTS.Helpers;
+using Terraria.GameContent;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {
 	public class FamishedLaser : ModProjectile
 	{
+		public Color color => this is not BridgeburnerLaser ? Famished.GlowColor : ColorHelper.RedEvilColor;
         public override string Texture => WorldGen.crimson ? "SOTS/Projectiles/AbandonedVillage/FamishedLaserCrimson" : "SOTS/Projectiles/AbandonedVillage/FamishedLaserCorruption";
         public override void SetStaticDefaults() 
 		{
@@ -28,18 +31,20 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 		}
-		private bool HasInit = false;
-		private Vector2 FinalPosition;
+		protected bool HasInit = false;
+		protected Vector2 FinalPosition;
         public override bool ShouldUpdatePosition()
         {
             return false;
         }
+		public virtual void PlaySound() => SOTSUtils.PlaySound(SoundID.Item94, Projectile.Center, 0.6f, 0.2f);
+		public virtual int DeadzoneType() => ModContent.ProjectileType<FamishedDeadzone>();
         public void InitializeLaser()
 		{
 			if(!HasInit)
 			{
-				SOTSUtils.PlaySound(SoundID.Item94, Projectile.Center, 0.6f, 0.2f);
-			}
+				PlaySound();
+            }
 			Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 			Vector2 startingPosition = Projectile.Center;
 			Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero);
@@ -60,7 +65,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 				int chance = SOTS.Config.lowFidelityMode ? 50 : 25;
 				if(Main.rand.NextBool(chance) || extra)
 				{
-					Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, ModContent.DustType<PixelDust>(), 0, 0, 0, Famished.GlowColor * Percent, 0.75f);
+					Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, ModContent.DustType<PixelDust>(), 0, 0, 0, color * Percent, 0.75f);
 					dust.noGravity = true;
                     dust.velocity *= 1.25f * Percent;
                     dust.velocity += Projectile.velocity * Main.rand.NextFloat(6f, 8f) * Percent;
@@ -70,7 +75,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 			}
 			for (int i = 2; i > 0; i--)
 			{
-				Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, ModContent.DustType<CopyDust4>(), 0, 0, 0, Famished.GlowColor * Percent * Percent, 1.5f);
+				Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, ModContent.DustType<CopyDust4>(), 0, 0, 0, color * Percent * Percent, 1.5f);
 				dust.noGravity = true;
 				dust.velocity = dust.velocity * 0.6f * (5 - Percent * 4) + Projectile.velocity * Main.rand.NextFloat(0.1f, 2.0f);
 				if (i == 2)
@@ -81,7 +86,8 @@ namespace SOTS.Projectiles.AbandonedVillage
 			{
 				if(Main.myPlayer == Projectile.owner)
 				{
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), FinalPosition, Vector2.Zero, ModContent.ProjectileType<FamishedDeadzone>(), Projectile.damage, 0, Main.myPlayer);
+					int Type = 
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), FinalPosition, Vector2.Zero, DeadzoneType(), Projectile.damage, 0, Main.myPlayer);
 				}
 			}
 			HasInit = true;
@@ -121,7 +127,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             Vector2 final = FinalPosition;
 			Vector2 toEnd = (final - start).SNormalize();
 			float dist = Vector2.Distance(start, final);
-            Color color = Famished.GlowColor;
+            Color color = this.color;
 			Vector2 prevPosition = Projectile.Center;
 			//float prevRot = Projectile.velocity.ToRotation();
 			float scale = 0.1f;
@@ -150,6 +156,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 	public class FamishedDeadzone : ModProjectile
 	{
         public override string Texture => WorldGen.crimson ? "SOTS/Projectiles/AbandonedVillage/FamishedLaserCrimson" : "SOTS/Projectiles/AbandonedVillage/FamishedLaserCorruption";
+		public Color color => this is not BridgeburnerDeadzone ? Famished.GlowColor : ColorHelper.RedEvilColor;
         public override void SetDefaults()
         {
             Projectile.width = 128;
@@ -177,15 +184,16 @@ namespace SOTS.Projectiles.AbandonedVillage
             Vector2 circular = Main.rand.NextVector2Square(-Projectile.width / 2, Projectile.width / 2);
             Vector2 center = Projectile.Center + circular;
 			if(percent < 0.9f)
-				PixelDust.Spawn(center, 0, 0, circular * Main.rand.NextFloat(0.05f), Famished.GlowColor * 0.5f * percent, 6);
-			for(int x = 0; x < 48; x++)
+				PixelDust.Spawn(center, 0, 0, circular * Main.rand.NextFloat(0.05f), color * 0.5f * percent, 6);
+			int count = (int)(Projectile.width * 0.3752f);
+			for(int x = 0; x < count; x++)
             {
                 center = Projectile.Center + Main.rand.NextVector2Square(-Projectile.width / 2, Projectile.width / 2);
                 int i = (int)center.X / 16;
                 int j = (int)center.Y / 16;
                 Vector2? dustPosition = SOTSTile.GetWorldPositionOnTile(i, j, x % 4, center.X - i * 16, center.Y - j * 16);
                 if (dustPosition != null)
-                    PixelDust.Spawn(dustPosition.Value, 0, 0, Main.rand.NextVector2Circular(0.1f, 0.1f) + (dustPosition.Value - center).SNormalize() * Main.rand.NextFloat(0.5f) * Main.rand.NextFloat(0.5f), Famished.GlowColor * 0.8f * percent, 3).scale = Main.rand.NextFloat(1.5f, 2f);
+                    PixelDust.Spawn(dustPosition.Value, 0, 0, Main.rand.NextVector2Circular(0.1f, 0.1f) + (dustPosition.Value - center).SNormalize() * Main.rand.NextFloat(0.5f) * Main.rand.NextFloat(0.5f), color * 0.8f * percent, 3).scale = Main.rand.NextFloat(1.5f, 2f);
             }
             return true;
         }

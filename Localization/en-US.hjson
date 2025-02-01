@@ -8546,6 +8546,8 @@ Mods: {
 			MoonClockHoldOut.DisplayName: Moon Clock Hold Out
 			BlinkBladeSlash.DisplayName: Blink Blade Slash
 			BlinkLightning.DisplayName: Blink Lightning
+			BridgeburnerDeadzone.DisplayName: Bridgeburner Deadzone
+			BridgeburnerLaser.DisplayName: Bridgeburner Laser
 		}
 
 		DamageClasses: {
