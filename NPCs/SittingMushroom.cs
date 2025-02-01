@@ -146,7 +146,8 @@ namespace SOTS.NPCs
 				}
 				SOTSUtils.PlaySound(SoundID.Item34, NPC.Center);
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/SittingMushroomGore1"), 1f);
-			}
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(4, 12), NPC.velocity, ModGores.GoreType("Gores/SittingMushroomGore2"), 1f);
+            }
 		}
 	}
 }
