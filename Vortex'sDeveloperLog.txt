@@ -44,6 +44,7 @@ Update Objectives:
 	1. Tiles: Overgrown Vespera Brick, Invidia Portal Plating
 	2. Solar Bulb item in the chest
 12. Add Bridge Burner
+	1. Needs: Gore, MP Syncing, One more attack, summonable by the electromagnetic lure
 13. Add Achievements
 
 ---WIP List---
@@ -80,7 +81,7 @@ N/A
 
 Daily Log:
 
-1/28/25 to 2/1/25  
+1/28/25 to 2/3/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
 2. Fixed bug where planetarium crates required crate potion to drop.
 3. Fix bug where mining speed boosting items along the Golden Trowel chain accidentally decreased minespeed.
@@ -88,6 +89,7 @@ Daily Log:
 5. WIP Bridgeburner
 6. Planetarium spawn-rate nerfed considerable in towns.
 7. Update Sitting Mushroom gore sprite, Sarcophagus sprite, and Frigid Ore Ice Shard sprite (Astrobit)
+	1. Also updated Pyramid enchanted tool shrines
 
 1/20/25 to 1/22/25
 1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines
