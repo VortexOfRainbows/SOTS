@@ -7,23 +7,28 @@ using SOTS.Items.Pyramid;
 using SOTS.Items.Fragments;
 using Terraria.DataStructures;
 using SOTS.Projectiles.Pyramid;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items
 {
 	public class SpectreSpiritStorm : VoidItem
 	{
-		public override void SetStaticDefaults()
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
+        public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 70;
+			Item.damage = 62;
 			Item.DamageType = DamageClass.Ranged;
 			Item.width = 54;
 			Item.height = 98;
-			Item.useTime = 15;
-			Item.useAnimation = 15;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 1.5f;
 			Item.value = Item.sellPrice(0, 10, 0, 0);
@@ -34,10 +39,15 @@ namespace SOTS.Items
             Item.shootSpeed = 21.5f;
 			Item.useAmmo = AmmoID.Arrow;
 			Item.noMelee = true;
-		}
+            if (!Main.dedServ)
+            {
+                Item.GetGlobalItem<ItemUseGlow>().glowTexture = Mod.Assets.Request<Texture2D>("Items/SpectreSpiritStorm").Value;
+				Item.GetGlobalItem<ItemUseGlow>().glowOffsetX = -1;
+            }
+        }
 		public override int GetVoid(Player player)
 		{
-			return  6;
+			return 9;
 		}
 		public override Vector2? HoldoutOffset()
 		{
@@ -45,7 +55,8 @@ namespace SOTS.Items
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<StormArrow>(), damage, knockback, player.whoAmI, 0, type);
+			for(int i = -1; i <= 1; i++)
+				Projectile.NewProjectile(source, position + velocity.SNormalize() * 24f, velocity.RotatedBy(MathHelper.ToRadians(15 * i)), ModContent.ProjectileType<StormArrow>(), damage, knockback, player.whoAmI, 0, type);
 			return false; 
 		}
 		public override void AddRecipes()	

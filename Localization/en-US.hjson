@@ -3604,11 +3604,7 @@ Mods: {
 
 			SpiritTracer: {
 				DisplayName: Spirit Tracer
-				Tooltip:
-					'''
-					Fires phantom arrows
-					Can hit up to 3 enemies at a time
-					'''
+				Tooltip: Fires phantom arrows that travel instantly to up to 3 enemies at a time
 			}
 
 			SunlightAmulet: {
@@ -4425,11 +4421,7 @@ Mods: {
 
 			SpectreSpiritStorm: {
 				DisplayName: Spectre Spirit Storm
-				Tooltip:
-					'''
-					Fires phantom arrows
-					Can hit up to 4 enemies at a time
-					'''
+				Tooltip: Fires 3 phantom arrows that each travel instantly to up to 4 enemies at a time
 			}
 
 			SubspaceBoosters: {
@@ -7711,6 +7703,7 @@ Mods: {
 				GOODBYE.
 				'''
 			Tardigrade: These water bears are able to survive the harsh combination of low pressure and intense radiation, allowing them to live in space.
+			Bridgeburner: Originally devised to contain the spread of evil, it is perhaps a testament to its failure that it is now controlled by evil.
 		}
 
 		DeathMessage: {
@@ -8548,6 +8541,7 @@ Mods: {
 			BlinkLightning.DisplayName: Blink Lightning
 			BridgeburnerDeadzone.DisplayName: Bridgeburner Deadzone
 			BridgeburnerLaser.DisplayName: Bridgeburner Laser
+			BridgeburnerFlame.DisplayName: Bridgeburner Flame
 		}
 
 		DamageClasses: {

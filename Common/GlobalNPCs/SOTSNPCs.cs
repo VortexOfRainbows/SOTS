@@ -1124,7 +1124,7 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
             }
-            if (npc.type == ModContent.NPCType<Famished>() || npc.type == ModContent.NPCType<EarthenGizmo>() || npc.type == ModContent.NPCType<Throe>() || npc.type == ModContent.NPCType<CorpseBloom>())
+            if (npc.type == ModContent.NPCType<Famished>() || npc.type == ModContent.NPCType<EarthenGizmo>() || npc.type == ModContent.NPCType<Throe>() || npc.type == ModContent.NPCType<CorpseBloom>() || npc.type == ModContent.NPCType<Bridgeburner>())
             {
                 FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Famished");
                 if (npc.type == ModContent.NPCType<EarthenGizmo>())
@@ -1133,6 +1133,8 @@ namespace SOTS.Common.GlobalNPCs
                     flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Throe");
                 if (npc.type == ModContent.NPCType<CorpseBloom>())
                     flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.CorpseBloom");
+                if (npc.type == ModContent.NPCType<Bridgeburner>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Bridgeburner");
                 bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                     AbandonedVillage,
                     flavorText

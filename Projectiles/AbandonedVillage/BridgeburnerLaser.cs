@@ -7,6 +7,7 @@ using SOTS.Dusts;
 using SOTS.NPCs.AbandonedVillage;
 using System;
 using SOTS.WorldgenHelpers;
+using SOTS.Void;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {
@@ -26,7 +27,11 @@ namespace SOTS.Projectiles.AbandonedVillage
 				Projectile.hostile = false;
 			return true;
         }
-		public override void PlaySound() => SOTSUtils.PlaySound(SoundID.Item92, Projectile.Center, 0.7f, -0.25f); // SOTSUtils.PlaySound(SoundID.Item42, Projectile.Center, 0.7f, -0.25f);
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            VoidPlayer.VoidDamage(Mod, target, 5);
+        }
+        public override void PlaySound() => SOTSUtils.PlaySound(SoundID.Item92, Projectile.Center, 0.7f, -0.25f); // SOTSUtils.PlaySound(SoundID.Item42, Projectile.Center, 0.7f, -0.25f);
         public override int DeadzoneType() => ModContent.ProjectileType<BridgeburnerDeadzone>();
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) 
 		{
@@ -53,7 +58,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             Vector2 final = FinalPosition;
 			Vector2 toEnd = (final - start).SNormalize();
 			float dist = Vector2.Distance(start, final);
-            Color color = Famished.GlowColor;
+            Color color = NPCs.AbandonedVillage.Famished.GlowColor;
 			Vector2 prevPosition = Projectile.Center;
 			//float prevRot = Projectile.velocity.ToRotation();
 			float scale = 0.1f;
