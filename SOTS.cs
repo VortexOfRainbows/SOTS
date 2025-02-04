@@ -38,6 +38,7 @@ using SOTS.Common;
 using SOTS.Common.ModPlayers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Earth;
+using SOTS.Biomes;
 
 namespace SOTS
 {
@@ -165,10 +166,10 @@ namespace SOTS
 			}*/
 			//Music Box Stuff
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PutridPinky"), ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Advisor"), ModContent.ItemType<AdvisorMusicBox>(), ModContent.TileType<AdvisorMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, Config.alternativeMusic ? "Sounds/Music/BananaLizard/Advisor" : "Sounds/Music/Advisor"), ModContent.ItemType<AdvisorMusicBox>(), ModContent.TileType<AdvisorMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Polaris"), ModContent.ItemType<PolarisMusicBox>(), ModContent.TileType<PolarisMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/SubspaceSerpent"), ModContent.ItemType<SubspaceSerpentMusicBox>(), ModContent.TileType<SubspaceSerpentMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/CursedPyramid"), ModContent.ItemType<AncientPyramidMusicBox>(), ModContent.TileType<AncientPyramidMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, PyramidBiome.music, ModContent.ItemType<AncientPyramidMusicBox>(), ModContent.TileType<AncientPyramidMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PyramidBattle"), ModContent.ItemType<PyramidBattleMusicBox>(), ModContent.TileType<PyramidBattleMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Planetarium"), ModContent.ItemType<PlanetariumMusicBox>(), ModContent.TileType<PlanetariumMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/KnucklesTheme"), ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK

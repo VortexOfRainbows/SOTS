@@ -13,6 +13,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using tModPorter;
 
 namespace SOTS.NPCs.Boss.Advisor
 {	[AutoloadBossHead]
@@ -613,7 +614,7 @@ namespace SOTS.NPCs.Boss.Advisor
 		}
 		public override void AI()
 		{
-			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Advisor");
+			Music = MusicLoader.GetMusicSlot(Mod, SOTS.Config.alternativeMusic ? "Sounds/Music/BananaLizard/Advisor" : "Sounds/Music/Advisor");
 			SceneEffectPriority = SceneEffectPriority.BossMedium;
 			NPC.TargetClosest(false);
 			NPC.spriteDirection = 1;

@@ -77,6 +77,7 @@ Mods: {
 				TPS: Texture Pack Settings
 				GPS: Gameplay Settings
 				BAL: Balance Changes
+				MS: Music Settings
 			}
 
 			Label: {
@@ -96,6 +97,7 @@ Mods: {
 				AVE: Additional Visual Effects
 				SHT: Starter House Type (Upon World Generation)
 				NINS: Nerf Soaring Insignia Before Lux
+				BLZD: Alternative SOTS Music
 			}
 
 			Tooltip: {
@@ -162,6 +164,12 @@ Mods: {
 					Nerfs Soaring Insignia, making it only grant infinite flight after Lux is defeated.
 					Before Lux is defeated, it will only double your flight time.
 					If you disagree with this change, you can disable it here.
+					'''
+				BLZD:
+					'''
+					When on, SOTS will play the soundtrack made by Banana Lizard where applicable
+					When off, SOTS will play the soundtrack made by Heart Plus Up where applicable
+					Currently only affects the Pyramid and The Advisor
 					'''
 			}
 		}
@@ -8632,6 +8640,11 @@ Mods: {
 				additionalTexturePackVisuals: {
 					Label: "{$Mods.SOTS.Configuration.Label.AVE}"
 					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.AVE}"
+				}
+
+				alternativeMusic: {
+					Label: "{$Mods.SOTS.Configuration.Label.BLZD}"
+					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.BLZD}"
 				}
 			}
 

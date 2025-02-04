@@ -41,11 +41,10 @@ Update Objectives:
 9. Upgrade item to the Hydrokinetic Antennae (Pending)
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 11. Sanctuary! (In Progress)
-	1. Tiles: Overgrown Vespera Brick, Invidia Portal Plating
+	1. Tiles: Overgrown Vespera Brick (change grass color and add foliage), Invidia Portal Plating
 	2. Solar Bulb item in the chest
 12. Add Achievements
 13. Glowmoth Music Box
-14. Add Alternative tracks from Banana lizard
 
 ---WIP List---
 Abandoned village generation

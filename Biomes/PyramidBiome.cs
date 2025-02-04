@@ -14,8 +14,8 @@ namespace SOTS.Biomes
 		//public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("ExampleMod/ExampleWaterStyle"); // Sets a water style for when inside this biome
 		//public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("ExampleMod/ExampleSurfaceBackgroundStyle");
 		//public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Crimson;
-
-		public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CursedPyramid");
+		public static int music => MusicLoader.GetMusicSlot(SOTS.Instance, SOTSConfig.Instance.alternativeMusic ? "Sounds/Music/BananaLizard/Pyramid" : "Sounds/Music/CursedPyramid");
+		public override int Music => music;
 		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
 		// Populate the Bestiary Filter

@@ -10,6 +10,7 @@ namespace SOTS
 	[BackgroundColor(45, 50, 65, 192)]
 	public class SOTSConfig : ModConfig
 	{
+		public static SOTSConfig Instance => SOTS.Config;
 		public static int voidBarNeedsLoading = 0;
 		public static int PreviousBarMode = 0;
 		public override void OnChanged()
@@ -19,64 +20,54 @@ namespace SOTS
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
 		[Header("$Mods.SOTS.Configuration.Header.GPS")]
-		[BackgroundColor(110, 80, 150, 192)]
-		[Increment(1)]
-		[Range(-2, 20)]
-		[DefaultValue(-1)]
+
+		[BackgroundColor(110, 80, 150, 192), Increment(1), Range(-2, 20), DefaultValue(-1)]
 		public int StarterHouseType;
 
 		[Header("$Mods.SOTS.Configuration.Header.UI")]
-		[BackgroundColor(110, 80, 150, 192)]
-		[Increment(5)]
-		[Range(0, 3200)]
-		[DefaultValue(810)]
+
+		[BackgroundColor(110, 80, 150, 192), Increment(5), Range(0, 3200), DefaultValue(810)]
 		public int voidBarPointX;
 
-		[BackgroundColor(110, 80, 150, 192)]
-		[Increment(5)]
-		[Range(0, 1600)]
-		[DefaultValue(30)]
+		[BackgroundColor(110, 80, 150, 192), Increment(5), Range(0, 1600), DefaultValue(30)]
 		public int voidBarPointY;
 
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(false)]
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
 		public bool lockVoidBar { get; set; }
 
-		[BackgroundColor(194, 111, 234, 192)]
-		[DefaultValue(false)]
+		[BackgroundColor(194, 111, 234, 192), DefaultValue(false)]
 		public bool alternateVoidBarDirection { get; set; }
 
-		[BackgroundColor(194, 111, 234, 192)]
-		[DefaultValue(false)]
+		[BackgroundColor(194, 111, 234, 192), DefaultValue(false)]
 		public bool alternateVoidBarStyle { get; set; }
 
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(true)]
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool voidBarTextOn { get; set; }
 
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(true)]
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool voidBarHoverTextOn { get; set; }
 
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(false)]
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
 		public bool simpleVoidText { get; set; }
 
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(false)]
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
 		public bool simpleVoidFill { get; set; }
 
 		[Header("$Mods.SOTS.Configuration.Header.GS")]
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(false)]
+
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
 		public bool lowFidelityMode { get; set; }
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(true)]
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool coloredTimeFreeze { get; set; }
 
-		[Header("$Mods.SOTS.Configuration.Header.TPS")]
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(true)]
+        [Header("$Mods.SOTS.Configuration.Header.MS")]
+
+        [BackgroundColor(150, 140, 40, 192), DefaultValue(true)]
+        public bool alternativeMusic { get; set; }
+
+        [Header("$Mods.SOTS.Configuration.Header.TPS")]
+
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool additionalTexturePackVisuals { get; set; }
 
 		/*[Label("Experimental Ambient Audio")]
@@ -91,22 +82,19 @@ namespace SOTS
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
 		[Header("$Mods.SOTS.Configuration.Header.BAL")]
-		[BackgroundColor(110, 80, 150, 192)]
-		[DefaultValue(true)]
+
+		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool NerfInsignia;
 
-        [BackgroundColor(110, 80, 150, 192)]
-        [DefaultValue(true)]
-		[ReloadRequired]
+        [BackgroundColor(110, 80, 150, 192), DefaultValue(true), ReloadRequired]
         public bool AddPlightToVanillaRecipes;
 
         [Header("$Mods.SOTS.Configuration.Header.GPS")]
-        [BackgroundColor(110, 80, 150, 192)]
-        [DefaultValue(true)]
+
+        [BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
         public bool GeneratePhaseOreAfterDefeatingLux;
 
-        [BackgroundColor(110, 80, 150, 192)]
-        [DefaultValue(true)]
+        [BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
         public bool NaturallySpawningPeanutBushes;
     }
 }
