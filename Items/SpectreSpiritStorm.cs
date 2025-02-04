@@ -20,8 +20,8 @@ namespace SOTS.Items
 		{
 			Item.damage = 70;
 			Item.DamageType = DamageClass.Ranged;
-			Item.width = 36;
-			Item.height = 74;
+			Item.width = 54;
+			Item.height = 98;
 			Item.useTime = 15;
 			Item.useAnimation = 15;
 			Item.useStyle = ItemUseStyleID.Shoot;
