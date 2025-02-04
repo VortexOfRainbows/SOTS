@@ -29,7 +29,7 @@ namespace SOTS.NPCs.Constructs
 			NPC.width = 76;
 			NPC.height = 98;
 			NPC.value = Item.buyPrice(0, 6, 0, 0);
-			NPC.npcSlots = 4f;
+			NPC.npcSlots = 3f;
 			NPC.boss = false;
 			NPC.lavaImmune = false;
 			NPC.noGravity = false;
@@ -73,8 +73,13 @@ namespace SOTS.NPCs.Constructs
                 bobbing.Y -= leg2.Y;
                 leg2.Y = 0;
             }
-			//leg1 = leg2 = bobbing= Vector2.Zero;
-			float dir = NPC.spriteDirection;
+            if (screenPos != Main.screenPosition && Main.netMode != NetmodeID.Server)
+            {
+				NPC.localAI[3] = 3 * MathHelper.PiOver4;
+				NPC.localAI[2] = 3 * MathHelper.PiOver4;
+            }
+            //leg1 = leg2 = bobbing= Vector2.Zero;
+            float dir = NPC.spriteDirection;
 			float armRot = NPC.localAI[3] + (!flip ? MathF.PI + MathHelper.PiOver4 : -MathHelper.PiOver4);
 			float armRot2 = NPC.localAI[2] + (!flip ? MathF.PI + MathHelper.PiOver4 : -MathHelper.PiOver4);
 			Vector2 armLeftRecoil = -toPlayer * fireRecoilLeft;
@@ -83,7 +88,7 @@ namespace SOTS.NPCs.Constructs
             spriteBatch.Draw(tArmBack, armLeftRecoil + bobbing + drawPos + armPosLeft, null, drawColor, armRot2, ArmOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(tLegBack, leg1 + drawPos + new Vector2(16 * dir, NPC.gfxOffY + 23), null, drawColor, 0, LegOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(t, bobbing + drawPos + new Vector2(0, NPC.gfxOffY), null, drawColor, 0, origin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
-            spriteBatch.Draw(tHead, bobbing + drawPos + new Vector2(2 * dir, NPC.gfxOffY - 29), null, drawColor, 0, HeadOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            spriteBatch.Draw(tHead, bobbing + drawPos + new Vector2(4 * dir, NPC.gfxOffY - 29), null, drawColor, 0, HeadOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(tHeadGlow, bobbing + drawPos + new Vector2(2 * dir, NPC.gfxOffY - 29), null, Color.White, 0, HeadOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(tLegFront, leg2 + drawPos + new Vector2(-22 * dir, NPC.gfxOffY + 23), null, drawColor, 0, LegOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             spriteBatch.Draw(tArmFront, armRightRecoil + bobbing + drawPos + armPosRight, null, drawColor, armRot, ArmOrigin, NPC.scale, flip ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
@@ -109,10 +114,35 @@ namespace SOTS.NPCs.Constructs
 				{
 					Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
 				}
-				//for(int i = 1; i < 8; i++)
-				//	Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/NatureConstructGore" + i), 1f);
-				//for(int i = 0; i < 9; i++)
-				//	Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61,64), 1f);	
+				for(int i = 1; i <= 12; i++)
+				{
+					Vector2 offset = Vector2.Zero;
+					if (i == 1)
+						offset += new Vector2(NPC.width * 0.5f, 0);
+                    if (i == 2)
+                        offset += new Vector2(0, NPC.height * 0.4f);
+                    if (i == 3)
+                        offset += new Vector2(NPC.width * 0.5f, NPC.height * 0.4f);
+                    if (i == 4)
+                        offset += new Vector2(NPC.width * 0.65f, NPC.height * 0.6f);
+                    if (i == 5)
+                        offset += new Vector2(NPC.width * 0.65f, NPC.height * 0.75f);
+                    if (i == 6)
+                        offset += new Vector2(NPC.width * 0.25f, NPC.height * 0.6f);
+                    if (i == 7)
+                        offset += new Vector2(NPC.width * 0.25f, NPC.height * 0.75f);
+                    if (i == 8)
+                        offset += new Vector2(NPC.width * 0.25f, NPC.height * 0.25f);
+                    if (i == 9)
+                        offset += new Vector2(NPC.width * 0.8f, NPC.height * 0.1f);
+                    if (i == 10)
+                        offset += new Vector2(NPC.width * 0.7f, NPC.height * 0.5f);
+                    if (i == 12)
+                        offset += new Vector2(NPC.width * 0.1f, NPC.height * 0.5f);
+                    Gore.NewGore(NPC.GetSource_Death(), NPC.position + offset, NPC.velocity, ModGores.GoreType($"Gores/BridgeburnerGore{i}"), 1f);
+                }
+                for (int i = 0; i < 9; i++)
+					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61,64), 1f);	
 			}
 		}
 		public override void FindFrame(int frameHeight) 
@@ -156,17 +186,25 @@ namespace SOTS.NPCs.Constructs
 			NPC.velocity.X -= dir.X;
         }
 		public override void AI()
-		{
-			NPC.TargetClosest(true);
+        {
+            NPC.TargetClosest(true);
 			Player player = Main.player[NPC.target];
-			Vector2 toPlayer = player.Center - NPC.Center;
+            Vector2 toPlayer = player.Center - NPC.Center;
+			if(toPlayer.Length() < 2400)
+				NPC.DiscourageDespawn(600);
 			NPC.spriteDirection = NPC.direction;
-			NPC.velocity.X *= 0.825f;
+            NPC.velocity.X *= 0.825f;
 			if(NPC.velocity.Y < 0)
 				NPC.velocity.Y *= 0.9f;
 			NPC.localAI[0] += MathHelper.ToRadians(MathF.Sqrt(MathF.Abs(NPC.velocity.X)) * 7.5f);
 			NPC.localAI[0] = MathHelper.WrapAngle(NPC.localAI[0]);
             NPC.localAI[1]++;
+			bool canSeePlayer = Collision.CanHitLine(player.position, player.width, player.height, NPC.position, NPC.width, NPC.height);
+			if(!canSeePlayer)
+			{
+				if (NPC.localAI[1] > 0)
+					NPC.localAI[1]--;
+			}
 			if (NPC.localAI[1] > 240)
             {
                 NPC.localAI[0] = SOTSUtils.AngularLerp(NPC.localAI[0], MathHelper.ToRadians(90), 0.04f);
@@ -203,5 +241,9 @@ namespace SOTS.NPCs.Constructs
 		{
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 1, 4, 7));
 		}
-	}
+        public override bool CheckActive()
+        {
+            return true;
+        }
+    }
 }

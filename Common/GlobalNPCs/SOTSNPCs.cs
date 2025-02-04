@@ -385,7 +385,11 @@ namespace SOTS.Common.GlobalNPCs
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ThundershockShortbow>(), 50, 1, 1));
 			if (npc.type == ModContent.NPCType<TwilightDevil>() || npc.type == ModContent.NPCType<Ultracap>())
 				npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<GravityAnchor>(), 70, 50));
-			if (npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || npc.type == ModContent.NPCType<ChaosConstruct>())
+			if (npc.type == ModContent.NPCType<NatureConstruct>() || npc.type == ModContent.NPCType<EarthenConstruct>() || 
+				npc.type == ModContent.NPCType<OtherworldlyConstructHead>() || npc.type == ModContent.NPCType<OtherworldlyConstructHead2>() || 
+				npc.type == ModContent.NPCType<PermafrostConstruct>() || npc.type == ModContent.NPCType<TidalConstruct>() || 
+				npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<InfernoConstruct>() || 
+				npc.type == ModContent.NPCType<ChaosConstruct>() || npc.type == ModContent.NPCType<Bridgeburner>())
             {
                 int type = ModContent.ItemType<NaturePlating>();
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrushingResistor>(), 50));
@@ -829,13 +833,16 @@ namespace SOTS.Common.GlobalNPCs
 					}
 				}
 			}
-			if((player.ZoneCrimson || player.ZoneCorrupt) && (player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight) && Main.hardMode)
+			if((player.ZoneCrimson || player.ZoneCorrupt) && Main.hardMode)
 			{
 				float rateMult = 1f;
 				if (Main.dayTime)
 					rateMult = 1.5f;
-				pool.Add(ModContent.NPCType<EvilConstruct>(), 0.006f * constructRateMultiplier * rateMult);
-			}
+				if(ZoneAV)
+                    pool.Add(ModContent.NPCType<Bridgeburner>(), 0.006f * constructRateMultiplier * rateMult);
+                else if (player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight)
+                    pool.Add(ModContent.NPCType<EvilConstruct>(), 0.006f * constructRateMultiplier * rateMult);
+            }
 			if (player.ZoneDungeon)
 			{
 				pool.Add(ModContent.NPCType<DungeonTreasureSlime>(), SpawnCondition.DungeonNormal.Chance * 0.015f); //this is about 75% of dungeon slime spawn rate

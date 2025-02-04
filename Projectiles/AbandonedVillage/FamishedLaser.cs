@@ -9,6 +9,7 @@ using System;
 using SOTS.WorldgenHelpers;
 using SOTS.Helpers;
 using Terraria.GameContent;
+using System.Threading.Channels;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {
@@ -42,8 +43,18 @@ namespace SOTS.Projectiles.AbandonedVillage
         public void InitializeLaser()
 		{
 			if(!HasInit)
-			{
-				PlaySound();
+            {
+				if (this is BridgeburnerLaser)
+                    for (int i = 0; i < 15; i++)
+                    {
+                        Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(11, 11), 12, 12, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1.75f);
+                        dust.noGravity = true;
+                        dust.velocity *= 1.25f;
+                        dust.velocity += Projectile.velocity * Main.rand.NextFloat(2f, 8f);
+                        dust.fadeIn = 6;
+                        dust.scale *= 0.5f + 0.75f;
+                    }
+                PlaySound();
             }
 			Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 			Vector2 startingPosition = Projectile.Center;

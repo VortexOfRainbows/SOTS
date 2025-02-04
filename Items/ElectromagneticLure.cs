@@ -38,7 +38,9 @@ namespace SOTS.Items
 				tooltips.Add(new TooltipLine(Mod, "Construct5", "Tidal Construct") { OverrideColor = ColorHelper.TideColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<EvilConstruct>()))
 				tooltips.Add(new TooltipLine(Mod, "Construct6", "Evil Construct") { OverrideColor = new Color(ColorHelper.EvilColor.R + 50, ColorHelper.EvilColor.G + 50, ColorHelper.EvilColor.B + 50)  });
-			if (CapableNPCs.Contains(ModContent.NPCType<ChaosConstruct>()))
+            if (CapableNPCs.Contains(ModContent.NPCType<Bridgeburner>()))
+                tooltips.Add(new TooltipLine(Mod, "Construct6", "Bridgeburner") { OverrideColor = new Color(ColorHelper.EvilColor.R + 50, ColorHelper.EvilColor.G + 50, ColorHelper.EvilColor.B + 50) });
+            if (CapableNPCs.Contains(ModContent.NPCType<ChaosConstruct>()))
 				tooltips.Add(new TooltipLine(Mod, "Construct7", "Chaos Construct") { OverrideColor = ColorHelper.PastelRainbow });
 			if (CapableNPCs.Contains(ModContent.NPCType<InfernoConstruct>()))
 				tooltips.Add(new TooltipLine(Mod, "Construct8", "Inferno Construct") { OverrideColor = ColorHelper.Inferno1 });
@@ -79,10 +81,13 @@ namespace SOTS.Items
 			{
 				capable.Add(ModContent.NPCType<TidalConstruct>());
 			}
-			if ((player.ZoneCrimson || player.ZoneCorrupt) && (player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight) && Main.hardMode)
-			{
-				capable.Add(ModContent.NPCType<EvilConstruct>());
-			}
+			if ((player.ZoneCrimson || player.ZoneCorrupt)  && Main.hardMode)
+            {
+                if (player.SOTSPlayer().AbandonedVillageBiome)
+                    capable.Add(ModContent.NPCType<Bridgeburner>());
+                else if (player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight)
+					capable.Add(ModContent.NPCType<EvilConstruct>());
+            }
 			if (!player.ZoneBeach)
 			{
 				if (player.ZoneDesert || player.ZoneUndergroundDesert || (player.ZoneRockLayerHeight && !player.ZoneDungeon && !player.ZoneJungle && !player.ZoneSnow))

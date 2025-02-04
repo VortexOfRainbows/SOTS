@@ -44,8 +44,10 @@ Update Objectives:
 	1. Tiles: Overgrown Vespera Brick, Invidia Portal Plating
 	2. Solar Bulb item in the chest
 12. Add Bridge Burner
-	1. Needs: Gore, MP Syncing, One more attack, summonable by the electromagnetic lure
+	1. Needs: MP Syncing, One more attack
 13. Add Achievements
+14. Glowmoth Music Box
+15. Add Alternative tracks from Banana lizard
 
 ---WIP List---
 Abandoned village generation
