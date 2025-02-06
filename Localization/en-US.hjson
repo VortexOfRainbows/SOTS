@@ -6643,6 +6643,16 @@ Mods: {
 				DisplayName: Glowmoth Music Box
 				Tooltip: ""
 			}
+
+			RuinedStatue: {
+				DisplayName: Ruined Statue
+				Tooltip: ""
+			}
+
+			SerpentStatue: {
+				DisplayName: Serpent Statue
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7392,6 +7402,8 @@ Mods: {
 			ChaosPlatingBlastDoorTileOpen.MapEntry: Chaos Plating Blast Door
 			ChaosPlatingBlastDoorTileClosed.MapEntry: Chaos Plating Blast Door
 			MothMusicBoxTile.MapEntry: Moth Music Box Tile
+			RuinedStatueTile.MapEntry: Ruined Statue Tile
+			SerpentStatueTile.MapEntry: Serpent Statue Tile
 		}
 
 		WorldGeneration: {
