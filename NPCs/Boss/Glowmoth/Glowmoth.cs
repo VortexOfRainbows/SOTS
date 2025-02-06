@@ -574,6 +574,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 				ModContent.ItemType<Items.Earth.Glowmoth.NightIlluminator>() }));
 			npcLoot.Add(notExpertRule);
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<GlowmothRelic>()));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GlowmothTrophy>(), 10));
 		}
 		public override void HitEffect(NPC.HitInfo hit)
 		{
