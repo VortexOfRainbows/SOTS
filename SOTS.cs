@@ -165,6 +165,7 @@ namespace SOTS
 				yabhb.Call("hbFinishSingle", ModContent.NPCType<SubspaceSerpentHead>());
 			}*/
 			//Music Box Stuff
+			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Glowmoth"), ModContent.ItemType<MothMusicBox>(), ModContent.TileType<MothMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PutridPinky"), ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, Config.alternativeMusic ? "Sounds/Music/BananaLizard/Advisor" : "Sounds/Music/Advisor"), ModContent.ItemType<AdvisorMusicBox>(), ModContent.TileType<AdvisorMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Polaris"), ModContent.ItemType<PolarisMusicBox>(), ModContent.TileType<PolarisMusicBoxTile>());
@@ -690,7 +691,7 @@ namespace SOTS
 						["displayName"] = Language.GetText("Mods.SOTS.NPCs.Glowmoth.DisplayName"),
 						["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.Glowmoth.BossChecklistIntegration.SpawnInfo"),
 						["spawnItems"] = ModContent.ItemType<SuspiciousLookingCandle>(),
-						//["collectibles"] = new List<int>() { ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.ItemType<PutridPinkyTrophy>() },
+						["collectibles"] = new List<int>() { ModContent.ItemType<MothMusicBox>(), ModContent.ItemType<GlowmothTrophy>() },
 						["availability"] = (Func<bool>)(() => true),
 						//["overrideHeadTextures"] = ,
 						["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Glowmoth.BossChecklistIntegration.DespawnMessage"),

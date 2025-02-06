@@ -44,7 +44,6 @@ Update Objectives:
 	1. Tiles: Overgrown Vespera Brick (change grass color and add foliage), Invidia Portal Plating
 	2. Solar Bulb item in the chest
 12. Add Achievements
-13. Glowmoth Music Box
 
 ---WIP List---
 Abandoned village generation
@@ -80,7 +79,7 @@ N/A
 
 Daily Log:
 
-1/28/25 to 2/4/25  
+1/28/25 to 2/6/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
 2. Fixed bug where planetarium crates required crate potion to drop.
 3. Fix bug where mining speed boosting items along the Golden Trowel chain accidentally decreased minespeed.
@@ -96,6 +95,8 @@ Daily Log:
 		2. Use time 15 -> 18
 		3. Now fires 3 arrows at a time. This makes it quite strong! Much more usable than before. Still weaker than plasma accelerator and rose bow
 		4. Void Cost 6 -> 9
+10. Added Glowmoth music box
+11. Added Glowmoth Trophy (Astrobit)
 
 1/20/25 to 1/22/25
 1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines

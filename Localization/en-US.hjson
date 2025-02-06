@@ -6633,6 +6633,16 @@ Mods: {
 					Hitting enemies will sometimes drop extra coins
 					'''
 			}
+
+			GlowmothTrophy: {
+				DisplayName: Glowmoth Trophy
+				Tooltip: ""
+			}
+
+			MothMusicBox: {
+				DisplayName: Glowmoth Music Box
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7381,6 +7391,7 @@ Mods: {
 
 			ChaosPlatingBlastDoorTileOpen.MapEntry: Chaos Plating Blast Door
 			ChaosPlatingBlastDoorTileClosed.MapEntry: Chaos Plating Blast Door
+			MothMusicBoxTile.MapEntry: Moth Music Box Tile
 		}
 
 		WorldGeneration: {
