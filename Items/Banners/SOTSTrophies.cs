@@ -77,4 +77,12 @@ namespace SOTS.Items.Banners
             Item.placeStyle = 2;
         }
     }
+    public class GlowmothTrophy : ModTrophy
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSTrophies>();
+            Item.placeStyle = 3;
+        }
+    }
 }
