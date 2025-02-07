@@ -763,7 +763,7 @@ namespace SOTS
 						["displayName"] = Language.GetText("Mods.SOTS.NPCs.Polaris.DisplayName"),
 						["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.Polaris.BossChecklistIntegration.SpawnInfo"),
 						["spawnItems"] = new List<int>() { ModContent.ItemType<FrostedKey>(), ModContent.ItemType<FrostArtifact>() },
-						["collectibles"] = new List<int>() { ModContent.ItemType<PolarisMusicBox>() },
+						["collectibles"] = new List<int>() { ModContent.ItemType<PolarisMusicBox>(), ModContent.ItemType<PolarisTrophy>() },
 						["availability"] = (Func<bool>)(() => true),
 						//["overrideHeadTextures"] = ,
 						["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Polaris.BossChecklistIntegration.DespawnMessage"),

@@ -4,10 +4,9 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Utilities;
 using Microsoft.Xna.Framework;
-using SOTS.Items.Permafrost;
 using System.Collections.Generic;
+using SOTS.Items.Banners;
 //using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
@@ -35,7 +34,7 @@ namespace SOTS.Items.MusicBoxes
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<AbsoluteBar>(10).AddIngredient(ItemID.MusicBox, 1).AddTile(TileID.HeavyWorkBench).Register();
+			CreateRecipe(1).AddIngredient<PolarisTrophy>(1).AddIngredient(ItemID.MusicBox, 1).AddTile(TileID.HeavyWorkBench).Register();
 		}
 	}
 	public class PolarisMusicBoxTile : ModTile

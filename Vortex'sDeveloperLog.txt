@@ -79,7 +79,7 @@ N/A
 
 Daily Log:
 
-1/28/25 to 2/6/25  
+1/28/25 to 2/7/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
 2. Fixed bug where planetarium crates required crate potion to drop.
 3. Fix bug where mining speed boosting items along the Golden Trowel chain accidentally decreased minespeed.
@@ -96,7 +96,7 @@ Daily Log:
 		3. Now fires 3 arrows at a time. This makes it quite strong! Much more usable than before. Still weaker than plasma accelerator and rose bow
 		4. Void Cost 6 -> 9
 10. Added Glowmoth music box
-11. Added glowmoth trophy and resprited trophies (Astrobit/Petaniks)
+11. Added glowmoth trophy, Polaris trophy, and resprited trophies (Astrobit/Petaniks)
 12. Add some statue furniture for sanctuary, but needs item sprites
 
 1/20/25 to 1/22/25
