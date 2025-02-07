@@ -1164,6 +1164,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.HallowedBar, 1, 15, 30));
             npcLoot.Add(notExpertRule);
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PolarisRelic>()));
+	    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PolarisTrophy>(), 10));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
