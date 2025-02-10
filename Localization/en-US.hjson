@@ -6653,6 +6653,11 @@ Mods: {
 				DisplayName: Serpent Statue
 				Tooltip: ""
 			}
+
+			PolarisTrophy: {
+				DisplayName: Polaris Trophy
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7630,6 +7635,8 @@ Mods: {
 			TardigradeGreen.DisplayName: Tardigrade
 			TardigradePink.DisplayName: Tardigrade
 			Bridgeburner.DisplayName: Bridgeburner
+			Excavator.DisplayName: Excavator
+			ExcavatorBody.DisplayName: Excavator Body
 		}
 
 		Bestiary: {

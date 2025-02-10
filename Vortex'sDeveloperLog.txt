@@ -44,6 +44,7 @@ Update Objectives:
 	1. Tiles: Overgrown Vespera Brick (change grass color and add foliage), Invidia Portal Plating
 	2. Solar Bulb item in the chest
 12. Add Achievements
+13. Invidia Gateway Tile
 
 ---WIP List---
 Abandoned village generation
