@@ -6658,6 +6658,11 @@ Mods: {
 				DisplayName: Polaris Trophy
 				Tooltip: ""
 			}
+
+			EmptyNecklace: {
+				DisplayName: Amulet of Emptiness
+				Tooltip: "Increases void regeneration speed by 50%"
+			}
 		}
 
 		ItemTooltip: {
