@@ -6659,10 +6659,16 @@ Mods: {
 				Tooltip: ""
 			}
 
+			EmptyNecklace: {
+				DisplayName: Amulet of Emptiness
+				Tooltip: "Increases void regeneration speed by 50%"
+			}
+			
 			LuxTrophy: {
 				DisplayName: Lux Trophy
 				Tooltip: ""
 			}
+
 		}
 
 		ItemTooltip: {
@@ -7640,6 +7646,8 @@ Mods: {
 			TardigradeGreen.DisplayName: Tardigrade
 			TardigradePink.DisplayName: Tardigrade
 			Bridgeburner.DisplayName: Bridgeburner
+			Excavator.DisplayName: Excavator
+			ExcavatorBody.DisplayName: Excavator Body
 		}
 
 		Bestiary: {
