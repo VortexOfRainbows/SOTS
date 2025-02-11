@@ -346,7 +346,8 @@ namespace SOTS.NPCs.Boss.Lux
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.SoulofLight, 1, 10, 20));
 			npcLoot.Add(notExpertRule);
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<LuxRelic>()));
-		}
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LuxTrophy>(), 10));
+        }
         public override void OnKill()
 		{
 			//if (Main.netMode == NetmodeID.Server)
