@@ -6653,6 +6653,16 @@ Mods: {
 				DisplayName: Serpent Statue
 				Tooltip: ""
 			}
+
+			PolarisTrophy: {
+				DisplayName: Polaris Trophy
+				Tooltip: ""
+			}
+
+			LuxTrophy: {
+				DisplayName: Lux Trophy
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

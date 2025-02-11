@@ -13,6 +13,7 @@ using Terraria.Audio;
 using System;
 using System.Collections.Generic;
 using SOTS.Helpers;
+using SOTS.Items.Banners;
 //using SOTS.Items.Trophies;
 
 namespace SOTS.Items.MusicBoxes
@@ -33,15 +34,10 @@ namespace SOTS.Items.MusicBoxes
 			Item.value = Item.sellPrice(gold: 2);
 			Item.accessory = true;
 		}
-		/*public override void AddRecipes()
+		public override void AddRecipes()
 		{
-			Recipe recipe = new Recipe(mod);
-			recipe.AddIngredient(null, "AdvisorTrophy", 1);
-			recipe.AddIngredient(ItemID.MusicBox);
-			recipe.AddTile(TileID.HeavyWorkBench);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
-		}*/
+            CreateRecipe(1).AddIngredient<LuxTrophy>(1).AddIngredient(ItemID.MusicBox, 1).AddTile(TileID.HeavyWorkBench).Register();
+        }
 	}
 	public class LuxMusicBoxTile : ModTile
     {

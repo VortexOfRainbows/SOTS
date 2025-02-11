@@ -787,8 +787,8 @@ namespace SOTS
 						["displayName"] = Language.GetText("Mods.SOTS.NPCs.Lux.DisplayName"),
 						["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.Lux.BossChecklistIntegration.SpawnInfo"),
 						["spawnItems"] = new List<int>() { ModContent.ItemType<ElectromagneticLure>() },
-						["collectibles"] = new List<int>() { ModContent.ItemType<LuxMusicBox>() },
-						["availability"] = (Func<bool>)(() => true),
+						["collectibles"] = new List<int>() { ModContent.ItemType<LuxMusicBox>(), ModContent.ItemType<LuxTrophy>() },
+                        ["availability"] = (Func<bool>)(() => true),
 						//["overrideHeadTextures"] = ,
 						["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Lux.BossChecklistIntegration.DespawnMessage"),
 						["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
