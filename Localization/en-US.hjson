@@ -6661,14 +6661,13 @@ Mods: {
 
 			EmptyNecklace: {
 				DisplayName: Amulet of Emptiness
-				Tooltip: "Increases void regeneration speed by 50%"
+				Tooltip: Increases void regeneration speed by 50%
 			}
-			
+
 			LuxTrophy: {
 				DisplayName: Lux Trophy
 				Tooltip: ""
 			}
-
 		}
 
 		ItemTooltip: {

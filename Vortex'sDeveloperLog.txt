@@ -80,9 +80,10 @@ N/A
 
 Daily Log:
 
-2/9/25 to 2/10/25
+2/9/25 to 2/11/25
 1. Very beginning excavator
 2. Amulet of Emptiness added (simple void accessory)
+3. Import Achievement sprites (not yet standardized)
 
 1/28/25 to 2/7/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
