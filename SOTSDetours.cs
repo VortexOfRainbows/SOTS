@@ -16,6 +16,7 @@ using SOTS.Projectiles.Chaos;
 using SOTS.Projectiles.Inferno;
 using SOTS.Projectiles.Minions;
 using SOTS.Utilities;
+using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,7 @@ namespace SOTS
 		{
 			On_NetMessage.SendData += NetMessage_SendData;
 
+            On_Main.DrawWalls += On_Main_DrawWalls;
 			On_Main.DrawProjectiles += Main_DrawProjectiles;
 			On_Main.DrawProj += Main_DrawProj;
 			On_Main.DrawCachedProjs += Main_DrawCachedProjs;
@@ -132,34 +134,39 @@ namespace SOTS
             if (!Main.dedServ)
 				ResizeTargets();
 		}
-		public static void Unload() //Apparently unloading Detours is handled automatically now..?
-		{
-			/*On_NetMessage.SendData -= NetMessage_SendData;
+        private static void On_Main_DrawWalls(On_Main.orig_DrawWalls orig, Main self)
+        {
+			SanctuaryWorldgenHelper.DrawPillars();
+			orig(self);
+        }
+        /*public static void Unload() //Apparently unloading Detours is handled automatically now..?
+{
+   On_NetMessage.SendData -= NetMessage_SendData;
 
-			On_Main.DrawProjectiles -= Main_DrawProjectiles;
-			On_Main.DrawNPCs -= Main_DrawNPCs;
-			On_Main.DrawPlayers_AfterProjectiles -= Main_DrawPlayers_AfterProjectiles;
+   On_Main.DrawProjectiles -= Main_DrawProjectiles;
+   On_Main.DrawNPCs -= Main_DrawNPCs;
+   On_Main.DrawPlayers_AfterProjectiles -= Main_DrawPlayers_AfterProjectiles;
 
-			//order of updates: player, NPC, gore, projectile, item, dust, time
-			On_Player.Update -= Player_Update;
-			On_NPC.UpdateNPC_Inner -= NPC_UpdateNPC_Inner;
-			On_Gore.Update -= Gore_Update;
-			On_Projectile.Update -= Projectile_Update;
-			On_Item.UpdateItem -= Item_UpdateItem;
-			On_Dust.UpdateDust -= Dust_UpdateDust;
-			On_Main.UpdateTime -= Main_UpdateTime;
+   //order of updates: player, NPC, gore, projectile, item, dust, time
+   On_Player.Update -= Player_Update;
+   On_NPC.UpdateNPC_Inner -= NPC_UpdateNPC_Inner;
+   On_Gore.Update -= Gore_Update;
+   On_Projectile.Update -= Projectile_Update;
+   On_Item.UpdateItem -= Item_UpdateItem;
+   On_Dust.UpdateDust -= Dust_UpdateDust;
+   On_Main.UpdateTime -= Main_UpdateTime;
 
-			On_WorldGen.CloseDoor -= Worldgen_CloseDoor;
-			On_WorldGen.OpenDoor -= Worldgen_OpenDoor;
-			On_WorldGen.FillWallHolesInSpot -= Worldgen_FillWallHolesInSpot;
+   On_WorldGen.CloseDoor -= Worldgen_CloseDoor;
+   On_WorldGen.OpenDoor -= Worldgen_OpenDoor;
+   On_WorldGen.FillWallHolesInSpot -= Worldgen_FillWallHolesInSpot;
 
-			//1.4 ZombieHand
-			On_Player.ItemCheck_MeleeHitNPCs -= Player_ItemCheck_MeleeHitNPCs;
+   //1.4 ZombieHand
+   On_Player.ItemCheck_MeleeHitNPCs -= Player_ItemCheck_MeleeHitNPCs;
 
-			Main.OnPreDraw -= Main_OnPreDraw;
-			On_Player.PickTile -= Player_PickTile;*/
-		}
-		public static void ResizeTargets()
+   Main.OnPreDraw -= Main_OnPreDraw;
+   On_Player.PickTile -= Player_PickTile;
+}*/
+        public static void ResizeTargets()
 		{
 			//Main.NewText("resized");
 			Main.QueueMainThreadAction(() =>

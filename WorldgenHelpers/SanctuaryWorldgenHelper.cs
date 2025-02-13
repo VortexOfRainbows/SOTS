@@ -3,18 +3,127 @@ using Terraria;
 using Terraria.ModLoader;
 using System;
 using SOTS.Items.Invidia;
-using SOTS.Items.AbandonedVillage;
-using System.Security.Cryptography;
-using Steamworks;
-using System.Text;
-using Terraria.Utilities;
 using System.Linq;
 using SOTS.Items.Invidia.MoonShard;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework;
+using static SOTS.NPCs.AbandonedVillage.Famished;
 
 namespace SOTS.WorldgenHelpers
 {
     public static class SanctuaryWorldgenHelper
     {
+        public static Texture2D pillarTexture;
+        public static void DrawPillars()
+        {
+            if (pillarTexture == null)
+                pillarTexture = ModContent.Request<Texture2D>("SOTS/Items/Invidia/SanctuaryPillar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Vector2 zero = Main.drawToScreen ? zero = Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
+            //Main.spriteBatch.Draw(pillarTexture, drawPos, null, Color.White, 0, Vector2.Zero, 1, SpriteEffects.None, 0f);
+            int sizeX = pillarTexture.Width / 16;
+            int sizeY = pillarTexture.Height / 16;
+            int endY = Bottom - 40;
+            Vector2 screenCenter = Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2) / 2;
+            for(int side = -3; side <= 3; side += 2)
+            {
+                int size = 119;
+                if (side == -3 || side == 3)
+                    size = 113;
+                int posX = SideOfWorld - sizeX / 2 + size * side;
+                Main.NewText(MathF.Abs(screenCenter.X - posX * 16));
+                if(MathF.Abs(screenCenter.X - posX * 16) < Main.screenWidth / 2)
+                {
+                    for (int posY = Ceiling - 15; posY < endY; posY += 4)
+                    {
+                        if (MathF.Abs(screenCenter.Y - posY * 16) < Main.screenHeight / 2)
+                        {
+                            for (int y = 0; y < sizeY; ++y)
+                            {
+                                for (int x = 0; x < sizeX; ++x)
+                                {
+                                    int i = posX + x;
+                                    int j = posY + y;
+                                    Vector2 drawPos = new Vector2(i, j) * 16 + zero - Main.screenPosition;
+                                    Vector3[] slices = new Vector3[9];
+                                    Lighting.GetColor9Slice(i, j, ref slices);
+                                    Vector3 vector = Lighting.GetColor(i, j).ToVector3();
+                                    Vector3 tileLight;
+                                    Vector2 position;
+                                    Color color = new Color();
+                                    Rectangle value = new Rectangle();
+                                    for (int a = 0; a < 9; a++)
+                                    {
+                                        value.X = 0;
+                                        value.Y = 0;
+                                        value.Width = 4;
+                                        value.Height = 4;
+                                        switch (a)
+                                        {
+                                            case 1:
+                                                value.Width = 8;
+                                                value.X = 4;
+                                                break;
+                                            case 2:
+                                                value.X = 12;
+                                                break;
+                                            case 3:
+                                                value.Height = 8;
+                                                value.Y = 4;
+                                                break;
+                                            case 4:
+                                                value.Width = 8;
+                                                value.Height = 8;
+                                                value.X = 4;
+                                                value.Y = 4;
+                                                break;
+                                            case 5:
+                                                value.X = 12;
+                                                value.Y = 4;
+                                                value.Height = 8;
+                                                break;
+                                            case 6:
+                                                value.Y = 12;
+                                                break;
+                                            case 7:
+                                                value.Width = 8;
+                                                value.Height = 4;
+                                                value.X = 4;
+                                                value.Y = 12;
+                                                break;
+                                            case 8:
+                                                value.X = 12;
+                                                value.Y = 12;
+                                                break;
+                                        }
+                                        //value.Y += glowOffset.Y;
+                                        position.X = drawPos.X + value.X;
+                                        position.Y = drawPos.Y + value.Y;
+                                        value.X += x * 16;
+                                        value.Y += y * 16;
+                                        tileLight.X = (slices[a].X + vector.X) * 0.5f;
+                                        tileLight.Y = (slices[a].Y + vector.Y) * 0.5f;
+                                        tileLight.Z = (slices[a].Z + vector.Z) * 0.5f;
+                                        int num = (int)(tileLight.X * 255f);
+                                        int num2 = (int)(tileLight.Y * 255f);
+                                        int num3 = (int)(tileLight.Z * 255f);
+                                        if (num > 255)
+                                            num = 255;
+                                        if (num2 > 255)
+                                            num2 = 255;
+                                        if (num3 > 255)
+                                            num3 = 255;
+                                        num3 <<= 16;
+                                        num2 <<= 8;
+                                        color.PackedValue = (uint)(num | num2 | num3) | 0xFF000000u;
+                                        Main.spriteBatch.Draw(pillarTexture, position, value, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public static FastNoiseLite genNoise = null;
         public static void SetNoise()
         {
@@ -126,7 +235,7 @@ namespace SOTS.WorldgenHelpers
                         y += WorldGen.genRand.Next(6, 10);
                         x -= i * 2;
                     }
-                    GenerateRectangle(x - 20, Ceiling, x + 20, Bottom, 1);
+                    //GenerateRectangle(x - 20, Ceiling, x + 20, Bottom, 1);
                     GeneratePlatform(x, y, 0);
                     if (MathF.Abs(i) == 1)
                         GeneratePlatform(x, UnderworldHeight - WorldGen.genRand.Next(23, 28), 0);
