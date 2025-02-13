@@ -8,6 +8,7 @@ using SOTS.Items.Invidia.MoonShard;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using static SOTS.NPCs.AbandonedVillage.Famished;
+using SOTS.Items.Pyramid.PyramidWalls;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -23,19 +24,19 @@ namespace SOTS.WorldgenHelpers
             int sizeX = pillarTexture.Width / 16;
             int sizeY = pillarTexture.Height / 16;
             int endY = Bottom - 40;
-            Vector2 screenCenter = Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2) / 2;
+            Vector2 screenCenter = Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2) - zero / 2;
             for(int side = -3; side <= 3; side += 2)
             {
                 int size = 119;
                 if (side == -3 || side == 3)
                     size = 113;
                 int posX = SideOfWorld - sizeX / 2 + size * side;
-                Main.NewText(MathF.Abs(screenCenter.X - posX * 16));
-                if(MathF.Abs(screenCenter.X - posX * 16) < Main.screenWidth / 2)
+                //Main.NewText(MathF.Abs(screenCenter.X - posX * 16));
+                if(MathF.Abs(screenCenter.X - posX * 16) < Main.screenWidth)
                 {
                     for (int posY = Ceiling - 15; posY < endY; posY += 4)
                     {
-                        if (MathF.Abs(screenCenter.Y - posY * 16) < Main.screenHeight / 2)
+                        if (MathF.Abs(screenCenter.Y - posY * 16) < Main.screenHeight)
                         {
                             for (int y = 0; y < sizeY; ++y)
                             {
@@ -235,7 +236,7 @@ namespace SOTS.WorldgenHelpers
                         y += WorldGen.genRand.Next(6, 10);
                         x -= i * 2;
                     }
-                    //GenerateRectangle(x - 20, Ceiling, x + 20, Bottom, 1);
+                    GenerateRectangle(x - 20, Ceiling, x + 20, Bottom, 4);
                     GeneratePlatform(x, y, 0);
                     if (MathF.Abs(i) == 1)
                         GeneratePlatform(x, UnderworldHeight - WorldGen.genRand.Next(23, 28), 0);
@@ -266,6 +267,11 @@ namespace SOTS.WorldgenHelpers
             ushort Invidia = (ushort)ModContent.TileType<InvidiaPlatingTile>();
             ushort Evostone = (ushort)ModContent.TileType<EvostoneBrickTile>();
             ushort EvostoneWall = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
+            if(style == 4)
+            {
+                style = 1;
+                EvostoneWall = (ushort)ModContent.WallType<EvostoneGrandPillarWall>();
+            }
             for (int i = x; i <= endX; i++)
             {
                 for (int j = y; j <= endY; j++)

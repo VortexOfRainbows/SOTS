@@ -6668,6 +6668,11 @@ Mods: {
 				DisplayName: Lux Trophy
 				Tooltip: ""
 			}
+
+			EvostoneGrandPillar: {
+				DisplayName: Evostone Grand Pillar
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
