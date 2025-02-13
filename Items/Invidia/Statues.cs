@@ -23,8 +23,8 @@ namespace SOTS.Items.Invidia
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.width = 64;
-			Item.height = 70;
+			Item.width = 30;
+			Item.height = 36;
 			Item.rare = ItemRarityID.Green;
 			Item.createTile = ModContent.TileType<RuinedStatueTile>();
 		}
@@ -83,8 +83,8 @@ namespace SOTS.Items.Invidia
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.width = 64;
-            Item.height = 90;
+            Item.width = 30;
+            Item.height = 48;
             Item.rare = ItemRarityID.Green;
             Item.createTile = ModContent.TileType<SerpentStatueTile>();
         }

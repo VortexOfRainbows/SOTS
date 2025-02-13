@@ -85,6 +85,7 @@ Daily Log:
 2. Amulet of Emptiness added (simple void accessory)
 3. Import Achievement sprites (not yet standardized)
 4. Added Pillars in Sanctuary
+5. Statues sprites for Sanctuary
 
 1/28/25 to 2/7/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
@@ -104,7 +105,7 @@ Daily Log:
 		4. Void Cost 6 -> 9
 10. Added Glowmoth music box
 11. Added glowmoth trophy, Polaris trophy, and resprited trophies (Astrobit/Petaniks)
-12. Add some statue furniture for sanctuary, but needs item sprites
+12. Add some statue furniture for sanctuary
 
 1/20/25 to 1/22/25
 1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines
