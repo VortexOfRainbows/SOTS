@@ -22,6 +22,7 @@ using Terraria.DataStructures;
 using SOTS.Items.AbandonedVillage;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.WorldgenHelpers;
+using SOTS.Items.Invidia;
 
 namespace SOTS
 {
@@ -335,7 +336,7 @@ namespace SOTS
             {
                 return false;
             }
-            if (tileAbove.TileType == (ushort)TileType<SarcophagusTile>() || tileAbove.TileType == (ushort)TileType<RubyKeystoneTile>() || tileAbove.TileType == (ushort)TileType<Items.Earth.Glowmoth.SilkCocoonTile>())
+            if (tileAbove.TileType == (ushort)TileType<SarcophagusTile>() || tileAbove.TileType == (ushort)TileType<RubyKeystoneTile>() || tileAbove.TileType == (ushort)TileType<Items.Earth.Glowmoth.SilkCocoonTile>() || tileAbove.TileType == (ushort)TileType<InvidiaGatewayTile>())
             {
                 return false;
             }

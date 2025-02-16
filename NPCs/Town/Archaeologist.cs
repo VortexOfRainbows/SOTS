@@ -35,6 +35,8 @@ using SOTS.Items.Earth.Glowmoth;
 using Terraria.Chat;
 using SOTS.Items;
 using SOTS.Helpers;
+using Terraria.Enums;
+using SOTS.Items.Invidia.MoonShard;
 
 namespace SOTS.NPCs.Town
 {
@@ -441,8 +443,14 @@ namespace SOTS.NPCs.Town
 				{
 					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAvaritia1"));
 					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueAvaritia2"));
-				}
-				if (currentLocationType == ImportantTileID.bigCrystal)
+                }
+                if (currentLocationType == ImportantTileID.InvidiaPortal)
+                {
+                    chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueInvidia1"));
+                    chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueInvidia2"));
+                    chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueInvidia3"));
+                }
+                if (currentLocationType == ImportantTileID.bigCrystal)
 				{
 					chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogueBigCrystal"));
 				}
@@ -505,8 +513,26 @@ namespace SOTS.NPCs.Town
 				.Add<GoldenTrowel>()
 				.Add<OldKey>()
 				.Add<ConduitChassis>()
+
 				.Add<NatureConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal))
-				.Add<CursedApple>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal))
+				.Add<EarthenConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal || currentLocationType == ImportantTileID.GulaPortal))
+				.Add<PermafrostConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.iceMonument))
+                .Add<OtherworldConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal))
+				.Add<TidalConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.coconutIslandMonument || currentLocationType == ImportantTileID.coconutIslandMonumentBroken))
+				.Add<EvilConduit>(new Condition(ShopKey, () => (currentLocationType == ImportantTileID.GulaPortal || currentLocationType == ImportantTileID.InvidiaPortal) && Main.hardMode))
+				.Add<InfernoConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.hardMode))
+				.Add<ChaosConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && Main.hardMode))
+
+                .Add<MoonShard1>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.moonPhase == 4))
+                .Add<MoonShard2>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.moonPhase == 5))
+                .Add<MoonShard3>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.moonPhase == 6))
+                .Add<MoonShard4>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.moonPhase == 7))
+                .Add<MoonShard5>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.moonPhase == 0))
+                .Add<MoonShard6>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.moonPhase == 1))
+                .Add<MoonShard7>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.moonPhase == 2))
+                .Add<MoonShard8>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.moonPhase == 3))
+
+                .Add<CursedApple>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal))
 				.Add<DreamLamp>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal && SOTSWorld.DreamLampSolved))
 				.Add<Items.Planetarium.MeteoriteKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
 				.Add<Items.Planetarium.SkywareKey>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && SOTSWorld.downedAdvisor))
@@ -535,7 +561,7 @@ namespace SOTS.NPCs.Town
 				.Add<WishingStar>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.bigCrystal))
 				.Add<TorchBomb>(Condition.PlayerCarriesItem(ModContent.ItemType<TorchGun>()));
             npcShop.Register(); // Name of this shop tab
-		}
+        }
 		public static int currentLocationType = -1;
 		public static void ForceToNewLocation()
 		{

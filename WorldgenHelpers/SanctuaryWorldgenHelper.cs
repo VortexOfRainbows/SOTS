@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
+using Steamworks;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -132,6 +133,7 @@ namespace SOTS.WorldgenHelpers
                                             tile2.Slope = 0;
                                             tile2.LiquidAmount = 0;
                                             tile2.LiquidType = 0;
+                                            tile2.WallType = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
                                             if (_structure[i, j] == -4)
                                             {
                                                 tile2 = Framing.GetTileSafely(k - 1, l + a);
@@ -253,7 +255,7 @@ namespace SOTS.WorldgenHelpers
                                         tile.HasTile = false;
                                         tile.Slope = 0;
                                         tile.IsHalfBlock = false;
-                                        WorldGen.PlaceTile(k, l, ModContent.TileType<SerpentStatueTile>(), true, true, -1, 1);
+                                        WorldGen.PlaceTile(k, l, ModContent.TileType<SerpentStatueTile>(), true, true, -1, 0);
                                     }
                                     break;
                                 case 16:
@@ -283,6 +285,14 @@ namespace SOTS.WorldgenHelpers
                                     }
                                     break;
                                 case 19:
+                                    if (confirmPlatforms == 0)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.IsHalfBlock = false;
+                                        tile.Slope = 0;
+                                        tile.LiquidAmount = 0;
+                                        tile.LiquidType = 0;
+                                    }
                                     tile.TileColor = PaintID.PurplePaint;
                                     break;
                                 case 21:
@@ -367,7 +377,8 @@ namespace SOTS.WorldgenHelpers
             }
         }
         public static Texture2D pillarTexture;
-        public static readonly int[] xPos = [-339, -230, -119, 0, 119, 230, 339];
+        //public static readonly int[] xPos = [-339, -230, -119, 0, 119, 230, 339];
+        public static int[] xPos => [-392, - 339, -286, -176, -119, -62, 62, 119, 176, 286, 339, 392];
         public static void DrawPillars()
         {
             if (pillarTexture == null)
@@ -605,12 +616,13 @@ namespace SOTS.WorldgenHelpers
             SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<EvostoneTile>());
 
             GenerateNewEmeraldGemStructure(SideOfWorld, Ceiling - 16);
+            WorldGen.PlaceTile(SideOfWorld, UnderworldHeight + 24, ModContent.TileType<InvidiaGatewayTile>(), true, true, -1, 0);
         }
         public static void GeneratePillar(int i, int j)
         {
-            GenerateRectangle(i - 10, j - 30 - 1, i + 10, j + 1, 1);
-            GenerateRectangle(i - 10, Ceiling - 15, i + 10, j - 30);
-            GenerateRectangle(i - 10, j, i + 10, Bottom);
+            //GenerateRectangle(i - 12, j - 30 - 1, i + 12, j + 1, 1);
+            GenerateRectangle(i - 12, Ceiling - 15, i + 12, j - 30);
+            GenerateRectangle(i - 12, j, i + 12, Bottom);
         }
         public static void GenerateRectangle(int x, int y, int endX, int endY, int style = 0)
         {
@@ -768,7 +780,8 @@ namespace SOTS.WorldgenHelpers
             SetNoise();
             float paddingZone = 30f;
             float noiseWormMult = 0.25f;
-            int gridRate = 15;
+            int gridRate = 16;
+            int offset = SideOfWorld % gridRate;
             for(int pass = 0; pass <= 2; pass++)
             {
                 for (int i = left; i <= right; i++)
@@ -789,7 +802,7 @@ namespace SOTS.WorldgenHelpers
                         Tile t = Main.tile[i, j];
                         if (pass == 2 || pass == 1)
                         {
-                            if(i % gridRate == 0 && j % gridRate == 0)
+                            if((i - offset) % gridRate == 0 && (j - 2) % gridRate == 0)
                             {
                                 if(pass == 2)
                                 {
@@ -821,7 +834,7 @@ namespace SOTS.WorldgenHelpers
                         }
                         if(pass == 0)
                         {
-                            if (i % gridRate == 0 || j % gridRate == 0)
+                            if ((i - offset) % gridRate == 0 || (j - 2) % gridRate == 0)
                             {
                                 if (t.TileType == EvostoneBrick)
                                     t.TileType = RuneBrick;

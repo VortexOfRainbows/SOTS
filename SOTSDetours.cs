@@ -9,6 +9,7 @@ using SOTS.Items;
 using SOTS.Items.Celestial;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
+using SOTS.Items.Invidia;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.NPCs.Town;
 using SOTS.Projectiles.Blades;
@@ -1030,7 +1031,7 @@ namespace SOTS
         }
 		private static bool On_WorldGen_KillWall_CheckFailure(On_WorldGen.orig_KillWall_CheckFailure orig, bool fail, Tile tileCache)
         {
-            if (SOTSWall.unsafePyramidWall.Contains(tileCache.WallType))
+			if (SOTSWall.unsafePyramidWall.Contains(tileCache.WallType) || tileCache.WallType == ModContent.WallType<EvostoneGrandPillarWall>())
             {
                 return !SOTSWorld.downedCurse;
 			}
