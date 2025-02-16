@@ -6678,6 +6678,11 @@ Mods: {
 				DisplayName: Invidia Gateway
 				Tooltip: ""
 			}
+
+			LevMirror: {
+				DisplayName: Shattered Mirror
+				Tooltip: Gaze in the mirror to return 'home'
+			}
 		}
 
 		ItemTooltip: {
