@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.Blades;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -72,7 +73,11 @@ namespace SOTS.Items.Invidia
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 2;
-		}
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<RuinedStatue>());
+        }
     }
     public class SerpentStatue : ModItem
     {
@@ -148,6 +153,10 @@ namespace SOTS.Items.Invidia
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = 2;
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<SerpentStatue>());
         }
     }
 }
