@@ -146,7 +146,7 @@ namespace SOTS.Items.Banners
                 else
                     circular *= 0f;
                 Rectangle clone = new Rectangle(0, 0, 74, 36);
-                Main.spriteBatch.Draw(texture, position + (circular * 0.4f), clone, color, 0f, drawOrigin, scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture, position + (circular * 0.36f), clone, color, 0f, drawOrigin, scale, SpriteEffects.None, 0f);
             }
         }
     }

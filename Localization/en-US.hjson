@@ -1028,7 +1028,7 @@ Mods: {
 				Tooltip:
 					'''
 					Displays the location of various anomalies, such as electromagnetic transmissions, wormholes, and teleported items, on the Minimap
-					Functions while equipped as an accessory, favorited in the inventory, or worn as a vanity accessory
+					Functions while equipped as an accessory, in the inventory, or worn as a vanity accessory
 					'''
 			}
 
@@ -6661,14 +6661,13 @@ Mods: {
 
 			EmptyNecklace: {
 				DisplayName: Amulet of Emptiness
-				Tooltip: "Increases void regeneration speed by 50%"
+				Tooltip: Increases void regeneration speed by 50%
 			}
-			
+
 			LuxTrophy: {
 				DisplayName: Lux Trophy
 				Tooltip: ""
 			}
-
 		}
 
 		ItemTooltip: {

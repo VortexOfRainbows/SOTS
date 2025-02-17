@@ -23,8 +23,7 @@ namespace SOTS.Items.Conduit
         public override void UpdateInventory(Player player)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			if(Item.favorited)
-				modPlayer.AnomalyLocator = true;
+			modPlayer.AnomalyLocator = true;
 		}
 	}
 }
