@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.NPCs.Boss;
 using SOTS.Projectiles.Blades;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -23,8 +24,8 @@ namespace SOTS.Items.Invidia
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.width = 64;
-			Item.height = 70;
+			Item.width = 30;
+			Item.height = 36;
 			Item.rare = ItemRarityID.Green;
 			Item.createTile = ModContent.TileType<RuinedStatueTile>();
 		}
@@ -72,7 +73,11 @@ namespace SOTS.Items.Invidia
 		public override void NumDust(int i, int j, bool fail, ref int num)
 		{
 			num = 2;
-		}
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<RuinedStatue>());
+        }
     }
     public class SerpentStatue : ModItem
     {
@@ -83,8 +88,8 @@ namespace SOTS.Items.Invidia
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.StoneBlock);
-            Item.width = 64;
-            Item.height = 90;
+            Item.width = 30;
+            Item.height = 48;
             Item.rare = ItemRarityID.Green;
             Item.createTile = ModContent.TileType<SerpentStatueTile>();
         }
@@ -148,6 +153,10 @@ namespace SOTS.Items.Invidia
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = 2;
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<SerpentStatue>());
         }
     }
 }

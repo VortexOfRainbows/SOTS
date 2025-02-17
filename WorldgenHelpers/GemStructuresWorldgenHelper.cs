@@ -3169,7 +3169,7 @@ namespace SOTS.WorldgenHelpers
 							isSpecialChest = true;
 						}
 					}
-					if (tileBelowLeft.TileType == ModContent.TileType<EvostoneTile>() && tileBelowRight.TileType == ModContent.TileType<EvostoneTile>() && tile.WallType == EvostoneWall) //This is the Emerald Ruined Chest
+					if (tileBelowLeft.TileType == ModContent.TileType<EvostoneBrickTile>() && tileBelowRight.TileType == ModContent.TileType<EvostoneBrickTile>() && tile.WallType == EvostoneWall) //This is the Emerald Ruined Chest
 					{
 						SpecialItem = ModContent.ItemType<VorpalKnife>();
 						fragmentItem = ModContent.ItemType<FragmentOfInferno>();

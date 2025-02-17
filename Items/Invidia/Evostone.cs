@@ -341,4 +341,34 @@ namespace SOTS.Items.Invidia
             HitSound = SoundID.Tink;
         }
     }
+    public class EvostoneGrandPillarWall : ModWall
+    {
+        public override string Texture => "SOTS/Items/Invidia/EvostoneBrickWallTile";
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = false;
+            DustType = ModContent.DustType<EvostoneDust>();
+            AddMapEntry(new Color(20, 31, 41));
+            HitSound = SoundID.Tink;
+        }
+        public override bool CanExplode(int i, int j) => false;
+        public override void KillWall(int i, int j, ref bool fail) => fail = true;
+        public override bool CanPlace(int i, int j) => false;
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            return false;
+        }
+    }
+    public class EvostoneGrandPillar : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(400);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneWall);
+            Item.width = 38;
+            Item.height = 34;
+            Item.rare = ItemRarityID.Red;
+            Item.createWall = ModContent.WallType<EvostoneGrandPillarWall>();
+        }
+    }
 }

@@ -229,7 +229,7 @@ namespace SOTS
 			ArmorSetHotKey = null;
 			MachinaBoosterHotKey = null;
 			SubworldLibrary = null;
-			SOTSDetours.Unload();
+			//SOTSDetours.Unload();
 		}
 		public static Vector2 CalculateBezierPoint(float t, Vector2 p0, Vector2 p1, Vector2 p2, Vector2 p3)
 		{

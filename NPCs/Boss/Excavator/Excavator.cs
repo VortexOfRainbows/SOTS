@@ -142,12 +142,24 @@ namespace SOTS.NPCs.Boss.Excavator
             Texture2D body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
             Vector2 origin = new Vector2(head.Width * 0.5f, head.Height * 0.5f);
             Vector2 bodyOrigin = body.Size() / 2;
-            for(int i = 0; i < segments.Length; i++)
+            Vector2 armOrigin = new Vector2(7, arm.Height / 2);
+            Vector2 handOrigin = new Vector2(19, 13);
+            Vector2 revArmOrigin = new Vector2(arm.Width - 7, arm.Height / 2);
+            Vector2 revHandOrigin = new Vector2(hand.Width - 19, 13);
+            for (int i = 0; i < segments.Length; i++)
             {
                 int segment = segments[i];
                 if (segment > 0)
                 {
                     NPC other = Main.npc[segment];
+                    for(int j = -1; j <= 1; j += 2)
+                    {
+                        float armRotation = other.rotation;
+                        Vector2 armPosition = new Vector2(-body.Width / 2 * j, 0).RotatedBy(armRotation) - screenPos + other.Center;
+                        spriteBatch.Draw(arm, armPosition, null, drawColor, armRotation, j == -1 ? armOrigin : revArmOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                        Vector2 handPosition = armPosition + new Vector2((arm.Width - 14) * -j, 0).RotatedBy(armRotation);
+                        spriteBatch.Draw(hand, handPosition, null, drawColor, armRotation + MathF.PI, j == -1 ? handOrigin : revHandOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                    }
                     spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
                 }
             }

@@ -44,12 +44,11 @@ Update Objectives:
 	1. Tiles: Overgrown Vespera Brick (change grass color and add foliage), Invidia Portal Plating
 	2. Solar Bulb item in the chest
 12. Add Achievements
-13. Invidia Gateway Tile
+13. Invidia Gateway Tile (needs: glow, conduit connection)
 
 ---WIP List---
 Abandoned village generation
 Make enemies spawn in the AV and Mines
-Fix Archaeologist Shop (for the new items)! Includes conduits, av loot, sanctuary loot, etc.
 Update treasure slime loot tables (look at old and new treasure slimes)
 Made all available conduits spawn on worldgen
 
@@ -58,6 +57,7 @@ If any other issues come up with Gilded Blade Wings trail interfering with how o
 Conduit powering code for the two portals. Conduit recipe code should be more robust and better!
 If the Abandoned Village particles fail to generate for weaker computers, or potentially optimization mods, it may be worth making a custom system for them instead of using dusts.
 Bestiary setup organization.
+ImportantTiles code (archaeologist tiles)
 
 ---Balance Needed List (by Severity, -weak, +strong)---
 5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot, +Little Woes, +Accretion Disc
@@ -80,9 +80,16 @@ N/A
 
 Daily Log:
 
-2/9/25 to 2/10/25
+2/9/25 to 2/15/25
 1. Very beginning excavator
 2. Amulet of Emptiness added (simple void accessory)
+3. Import Achievement sprites (not yet standardized)
+4. Added Pillars in Sanctuary
+5. Statues sprites for Sanctuary
+6. Some Putrid Pinky resprites from Taco
+7. Emerald gem structure reworked. Spawns at the top of the sanctuary
+8. Conduits are now all sold by Archaeologist, and moon shards can be boughten at Invidia
+9. WIP Invidia Gateway Tile
 
 1/28/25 to 2/7/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
@@ -102,7 +109,7 @@ Daily Log:
 		4. Void Cost 6 -> 9
 10. Added Glowmoth music box
 11. Added glowmoth trophy, Polaris trophy, and resprited trophies (Astrobit/Petaniks)
-12. Add some statue furniture for sanctuary, but needs item sprites
+12. Add some statue furniture for sanctuary
 
 1/20/25 to 1/22/25
 1. Now Earthen Chairs, Earthen Tables, and Candles may spawn in the AV Mines

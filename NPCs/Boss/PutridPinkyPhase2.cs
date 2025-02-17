@@ -12,9 +12,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.NPCs.Boss
-{	[AutoloadBossHead]
+{	
+	[AutoloadBossHead]
 	public class PutridPinkyPhase2 : ModNPC
 	{
+		public Vector2 EyePosition => new Vector2(1, 15);
 		private float attackPhase {
 			get => NPC.ai[0];
 			set => NPC.ai[0] = value;
@@ -43,7 +45,7 @@ namespace SOTS.NPCs.Boss
 		private int storeDamage = 0;
 		private int exponentialMod = 0;
 		private int rotateDir = 1;
-		int despawn = 0;
+		private int despawn = 0;
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
 			writer.Write(fireToX);
@@ -86,7 +88,7 @@ namespace SOTS.NPCs.Boss
 			NPC.alpha = 60;
             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PutridPinky");
 		}
-		const int alphaMin = 60;
+		private const int alphaMin = 60;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			for(int i = 0; i < Main.npc.Length; i++)
@@ -113,17 +115,17 @@ namespace SOTS.NPCs.Boss
 			float height = (float)texture.Height;
 			Vector2 betweenPos = to - position;
 			float rotation = betweenPos.ToRotation() - 1.57f;
-			bool flag = true;
+			bool draw = true;
 			if (float.IsNaN(position.X) && float.IsNaN(position.Y))
-				flag = false;
+				draw = false;
 			if (float.IsNaN(betweenPos.X) && float.IsNaN(betweenPos.Y))
-				flag = false;
+				draw = false;
 			bool flag2 = false;
-			while (flag)
+			while (draw)
 			{
 				if ((double)betweenPos.Length() - texture.Height < 2.0)
 				{
-					flag = false;
+					draw = false;
 				}
 				else
 				{
@@ -174,12 +176,16 @@ namespace SOTS.NPCs.Boss
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+			Texture2D textureTop = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinkyPhase2Top");
 			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/NPCs/Boss/PutridPinkyEye");
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
+            Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
 			Vector2 drawPos = NPC.Center - screenPos;
 			drawColor = drawColor * ((195 - NPC.alpha + 60) / 195f);
-			spriteBatch.Draw(texture, drawPos + new Vector2(0, 3.5f), null, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(texture, drawPos + EyePosition, null, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 			DrawEye(spriteBatch, screenPos, drawColor);
+
+
+			spriteBatch.Draw(textureTop, drawPos + new Vector2(0, NPC.gfxOffY + 4), null, NPC.GetAlpha(drawColor), NPC.rotation, textureTop.Size() / 2, NPC.scale, SpriteEffects.None, 0f);
         }
         public void DrawEye(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
@@ -187,16 +193,16 @@ namespace SOTS.NPCs.Boss
 			Vector2 drawOrigin = new Vector2(texture.Width/2, texture.Height/2);
 			Vector2 drawPos = NPC.Center - screenPos;
 			
-			float shootToX = fireToX - NPC.Center.X;
-			float shootToY = fireToY - NPC.Center.Y + 3.5f;
+			float shootToX = fireToX - NPC.Center.X + EyePosition.X;
+			float shootToY = fireToY - NPC.Center.Y + EyePosition.Y;
 			float distance = (float)Math.Sqrt((double)(shootToX * shootToX + shootToY * shootToY));
 
 			distance = eyeReset * 2f * (NPC.scale) / distance;
 			shootToX *= distance * 2;
 			shootToY *= distance * 2;
 			
-			drawPos.X += shootToX;
-			drawPos.Y += 3.5f + shootToY;
+			drawPos.X += EyePosition.X + shootToX;
+			drawPos.Y += EyePosition.Y + shootToY;
 			if(NPC.scale == 1)
 				spriteBatch.Draw(texture, drawPos, null, drawColor, NPC.rotation, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
 		}
@@ -206,11 +212,10 @@ namespace SOTS.NPCs.Boss
 			{
 				Vector2 circularLocation = new Vector2(-dist, 0).RotatedBy(MathHelper.ToRadians(i));
 				
-				int num1 = Dust.NewDust(new Vector2(x - 4, y - 4), 4, 4, DustID.Gastropod);
-				Main.dust[num1].noGravity = true;
-				Main.dust[num1].velocity = circularLocation * 0.08f;
-				//Main.dust[num1].alpha = 0;
-				Main.dust[num1].scale *= 2.5f;
+				Dust d = Dust.NewDustDirect(new Vector2(x - 4, y - 4), 4, 4, DustID.Gastropod);
+                d.noGravity = true;
+                d.velocity = circularLocation * 0.08f;
+                d.scale *= 2.5f;
 			}
 		}
 		public override void AI()
@@ -245,17 +250,11 @@ namespace SOTS.NPCs.Boss
 			if(attackPhase == 1)
 			{
 				if(rotationDistance < 119)
-                {
 					rotationDistance += 1f;
-				}
 				else if (rotationDistance > 121)
-				{
 					rotationDistance -= 1f;
-				}
 				else
-                {
 					rotationDistance = 120;
-                }
 				rotationSpeed = rotationSpeed * rotateDir > 0.4f ? rotationSpeed * 0.99f : rotationSpeed * 1.01f;
 				eyeReset = eyeReset < 1 ? eyeReset + 0.08f : 1;
 				attackTimer--;
@@ -267,7 +266,7 @@ namespace SOTS.NPCs.Boss
 				}
 				if(attackTimer == 870 || attackTimer == 600 || attackTimer == 330 || attackTimer == 810 || attackTimer == 540 || attackTimer == 270 || attackTimer == 750 || attackTimer == 480 || attackTimer == 210)
 				{
-					LaunchLaser(NPC.Center, new Vector2(fireToX, fireToY));
+					LaunchLaser(NPC.Center + new Vector2(1, 15), new Vector2(fireToX, fireToY));
 					followPlayer = 1;
 				}
 				if(attackTimer == 0) // next pattern
@@ -288,23 +287,15 @@ namespace SOTS.NPCs.Boss
 					NPC.alpha += 3;
 					rotationSpeed *= 1.012f;
 					if (rotationDistance < 299)
-					{
 						rotationDistance += 1.5f;
-					}
 					else if (rotationDistance > 301)
-					{
 						rotationDistance -= 1.5f;
-					}
 					else
-					{
 						rotationDistance = 300;
-					}
 					NPC.velocity *= 0.92f;
 					NPC.velocity += toPlayer * 0.22f;
 					if(NPC.alpha > 255)
-					{
 						NPC.alpha = 255;
-					}
 				}
 				else if(attackTimer > 950)
 				{
@@ -312,9 +303,7 @@ namespace SOTS.NPCs.Boss
 					rotationSpeed *= 0.959f;
 					NPC.alpha -= 4;
 					if(NPC.alpha < alphaMin)
-					{
 						NPC.alpha = alphaMin;
-					}
 				}
 				else if(attackTimer >= 940)
 				{
@@ -388,9 +377,7 @@ namespace SOTS.NPCs.Boss
 							if (bonus < 0)
 								bonus = 0;
 							if (dis > distanceTB || (Main.rand.NextBool(Main.expertMode ? 1200 + bonus : 1800 + bonus) && NPC.life < NPC.lifeMax / 2))
-							{
 								Recollect(Main.npc[i]);
-							}
 						}
 					}
 				}
@@ -398,17 +385,11 @@ namespace SOTS.NPCs.Boss
 			if(attackPhase == 3)
 			{
 				if (rotationDistance < 119)
-				{
 					rotationDistance += 1.5f;
-				}
 				else if (rotationDistance > 121)
-				{
 					rotationDistance -= 1.5f;
-				}
 				else
-				{
 					rotationDistance = 120;
-				}
 				rotationSpeed = rotationSpeed * rotateDir > 0.7f ? rotationSpeed * 0.99f : rotationSpeed * 1.01f;
 				eyeReset = eyeReset < 1 ? eyeReset + 0.08f : 1;
 				attackTimer--;
@@ -453,17 +434,11 @@ namespace SOTS.NPCs.Boss
 						}
 					}
 					if(npcIndex != -1 && total > 0)
-                    {
 						Recollect(Main.npc[npcIndex]);
-					}
 					if (npcIndex1 != -1 && (total >= 4 || Main.expertMode))
-					{
 						Recollect(Main.npc[npcIndex1]);
-					}
 					if (npcIndex2 != -1 && (total >= 8 || (total >= 5 && Main.expertMode)))
-					{
 						Recollect(Main.npc[npcIndex2]);
-					}
 				}
 				if(attackTimer <= 1100)
 				{
@@ -509,52 +484,44 @@ namespace SOTS.NPCs.Boss
 			}
 			for(int i = 0; i < 200; i++)
 			{
-				if(Main.npc[i].type == ModContent.NPCType<PutridHook>() && Main.npc[i].active)
+				NPC hook = Main.npc[i];
+				if(hook.type == ModContent.NPCType<PutridHook>() && hook.active)
 				{
-					Main.npc[i].ai[0] = player.Center.X;
-					Main.npc[i].ai[1] = player.Center.Y;
+					hook.ai[0] = player.Center.X;
+                    hook.ai[1] = player.Center.Y;
 					if(attackPhase == 2)
 					{
-						Main.npc[i].ai[0] = NPC.Center.X;
-						Main.npc[i].ai[1] = NPC.Center.Y + 3.5f;
+						hook.ai[0] = NPC.Center.X;
+                        hook.ai[1] = NPC.Center.Y + 3.5f;
 					}
 					if(attackPhase == 3)
 					{
-						float aimToX = Main.npc[i].Center.X - NPC.Center.X;
-						float aimToY = Main.npc[i].Center.Y - (NPC.Center.Y + 3.5f);
+						float aimToX = hook.Center.X - NPC.Center.X - EyePosition.X;
+						float aimToY = hook.Center.Y - NPC.Center.Y - EyePosition.Y;
 						Vector2 aimTo = new Vector2(100, 0).RotatedBy(Math.Atan2(aimToY, aimToX));
-						aimToX = aimTo.X + Main.npc[i].Center.X;
-						aimToY = aimTo.Y + Main.npc[i].Center.Y;
+						aimToX = aimTo.X + hook.Center.X;
+						aimToY = aimTo.Y + hook.Center.Y;
 						
-						Main.npc[i].ai[0] = aimToX;
-						Main.npc[i].ai[1] = aimToY;
+						hook.ai[0] = aimToX;
+                        hook.ai[1] = aimToY;
 					}
-					Main.npc[i].alpha = NPC.alpha;
+                    hook.alpha = NPC.alpha;
 				}
 			}
 			if(Main.player[NPC.target].dead)
-			{
 				despawn++;
-			}
 			if(despawn >= 720)
-			{
 				NPC.active = false;
-			}
-			
 			if(Main.netMode != NetmodeID.MultiplayerClient)
-			NPC.netUpdate = true;
+				NPC.netUpdate = true;
 		}
 		private void BurstSpiral()
 		{
 			for(int i = 0; i < 200; i++)
 			{
-				if(Main.npc[i].type == ModContent.NPCType<HookTurret>() && Main.npc[i].active)
+				if(Main.npc[i].type == ModContent.NPCType<HookTurret>() && Main.npc[i].active && Main.npc[i].ai[2] == -1)
 				{
-					if(Main.npc[i].ai[2] == -1)
-					{
-						Main.npc[i].ai[3] = Main.rand.Next(76, 125);
-						//Main.npc[i].netUpdate = true;
-					}
+					Main.npc[i].ai[3] = Main.rand.Next(76, 125);
 				}
 			}
 		}
@@ -569,31 +536,24 @@ namespace SOTS.NPCs.Boss
 		{
 			for(int i = 0; i < 200; i++)
 			{
-				if(Main.npc[i].type == ModContent.NPCType<PutridHook>() && Main.npc[i].active && (int)Main.npc[i].localAI[0] == NPC.whoAmI)
+				NPC hook = Main.npc[i];
+				if(hook.type == ModContent.NPCType<PutridHook>() && hook.active && hook.localAI[0] == NPC.whoAmI)
 				{
-					float aimToX = NPC.Center.X - Main.npc[i].Center.X;
-					float aimToY = NPC.Center.Y + 3.5f - Main.npc[i].Center.Y;
+					float aimToX = NPC.Center.X -hook.Center.X;
+					float aimToY = NPC.Center.Y + 3.5f -hook.Center.Y;
 					Vector2 aimTo = new Vector2(speed, 0).RotatedBy(Math.Atan2(aimToY, aimToX) + MathHelper.ToRadians(180));
 
 					int damage = NPC.GetBaseDamage() / 2;
 					if(Main.netMode != NetmodeID.MultiplayerClient && type == 1)
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo.X, aimTo.Y, ModContent.ProjectileType<PinkBullet>(), damage, 0, Main.myPlayer);
+						Projectile.NewProjectile(NPC.GetSource_FromAI(), hook.Center, aimTo, ModContent.ProjectileType<PinkBullet>(), damage, 0, Main.myPlayer);
 					damage += 10;
 					if(Main.netMode != NetmodeID.MultiplayerClient && type == 2)
 					{
-						Vector2 aimTo2 = new Vector2(aimTo.X, aimTo.Y).RotatedBy(MathHelper.ToRadians(15));
-						Vector2 aimTo3 = new Vector2(aimTo.X, aimTo.Y).RotatedBy(MathHelper.ToRadians(-15));
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo.X, aimTo.Y, ModContent.ProjectileType<PinkTracer>(), damage, 0, Main.myPlayer);
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo2.X, aimTo2.Y, ModContent.ProjectileType<PinkTracer>(), damage, 0, Main.myPlayer);
-						Projectile.NewProjectile(NPC.GetSource_FromAI(), Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo3.X, aimTo3.Y, ModContent.ProjectileType<PinkTracer>(), damage, 0, Main.myPlayer);
-						if(Main.expertMode)
+						int increment = Main.expertMode ? 1 : 2;
+						for(int j = -2; j <= 2; j += increment)
 						{
-							Vector2 aimTo4 = new Vector2(aimTo.X, aimTo.Y).RotatedBy(MathHelper.ToRadians(7.5f));
-							Vector2 aimTo5 = new Vector2(aimTo.X, aimTo.Y).RotatedBy(MathHelper.ToRadians(-7.5f));
-							Projectile.NewProjectile(NPC.GetSource_FromAI(), Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo4.X, aimTo4.Y, ModContent.ProjectileType<PinkTracer>(), damage, 0, Main.myPlayer);
-							Projectile.NewProjectile(NPC.GetSource_FromAI(), Main.npc[i].Center.X, Main.npc[i].Center.Y, aimTo5.X, aimTo5.Y, ModContent.ProjectileType<PinkTracer>(), damage, 0, Main.myPlayer);
-						}
-					
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), hook.Center, aimTo.RotatedBy(MathHelper.ToRadians(j * 7.5f)), ModContent.ProjectileType<PinkTracer>(), damage, 0, Main.myPlayer);
+                        }
 					}
 				}
 			}
@@ -647,12 +607,16 @@ namespace SOTS.NPCs.Boss
 					dust.scale *= 2.3f;
 					dust.velocity *= 2;
 				}
-				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 24), NPC.velocity, ModGores.GoreType("Gores/ppGore_1"), 1f);
-				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/ppGore_2"), 1f);
-				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(24, 0), NPC.velocity, ModGores.GoreType("Gores/ppGore_3"), 1f);
-				Gore.NewGore(NPC.GetSource_Death(), NPC.Center - new Vector2(26, 26), NPC.velocity, ModGores.GoreType("Gores/ppGore_4"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 30), NPC.velocity, ModGores.GoreType("Gores/PP/Gore1"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 76), NPC.velocity, ModGores.GoreType("Gores/PP/Gore2"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 46), NPC.velocity, ModGores.GoreType("Gores/PP/Gore3"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(14, 0), NPC.velocity, ModGores.GoreType("Gores/PP/Gore4"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(2, 14), NPC.velocity, ModGores.GoreType("Gores/PP/Gore5"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(12, 96), NPC.velocity, ModGores.GoreType("Gores/PP/Gore6"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(18, 24), NPC.velocity, ModGores.GoreType("Gores/PP/Gore7"), 1f);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.Center + EyePosition - new Vector2(13, 13), NPC.velocity, ModGores.GoreType("Gores/PP/Gore8"), 1f);
 				if(Main.netMode != NetmodeID.Server)
-				{
+                {
 					for (int i = 0; i < Main.npc.Length; i++)
 					{
 						if (Main.npc[i].type == ModContent.NPCType<PutridHook>() && Main.npc[i].active && (int)Main.npc[i].localAI[0] == NPC.whoAmI)

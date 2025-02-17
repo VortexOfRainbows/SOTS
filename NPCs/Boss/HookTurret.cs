@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -43,7 +42,7 @@ namespace SOTS.NPCs.Boss
 		}
 		private float eyeReset = 0;
 		private float fireRate = 0;
-		int initiate = -1;
+        private int initiate = -1;
 		public override bool CheckActive()
 		{
 			return false;
@@ -136,6 +135,7 @@ namespace SOTS.NPCs.Boss
         }
 		public override void AI()
 		{
+			NPC.rotation += NPC.velocity.X * 0.03f;
 			NPC.dontTakeDamage = true;
 			if(initiate == -1 && Main.netMode != NetmodeID.MultiplayerClient)
 			{
@@ -198,13 +198,10 @@ namespace SOTS.NPCs.Boss
 				NPC.life--;
 				NPC.scale *= 0.98f;
 				if(NPC.life < 50 || NPC.scale < 0.4f)
-				{
 					NPC.active = false;
-				}
 				return;
 			}
-			//NPC putridPinky = Main.npc[pIndex];
-			Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<Dusts.BigPinkDust>());
+			Dust.NewDust(NPC.position, NPC.width, NPC.height, ModContent.DustType<Dusts.BigPinkDust>());
 		}
 	}
 }
