@@ -80,7 +80,7 @@ N/A
 
 Daily Log:
 
-2/9/25 to 2/15/25
+2/9/25 to 2/17/25
 1. Very beginning excavator
 2. Amulet of Emptiness added (simple void accessory)
 3. Import Achievement sprites (not yet standardized)
@@ -90,6 +90,8 @@ Daily Log:
 7. Emerald gem structure reworked. Spawns at the top of the sanctuary
 8. Conduits are now all sold by Archaeologist, and moon shards can be boughten at Invidia
 9. WIP Invidia Gateway Tile
+10. Added Shattered Mirror
+11. Anomaly Locator no longer needs to be favorited in order to work (Astrobit)
 
 1/28/25 to 2/7/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!
