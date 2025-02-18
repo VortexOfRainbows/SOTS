@@ -1028,7 +1028,7 @@ Mods: {
 				Tooltip:
 					'''
 					Displays the location of various anomalies, such as electromagnetic transmissions, wormholes, and teleported items, on the Minimap
-					Functions while equipped as an accessory, in the inventory, or worn as a vanity accessory
+					Functions while in the inventory, equipped as an accessory, or worn as a vanity accessory
 					'''
 			}
 
