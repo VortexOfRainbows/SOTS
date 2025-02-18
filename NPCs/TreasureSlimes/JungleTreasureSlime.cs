@@ -69,8 +69,6 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<VibePotion>(), 1, 4, 0.5f),
 				new TreasureSlimeItem(ItemType<FragmentOfNature>(), 3, 6, 0.3f),
 				new TreasureSlimeItem(ItemType<AlmondMilk>(), 5, 5, 0.3f),
-
-				new TreasureSlimeItem(ItemType<Items.AbandonedVillage.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
 		public override void ModifyAdditionalLoot(NPCLoot npcLoot)

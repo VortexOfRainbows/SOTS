@@ -17,7 +17,7 @@ Acknowledged But Likely Delayed:
 7. Player Draw layers draw in the incorrect position on the minimap when part of the head and gravity is reversed.
 8. Many SOTS items work inappropriately when upside down, such as Atlantis, Helios, and more... (This is probably not an important enough thing to fix)
 9. Scroll wheel with challenger's ring
-10. Banners/Lanterns to work on platforms (should be fairly easy), and to have proper tooltip text
+10. Lanterns to work on platforms (should be fairly easy), and Banners to have proper tooltip text
 11. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 12. Ammo Pouch + Infinity Pouch leads to some crazy combos...
 13. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
@@ -45,11 +45,12 @@ Update Objectives:
 	2. Solar Bulb item in the chest
 12. Add Achievements
 13. Invidia Gateway Tile (needs: glow, conduit connection)
+14. Add Sanctuary Music and Music Box
+	1. Make sure Subspace music plays here when SUBSPACE is alive
 
 ---WIP List---
 Abandoned village generation
 Make enemies spawn in the AV and Mines
-Update treasure slime loot tables (look at old and new treasure slimes)
 Made all available conduits spawn on worldgen
 
 ---Code Refactoring Needed List---
@@ -94,6 +95,10 @@ Daily Log:
 11. Anomaly Locator no longer needs to be favorited in order to work (Astrobit)
 12. Banners now sway in wind and can be placed on platforms properly!
 	1. Hardlight banners will not sway but can be placed on platforms
+13. Catalyst Bombs no longer break blocks near underworld layer
+	1. Subspace Serpent now only spawns in the sanctuary
+14. Subspace Serpent now tracks the center of the sanctuary for determining which direction to go initially with the serpent clone attack instead of the center of the world.
+15. Elemental Amulet no longer has a chance to drop from any non-Mutagen treasure slimes
 
 1/28/25 to 2/7/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!

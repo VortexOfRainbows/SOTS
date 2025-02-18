@@ -15,7 +15,6 @@ namespace SOTS.Projectiles.Celestial
     {
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Catalyst Bomb");
 			Main.projFrames[Projectile.type] = 2;
 		}
         public override void SetDefaults()
@@ -156,7 +155,7 @@ namespace SOTS.Projectiles.Celestial
 				}
 				for (int i = 0; i < 24; i++)
 					Gore.NewGore(Projectile.GetSource_Death(), Projectile.position + new Vector2(Main.rand.NextFloat(12, 36), 0).RotatedBy(MathHelper.ToRadians(i * 15)), default(Vector2), Main.rand.Next(61, 64), 1.25f);
-				if (player.ZoneUnderworldHeight)
+				if (player.ZoneUnderworldHeight && player.SOTSPlayer().SanctuaryBiome)
 				{
 					Terraria.Audio.SoundEngine.PlaySound(SoundID.Item119, Projectile.Center);
 					if (!NPC.AnyNPCs(ModContent.NPCType<SubspaceSerpentHead>()))
@@ -189,11 +188,11 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.rotation = reader.ReadSingle();
 			Projectile.timeLeft = reader.ReadInt32();
 		}
-		List<FireParticle> particleList = new List<FireParticle>();
-		bool runOnce = true;
-		float rotation = 3600; 
-		int count = 0;
-		float dist = 0;
+		private List<FireParticle> particleList = new List<FireParticle>();
+		private bool runOnce = true;
+		private float rotation = 3600; 
+		private int count = 0;
+		private float dist = 0;
 		public void cataloguePos()
 		{
 			for (int i = 0; i < particleList.Count; i++)
@@ -259,7 +258,8 @@ namespace SOTS.Projectiles.Celestial
 						num = 30;
 					if(Projectile.timeLeft % (20 - (int)(num * 0.5f)) == 0)
 					{
-						Detonate(dist / 16f);
+						if((Main.maxTilesY - 235) * 16 > Projectile.Center.Y)
+							Detonate(dist / 16f);
 						for (int i = 0; i < 360; i += 6)
 						{
 							if (Main.rand.NextBool(3))

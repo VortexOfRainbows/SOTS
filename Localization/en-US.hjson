@@ -233,8 +233,8 @@ Mods: {
 			}
 
 			SanctuaryBiome: {
-				DisplayName: Sanctuary Biome
-				TownNPCDialogueName: the Sanctuary Biome
+				DisplayName: Sanctuary
+				TownNPCDialogueName: the Sanctuary
 			}
 		}
 
@@ -7563,7 +7563,7 @@ Mods: {
 
 				BossChecklistIntegration: {
 					EntryName: Subspace Serpent
-					SpawnInfo: Tear a dimensional rift in hell by detonating a [i:SOTS/CatalystBomb]
+					SpawnInfo: Tear a dimensional rift in hell by detonating a [i:SOTS/CatalystBomb] in the Sanctuary
 					DespawnMessage: Subspace Serpent is no longer after you
 				}
 			}
