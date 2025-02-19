@@ -164,4 +164,19 @@ namespace SOTS.Projectiles.AbandonedVillage
             }
         }
     }
+    public class FriendlyBridgeBurnerFlame : BridgeburnerFlame
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 60;
+        }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.Defense *= 0;
+        }
+    }
 }

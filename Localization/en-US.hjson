@@ -6683,6 +6683,11 @@ Mods: {
 				DisplayName: Shattered Mirror
 				Tooltip: Gaze in the mirror to return 'home'
 			}
+
+			StreetCleaner: {
+				DisplayName: Street Cleaner
+				Tooltip: Ignores enemy defense
+			}
 		}
 
 		ItemTooltip: {
@@ -8610,6 +8615,7 @@ Mods: {
 			BridgeburnerDeadzone.DisplayName: Bridgeburner Deadzone
 			BridgeburnerLaser.DisplayName: Bridgeburner Laser
 			BridgeburnerFlame.DisplayName: Bridgeburner Flame
+			FriendlyBridgeBurnerFlame.DisplayName: Friendly Bridge Burner Flame
 		}
 
 		DamageClasses: {

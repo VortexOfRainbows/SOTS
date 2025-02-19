@@ -61,7 +61,7 @@ Bestiary setup organization.
 ImportantTiles code (archaeologist tiles)
 
 ---Balance Needed List (by Severity, -weak, +strong)---
-5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot, +Little Woes, +Accretion Disc
+5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot, +Little Woes, +Accretion Disc, -Street Cleaner
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. Earthen Gizmo, Corpsebloom, Throe, Famished
 2. +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
@@ -99,6 +99,8 @@ Daily Log:
 	1. Subspace Serpent now only spawns in the sanctuary
 14. Subspace Serpent now tracks the center of the sanctuary for determining which direction to go initially with the serpent clone attack instead of the center of the world.
 15. Elemental Amulet no longer has a chance to drop from any non-Mutagen treasure slimes
+16. Added Street Cleaner. Rather basic ranged void weapon, but should be fairly powerful due to ignoring all defense.
+	1. Not tested in MP (but it really should work on account of functioning like Bridgeburner)
 
 1/28/25 to 2/7/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!

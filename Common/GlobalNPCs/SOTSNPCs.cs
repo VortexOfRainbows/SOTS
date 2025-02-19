@@ -416,8 +416,7 @@ namespace SOTS.Common.GlobalNPCs
                 }
                 if (npc.type == ModContent.NPCType<EvilConstruct>() || npc.type == ModContent.NPCType<Bridgeburner>())
                 {
-					if(npc.type == ModContent.NPCType<EvilConstruct>())
-                        npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<DeathSpiral>(), 30, 25));
+					npcLoot.Add(ItemDropRule.NormalvsExpert(npc.type == ModContent.NPCType<EvilConstruct>() ? ModContent.ItemType<DeathSpiral>() : ModContent.ItemType<StreetCleaner>(), 30, 25));
                     type = ModContent.ItemType<EvilPlating>();
                 }
                 if (npc.type == ModContent.NPCType<InfernoConstruct>())
