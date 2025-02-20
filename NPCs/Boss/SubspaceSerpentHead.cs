@@ -4,6 +4,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
+using SOTS.Common.Systems;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
 using SOTS.Items.Celestial;
@@ -47,9 +48,9 @@ namespace SOTS.NPCs.Boss
             get => NPC.ai[3];
             set => NPC.ai[3] = value;
         }
-        int phase = 0;
-        int despawn = 0;
-        Vector2 directVelo;
+        private int phase = 0;
+        private int despawn = 0;
+        private Vector2 directVelo;
         public override void SetStaticDefaults()
         {
             NPCID.Sets.ImmuneToRegularBuffs[NPC.type] = true;
@@ -86,8 +87,8 @@ namespace SOTS.NPCs.Boss
             NPC.target = -1;
             Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SubspaceSerpent");
         }
-        bool hasSpawnedProjectile = false;
-        int hasSpawnedProjcounter = 0;
+        private bool hasSpawnedProjectile = false;
+        private int hasSpawnedProjcounter = 0;
         public override bool CheckDead()
         {
             if (!hasSpawnedProjectile)
@@ -293,8 +294,8 @@ namespace SOTS.NPCs.Boss
             NPC.damage = NPC.damage * 4 / 5;
         }
         public bool hasEnteredSecondPhase = false;
-        bool runOnce = true;
-        float rotate = 0;
+        private bool runOnce = true;
+        private float rotate = 0;
         public void TransitionPhase(int Tphase)
         {
             if (Tphase == 0)
@@ -341,7 +342,7 @@ namespace SOTS.NPCs.Boss
             }
             phase = Tphase;
         }
-        bool left;
+        private bool left;
         public override void FindFrame(int frameHeight)
         {
             int targetFrame = 0;
@@ -365,6 +366,15 @@ namespace SOTS.NPCs.Boss
                 currentFrame = 0;
             NPC.frame.Y = currentFrame * frameHeight;
         }
+        public int CenterOfArena
+        { 
+            get
+            {
+                if (ImportantTilesWorld.InvidiaPortal.HasValue)
+                    return ImportantTilesWorld.InvidiaPortal.Value.X;
+                return Main.maxTilesX / 2;
+            }
+        }
         public override void AI()
         {
             Player player = Main.player[NPC.target];
@@ -379,7 +389,7 @@ namespace SOTS.NPCs.Boss
             if (runOnce)
             {
                 hasEnteredSecondPhase = false;
-                left = player.Center.X < (Main.maxTilesX / 2) * 16;
+                left = player.Center.X < CenterOfArena * 16;
                 runOnce = false;
                 rotate = Main.rand.Next(120);
                 TransitionPhase(0);

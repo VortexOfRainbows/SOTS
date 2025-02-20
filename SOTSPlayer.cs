@@ -277,8 +277,9 @@ namespace SOTS
 		public bool AnomalyBiome => Player.InModBiome<Biomes.AnomalyBiome>();
 		public bool PyramidBiome => Player.InModBiome<Biomes.PyramidBiome>();
         public bool AbandonedVillageBiome => Player.InModBiome<Biomes.AbandonedVillageBiome>();
+        public bool SanctuaryBiome => Player.InModBiome<Biomes.SanctuaryBiome>();
         public bool backUpBow = false;
-		public bool backUpBowVisual = false;
+        public bool backUpBowVisual = false;
 		public bool DoubleVisionActive = false;
 		public int BonusFishingLines = 0;
 		public bool Lockpick = false;

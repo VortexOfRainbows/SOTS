@@ -66,8 +66,6 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemID.GravitationPotion, 1, 4, 0.25f),
 				new TreasureSlimeItem(ItemType<FragmentOfTide>(), 3, 6, 0.25f),
 				new TreasureSlimeItem(ItemType<AvocadoSoup>(), 5, 5, 0.25f),
-
-				new TreasureSlimeItem(ItemType<Items.AbandonedVillage.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
 		public override void ModifyAdditionalLoot(NPCLoot npcLoot)

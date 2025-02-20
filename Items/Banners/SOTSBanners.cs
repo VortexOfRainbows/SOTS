@@ -24,24 +24,24 @@ namespace SOTS.Items.Banners
 	{
 		public override void NearbyEffects(int i, int j, bool closer)
 		{
-                if (closer)
-                {
-                    return;
-                }
-                // Calculate the tile place style, then map that place style to an ItemID and BannerID.
-                int tileStyle = TileObjectData.GetTileStyle(Main.tile[i, j]);
-                int itemType = TileLoader.GetItemDropFromTypeAndStyle(Type, tileStyle);
-                int bannerID = NPCLoader.BannerItemToNPC(itemType);
-                if (bannerID == -1)
-                {
-                    return;
-                }
-                // Once the BannerID and Item type have been calculated, we apply the banner buff
-                if (ItemID.Sets.BannerStrength.IndexInRange(itemType) && ItemID.Sets.BannerStrength[itemType].Enabled)
-                {
-                    Main.SceneMetrics.NPCBannerBuff[bannerID] = true;
-                    Main.SceneMetrics.hasBanner = true;
-                }
+            if (closer)
+            {
+                return;
+            }
+            // Calculate the tile place style, then map that place style to an ItemID and BannerID.
+            int tileStyle = TileObjectData.GetTileStyle(Main.tile[i, j]);
+            int itemType = TileLoader.GetItemDropFromTypeAndStyle(Type, tileStyle);
+            int bannerID = NPCLoader.BannerItemToNPC(itemType);
+            if (bannerID == -1)
+            {
+                return;
+            }
+            // Once the BannerID and Item type have been calculated, we apply the banner buff
+            if (ItemID.Sets.BannerStrength.IndexInRange(itemType) && ItemID.Sets.BannerStrength[itemType].Enabled)
+            {
+                Main.SceneMetrics.NPCBannerBuff[bannerID] = true;
+                Main.SceneMetrics.hasBanner = true;
+            }
             if (bannerID == NPCType<PhaseAssaulterHead>()) {
                 Main.SceneMetrics.NPCBannerBuff[NPCType<PhaseAssaulterBody>()] = true;
                 Main.SceneMetrics.NPCBannerBuff[NPCType<PhaseAssaulterTail>()] = true;
@@ -592,6 +592,9 @@ namespace SOTS.Items.Banners
                 zero = Vector2.Zero;
             }
             zero.Y -= 2;
+            int top = j - Main.tile[i, j].TileFrameY / 18;
+            if (Main.tileSolid[Main.tile[i, top - 1].TileType] && Main.tileSolidTop[Main.tile[i, top - 1].TileType])
+                zero.Y -= 8;
             for (int k = 0; k < 6; k++)
             {
                 float x = Main.rand.Next(-10, 11) * 0.05f;
@@ -650,10 +653,11 @@ namespace SOTS.Items.Banners
             int frameY = Main.tile[i, j].TileFrameY;
             Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
-            {
                 zero = Vector2.Zero;
-            }
             zero.Y -= 2;
+            int top = j - Main.tile[i, j].TileFrameY / 18;
+            if (Main.tileSolid[Main.tile[i, top - 1].TileType] && Main.tileSolidTop[Main.tile[i, top - 1].TileType])
+                zero.Y -= 8;
             for (int k = 0; k < 6; k++)
             {
                 float x = Main.rand.Next(-10, 11) * 0.05f;
@@ -705,16 +709,18 @@ namespace SOTS.Items.Banners
             {
                 return true;
             }
+            Texture2D textureTile = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerTile").Value;
             Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerTileFill").Value;
             Texture2D texture2 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerTileOutline").Value;
             Texture2D texture3 = Mod.Assets.Request<Texture2D>("Items/Banners/HoloEyeBannerTilePupil").Value;
             Color color = new Color(90, 90, 90, 0);
             Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
-            {
                 zero = Vector2.Zero;
-            }
             zero.Y -= 2;
+            int top = j - Main.tile[i, j].TileFrameY / 18;
+            if (Main.tileSolid[Main.tile[i, top - 1].TileType] && Main.tileSolidTop[Main.tile[i, top - 1].TileType])
+                zero.Y -= 8;
             for (int k = 0; k < 6; k++)
             {
                 float x = Main.rand.Next(-10, 11) * 0.05f;
@@ -730,14 +736,16 @@ namespace SOTS.Items.Banners
                 x -= 2;
                 y -= 2;
                 if (k == 0)
-                    Main.spriteBatch.Draw(texture, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero, null, color * 0.5f, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-                Main.spriteBatch.Draw(texture2, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero, null, color, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+                    Main.spriteBatch.Draw(texture, new Vector2((i * 16 - (int)Main.screenPosition.X) + x, (j * 16 - (int)Main.screenPosition.Y) + y) + zero, null, color * 0.5f, 0f, default, 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture2, new Vector2((i * 16 - (int)Main.screenPosition.X) + x, (j * 16 - (int)Main.screenPosition.Y) + y) + zero, null, color, 0f, default, 1f, SpriteEffects.None, 0f);
 
                 x += 10;
                 y += 40;
-                Main.spriteBatch.Draw(texture3, new Vector2((float)(i * 16 - (int)Main.screenPosition.X) + x, (float)(j * 16 - (int)Main.screenPosition.Y) + y) + zero + between, null, color, 0f, new Vector2(4, 4), 1f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture3, new Vector2((i * 16 - (int)Main.screenPosition.X) + x, (j * 16 - (int)Main.screenPosition.Y) + y) + zero + between, null, color, 0f, new Vector2(4, 4), 1f, SpriteEffects.None, 0f);
             }
-            return true;
+            if (Main.tile[i, j].TileFrameY == 0)
+                Main.spriteBatch.Draw(textureTile, new Vector2((i * 16 - (int)Main.screenPosition.X), (j * 16 - (int)Main.screenPosition.Y)) + zero, null, Lighting.GetColor(i, j), 0f, default, 1f, SpriteEffects.None, 0f);
+            return false;
         }
         public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects)
         {

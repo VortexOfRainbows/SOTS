@@ -65,8 +65,6 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<ExplosiveKnife>(), 30, 50, 1f),
 				new TreasureSlimeItem(ItemType<FragmentOfEarth>(), 3, 6, 0.2f),
 				new TreasureSlimeItem(ItemType<CursedCaviar>(), 5, 5, 0.2f),
-
-				new TreasureSlimeItem(ItemType<Items.AbandonedVillage.VisionAmulet>(), 1, 1, 0.01f)
 			};
 		}
 		public override void ModifyAdditionalLoot(NPCLoot npcLoot)
