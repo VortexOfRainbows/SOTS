@@ -174,7 +174,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			Item.width = 32;
-			Item.height = 38;
+			Item.height = 40;
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateElement(DissolvingElementsPlayer DEP)
@@ -212,7 +212,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			Item.width = 38;
-			Item.height = 48;
+			Item.height = 50;
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateElement(DissolvingElementsPlayer DEP)
@@ -230,7 +230,7 @@ namespace SOTS.Items.Fragments
 		public override void SafeSetDefaults()
 		{
 			Item.width = 42;
-			Item.height = 40;
+			Item.height = 42;
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateElement(DissolvingElementsPlayer DEP)
