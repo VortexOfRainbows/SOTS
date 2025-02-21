@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -262,6 +263,10 @@ namespace SOTS.Items.Invidia
             g = .443f * mult;
             b = .196f * mult;
         }
+        public bool ValidTile(int i, int j)
+        {
+            return Main.tile[i, j].HasTile && Main.tileSolid[Main.tile[i, j].TileType] && !Main.tileSolidTop[Main.tile[i, j].TileType] && Main.tileBrick[Main.tile[i, j].TileType];
+        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D tileTexture = TextureAssets.Tile[Type].Value;
@@ -275,14 +280,14 @@ namespace SOTS.Items.Invidia
             int c = SOTS.Config.lowFidelityMode ? 3 : 6;
             int d = SOTS.Config.lowFidelityMode ? 120 : 60;
 			float moonDist = .4f + 1.8f * SOTSWorld.MoonPhasePercent;
-            bool top = Main.tile[i, j - 1].HasTile && (Main.tile[i, j - 1].Slope == 0 || Main.tile[i, j - 1].TopSlope);
-            bool bot = Main.tile[i, j + 1].HasTile && (Main.tile[i, j + 1].Slope == 0 || Main.tile[i, j + 1].BottomSlope);
-            bool left = Main.tile[i - 1, j].HasTile && (Main.tile[i - 1, j].Slope == 0 || Main.tile[i - 1, j].LeftSlope);
-            bool right = Main.tile[i + 1, j].HasTile && (Main.tile[i + 1, j].Slope == 0 || Main.tile[i - 1, j].RightSlope);
-            bool topLeft = Main.tile[i - 1, j - 1].HasTile && (Main.tile[i - 1, j - 1].Slope == SlopeType.SlopeDownRight || Main.tile[i - 1, j - 1].Slope == 0);
-            bool topRight = Main.tile[i + 1, j - 1].HasTile && (Main.tile[i + 1, j - 1].Slope == SlopeType.SlopeDownLeft || Main.tile[i + 1, j - 1].Slope == 0);
-            bool botLeft = Main.tile[i - 1, j + 1].HasTile && (Main.tile[i - 1, j + 1].Slope == SlopeType.SlopeUpRight || Main.tile[i - 1, j + 1].Slope == 0);
-            bool botRight = Main.tile[i + 1, j + 1].HasTile && (Main.tile[i + 1, j + 1].Slope == SlopeType.SlopeUpLeft || Main.tile[i + 1, j + 1].Slope == 0);
+            bool top = ValidTile(i, j - 1) && (Main.tile[i, j - 1].Slope == 0 || Main.tile[i, j - 1].TopSlope);
+            bool bot = ValidTile(i, j + 1) && (Main.tile[i, j + 1].Slope == 0 || Main.tile[i, j + 1].BottomSlope);
+            bool left = ValidTile(i - 1, j) && (Main.tile[i - 1, j].Slope == 0 || Main.tile[i - 1, j].LeftSlope);
+            bool right = ValidTile(i + 1, j) && (Main.tile[i + 1, j].Slope == 0 || Main.tile[i - 1, j].RightSlope);
+            bool topLeft = ValidTile(i - 1, j - 1) && (Main.tile[i - 1, j - 1].Slope == SlopeType.SlopeDownRight || Main.tile[i - 1, j - 1].Slope == 0);
+            bool topRight = ValidTile(i + 1, j - 1) && (Main.tile[i + 1, j - 1].Slope == SlopeType.SlopeDownLeft || Main.tile[i + 1, j - 1].Slope == 0);
+            bool botLeft = ValidTile(i - 1, j + 1) && (Main.tile[i - 1, j + 1].Slope == SlopeType.SlopeUpRight || Main.tile[i - 1, j + 1].Slope == 0);
+            bool botRight = ValidTile(i + 1, j + 1) && (Main.tile[i + 1, j + 1].Slope == SlopeType.SlopeUpLeft || Main.tile[i + 1, j + 1].Slope == 0);
             bool drawTopLeft = top && left && !topLeft;
             bool drawTopRight = top && right && !topRight;
             bool drawBotLeft = bot && left && !botLeft;

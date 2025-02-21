@@ -631,17 +631,20 @@ namespace SOTS.WorldgenHelpers
             if (style == 3)
                 style = 0;
             ushort Invidia = (ushort)ModContent.TileType<InvidiaPlatingTile>();
-            ushort Evostone = (ushort)ModContent.TileType<EvostoneBrickTile>();
+            ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
+            ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
             ushort EvostoneWall = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
             if(style == 4)
             {
-                killBlocks = false;
                 style = 1;
                 EvostoneWall = (ushort)ModContent.WallType<EvostoneGrandPillarWall>();
             }
-            for (int i = x; i <= endX; i++)
+            int entranceLevel = Ceiling + 65;
+            for (int j = y; j <= endY; j++)
             {
-                for (int j = y; j <= endY; j++)
+                if(killBlocks)
+                    killBlocks = j < entranceLevel;
+                for (int i = x; i <= endX; i++)
                 {
                     Tile t = Main.tile[i, j];
                     if(style == 2)
@@ -662,7 +665,7 @@ namespace SOTS.WorldgenHelpers
                                 if(topLayer && j <= y && i != x && i != endX)
                                     t.TileType = Invidia;
                                 else
-                                    t.TileType = Evostone;
+                                    t.TileType = EvostoneBrick;
                                 t.HasTile = true;
                                 t.LiquidAmount = 0;
                             }
@@ -674,7 +677,7 @@ namespace SOTS.WorldgenHelpers
                         }
                         if (i > x && i < endX && j > y && j < endY)
                         {
-                            if(killBlocks && t.TileType != Invidia && t.TileType != Evostone)
+                            if(killBlocks && t.TileType != Invidia && t.TileType != EvostoneBrick)
                             {
                                 t.ClearTile();
                             }

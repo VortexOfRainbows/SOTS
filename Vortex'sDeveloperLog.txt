@@ -45,8 +45,6 @@ Update Objectives:
 	2. Solar Bulb item in the chest
 12. Add Achievements
 13. Invidia Gateway Tile (needs: glow, conduit connection)
-14. Add Sanctuary Music and Music Box
-	1. Make sure Subspace music plays here when SUBSPACE is alive
 
 ---WIP List---
 Abandoned village generation
@@ -81,7 +79,7 @@ N/A
 
 Daily Log:
 
-2/9/25 to 2/18/25
+2/9/25 to 2/20/25
 1. Very beginning excavator
 2. Amulet of Emptiness added (simple void accessory)
 3. Import Achievement sprites (not yet standardized)
@@ -101,6 +99,7 @@ Daily Log:
 15. Elemental Amulet no longer has a chance to drop from any non-Mutagen treasure slimes
 16. Added Street Cleaner. Rather basic ranged void weapon, but should be fairly powerful due to ignoring all defense.
 	1. Not tested in MP (but it really should work on account of functioning like Bridgeburner)
+17. Sanctuary Music Box and some worldgen fixes
 
 1/28/25 to 2/7/25  
 1. Added Tardigrades of 4 different colors, which can spawn in space! Works in MP~!

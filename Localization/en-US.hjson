@@ -6688,6 +6688,11 @@ Mods: {
 				DisplayName: Street Cleaner
 				Tooltip: Ignores enemy defense
 			}
+
+			SanctuaryMusicBox: {
+				DisplayName: Sanctuary Music Box
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7440,6 +7445,7 @@ Mods: {
 			RuinedStatueTile.MapEntry: Ruined Statue Tile
 			SerpentStatueTile.MapEntry: Serpent Statue Tile
 			InvidiaGatewayTile.MapEntry: Invidia Gateway Tile
+			SanctuaryMusicBoxTile.MapEntry: Sanctuary Music Box Tile
 		}
 
 		WorldGeneration: {
