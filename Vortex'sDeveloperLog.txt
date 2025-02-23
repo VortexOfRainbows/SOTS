@@ -41,7 +41,7 @@ Update Objectives:
 9. Upgrade item to the Hydrokinetic Antennae (Pending)
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 11. Sanctuary! (In Progress)
-	1. Tiles: Overgrown Vespera Brick (change grass color and add foliage), Invidia Portal Plating
+	1. Tiles: Invidia Portal Plating
 	2. Solar Bulb item in the chest
 12. Add Achievements
 13. Invidia Gateway Tile (needs: glow, conduit connection)
@@ -82,6 +82,7 @@ Daily Log:
 2/22/25
 1. Music helper to help reorganize code
 2. Putrid Pinky alt song from Bananalizard
+3. Recolor overgrown Evostone Brick + added Foliage
 
 2/9/25 to 2/20/25
 1. Very beginning excavator

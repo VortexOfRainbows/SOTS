@@ -21,4 +21,5 @@ namespace SOTS.Dusts
     public class FamishedDustCorruption : BasicDust { }
     public class FamishedDustCrimson : BasicDust { }
     public class EvostoneDust : BasicDust { }
+    public class InvidiaGrassDust : BasicDust { }
 }

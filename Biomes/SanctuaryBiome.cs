@@ -23,7 +23,7 @@ namespace SOTS.Biomes
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player)
 		{
-			return player.ZoneUnderworldHeight && SOTSWorld.SanctuaryBiome >= 50;
+			return (player.ZoneUnderworldHeight || player.Center.Y > (Main.maxTilesY - 250) * 16) && SOTSWorld.SanctuaryBiome >= 50;
 		}
         public override void OnInBiome(Player player)
         {
