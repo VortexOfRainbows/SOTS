@@ -89,7 +89,7 @@ namespace SOTS.NPCs.Boss.Glowmoth
 			NPC.boss = true;
 			NPC.dontTakeDamage = true;
 			NPC.alpha = 255;
-            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Glowmoth");
+            Music = MusicHelper.Glowmoth;
 			SceneEffectPriority = SceneEffectPriority.BossLow;
         }
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */

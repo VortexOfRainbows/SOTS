@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Projectiles;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,7 +10,8 @@ namespace SOTS.NPCs.Boss
 {	
 	[AutoloadBossHead]
 	public class PutridPinky1 : ModNPC
-	{	int despawn = 0;
+	{	
+		private int despawn = 0;
 		public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 2;
@@ -44,7 +44,7 @@ namespace SOTS.NPCs.Boss
             NPC.netAlways = true;
 			NPC.alpha = 70;
 		}
-		Vector2 aimTo = new Vector2(-1, -1);
+		private Vector2 aimTo = new Vector2(-1, -1);
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Player player = Main.player[NPC.target];

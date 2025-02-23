@@ -169,7 +169,6 @@ Mods: {
 					'''
 					When on, SOTS will play the soundtrack made by Banana Lizard where applicable
 					When off, SOTS will play the soundtrack made by Heart Plus Up where applicable
-					Currently only affects the Pyramid and The Advisor
 					'''
 			}
 		}

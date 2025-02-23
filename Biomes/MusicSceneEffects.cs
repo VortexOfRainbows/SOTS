@@ -1,3 +1,4 @@
+using SOTS.Helpers;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -5,7 +6,7 @@ namespace SOTS.Biomes
 {
 	public class SecretFound : ModSceneEffect
 	{
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SecretFound");
+        public override int Music => MusicHelper.Secret;
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh + 1;
         public override bool IsSceneEffectActive(Player player)
         {
@@ -19,7 +20,7 @@ namespace SOTS.Biomes
     }
     public class PyramidBattle : ModSceneEffect
     {
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PyramidBattle");
+        public override int Music => MusicHelper.PyramidBattle;
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
         public override bool IsSceneEffectActive(Player player)
         {
@@ -30,7 +31,7 @@ namespace SOTS.Biomes
     }
     public class Knuckles : ModSceneEffect
     {
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/KnucklesTheme"); //balls in you jaws
+        public override int Music => MusicHelper.Knuckles; //balls in you jaws
         public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
         public override bool IsSceneEffectActive(Player player)
         {

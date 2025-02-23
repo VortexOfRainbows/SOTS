@@ -94,7 +94,7 @@ namespace SOTS.NPCs.Boss.Curse
 			NPC.noTileCollide = true;
 			NPC.HitSound = null;
 			NPC.DeathSound = SoundID.NPCDeath6;
-			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PharaohsCurse");
+			Music = MusicHelper.PharaohsCurse;
 			SceneEffectPriority = SceneEffectPriority.BossMedium;
 			NPC.netAlways = true;
 			NPC.alpha = 255;

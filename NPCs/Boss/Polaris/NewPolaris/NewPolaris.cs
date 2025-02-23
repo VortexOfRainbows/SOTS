@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.CodeAnalysis.Operations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Permafrost;
 using SOTS.Prim;
@@ -149,7 +150,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Polaris");
+            Music = MusicHelper.Polaris;
             NPC.netAlways = true;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;

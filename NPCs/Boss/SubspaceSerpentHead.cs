@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
 using SOTS.Common.Systems;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Celestial;
 using SOTS.Projectiles.Celestial;
@@ -85,7 +86,7 @@ namespace SOTS.NPCs.Boss
             NPC.npcSlots = 25;
             NPC.netAlways = true;
             NPC.target = -1;
-            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/SubspaceSerpent");
+            Music = MusicHelper.SubspaceSerpent;
         }
         private bool hasSpawnedProjectile = false;
         private int hasSpawnedProjcounter = 0;

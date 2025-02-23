@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.Graphics.Capture;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using SOTS.Helpers;
 
 namespace SOTS.Biomes
 {
@@ -14,7 +15,7 @@ namespace SOTS.Biomes
 		//public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("ExampleMod/ExampleWaterStyle"); // Sets a water style for when inside this biome
 		//public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("ExampleMod/ExampleSurfaceBackgroundStyle");
 		//public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Crimson;
-		public static int music => MusicLoader.GetMusicSlot(SOTS.Instance, SOTSConfig.Instance.alternativeMusic ? "Sounds/Music/BananaLizard/Pyramid" : "Sounds/Music/CursedPyramid");
+		public static int music => MusicHelper.Pyramid;
 		public override int Music => music;
 		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 

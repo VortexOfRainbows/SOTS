@@ -39,6 +39,8 @@ using SOTS.Common.ModPlayers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Earth;
 using SOTS.Biomes;
+using SOTS.Helpers;
+using SOTS.NPCs.Boss.Polaris;
 
 namespace SOTS
 {
@@ -165,20 +167,20 @@ namespace SOTS
 				yabhb.Call("hbFinishSingle", ModContent.NPCType<SubspaceSerpentHead>());
 			}*/
 			//Music Box Stuff
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Glowmoth"), ModContent.ItemType<MothMusicBox>(), ModContent.TileType<MothMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PutridPinky"), ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, Config.alternativeMusic ? "Sounds/Music/BananaLizard/Advisor" : "Sounds/Music/Advisor"), ModContent.ItemType<AdvisorMusicBox>(), ModContent.TileType<AdvisorMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Polaris"), ModContent.ItemType<PolarisMusicBox>(), ModContent.TileType<PolarisMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/BananaLizard/Sanctuary"), ModContent.ItemType<SanctuaryMusicBox>(), ModContent.TileType<SanctuaryMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/SubspaceSerpent"), ModContent.ItemType<SubspaceSerpentMusicBox>(), ModContent.TileType<SubspaceSerpentMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, PyramidBiome.music, ModContent.ItemType<AncientPyramidMusicBox>(), ModContent.TileType<AncientPyramidMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PyramidBattle"), ModContent.ItemType<PyramidBattleMusicBox>(), ModContent.TileType<PyramidBattleMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Planetarium"), ModContent.ItemType<PlanetariumMusicBox>(), ModContent.TileType<PlanetariumMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/KnucklesTheme"), ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/Lux"), ModContent.ItemType<LuxMusicBox>(), ModContent.TileType<LuxMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/PharaohsCurse"), ModContent.ItemType<CurseMusicBox>(), ModContent.TileType<CurseMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/BananaLizard/AVSurface"), ModContent.ItemType<AVMusicBox>(), ModContent.TileType<AVMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicLoader.GetMusicSlot(this, "Sounds/Music/BananaLizard/AVUnderground"), ModContent.ItemType<AVMinesMusicBox>(), ModContent.TileType<AVMinesMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.Glowmoth, ModContent.ItemType<MothMusicBox>(), ModContent.TileType<MothMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.PutridPinky, ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.Advisor, ModContent.ItemType<AdvisorMusicBox>(), ModContent.TileType<AdvisorMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.Polaris, ModContent.ItemType<PolarisMusicBox>(), ModContent.TileType<PolarisMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.Sanctuary, ModContent.ItemType<SanctuaryMusicBox>(), ModContent.TileType<SanctuaryMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.SubspaceSerpent, ModContent.ItemType<SubspaceSerpentMusicBox>(), ModContent.TileType<SubspaceSerpentMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.Pyramid, ModContent.ItemType<AncientPyramidMusicBox>(), ModContent.TileType<AncientPyramidMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.PyramidBattle, ModContent.ItemType<PyramidBattleMusicBox>(), ModContent.TileType<PyramidBattleMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.Planetarium, ModContent.ItemType<PlanetariumMusicBox>(), ModContent.TileType<PlanetariumMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.Knuckles, ModContent.ItemType<KnucklesMusicBox>(), ModContent.TileType<KnucklesMusicBoxTile>()); //WHY THE FUCK
+			MusicLoader.AddMusicBox(this, MusicHelper.Lux, ModContent.ItemType<LuxMusicBox>(), ModContent.TileType<LuxMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.PharaohsCurse, ModContent.ItemType<CurseMusicBox>(), ModContent.TileType<CurseMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.AbandonedVillageSurface, ModContent.ItemType<AVMusicBox>(), ModContent.TileType<AVMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.AbandonedVillageUnderground, ModContent.ItemType<AVMinesMusicBox>(), ModContent.TileType<AVMinesMusicBoxTile>());
 			SOTSItem.LoadArrays();
             SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();

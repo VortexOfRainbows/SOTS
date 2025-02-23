@@ -59,7 +59,7 @@ namespace SOTS.NPCs.Boss.Lux
 			NPC.HitSound = SoundID.NPCHit54;
 			NPC.DeathSound = SoundID.NPCDeath6;
 			NPC.netAlways = false;
-			Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Lux");
+			Music = MusicHelper.Lux;
 			SceneEffectPriority = SceneEffectPriority.BossHigh;
 		}
 		public override void SendExtraAI(BinaryWriter writer)

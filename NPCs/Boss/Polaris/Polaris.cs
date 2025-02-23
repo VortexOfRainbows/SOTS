@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Chaos;
 using SOTS.Items.Permafrost;
@@ -74,7 +75,7 @@ namespace SOTS.NPCs.Boss.Polaris
             NPC.lavaImmune = true;
             NPC.noGravity = true;
             NPC.noTileCollide = true;
-            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Polaris");
+            Music = MusicHelper.Polaris;
 			NPC.netAlways = true;
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

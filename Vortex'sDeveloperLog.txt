@@ -79,6 +79,10 @@ N/A
 
 Daily Log:
 
+2/22/25
+1. Music helper to help reorganize code
+2. Putrid Pinky alt song from Bananalizard
+
 2/9/25 to 2/20/25
 1. Very beginning excavator
 2. Amulet of Emptiness added (simple void accessory)

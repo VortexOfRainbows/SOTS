@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Slime;
 using SOTS.Projectiles;
@@ -86,7 +87,7 @@ namespace SOTS.NPCs.Boss
             NPC.HitSound = SoundID.NPCHit1;
             NPC.DeathSound = SoundID.NPCDeath5;
 			NPC.alpha = 60;
-            Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/PutridPinky");
+			Music = MusicHelper.PutridPinky;
 		}
 		private const int alphaMin = 60;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
