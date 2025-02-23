@@ -213,11 +213,11 @@ namespace SOTS.Helpers
         public static Color PolarisColor(float lerp = 0)
         {
             return Color.Lerp(new Color(100, 100, 250), new Color(250, 100, 100), lerp);
-
         }
         public static Color TesseractColor(float radians, float lerp = 0.5f)
         {
             return Color.Lerp(Pastel(radians + SoulColorCounter * 9 / 130f), AmethystColor, lerp);
         }
+        public static readonly Color Evostone = new Color(46, 63, 77);
     }
 }

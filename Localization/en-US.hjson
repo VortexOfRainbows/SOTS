@@ -6692,6 +6692,11 @@ Mods: {
 				DisplayName: Sanctuary Music Box
 				Tooltip: ""
 			}
+
+			EvostonePlatform: {
+				DisplayName: Evostone Platform
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
