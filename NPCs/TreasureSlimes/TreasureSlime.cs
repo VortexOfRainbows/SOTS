@@ -121,7 +121,8 @@ namespace SOTS.NPCs.TreasureSlimes
 		{
 			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
 			NPCID.Sets.TrailingMode[NPC.type] = 2;
-		}
+			Main.npcFrameCount[NPC.type] = 2;
+        }
         public override Color? GetAlpha(Color drawColor)
         {
 			return drawColor * ((255f - NPC.alpha) / 255f);
@@ -135,7 +136,6 @@ namespace SOTS.NPCs.TreasureSlimes
 			NPC.alpha = 50;
 			NPC.color = temp;
 			NPC.rarity = 1;
-			Main.npcFrameCount[NPC.type] = 2;
 		}
 		public float runAwayCounter = 0;
 		public float runAwayDelay = 0;
@@ -205,6 +205,8 @@ namespace SOTS.NPCs.TreasureSlimes
 							type = 9;
                         if (NPC.type == NPCType<MutagenTreasureSlime>())
                             type = 10;
+                        //if (NPC.type == NPCType<SanctuaryTreasureSlime>())
+                        //    type = 11;
                         Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
 					}
 					runAwayDelay++;

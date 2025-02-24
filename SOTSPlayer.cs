@@ -1409,7 +1409,13 @@ namespace SOTS
                 itemDrop = Main.hardMode ? ModContent.ItemType<OtherworldCrate>() : ModContent.ItemType<PlanetariumCrate>();
             }
 
-		}
+			bool canCatchObsidianInOtherLiquids = liquidType != 1 && attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<SubspaceWormItem>();
+
+			if(canCatchObsidianInOtherLiquids && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
+            {
+                itemDrop = Main.hardMode ? ItemID.LavaCrateHard : ItemID.LavaCrate;
+            }
+        }
         /** minPower is the minimum power required, and yields a 1/maxRate chance of catching
 		*	maxPower is the maximum power required, and yields a 1/minRate chance of catching
 		*	rates are overall rounded down

@@ -919,7 +919,11 @@ namespace SOTS.Common.GlobalNPCs
 				else if (NPC.CountNPCS(ModContent.NPCType<Planetoid>()) < 2) //only two Planetoid max
 					pool.Add(ModContent.NPCType<Planetoid>(), 0.035f);
 			}
-		}
+			if(sPlayer.SanctuaryBiome)
+			{
+                pool.Add(ModContent.NPCType<SubspaceWorm>(), 2.5f);
+            }
+        }
         public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)
 		{
 			SpawnConditionBestiaryInfoElement Surface = BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface;

@@ -6700,11 +6700,16 @@ Mods: {
 
 			Dreamcatcher: {
 				DisplayName: Dreamcatcher
-				Tooltip: 
-				'''
-				Prevents attacks from dealing damage to your void meter
-				Increases void damage by 10%
-				'''
+				Tooltip:
+					'''
+					Prevents attacks from dealing damage to your void meter
+					Increases void damage by 10%
+					'''
+			}
+
+			SubspaceWormItem: {
+				DisplayName: Subspace Worm
+				Tooltip: Allows the catching of Obsidian Crates in any liquid
 			}
 		}
 
@@ -7691,6 +7696,7 @@ Mods: {
 			Bridgeburner.DisplayName: Bridgeburner
 			Excavator.DisplayName: Excavator
 			ExcavatorBody.DisplayName: Excavator Body
+			SubspaceWorm.DisplayName: Subspace Worm
 		}
 
 		Bestiary: {

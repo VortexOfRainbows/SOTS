@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
 using Steamworks;
+using SOTS.Items.Furniture.Evostone;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -298,7 +299,7 @@ namespace SOTS.WorldgenHelpers
                                 case 21:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, 19, true, true, -1, 28);
+                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 28);
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -314,7 +315,7 @@ namespace SOTS.WorldgenHelpers
                                 case 23:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, 19, true, true, -1, 28);
+                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 28);
                                     tile.Slope = (SlopeType)2;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -327,7 +328,7 @@ namespace SOTS.WorldgenHelpers
                                 case 25:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, 19, true, true, -1, 28);
+                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 28);
                                     tile.Slope = (SlopeType)1;
                                     tile.IsHalfBlock = false;
                                     break;
