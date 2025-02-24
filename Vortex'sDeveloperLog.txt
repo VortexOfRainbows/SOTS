@@ -80,11 +80,12 @@ N/A
 
 Daily Log:
 
-2/22/25
+2/22/25 to 2/24/25
 1. Music helper to help reorganize code
 2. Putrid Pinky alt song from Bananalizard
 3. Recolor overgrown Evostone Brick + added Foliage
 4. Evostone platform
+5. Add Dreamcatcher (Kekcroc)
 
 2/9/25 to 2/20/25
 1. Very beginning excavator

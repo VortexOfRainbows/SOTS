@@ -251,7 +251,7 @@ namespace SOTS
 		public int shardSpellExtra = 0;
 		public int frigidJavelinBoost = 0;
 		public bool frigidJavelinNoCost = false;
-		public int orbitalCounter
+        public int orbitalCounter
         {
 			get => SOTSWorld.GlobalCounter + Player.whoAmI * 30;
         }
@@ -362,7 +362,7 @@ namespace SOTS
 		public bool KeepersBox = false;
         public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
-		public bool AcidInject = false, Earthdrive = false, Sunbulb = false;
+		public bool AcidInject = false, Earthdrive = false, Sunbulb = false, Dreamcatcher = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -1016,7 +1016,7 @@ namespace SOTS
 				return;
 			}
 			SOTSWorld.lightingChange = 0f;
-			BlazingQuiver = WishingStar = AcidInject = Sunbulb = false;
+			BlazingQuiver = WishingStar = AcidInject = Sunbulb = Dreamcatcher = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
 			if(VMincubator)

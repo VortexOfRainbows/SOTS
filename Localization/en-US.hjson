@@ -6697,6 +6697,15 @@ Mods: {
 				DisplayName: Evostone Platform
 				Tooltip: ""
 			}
+
+			Dreamcatcher: {
+				DisplayName: Dreamcatcher
+				Tooltip: 
+				'''
+				Prevents attacks from dealing damage to your void meter
+				Increases void damage by 10%
+				'''
+			}
 		}
 
 		ItemTooltip: {

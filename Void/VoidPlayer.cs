@@ -455,6 +455,8 @@ namespace SOTS.Void
 		}
 		public static void VoidBurn(Mod mod, Player player, int damage, int duration)
 		{
+			if (player.SOTSPlayer().Dreamcatcher)
+				return;
 			VoidDamage(mod, player, damage);
 			player.AddBuff(BuffType<VoidBurn>(), duration, false);
 		}
@@ -462,10 +464,8 @@ namespace SOTS.Void
 		public static void VoidDamage(Mod mod, Player player, int damage)
 		{
 			VoidPlayer local = ModPlayer(player);
-			if (local.voidDamageTimer > 0)
-            {
+			if (local.voidDamageTimer > 0 || player.SOTSPlayer().Dreamcatcher)
 				return;
-            }
 			damage = (int)(damage * Main.rand.NextFloat(0.9f, 1.1f));
 			if (player.whoAmI == Main.LocalPlayer.whoAmI)
 				SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Void/Void_Damage"), (int)player.Center.X, (int)player.Center.Y, 1.1f);
