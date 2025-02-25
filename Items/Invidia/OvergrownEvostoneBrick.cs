@@ -25,7 +25,21 @@ namespace SOTS.Items.Invidia
 			Item.createTile = ModContent.TileType<OvergrownEvostoneBrickTile>();
 			Item.height += 2;
 		}
-	}
+    }
+    public class OvergrownEvostone : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            this.SetResearchCost(100);
+        }
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.rare = ItemRarityID.LightPurple;
+            Item.createTile = ModContent.TileType<OvergrownEvostoneTile>();
+            Item.height += 2;
+        }
+    }
 	public class OvergrownEvostoneBrickTile : ModTile
 	{
 		public override void SetStaticDefaults()
@@ -39,9 +53,9 @@ namespace SOTS.Items.Invidia
 			Main.tileLighted[Type] = true;
 			AddMapEntry(new Color(112, 82, 122));
 			MineResist = 1.5f;
-            HitSound = SoundID.Tink;
+			HitSound = SoundID.Tink;
 			DustType = ModContent.DustType<InvidiaGrassDust>();
-        }
+		}
 		public override void RandomUpdate(int i, int j)
 		{
 			if (!Main.rand.NextBool(5))
@@ -103,7 +117,15 @@ namespace SOTS.Items.Invidia
 			return true;
 		}
 	}
-	public class OvergrowthGrass : ModTile
+    public class OvergrownEvostoneTile : OvergrownEvostoneBrickTile
+    {
+        public override void SetStaticDefaults()
+        {
+			base.SetStaticDefaults();
+            TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<EvostoneTile>();
+        }
+    }
+    public class OvergrowthGrass : ModTile
 	{
 		private Texture2D glow;
         public override void SetStaticDefaults()
@@ -177,8 +199,9 @@ namespace SOTS.Items.Invidia
 			TileObjectData.newTile.AnchorAlternateTiles =
             [
                 ModContent.TileType<OvergrownEvostoneBrickTile>(),
+				ModContent.TileType<OvergrownEvostoneTile>(),
 				ModContent.TileType<OvergrowthVine>(),
-			];
+            ];
 			TileObjectData.addTile(Type);
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num)
@@ -188,7 +211,9 @@ namespace SOTS.Items.Invidia
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
 		{
-			if (!Main.tile[i, j - 1].HasTile || !(Main.tile[i, j - 1].TileType == ModContent.TileType<OvergrowthVine>() || Main.tile[i, j - 1].TileType == ModContent.TileType<OvergrownEvostoneBrickTile>()))
+			if (!Main.tile[i, j - 1].HasTile || !(Main.tile[i, j - 1].TileType == ModContent.TileType<OvergrowthVine>()
+				|| Main.tile[i, j - 1].TileType == ModContent.TileType<OvergrownEvostoneBrickTile>()
+                || Main.tile[i, j - 1].TileType == ModContent.TileType<OvergrownEvostoneTile>()))
 				WorldGen.KillTile(i, j, false, false, false);
 			return base.TileFrame(i, j, ref resetFrame, ref noBreak);
 		}
