@@ -6716,6 +6716,21 @@ Mods: {
 				DisplayName: Subspace Worm
 				Tooltip: Allows the catching of Obsidian Crates in any liquid
 			}
+
+			InvidiaPetal: {
+				DisplayName: Invidia Petal
+				Tooltip: "WIP"
+			}
+
+			MrEepy: {
+				DisplayName: Mr. Eepy
+				Tooltip:
+					'''
+					Prevents attacks from dealing damage to your void meter
+					Decreases the potency of Void Shock and Void Recovery
+					Increases void damage by 10% and max void by 50
+					'''
+			}
 		}
 
 		ItemTooltip: {

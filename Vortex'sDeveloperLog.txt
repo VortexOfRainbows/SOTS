@@ -80,6 +80,10 @@ N/A
 
 Daily Log:
 
+2/26/25
+1. Added Mr. Eepy
+2. Added Invidia Petal (needs inventory visuals, obtaining, and uses)
+
 2/22/25 to 2/25/25
 1. Music helper to help reorganize code
 2. Putrid Pinky alt song from Bananalizard
