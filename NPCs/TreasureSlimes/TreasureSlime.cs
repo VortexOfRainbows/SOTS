@@ -121,7 +121,6 @@ namespace SOTS.NPCs.TreasureSlimes
 		{
 			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
 			NPCID.Sets.TrailingMode[NPC.type] = 2;
-			Main.npcFrameCount[NPC.type] = 2;
         }
         public override Color? GetAlpha(Color drawColor)
         {
@@ -130,14 +129,15 @@ namespace SOTS.NPCs.TreasureSlimes
         public override void SetDefaults()
 		{
 			Color temp = NPC.color;
-			NPC.CloneDefaults(NPCID.GreenSlime);
+            NPC.CloneDefaults(NPCID.GreenSlime);
 			AIType = NPCID.GreenSlime;
 			AnimationType = NPCID.BlueSlime;
 			NPC.alpha = 50;
 			NPC.color = temp;
 			NPC.rarity = 1;
-		}
-		public float runAwayCounter = 0;
+			Main.npcFrameCount[NPC.type] = 2;
+        }
+        public float runAwayCounter = 0;
 		public float runAwayDelay = 0;
 		public int runAwayTime = 480;
         public sealed override bool PreAI()

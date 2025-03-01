@@ -6718,8 +6718,8 @@ Mods: {
 			}
 
 			InvidiaPetal: {
-				DisplayName: Invidia Petal
-				Tooltip: WIP
+				DisplayName: Pink Petal
+				Tooltip: ""
 			}
 
 			MrEepy: {

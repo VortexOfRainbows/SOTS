@@ -16,6 +16,7 @@ namespace SOTS.NPCs.TreasureSlimes
 	{
         public override void SetStaticDefaults()
 		{
+			Main.npcFrameCount[Type] = 2;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 6;
 			NPCID.Sets.TrailingMode[NPC.type] = 2;
 		}

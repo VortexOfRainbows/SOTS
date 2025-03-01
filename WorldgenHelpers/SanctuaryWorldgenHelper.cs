@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
-using Steamworks;
 using SOTS.Items.Furniture.Evostone;
+using System.Transactions;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -299,7 +299,7 @@ namespace SOTS.WorldgenHelpers
                                 case 21:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 28);
+                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 0);
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -315,7 +315,7 @@ namespace SOTS.WorldgenHelpers
                                 case 23:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 28);
+                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 0);
                                     tile.Slope = (SlopeType)2;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -328,7 +328,7 @@ namespace SOTS.WorldgenHelpers
                                 case 25:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 28);
+                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 0);
                                     tile.Slope = (SlopeType)1;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -394,11 +394,11 @@ namespace SOTS.WorldgenHelpers
             {
                 int posX = SideOfWorld - sizeX / 2 + xPos[b];
                 //Main.NewText(MathF.Abs(screenCenter.X - posX * 16));
-                if(MathF.Abs(screenCenter.X - posX * 16) < Main.screenWidth)
+                if(MathF.Abs(screenCenter.X - posX * 16) < Main.screenWidth * 0.75f)
                 {
                     for (int posY = Ceiling - 15; posY < endY; posY += 4)
                     {
-                        if (MathF.Abs(screenCenter.Y - posY * 16) < Main.screenHeight)
+                        if (MathF.Abs(screenCenter.Y - posY * 16) < Main.screenHeight * 0.75f)
                         {
                             for (int y = 0; y < sizeY; ++y)
                             {
@@ -503,6 +503,7 @@ namespace SOTS.WorldgenHelpers
         public static void PrepareUnderworldArea(int x, int y, int endX, int endY, int style = 0, int heightCutoff = 0)
         {
             ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
+            ushort OvergrownEvostone = (ushort)ModContent.TileType<OvergrownEvostoneTile>();
             float height = endY - y;
             float length = endX - x;
             int rightSide = endX;
@@ -518,7 +519,7 @@ namespace SOTS.WorldgenHelpers
             if (style > 0)
             {
                 rightSide -= (int)length / 2;
-                if(style == 2)
+                if (style == 2)
                 {
                     bottom -= (int)(height / 2);
                 }
@@ -543,7 +544,7 @@ namespace SOTS.WorldgenHelpers
                     }
                     if (d > 0.9f * randHeightMult && j > UnderworldHeight + h + heightCutoff)
                     {
-                        if(t.TileType != TileID.Hellstone || !t.HasTile)
+                        if (t.TileType != TileID.Hellstone || !t.HasTile)
                         {
                             t.HasTile = true;
                             t.TileType = Evostone;
@@ -614,7 +615,7 @@ namespace SOTS.WorldgenHelpers
             left -= outcropSize / 2;
             right += outcropSize / 2;
             CleanUp(left, right, Ceiling - 30, Bottom);
-            SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<EvostoneTile>());
+            SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<OvergrownEvostoneTile>());
 
             GenerateNewEmeraldGemStructure(SideOfWorld, Ceiling - 16);
             WorldGen.PlaceTile(SideOfWorld, UnderworldHeight + 24, ModContent.TileType<InvidiaGatewayTile>(), true, true, -1, 0);
@@ -633,6 +634,8 @@ namespace SOTS.WorldgenHelpers
                 style = 0;
             ushort Invidia = (ushort)ModContent.TileType<InvidiaPlatingTile>();
             ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
+            ushort OvergrownEvostone = (ushort)ModContent.TileType<OvergrownEvostoneTile>();
+            ushort OvergrownEvostoneBrickTile = (ushort)ModContent.TileType<OvergrownEvostoneBrickTile>();
             ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
             ushort EvostoneWall = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
             if(style == 4)
@@ -678,7 +681,7 @@ namespace SOTS.WorldgenHelpers
                         }
                         if (i > x && i < endX && j > y && j < endY)
                         {
-                            if(killBlocks && t.TileType != Invidia && t.TileType != EvostoneBrick)
+                            if(killBlocks && t.TileType != Invidia && t.TileType != EvostoneBrick && t.TileType != OvergrownEvostone && t.TileType != OvergrownEvostoneBrickTile)
                             {
                                 t.ClearTile();
                             }
@@ -777,6 +780,7 @@ namespace SOTS.WorldgenHelpers
         }
         public static void CleanUp(int left, int right, int top, int bottom)
         {
+            ushort OvergrownEvostone = (ushort)ModContent.TileType<OvergrownEvostoneTile>();
             ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
             ushort Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
             ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
@@ -786,7 +790,7 @@ namespace SOTS.WorldgenHelpers
             float noiseWormMult = 0.25f;
             int gridRate = 16;
             int offset = SideOfWorld % gridRate;
-            for(int pass = 0; pass <= 2; pass++)
+            for(int pass = 0; pass <= 3; pass++)
             {
                 for (int i = left; i <= right; i++)
                 {
@@ -804,6 +808,28 @@ namespace SOTS.WorldgenHelpers
                             percent = smallest / paddingZone;
                         }
                         Tile t = Main.tile[i, j];
+                        if(pass == 3)
+                        {
+                            if (Main.tile[i, j].TileType == Evostone || Main.tile[i, j].TileType == Rune)
+                            {
+                                bool passed = false;
+                                for (int k = -1; k <= 1; k++)
+                                {
+                                    for (int l = -1; l <= 1; l++)
+                                    {
+                                        if (!SOTSWorldgenHelper.TrueTileSolid(i + k, j + l))
+                                        {
+                                            passed = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (passed)
+                                {
+                                    Main.tile[i, j].TileType = OvergrownEvostone;
+                                }
+                            }
+                        }
                         if (pass == 2 || pass == 1)
                         {
                             if((i - offset) % gridRate == 0 && (j - 2) % gridRate == 0)

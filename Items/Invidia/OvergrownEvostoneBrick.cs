@@ -9,6 +9,7 @@ using Terraria.Enums;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Utilities;
 using SOTS.Dusts;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Invidia
 {
@@ -25,6 +26,10 @@ namespace SOTS.Items.Invidia
 			Item.createTile = ModContent.TileType<OvergrownEvostoneBrickTile>();
 			Item.height += 2;
 		}
+        public override void AddRecipes()
+        {
+			CreateRecipe(5).AddIngredient<EvostoneBrick>(5).AddIngredient<InvidiaPetal>().Register();
+        }
     }
     public class OvergrownEvostone : ModItem
     {
@@ -38,6 +43,10 @@ namespace SOTS.Items.Invidia
             Item.rare = ItemRarityID.LightPurple;
             Item.createTile = ModContent.TileType<OvergrownEvostoneTile>();
             Item.height += 2;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(5).AddIngredient<Evostone>(5).AddIngredient<InvidiaPetal>().Register();
         }
     }
 	public class OvergrownEvostoneBrickTile : ModTile
@@ -58,7 +67,8 @@ namespace SOTS.Items.Invidia
 		}
 		public override void RandomUpdate(int i, int j)
 		{
-			if (!Main.rand.NextBool(5))
+			if (Main.rand.NextBool(5))
+			{
 				if (!Main.tile[i, j - 1].HasTile)
 				{
 					Tile tile = Main.tile[i, j - 1];
@@ -66,8 +76,9 @@ namespace SOTS.Items.Invidia
 					tile.TileColor = Main.tile[i, j].TileColor;
 					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
 				}
-				else if (Main.rand.NextBool(8))
-					GrowCurseVine(i, j);
+			}
+			else if (Main.rand.NextBool(5))
+				GrowCurseVine(i, j);
 			base.RandomUpdate(i, j);
 		}
 		public static void GrowCurseVine(int i, int j)
@@ -156,8 +167,8 @@ namespace SOTS.Items.Invidia
             if (glow == null)
                 glow = ModContent.Request<Texture2D>("SOTS/Items/Invidia/OvergrowthGrassGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             int frameX = Main.tile[i, j].TileFrameX / 18;
-			if(frameX >= 5 || frameX <= 8)
-			{
+            if (frameX >= 5 && frameX <= 8)
+            {
 				for(int a = 0; a < 6; a ++)
 				{
                     SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, new Color(60, 50, 50, 0), new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(a * 60 + SOTSWorld.GlobalCounter)));
@@ -168,12 +179,18 @@ namespace SOTS.Items.Invidia
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             int frameX = Main.tile[i, j].TileFrameX / 18;
-            if (frameX >= 5 || frameX <= 8)
+            if (frameX >= 5 && frameX <= 8)
 			{
 				r = .5f;
 				g = .2f;
 				b = .25f;
 			}
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            int frameX = Main.tile[i, j].TileFrameX / 18;
+			if (frameX >= 5 && frameX <= 8)
+				yield return new Item(ModContent.ItemType<InvidiaPetal>());
         }
     }
 	public class OvergrowthVine : ModTile
@@ -226,6 +243,7 @@ namespace SOTS.Items.Invidia
         {
             if (glow == null)
                 glow = ModContent.Request<Texture2D>("SOTS/Items/Invidia/OvergrowthVineGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            if (IsGlowingTile(i, j))
             {
                 for (int a = 0; a < 6; a++)
                 {
@@ -240,15 +258,23 @@ namespace SOTS.Items.Invidia
             int frameY = Main.tile[i, j].TileFrameY / 18;
 			return (frameY == 0 && (frameX == 9 || frameX == 12)) ||
                 (frameY == 1 && (frameX == 3 || frameX == 8)) ||
-                (frameY == 2 && (frameX == 0 || frameX == 3 || frameX == 4 || frameX == 5) || frameX == 8 || frameX == 10 || frameX == 11) ||
+                (frameY == 2 && (frameX == 0 || frameX == 3 || frameX == 4 || frameX == 5 || frameX == 8 || frameX == 10 || frameX == 11)) ||
                 (frameY == 3 && (frameX == 8 || frameX == 11)) ||
                 (frameY == 4 && (frameX == 4 || frameX == 5 || frameX == 8));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = .5f;
-            g = .2f;
-            b = .25f;
+			if(IsGlowingTile(i, j))
+            {
+                r = .5f;
+                g = .2f;
+                b = .25f;
+            }
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            if (IsGlowingTile(i, j))
+                yield return new Item(ModContent.ItemType<InvidiaPetal>());
         }
     }
 }
