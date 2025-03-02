@@ -176,12 +176,14 @@ namespace SOTS
         public override void SaveData(TagCompound tag)
 		{
 			tag["UniqueVisionNumber"] = UniqueVisionNumber;
+			tag["VigorDashes"] = VigorDashes;
         }
         public override void LoadData(TagCompound tag)
 		{
 			UniqueVisionNumber = tag.GetInt("UniqueVisionNumber");
-		}
-		public void TrailStuff()
+            VigorDashes = tag.GetInt("VigorDashes");
+        }
+        public void TrailStuff()
 		{
 			FluidCurse = false;
 			if (Player.HasBuff(ModContent.BuffType<FluidCurse>()))
@@ -280,10 +282,10 @@ namespace SOTS
         public bool SanctuaryBiome => Player.InModBiome<Biomes.SanctuaryBiome>();
         public bool backUpBow = false;
         public bool backUpBowVisual = false;
-		public bool DoubleVisionActive = false;
-		public int BonusFishingLines = 0;
-		public bool Lockpick = false;
-		public int onhit = 0;
+		public bool DoubleVisionActive = false, VigorActive = false;
+        public int BonusFishingLines = 0, VigorDashes = 0;
+        public bool Lockpick = false;
+        public int onhit = 0;
 		public int onhitdamage = 0;
 		public int OnHitCD = 0;
 		public float attackSpeedMod = 1;
@@ -654,10 +656,10 @@ namespace SOTS
 				Player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, -1, false, knockback: 3.0f);
 			}
 		}
-		int fireIcoCD = 0;
-		int iceIcoCD = 0;
-		int cursedIcoCD = 0;
-		int nightmareArmCD = 0;
+		private int fireIcoCD = 0;
+		private int iceIcoCD = 0;
+		private int cursedIcoCD = 0;
+		private int nightmareArmCD = 0;
 		public static void decrement(ref int number)
 		{
 			if (number > 0)
@@ -1272,7 +1274,7 @@ namespace SOTS
 			Player.GetAttackSpeed(DamageClass.Generic) += attackSpeedMod - 1;
 			attackSpeedMod = 1;
 			Lockpick = false;
-			DoubleVisionActive = false;
+			DoubleVisionActive = VigorActive = false;
 			backUpBow = VoidspaceFlames = AutoReuseAnything = InfinityPouch = PurpleBalloon = false;
 			PushBack = false;
 

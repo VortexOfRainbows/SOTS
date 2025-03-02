@@ -6731,6 +6731,21 @@ Mods: {
 					Increases void damage by 10% and max void by 50
 					'''
 			}
+
+			VeganBurger: {
+				DisplayName: Vegan Burger
+				Tooltip: Minor improvements to all stats
+			}
+
+			VigorPotion: {
+				DisplayName: Vigor Potion
+				Tooltip: Grants the ability to dash 50 times
+			}
+
+			PetalSalad: {
+				DisplayName: Petal Salad
+				Tooltip: Refills 5 void and grants Void Access for 60 seconds, increasing void gain by 5
+			}
 		}
 
 		ItemTooltip: {
@@ -7192,6 +7207,16 @@ Mods: {
 				Prefix7: "Crippling "
 				DisplayName: Silence
 				Description: Reduced spawnrates by {0}%
+			}
+
+			Vigor: {
+				DisplayName: Vigor
+				Description: Dashes remaining: {0}
+			}
+
+			VoidAccess: {
+				DisplayName: Void Access
+				Description: Increases void gain by 5
 			}
 		}
 
@@ -7717,6 +7742,7 @@ Mods: {
 			Excavator.DisplayName: Excavator
 			ExcavatorBody.DisplayName: Excavator Body
 			SubspaceWorm.DisplayName: Subspace Worm
+			SanguineFoundry.DisplayName: Sanguine Foundry
 		}
 
 		Bestiary: {
@@ -8661,6 +8687,8 @@ Mods: {
 			BridgeburnerLaser.DisplayName: Bridgeburner Laser
 			BridgeburnerFlame.DisplayName: Bridgeburner Flame
 			FriendlyBridgeBurnerFlame.DisplayName: Friendly Bridge Burner Flame
+			FoundryFire.DisplayName: Foundry Fire
+			FoundryFireBoom.DisplayName: Foundry Fire Boom
 		}
 
 		DamageClasses: {

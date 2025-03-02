@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS;
 using SOTS.Dusts;
 using SOTS.Projectiles.Pyramid;
 using SOTS.Void;
@@ -9,8 +8,6 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
-using static SOTS.SOTS;
 using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.Items.Pyramid
@@ -21,9 +18,9 @@ namespace SOTS.Items.Pyramid
 		{
 			this.SetResearchCost(1);
 		}
-		Vector2 toPos = new Vector2(3.75f, 0);
-		Vector2 CurrentPos = new Vector2(0, 0);
-		int waitTime = 0;
+		private Vector2 toPos = new Vector2(3.75f, 0);
+		private Vector2 CurrentPos = new Vector2(0, 0);
+		private int waitTime = 0;
 		public override void SetDefaults()
 		{
 			Item.width = 38;
@@ -89,11 +86,11 @@ namespace SOTS.Items.Pyramid
 			spriteBatch.Draw(texture2, Item.position + new Vector2(19 * scale, 20 * scale) - Main.screenPosition + CurrentPos * scale, null, lightColor, 0, origin2, scale, SpriteEffects.None, 1f);
 			return false;
 		}
-		int rotation = 0;
-		int alpha1 = 0;
-		int alpha2 = 0;
-		Vector2 npcPosStore1;
-		Vector2 npcPosStore2;
+		private int rotation = 0;
+		private int alpha1 = 0;
+		private int alpha2 = 0;
+		private Vector2 npcPosStore1;
+		private Vector2 npcPosStore2;
 		public static Vector2 StaticDrawDetect(Mod mod, Vector2 player, int i, int alpha1, int alpha2, int rotation, ref Vector2 toVelo, bool final = false, Player player2 = null)
 		{
 			Vector2 npcPosStore1 = player;
@@ -101,11 +98,11 @@ namespace SOTS.Items.Pyramid
 			for (int u = 0; u < 360; u += 10)
 			{
 				Vector2 circularRotation = new Vector2(-16, 0).RotatedBy(MathHelper.ToRadians(u));
-				int num = Dust.NewDust(new Vector2(player.X - 5 + circularRotation.X, player.Y - 6 + circularRotation.Y), 0, 0, 21);
-				Main.dust[num].velocity *= 1.5f;
-				Main.dust[num].scale = 2.1f;
-				Main.dust[num].noGravity = true;
-				Main.dust[num].shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player2).darkEyeShader, player2);
+				Dust d = Dust.NewDustDirect(new Vector2(player.X - 5 + circularRotation.X, player.Y - 6 + circularRotation.Y), 0, 0, 21);
+				d.velocity *= 1.5f;
+				d.scale = 2.1f;
+				d.noGravity = true;
+                d.shader = GameShaders.Armor.GetSecondaryShader(SOTSPlayer.ModPlayer(player2).darkEyeShader, player2);
 			}
 			Vector2 finalPos = player;
 			float dX;

@@ -41,6 +41,7 @@ using SOTS.Items.Earth;
 using SOTS.Biomes;
 using SOTS.Helpers;
 using SOTS.NPCs.Boss.Polaris;
+using SOTS.Items.Potions;
 
 namespace SOTS
 {
@@ -269,7 +270,8 @@ namespace SOTS
 			SyncConduitPlayer,
 			SyncConduitPlayerAll,
             SyncGlobalNPC2,
-			SyncFamineBlock
+			SyncFamineBlock,
+            SyncVigorDash
         }
 		public override void HandlePacket(BinaryReader reader, int whoAmI)
 		{
@@ -619,7 +621,26 @@ namespace SOTS
 				{
 					fm.ReceiveBlockData(reader);
 				}
-			}
+            }
+            if (msgType == (int)SOTSMessageType.SyncVigorDash)
+            {
+                byte playernumber = reader.ReadByte();
+                SOTSPlayer sPlayer = Main.player[playernumber].GetModPlayer<SOTSPlayer>();
+                SOTSVigorDashPlayer modPlayer = Main.player[playernumber].GetModPlayer<SOTSVigorDashPlayer>();
+                modPlayer.DashDir = reader.ReadInt32();
+				modPlayer.DashTimer = reader.ReadInt32();
+				sPlayer.VigorDashes = reader.ReadInt32();
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    var packet = GetPacket();
+                    packet.Write((byte)msgType);
+                    packet.Write((byte)playernumber);
+                    packet.Write(modPlayer.DashDir);
+                    packet.Write(modPlayer.DashTimer);
+                    packet.Write(sPlayer.VigorDashes);
+                    packet.Send(-1, playernumber);
+                }
+            }
         }
 		public static void SendTesseractDataPacket(int playerNumber, int tesseractID)
         {

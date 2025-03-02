@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using SOTS.Buffs;
 using SOTS.Projectiles.Permafrost;
 using Terraria.Localization;
+using SOTS.Items.Invidia;
 
 namespace SOTS.Items.Void
 {
@@ -374,6 +375,34 @@ namespace SOTS.Items.Void
         public override int GetSatiateDuration()
         {
             return 5;
+        }
+    }
+    public class PetalSalad : VoidConsumable
+    {
+        public override void SetStaticDefaults()
+        {
+            this.SetResearchCost(20);
+        }
+        public override void SafeSetDefaults()
+        {
+            Item.width = 32;
+            Item.height = 22;
+            Item.value = Item.sellPrice(0, 0, 10, 0);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item2;
+        }
+        public override void OnActivation(Player player)
+        {
+            RefillEffect(player, 5);
+            player.AddBuff(ModContent.BuffType<VoidAccess>(), 3600, true);
+        }
+        public override int GetSatiateDuration()
+        {
+            return 2;
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient<InvidiaPetal>(5).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

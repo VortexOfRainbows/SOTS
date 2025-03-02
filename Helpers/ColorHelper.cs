@@ -219,5 +219,6 @@ namespace SOTS.Helpers
             return Color.Lerp(Pastel(radians + SoulColorCounter * 9 / 130f), AmethystColor, lerp);
         }
         public static readonly Color Evostone = new Color(46, 63, 77);
+        public static readonly Color PinkPetal = new Color(207, 110, 101, 0);
     }
 }
