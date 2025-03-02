@@ -379,7 +379,7 @@ namespace SOTS.WorldgenHelpers
         }
         public static Texture2D pillarTexture;
         //public static readonly int[] xPos = [-339, -230, -119, 0, 119, 230, 339];
-        public static int[] xPos => [-392, - 339, -286, -176, -119, -62, 62, 119, 176, 286, 339, 392];
+        public static readonly int[] xPos = [-392, - 339, -286, -176, -119, -62, 62, 119, 176, 286, 339, 392];
         public static void DrawPillars()
         {
             if (pillarTexture == null)
@@ -390,15 +390,17 @@ namespace SOTS.WorldgenHelpers
             int sizeY = pillarTexture.Height / 16;
             int endY = Bottom - 40;
             Vector2 screenCenter = Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2) - zero / 2;
-            for(int b = 0; b < xPos.Length; b++)
+            float cullDist = Main.screenWidth;
+            float cullDistY = Main.screenHeight;
+            for (int b = 0; b < xPos.Length; b++)
             {
                 int posX = SideOfWorld - sizeX / 2 + xPos[b];
                 //Main.NewText(MathF.Abs(screenCenter.X - posX * 16));
-                if(MathF.Abs(screenCenter.X - posX * 16) < Main.screenWidth * 0.75f)
+                if(MathF.Abs(screenCenter.X - posX * 16) < cullDist)
                 {
                     for (int posY = Ceiling - 15; posY < endY; posY += 4)
                     {
-                        if (MathF.Abs(screenCenter.Y - posY * 16) < Main.screenHeight * 0.75f)
+                        if (MathF.Abs(screenCenter.Y - posY * 16) < cullDistY)
                         {
                             for (int y = 0; y < sizeY; ++y)
                             {
