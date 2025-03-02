@@ -15,7 +15,7 @@ namespace SOTS.NPCs.Critters
         public virtual int CatchItem => ModContent.ItemType<BrownTardigrade>();
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 8;
+            Main.npcFrameCount[Type] = 7;
             Main.npcCatchable[Type] = true;
 
             NPCID.Sets.CountsAsCritter[Type] = true;
@@ -77,7 +77,7 @@ namespace SOTS.NPCs.Critters
             if(NPC.frameCounter > 6)
             {
                 NPC.frame.Y += 22;
-                if (NPC.frame.Y >= 8 * frameHeight)
+                if (NPC.frame.Y >= Main.npcFrameCount[Type] * frameHeight)
                     NPC.frame.Y = 0;
                 NPC.frameCounter = 0;
             }
