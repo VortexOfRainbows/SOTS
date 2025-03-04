@@ -1411,7 +1411,9 @@ namespace SOTS
                 itemDrop = Main.hardMode ? ModContent.ItemType<OtherworldCrate>() : ModContent.ItemType<PlanetariumCrate>();
             }
 
-			bool canCatchObsidianInOtherLiquids = liquidType != 1 && attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<SubspaceWormItem>();
+			bool canCatchObsidianInOtherLiquids = liquidType != 1 && 
+				(attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<SubspaceWormItem>() ||
+				attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<LunaMothItem>());
 
 			if(canCatchObsidianInOtherLiquids && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
             {

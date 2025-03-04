@@ -921,7 +921,9 @@ namespace SOTS.Common.GlobalNPCs
 			}
 			if(sPlayer.SanctuaryBiome)
 			{
-                pool.Add(ModContent.NPCType<SubspaceWorm>(), 2.5f);
+				float moonPercent = SOTSWorld.MoonPhasePercent;
+                pool.Add(ModContent.NPCType<SubspaceWorm>(), 2.5f * (1 - moonPercent));
+                pool.Add(ModContent.NPCType<LunaMoth>(), 2.5f * moonPercent);
             }
         }
         public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry)

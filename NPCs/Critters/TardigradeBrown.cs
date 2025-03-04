@@ -135,8 +135,8 @@ namespace SOTS.NPCs.Critters
         }
         public override void SetDefaults()
         {
-            Item.Size = new Vector2(30, 18);
             Item.CloneDefaults(ItemID.Frog);
+            Item.Size = new Vector2(30, 18);
             Item.makeNPC = NPC;
             Item.value = Item.sellPrice(0, 0, BaitPower, 0); // Make this critter worth slightly more than the frog
             Item.rare = ItemRarityID.Blue;

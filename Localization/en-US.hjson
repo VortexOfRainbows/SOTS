@@ -6746,6 +6746,11 @@ Mods: {
 				DisplayName: Petal Salad
 				Tooltip: Refills 5 void and grants Void Access for 60 seconds, increasing void gain by 5
 			}
+
+			LunaMothItem: {
+				DisplayName: Luna Moth
+				Tooltip: Allows the catching of Obsidian Crates in any liquid
+			}
 		}
 
 		ItemTooltip: {
@@ -7743,6 +7748,7 @@ Mods: {
 			ExcavatorBody.DisplayName: Excavator Body
 			SubspaceWorm.DisplayName: Subspace Worm
 			SanguineFoundry.DisplayName: Sanguine Foundry
+			LunaMoth.DisplayName: Luna Moth
 		}
 
 		Bestiary: {
