@@ -8693,8 +8693,8 @@ Mods: {
 			BridgeburnerLaser.DisplayName: Bridgeburner Laser
 			BridgeburnerFlame.DisplayName: Bridgeburner Flame
 			FriendlyBridgeBurnerFlame.DisplayName: Friendly Bridge Burner Flame
-			FoundryFire.DisplayName: Foundry Fire
-			FoundryFireBoom.DisplayName: Foundry Fire Boom
+			FoundryFire.DisplayName: Meatball
+			FoundryFireBoom.DisplayName: Meatball Explosion
 		}
 
 		DamageClasses: {

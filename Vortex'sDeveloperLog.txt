@@ -79,6 +79,10 @@ N/A
 
 Daily Log:
 
+3/7/25
+1. WIP Polish for Sanguine Foundry
+	1. Needs: for AV (polish, MP syncing, banner, drops, correct coin amount, spawning)
+
 3/4/25
 1. Add Luna Moth (should work in MP, but not tested)
 
