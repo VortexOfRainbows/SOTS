@@ -6751,6 +6751,11 @@ Mods: {
 				DisplayName: Luna Moth
 				Tooltip: Allows the catching of Obsidian Crates in any liquid
 			}
+
+			FurnaceBanner: {
+				DisplayName: Sanguine Foundry Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7854,6 +7859,11 @@ Mods: {
 				'''
 			Tardigrade: These water bears are able to survive the harsh combination of low pressure and intense radiation, allowing them to live in space.
 			Bridgeburner: Originally devised to contain the spread of evil, it is perhaps a testament to its failure that it is now controlled by evil.
+			SanguineFoundry:
+				'''
+				Why must we smelt our own ore? You guys are made of metal. If you really want this excavation finished, you could supply us directly... I'm starting to think your promises are ill kept.
+				PREMISSION TO ANSWER DENIED.
+				'''
 		}
 
 		DeathMessage: {

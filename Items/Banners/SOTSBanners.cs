@@ -423,6 +423,14 @@ namespace SOTS.Items.Banners
             Item.placeStyle = 42;
         }
     }
+    public class FurnaceBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners>();
+            Item.placeStyle = 43;
+        }
+    }
     public class HoloSlimeBanner : ModBanner
     {
         public override void SafeSetDefaults()
