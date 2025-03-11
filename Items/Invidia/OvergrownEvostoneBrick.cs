@@ -10,6 +10,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria.Utilities;
 using SOTS.Dusts;
 using System.Collections.Generic;
+using SOTS.Biomes;
+using SOTS.WorldgenHelpers;
 
 namespace SOTS.Items.Invidia
 {
@@ -69,18 +71,22 @@ namespace SOTS.Items.Invidia
 		{
 			if (Main.rand.NextBool(5))
 			{
-				if (!Main.tile[i, j - 1].HasTile)
-				{
-					Tile tile = Main.tile[i, j - 1];
-					WorldGen.PlaceTile(i, j - 1, ModContent.TileType<OvergrowthGrass>(), true, false, -1, Main.rand.Next(12));
-					tile.TileColor = Main.tile[i, j].TileColor;
-					NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
-				}
+				GrowGrass(i, j);
 			}
 			else if (Main.rand.NextBool(5))
 				GrowCurseVine(i, j);
 			base.RandomUpdate(i, j);
 		}
+		public static void GrowGrass(int i, int j)
+        {
+            if (!Main.tile[i, j - 1].HasTile)
+            {
+                Tile tile = Main.tile[i, j - 1];
+                WorldGen.PlaceTile(i, j - 1, ModContent.TileType<OvergrowthGrass>(), true, false, -1, Main.rand.Next(12));
+                tile.TileColor = Main.tile[i, j].TileColor;
+                NetMessage.SendTileSquare(-1, i, j - 1, 3, TileChangeType.None);
+            }
+        }
 		public static void GrowCurseVine(int i, int j)
 		{
 			if (!Main.tile[i, j + 1].HasTile && Main.tile[i, j + 1].LiquidAmount == 0)
@@ -273,7 +279,7 @@ namespace SOTS.Items.Invidia
         }
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            if (IsGlowingTile(i, j))
+            if (IsGlowingTile(i, j) && !SanctuaryWorldgenHelper.IsGenerating)
                 yield return new Item(ModContent.ItemType<InvidiaPetal>());
         }
     }

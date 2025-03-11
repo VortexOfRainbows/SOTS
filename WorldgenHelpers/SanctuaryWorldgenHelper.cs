@@ -12,6 +12,9 @@ using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Furniture.Evostone;
 using System.Transactions;
 using System.Collections.Generic;
+using System.Text;
+using SOTS.Items.Pyramid.AltPyramidBlocks;
+using SOTS.Items.Pyramid;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -25,6 +28,11 @@ namespace SOTS.WorldgenHelpers
         private static ushort Evostone;
         private static ushort OvergrownEvostone;
         private static ushort OvergrownEvostoneBrick;
+        private static ushort Rune;
+        private static ushort RuneBrick;
+        public static FastNoiseLite genNoise = null;
+        public static FastNoiseLite genNoise2 = null;
+        public static bool IsGenerating = false;
         public static void InitTypes()
         {
             EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
@@ -34,6 +42,8 @@ namespace SOTS.WorldgenHelpers
             Evostone = (ushort)ModContent.TileType<EvostoneTile>();
             OvergrownEvostone = (ushort)ModContent.TileType<OvergrownEvostoneTile>();
             OvergrownEvostoneBrick = (ushort)ModContent.TileType<OvergrownEvostoneBrickTile>();
+            Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
+            RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
         }
         public static void GenerateNewEmeraldGemStructure(int x, int y)
         {
@@ -203,7 +213,7 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 5:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
+                                    tile.TileType = EvostoneBrick;
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
                                     tile.LiquidAmount = 0;
@@ -353,7 +363,7 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 27:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
+                                    tile.TileType = EvostoneBrick;
                                     tile.Slope = (SlopeType)3;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -369,7 +379,7 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 29:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
+                                    tile.TileType = EvostoneBrick;
                                     tile.Slope = (SlopeType)4;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -508,7 +518,6 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-        public static FastNoiseLite genNoise = null;
         public static void SetNoise()
         {
             genNoise = new FastNoiseLite();
@@ -516,6 +525,12 @@ namespace SOTS.WorldgenHelpers
             genNoise.SetFractalType(FastNoiseLite.FractalType.PingPong);
             genNoise.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.EuclideanSq);
             genNoise.SetSeed(WorldGen.genRand.Next(500, 1500));
+
+            genNoise2 = new FastNoiseLite();
+            genNoise2.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
+            genNoise2.SetFractalType(FastNoiseLite.FractalType.FBm);
+            genNoise2.SetCellularDistanceFunction(FastNoiseLite.CellularDistanceFunction.EuclideanSq);
+            genNoise2.SetSeed(WorldGen.genRand.Next(500, 1500));
         }
         public static int Ceiling => Main.UnderworldLayer;
         public static int Bottom => Main.maxTilesY - 1;
@@ -590,6 +605,7 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenerateSanctuary()
         {
+            IsGenerating = true;
             InitTypes();
             int size = 5;
             int spread = 80;
@@ -653,6 +669,7 @@ namespace SOTS.WorldgenHelpers
             SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<OvergrownEvostoneTile>());
             GenerateNewEmeraldGemStructure(SideOfWorld, Ceiling - 16);
             WorldGen.PlaceTile(SideOfWorld, UnderworldHeight + 24, ModContent.TileType<InvidiaGatewayTile>(), true, true, -1, 0);
+            IsGenerating = false;
         }
         public static void GeneratePillar(int i, int j)
         {
@@ -670,7 +687,6 @@ namespace SOTS.WorldgenHelpers
             ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
             ushort OvergrownEvostone = (ushort)ModContent.TileType<OvergrownEvostoneTile>();
             ushort OvergrownEvostoneBrickTile = (ushort)ModContent.TileType<OvergrownEvostoneBrickTile>();
-            ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
             ushort EvostoneWall = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
             if(style == 4)
             {
@@ -731,7 +747,7 @@ namespace SOTS.WorldgenHelpers
         public static void GeneratePlatform(int x, int y, int style = 0)
         {
             ushort Invidia = (ushort)ModContent.TileType<InvidiaPlatingTile>();
-            ushort Evostone = (ushort)ModContent.TileType<EvostoneBrickTile>();
+            ushort Evostone = EvostoneBrick;
             ushort Grass = (ushort)ModContent.TileType<OvergrownEvostoneBrickTile>();
             int[,] _structure;
             if (style == 0)
@@ -815,18 +831,32 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
+        public static void TryOvergrowing(int i, int j)
+        {
+            Tile t = Main.tile[i, j];
+            bool passed = false;
+            for (int k = -1; k <= 1; k++)
+            {
+                for (int l = -1; l <= 1; l++)
+                {
+                    if (!SOTSWorldgenHelper.TrueTileSolid(i + k, j + l))
+                    {
+                        passed = true;
+                        break;
+                    }
+                }
+            }
+            if (passed)
+                t.TileType = t.TileType == Evostone || t.TileType == Rune ? OvergrownEvostone : OvergrownEvostoneBrick;
+        }
         public static void CleanUp(int left, int right, int top, int bottom)
         {
-            ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
-            ushort Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
-            ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
-            ushort RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
             SetNoise();
             float paddingZone = 30f;
             float noiseWormMult = 0.25f;
             int gridRate = 16;
             int offset = SideOfWorld % gridRate;
-            for(int pass = 0; pass <= 3; pass++)
+            for(int pass = 0; pass <= 4; pass++)
             {
                 for (int i = left; i <= right; i++)
                 {
@@ -844,26 +874,21 @@ namespace SOTS.WorldgenHelpers
                             percent = smallest / paddingZone;
                         }
                         Tile t = Main.tile[i, j];
+                        if(pass == 4)
+                        {
+                            TryErodingBlocks(i, j);
+                            if(t.TileType == OvergrownEvostoneBrick || t.TileType == OvergrownEvostone)
+                            {
+                                OvergrownEvostoneBrickTile.GrowGrass(i, j);
+                                for (int a = 1; WorldGen.genRand.NextBool(a); ++a)
+                                    OvergrownEvostoneBrickTile.GrowCurseVine(i, j + a - 1);
+                            }
+                        }
                         if(pass == 3)
                         {
                             if (t.TileType == Evostone || t.TileType == Rune)
                             {
-                                bool passed = false;
-                                for (int k = -1; k <= 1; k++)
-                                {
-                                    for (int l = -1; l <= 1; l++)
-                                    {
-                                        if (!SOTSWorldgenHelper.TrueTileSolid(i + k, j + l))
-                                        {
-                                            passed = true;
-                                            break;
-                                        }
-                                    }
-                                }
-                                if (passed)
-                                {
-                                    t.TileType = OvergrownEvostone;
-                                }
+                                TryOvergrowing(i, j);
                             }
                             if(t.LiquidType == 1 && i > left + 80 && i < right - 80)
                             {
@@ -921,10 +946,6 @@ namespace SOTS.WorldgenHelpers
         }
         public static void PlaceCircle(int x, int y, int r)
         {
-            ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();
-            ushort Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
-            ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
-            ushort RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
             for (int i = x - r; i <= x + r; i++)
             {
                 for(int j = y - r; j <= y + r; j++)
@@ -960,9 +981,6 @@ namespace SOTS.WorldgenHelpers
         }
         public static void KillLine(int x, int y, int dirX = 1, int dirY = 0)
         {
-            ushort Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
-            ushort EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
-            ushort RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
             Tile t = Main.tile[x, y];
             while ((t.HasTile || t.WallType == RuneWall || t.WallType == EvostoneWall) && WorldGen.InWorld(x, y))
             {
@@ -1020,8 +1038,8 @@ namespace SOTS.WorldgenHelpers
             InitTypes();
             List<Rectangle> rects = [
                 new Rectangle(x, y, 15, 15), 
-                new Rectangle(x + Main.rand.Next(-5, 6), y + Main.rand.Next(-5, 6), 15, 15), 
-                new Rectangle(x + Main.rand.Next(-5, 6), y + Main.rand.Next(-5, 6), 15, 15)];
+                new Rectangle(x + WorldGen.genRand.Next(-5, 6), y + WorldGen.genRand.Next(-5, 6), 15, 15), 
+                new Rectangle(x + WorldGen.genRand.Next(-5, 6), y + WorldGen.genRand.Next(-5, 6), 15, 15)];
             int wallSize = 2;
             foreach (Rectangle rect in rects)
             {
@@ -1081,6 +1099,28 @@ namespace SOTS.WorldgenHelpers
                         t.ClearTile();
                     if (t.WallType != PillarWall)
                         t.WallType = EvostoneWall;
+                }
+            }
+        }
+        public static void TryErodingBlocks(int i, int j)
+        {
+            float noise = genNoise2.GetNoise(i * 4, j * 4, 0);
+            float size = Bottom - Ceiling;
+            float percent = (j - Ceiling) / size;
+            float noiseWormMult = 0.05f + 0.05f * percent;
+            if(noise < noiseWormMult && noise > -noiseWormMult)
+            {
+                Tile t = Framing.GetTileSafely(i, j);
+                bool capable = t.TileType == EvostoneBrick || t.TileType == RuneBrick;
+                if (t.HasTile && capable)
+                {
+                    capable = t.TileType == EvostoneBrick || t.TileType == RuneBrick;
+                    if(capable && WorldGen.genRand.NextFloat(1) < percent * 0.3f + 0.7f)
+                    {
+                        t.TileType = t.TileType == EvostoneBrick ? Evostone : Rune;
+                        t.HasTile = true;
+                    }
+                    TryOvergrowing(i, j);
                 }
             }
         }

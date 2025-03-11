@@ -85,7 +85,6 @@ namespace SOTS.Items.Invidia
 		{
 			Main.wallHouse[Type] = true;
 			DustType = ModContent.DustType<EvostoneDust>();
-			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<EvostoneBrickWall>();
 			AddMapEntry(new Color(25, 38, 49));
 			HitSound = SoundID.Tink;
 		}
@@ -287,7 +286,10 @@ namespace SOTS.Items.Invidia
         }
         public bool ValidTile(int i, int j)
         {
-            return Main.tile[i, j].HasTile && Main.tileSolid[Main.tile[i, j].TileType] && !Main.tileSolidTop[Main.tile[i, j].TileType] && Main.tileBrick[Main.tile[i, j].TileType];
+            Tile t = Main.tile[i, j];
+            int type = t.TileType;
+            return t.HasTile && Main.tileSolid[type] && 
+                !Main.tileSolidTop[type] && (Main.tileBrick[type] || Main.tileBlendAll[type]);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -402,6 +404,13 @@ namespace SOTS.Items.Invidia
     {
         public override string Texture => "SOTS/Items/Invidia/EvostoneBrickWallTile";
         public static Texture2D rune = null;
+        public override void SetStaticDefaults()
+        {
+            Main.wallHouse[Type] = true;
+            DustType = ModContent.DustType<EvostoneDust>();
+            HitSound = SoundID.Tink;
+            AddMapEntry(Color.Lerp(new Color(25, 38, 49), new Color(31, 39, 57), 0.6f));
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             RunicEvostoneBrickTile.ModLight(i, j, ref r, ref g, ref b);
