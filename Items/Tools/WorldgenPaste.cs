@@ -35,11 +35,13 @@ namespace SOTS.Items.Tools
 			int dir = (x % 2 * 2) -1;
 			int x2 = (int)tileLocation.X;
             int y2 = (int)tileLocation.Y;
+            //SanctuaryWorldgenHelper.GenerateRoom(x2, y2);
+            SanctuaryWorldgenHelper.GenerateSanctuary();
             //WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
             //AbandonedVillageWorldgenHelper.TryPlacingImportantTiles(0);
             //Main.moonPhase = ++Main.moonPhase % 8;
             //player.AddBuff(ModContent.BuffType<SanctuarySilence>(), 36000);
-            SanctuaryWorldgenHelper.GenerateSanctuary();
+            //SanctuaryWorldgenHelper.GenerateSanctuary();
             //SanctuaryWorldgenHelper.GenerateNewEmeraldGemStructure(x2, y2);
             //SanctuaryWorldgenHelper.GeneratePlatform(x2, y2);
             //SOTSWorldgenHelper.GenerateTestRoom();

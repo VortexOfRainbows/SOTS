@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Xml.Schema;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -132,9 +133,25 @@ namespace SOTS
 			//For fish bomb
 			On_Player.GetFishingConditions += On_Player_GetFishingConditions;
 
+            //Prevent evaporation in the underworld
+            On_Liquid.Update += On_Liquid_Update;
+
             if (!Main.dedServ)
 				ResizeTargets();
 		}
+
+        private static void On_Liquid_Update(On_Liquid.orig_Update orig, Liquid self)
+        {
+			int oldMaxTilesY = Main.maxTilesY;
+            if (SanctuaryWorldgenHelper.Rectangle.Contains(self.x, self.y))
+			{
+				Main.maxTilesY += 200; //Liquid uses Main.underworldLayer in order to determine when to evaporate.
+				//By essentially shifting the underworld layer down, I make this check always fail in the sanctuary.
+			}
+            orig(self);
+			Main.maxTilesY = oldMaxTilesY;
+        }
+
         private static void On_Main_DrawWalls(On_Main.orig_DrawWalls orig, Main self)
         {
 			SanctuaryWorldgenHelper.DrawPillars();

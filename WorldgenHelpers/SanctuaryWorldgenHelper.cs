@@ -17,12 +17,15 @@ namespace SOTS.WorldgenHelpers
 {
     public static class SanctuaryWorldgenHelper
     {
+        public static Rectangle Rectangle = SetRect();
+        private static ushort PillarWall;
         private static ushort EvostoneWall;
         private static ushort EvostoneBrick;
         public static void InitTypes()
         {
             EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
             EvostoneWall = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
+            PillarWall = (ushort)ModContent.WallType<EvostoneGrandPillarWall>();
         }
         public static void GenerateNewEmeraldGemStructure(int x, int y)
         {
@@ -566,6 +569,17 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
+        public static Rectangle SetRect()
+        {
+            int size = 5;
+            int spread = 80;
+            int left = SideOfWorld - size * spread;
+            int right = SideOfWorld + size * spread;
+            left -= 10;
+            right += 10;
+            Rectangle rect = new Rectangle(left - 10, Ceiling - 10, right - left + 20, Bottom - Ceiling + 20);
+            return rect;
+        }
         public static void GenerateSanctuary()
         {
             int size = 5;
@@ -622,11 +636,12 @@ namespace SOTS.WorldgenHelpers
             GenerateRectangle(right - 150, UnderworldHeight + 25, right, Bottom, 2);
             GenerateRectangle(left, UnderworldHeight + 25, left + 150, Bottom, 2);
 
+            GenerateBottomCorridor();
+
             left -= outcropSize / 2;
             right += outcropSize / 2;
             CleanUp(left, right, Ceiling - 30, Bottom);
             SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<OvergrownEvostoneTile>());
-
             GenerateNewEmeraldGemStructure(SideOfWorld, Ceiling - 16);
             WorldGen.PlaceTile(SideOfWorld, UnderworldHeight + 24, ModContent.TileType<InvidiaGatewayTile>(), true, true, -1, 0);
         }
@@ -663,11 +678,13 @@ namespace SOTS.WorldgenHelpers
                     Tile t = Main.tile[i, j];
                     if(style == 2)
                     {
+                        Tile tU = Main.tile[i, j - 2];
                         if(!t.HasTile)
                         {
                             t.LiquidType = LiquidID.Lava;
                             t.LiquidAmount = 255;
                         }
+                        tU.WallType = EvostoneWall;
                     }
                     else
                     {
@@ -820,7 +837,7 @@ namespace SOTS.WorldgenHelpers
                         Tile t = Main.tile[i, j];
                         if(pass == 3)
                         {
-                            if (Main.tile[i, j].TileType == Evostone || Main.tile[i, j].TileType == Rune)
+                            if (t.TileType == Evostone || t.TileType == Rune)
                             {
                                 bool passed = false;
                                 for (int k = -1; k <= 1; k++)
@@ -836,8 +853,12 @@ namespace SOTS.WorldgenHelpers
                                 }
                                 if (passed)
                                 {
-                                    Main.tile[i, j].TileType = OvergrownEvostone;
+                                    t.TileType = OvergrownEvostone;
                                 }
+                            }
+                            if(t.LiquidType == 1 && i > left + 80 && i < right - 80)
+                            {
+                                t.LiquidType = 0; //Convert to water
                             }
                         }
                         if (pass == 2 || pass == 1)
@@ -977,14 +998,16 @@ namespace SOTS.WorldgenHelpers
         public static void GenerateRoom(int x, int y)
         {
             InitTypes();
-            List<Rectangle> rects = [new Rectangle(x, y, 10, 10), new Rectangle(x + Main.rand.Next(-5, 6), y + Main.rand.Next(-5, 6), 10, 10), 
-                new Rectangle(x + Main.rand.Next(-5, 6), y + Main.rand.Next(-5, 6), 10, 10)];
-            int wallSize = 1;
+            List<Rectangle> rects = [
+                new Rectangle(x, y, 15, 15), 
+                new Rectangle(x + Main.rand.Next(-5, 6), y + Main.rand.Next(-5, 6), 15, 15), 
+                new Rectangle(x + Main.rand.Next(-5, 6), y + Main.rand.Next(-5, 6), 15, 15)];
+            int wallSize = 2;
             foreach (Rectangle rect in rects)
             {
                 for(int i = rect.X; i < rect.Right; i++)
                 {
-                    for (int j = rect.Y; i < rect.Bottom; j++)
+                    for (int j = rect.Y; j < rect.Bottom; j++)
                     {
                         bool inside = false;
                         foreach (Rectangle other in rects)
@@ -1012,6 +1035,23 @@ namespace SOTS.WorldgenHelpers
                             t.HasTile = true;
                         }
                     }
+                }
+            }
+        }
+        public static void GenerateBottomCorridor()
+        {
+            InitTypes();
+            int height = 15;
+            int width = 240;
+            int bot = Bottom - 60;
+            for(int i = -width; i <= width; ++i)
+            {
+                for (int j = 0; j <= height; ++j)
+                {
+                    Tile t = Main.tile[SideOfWorld + i, bot + j];
+                    t.ClearTile();
+                    if(t.WallType != PillarWall)
+                        t.WallType = EvostoneWall;
                 }
             }
         }
