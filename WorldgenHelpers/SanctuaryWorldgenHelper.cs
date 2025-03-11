@@ -10,11 +10,8 @@ using Microsoft.Xna.Framework;
 using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Furniture.Evostone;
-using System.Transactions;
 using System.Collections.Generic;
-using System.Text;
-using SOTS.Items.Pyramid.AltPyramidBlocks;
-using SOTS.Items.Pyramid;
+using System.Collections;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -580,14 +577,9 @@ namespace SOTS.WorldgenHelpers
                     }
                     if (d > 0.9f * randHeightMult && j > UnderworldHeight + h + heightCutoff)
                     {
-                        if (t.TileType == TileID.Hellstone || !t.HasTile)
-                        {
-                            t.HasTile = true;
-                            t.TileType = Evostone;
-                            t.LiquidAmount = 0;
-                            //t.Slope = 0;
-                            //t.IsHalfBlock = false;
-                        }
+                        t.HasTile = true;
+                        t.TileType = Evostone;
+                        t.LiquidAmount = 0;
                     }
                 }
             }
@@ -1079,7 +1071,7 @@ namespace SOTS.WorldgenHelpers
         public static void GenerateBottomCorridor()
         {
             int height = 15;
-            int width = 240;
+            int width = 237;
             int bot = Bottom - 60;
             for(int i = -width; i <= width; ++i)
             {
@@ -1100,6 +1092,48 @@ namespace SOTS.WorldgenHelpers
                     if (t.WallType != PillarWall)
                         t.WallType = EvostoneWall;
                 }
+            }
+            int size = 14;
+            int Hall1 = WorldGen.genRand.Next(15, 26);
+            int Hall2 = WorldGen.genRand.Next(32, 42);
+            for(int x = -width; x <= width - size; x += width * 2 - size)
+            {
+                for (int j = 0; j < 60; ++j)
+                {
+                    for (int i = x; i <= x + size; ++i)
+                    {
+                        Tile t = Main.tile[SideOfWorld + i, bot - j];
+                        if (t.HasTile && t.WallType != PillarWall)
+                            t.WallType = EvostoneWall;
+                        t.ClearTile();
+                    }
+                    if (j == Hall1 || j == Hall2)
+                    {
+                        int dir = WorldGen.genRand.Next(2) * 2 - 1;
+                        int sizeH = WorldGen.genRand.Next(24, 40);
+                        GenerateOffshootRoom(SideOfWorld + x + (dir == 1 ? size : 0), bot - j, sizeH, 9, dir);
+                        if(WorldGen.genRand.NextBool(3))
+                        {
+                            GenerateOffshootRoom(SideOfWorld + x + (dir == -1 ? size : 0), bot - j + WorldGen.genRand.Next(-3, 4), WorldGen.genRand.Next(24, 40), 9, -dir);
+                        }
+                    }
+                }
+            }
+        }
+        public static void GenerateOffshootRoom(int i, int j, int hallSize = 31, int roomSize = 9, int dir = -1)
+        {
+            for (int a = 0; a <= hallSize; ++a)
+            {
+                int pos = i + a * dir;
+                for(int b = -2; b <= 2; ++b)
+                {
+                    Tile t = Main.tile[pos, j + b];
+                    if (t.HasTile && t.WallType != PillarWall)
+                        t.WallType = EvostoneWall;
+                    t.ClearTile();
+                }
+                if(a == hallSize - roomSize - 2)
+                    StarterHouseWorldgenHelper.UseStarterHouseHalfCircle(pos, j - 1, 0, 9, 9, 0, 0);
             }
         }
         public static void TryErodingBlocks(int i, int j)

@@ -409,7 +409,7 @@ namespace SOTS.Items.Invidia
             Main.wallHouse[Type] = true;
             DustType = ModContent.DustType<EvostoneDust>();
             HitSound = SoundID.Tink;
-            AddMapEntry(Color.Lerp(new Color(25, 38, 49), new Color(31, 39, 57), 0.6f));
+            AddMapEntry(Color.Lerp(new Color(14, 53, 4), new Color(25, 38, 49), 0.6f));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
