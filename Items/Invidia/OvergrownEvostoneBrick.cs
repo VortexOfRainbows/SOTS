@@ -153,7 +153,7 @@ namespace SOTS.Items.Invidia
 			Main.tileSolid[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
-			AddMapEntry(new Color(112, 82, 122));
+			AddMapEntry(new Color(135, 92, 138));
 			HitSound = SoundID.Grass;
 			DustType = ModContent.DustType<InvidiaGrassDust>();
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
@@ -210,7 +210,7 @@ namespace SOTS.Items.Invidia
 			Main.tileSolid[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
-			AddMapEntry(new Color(112, 82, 122));
+			AddMapEntry(new Color(135, 92, 138));
 			HitSound = SoundID.Grass;
 			DustType = ModContent.DustType<InvidiaGrassDust>();
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
