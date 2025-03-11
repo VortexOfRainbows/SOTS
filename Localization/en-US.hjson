@@ -6756,6 +6756,11 @@ Mods: {
 				DisplayName: Sanguine Foundry Banner
 				Tooltip: ""
 			}
+
+			EvostoneRuneBrickWall: {
+				DisplayName: Evostone Rune Brick Wall
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

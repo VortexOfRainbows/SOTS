@@ -82,6 +82,7 @@ Daily Log:
 3/11/25
 1. Sanctuary room worldgen super duper WIP
 2. Sanctuary now spawns with water, and water in the sanctuary no longer evaporates
+3. Rune walls in the sanctuary + WIP hallway
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP
