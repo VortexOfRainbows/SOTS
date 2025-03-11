@@ -43,6 +43,7 @@ Update Objectives:
 11. Sanctuary! (In Progress)
 	1. Tiles: Invidia Portal Plating
 	2. Solar Bulb item in the chest
+	3. Water instead of lava
 12. Add Achievements
 13. Invidia Gateway Tile (needs: glow, conduit connection)
 
@@ -78,6 +79,9 @@ N/A
 N/A
 
 Daily Log:
+
+3/11/25
+1. sanctuary room worldgen super duper WIP
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP

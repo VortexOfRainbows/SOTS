@@ -11,11 +11,19 @@ using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Furniture.Evostone;
 using System.Transactions;
+using System.Collections.Generic;
 
 namespace SOTS.WorldgenHelpers
 {
     public static class SanctuaryWorldgenHelper
     {
+        private static ushort EvostoneWall;
+        private static ushort EvostoneBrick;
+        public static void InitTypes()
+        {
+            EvostoneBrick = (ushort)ModContent.TileType<EvostoneBrickTile>();
+            EvostoneWall = (ushort)ModContent.WallType<EvostoneBrickWallTile>();
+        }
         public static void GenerateNewEmeraldGemStructure(int x, int y)
         {
             int PosX = x - 23; //spawnX and spawnY is where you want the anchor to be when this generates
@@ -963,6 +971,47 @@ namespace SOTS.WorldgenHelpers
                     if (chestType == 9)
                         primaryItem = ModContent.ItemType<MoonShard8>();
                     chest.AddItemToChest(primaryItem, ref slot, 1);
+                }
+            }
+        }
+        public static void GenerateRoom(int x, int y)
+        {
+            InitTypes();
+            List<Rectangle> rects = [new Rectangle(x, y, 10, 10), new Rectangle(x + Main.rand.Next(-5, 6), y + Main.rand.Next(-5, 6), 10, 10), 
+                new Rectangle(x + Main.rand.Next(-5, 6), y + Main.rand.Next(-5, 6), 10, 10)];
+            int wallSize = 1;
+            foreach (Rectangle rect in rects)
+            {
+                for(int i = rect.X; i < rect.Right; i++)
+                {
+                    for (int j = rect.Y; i < rect.Bottom; j++)
+                    {
+                        bool inside = false;
+                        foreach (Rectangle other in rects)
+                        {
+                            if (other.Contains(i + wallSize, j) &&
+                                other.Contains(i, j + wallSize) &&
+                                other.Contains(i - wallSize, j) && 
+                                other.Contains(i, j - wallSize))
+                            {
+                                inside = true;
+                                break;
+                            }
+                        }
+                        Tile t = Main.tile[i, j];
+                        if (inside)
+                        {
+                            t.ClearTile();
+                            t.WallType = EvostoneWall;
+                        }
+                        else
+                        {
+                            t.TileType = EvostoneBrick;
+                            t.Slope = SlopeType.Solid;
+                            t.IsHalfBlock = false;
+                            t.HasTile = true;
+                        }
+                    }
                 }
             }
         }
