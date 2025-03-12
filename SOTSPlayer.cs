@@ -1029,6 +1029,13 @@ namespace SOTS
 					Player.AddBuff(ModContent.BuffType<DilationSickness>(), SOTSWorld.GlobalTimeFreeze * 3 + 1200, true);
                 }
             }
+			if(SanctuaryBiome)
+			{
+				if(Player.wet)
+				{
+					Player.AddBuff(ModContent.BuffType<Boiling>(), 6, true);
+				}
+			}
 			VoidAnomaly = false;
 			VMincubator = MrBurns = false;
 			zoneLux = zonePolaris = false;
@@ -1931,6 +1938,10 @@ namespace SOTS
 					VoidPlayer.ModPlayer(Player).bonusVoidGain += Player.lifeRegen;
                     Player.lifeRegen = 0;
                 }
+			}
+			if (Player.HasBuff<Boiling>())
+			{
+				Player.lifeRegen -= 20;
 			}
 			RotHeart = false;
         }

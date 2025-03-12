@@ -7243,6 +7243,11 @@ Mods: {
 				DisplayName: Void Access
 				Description: Increases void gain by 5
 			}
+
+			Boiling: {
+				DisplayName: Boiling
+				Description: "'You can feel your skin peeling off'"
+			}
 		}
 
 		ArmorSetBonus: {
