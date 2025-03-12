@@ -11,6 +11,8 @@ using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Furniture.Evostone;
 using System.Collections.Generic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Threading;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -29,6 +31,7 @@ namespace SOTS.WorldgenHelpers
         private static ushort EvostoneTable;
         private static ushort EvostoneChair;
         private static ushort EvostonePlatform;
+        private static ushort DarkShingles;
         public static FastNoiseLite genNoise = null;
         public static FastNoiseLite genNoise2 = null;
         public static bool IsGenerating = false;
@@ -46,6 +49,7 @@ namespace SOTS.WorldgenHelpers
             EvostoneTable = (ushort)ModContent.TileType<EvostoneTableTile>();
             EvostoneChair = (ushort)ModContent.TileType<EvostoneChairTile>();
             EvostonePlatform = (ushort)ModContent.TileType<EvostonePlatformTile>();
+            DarkShingles = (ushort)ModContent.TileType<DarkShinglesTile>();
         }
         public static void GenerateNewEmeraldGemStructure(int x, int y)
         {
@@ -191,25 +195,25 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 1:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<DarkShinglesTile>();
+                                    tile.TileType = DarkShingles;
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = true;
                                     break;
                                 case 2:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<DarkShinglesTile>();
+                                    tile.TileType = DarkShingles;
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
                                     break;
                                 case 3:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<DarkShinglesTile>();
+                                    tile.TileType = DarkShingles;
                                     tile.Slope = (SlopeType)2;
                                     tile.IsHalfBlock = false;
                                     break;
                                 case 4:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<DarkShinglesTile>();
+                                    tile.TileType = DarkShingles;
                                     tile.Slope = (SlopeType)1;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -256,7 +260,7 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 11:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<DarkShinglesTile>();
+                                    tile.TileType = DarkShingles;
                                     tile.Slope = (SlopeType)4;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -277,7 +281,7 @@ namespace SOTS.WorldgenHelpers
                                     break;
                                 case 14:
                                     tile.HasTile = true;
-                                    tile.TileType = (ushort)ModContent.TileType<DarkShinglesTile>();
+                                    tile.TileType = DarkShingles;
                                     tile.Slope = (SlopeType)3;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -631,6 +635,8 @@ namespace SOTS.WorldgenHelpers
                     PrepareUnderworldArea(x - centerPillarSize - outcropSize, Ceiling + 60, x - centerPillarSize, Bottom - 4, -2, heightOffset - 2);
                     PrepareUnderworldArea(x + centerPillarSize, Ceiling + 60, x + outcropSize + centerPillarSize, Bottom - 4, 2, heightOffset - 2);
                     GenerateRectangle(x - centerPillarSize, UnderworldHeight + heightOffset, x + centerPillarSize, Bottom, 3);
+                    if(i != 0)
+                        GenerateTunnelHouse(x, UnderworldHeight + heightOffset);
                 }
                 else
                 {
@@ -662,10 +668,10 @@ namespace SOTS.WorldgenHelpers
 
             left -= outcropSize / 2;
             right += outcropSize / 2;
+            WorldGen.PlaceTile(SideOfWorld, UnderworldHeight + 24, ModContent.TileType<InvidiaGatewayTile>(), true, true, -1, 0);
             CleanUp(left, right, Ceiling - 30, Bottom);
             SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<OvergrownEvostoneTile>());
             GenerateNewEmeraldGemStructure(SideOfWorld, Ceiling - 16);
-            WorldGen.PlaceTile(SideOfWorld, UnderworldHeight + 24, ModContent.TileType<InvidiaGatewayTile>(), true, true, -1, 0);
             IsGenerating = false;
         }
         public static void GeneratePillar(int i, int j)
@@ -1114,7 +1120,8 @@ namespace SOTS.WorldgenHelpers
                         Tile t = Main.tile[SideOfWorld + i, bot - j];
                         if (t.HasTile && t.WallType != PillarWall)
                             t.WallType = EvostoneWall;
-                        t.ClearTile();
+                        if(t.TileType != EvostonePlatform)
+                            t.ClearTile();
                     }
                     if (j == Hall1 || j == Hall2)
                     {
@@ -1213,6 +1220,149 @@ namespace SOTS.WorldgenHelpers
                 else if (WorldGen.genRand.NextBool(60))
                 {
                     WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RuinedStatueTile>(), true, true, -1, WorldGen.genRand.Next(2));
+                }
+            }
+        }
+        public static void GenerateTunnelHouse(int spawnX, int spawnY)
+        {
+            int[,] _structure = {
+                {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,3,4,4,3,3,3,4,4,3,0,0,0,0,0,0,0,0},
+                {0,0,1,0,0,0,4,3,4,4,4,4,4,4,4,4,4,3,4,0,0,0,2,0,0},
+                {0,0,4,4,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,4,0,0},
+                {0,0,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,6,0,0},
+                {0,0,0,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,0,0,0},
+                {1,0,3,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,3,0,2},
+                {4,4,4,4,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,4,4,4,4},
+                {5,4,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,4,6},
+                {0,0,7,7,7,7,7,0,0,0,0,0,0,0,0,0,0,0,7,7,7,7,7,0,0},
+                {0,0,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,0,0},
+                {0,0,7,7,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,7,7,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,8,8,8,8,8}
+            };
+            int PosX = spawnX - 12;  //spawnX and spawnY is where you want the anchor to be when this generates
+            int PosY = spawnY - 17;
+            for (int i = 0; i < _structure.GetLength(0); i++)
+            {
+                for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+                {
+                    int k = PosX + j;
+                    int l = PosY + i;
+                    if (WorldGen.InWorld(k, l, 30))
+                    {
+                        Tile tile = Framing.GetTileSafely(k, l);
+                        switch (_structure[i, j])
+                        {
+                            case 0:
+                                tile.HasTile = false;
+                                tile.IsHalfBlock = false;
+                                tile.Slope = 0;
+                                break;
+                            case 1:
+                                tile.HasTile = true;
+                                tile.TileType = DarkShingles;
+                                tile.Slope = (SlopeType)1;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 2:
+                                tile.HasTile = true;
+                                tile.TileType = DarkShingles;
+                                tile.Slope = (SlopeType)2;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 3:
+                                tile.HasTile = true;
+                                tile.TileType = DarkShingles;
+                                tile.Slope = 0;
+                                tile.IsHalfBlock = true;
+                                break;
+                            case 4:
+                                tile.HasTile = true;
+                                tile.TileType = DarkShingles;
+                                tile.Slope = 0;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 5:
+                                tile.HasTile = true;
+                                tile.TileType = DarkShingles;
+                                tile.Slope = (SlopeType)4;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 6:
+                                tile.HasTile = true;
+                                tile.TileType = DarkShingles;
+                                tile.Slope = (SlopeType)3;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 7:
+                                tile.HasTile = true;
+                                tile.TileType = (ushort)ModContent.TileType<EvostoneBrickTile>();
+                                tile.Slope = 0;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 8:
+                                tile.HasTile = true;
+                                tile.TileType = (ushort)ModContent.TileType<InvidiaPlatingTile>();
+                                tile.Slope = 0;
+                                tile.IsHalfBlock = false;
+                                break;
+                            case 9:
+                                tile.HasTile = false;
+                                WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 0);
+                                tile.Slope = 0;
+                                tile.IsHalfBlock = false;
+                                break;
+                        }
+                    }
+                }
+            }
+            _structure = new int[,] {
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+                {0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+                {0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0},
+                {0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
+                {0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0},
+                {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                {0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                {0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,0,0,0,0,0}
+            };
+            for (int i = 0; i < _structure.GetLength(0); i++)
+            {
+                for (int j = _structure.GetLength(1) - 1; j >= 0; j--)
+                {
+                    int k = PosX + j;
+                    int l = PosY + i;
+                    if (WorldGen.InWorld(k, l, 30))
+                    {
+                        Tile tile = Framing.GetTileSafely(k, l);
+                        switch (_structure[i, j])
+                        {
+                            case 0:
+                                tile.WallType = 0;
+                                break;
+                            case 1:
+                                tile.WallType = EvostoneWall;
+                                break;
+                            case 2:
+                                tile.WallType = RuneWall;
+                                break;
+                        }
+                    }
                 }
             }
         }
