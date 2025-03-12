@@ -6761,6 +6761,16 @@ Mods: {
 				DisplayName: Evostone Rune Brick Wall
 				Tooltip: ""
 			}
+
+			EvostoneChair: {
+				DisplayName: Evostone Chair
+				Tooltip: ""
+			}
+
+			EvostoneTable: {
+				DisplayName: Evostone Table
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

@@ -11,7 +11,6 @@ using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Furniture.Evostone;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -27,6 +26,9 @@ namespace SOTS.WorldgenHelpers
         private static ushort OvergrownEvostoneBrick;
         private static ushort Rune;
         private static ushort RuneBrick;
+        private static ushort EvostoneTable;
+        private static ushort EvostoneChair;
+        private static ushort EvostonePlatform;
         public static FastNoiseLite genNoise = null;
         public static FastNoiseLite genNoise2 = null;
         public static bool IsGenerating = false;
@@ -41,6 +43,9 @@ namespace SOTS.WorldgenHelpers
             OvergrownEvostoneBrick = (ushort)ModContent.TileType<OvergrownEvostoneBrickTile>();
             Rune = (ushort)ModContent.TileType<RunicEvostoneTile>();
             RuneBrick = (ushort)ModContent.TileType<RunicEvostoneBrickTile>();
+            EvostoneTable = (ushort)ModContent.TileType<EvostoneTableTile>();
+            EvostoneChair = (ushort)ModContent.TileType<EvostoneChairTile>();
+            EvostonePlatform = (ushort)ModContent.TileType<EvostonePlatformTile>();
         }
         public static void GenerateNewEmeraldGemStructure(int x, int y)
         {
@@ -868,12 +873,16 @@ namespace SOTS.WorldgenHelpers
                         Tile t = Main.tile[i, j];
                         if(pass == 4)
                         {
-                            TryErodingBlocks(i, j);
-                            if(t.TileType == OvergrownEvostoneBrick || t.TileType == OvergrownEvostone)
+                            if(t.HasTile)
                             {
-                                OvergrownEvostoneBrickTile.GrowGrass(i, j);
-                                for (int a = 1; WorldGen.genRand.NextBool(a); ++a)
-                                    OvergrownEvostoneBrickTile.GrowCurseVine(i, j + a - 1);
+                                TryErodingBlocks(i, j);
+                                if (t.TileType == OvergrownEvostoneBrick || t.TileType == OvergrownEvostone)
+                                {
+                                    OvergrownEvostoneBrickTile.GrowGrass(i, j);
+                                    for (int a = 1; WorldGen.genRand.NextBool(a); ++a)
+                                        OvergrownEvostoneBrickTile.GrowCurseVine(i, j + a - 1);
+                                }
+                                TryPlacingAmbientTile(i, j);
                             }
                         }
                         if(pass == 3)
@@ -1094,8 +1103,8 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             int size = 14;
-            int Hall1 = WorldGen.genRand.Next(15, 26);
-            int Hall2 = WorldGen.genRand.Next(32, 42);
+            int Hall1 = WorldGen.genRand.Next(16, 25);
+            int Hall2 = WorldGen.genRand.Next(33, 41);
             for(int x = -width; x <= width - size; x += width * 2 - size)
             {
                 for (int j = 0; j < 60; ++j)
@@ -1114,7 +1123,7 @@ namespace SOTS.WorldgenHelpers
                         GenerateOffshootRoom(SideOfWorld + x + (dir == 1 ? size : 0), bot - j, sizeH, 9, dir);
                         if(WorldGen.genRand.NextBool(3))
                         {
-                            GenerateOffshootRoom(SideOfWorld + x + (dir == -1 ? size : 0), bot - j + WorldGen.genRand.Next(-3, 4), WorldGen.genRand.Next(24, 40), 9, -dir);
+                            GenerateOffshootRoom(SideOfWorld + x + (dir == -1 ? size : 0), bot - j + WorldGen.genRand.Next(6, 10), WorldGen.genRand.Next(24, 40), 9, -dir);
                         }
                     }
                 }
@@ -1122,18 +1131,37 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenerateOffshootRoom(int i, int j, int hallSize = 31, int roomSize = 9, int dir = -1)
         {
-            for (int a = 0; a <= hallSize; ++a)
+            for (int a = -10; a <= hallSize; ++a)
             {
                 int pos = i + a * dir;
-                for(int b = -2; b <= 2; ++b)
+                for(int b = -2; b <= 3; ++b)
                 {
                     Tile t = Main.tile[pos, j + b];
-                    if (t.HasTile && t.WallType != PillarWall)
-                        t.WallType = EvostoneWall;
-                    t.ClearTile();
+                    if(b != 3)
+                    {
+                        if (t.HasTile && t.WallType != PillarWall)
+                            t.WallType = EvostoneWall;
+                        if(t.TileType != EvostonePlatform)
+                            t.ClearTile();
+                    }
+                    else
+                    {
+                        if(!t.HasTile)
+                        {
+                            WorldGen.PlaceTile(pos, j + b, EvostonePlatform, true, true, -1, 0);
+                        }
+                    }
                 }
-                if(a == hallSize - roomSize - 2)
-                    StarterHouseWorldgenHelper.UseStarterHouseHalfCircle(pos, j - 1, 0, 9, 9, 0, 0);
+            }
+            int posX = i + (hallSize - roomSize - 2) * dir;
+            StarterHouseWorldgenHelper.UseStarterHouseHalfCircle(posX , j - 1, 0, 9, 9, 0, 0);
+            WorldGen.PlaceTile(posX, j + 2, EvostoneTable, true, true, -1, 0);
+            if (Main.tile[posX, j + 2].HasTile && Main.tile[posX, j + 2].TileType == EvostoneTable)
+            {
+                if (!WorldGen.genRand.NextBool(3))
+                    WorldGen.PlaceTile(posX + 2, j + 2, EvostoneChair, true, true, -1, 0);
+                if (!WorldGen.genRand.NextBool(3))
+                    WorldGen.PlaceTile(posX - 2, j + 2, EvostoneChair, true, true, -1, 1);
             }
         }
         public static void TryErodingBlocks(int i, int j)
@@ -1155,6 +1183,36 @@ namespace SOTS.WorldgenHelpers
                         t.HasTile = true;
                     }
                     TryOvergrowing(i, j);
+                }
+            }
+        }
+        public static void TryPlacingAmbientTile(int i, int j)
+        {
+            if(WorldGen.genRand.NextBool(60))
+            {
+                if (!Main.tile[i, j - 1].HasTile && !Main.tile[i, j - 2].HasTile)
+                {
+                    WorldGen.PlaceTile(i, j - 1, EvostoneTable, true, true, -1, 0);
+                    if (Main.tile[i, j - 1].HasTile && Main.tile[i, j - 1].TileType == EvostoneTable)
+                    {
+                        if (!WorldGen.genRand.NextBool(3))
+                            WorldGen.PlaceTile(i + 2, j - 1, EvostoneChair, true, true, -1, 0);
+                        if (!WorldGen.genRand.NextBool(3))
+                            WorldGen.PlaceTile(i - 2, j - 1, EvostoneChair, true, true, -1, 1);
+                        //if (WorldGen.genRand.NextBool(4))
+                        //    WorldGen.PlaceTile(i + WorldGen.genRand.Next(-1, 2), j - 3, ModContent.TileType<EarthenPlatingBulbTile>(), true, true, -1, 0);
+                    }
+                }
+            }
+            else if(Main.tile[i - 2, j].HasTile && Main.tile[i + 2, j].HasTile && !Main.tile[i - 2, j - 2].HasTile && !Main.tile[i + 2, j - 2].HasTile)
+            {
+                if (WorldGen.genRand.NextBool(60))
+                {
+                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SerpentStatueTile>(), true, true, -1, WorldGen.genRand.Next(2));
+                }
+                else if (WorldGen.genRand.NextBool(60))
+                {
+                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RuinedStatueTile>(), true, true, -1, WorldGen.genRand.Next(2));
                 }
             }
         }

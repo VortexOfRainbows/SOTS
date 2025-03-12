@@ -56,7 +56,7 @@ namespace SOTS.Items.Invidia
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(237, 255, 193), name);
+			AddMapEntry(new Color(57, 46, 76), name);
 			MinPick = 110;
 			DustType = ModContent.DustType<EvostoneDust>();
 			HitSound = SoundID.Item27;
@@ -136,7 +136,7 @@ namespace SOTS.Items.Invidia
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
             LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(237, 255, 193), name);
+            AddMapEntry(new Color(57, 46, 76), name);
             MinPick = 110;
             DustType = ModContent.DustType<EvostoneDust>();
             HitSound = SoundID.Item27;

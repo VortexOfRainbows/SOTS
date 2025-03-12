@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Helpers;
+using SOTS.Items.Fragments;
 using SOTS.Items.Invidia;
 using Terraria;
 using Terraria.ID;
@@ -10,6 +11,44 @@ using Terraria.ObjectData;
 
 namespace SOTS.Items.Furniture.Evostone
 {
+    public class EvostoneChair : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(1);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.Size = new Vector2(16, 32);
+            Item.rare = ItemRarityID.Blue;
+            Item.createTile = ModContent.TileType<EvostoneChairTile>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvostoneBrick>(), 4).AddTile(TileID.WorkBenches).Register();
+        }
+    }
+    public class EvostoneChairTile : Chair<EvostoneChair>
+    {
+
+    }
+    public class EvostoneTable : ModItem
+    {
+        public override void SetStaticDefaults() => this.SetResearchCost(1);
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.Size = new Vector2(38, 24);
+            Item.rare = ItemRarityID.Blue;
+            Item.createTile = ModContent.TileType<EvostoneTableTile>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient(ModContent.ItemType<EvostoneBrick>(), 8).AddTile(TileID.WorkBenches).Register();
+        }
+    }
+    public class EvostoneTableTile : Table<EvostoneTable>
+    {
+
+    }
     public class EvostonePlatform : ModItem
     {
         public override void SetStaticDefaults() => this.SetResearchCost(200);
@@ -70,5 +109,4 @@ namespace SOTS.Items.Furniture.Evostone
             num = fail ? 1 : 3;
         }
     }
-   
 }
