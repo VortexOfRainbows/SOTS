@@ -1,16 +1,9 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Conduit;
-using SOTS.Items.Furniture.AncientGold;
 using SOTS.Items.Potions;
-using SOTS.Items.Pyramid;
 using SOTS.Items.Void;
-using SOTS.NPCs;
-using SOTS.Projectiles.Slime;
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

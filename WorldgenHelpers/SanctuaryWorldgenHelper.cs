@@ -13,6 +13,8 @@ using SOTS.Items.Furniture.Evostone;
 using System.Collections.Generic;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Threading;
+using SOTS.Items.Fragments;
+using SOTS.Items.Furniture.Earthen;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -1210,17 +1212,28 @@ namespace SOTS.WorldgenHelpers
                         //    WorldGen.PlaceTile(i + WorldGen.genRand.Next(-1, 2), j - 3, ModContent.TileType<EarthenPlatingBulbTile>(), true, true, -1, 0);
                     }
                 }
+                return;
             }
             else if(Main.tile[i - 2, j].HasTile && Main.tile[i + 2, j].HasTile && !Main.tile[i - 2, j - 2].HasTile && !Main.tile[i + 2, j - 2].HasTile)
             {
                 if (WorldGen.genRand.NextBool(60))
                 {
                     WorldGen.PlaceTile(i, j - 1, ModContent.TileType<SerpentStatueTile>(), true, true, -1, WorldGen.genRand.Next(2));
+                    return;
                 }
                 else if (WorldGen.genRand.NextBool(60))
                 {
                     WorldGen.PlaceTile(i, j - 1, ModContent.TileType<RuinedStatueTile>(), true, true, -1, WorldGen.genRand.Next(2));
+                    return;
                 }
+            }
+            if (WorldGen.genRand.NextBool(3) && !Main.tile[i, j - 1].HasTile && !Main.tile[i + 1, j - 1].HasTile && !Main.tile[i, j - 2].HasTile && !Main.tile[i + 1, j - 2].HasTile)
+            {
+                Main.tile[i, j - 1].ClearTile();
+                Main.tile[i + 1, j - 1].ClearTile();
+                Main.tile[i, j - 2].ClearTile();
+                Main.tile[i + 1, j - 2].ClearTile();
+                WorldGen.PlaceTile(i, j - 1, ModContent.TileType<EvostonePots>(), true, true, -1, WorldGen.genRand.Next(9));
             }
         }
         public static void GenerateTunnelHouse(int spawnX, int spawnY)

@@ -45,8 +45,7 @@ Update Objectives:
 	2. Solar Bulb item in the chest
 	3. Rubble tiles (ambient tiles)
 	4. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
-	5. Spawn POTS
-	6. Massive arches behind the pillars in the sanctuary
+	5. Massive arches behind the pillars in the sanctuary
 12. Add Achievements
 13. Invidia Gateway Tile (needs: glow, conduit connection)
 
@@ -89,7 +88,7 @@ Daily Log:
 3. Add boiling buff
 4. Add Evostone Table + Chair
 5. Add tunnel and rooms in the sanctuary
-6. Add evostone pot loot table (does not spawn yet)
+6. Add Evostone Pot
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP

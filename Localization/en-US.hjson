@@ -6773,7 +6773,7 @@ Mods: {
 			}
 
 			EvostonePotItem: {
-				DisplayName: Evostone Pot Item
+				DisplayName: Evostone Pot
 				Tooltip: ""
 			}
 		}
@@ -7544,7 +7544,7 @@ Mods: {
 			SerpentStatueTile.MapEntry: Serpent Statue Tile
 			InvidiaGatewayTile.MapEntry: Invidia Gateway Tile
 			SanctuaryMusicBoxTile.MapEntry: Sanctuary Music Box Tile
-			EvostonePots.MapEntry: Evostone Pots
+			EvostonePots.MapEntry: Pots
 		}
 
 		WorldGeneration: {
