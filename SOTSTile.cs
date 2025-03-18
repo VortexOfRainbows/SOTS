@@ -594,12 +594,13 @@ namespace SOTS
                 bool PyramidPot = type == TileType<PyramidPots>();
                 bool AbandonedPot = type == TileType<AVPots>();
                 bool SkyPot = type == TileType<SkyPots>();
+                bool SanctuaryPot = type == TileType<EvostonePots>();
                 int chanceToDrop = 1000;
                 if (SkyPot || AbandonedPot)
                 {
                     chanceToDrop = 900;
                 }
-                if (PyramidPot)
+                if (PyramidPot || SanctuaryPot)
                 {
                     chanceToDrop = 800;
                 }
