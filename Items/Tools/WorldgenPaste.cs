@@ -3,7 +3,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using SOTS.WorldgenHelpers;
-using SOTS.Buffs.Debuffs;
 
 namespace SOTS.Items.Tools
 {
@@ -35,7 +34,7 @@ namespace SOTS.Items.Tools
 			int dir = (x % 2 * 2) -1;
 			int x2 = (int)tileLocation.X;
             int y2 = (int)tileLocation.Y;
-            //SanctuaryWorldgenHelper.GenerateRoom(x2, y2);
+            //SanctuaryWorldgenHelper.GenerateGrandArch(x2, y2, 20, 20);
             SanctuaryWorldgenHelper.GenerateSanctuary();
             //WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
             //AbandonedVillageWorldgenHelper.TryPlacingImportantTiles(0);

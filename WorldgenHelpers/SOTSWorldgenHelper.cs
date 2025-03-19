@@ -4731,7 +4731,6 @@ namespace SOTS.WorldgenHelpers
 			endX = (int)MathHelper.Clamp(endX, 20, Main.maxTilesX - 20);
 			startY = (int)MathHelper.Clamp(startY, 20, Main.maxTilesY - 20);
 			endY = (int)MathHelper.Clamp(endY, 20, Main.maxTilesY - 20);
-
 			for (int i = startX; i <= endX; i++)
 			{
 				for (int j = startY; j <= endY; j++)

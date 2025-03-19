@@ -11,10 +11,9 @@ using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Furniture.Evostone;
 using System.Collections.Generic;
+using Microsoft.CodeAnalysis;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Threading;
-using SOTS.Items.Fragments;
-using SOTS.Items.Furniture.Earthen;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -34,6 +33,7 @@ namespace SOTS.WorldgenHelpers
         private static ushort EvostoneChair;
         private static ushort EvostonePlatform;
         private static ushort DarkShingles;
+        private static ushort InvidiaPlating;
         public static FastNoiseLite genNoise = null;
         public static FastNoiseLite genNoise2 = null;
         public static bool IsGenerating = false;
@@ -52,6 +52,7 @@ namespace SOTS.WorldgenHelpers
             EvostoneChair = (ushort)ModContent.TileType<EvostoneChairTile>();
             EvostonePlatform = (ushort)ModContent.TileType<EvostonePlatformTile>();
             DarkShingles = (ushort)ModContent.TileType<DarkShinglesTile>();
+            InvidiaPlating = (ushort)ModContent.TileType<InvidiaPlatingTile>();
         }
         public static void GenerateNewEmeraldGemStructure(int x, int y)
         {
@@ -416,7 +417,7 @@ namespace SOTS.WorldgenHelpers
         }
         public static Texture2D pillarTexture;
         //public static readonly int[] xPos = [-339, -230, -119, 0, 119, 230, 339];
-        public static readonly int[] xPos = [-392, - 339, -286, -176, -119, -62, 62, 119, 176, 286, 339, 392];
+        public static readonly int[] PillarPos = [-392, - 339, -286, -176, -119, -62, 62, 119, 176, 286, 339, 392];
         public static void DrawPillars()
         {
             if (pillarTexture == null)
@@ -429,9 +430,9 @@ namespace SOTS.WorldgenHelpers
             Vector2 screenCenter = Main.screenPosition + new Vector2(Main.screenWidth / 2, Main.screenHeight / 2) - zero / 2;
             float cullDist = Main.screenWidth;
             float cullDistY = Main.screenHeight;
-            for (int b = 0; b < xPos.Length; b++)
+            for (int b = 0; b < PillarPos.Length; b++)
             {
-                int posX = SideOfWorld - sizeX / 2 + xPos[b];
+                int posX = SideOfWorld - sizeX / 2 + PillarPos[b];
                 //Main.NewText(MathF.Abs(screenCenter.X - posX * 16));
                 if(MathF.Abs(screenCenter.X - posX * 16) < cullDist)
                 {
@@ -659,8 +660,8 @@ namespace SOTS.WorldgenHelpers
                 }
             }
 
-            for(int i = 0; i < xPos.Length; i++)
-                GenerateRectangle(SideOfWorld + xPos[i] - 20, Ceiling, SideOfWorld + xPos[i] + 20, Bottom, 4);
+            for(int i = 0; i < PillarPos.Length; i++)
+                GenerateRectangle(SideOfWorld + PillarPos[i] - 20, Ceiling - 15, SideOfWorld + PillarPos[i] + 20, Bottom, 4);
 
             GenerateRectangle(left, UnderworldHeight + 35, right, Bottom, 2);
             GenerateRectangle(right - 150, UnderworldHeight + 23, right, Bottom, 2);
@@ -670,9 +671,30 @@ namespace SOTS.WorldgenHelpers
 
             left -= outcropSize / 2;
             right += outcropSize / 2;
-            WorldGen.PlaceTile(SideOfWorld, UnderworldHeight + 24, ModContent.TileType<InvidiaGatewayTile>(), true, true, -1, 0);
-            CleanUp(left, right, Ceiling - 30, Bottom);
+            WorldGen.PlaceTile(SideOfWorld, Bottom - 45, ModContent.TileType<InvidiaGatewayTile>(), true, true, -1, 0);
+
+            for (int i = 0; i < PillarPos.Length; i++)
+            {
+                if (i < PillarPos.Length - 1)
+                {
+                    int nextPillar = PillarPos[i + 1];
+                    int rightOfThis = SideOfWorld + PillarPos[i] + 20;
+                    int leftOfNext = SideOfWorld + nextPillar - 20;
+                    int sizeX = leftOfNext - rightOfThis;
+                    float arch = 0.9f;
+                    if (sizeX < 20)
+                        arch = 0.325f;
+                    GenerateGrandArch(rightOfThis, Ceiling + 5, sizeX, 30, arch);
+                }
+            }
+            CleanUp(left, right, Ceiling - 30, Bottom, 0);
+            CleanUp(left, right, Ceiling - 30, Bottom, 1);
+            CleanUp(left, right, Ceiling - 30, Bottom, 2);
+            CleanUp(left, right, Ceiling - 30, Bottom, 3);
+            CleanUp(left, right, Ceiling - 30, Bottom, 4);
             SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<OvergrownEvostoneTile>());
+            SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<OvergrownEvostoneBrickTile>());
+            CleanUp(left, right, Ceiling - 30, Bottom, 5);
             GenerateNewEmeraldGemStructure(SideOfWorld, Ceiling - 16);
             IsGenerating = false;
         }
@@ -766,14 +788,14 @@ namespace SOTS.WorldgenHelpers
                     {1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,3,0,3,3,3,1,1,1,3},
                     {1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3,1,1},
                     {1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3},
-                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0},
-                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0},
-                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0},
-                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0},
-                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,0,0},
-                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0},
-                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0},
-                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0}
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+                    {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
                 };
             }
             else
@@ -854,16 +876,14 @@ namespace SOTS.WorldgenHelpers
             if (passed)
                 t.TileType = t.TileType == Evostone || t.TileType == Rune ? OvergrownEvostone : OvergrownEvostoneBrick;
         }
-        public static void CleanUp(int left, int right, int top, int bottom)
+        public static void CleanUp(int left, int right, int top, int bottom, int pass)
         {
             SetNoise();
             float paddingZone = 30f;
             float noiseWormMult = 0.25f;
             int gridRate = 16;
             int offset = SideOfWorld % gridRate;
-            for(int pass = 0; pass <= 4; pass++)
-            {
-                for (int i = left; i <= right; i++)
+            for (int i = left; i <= right; i++)
                 {
                     for (int j = top; j <= bottom; j++)
                     {
@@ -879,19 +899,15 @@ namespace SOTS.WorldgenHelpers
                             percent = smallest / paddingZone;
                         }
                         Tile t = Main.tile[i, j];
-                        if(pass == 4)
+                        if (pass == 5)
+                        {
+                            if (t.HasTile)
+                                TryPlacingAmbientTile(i, j);
+                        }
+                        if (pass == 4)
                         {
                             if(t.HasTile)
-                            {
                                 TryErodingBlocks(i, j);
-                                if (t.TileType == OvergrownEvostoneBrick || t.TileType == OvergrownEvostone)
-                                {
-                                    OvergrownEvostoneBrickTile.GrowGrass(i, j);
-                                    for (int a = 1; WorldGen.genRand.NextBool(a); ++a)
-                                        OvergrownEvostoneBrickTile.GrowCurseVine(i, j + a - 1);
-                                }
-                                TryPlacingAmbientTile(i, j);
-                            }
                         }
                         if(pass == 3)
                         {
@@ -951,7 +967,6 @@ namespace SOTS.WorldgenHelpers
                         WorldGen.TileFrame(i, j);
                     }
                 }
-            }
         }
         public static void PlaceCircle(int x, int y, int r)
         {
@@ -1087,15 +1102,30 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenerateBottomCorridor()
         {
+            int top = -3;
             int height = 15;
             int width = 237;
+            int biggerWidth = 374;
             int bot = Bottom - 60;
-            for(int i = -width; i <= width; ++i)
+            int innerSize = 90;
+            int innerOuterSize = 70;
+            int outerSize = 364;
+            bool apply;
+            bool isOuter = false;
+            for(int i = -biggerWidth; i <= biggerWidth; ++i)
             {
-                for (int j = -3; j <= height + 3; ++j)
+                apply = true;
+                if(i > -innerOuterSize && i < innerOuterSize)
+                    i = innerOuterSize;
+                if (Math.Abs(i) < innerSize || (isOuter = Math.Abs(i) > outerSize))
+                {
+                    apply = false;
+                    
+                }
+                for (int j = top; j <= height + 3; ++j)
                 {
                     Tile t = Main.tile[SideOfWorld + i, bot + j];
-                    if(j < 0 || j > height)
+                    if(j < top + 3 || j > height)
                     {
                         if (t.TileType == Evostone)
                             t.TileType = EvostoneBrick;
@@ -1104,8 +1134,24 @@ namespace SOTS.WorldgenHelpers
                         t.Slope = SlopeType.Solid;
                         t.IsHalfBlock = false;
                     }
-                    else
+                    else if(apply)
                         t.ClearTile();
+                    else
+                    {
+                        float diff;
+                        if(isOuter)
+                            diff = Math.Abs(i) - outerSize + Math.Abs(j - height / 2) + WorldGen.genRand.NextFloat(3);
+                        else
+                            diff = innerSize - Math.Abs(i) + Math.Abs(j - height / 2) + WorldGen.genRand.NextFloat(3); 
+                        if(diff < 10)
+                        {
+                            t.ClearTile();
+                        }
+                        else
+                        {
+                            t.Slope = SlopeType.Solid;
+                        }
+                    }
                     if (t.WallType != PillarWall)
                         t.WallType = EvostoneWall;
                 }
@@ -1137,6 +1183,7 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+            GeneratePortalRoom(SideOfWorld, bot - 14);
         }
         public static void GenerateOffshootRoom(int i, int j, int hallSize = 31, int roomSize = 9, int dir = -1)
         {
@@ -1197,7 +1244,14 @@ namespace SOTS.WorldgenHelpers
         }
         public static void TryPlacingAmbientTile(int i, int j)
         {
-            if(WorldGen.genRand.NextBool(60))
+            Tile t = Main.tile[i, j];
+            if (t.Slope == SlopeType.Solid && (t.TileType == OvergrownEvostoneBrick || t.TileType == OvergrownEvostone))
+            {
+                OvergrownEvostoneBrickTile.GrowGrass(i, j);
+                for (int a = 1; WorldGen.genRand.NextBool(a); ++a)
+                    OvergrownEvostoneBrickTile.GrowCurseVine(i, j + a - 1);
+            }
+            if (WorldGen.genRand.NextBool(60))
             {
                 if (!Main.tile[i, j - 1].HasTile && !Main.tile[i, j - 2].HasTile)
                 {
@@ -1374,6 +1428,91 @@ namespace SOTS.WorldgenHelpers
                             case 2:
                                 tile.WallType = RuneWall;
                                 break;
+                        }
+                    }
+                }
+            }
+        }
+        public static void GenerateGrandArch(int x, int y, int width, int height, float archSize = 1.0f)
+        {
+            InitTypes();
+            int endX = x + width;
+            int endY = y + height;
+            for(int i = x; i <= endX; ++i)
+            {
+                for (int j = y; j <= endY; ++j)
+                {
+                    float percentX = (i - x) / (float)width;
+                    float percentY = (j - y) / (float)height;
+                    float sin = 1f - archSize * MathF.Sin(percentX * MathF.PI);
+                    if(sin >= percentY)
+                    {
+                        Tile t = Main.tile[i, j];
+                        t.WallType = EvostoneWall;
+                    }
+                }
+            }
+        }
+        public static void GeneratePortalRoom(int posX, int posY)
+        {
+            int[,] _structure = {
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            };
+            int width = _structure.GetLength(1);
+            int PosX = posX - width;  //spawnX and spawnY is where you want the anchor to be when this generates
+            int PosY = posY - 0;
+            //i = vertical, j = horizontal
+            for (int i = 0; i < _structure.GetLength(0); i++)
+            {
+                for (int j = width - 1; j >= 0; j--)
+                {
+                    int k = PosX + j + 1;
+                    int k2 = PosX - j + width * 2 - 1;
+                    int l = PosY + i;
+                    if (WorldGen.InWorld(k, l, 30))
+                    {
+                        for(int a = 0; a < 2; a++)
+                        {
+                            Tile tile = a == 0 ? Framing.GetTileSafely(k, l) : Framing.GetTileSafely(k2, l);
+                            switch (_structure[i, j])
+                            {
+                                case 0:
+                                    break;
+                                case 1:
+                                    tile.HasTile = false;
+                                    tile.IsHalfBlock = false;
+                                    tile.Slope = 0;
+                                    break;
+                            }
                         }
                     }
                 }
