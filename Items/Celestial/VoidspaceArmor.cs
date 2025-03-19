@@ -135,7 +135,8 @@ namespace SOTS.Items.Celestial
 		public override void UpdateEquip(Player player)
 		{
 			VoidPlayer vPlayer = player.VoidPlayer();
-			vPlayer.GainVoidOnHurt = vPlayer.GainHealthOnVoidUse = 0.15f;
+			vPlayer.GainVoidOnHurt += 0.15f;
+            vPlayer.GainHealthOnVoidUse += 0.15f;
 			player.manaCost -= 0.15f;
             vPlayer.bonusVoidGain += 3;
             vPlayer.voidMeterMax2 += 100;

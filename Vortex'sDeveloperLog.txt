@@ -90,6 +90,7 @@ Daily Log:
 6. Add Evostone Pot
 7. Massive Arches in the Sanctuary between pillars
 8. Changed where the portal spawns in the sanctuary
+9. Add Flower crown
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP

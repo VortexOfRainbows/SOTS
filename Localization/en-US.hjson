@@ -6776,6 +6776,17 @@ Mods: {
 				DisplayName: Evostone Pot
 				Tooltip: ""
 			}
+
+			FlowerCrown: {
+				DisplayName: Flower Crown
+				Tooltip:
+					'''
+					Increases endurance by 10%
+					Increases void gain and life regen by 4
+					When using void, 30% of the void used is converted into life
+					'''
+				ArchTooltip: "'Would you rather have +100% super chungus or +5 defense?'"
+			}
 		}
 
 		ItemTooltip: {
