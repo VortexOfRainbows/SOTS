@@ -685,6 +685,10 @@ namespace SOTS.WorldgenHelpers
                     if (sizeX < 20)
                         arch = 0.325f;
                     GenerateGrandArch(rightOfThis, Ceiling + 5, sizeX, 30, arch);
+                    if (i == 3 || i == 5 || i == 6 || i == 8)
+                    {
+                        GeneratePillarRoom(SideOfWorld + PillarPos[i] - 19, Ceiling, 39, 20);
+                    }
                 }
             }
             CleanUp(left, right, Ceiling - 30, Bottom, 0);
@@ -1057,45 +1061,36 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-        public static void GenerateRoom(int x, int y)
+        public static void GeneratePillarRoom(int x, int y, int width = 30, int height = 20)
         {
             InitTypes();
-            List<Rectangle> rects = [
-                new Rectangle(x, y, 15, 15), 
-                new Rectangle(x + WorldGen.genRand.Next(-5, 6), y + WorldGen.genRand.Next(-5, 6), 15, 15), 
-                new Rectangle(x + WorldGen.genRand.Next(-5, 6), y + WorldGen.genRand.Next(-5, 6), 15, 15)];
-            int wallSize = 2;
-            foreach (Rectangle rect in rects)
+            for(int j = 0; j < height; ++j)
             {
-                for(int i = rect.X; i < rect.Right; i++)
+                for (int i = 0; i < width; ++i)
                 {
-                    for (int j = rect.Y; j < rect.Bottom; j++)
+                    Tile t = Main.tile[x + i, y + j];
+                    if(((i >= 3 && i < width - 3) || (j < height - 3 && j >= height - 6)) && j >= 3 && j < height - 3)
                     {
-                        bool inside = false;
-                        foreach (Rectangle other in rects)
-                        {
-                            if (other.Contains(i + wallSize, j) &&
-                                other.Contains(i, j + wallSize) &&
-                                other.Contains(i - wallSize, j) && 
-                                other.Contains(i, j - wallSize))
-                            {
-                                inside = true;
-                                break;
-                            }
-                        }
-                        Tile t = Main.tile[i, j];
-                        if (inside)
-                        {
-                            t.ClearTile();
-                            t.WallType = EvostoneWall;
-                        }
-                        else
-                        {
-                            t.TileType = EvostoneBrick;
-                            t.Slope = SlopeType.Solid;
-                            t.IsHalfBlock = false;
-                            t.HasTile = true;
-                        }
+                        t.ClearTile();
+                    }
+                    else
+                    {
+                        t.TileType = EvostoneBrick;
+                        t.HasTile = true;
+                    }
+                }
+            }
+            int platformSize = 10;
+            for(int k = -1; k <= 1; k += 2)
+            {
+                for (int i = 0; i < platformSize; ++i)
+                {
+                    int x2 = x + i * k + (k == 1 ? width : -1);
+                    int y2 = y + height - 3;
+                    Tile t = Main.tile[x2, y2];
+                    if (!t.HasTile)
+                    {
+                        WorldGen.PlaceTile(x2, y2, EvostonePlatform);
                     }
                 }
             }

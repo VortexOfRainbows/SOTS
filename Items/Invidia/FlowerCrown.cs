@@ -69,7 +69,7 @@ namespace SOTS.Items.Invidia
         }
         public override void AddRecipes()
         {
-            CreateRecipe(1).AddIngredient<InvidiaPetal>(100).AddIngredient<FragmentOfInferno>(4).AddIngredient<FragmentOfNature>(4).Register();
+            CreateRecipe(1).AddIngredient<InvidiaPetal>(100).AddIngredient<FragmentOfInferno>(4).AddIngredient<FragmentOfNature>(4).AddTile(TileID.WorkBenches).Register();
         }
     }
 }
