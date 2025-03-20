@@ -1517,6 +1517,70 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+
+            int mainDir = WorldGen.genRand.Next(2) * 2 - 1;
+            GeneratePortalRoomTunnel(posX + 66 * mainDir, PosY + 4, posX, PosY - 5, 3.9f);
+            GeneratePortalRoomTunnel(posX - 66 * mainDir, PosY + 4, posX, PosY - 5, 2.3f, 0.18f);
+            //GeneratePortalRoomTunnel(posX + 50, PosY);
+        }
+        public static void GeneratePortalRoomTunnel(int posX, int posY, int endPointX, int endPointY, float targetSize = 3.75f, float baseLerpAmt = 0.3f)
+        {
+            int dir = Math.Sign(endPointX - posX);
+            int toEnd = Math.Abs(posX - endPointX);
+            int toEndY = Math.Abs(posY - endPointY);
+            float endY = endPointY;
+            float size = 17;
+            float ySize = 3.5f;
+            float SizeTarget = targetSize;
+            for (int i = 0; i < toEnd; ++i)
+            {
+                float lerpAmt = baseLerpAmt;
+                if (ySize < 1)
+                    lerpAmt += 0.3f;
+                else if (ySize > 4)
+                    lerpAmt += 0.1f;
+                ySize = MathHelper.Lerp(ySize, SizeTarget, lerpAmt);
+                ySize += WorldGen.genRand.NextFloat(-0.9f, 0.9f);
+                float percent = i / (float)toEnd; 
+                if (percent > 0.5f)
+                    size *= 0.7f;
+                else if(percent > 0.3f)
+                    size *= 0.9f;
+                if(percent > 0.07f && percent < 0.2f)
+                {
+                    ySize *= WorldGen.genRand.NextFloat(0.8f, 0.9f);
+                }
+                else if (percent > 0.2f && percent < 0.25f)
+                {
+                    ySize += 0.1f;
+                    ySize *= WorldGen.genRand.NextFloat(1f, 1.1f);
+                }
+                if (percent > 0.4f)
+                {
+                    ySize -= 0.1f;
+                    ySize *= WorldGen.genRand.NextFloat(0.92f, 1f);
+                }
+                if(percent > 0.8f)
+                {
+                    endY += 0.6f;
+                }
+
+                float sin = MathF.Sin(percent * MathF.PI * 3.0f + 0.3f);
+                int y = (int)MathHelper.Lerp(posY, endY, MathF.Sqrt( percent)) + (int)(sin * size * MathF.Sqrt(percent));
+                for(float j = -ySize; j <= ySize; ++j)
+                {
+                    Tile t = Main.tile[posX + i * dir, y + (int)j];
+                    t.ClearTile();
+                    if(percent < 0.28f)
+                    {
+                        t.LiquidAmount = 255;
+                        t.LiquidType = 0;
+                    }
+                }
+            }
+            int middleX = (posX + endPointX) / 2;
+            int middleY = (posY + endPointY) / 2;
+            SOTSWorldgenHelper.SmoothRegion(middleX, middleY, toEnd, toEndY);
         }
     }
 }

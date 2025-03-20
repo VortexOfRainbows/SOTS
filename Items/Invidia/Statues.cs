@@ -59,8 +59,8 @@ namespace SOTS.Items.Invidia
 			AddMapEntry(new Color(57, 46, 76), name);
 			MinPick = 110;
 			DustType = ModContent.DustType<EvostoneDust>();
-			HitSound = SoundID.Item27;
-			MineResist = 0.1f;
+            HitSound = SoundID.Tink;
+            MineResist = 0.1f;
 		}
         public override bool CanExplode(int i, int j)
         {
@@ -139,7 +139,7 @@ namespace SOTS.Items.Invidia
             AddMapEntry(new Color(57, 46, 76), name);
             MinPick = 110;
             DustType = ModContent.DustType<EvostoneDust>();
-            HitSound = SoundID.Item27;
+            HitSound = SoundID.Tink;
             MineResist = 0.1f;
         }
         public override bool CanExplode(int i, int j)
