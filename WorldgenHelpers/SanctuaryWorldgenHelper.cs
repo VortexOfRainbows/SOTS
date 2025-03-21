@@ -10,10 +10,8 @@ using Microsoft.Xna.Framework;
 using SOTS.Items.Gems;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Furniture.Evostone;
-using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Threading;
+using SOTS.Items.Furniture.Earthen;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -337,7 +335,7 @@ namespace SOTS.WorldgenHelpers
                                 case 21:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 0);
+                                    WorldGen.PlaceTile(k, l, EvostonePlatform, true, true, -1, 0);
                                     tile.Slope = 0;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -353,7 +351,7 @@ namespace SOTS.WorldgenHelpers
                                 case 23:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 0);
+                                    WorldGen.PlaceTile(k, l, EvostonePlatform, true, true, -1, 0);
                                     tile.Slope = (SlopeType)2;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -366,7 +364,7 @@ namespace SOTS.WorldgenHelpers
                                 case 25:
                                     if (confirmPlatforms == 0)
                                         tile.HasTile = false;
-                                    WorldGen.PlaceTile(k, l, ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 0);
+                                    WorldGen.PlaceTile(k, l, EvostonePlatform, true, true, -1, 0);
                                     tile.Slope = (SlopeType)1;
                                     tile.IsHalfBlock = false;
                                     break;
@@ -687,7 +685,7 @@ namespace SOTS.WorldgenHelpers
                     GenerateGrandArch(rightOfThis, Ceiling + 5, sizeX, 30, arch);
                     if (i == 3 || i == 5 || i == 6 || i == 8)
                     {
-                        GeneratePillarRoom(SideOfWorld + PillarPos[i] - 19, Ceiling, 39, 20);
+                        GeneratePillarRoom(SideOfWorld + PillarPos[i] - 19, Ceiling, 39, 20, i);
                     }
                 }
             }
@@ -888,89 +886,89 @@ namespace SOTS.WorldgenHelpers
             int gridRate = 16;
             int offset = SideOfWorld % gridRate;
             for (int i = left; i <= right; i++)
+            {
+                for (int j = top; j <= bottom; j++)
                 {
-                    for (int j = top; j <= bottom; j++)
+                    float fromLeft = MathF.Abs(i - left);
+                    float fromRight = MathF.Abs(i - right);
+                    float fromTop = MathF.Abs(j - top);
+                    float fromBottom = MathF.Abs(j - bottom);
+                    float percent = 1;
+                    if (fromLeft < paddingZone || fromRight < paddingZone ||
+                       fromTop < paddingZone || fromBottom < paddingZone)
                     {
-                        float fromLeft = MathF.Abs(i - left);
-                        float fromRight = MathF.Abs(i - right);
-                        float fromTop = MathF.Abs(j - top);
-                        float fromBottom = MathF.Abs(j - bottom);
-                        float percent = 1;
-                        if (fromLeft < paddingZone || fromRight < paddingZone ||
-                           fromTop < paddingZone || fromBottom < paddingZone)
-                        {
-                            float smallest = MathF.Min(MathF.Min(fromLeft, fromRight), MathF.Min(fromTop, fromBottom));
-                            percent = smallest / paddingZone;
-                        }
-                        Tile t = Main.tile[i, j];
-                        if (pass == 5)
-                        {
-                            if (t.HasTile)
-                                TryPlacingAmbientTile(i, j);
-                        }
-                        if (pass == 4)
-                        {
-                            if(t.HasTile)
-                                TryErodingBlocks(i, j);
-                        }
-                        if(pass == 3)
-                        {
-                            if (t.TileType == Evostone || t.TileType == Rune)
-                            {
-                                TryOvergrowing(i, j);
-                            }
-                            if(t.LiquidType == 1 && i > left + 80 && i < right - 80)
-                            {
-                                t.LiquidType = 0; //Convert to water
-                            }
-                        }
-                        if (pass == 2 || pass == 1)
-                        {
-                            if((i - offset) % gridRate == 0 && (j - 2) % gridRate == 0)
-                            {
-                                if(pass == 2)
-                                {
-                                    float noise = genNoise.GetNoise(i * 4f, j * 4f, 0);
-                                    bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
-                                    int edges = 0;
-                                    if (Main.tile[i, j - 1].TileType == RuneBrick || Main.tile[i, j - 1].TileType == Rune || Main.tile[i, j - 1].WallType == RuneWall)
-                                        edges++;
-                                    if (Main.tile[i, j + 1].TileType == RuneBrick || Main.tile[i, j + 1].TileType == Rune || Main.tile[i, j + 1].WallType == RuneWall)
-                                        edges++;
-                                    if (Main.tile[i - 1, j].TileType == RuneBrick || Main.tile[i - 1, j].TileType == Rune || Main.tile[i - 1, j].WallType == RuneWall)
-                                        edges++;
-                                    if (Main.tile[i + 1, j].TileType == RuneBrick || Main.tile[i + 1, j].TileType == Rune || Main.tile[i + 1, j].WallType == RuneWall)
-                                        edges++;
-                                    if (noiseWorm || edges == 1)// && !WorldGen.genRand.NextBool(8))
-                                    {
-                                        if (t.TileType == RuneBrick || t.TileType == Rune || t.WallType == RuneWall)
-                                            PlaceCircle(i, j, WorldGen.genRand.Next(3, 6));
-                                    }
-                                }
-                                if(WorldGen.genRand.NextBool(3) && pass == 1)
-                                {
-                                    KillLine(i, j, 1, 0);
-                                    KillLine(i, j, -1, 0);
-                                    KillLine(i, j, 0, 1);
-                                    KillLine(i, j, 0, -1);
-                                }
-                            }
-                        }
-                        if(pass == 0)
-                        {
-                            if ((i - offset) % gridRate == 0 || (j - 2) % gridRate == 0)
-                            {
-                                if (t.TileType == EvostoneBrick)
-                                    t.TileType = RuneBrick;
-                                if (t.TileType == Evostone)
-                                    t.TileType = Rune;
-                                if (t.WallType == EvostoneWall)
-                                    t.WallType = RuneWall;
-                            }
-                        }
+                        float smallest = MathF.Min(MathF.Min(fromLeft, fromRight), MathF.Min(fromTop, fromBottom));
+                        percent = smallest / paddingZone;
+                    }
+                    Tile t = Main.tile[i, j];
+                    if (pass == 5)
+                    {
+                        if (t.HasTile)
+                            TryPlacingAmbientTile(i, j);
                         WorldGen.TileFrame(i, j);
                     }
+                    if (pass == 4)
+                    {
+                        if (t.HasTile)
+                            TryErodingBlocks(i, j);
+                    }
+                    if (pass == 3)
+                    {
+                        if (t.TileType == Evostone || t.TileType == Rune)
+                        {
+                            TryOvergrowing(i, j);
+                        }
+                        if (t.LiquidType == 1 && i > left + 80 && i < right - 80)
+                        {
+                            t.LiquidType = 0; //Convert to water
+                        }
+                    }
+                    if (pass == 2 || pass == 1)
+                    {
+                        if ((i - offset) % gridRate == 0 && (j - 2) % gridRate == 0)
+                        {
+                            if (pass == 2)
+                            {
+                                float noise = genNoise.GetNoise(i * 4f, j * 4f, 0);
+                                bool noiseWorm = noise > -noiseWormMult * percent && noise < noiseWormMult * percent;
+                                int edges = 0;
+                                if (Main.tile[i, j - 1].TileType == RuneBrick || Main.tile[i, j - 1].TileType == Rune || Main.tile[i, j - 1].WallType == RuneWall)
+                                    edges++;
+                                if (Main.tile[i, j + 1].TileType == RuneBrick || Main.tile[i, j + 1].TileType == Rune || Main.tile[i, j + 1].WallType == RuneWall)
+                                    edges++;
+                                if (Main.tile[i - 1, j].TileType == RuneBrick || Main.tile[i - 1, j].TileType == Rune || Main.tile[i - 1, j].WallType == RuneWall)
+                                    edges++;
+                                if (Main.tile[i + 1, j].TileType == RuneBrick || Main.tile[i + 1, j].TileType == Rune || Main.tile[i + 1, j].WallType == RuneWall)
+                                    edges++;
+                                if (noiseWorm || edges == 1)// && !WorldGen.genRand.NextBool(8))
+                                {
+                                    if (t.TileType == RuneBrick || t.TileType == Rune || t.WallType == RuneWall)
+                                        PlaceCircle(i, j, WorldGen.genRand.Next(3, 6));
+                                }
+                            }
+                            if (WorldGen.genRand.NextBool(3) && pass == 1)
+                            {
+                                KillLine(i, j, 1, 0);
+                                KillLine(i, j, -1, 0);
+                                KillLine(i, j, 0, 1);
+                                KillLine(i, j, 0, -1);
+                            }
+                        }
+                    }
+                    if (pass == 0)
+                    {
+                        if ((i - offset) % gridRate == 0 || (j - 2) % gridRate == 0)
+                        {
+                            if (t.TileType == EvostoneBrick)
+                                t.TileType = RuneBrick;
+                            if (t.TileType == Evostone)
+                                t.TileType = Rune;
+                            if (t.WallType == EvostoneWall)
+                                t.WallType = RuneWall;
+                        }
+                    }
                 }
+            }
         }
         public static void PlaceCircle(int x, int y, int r)
         {
@@ -1061,7 +1059,7 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-        public static void GeneratePillarRoom(int x, int y, int width = 30, int height = 20)
+        public static void GeneratePillarRoom(int x, int y, int width = 30, int height = 20, int pillarNum = 0)
         {
             InitTypes();
             for(int j = 0; j < height; ++j)
@@ -1081,16 +1079,31 @@ namespace SOTS.WorldgenHelpers
                 }
             }
             int platformSize = 10;
+            int dir = pillarNum == 3 || pillarNum == 6 ? 1 : -1;
             for(int k = -1; k <= 1; k += 2)
             {
-                for (int i = 0; i < platformSize; ++i)
+                int platformSizeBonus = dir == k ? 25 : platformSize;
+                for (int i = 0; i < platformSizeBonus; ++i)
                 {
                     int x2 = x + i * k + (k == 1 ? width : -1);
                     int y2 = y + height - 3;
                     Tile t = Main.tile[x2, y2];
-                    if (!t.HasTile)
+                    if (!t.HasTile && i < platformSize)
                     {
                         WorldGen.PlaceTile(x2, y2, EvostonePlatform);
+                    }
+                    if (dir == k)
+                    {
+                        int y3 = y2 + i;
+                        WorldGen.PlaceTile(x2, y3, EvostonePlatform);
+                        t = Main.tile[x2, y3];
+                        if (t.TileType == EvostonePlatform)
+                        {
+                            t.Slope = dir == -1 ? SlopeType.SlopeDownRight : SlopeType.SlopeDownLeft;
+                            WorldGen.SquareTileFrame(x2, y3, true);
+                        }
+                        else
+                            break;
                     }
                 }
             }
@@ -1375,7 +1388,7 @@ namespace SOTS.WorldgenHelpers
                                 break;
                             case 9:
                                 tile.HasTile = false;
-                                WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<EvostonePlatformTile>(), true, true, -1, 0);
+                                WorldGen.PlaceTile(k, l, (ushort)EvostonePlatform, true, true, -1, 0);
                                 tile.Slope = 0;
                                 tile.IsHalfBlock = false;
                                 break;

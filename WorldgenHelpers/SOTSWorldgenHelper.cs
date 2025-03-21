@@ -23,6 +23,7 @@ using SOTS.Items.Earth.Glowmoth;
 using Terraria.DataStructures;
 using SOTS.Items.Conduit;
 using Terraria.WorldBuilding;
+using SOTS.Items.Furniture.Evostone;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -4735,7 +4736,7 @@ namespace SOTS.WorldgenHelpers
 			{
 				for (int j = startY; j <= endY; j++)
 				{
-					if (Main.tile[i, j].TileType == ModContent.TileType<GulaPortalPlatingTile>())
+					if (Main.tile[i, j].TileType == ModContent.TileType<GulaPortalPlatingTile>() || Main.tile[i, j].TileType == ModContent.TileType<EvostonePlatformTile>())
 						continue;
 					if ((whitelist == Main.tile[i, j].TileType) || (whitelist == -1 && Main.tile[i, j].TileType != 48 && Main.tile[i, j].TileType != 137 &&
 						Main.tile[i, j].TileType != 232 && Main.tile[i, j].TileType != 191 &&
@@ -4918,7 +4919,7 @@ namespace SOTS.WorldgenHelpers
 			{
 				for (int j = startY; j <= endY; j++)
                 {
-                    if (Main.tile[i, j].TileType == ModContent.TileType<GulaPortalPlatingTile>())
+                    if (Main.tile[i, j].TileType == ModContent.TileType<GulaPortalPlatingTile>() || Main.tile[i, j].TileType == ModContent.TileType<EvostonePlatformTile>())
                         continue;
                     bool canRun = WorldGen.genRand.NextBool(2) && !Main.tile[i, j - 1].HasTile && WorldGen.SolidTile(i, j);
 					if (canRun && ((whitelist == Main.tile[i, j].TileType) ||

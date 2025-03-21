@@ -36,6 +36,7 @@ namespace SOTS.Items.Tools
             int y2 = (int)tileLocation.Y;
             //SanctuaryWorldgenHelper.GenerateGrandArch(x2, y2, 20, 20);
             SanctuaryWorldgenHelper.GenerateSanctuary();
+            //AbandonedVillageWorldgenHelper.PlaceStairDecor(x2, )
             //WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
             //AbandonedVillageWorldgenHelper.TryPlacingImportantTiles(0);
             //Main.moonPhase = ++Main.moonPhase % 8;
