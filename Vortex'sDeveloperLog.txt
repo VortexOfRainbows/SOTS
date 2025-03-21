@@ -81,7 +81,7 @@ N/A
 
 Daily Log:
 
-3/11/25 and 3/17/25 to 3/20/25
+3/11/25 and 3/17/25 to 3/21/25
 1. Sanctuary now spawns with water, and water in the sanctuary no longer evaporates
 2. Rune walls in the sanctuary + WIP hallway
 3. Add boiling buff
@@ -93,6 +93,7 @@ Daily Log:
 9. Add Flower crown
 10. Sanctuary Water Tunnel
 11. Generate Roof Building in the Sanctuary and Spiral Staircases
+12. More progress on the sanctuary generation
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP
