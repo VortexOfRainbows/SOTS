@@ -92,7 +92,7 @@ Daily Log:
 8. Changed where the portal spawns in the sanctuary
 9. Add Flower crown
 10. Sanctuary Water Tunnel
-11. Generate Roof Building in he Sanctuary (WIP)
+11. Generate Roof Building in the Sanctuary and Spiral Staircases
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP

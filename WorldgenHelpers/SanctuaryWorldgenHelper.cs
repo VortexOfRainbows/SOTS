@@ -654,7 +654,7 @@ namespace SOTS.WorldgenHelpers
                     }
                     GeneratePlatform(x, y, 0);
                     if (MathF.Abs(i) == 1)
-                        GeneratePlatform(x, UnderworldHeight - WorldGen.genRand.Next(23, 28), 0);
+                        GeneratePlatform(x, UnderworldHeight - 25, 0);
                 }
             }
 
@@ -1062,6 +1062,7 @@ namespace SOTS.WorldgenHelpers
         public static void GeneratePillarRoom(int x, int y, int width = 30, int height = 20, int pillarNum = 0)
         {
             InitTypes();
+            int dir = pillarNum == 3 || pillarNum == 6 ? 1 : -1;
             for(int j = 0; j < height; ++j)
             {
                 for (int i = 0; i < width; ++i)
@@ -1078,8 +1079,54 @@ namespace SOTS.WorldgenHelpers
                     }
                 }
             }
+             
+            for (int i = 0; i < width; ++i)
+            {
+                int yPos = y + 40;
+                for (int j = 0; j < 3; ++j)
+                {
+                    Tile t = Main.tile[x + i, yPos + j];
+                    if(i >= 6 && i < width - 6)
+                    {
+                        WorldGen.PlaceTile(x + i, yPos + j, EvostonePlatform);
+                        break;
+                    }
+                    t.TileType = EvostoneBrick;
+                    t.HasTile = true;
+                }
+            }
+
+            int wallPos = x + (dir == -1 ? width - 3 : 0);
+            for(int j = height; j < 40; ++j)
+            {
+                int yPos = y + j;
+                for (int i = 0; i < 3; ++i)
+                {
+                    Tile t = Main.tile[wallPos + i, yPos];
+                    t.TileType = EvostoneBrick;
+                    t.HasTile = true;
+                }
+            }
+
+            for(int j = 1; j < 51; ++j)
+            {
+                float percent = j / 50f;
+                int yPos = y + 40 + j;
+
+                float radius = width / 4;
+                for(int i = -1; i <= 1; ++i)
+                {
+                    for(int x2 = -1; x2 <= 1; x2++)
+                    {
+                        float sin = MathF.Sin(percent * dir * MathF.PI * 4 + MathHelper.ToRadians(i * 5));
+                        int xPos = (int)(x + width / 2 + radius * sin + 0.5f);
+                        Tile t = Main.tile[xPos, yPos];
+                        WorldGen.PlaceTile(xPos + x2, yPos, EvostonePlatform);
+                    }
+                }
+            }
+
             int platformSize = 10;
-            int dir = pillarNum == 3 || pillarNum == 6 ? 1 : -1;
             for(int k = -1; k <= 1; k += 2)
             {
                 int platformSizeBonus = dir == k ? 25 : platformSize;
@@ -1253,12 +1300,6 @@ namespace SOTS.WorldgenHelpers
         public static void TryPlacingAmbientTile(int i, int j)
         {
             Tile t = Main.tile[i, j];
-            if (t.Slope == SlopeType.Solid && (t.TileType == OvergrownEvostoneBrick || t.TileType == OvergrownEvostone))
-            {
-                OvergrownEvostoneBrickTile.GrowGrass(i, j);
-                for (int a = 1; WorldGen.genRand.NextBool(a); ++a)
-                    OvergrownEvostoneBrickTile.GrowCurseVine(i, j + a - 1);
-            }
             if (WorldGen.genRand.NextBool(60))
             {
                 if (!Main.tile[i, j - 1].HasTile && !Main.tile[i, j - 2].HasTile)
@@ -1296,6 +1337,12 @@ namespace SOTS.WorldgenHelpers
                 Main.tile[i, j - 2].ClearTile();
                 Main.tile[i + 1, j - 2].ClearTile();
                 WorldGen.PlaceTile(i, j - 1, ModContent.TileType<EvostonePots>(), true, true, -1, WorldGen.genRand.Next(9));
+            }
+            if (t.Slope == SlopeType.Solid && (t.TileType == OvergrownEvostoneBrick || t.TileType == OvergrownEvostone))
+            {
+                OvergrownEvostoneBrickTile.GrowGrass(i, j);
+                for (int a = 1; WorldGen.genRand.NextBool(a); ++a)
+                    OvergrownEvostoneBrickTile.GrowCurseVine(i, j + a - 1);
             }
         }
         public static void GenerateTunnelHouse(int spawnX, int spawnY)
