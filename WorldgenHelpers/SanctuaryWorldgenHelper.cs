@@ -681,8 +681,10 @@ namespace SOTS.WorldgenHelpers
             CleanUp(left, right, Ceiling - 30, Bottom, 4);
             SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<OvergrownEvostoneTile>());
             SOTSWorldgenHelper.SmoothRegion(left / 2 + right / 2, Ceiling / 2 + Bottom / 2, right - left, Bottom - Ceiling, ModContent.TileType<OvergrownEvostoneBrickTile>());
-            CleanUp(left, right, Ceiling - 30, Bottom, 5);
 
+            GenerateImportantChests();
+
+            CleanUp(left, right, Ceiling - 30, Bottom, 5);
             for (int i = 0; i < PillarPos.Length; i++)
             {
                 if (i < PillarPos.Length - 1)
@@ -697,8 +699,9 @@ namespace SOTS.WorldgenHelpers
                     GenerateGrandArch(rightOfThis, Ceiling + 5, sizeX, 30, arch);
                 }
             }
-
             GenerateNewEmeraldGemStructure(SideOfWorld, Ceiling - 16);
+
+            
             IsGenerating = false;
         }
         public static void GeneratePillar(int i, int j)
@@ -1072,29 +1075,60 @@ namespace SOTS.WorldgenHelpers
         {
             foreach (Chest chest in Main.chest.Where(c => c != null))
             {
-                Tile t = Main.tile[chest.x, chest.y];
-                if(t.TileType == ModContent.TileType<InvidiaChestTile>())
+                int i = chest.x;
+                int j = chest.y;
+                Tile t = Main.tile[i, j];
+                if (t.TileType == ModContent.TileType<InvidiaChestTile>())
                 {
+                    int MainItem = -1;
+                    int SecondItem = -1;
+                    int frameX = t.TileFrameX;
+                    int style = t.TileFrameX / 36 - 2;
+                    if (style == 0) //new moon
+                    {
+                        MainItem = ModContent.ItemType<MoonShard1>();
+                        //SecondItem = ModContent.ItemType<LevMirror>(); //Gula
+                    }
+                    if (style == 1) //waxing crescent
+                    {
+                        MainItem = ModContent.ItemType<MoonShard2>();
+                        SecondItem = ModContent.ItemType<Dreamcatcher>(); //Luxuria
+                    }
+                    if (style == 2) //second quarter
+                    {
+                        MainItem = ModContent.ItemType<MoonShard3>();
+                        //SecondItem = ModContent.ItemType<LevMirror>(); //Ira
+                    }
+                    if (style == 3) //waxing gibbous
+                    {
+                        MainItem = ModContent.ItemType<MoonShard4>();
+                        //SecondItem = ModContent.ItemType<LevMirror>(); //Avaritia
+                    }
+                    if (style == 4) //full moon
+                    {
+                        MainItem = ModContent.ItemType<MoonShard5>();
+                        SecondItem = ModContent.ItemType<LevMirror>(); //Invidia
+                    }
+                    if (style == 5) //waning gibbous
+                    {
+                        MainItem = ModContent.ItemType<MoonShard6>();
+                        SecondItem = ModContent.ItemType<Sunbulb>(); //Superbia
+                    }
+                    if (style == 6) //third quarter
+                    {
+                        MainItem = ModContent.ItemType<MoonShard7>();
+                        SecondItem = ModContent.ItemType<EmptyNecklace>(); //Vanagloria
+                    }
+                    if (style == 7) //waning crescent
+                    {
+                        MainItem = ModContent.ItemType<MoonShard8>();
+                        //SecondItem = ModContent.ItemType<LevMirror>(); //Acedia
+                    }
                     int slot = 0;
-                    int chestType = t.TileFrameX / 36;
-                    int primaryItem = ModContent.ItemType<MoonShard1>();
-                    if(chestType == 2)
-                        primaryItem = ModContent.ItemType<MoonShard1>();
-                    if (chestType == 3)
-                        primaryItem = ModContent.ItemType<MoonShard2>();
-                    if (chestType == 4)
-                        primaryItem = ModContent.ItemType<MoonShard3>();
-                    if (chestType == 5)
-                        primaryItem = ModContent.ItemType<MoonShard4>();
-                    if (chestType == 6)
-                        primaryItem = ModContent.ItemType<MoonShard5>();
-                    if (chestType == 7)
-                        primaryItem = ModContent.ItemType<MoonShard6>();
-                    if (chestType == 8)
-                        primaryItem = ModContent.ItemType<MoonShard7>();
-                    if (chestType == 9)
-                        primaryItem = ModContent.ItemType<MoonShard8>();
-                    chest.AddItemToChest(primaryItem, ref slot, 1);
+                    if (MainItem != -1)
+                        chest.AddItemToChest(MainItem, ref slot);
+                    if (SecondItem != -1)
+                        chest.AddItemToChest(SecondItem, ref slot);
                 }
             }
         }
@@ -1717,6 +1751,49 @@ namespace SOTS.WorldgenHelpers
             int middleX = (posX + endPointX) / 2;
             int middleY = (posY + endPointY) / 2;
             SOTSWorldgenHelper.SmoothRegion(middleX, middleY, toEnd, toEndY);
+        }
+        public static void GenerateImportantChests()
+        {
+            Rectangle = SetRect();
+            int width = Rectangle.Width / 4;
+            int height = Rectangle.Height / 2;
+            Rectangle[] cutouts = [
+                new Rectangle(Rectangle.Left, Rectangle.Top, width, height), 
+                new Rectangle(Rectangle.Left + width, Rectangle.Top, width, height),
+                new Rectangle(Rectangle.Left + 2 * width, Rectangle.Top, width, height),
+                new Rectangle(Rectangle.Left + 3 * width, Rectangle.Top, width, height),
+                new Rectangle(Rectangle.Left, Rectangle.Top + height, width, height),
+                new Rectangle(Rectangle.Left + width, Rectangle.Top + height, width, height),
+                new Rectangle(Rectangle.Left + 2 * width, Rectangle.Top + height, width, height),
+                new Rectangle(Rectangle.Left + 3 * width, Rectangle.Top + height, width, height),
+            ];
+            int[] chestOrder = WorldGen.genRand.NextBool() ? 
+                                [1, 4, 0, 5,
+                                 2, 3, 7, 6] : 
+                                [5, 0, 4, 1, 
+                                 6, 7, 3, 2];
+            int k = 0;
+            foreach(Rectangle rect in cutouts)
+            {
+                int failAttempts = 100;
+                bool placedChest = false;
+                while(!placedChest && --failAttempts >= 0)
+                {
+                    int i = rect.Left + WorldGen.genRand.Next(rect.Width);
+                    int j = rect.Top + (k > 3 ? Math.Max(WorldGen.genRand.Next(rect.Height), WorldGen.genRand.Next(rect.Height)) : Math.Min(WorldGen.genRand.Next(rect.Height), WorldGen.genRand.Next(rect.Height)));
+                    if (!WorldGen.InWorld(i, j, 10))
+                        continue;
+                    while(!Main.tile[i, j + 1].HasTile)
+                        ++j;
+                    Tile t = Main.tile[i, j];
+                    if(!t.HasTile)
+                    {
+                        placedChest = -1 != WorldGen.PlaceChest(i, j, (ushort)ModContent.TileType<InvidiaChestTile>(), true, 2 + chestOrder[k % 8]);
+                    }
+                }
+                //Main.NewText(failAttempts);
+                k++;
+            }
         }
     }
 }

@@ -4074,7 +4074,7 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-        public static void PlaceLootInChests()
+        public static void FillChestsWithLoot()
         {
             int bestC = BestEvilBiome();
             CorruptionRectangle cR = Corruptions[bestC];
