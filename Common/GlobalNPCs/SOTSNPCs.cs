@@ -572,6 +572,12 @@ namespace SOTS.Common.GlobalNPCs
 				spawnRate = (int)(spawnRate * multiplier);
                 maxSpawns = (int)(maxSpawns / multiplier);
             }
+			if(player.HasBuff<Embattle>())
+			{
+				spawnRate = (int)(spawnRate * 0.25f);
+				maxSpawns = (int)(maxSpawns * 3f);
+
+            }
 			if (spawnRate < 1)
 				spawnRate = 1;
 		}

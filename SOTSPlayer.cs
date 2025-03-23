@@ -268,9 +268,9 @@ namespace SOTS
 
 		public Vector2 starCen;
 
-		public bool RotHeart = false;
+		public bool RotHeart = false, Embattle = false;
 
-		public bool VoidspaceFlames = false;
+        public bool VoidspaceFlames = false;
 		public bool AutoReuseAnything = false;
 		public bool InfinityPouch = false;
 
@@ -1018,7 +1018,7 @@ namespace SOTS
 				return;
 			}
 			SOTSWorld.lightingChange = 0f;
-			BlazingQuiver = WishingStar = AcidInject = Sunbulb = Dreamcatcher = false;
+			BlazingQuiver = WishingStar = AcidInject = Sunbulb = Dreamcatcher = Embattle = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
 			if(VMincubator)

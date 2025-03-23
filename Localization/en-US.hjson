@@ -6807,6 +6807,11 @@ Mods: {
 					'Cow on a trash farm...'
 					'''
 			}
+
+			MartianWarhorn: {
+				DisplayName: Martian Warhorn
+				Tooltip: Grants the Embattle buff, increasing damage by 5% and greatly increasing enemy spawn rates
+			}
 		}
 
 		ItemTooltip: {
@@ -7003,7 +7008,7 @@ Mods: {
 
 			PharaohsCurse: {
 				DisplayName: Pharaoh's Curse
-				Description: Something is watching you, spawn rates increased
+				Description: Something is watching you, enemy spawn rates increased
 			}
 
 			PurpleBalloon: {
@@ -7283,6 +7288,11 @@ Mods: {
 			Boiling: {
 				DisplayName: Boiling
 				Description: "'You can feel your skin peeling off'"
+			}
+
+			Embattle: {
+				DisplayName: Embattle
+				Description: Increases damage by 5% and greatly increases enemy spawn rates
 			}
 		}
 

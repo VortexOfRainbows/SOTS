@@ -1087,7 +1087,7 @@ namespace SOTS.WorldgenHelpers
                     if (style == 0) //new moon
                     {
                         MainItem = ModContent.ItemType<MoonShard1>();
-                        //SecondItem = ModContent.ItemType<LevMirror>(); //Gula
+                        SecondItem = ModContent.ItemType<EmptyNecklace>(); //Vanagloria
                     }
                     if (style == 1) //waxing crescent
                     {
@@ -1097,7 +1097,7 @@ namespace SOTS.WorldgenHelpers
                     if (style == 2) //second quarter
                     {
                         MainItem = ModContent.ItemType<MoonShard3>();
-                        //SecondItem = ModContent.ItemType<LevMirror>(); //Ira
+                        SecondItem = ModContent.ItemType<MartianWarhorn>(); //Ira
                     }
                     if (style == 3) //waxing gibbous
                     {
@@ -1117,12 +1117,12 @@ namespace SOTS.WorldgenHelpers
                     if (style == 6) //third quarter
                     {
                         MainItem = ModContent.ItemType<MoonShard7>();
-                        SecondItem = ModContent.ItemType<EmptyNecklace>(); //Vanagloria
+                        //SecondItem = ModContent.ItemType<LevMirror>(); //Acedia
                     }
                     if (style == 7) //waning crescent
                     {
                         MainItem = ModContent.ItemType<MoonShard8>();
-                        //SecondItem = ModContent.ItemType<LevMirror>(); //Acedia
+                        //SecondItem = ModContent.ItemType<LevMirror>(); //Gula
                     }
                     int slot = 0;
                     if (MainItem != -1)

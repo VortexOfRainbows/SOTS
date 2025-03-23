@@ -98,6 +98,9 @@ Daily Log:
 14. Add Hardlight Hook: works in MP
 15. Add Plastic Bait
 16. Add Mr McMillen
+17. Lava now "evaporates" in the sanctuary (visuals do not work in multiplayer, but the effect generally does)
+	1. Multiplayer syncing for the dust visuals can be fixed after the system for
+18. Add Martian Warhorn
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP
