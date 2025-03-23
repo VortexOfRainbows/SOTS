@@ -47,8 +47,11 @@ namespace SOTS
 {
 	public class SOTS : Mod
 	{
+		public static Mod SubworldLibrary;
+		public static Mod SpookyMod;
+		public static Mod InfernumMod;
 		private const string SOTSTexturePackName = "Secrets of the Shadows Texture Pack";
-		public static bool IsSOTSTexturePackEnabled()
+        public static bool IsSOTSTexturePackEnabled()
 		{
 			if (Main.netMode == NetmodeID.Server)
 				return false;
@@ -64,10 +67,11 @@ namespace SOTS
             }				
 			return false;
 		}
-		private static Mod SubworldLibrary;
 		public static void SetSubworld()
 		{
             ModLoader.TryGetMod("SubworldLibrary", out SubworldLibrary);
+            ModLoader.TryGetMod("Spooky", out SpookyMod);
+            ModLoader.TryGetMod("InfernumMode", out InfernumMod);
         }
         public static bool InSubworld()
         {
