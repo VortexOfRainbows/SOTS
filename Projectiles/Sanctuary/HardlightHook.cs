@@ -71,11 +71,12 @@ namespace SOTS.Projectiles.Sanctuary
             Texture2D texture = SOTSUtils.WhitePixel;
 
             Color color = new Color(122, 243, 255, 0) * 0.6f;
-
-            Vector2 position = Projectile.Center;
-            Vector2 backOffset = new Vector2(0, 9).RotatedBy(Projectile.rotation);
-            Vector2 endPosition = position + backOffset;
+            
             Vector2 mountedCenter = Main.player[Projectile.owner].MountedCenter;
+            float actualDist = Projectile.Center.Distance(mountedCenter);
+            Vector2 position = Projectile.Center;
+            Vector2 backOffset = new Vector2(0, MathF.Min(9, actualDist)).RotatedBy(Projectile.rotation);
+            Vector2 endPosition = position + backOffset;
             Vector2 origin = new Vector2(0, 1);
             Vector2 prev = mountedCenter;
             float distToPlayer = mountedCenter.Distance(endPosition);
