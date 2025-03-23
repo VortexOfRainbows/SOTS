@@ -6787,6 +6787,11 @@ Mods: {
 					'''
 				ArchTooltip: "'Would you rather have +100% super chungus or +5 defense?'"
 			}
+
+			HardlightHook: {
+				DisplayName: Hardlight Hook
+				Tooltip: Allows grappling onto the air
+			}
 		}
 
 		ItemTooltip: {
@@ -8742,6 +8747,7 @@ Mods: {
 			FriendlyBridgeBurnerFlame.DisplayName: Friendly Bridge Burner Flame
 			FoundryFire.DisplayName: Meatball
 			FoundryFireBoom.DisplayName: Meatball Explosion
+			HardlightHook.DisplayName: Hardlight Hook
 		}
 
 		DamageClasses: {

@@ -73,7 +73,7 @@ namespace SOTS.Items.Planetarium.Furniture
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<AvaritianPlating>(), 10).Register();
+			CreateRecipe(1).AddIngredient<AvaritianPlating>(10).Register();
 		}
 	}	
 	public class HardlightFabricatorTile : ModTile
