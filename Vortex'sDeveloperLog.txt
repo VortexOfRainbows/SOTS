@@ -95,7 +95,8 @@ Daily Log:
 11. Generate Roof Building in the Sanctuary and Spiral Staircases
 12. More progress on the sanctuary generation
 13. Sanctuary Now generates the 8 moon chests (loot is WIP)
-14. Add Hardlight Hook (needs MP testing and spawn in chests)
+14. Add Hardlight Hook: works in MP
+15. Add Plastic Bait
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP

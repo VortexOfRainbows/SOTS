@@ -53,7 +53,8 @@ namespace SOTS.Common.GlobalNPCs
 			if (shop.NpcType == NPCID.Merchant)
 			{
 				shop.Add(ModContent.ItemType<KeepersBox>(), Condition.TimeNight);
-				shop.Add(ModContent.ItemType<BlackFlare>(), Condition.PlayerCarriesItem(ModContent.ItemType<FlareDetonator>()));
+                shop.Add(ModContent.ItemType<PlasticBait>());
+                shop.Add(ModContent.ItemType<BlackFlare>(), Condition.PlayerCarriesItem(ModContent.ItemType<FlareDetonator>()));
 			}
 		}
     }

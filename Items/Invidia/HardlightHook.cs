@@ -63,7 +63,7 @@ namespace SOTS.Items.Invidia
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Green;
             Item.shoot = ModContent.ProjectileType<Projectiles.Sanctuary.HardlightHook>(); 
-            Item.shootSpeed = 16f;
+            Item.shootSpeed = 15f;
 		}
 	}
 }

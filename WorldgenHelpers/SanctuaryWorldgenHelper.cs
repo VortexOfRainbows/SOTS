@@ -1102,7 +1102,7 @@ namespace SOTS.WorldgenHelpers
                     if (style == 3) //waxing gibbous
                     {
                         MainItem = ModContent.ItemType<MoonShard4>();
-                        //SecondItem = ModContent.ItemType<LevMirror>(); //Avaritia
+                        SecondItem = ModContent.ItemType<HardlightHook>(); //Avaritia
                     }
                     if (style == 4) //full moon
                     {
