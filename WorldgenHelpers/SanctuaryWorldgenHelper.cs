@@ -1456,6 +1456,15 @@ namespace SOTS.WorldgenHelpers
                 Main.tile[i + 1, j - 2].ClearTile();
                 WorldGen.PlaceTile(i, j - 1, ModContent.TileType<EvostonePots>(), true, true, -1, WorldGen.genRand.Next(9));
             }
+            else if(WorldGen.genRand.NextBool(2) && !Main.tile[i, j - 1].HasTile)
+            {
+                if(WorldGen.genRand.NextBool(5) && !Main.tile[i, j - 2].HasTile)
+                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<EvostoneAmbientTile1x2>(), true, true, -1, WorldGen.genRand.Next(2));
+                else if (WorldGen.genRand.NextBool(4))
+                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<EvostoneAmbientTile1x1>(), true, true, -1, WorldGen.genRand.Next(4));
+                else if (WorldGen.genRand.NextBool(3) && !Main.tile[i + 1, j - 1].HasTile)
+                    WorldGen.PlaceTile(i, j - 1, ModContent.TileType<EvostoneAmbientTile2x1>(), true, true, -1, WorldGen.genRand.Next(3));
+            }
             if (t.Slope == SlopeType.Solid && (t.TileType == OvergrownEvostoneBrick || t.TileType == OvergrownEvostone))
             {
                 OvergrownEvostoneBrickTile.GrowGrass(i, j);

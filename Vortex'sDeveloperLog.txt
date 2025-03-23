@@ -42,8 +42,7 @@ Update Objectives:
 10. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 11. Sanctuary! (In Progress)
 	1. Tiles: Invidia Portal Plating
-	2. Rubble tiles (ambient tiles)
-	3. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
+	2. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 12. Add Achievements
 13. Invidia Gateway Tile (needs: glow, conduit connection)
 
@@ -103,6 +102,7 @@ Daily Log:
 18. Add Martian Warhorn
 19. WIP steam effects
 	1. Also need to fix water coloration in the sanctuary (in order to make it more unique, custom water style)
+20. Add Sanctuary ambient tiles
 	
 
 3/7/25

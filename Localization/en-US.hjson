@@ -6812,6 +6812,11 @@ Mods: {
 				DisplayName: Martian Warhorn
 				Tooltip: Grants the Embattle buff, increasing damage by 5% and greatly increasing enemy spawn rates
 			}
+
+			EvostoneAmbient: {
+				DisplayName: Evostone Ambient
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
