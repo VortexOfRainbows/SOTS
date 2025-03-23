@@ -6726,8 +6726,8 @@ Mods: {
 				DisplayName: Mr. Eepy
 				Tooltip:
 					'''
-					Prevents attacks from dealing damage to your void meter
 					Decreases the potency of Void Shock and Void Recovery
+					Prevents attacks from dealing damage to your void meter
 					Increases void damage by 10% and max void by 50
 					'''
 			}
@@ -6796,6 +6796,16 @@ Mods: {
 			PlasticBait: {
 				DisplayName: Plastic Bait
 				Tooltip: ""
+			}
+
+			MrMcMillen: {
+				DisplayName: Mr. McMillen
+				Tooltip:
+					'''
+					Decreases the potency of Void Shock and Void Recovery
+					Increases void regeneration speed by 50% and max void by 50
+					'Cow on a trash farm...'
+					'''
 			}
 		}
 
