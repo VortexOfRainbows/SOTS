@@ -673,6 +673,10 @@ namespace SOTS
 			{
 				return;
 			}
+			else if(Player.whoAmI == Main.myPlayer && SanctuaryBiome)
+			{
+				SOTSWorld.TryDoingLiquidScreenEffects();
+			}
 			decrement(ref nightmareArmCD);
 			decrement(ref fireIcoCD);
 			decrement(ref iceIcoCD);

@@ -49,6 +49,8 @@ using SOTS.Items.Furniture.Functional;
 using SOTS.Items.Conduit;
 using Terraria.Graphics.Light;
 using SOTS.Items.Invidia;
+using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 
 namespace SOTS
 {
@@ -1850,6 +1852,44 @@ namespace SOTS
                 {
 					int stackAvg = fright.stack + sight.stack + might.stack;
 					recipe.AddIngredient(ModContent.ItemType<SoulOfPlight>(), stackAvg / 3);
+                }
+            }
+        }
+		public static void TryDoingLiquidScreenEffects()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                Point point = Main.LocalPlayer.Center.ToTileCoordinates();
+                Rectangle tileRectangle = new Rectangle(point.X - Main.buffScanAreaWidth / 2, point.Y - Main.buffScanAreaHeight / 2, Main.buffScanAreaWidth, Main.buffScanAreaHeight);
+                tileRectangle = WorldUtils.ClampToWorld(tileRectangle);
+                for (int i = 0; i < 100; ++i)
+                {
+                    LiquidScreenEffect(Main.rand.Next(tileRectangle.Left, tileRectangle.Right), Main.rand.Next(tileRectangle.Top, tileRectangle.Bottom));
+                }
+            }
+        }
+        public static void LiquidScreenEffect(int i, int j)
+        {
+            if (SanctuaryWorldgenHelper.Rectangle.Contains(i, j) && !Main.gamePaused)
+            {
+                Tile t = Main.tile[i, j];
+                Tile tU = Main.tile[i, j - 1];
+                if (t.LiquidAmount > 0 && !tU.HasTile && tU.LiquidAmount <= 0)
+                {
+                    Vector2 pos = new Vector2(i * 16, j * 16 + (1 - t.LiquidAmount / 255f) * 16);
+                    if (t.LiquidType == 0)
+                    {
+                        //Water steaming
+                        PixelDust.Spawn(pos, 16, 0, Main.rand.NextVector2Circular(1, 1), Color.White, 2);
+                    }
+                    if (t.LiquidType == 1)
+                    {
+                        //Lava evaporating
+                    }
+                    if (t.LiquidType == 2)
+                    {
+                        //Honey evaporating
+                    }
                 }
             }
         }

@@ -99,8 +99,11 @@ Daily Log:
 15. Add Plastic Bait
 16. Add Mr McMillen
 17. Lava now "evaporates" in the sanctuary (visuals do not work in multiplayer, but the effect generally does)
-	1. Multiplayer syncing for the dust visuals can be fixed after the system for
+	1. Multiplayer syncing for the dust visuals can be fixed after the system for steam is added
 18. Add Martian Warhorn
+19. WIP steam effects
+	1. Also need to fix water coloration in the sanctuary (in order to make it more unique, custom water style)
+	
 
 3/7/25
 1. Finish Sanguine Foundry (added Gore, Banner, Polish, drops, bestiary) + should work in MP

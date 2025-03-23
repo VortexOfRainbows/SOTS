@@ -23,6 +23,7 @@ using SOTS.Items.AbandonedVillage;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.WorldgenHelpers;
 using SOTS.Items.Invidia;
+using SOTS.Dusts;
 
 namespace SOTS
 {

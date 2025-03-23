@@ -8,6 +8,8 @@ using SOTS.Items.Pyramid;
 using Terraria;
 using SOTS.Items.Gems;
 using Terraria.ID;
+using SOTS.Dusts;
+using SOTS.WorldgenHelpers;
 
 namespace SOTS
 {
