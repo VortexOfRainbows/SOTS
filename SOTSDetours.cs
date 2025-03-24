@@ -139,9 +139,31 @@ namespace SOTS
             //Prevent evaporation in the underworld
             On_Liquid.Update += On_Liquid_Update;
 
+			//Prevent lava slime lava in sanctuary
+            On_NPC.VanillaHitEffect += On_NPC_VanillaHitEffect;
+
             if (!Main.dedServ)
 				ResizeTargets();
 		}
+
+        private static void On_NPC_VanillaHitEffect(On_NPC.orig_VanillaHitEffect orig, NPC self, int hitDirection, double dmg, bool instantKill)
+        {
+			int actualNetMode = Main.netMode;
+			//Main.NewText("in here");
+            if (self.type == NPCID.LavaSlime)
+            {
+				//Main.NewText(self.Center.ToTileCoordinates());
+				//Main.NewText(SanctuaryWorldgenHelper.SpawnPos);
+				//Main.NewText(SanctuaryWorldgenHelper.Rectangle);
+                if (SanctuaryWorldgenHelper.Rectangle.Contains(self.Center.ToTileCoordinates()))
+				{
+                    //Main.NewText("Prevented lava from spawning");
+                    Main.netMode = NetmodeID.MultiplayerClient; //This will prevent the lava from spawning, though this is a rather jank way of doing it
+                }
+            }
+			orig(self, hitDirection, dmg, instantKill);
+			Main.netMode = actualNetMode;
+        }
 
         private static void On_Liquid_Update(On_Liquid.orig_Update orig, Liquid self)
         {
@@ -150,31 +172,6 @@ namespace SOTS
 			{
 				Main.maxTilesY += 200; //Liquid uses Main.underworldLayer in order to determine when to evaporate.
 									   //By essentially shifting the underworld layer down, I make this check always fail in the sanctuary.
-
-				Tile t = Main.tile[self.x, self.y];
-                if (t.LiquidType == 1 && t.LiquidAmount > 0)
-				{
-					t.LiquidAmount = (byte)Math.Max(t.LiquidAmount - 2, 0);
-					if(Main.netMode != NetmodeID.Server)
-                    {
-                        Color c = ColorHelper.Inferno1;
-                        c.A = 0;
-                        if (t.LiquidAmount == 0)
-                        {
-							for(int i = 10; i > 0; --i)
-							{
-								Vector2 rand = Main.rand.NextVector2Circular(3, 2);
-								rand.Y -= 1.5f;
-                                PixelDust.Spawn(new Vector2(self.x * 16, self.y * 16 + 16), 16, 0, rand, c, 6).scale = Main.rand.NextFloat(1.3f, 1.6f);
-                            }
-                        }
-						else
-                        {
-                            float liquidPercent = t.LiquidAmount / 255f;
-                            PixelDust.Spawn(new Vector2(self.x * 16, self.y * 16 + 16 * (1 - liquidPercent)), 16, (int)(16 * liquidPercent), Main.rand.NextVector2Circular(2, 2), c, 8).scale = Main.rand.NextFloat(.9f, 1.2f);
-                        }
-                    }
-                }
             }
             orig(self);
 			Main.maxTilesY = oldMaxTilesY;

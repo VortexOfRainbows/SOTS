@@ -52,23 +52,17 @@ namespace SOTS.WorldgenHelpers
             EvostonePlatform = (ushort)ModContent.TileType<EvostonePlatformTile>();
             DarkShingles = (ushort)ModContent.TileType<DarkShinglesTile>();
             InvidiaPlating = (ushort)ModContent.TileType<InvidiaPlatingTile>();
-            SpawnPos = DetermineSpawnLocation();
+            if(SpawnPos <= 0)
+                SpawnPos = DetermineSpawnLocation();
+            Rectangle = SetRect();
         }
         public static int DetermineSpawnLocation()
         {
             // In infernum mod, the jungle is always on the right, forcing the sanctuary to the brimstone crags, where it probably will not conflict with infernum
             // Spooky mod spawns the eye valley on the jungle-side of the world, meaning this should also fix spooky mod compatability
             if (SOTS.SpookyMod != null || SOTS.InfernumMod != null)
-            {
                 if(GenVars.JungleX > Main.maxTilesX / 2) //Jungle is on the right
-                {
                     return Main.maxTilesX * 1 / 8;
-                }
-                else
-                {
-                    return Main.maxTilesX * 7 / 8;
-                }
-            }
             return Main.maxTilesX * 7 / 8;
         }
         public static void GenerateNewEmeraldGemStructure(int x, int y)
@@ -561,8 +555,8 @@ namespace SOTS.WorldgenHelpers
         public static int Ceiling => Main.UnderworldLayer;
         public static int Bottom => Main.maxTilesY - 1;
         public static int UnderworldHeight => Main.UnderworldLayer + 65;
-        public static int SideOfWorld => SpawnPos == -1 ? (SpawnPos = DetermineSpawnLocation()) : SpawnPos;
-        private static int SpawnPos = -1;
+        public static int SideOfWorld => SpawnPos <= 0 ? (SpawnPos = DetermineSpawnLocation()) : SpawnPos;
+        public static int SpawnPos = -1;
         public static void PrepareUnderworldArea(int x, int y, int endX, int endY, int style = 0, int heightCutoff = 0)
         {
             ushort Evostone = (ushort)ModContent.TileType<EvostoneTile>();

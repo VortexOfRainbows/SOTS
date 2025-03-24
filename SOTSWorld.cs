@@ -51,6 +51,7 @@ using Terraria.Graphics.Light;
 using SOTS.Items.Invidia;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 
 namespace SOTS
 {
@@ -335,6 +336,8 @@ namespace SOTS
 
 			tag["SunbulbSolved"] = SunbulbSolved;
 			tag["SunbulbFailed"] = SunbulbFailed;
+
+			tag["SanctuaryLocation"] = SanctuaryWorldgenHelper.SpawnPos;
         }
         public override void LoadWorldData(TagCompound tag)
 		{
@@ -359,6 +362,10 @@ namespace SOTS
 
             SunbulbSolved = tag.GetBool("SunbulbSolved");
             SunbulbFailed = tag.GetBool("SunbulbFailed");
+
+			int sanctuaryLocation = tag.GetInt("SanctuaryLocation");
+			if(sanctuaryLocation > 0)
+				SanctuaryWorldgenHelper.SpawnPos = sanctuaryLocation;
         }
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();
@@ -1882,14 +1889,26 @@ namespace SOTS
                         //Water steaming
                         PixelDust.Spawn(pos, 16, 0, Main.rand.NextVector2Circular(1, 1), Color.White, 2);
                     }
-                    if (t.LiquidType == 1)
-                    {
-                        //Lava evaporating
-                    }
-                    if (t.LiquidType == 2)
-                    {
-                        //Honey evaporating
-                    }
+                    //if (t.LiquidType == 1)
+                    //{
+                    //    Color c = ColorHelper.Inferno1;
+                    //    c.A = 0;
+                    //    if (t.LiquidAmount == 0)
+                    //    {
+                    //        for (int a = 10; a > 0; --a)
+                    //        {
+                    //            Vector2 rand = Main.rand.NextVector2Circular(3, 2);
+                    //            rand.Y -= 1.5f;
+                    //            PixelDust.Spawn(pos, 16, 0, rand, c, 6).scale = Main.rand.NextFloat(1.3f, 1.6f);
+                    //        }
+					//		t.LiquidType = 0;
+                    //    }
+                    //    else
+                    //    {
+                    //        float liquidPercent = t.LiquidAmount / 255f;
+                    //        PixelDust.Spawn(pos, 16, (int)(16 * liquidPercent), Main.rand.NextVector2Circular(2, 2), c, 8).scale = Main.rand.NextFloat(.9f, 1.2f);
+                    //    }
+                    //}
                 }
             }
         }
