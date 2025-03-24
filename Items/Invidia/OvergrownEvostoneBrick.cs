@@ -186,11 +186,20 @@ namespace SOTS.Items.Invidia
         {
             int frameX = Main.tile[i, j].TileFrameX / 18;
             if (frameX >= 5 && frameX <= 8)
-			{
-				r = .5f;
-				g = .2f;
-				b = .25f;
-			}
+            {
+                if (Main.tile[i, j].LiquidAmount > 0)
+                {
+                    r = .6f;
+                    g = .125f;
+                    b = .225f;
+                }
+                else
+                {
+                    r = .5f;
+                    g = .2f;
+                    b = .25f;
+                }
+            }
         }
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
@@ -272,9 +281,18 @@ namespace SOTS.Items.Invidia
         {
 			if(IsGlowingTile(i, j))
             {
-                r = .5f;
-                g = .2f;
-                b = .25f;
+				if (Main.tile[i, j].LiquidAmount > 0)
+                {
+                    r = .6f;
+                    g = .125f;
+                    b = .225f;
+                }
+				else
+                {
+                    r = .5f;
+                    g = .2f;
+                    b = .25f;
+                }
             }
         }
         public override IEnumerable<Item> GetItemDrops(int i, int j)

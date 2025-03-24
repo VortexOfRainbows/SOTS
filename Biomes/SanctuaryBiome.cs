@@ -5,6 +5,7 @@ using SOTS.Buffs.Debuffs;
 using SOTS.Helpers;
 using SOTS.NPCs.Boss;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,7 +13,7 @@ namespace SOTS.Biomes
 {
 	public class SanctuaryBiome : ModBiome
 	{
-		//public override ModWaterStyle WaterStyle => ModContent.Find<ModWaterStyle>("ExampleMod/ExampleWaterStyle"); // Sets a water style for when inside this biome
+		public override ModWaterStyle WaterStyle => ModContent.GetInstance<SanctuaryWaterStyle>(); // Sets a water style for when inside this biome
 		//public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.Find<ModSurfaceBackgroundStyle>("ExampleMod/ExampleSurfaceBackgroundStyle");
 		//public override CaptureBiome.TileColorStyle TileColorStyle => CaptureBiome.TileColorStyle.Crimson;
 		public override int Music => NPC.CountNPCS(ModContent.NPCType<SubspaceSerpentHead>()) > 0 ? MusicHelper.SubspaceSerpent : MusicHelper.Sanctuary;
@@ -33,39 +34,45 @@ namespace SOTS.Biomes
         }
         public override int BiomeTorchItemType => ItemID.DemonTorch;
     }
-    //public class ExampleWaterStyle : ModWaterStyle
-	//{
-    //    private Asset<Texture2D> rainTexture;
-    //    public override void Load()
-    //    {
-    //        rainTexture = Mod.Assets.Request<Texture2D>("Content/Biomes/ExampleRain");
-    //    }
-    //    public override int ChooseWaterfallStyle()
-    //    {
-    //        return ModContent.GetInstance<ExampleWaterfallStyle>().Slot;
-    //    }
-    //    public override int GetSplashDust()
-    //    {
-    //        return ModContent.DustType<ExampleSolutionDust>();
-    //    }
-    //    public override int GetDropletGore()
-    //    {
-    //        return ModContent.GoreType<ExampleDroplet>();
-    //    }
-    //    public override void LightColorMultiplier(ref float r, ref float g, ref float b)
-    //    {
-    //        r = 1f;
-    //        g = 1f;
-    //        b = 1f;
-    //    }
-    //    public override Color BiomeHairColor()
-    //    {
-    //        return Color.White;
-    //    }
-    //    public override byte GetRainVariant()
-    //    {
-    //        return (byte)Main.rand.Next(3);
-    //    }
-    //    public override Asset<Texture2D> GetRainTexture() => rainTexture;
-    //}
+    public class SanctuaryWaterStyle : ModWaterStyle
+	{
+        public override string Texture => base.Texture;
+        public override int ChooseWaterfallStyle()
+        {
+            return ModContent.GetInstance<SanctuaryWaterfallStyle>().Slot;
+        }
+        public override int GetSplashDust()
+        {
+            return DustID.Water_Desert; //ModContent.DustType<SanctuarySolutionDust>();
+        }
+        public override int GetDropletGore()
+        {
+            return ModContent.GoreType<SanctuaryDroplet>();
+        }
+        public override void LightColorMultiplier(ref float r, ref float g, ref float b)
+        {
+            r = 1f;
+            g = 0.85f;
+            b = 0.85f;
+        }
+        public override Color BiomeHairColor()
+        {
+            return ColorHelper.EmeraldColor;
+        }
+    }
+    public class SanctuaryDroplet : ModGore
+    {
+        public override void SetStaticDefaults()
+        {
+            ChildSafety.SafeGore[Type] = true;
+            GoreID.Sets.LiquidDroplet[Type] = true;
+
+            UpdateType = GoreID.WaterDrip;
+        }
+    }
+    public class SanctuaryWaterfallStyle : ModWaterfallStyle
+    {
+        //public override void AddLight(int i, int j) =>
+        //    Lighting.AddLight(new Vector2(i, j).ToWorldCoordinates(), Color.White.ToVector3() * 0.5f);
+    }
 }

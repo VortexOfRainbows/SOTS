@@ -98,8 +98,7 @@ Daily Log:
 16. Add Mr McMillen
 17. Lava slimes no longer drop lava in the sanctuary
 18. Add Martian Warhorn
-19. WIP steam effects
-	1. Also need to fix water coloration in the sanctuary (in order to make it more unique, custom water style)
+19. Sanctuary custom water + WIP steam effects
 20. Add Sanctuary ambient tiles
 21. Sanctuary should no longer conflict with Infernum and Spooky Mod
 	
