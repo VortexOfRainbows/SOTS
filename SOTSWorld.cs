@@ -1869,7 +1869,7 @@ namespace SOTS
                 Point point = Main.LocalPlayer.Center.ToTileCoordinates();
                 Rectangle tileRectangle = new Rectangle(point.X - Main.buffScanAreaWidth / 2, point.Y - Main.buffScanAreaHeight / 2, Main.buffScanAreaWidth, Main.buffScanAreaHeight);
                 tileRectangle = WorldUtils.ClampToWorld(tileRectangle);
-                for (int i = 0; i < 100; ++i)
+                for (int i = 0; i < 150; ++i)
                 {
                     LiquidScreenEffect(Main.rand.Next(tileRectangle.Left, tileRectangle.Right), Main.rand.Next(tileRectangle.Top, tileRectangle.Bottom));
                 }
@@ -1881,13 +1881,58 @@ namespace SOTS
             {
                 Tile t = Main.tile[i, j];
                 Tile tU = Main.tile[i, j - 1];
-                if (t.LiquidAmount > 0 && !tU.HasTile && tU.LiquidAmount <= 0)
+				bool noTileAbove = !tU.HasTile && tU.LiquidAmount <= 0;
+                if (t.LiquidAmount > 0)
                 {
-                    Vector2 pos = new Vector2(i * 16, j * 16 + (1 - t.LiquidAmount / 255f) * 16);
                     if (t.LiquidType == 0)
                     {
-                        //Water steaming
-                        PixelDust.Spawn(pos, 16, 0, Main.rand.NextVector2Circular(1, 1), Color.White, 2);
+						if(noTileAbove)
+                        {
+                            for (int a = 0; a < 3; a++)
+                            {
+                                Vector2 pos = new Vector2(i * 16, j * 16 - t.LiquidAmount / 255f * 16 + Main.rand.NextFloat(8, 28));
+                                //Water steaming
+                                int type = Main.rand.NextFromList(GoreID.FogMachineCloud1, GoreID.FogMachineCloud2, GoreID.FogMachineCloud3); //try using fog machine cloud
+                                Vector2 velo = new Vector2(Main.rand.NextFloat(-0.5f, 0.5f), Main.rand.NextFloat(-0.2f, 0.05f));
+                                Gore g = Gore.NewGorePerfect(new EntitySource_Misc("SOTS:Steam"), pos, velo, type);
+                                g.scale *= Main.rand.NextFloat(1.1f, 1.8f);
+                                g.alpha -= 30;
+                                g.timeLeft += 40;
+                                //g.velocity = velo;
+                                //g.timeLeft = 120;
+
+                                if (Main.rand.NextBool(3))
+                                {
+                                    velo = Main.rand.NextVector2Circular(1.2f, 0.2f);
+                                    velo.Y -= 0.1f;
+                                    PixelDust.Spawn(pos, 16, 0, velo, Color.White * 0.5f, -2).scale *= Main.rand.NextFloat(1, 2);
+                                }
+                                else if (a == 2 && Main.rand.NextBool(12))
+                                {
+                                    g = Gore.NewGorePerfect(new EntitySource_Misc("SOTS:Steam"), pos + new Vector2(0, 16), velo, 411); //Blue bubble gore
+                                    g.type = 411;
+                                    g.alpha += 50;
+                                    g.timeLeft -= 300;
+                                }
+                                else if (a == 1 && Main.rand.NextBool(2))
+                                {
+                                    pos = new Vector2(i * 16, j * 16 - t.LiquidAmount / 255f * 16 + 15);
+                                    velo = Main.rand.NextVector2Circular(0.1f, 0.2f);
+                                    velo.Y -= 0.6f;
+                                    PixelDust.Spawn(pos, 16, 0, velo, new Color(23, 191, 180, 0) * Main.rand.NextFloat(0.5f, 0.75f), 1).scale *= Main.rand.NextFloat(0.75f, 1.5f);
+                                }
+                            }
+                        }
+						else
+						{
+							if(Main.rand.NextBool(12))
+							{
+                                Vector2 pos = new Vector2(i * 16, j * 16 - t.LiquidAmount / 255f * 16 + 15);
+                                Vector2 velo = Main.rand.NextVector2Circular(0.1f, 0.2f);
+                                velo.Y -= 0.6f;
+                                PixelDust.Spawn(pos, 16, 0, velo, new Color(23, 191, 180, 0) * Main.rand.NextFloat(0.25f, 0.5f), 1).scale *= Main.rand.NextFloat(0.5f, 1.0f);
+                            }
+						}
                     }
                     //if (t.LiquidType == 1)
                     //{

@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using SOTS.Buffs.Debuffs;
 using SOTS.Helpers;
 using SOTS.NPCs.Boss;

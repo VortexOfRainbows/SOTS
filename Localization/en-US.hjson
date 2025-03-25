@@ -7277,7 +7277,7 @@ Mods: {
 				Prefix6: "Creeping "
 				Prefix7: "Crippling "
 				DisplayName: Silence
-				Description: Reduced spawnrates by {0}%
+				Description: Reduced enemy spawnrates by {0}%
 			}
 
 			Vigor: {
