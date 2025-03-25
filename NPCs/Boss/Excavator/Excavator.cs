@@ -223,7 +223,7 @@ namespace SOTS.NPCs.Boss.Excavator
             Color drawColor = Lighting.GetColor(other.Center.ToTileCoordinates(), Color.White);
             Texture2D body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
             Vector2 bodyOrigin = body.Size() / 2;
-            for (int j = -1; j <= 0; j += 2)
+            for (int j = -1; j <= 1; j += 2)
             {
                 DrawArmIK(other, spriteBatch, screenPos, j);
             }
@@ -238,41 +238,41 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector2 armOrigin = new Vector2(7, arm.Height / 2);
             Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
             Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height);
-            Vector2 revHandOrigin = new Vector2(hand.Width - handOrigin.X, handOrigin.Y);
             float armRotation = other.rotation;
             Vector2 armPosition = new Vector2(-body.Width / 2 * j, 0).RotatedBy(armRotation) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
 
             float A = hand.Height - 14; //size of hand
-            float B = arm.Width; //size of arm
+            float B = arm.Width - 14; //size of arm
             Vector2 end = Main.MouseWorld;
             Vector2 start = armPosition;
             if(end.Distance(start) > (A + B))
             {
                 end = start + (end - start).SNormalize() * (A + B);
             }
+            if (end.Distance(start) < 32)
+            {
+                end = start + (end - start).SNormalize() * 32;
+            }
             Vector2 startToEnd = end - start;
             float C = startToEnd.Length();
             float angleA = C - A - B > 0 ? 0 : MathF.Acos((B * B + C * C - A * A) / (2 * B * C));
             float angleB = C - A - B > 0 ? 0 : MathF.Acos((A * A + C * C - B * B) / (2 * A * C));
-            Vector2 endToMid = -startToEnd.RotatedBy(-angleB);
-            Vector2 startToMid = startToEnd.RotatedBy(angleA);
-            //
-            //spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, armRotation, j == -1 ? armOrigin : revArmOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            //
-            //Vector2 handPosition = armPosition + new Vector2((arm.Width - 14) * -j, 0).RotatedBy(armRotation);
-            //
-            //spriteBatch.Draw(hand, handTargetPosition - screenPos, null, drawColor, handToArm.ToRotation() + MathHelper.PiOver2, j == -1 ? handOrigin : revHandOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            //
-            //spriteBatch.Draw(SOTSUtils.WhitePixel, middle - screenPos, null, drawColor, startToEnd.ToRotation() + MathHelper.PiOver2, new Vector2(0, 1), new Vector2(30 * 0.5f, 2), SpriteEffects.None, 0);
-            spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-            spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endToMid.ToRotation(), new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
-            spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-            spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, startToMid.ToRotation(), new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
+            Vector2 endToMid = -startToEnd.RotatedBy(angleB * dir);
+            Vector2 startToMid = startToEnd.RotatedBy(-angleA * dir);
             
-            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endToMid.ToRotation() + MathHelper.PiOver2, j == -1 ? handOrigin : revHandOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            //Visual representations of the IK happening
+            //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+            //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endToMid.ToRotation(), new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
+            //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+            //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, startToMid.ToRotation(), new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
+            
+            spriteBatch.Draw(arm, start - screenPos, null, drawColor, startToMid.ToRotation() + (j == 1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endToMid.ToRotation() + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
-            //spriteBatch.Draw(SOTSUtils.WhitePixel, middle - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+            //Visual location of the actual center of the arm
+            Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
+            spriteBatch.Draw(SOTSUtils.WhitePixel, realEnd - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
         }
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
         public override void SetStaticDefaults()
@@ -325,7 +325,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     NPC.realLife = NPC.whoAmI;
                     int latestNPC = NPC.whoAmI;
                     int WormLength = segments.Length;
-                    for (int i = 0; i < 1; i++)
+                    for (int i = 0; i < WormLength; i++)
                     {
                         latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ExcavatorBody>(), NPC.whoAmI, 0, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
