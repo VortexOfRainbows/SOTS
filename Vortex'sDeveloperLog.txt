@@ -78,8 +78,9 @@ N/A
 
 Daily Log:
 
-3/25/25
+3/25/25 to 3/26/25
 1. WIP Excavator + Homebaked IK
+	1. IK looks more like walking now!
 
 3/11/25 and 3/17/25 to 3/24/25
 1. Sanctuary now spawns with water, and water in the sanctuary no longer evaporates

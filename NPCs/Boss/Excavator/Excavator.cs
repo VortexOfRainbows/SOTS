@@ -101,6 +101,13 @@ namespace SOTS.NPCs.Boss.Excavator
                     NPC.netUpdate = true;
                 }
             }
+
+            Vector2 trueVelo = NPC.position - NPC.oldPosition;
+            float speed = trueVelo.Length();
+            if(speed < 1000)
+            {
+                NPC.ai[0] += 2 * MathF.Sqrt(speed);
+            }
             return false;
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -242,9 +249,18 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector2 armPosition = new Vector2(-body.Width / 2 * j, 0).RotatedBy(armRotation) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
 
+            float r = other.ai[0] * j + j * 45;
+            float outwardSize = 38 - 16 * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
+            Vector2 targetHandPos = new Vector2(-(body.Width / 2 + outwardSize) * j, -66).RotatedBy(armRotation) + other.Center;
+            Vector2 circular = new Vector2(46, 0).RotatedBy(MathHelper.ToRadians(r));
+            circular.X *= 0.25f;
+            circular = circular.RotatedBy(armRotation);
+            targetHandPos += circular;
+
+
             float A = hand.Height - 14; //size of hand
             float B = arm.Width - 14; //size of arm
-            Vector2 end = Main.MouseWorld;
+            Vector2 end = targetHandPos;
             Vector2 start = armPosition;
             if(end.Distance(start) > (A + B))
             {
@@ -271,8 +287,8 @@ namespace SOTS.NPCs.Boss.Excavator
             spriteBatch.Draw(hand, end - screenPos, null, drawColor, endToMid.ToRotation() + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
             //Visual location of the actual center of the arm
-            Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
-            spriteBatch.Draw(SOTSUtils.WhitePixel, realEnd - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+            //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
+            //spriteBatch.Draw(SOTSUtils.WhitePixel, realEnd - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
         }
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
         public override void SetStaticDefaults()
@@ -308,7 +324,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.aiStyle = -1;
             neckSegments = new List<Vector2>();
         }
-        private int[] segments = [-1, -1, -1, -1];
+        private int[] segments = [-1, -1, -1];
         public override bool PreAI()
         {
             UpdateNeckSegments();
@@ -327,7 +343,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     int WormLength = segments.Length;
                     for (int i = 0; i < WormLength; i++)
                     {
-                        latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ExcavatorBody>(), NPC.whoAmI, 0, latestNPC);
+                        latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ExcavatorBody>(), NPC.whoAmI, i * 180f, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
                         Main.npc[latestNPC].ai[2] = i + 1;
