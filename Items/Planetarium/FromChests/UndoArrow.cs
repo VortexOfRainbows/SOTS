@@ -1,20 +1,11 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
 using Microsoft.Xna.Framework;
-using SOTS.Projectiles.Celestial;
-using SOTS.Projectiles.Inferno;
-using SOTS.NPCs.Boss.Curse;
-using SOTS.Projectiles.Pyramid;
-using SOTS.Buffs;
-using SOTS.Projectiles.Slime;
-using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
-using System.IO;
 using SOTS.Projectiles.Chaos;
 using Terraria.DataStructures;
-using Terraria.Localization;
+using SOTS.Projectiles.AbandonedVillage;
 
 namespace SOTS.Items.Planetarium.FromChests
 {
@@ -40,6 +31,7 @@ namespace SOTS.Items.Planetarium.FromChests
 		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+			CollapseBlock.Spawn(source, Main.MouseWorld.ToTileCoordinates().X, Main.MouseWorld.ToTileCoordinates().Y);
 			//for(int i = 0; i < 200; i ++)
 			//{
 			//	if(Main.npc[i].active)
@@ -77,9 +69,9 @@ namespace SOTS.Items.Planetarium.FromChests
 				if (next == 6)
 					SOTSWorld.AmberKeySlotted = true;
 			}*/
-			SOTSPlayer sPlayer = player.SOTSPlayer();
-			sPlayer.UniqueVisionNumber++;
-			sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 40;
+			//SOTSPlayer sPlayer = player.SOTSPlayer();
+			//sPlayer.UniqueVisionNumber++;
+			//sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 40;
 			//player.VoidPlayer().ResetAllVoidBonuses();
 			//Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
 			return false; 

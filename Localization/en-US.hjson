@@ -8778,6 +8778,7 @@ Mods: {
 			FoundryFire.DisplayName: Meatball
 			FoundryFireBoom.DisplayName: Meatball Explosion
 			HardlightHook.DisplayName: Hardlight Hook
+			CollapseBlock.DisplayName: Collapse Block
 		}
 
 		DamageClasses: {
