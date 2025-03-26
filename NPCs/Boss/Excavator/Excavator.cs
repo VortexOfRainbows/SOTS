@@ -1,12 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.WorldgenHelpers;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.GameContent.Animations;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -121,13 +118,21 @@ namespace SOTS.NPCs.Boss.Excavator
     }
     public class Excavator : ModNPC
     {
+        public float AI1
+        {
+            get => NPC.ai[1];
+            set => NPC.ai[1] = value;
+        }
         public static int BodyFrequency => 3;
         public List<Vector2> neckSegments;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D head = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/head").Value;
+            Texture2D headGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/headGlow").Value;
             Texture2D neck = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/neck").Value;
+            Texture2D neckGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/neckGlow").Value;
             Texture2D bodyTop = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bodytop").Value;
+            Texture2D bodyGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bodyGlow").Value;
             Vector2 origin = new Vector2(head.Width * 0.5f, head.Height * 0.5f);
             Vector2 neckOrigin = new Vector2(neck.Width * 0.5f, neck.Height);
 
@@ -150,7 +155,8 @@ namespace SOTS.NPCs.Boss.Excavator
 
                 float length = toPrev.Length() + 4;
                 Vector2 scale = new Vector2(1, length / neck.Height);
-                spriteBatch.Draw(neck, segment - screenPos, null, drawColor, toPrev.ToRotation() + MathHelper.PiOver2, neckOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(neck, segment - screenPos, null, Lighting.GetColor(segment.ToTileCoordinates()), toPrev.ToRotation() + MathHelper.PiOver2, neckOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(neckGlow, segment - screenPos, null, Color.White, toPrev.ToRotation() + MathHelper.PiOver2, neckOrigin, scale, SpriteEffects.None, 0);
 
                 previousPos = segment;
                 if ((i + 1) % BodyFrequency == 0 && i != 0)
@@ -165,17 +171,23 @@ namespace SOTS.NPCs.Boss.Excavator
                 if (segment > 0)
                 {
                     NPC other = Main.npc[segment];
-                    //if (other.ModNPC is ExcavatorBody)
-                    //    spriteBatch.Draw(bodyTop, other.Center - screenPos, null, drawColor, other.rotation, bodyTop.Size() / 2, other.scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                    if (other.ModNPC is ExcavatorBody)
+                    {
+                        spriteBatch.Draw(bodyTop, other.Center - screenPos, null, Lighting.GetColor(other.Center.ToTileCoordinates()), other.rotation, bodyTop.Size() / 2, other.scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                        spriteBatch.Draw(bodyGlow, other.Center - screenPos, null, Color.White, other.rotation, bodyTop.Size() / 2, other.scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                    }
                 }
             }
-            spriteBatch.Draw(head, NPC.Center - screenPos, null, drawColor, NPC.rotation, origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            spriteBatch.Draw(head, NPC.Center - screenPos, null, drawColor, NPC.rotation + 1.57f, origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            spriteBatch.Draw(headGlow, NPC.Center - screenPos, null, Color.White, NPC.rotation + 1.57f, origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
         }
         public void UpdateNeckSegments()
         {
+            Vector3 glow = new Vector3(1f, .55f, .05f);
+            Lighting.AddLight(NPC.Center, glow * 0.3f);
             float neckHeight = 26;
-            while(neckSegments.Count < segments.Length * BodyFrequency)
+            while (neckSegments.Count < segments.Length * BodyFrequency)
             {
                 neckSegments.Add(NPC.Center);
             }
@@ -194,6 +206,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 {
                     previous += new Vector2(-74, 0).RotatedBy(toBody.ToRotation());
                 }
+                Lighting.AddLight(neckSegments[i], glow * 0.2f);
             }
 
             for (int i = 0; i < segments.Length; i++)
@@ -329,7 +342,8 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             UpdateNeckSegments();
             NPC.TargetClosest(true);
-            if (Main.player[NPC.target].dead || Vector2.Distance(Main.player[NPC.target].Center, NPC.Center) > 4800)
+            Player player = Main.player[NPC.target];
+            if (player.dead || Vector2.Distance(player.Center, NPC.Center) > 4800)
             {
                 NPC.active = false;
                 return false;
@@ -353,7 +367,17 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
                 NPC.netUpdate = true;
             }
-            NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
+
+            Vector2 toPlayer = player.Center - NPC.Center;
+
+            if(NPC.velocity.LengthSquared() > 0.1f)
+            {
+                float movementTargetR = NPC.velocity.ToRotation();
+                float distToPlayer = toPlayer.Length();
+                float playerFacingTargetR = toPlayer.ToRotation();
+                float lerpAmt = 0.8f * MathF.Max(1 - distToPlayer / 480f, 0);
+                NPC.rotation = SOTSUtils.AngularLerp(movementTargetR, playerFacingTargetR, lerpAmt);
+            }
             return false;
         }
         public override void SendExtraAI(BinaryWriter writer)
