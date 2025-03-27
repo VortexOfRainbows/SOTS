@@ -8866,6 +8866,11 @@ Mods: {
 					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.CTF}"
 				}
 
+				screenShake: {
+					Label: Screenshake
+					Tooltip: Only effects screenshake originating from SOTS
+				}
+
 				additionalTexturePackVisuals: {
 					Label: "{$Mods.SOTS.Configuration.Label.AVE}"
 					Tooltip: "{$Mods.SOTS.Configuration.Tooltip.AVE}"

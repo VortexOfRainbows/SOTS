@@ -60,6 +60,9 @@ namespace SOTS
 		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool coloredTimeFreeze { get; set; }
 
+        [BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
+        public bool screenShake { get; set; }
+
         [Header("$Mods.SOTS.Configuration.Header.MS")]
 
         [BackgroundColor(150, 140, 40, 192), DefaultValue(true)]

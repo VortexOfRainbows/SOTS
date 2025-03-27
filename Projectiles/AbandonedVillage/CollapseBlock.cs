@@ -22,9 +22,12 @@ namespace SOTS.Projectiles.AbandonedVillage
         public static void Spawn(IEntitySource spawn, int i, int j)
 		{
 			Vector2 pos = new Vector2(i * 16 + 8, j * 16 + 8);
-			SOTSUtils.PlaySound(SoundID.Item62, pos, 0.8f, -0.5f);
-            PunchCameraModifier modifier = new PunchCameraModifier(pos, Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2(), 20f, 6f, 20, 1000f);
-            Main.instance.CameraModifiers.Add(modifier);
+            SOTSUtils.PlaySound(SoundID.Item62, pos, 0.8f, -0.5f);
+            if(SOTS.Config.screenShake)
+            {
+                PunchCameraModifier modifier = new PunchCameraModifier(pos, Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2(), 20f, 6f, 20, 1000f);
+                Main.instance.CameraModifiers.Add(modifier);
+            }
 			if(Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int origI = i;
@@ -45,17 +48,41 @@ namespace SOTS.Projectiles.AbandonedVillage
 			int frameX = 162 + (int)Projectile.ai[1] * 18; //18 * 9
 			int frameY = 54; //18 * 3
 			Rectangle frame = new Rectangle(frameX, frameY, 16, 16);
+            DrawTrail();
             Main.EntitySpriteDraw(tileTexture, Projectile.Center - Main.screenPosition, frame, lightColor, Projectile.rotation, Vector2.One * 8, Projectile.scale * 1.25f, SpriteEffects.None, 0);
             return false;
         }
+        public void DrawTrail()
+        {
+            float scaler = 1f;
+            Texture2D texture = SOTSUtils.WhitePixel;
+            Vector2 drawOrigin = new Vector2(0, 1);
+            Vector2 previous = Projectile.Center;
+            Color c = new Color(44, 38, 33);
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                if (Projectile.oldPos[i] == Vector2.Zero)
+                    break;
+                float perc = 1 - i / (float)Projectile.oldPos.Length;
+                Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
+                Vector2 toPrev = previous - center;
+                float dist = toPrev.Length();
+                if (dist > 1600)
+                    break;
+                float rot = toPrev.ToRotation();
+                Vector2 stretch = new Vector2(dist / texture.Width, perc * 6f * scaler);
+                Main.EntitySpriteDraw(texture, center - Main.screenPosition, null, c * perc * 0.5f, rot, drawOrigin, stretch, SpriteEffects.FlipVertically, 0f);
+                previous = center;
+            }
+        }
         public override void SetStaticDefaults()
         {
-            ProjectileID.Sets.TrailCacheLength[Type] = 10;
+            ProjectileID.Sets.TrailCacheLength[Type] = 12;
             ProjectileID.Sets.TrailingMode[Type] = 0;
         }
         public override void SetDefaults()
         {
-			Projectile.height = 16;
+            Projectile.height = 16;
 			Projectile.width = 16;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 600;
@@ -125,6 +152,13 @@ namespace SOTS.Projectiles.AbandonedVillage
                 d.velocity *= 1.25f;
                 d.scale *= 1.25f;
                 d.velocity -= Projectile.velocity * 0.25f;
+            }
+            Color c = new Color(44, 38, 33);
+            for (int i = 0; i < Projectile.oldPos.Length; i++)
+            {
+                float perc = 1 - i / (float)Projectile.oldPos.Length;
+                Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
+                PixelDust.Spawn(center, 0, 0, Main.rand.NextVector2Circular(0.3f, 0.3f) * perc + Projectile.oldVelocity * 0.4f, c * perc * 0.5f, 5).scale = 1.5f + 3 * perc;
             }
         }
 	}

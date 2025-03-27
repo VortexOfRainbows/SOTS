@@ -83,7 +83,8 @@ Daily Log:
 	1. Homebaked IK + moving animation + spine
 	2. Glowmasks
 2. WIP Collapsing blocks for use in Excavator attacks
-	1. Needs: visual improvements. Functionality/code improvements, trail
+	1. Needs: MP syncing
+3. Screenshake config
 
 3/11/25 and 3/17/25 to 3/24/25
 1. Sanctuary now spawns with water, and water in the sanctuary no longer evaporates
