@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.Chaos
     {
         public override void SetDefaults()
         {
-            Projectile.width = 46;
+            Projectile.width = 48;
             Projectile.height = 132;
             Projectile.aiStyle = 20;
             Projectile.friendly = false;
