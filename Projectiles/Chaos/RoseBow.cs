@@ -13,14 +13,10 @@ namespace SOTS.Projectiles.Chaos
 {
     public class RoseBow : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Rose Bow");
-        }
         public override void SetDefaults()
         {
-            Projectile.width = 44;
-            Projectile.height = 92;
+            Projectile.width = 46;
+            Projectile.height = 132;
             Projectile.aiStyle = 20;
             Projectile.friendly = false;
             Projectile.penetrate = -1;

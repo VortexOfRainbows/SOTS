@@ -85,6 +85,7 @@ Daily Log:
 2. WIP Collapsing blocks for use in Excavator attacks
 	1. Needs: MP syncing
 3. Screenshake config
+4. Petaniks RoseBow resprite
 
 3/11/25 and 3/17/25 to 3/24/25
 1. Sanctuary now spawns with water, and water in the sanctuary no longer evaporates
