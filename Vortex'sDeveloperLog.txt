@@ -78,7 +78,7 @@ N/A
 
 Daily Log:
 
-3/25/25 to 3/26/25
+3/25/25 to 3/30/25
 1. WIP Excavator
 	1. Homebaked IK + moving animation + spine
 	2. Glowmasks

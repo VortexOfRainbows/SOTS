@@ -255,24 +255,24 @@ namespace SOTS.NPCs.Boss.Excavator
             Texture2D body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
             Texture2D arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/arm").Value;
             Texture2D hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/hand").Value;
-            Vector2 armOrigin = new Vector2(7, arm.Height / 2);
+            Vector2 armOrigin = new Vector2(50, 14);
             Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
             Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height);
             float armRotation = other.rotation;
-            Vector2 armPosition = new Vector2(-body.Width / 2 * j, 0).RotatedBy(armRotation) + other.Center;
+            Vector2 armPosition = new Vector2(-body.Width / 2 * j, -body.Height / 2 + 20).RotatedBy(armRotation) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
 
             float r = other.ai[0] * j + j * 45;
             float outwardSize = 38 - 16 * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
-            Vector2 targetHandPos = new Vector2(-(body.Width / 2 + outwardSize) * j, -66).RotatedBy(armRotation) + other.Center;
-            Vector2 circular = new Vector2(46, 0).RotatedBy(MathHelper.ToRadians(r));
+            Vector2 targetHandPos = new Vector2(-(body.Width / 2 + outwardSize) * j, -100).RotatedBy(armRotation) + other.Center;
+            Vector2 circular = new Vector2(40, 0).RotatedBy(MathHelper.ToRadians(r));
             circular.X *= 0.25f;
             circular = circular.RotatedBy(armRotation);
             targetHandPos += circular;
 
 
-            float A = hand.Height - 14; //size of hand
-            float B = arm.Width - 14; //size of arm
+            float A = hand.Height; //size of hand
+            float B = arm.Width - 20; //size of arm
             Vector2 end = targetHandPos;
             Vector2 start = armPosition;
             if(end.Distance(start) > (A + B))
@@ -296,8 +296,8 @@ namespace SOTS.NPCs.Boss.Excavator
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, startToMid.ToRotation(), new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
             
-            spriteBatch.Draw(arm, start - screenPos, null, drawColor, startToMid.ToRotation() + (j == 1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
             spriteBatch.Draw(hand, end - screenPos, null, drawColor, endToMid.ToRotation() + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(arm, start - screenPos, null, drawColor, startToMid.ToRotation() + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
             //Visual location of the actual center of the arm
             //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
