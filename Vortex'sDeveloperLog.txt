@@ -78,6 +78,9 @@ N/A
 
 Daily Log:
 
+3/31/25
+1. More WIP Excavator rigging
+
 3/25/25 to 3/30/25
 1. WIP Excavator
 	1. Homebaked IK + moving animation + spine

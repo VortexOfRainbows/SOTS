@@ -39,6 +39,10 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
         }
+        public override void ModifyHoverBoundingBox(ref Rectangle boundingBox)
+        {
+            boundingBox = NPC.Hitbox;
+        }
         public override void SendExtraAI(BinaryWriter writer)
         {
 
@@ -114,7 +118,39 @@ namespace SOTS.NPCs.Boss.Excavator
             //spriteBatch.Draw(texture, NPC.Center - screenPos, null, drawColor, NPC.rotation - MathHelper.ToRadians(90), origin, NPC.scale + 0.04f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
         }
-        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) => false;  
+        public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) => false;
+    }
+    public class ExcavatorBody2 : ExcavatorBody
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            NPC.width = 60;
+            NPC.height = 60;
+            NPC.damage = 20;
+            NPC.defense = 20;
+        }
+    }
+    public class ExcavatorTail : ExcavatorBody
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            NPC.width = 40;
+            NPC.height = 40;
+            NPC.damage = 12;
+            NPC.defense = 12;
+            NPC.dontTakeDamage = true;
+        }
+    }
+    public class ExcavatorDrillTail : ExcavatorTail
+    {
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            NPC.damage = 40;
+            NPC.dontTakeDamage = false;
+        }
     }
     public class Excavator : ModNPC
     {
@@ -123,7 +159,6 @@ namespace SOTS.NPCs.Boss.Excavator
             get => NPC.ai[1];
             set => NPC.ai[1] = value;
         }
-        public static int BodyFrequency => 3;
         public List<Vector2> neckSegments;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -131,8 +166,6 @@ namespace SOTS.NPCs.Boss.Excavator
             Texture2D headGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/headGlow").Value;
             Texture2D neck = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/neck").Value;
             Texture2D neckGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/neckGlow").Value;
-            Texture2D bodyTop = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bodytop").Value;
-            Texture2D bodyGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bodyGlow").Value;
             Vector2 origin = new Vector2(head.Width * 0.5f, head.Height * 0.5f);
             Vector2 neckOrigin = new Vector2(neck.Width * 0.5f, neck.Height);
 
@@ -144,7 +177,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 {
                     NPC other = Main.npc[segment];
                     if (other.ModNPC is ExcavatorBody)
-                        DrawBody(other, spriteBatch, screenPos);
+                        DrawBody(other, spriteBatch, screenPos, i, false);
                 }
             }
             Vector2 previousPos = NPC.Center;
@@ -158,24 +191,23 @@ namespace SOTS.NPCs.Boss.Excavator
                 spriteBatch.Draw(neck, segment - screenPos, null, Lighting.GetColor(segment.ToTileCoordinates()), toPrev.ToRotation() + MathHelper.PiOver2, neckOrigin, scale, SpriteEffects.None, 0);
                 spriteBatch.Draw(neckGlow, segment - screenPos, null, Color.White, toPrev.ToRotation() + MathHelper.PiOver2, neckOrigin, scale, SpriteEffects.None, 0);
 
-                previousPos = segment;
-                if ((i + 1) % BodyFrequency == 0 && i != 0)
+                if (i == 2 && segments[1] != -1)
                 {
-                    previousPos += new Vector2(-74, 0).RotatedBy(toPrev.ToRotation());
+                    NPC child = Main.npc[segments[1]];
+                    previousPos = child.Center + new Vector2(0, child.height / 2 - 20).RotatedBy(child.rotation);
                 }
+                else
+                    previousPos = segment;
             }
 
             for (int i = segments.Length - 1; i >= 0; --i)
             {
                 int segment = segments[i];
-                if (segment > 0)
+                if (segment >= 0)
                 {
                     NPC other = Main.npc[segment];
                     if (other.ModNPC is ExcavatorBody)
-                    {
-                        spriteBatch.Draw(bodyTop, other.Center - screenPos, null, Lighting.GetColor(other.Center.ToTileCoordinates()), other.rotation, bodyTop.Size() / 2, other.scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
-                        spriteBatch.Draw(bodyGlow, other.Center - screenPos, null, Color.White, other.rotation, bodyTop.Size() / 2, other.scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
-                    }
+                        DrawBody(other, spriteBatch, screenPos, i, true);
                 }
             }
             spriteBatch.Draw(head, NPC.Center - screenPos, null, drawColor, NPC.rotation + 1.57f, origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
@@ -187,7 +219,7 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector3 glow = new Vector3(1f, .55f, .05f);
             Lighting.AddLight(NPC.Center, glow * 0.3f);
             float neckHeight = 26;
-            while (neckSegments.Count < segments.Length * BodyFrequency)
+            while (neckSegments.Count < 9)
             {
                 neckSegments.Add(NPC.Center);
             }
@@ -199,13 +231,20 @@ namespace SOTS.NPCs.Boss.Excavator
                 if(length > neckHeight)
                 {
                     Vector2 targetPosition = neckSegments[i] + toBody.SNormalize() * (length - neckHeight);
-                    neckSegments[i] = Vector2.Lerp(neckSegments[i], targetPosition, 0.6f);
+                    neckSegments[i] = Vector2.Lerp(neckSegments[i], targetPosition, 0.64f);
                 }
                 previous = neckSegments[i];
-                if((i + 1) % BodyFrequency == 0 && i != 0)
+                if (i == 2 && segments[1] != -1)
                 {
-                    previous += new Vector2(-74, 0).RotatedBy(toBody.ToRotation());
+                    NPC child = Main.npc[segments[1]];
+                    previous = child.Center + new Vector2(0, child.height / 2 - 20).RotatedBy(child.rotation);
                 }
+                if (i == 2)
+                {
+                    neckHeight = 16;
+                }
+                else if (i > 2)
+                    neckHeight *= 0.94f;
                 Lighting.AddLight(neckSegments[i], glow * 0.2f);
             }
 
@@ -215,39 +254,98 @@ namespace SOTS.NPCs.Boss.Excavator
                 if (segment > 0)
                 {
                     NPC other = Main.npc[segment];
-                    if(other.ModNPC is ExcavatorBody)
+                    if (other.ModNPC is ExcavatorTail)
                     {
-                        UpdateChildPos(other, (1 + i) * BodyFrequency - 1);
+                        UpdateChildPos(other, 1 + i);
+                    }
+                    else if (other.ModNPC is ExcavatorBody2)
+                    {
+                        UpdateChildPos(other, -1);
+                    }
+                    else if (other.ModNPC is ExcavatorBody)
+                    {
+                        UpdateChildPos(other, 2);
                     }
                 }
             }
         }
         public void UpdateChildPos(NPC child, int neckPos)
         {
-            //float percent = 1f - (float)i / segments.Count;
-            //Vector2 toPrev = prev - segments[i];
-            //float normalMovement = toPrev.Length() * 0.6f - wormingAmount;
-            //if (normalMovement > 0)
-            //    segments[i] += toPrev.SNormalize() * normalMovement;
-            //segments[i] = Vector2.Lerp(segments[i], prev, 0.035f);
-            //segments[i] += new Vector2(0, 0.3f + 0.02f * i + NPC.velocity.Y * percent * 0.3f);
-            Vector2 nextSegment = neckSegments[neckPos];
-            Vector2 toNext = neckSegments[neckPos - 1] - nextSegment;
-            child.rotation = toNext.ToRotation() + 1.57f;
-            Vector2 rotationOrigin = new Vector2(0, -NPC.height / 2).RotatedBy(child.rotation);
-            child.velocity = Vector2.Zero;
-            child.Center = nextSegment - rotationOrigin;
+            if(neckPos < 0 && segments[0] != -1)
+            {
+                NPC other = Main.npc[segments[0]];
+                Vector2 nextSegment = other.Center + new Vector2(0, other.height - 9).RotatedBy(other.rotation);
+                child.rotation = SOTSUtils.AngularLerp(child.rotation, (other.Center - child.Center).ToRotation() + 1.57f, 0.5f);
+                child.velocity = Vector2.Zero;
+                child.Center = nextSegment;
+            }
+            else
+            {
+                Vector2 prev = neckSegments[neckPos - 1];
+                if (neckPos == 3 && segments[1] != -1)
+                {
+                    NPC other = Main.npc[segments[1]];
+                    prev = other.Center + new Vector2(0, other.height / 2 - 20).RotatedBy(other.rotation);
+                }
+                Vector2 nextSegment = neckSegments[neckPos];
+                Vector2 toPrev = prev - nextSegment;
+                child.rotation = toPrev.ToRotation() + 1.57f;
+                Vector2 rotationOrigin = new Vector2(0, neckPos == 2 ? (-NPC.height / 2) : (-child.height / 2 + 19)).RotatedBy(child.rotation);
+                child.velocity = Vector2.Zero;
+                child.Center = nextSegment - rotationOrigin;
+            }
         }
-        public void DrawBody(NPC other, SpriteBatch spriteBatch, Vector2 screenPos)
+        public void DrawBody(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i, bool top)
         {
             Color drawColor = Lighting.GetColor(other.Center.ToTileCoordinates(), Color.White);
-            Texture2D body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
-            Vector2 bodyOrigin = body.Size() / 2;
-            for (int j = -1; j <= 1; j += 2)
+            string dir = "SOTS/NPCs/Boss/Excavator/";
+            Texture2D body = null;
+            Texture2D bodyTop = null;
+            Texture2D bodyGlow = null;
+            bool arms = false;
+            float scale = 1;
+            if (i == 0)
             {
-                DrawArmIK(other, spriteBatch, screenPos, j);
+                body = ModContent.Request<Texture2D>($"{dir}body").Value;
+                bodyTop = ModContent.Request<Texture2D>($"{dir}bodytop").Value;
+                bodyGlow = ModContent.Request<Texture2D>($"{dir}bodyGlow").Value;
+                arms = true;
             }
-            spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            else if (i == 1)
+            {
+                bodyTop = ModContent.Request<Texture2D>($"{dir}body2").Value;
+                bodyGlow = ModContent.Request<Texture2D>($"{dir}body2Glow").Value;
+            }
+            else
+            {
+                body = ModContent.Request<Texture2D>($"{dir}tail").Value;
+                bodyTop = ModContent.Request<Texture2D>($"{dir}tailTop").Value;
+                //bodyGlow = ModContent.Request<Texture2D>($"{dir}tailGlow").Value;
+                scale *= MathF.Pow(0.94f, i - 2);
+            }
+            Vector2 bodyOrigin = bodyTop.Size() / 2;
+            if(top)
+            {
+                if (other.ModNPC is ExcavatorBody)
+                {
+                    if(bodyTop != null)
+                        spriteBatch.Draw(bodyTop, other.Center - screenPos, null, drawColor, other.rotation, bodyTop.Size() / 2, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                    if(bodyGlow != null)
+                        spriteBatch.Draw(bodyGlow, other.Center - screenPos, null, Color.White, other.rotation, bodyTop.Size() / 2, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                }
+            }
+            else
+            {
+                if(arms)
+                {
+                    for (int j = -1; j <= 1; j += 2)
+                    {
+                        DrawArmIK(other, spriteBatch, screenPos, j);
+                    }
+                }
+                if(body != null)
+                    spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+            }
         }
         public void DrawArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir)
         {
@@ -259,13 +357,13 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
             Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height);
             float armRotation = other.rotation;
-            Vector2 armPosition = new Vector2(-body.Width / 2 * j, -body.Height / 2 + 20).RotatedBy(armRotation) + other.Center;
+            Vector2 armPosition = new Vector2((-body.Width / 2 + 4) * j, -body.Height / 2 + 16).RotatedBy(armRotation) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
 
             float r = other.ai[0] * j + j * 45;
             float outwardSize = 38 - 16 * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
-            Vector2 targetHandPos = new Vector2(-(body.Width / 2 + outwardSize) * j, -100).RotatedBy(armRotation) + other.Center;
-            Vector2 circular = new Vector2(40, 0).RotatedBy(MathHelper.ToRadians(r));
+            Vector2 targetHandPos = new Vector2(-(body.Width / 2 + outwardSize) * j, -102).RotatedBy(armRotation) + other.Center;
+            Vector2 circular = new Vector2(38, 0).RotatedBy(MathHelper.ToRadians(r));
             circular.X *= 0.25f;
             circular = circular.RotatedBy(armRotation);
             targetHandPos += circular;
@@ -324,7 +422,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.damage = 25;
             NPC.defense = 20;
             NPC.knockBackResist = 0f;
-            NPC.width = 118;
+            NPC.width = 68;
             NPC.height = 68;
             NPC.lavaImmune = true;
             NPC.noGravity = true;
@@ -337,7 +435,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.aiStyle = -1;
             neckSegments = new List<Vector2>();
         }
-        private int[] segments = [-1, -1, -1];
+        private int[] segments = [-1, -1, -1, -1, -1, -1, -1, -1];
         public override bool PreAI()
         {
             UpdateNeckSegments();
@@ -357,7 +455,8 @@ namespace SOTS.NPCs.Boss.Excavator
                     int WormLength = segments.Length;
                     for (int i = 0; i < WormLength; i++)
                     {
-                        latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ExcavatorBody>(), NPC.whoAmI, i * 180f, latestNPC);
+                        int type = i == 0 ? ModContent.NPCType<ExcavatorBody>() : i == 1 ? ModContent.NPCType<ExcavatorBody2>() : i == segments.Length - 1 ? ModContent.NPCType<ExcavatorDrillTail>() : ModContent.NPCType<ExcavatorTail>();
+                        latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI, i * 180f, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
                         Main.npc[latestNPC].ai[2] = i + 1;
@@ -375,7 +474,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 float movementTargetR = NPC.velocity.ToRotation();
                 float distToPlayer = toPlayer.Length();
                 float playerFacingTargetR = toPlayer.ToRotation();
-                float lerpAmt = 0.8f * MathF.Max(1 - distToPlayer / 480f, 0);
+                float lerpAmt = 0.1f * MathF.Max(1 - distToPlayer / 480f, 0);
                 NPC.rotation = SOTSUtils.AngularLerp(movementTargetR, playerFacingTargetR, lerpAmt);
             }
             return false;

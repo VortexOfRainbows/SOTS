@@ -7822,10 +7822,13 @@ Mods: {
 			TardigradePink.DisplayName: Tardigrade
 			Bridgeburner.DisplayName: Bridgeburner
 			Excavator.DisplayName: Excavator
-			ExcavatorBody.DisplayName: Excavator Body
+			ExcavatorBody.DisplayName: Excavator
 			SubspaceWorm.DisplayName: Subspace Worm
 			SanguineFoundry.DisplayName: Sanguine Foundry
 			LunaMoth.DisplayName: Luna Moth
+			ExcavatorBody2.DisplayName: Excavator
+			ExcavatorTail.DisplayName: Excavator
+			ExcavatorDrillTail.DisplayName: Excavator
 		}
 
 		Bestiary: {
