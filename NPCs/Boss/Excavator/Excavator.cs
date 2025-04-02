@@ -338,39 +338,43 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 if(arms)
                 {
-                    for (int j = -1; j <= 1; j += 2)
+                    for (int j = -2; j <= 2; ++j)
                     {
-                        DrawArmIK(other, spriteBatch, screenPos, j);
+                        if (j != 0)
+                            DrawArmIK(other, spriteBatch, screenPos, j);
                     }
                 }
                 if(body != null)
                     spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             }
         }
-        public void DrawArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir)
+        public static void DrawArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir)
         {
-            int j = dir;
+            bool isBigArm = MathF.Abs(dir) == 2;
+            int j = SOTSUtils.SignNoZero(dir);
             Texture2D body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
-            Texture2D arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/arm").Value;
+            Texture2D arm = ModContent.Request<Texture2D>(isBigArm ? "SOTS/NPCs/Boss/Excavator/bigArmLeft" : "SOTS/NPCs/Boss/Excavator/arm").Value;
             Texture2D hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/hand").Value;
-            Vector2 armOrigin = new Vector2(50, 14);
+            Vector2 armOrigin = isBigArm ? new Vector2(95, 47): new Vector2(50, 14);
             Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
             Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height);
             float armRotation = other.rotation;
-            Vector2 armPosition = new Vector2((-body.Width / 2 + 4) * j, -body.Height / 2 + 16).RotatedBy(armRotation) + other.Center;
+            Vector2 armPosition = isBigArm ? new Vector2((-body.Width / 2 + 13) * j, body.Height / 2 - 31) : new Vector2((-body.Width / 2 + 4) * j, -body.Height / 2 + 16);
+            armPosition = armPosition.RotatedBy(armRotation) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
 
-            float r = other.ai[0] * j + j * 45;
-            float outwardSize = 38 - 16 * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
-            Vector2 targetHandPos = new Vector2(-(body.Width / 2 + outwardSize) * j, -102).RotatedBy(armRotation) + other.Center;
-            Vector2 circular = new Vector2(38, 0).RotatedBy(MathHelper.ToRadians(r));
+            float r = other.ai[0] * j + (isBigArm ? (j == -2 ? 45 : 135) : (j * 45));
+            float outwardSize = (isBigArm ? 72 : 38) - 16 * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
+            Vector2 targetHandPos = new Vector2(-(body.Width / 2 + outwardSize) * j, isBigArm ? -30 : -100).RotatedBy(armRotation);
+            targetHandPos = targetHandPos + other.Center;
+            Vector2 circular = new Vector2(isBigArm ? 32 : 20, 0).RotatedBy(MathHelper.ToRadians(r));
             circular.X *= 0.25f;
             circular = circular.RotatedBy(armRotation);
             targetHandPos += circular;
 
 
-            float A = hand.Height; //size of hand
-            float B = arm.Width - 20; //size of arm
+            float A = isBigArm ? hand.Height : hand.Height; //size of hand
+            float B = isBigArm ? arm.Width - 36 : arm.Width - 20; //size of arm
             Vector2 end = targetHandPos;
             Vector2 start = armPosition;
             if(end.Distance(start) > (A + B))
@@ -385,8 +389,13 @@ namespace SOTS.NPCs.Boss.Excavator
             float C = startToEnd.Length();
             float angleA = C - A - B > 0 ? 0 : MathF.Acos((B * B + C * C - A * A) / (2 * B * C));
             float angleB = C - A - B > 0 ? 0 : MathF.Acos((A * A + C * C - B * B) / (2 * A * C));
-            Vector2 endToMid = -startToEnd.RotatedBy(angleB * dir);
-            Vector2 startToMid = startToEnd.RotatedBy(-angleA * dir);
+            Vector2 endToMid = -startToEnd.RotatedBy(angleB * j);
+            Vector2 startToMid = startToEnd.RotatedBy(-angleA * j);
+            float endArmR = endToMid.ToRotation();
+            if (isBigArm)
+            {
+                end += new Vector2(14, 0).RotatedBy(endArmR);
+            }
             
             //Visual representations of the IK happening
             //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
@@ -394,7 +403,7 @@ namespace SOTS.NPCs.Boss.Excavator
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, startToMid.ToRotation(), new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
             
-            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endToMid.ToRotation() + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endArmR + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
             spriteBatch.Draw(arm, start - screenPos, null, drawColor, startToMid.ToRotation() + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
             //Visual location of the actual center of the arm

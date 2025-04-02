@@ -78,6 +78,9 @@ N/A
 
 Daily Log:
 
+4/2/25
+1. Excavator Big Arm rigging WIP
+
 3/31/25
 1. More WIP Excavator rigging
 
