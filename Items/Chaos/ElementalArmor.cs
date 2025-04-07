@@ -72,8 +72,8 @@ namespace SOTS.Items.Chaos
         }
         public override void SetDefaults()
         {
-            Item.width = 26;
-            Item.height = 14;
+            Item.width = 30;
+            Item.height = 18;
             Item.value = Item.sellPrice(0, 10, 0, 0);
             Item.rare = ItemRarityID.Yellow;
             Item.defense = 18;
