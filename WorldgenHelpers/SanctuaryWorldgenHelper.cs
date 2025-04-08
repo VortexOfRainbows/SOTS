@@ -1131,7 +1131,7 @@ namespace SOTS.WorldgenHelpers
                     if (style == 6) //third quarter
                     {
                         MainItem = ModContent.ItemType<MoonShard7>();
-                        //SecondItem = ModContent.ItemType<LevMirror>(); //Acedia
+                        SecondItem = ModContent.ItemType<UnholyGrail>(); //Acedia
                     }
                     if (style == 7) //waning crescent
                     {

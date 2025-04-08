@@ -6817,6 +6817,15 @@ Mods: {
 				DisplayName: Evostone Ambient
 				Tooltip: ""
 			}
+
+			UnholyGrail: {
+				DisplayName: Unholy Grail
+				Tooltip:
+					'''
+					Summons a stationary throne to sit upon
+					Gain 12 defense while active
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7298,6 +7307,11 @@ Mods: {
 			Embattle: {
 				DisplayName: Embattle
 				Description: Increases damage by 5% and greatly increases enemy spawn rates
+			}
+
+			UnholyGrailBuff: {
+				DisplayName: Slothful Throne
+				Description: Increases defense by 12
 			}
 		}
 
