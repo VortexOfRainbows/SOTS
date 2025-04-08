@@ -303,6 +303,7 @@ namespace SOTS.NPCs.Boss.Excavator
             Texture2D bodyTop = null;
             Texture2D bodyGlow = null;
             bool arms = false;
+            bool legs = false;
             float scale = 1;
             if (i == 0)
             {
@@ -315,10 +316,11 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 bodyTop = ModContent.Request<Texture2D>($"{dir}body2").Value;
                 bodyGlow = ModContent.Request<Texture2D>($"{dir}body2Glow").Value;
+                legs = true;
             }
             else
             {
-                body = ModContent.Request<Texture2D>($"{dir}tail").Value;
+                body = i == segments.Length - 1 ? ModContent.Request<Texture2D>($"{dir}tailDrill").Value : ModContent.Request<Texture2D>($"{dir}tail").Value;
                 bodyTop = ModContent.Request<Texture2D>($"{dir}tailTop").Value;
                 //bodyGlow = ModContent.Request<Texture2D>($"{dir}tailGlow").Value;
                 scale *= MathF.Pow(0.94f, i - 2);
@@ -338,12 +340,18 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 if(arms)
                 {
+                    DrawLeg(other, spriteBatch, screenPos, 3);
+                    DrawLeg(other, spriteBatch, screenPos, -3);
                     for (int j = -2; j <= 2; ++j)
                     {
                         if (j != 0)
                             DrawArmIK(other, spriteBatch, screenPos, j);
                     }
                 }
+                if (legs)
+                    for (int j = -2; j <= 2; ++j)
+                        if (j != 0)
+                            DrawLeg(other, spriteBatch, screenPos, j);
                 if(body != null)
                     spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             }
@@ -409,6 +417,25 @@ namespace SOTS.NPCs.Boss.Excavator
             //Visual location of the actual center of the arm
             //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
             //spriteBatch.Draw(SOTSUtils.WhitePixel, realEnd - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+        }
+        public static void DrawLeg(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i)
+        {
+            int j = SOTSUtils.SignNoZero(i);
+            i = Math.Abs(i) - 1;
+            int separation = i == 2 ? 4 : i * 40;
+            float scale = i == 2 ? 0.9f : 0.8f;
+            float rotation = i == 2 ? -25 : i == 0 ? 25 : 0;
+            int outward = i == 1 ? 32 : i == 2 ? 52 : 28;
+            Texture2D arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/leg").Value;
+            Vector2 armOrigin = new Vector2(69, 15);
+            Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
+            float armRotation = other.rotation;
+            Vector2 armPosition = new Vector2(outward * j, 8 - separation);
+            armPosition = armPosition.RotatedBy(armRotation) + other.Center;
+            Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
+
+            spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, armRotation + MathHelper.ToRadians(rotation * j), j == -1 ? armOrigin : revArmOrigin, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+
         }
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
         public override void SetStaticDefaults()
