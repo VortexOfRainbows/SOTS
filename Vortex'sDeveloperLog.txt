@@ -78,10 +78,11 @@ N/A
 
 Daily Log:
 
-4/2/25 and 4/7/25
+4/2/25 and 4/7/25 and 4/9/25
 1. Excavator Big Arm rigging WIP
 2. Unholy Grail item added (Kekcroc)
 3. Excavator Leg placement positions
+4. Excavator WIP drill limb position
 
 3/31/25
 1. More WIP Excavator rigging

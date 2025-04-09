@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
  
@@ -399,20 +400,32 @@ namespace SOTS.NPCs.Boss.Excavator
             float angleB = C - A - B > 0 ? 0 : MathF.Acos((A * A + C * C - B * B) / (2 * A * C));
             Vector2 endToMid = -startToEnd.RotatedBy(angleB * j);
             Vector2 startToMid = startToEnd.RotatedBy(-angleA * j);
-            float endArmR = endToMid.ToRotation();
+            float endHandRot = endToMid.ToRotation();
+            float endArmRot = startToMid.ToRotation();
             if (isBigArm)
             {
-                end += new Vector2(14, 0).RotatedBy(endArmR);
+                end -= new Vector2(0, 14 * j).RotatedBy(endArmRot);
             }
-            
+
+            if (isBigArm)
+            {
+                Vector2 mid = startToMid.SNormalize() * 84 + start;
+                mid -= new Vector2(0, 14 * j).RotatedBy(endArmRot);
+                Texture2D bigDrill = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bigDrill").Value;
+                Vector2 drillOrigin = new Vector2(42, 72);
+                Vector2 revDrillOrigin = new Vector2(bigDrill.Width - drillOrigin.X, drillOrigin.Y);
+                float deg = -j * ((j == 1 ? 180 : 0) + -70);
+                spriteBatch.Draw(bigDrill, mid - screenPos, null, drawColor, endHandRot + MathHelper.ToRadians(deg), j == 1 ? drillOrigin : revDrillOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            }
+
+            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+
             //Visual representations of the IK happening
             //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endToMid.ToRotation(), new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, startToMid.ToRotation(), new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
-            
-            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endArmR + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(arm, start - screenPos, null, drawColor, startToMid.ToRotation() + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
             //Visual location of the actual center of the arm
             //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
@@ -422,7 +435,7 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             int j = SOTSUtils.SignNoZero(i);
             i = Math.Abs(i) - 1;
-            int separation = i == 2 ? 4 : i * 40;
+            int separation = i == 2 ?  12 : i * 32;
             float scale = i == 2 ? 0.9f : 0.8f;
             float rotation = i == 2 ? -25 : i == 0 ? 25 : 0;
             int outward = i == 1 ? 32 : i == 2 ? 52 : 28;
@@ -430,9 +443,9 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector2 armOrigin = new Vector2(69, 15);
             Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
             float armRotation = other.rotation;
-            Vector2 armPosition = new Vector2(outward * j, 8 - separation);
+            Vector2 armPosition = new Vector2(outward * j, 18 - separation);
             armPosition = armPosition.RotatedBy(armRotation) + other.Center;
-            Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
+            Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), new Color(210, 210, 210));
 
             spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, armRotation + MathHelper.ToRadians(rotation * j), j == -1 ? armOrigin : revArmOrigin, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
