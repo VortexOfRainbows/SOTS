@@ -431,23 +431,27 @@ namespace SOTS.NPCs.Boss.Excavator
             //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
             //spriteBatch.Draw(SOTSUtils.WhitePixel, realEnd - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
         }
-        public static void DrawLeg(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i)
+        public void DrawLeg(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i)
         {
             int j = SOTSUtils.SignNoZero(i);
             i = Math.Abs(i) - 1;
+            float r = NPC.ai[0] * 2.0f;
+            float legSwayAmt = i == 0 ? 22 : 18;
+            float legMoveSin = MathF.Sin(MathHelper.ToRadians(r + i * 120 + (j == -1 ? 180 : 0)));
+            legMoveSin = (legMoveSin * 0.2f + 0.8f * MathF.Sign(legMoveSin) * MathF.Sqrt(MathF.Abs(legMoveSin))) * legSwayAmt * j;
             int separation = i == 2 ?  12 : i * 32;
             float scale = i == 2 ? 0.9f : 0.8f;
-            float rotation = i == 2 ? -25 : i == 0 ? 25 : 0;
-            int outward = i == 1 ? 32 : i == 2 ? 52 : 28;
+            float rotation = i == 2 ? -12.5f : i == 0 ? 5 : -6.25f;
+            int outward = i == 1 ? 26 : i == 2 ? 48 : 22;
             Texture2D arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/leg").Value;
-            Vector2 armOrigin = new Vector2(69, 15);
-            Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
-            float armRotation = other.rotation;
+            Vector2 legOrig = new Vector2(73, 15);
+            Vector2 revLegOrig = new Vector2(arm.Width - legOrig.X, legOrig.Y);
+            float legRot = other.rotation;
             Vector2 armPosition = new Vector2(outward * j, 18 - separation);
-            armPosition = armPosition.RotatedBy(armRotation) + other.Center;
+            armPosition = armPosition.RotatedBy(legRot) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), new Color(210, 210, 210));
-
-            spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, armRotation + MathHelper.ToRadians(rotation * j), j == -1 ? armOrigin : revArmOrigin, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            legRot += MathHelper.ToRadians(legMoveSin);
+            spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, legRot + MathHelper.ToRadians(rotation * j), j == -1 ? legOrig : revLegOrig, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
         }
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
@@ -538,6 +542,12 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override void PostAI()
         {
+            Vector2 trueVelo = NPC.position - NPC.oldPosition;
+            float speed = trueVelo.Length();
+            if (speed < 1000)
+            {
+                NPC.ai[0] += 2 * MathF.Sqrt(speed);
+            }
             NPC.velocity *= 0.95f;
             if(Main.mouseRight)
             {
