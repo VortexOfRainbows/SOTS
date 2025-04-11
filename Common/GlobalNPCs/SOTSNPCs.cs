@@ -550,8 +550,8 @@ namespace SOTS.Common.GlobalNPCs
             }
             else if (sPlayer.AbandonedVillageBiome)
             {
-                spawnRate = (int)(spawnRate * 0.825f); //Increase spawn rates
-                maxSpawns = (int)(maxSpawns * 1.4f); //Increase spawn rate cap
+                spawnRate = (int)(spawnRate * 0.9f); //Increase spawn rates
+                maxSpawns = (int)(maxSpawns * 1.3f); //Increase spawn rate cap
             }
             if (sPlayer.PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
@@ -725,20 +725,31 @@ namespace SOTS.Common.GlobalNPCs
 					bool underground = player.ZoneRockLayerHeight || player.ZoneDirtLayerHeight;
                     if (underground)
 						pool[0] *= underground ? 0.1f : 0.45f; //Decrease spawnrates of vanilla NPCs, especially in the underground
-                    pool.Add(ModContent.NPCType<Throe>(), (underground ? 0.45f : 0.05f) / (1f + NPC.CountNPCS(ModContent.NPCType<Throe>()))); //Spawn throes less often the more of them there are
-                    pool.Add(ModContent.NPCType<CorpseBloom>(), (corrupt ? 0.75f : 0.1f) * (underground ? 0.3f : 1f));
-                    pool.Add(ModContent.NPCType<SanguineFoundry>(), (corrupt ? 0.1f : 0.75f) * (underground ? 1f : 0.3f));
-					pool.Add(corrupt ? ModContent.NPCType<BallOWorms>() : ModContent.NPCType<BallOGuts>(), 0.4f);
-                    pool.Add(ModContent.NPCType<Fistfull>(), 0.3f + (underground ? 0.1f : 0.0f) + (crimson ? 0.1f : 0.0f));
+					float throeCount = 1f + NPC.CountNPCS(ModContent.NPCType<Throe>());
+					float gizmoCount = 1f + NPC.CountNPCS(ModContent.NPCType<EarthenGizmo>());
+                    pool.Add(ModContent.NPCType<Throe>(), (underground ? 0.45f : 0.05f) / throeCount); //Spawn throes less often the more of them there are
+                    pool.Add(ModContent.NPCType<Fistfull>(), underground ? 0.4f : 0.3f);
                     if (underground)
-						pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.5f / (1f + NPC.CountNPCS(ModContent.NPCType<EarthenGizmo>()))); //Spawn gizmos less often the more of them there area
+					{
+                        pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.5f / gizmoCount); //Spawn gizmos less often the more of them there area
+                        pool.Add(ModContent.NPCType<CoalCart>(), 0.4f); //Spawn gizmos less often the more of them there area
+                    }
 
-					pool.Add(ModContent.NPCType<MutagenTreasureSlime>(), 0.05f);
+                    pool.Add(ModContent.NPCType<MutagenTreasureSlime>(), 0.05f);
                     if (crimson)
+                    {
+                        if (!underground)
+                            pool.Add(ModContent.NPCType<SanguineFoundry>(), 1f);
+						pool.Add(ModContent.NPCType<BallOGuts>(), 0.4f);
                         pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.01f);
+                    }
                     if (corrupt)
+                    {
+                        if (!underground)
+                            pool.Add(ModContent.NPCType<CorpseBloom>(), 1f);
+						pool.Add(ModContent.NPCType<BallOWorms>(), 0.4f);
                         pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.01f);
-
+                    }
                     if (underground && Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2].WallType == WallID.None)
 					{
 						if(!Main.rand.NextBool(10)) //Do not spawn enemies where there are no walls 90% of the time. This forces enemies to spawn in the cooridors in the abandoned village rather than the offshoot caves.
@@ -1149,6 +1160,8 @@ namespace SOTS.Common.GlobalNPCs
                     flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.SanguineFoundry");
                 if (npc.type == ModContent.NPCType<Bridgeburner>())
                     flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Bridgeburner");
+                if (npc.type == ModContent.NPCType<CoalCart>())
+                    flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.CoalCart");
                 bestiaryEntry.Info.AddRange(new List<IBestiaryInfoElement> {
                     AbandonedVillage,
                     flavorText

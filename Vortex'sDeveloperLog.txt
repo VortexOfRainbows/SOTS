@@ -81,9 +81,11 @@ Daily Log:
 
 4/10/25
 1. Small file reorganization and imports for AV enemies
-2. Add Captured Cart (Coal Cart) enemy.
-	1. Needs: Spawning, MP testing, Banner, potentially more complicated AI
+2. Add Captured Cart (Coal Cart) enemy (seems to work in multiplayer).
+	1. Needs: Banner
 3. Allowed sanguine foundry to be famished carrier, alongside coal cart
+4. Reduce spawnrates in AV slightly. Also simplify spawn pools. Now enemies are more biome-specific and less enemies bleed between surface and underground.
+5. Reduce the base chance for an enemy to be a famished carrier in AV mines 25% -> 20%
 
 4/2/25 and 4/7/25 and 4/9/25
 1. Excavator Big Arm rigging WIP

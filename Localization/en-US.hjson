@@ -7549,7 +7549,7 @@ Mods: {
 			InfernoConduitTile.MapEntry: Inferno Conduit
 			PermafrostConduitTile.MapEntry: Permafrost Conduit
 			TidalConduitTile.MapEntry: Tidal Conduit
-			GulaGatewayTile.MapEntry: Gula Gateway
+			GulaGatewayTile.MapEntry: Strange Gateway
 			AVPots.MapEntry: Pot
 			AVMusicBoxTile.MapEntry: Abandoned Village Surface Music Box
 			TidalPlatingBlastDoorTileClosed.MapEntry: Tidal Plating Blast Door
@@ -7602,7 +7602,7 @@ Mods: {
 			MothMusicBoxTile.MapEntry: Moth Music Box Tile
 			RuinedStatueTile.MapEntry: Ruined Statue Tile
 			SerpentStatueTile.MapEntry: Serpent Statue Tile
-			InvidiaGatewayTile.MapEntry: Invidia Gateway Tile
+			InvidiaGatewayTile.MapEntry: Strange Gateway
 			SanctuaryMusicBoxTile.MapEntry: Sanctuary Music Box Tile
 			EvostonePots.MapEntry: Pots
 		}
@@ -7954,8 +7954,9 @@ Mods: {
 			SanguineFoundry:
 				'''
 				Why must we smelt our own ore? You guys are made of metal. If you really want this excavation finished, you could supply us directly... I'm starting to think your promises are ill kept.
-				PREMISSION TO ANSWER DENIED.
+				PERMISSION TO ANSWER DENIED.
 				'''
+			CoalCart: Haunted by spirits that once labored in agony.
 		}
 
 		DeathMessage: {
@@ -8799,6 +8800,7 @@ Mods: {
 			FoundryFireBoom.DisplayName: Meatball Explosion
 			HardlightHook.DisplayName: Hardlight Hook
 			CollapseBlock.DisplayName: Collapse Block
+			CoalCartCoal.DisplayName: Coal Cart Coal
 		}
 
 		DamageClasses: {

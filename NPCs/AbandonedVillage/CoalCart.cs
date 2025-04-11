@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Common.ModPlayers;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Fragments;
+using SOTS.Projectiles.AbandonedVillage;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -18,8 +20,13 @@ namespace SOTS.NPCs.AbandonedVillage
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 1;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                Position = new Vector2(0, 24),
+            };
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
-		public override void SetDefaults()
+        public override void SetDefaults()
 		{
 			NPC.aiStyle = NPCAIStyleID.Unicorn;
 			NPC.width = 62;
@@ -34,6 +41,7 @@ namespace SOTS.NPCs.AbandonedVillage
 			NPC.DeathSound = new SoundStyle("SOTS/Sounds/Tiles/WoodBreaking") with { Pitch = 0.3f };
 			NPC.noTileCollide = false;
             NPC.noGravity = false;
+            NPC.localAI[3] = 145; //This is good starting position for the legs in the bestiary
             //Banner = NPC.type;
             //BannerItem = ItemType<TeratomaBanner>();
         }
@@ -116,6 +124,7 @@ namespace SOTS.NPCs.AbandonedVillage
             Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             Texture2D head = Request<Texture2D>(this.Texture + "Head").Value;
             Texture2D glow = Request<Texture2D>(this.Texture + "Glow").Value;
+            Texture2D hot = Request<Texture2D>(this.Texture + "CoalHot").Value;
             int height = texture.Height / Main.npcFrameCount[NPC.type];
             Vector2 drawOrigin = new Vector2(texture.Width / 2, height / 2);
             Vector2 drawPos = NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY);
@@ -123,9 +132,19 @@ namespace SOTS.NPCs.AbandonedVillage
             float sin = MathF.Sin(MathHelper.ToRadians(NPC.localAI[3] * 2.0f));
             float sin2 = -MathF.Sin(MathHelper.ToRadians(NPC.localAI[3] * 1.0f));
             Vector2 bobbing = new Vector2(0, 2 * sin);
+            drawPos += bobbing;
             DrawArmIK(spriteBatch, screenPos - bobbing, 2 * NPC.spriteDirection);
-            spriteBatch.Draw(head, drawPos + bobbing, null, drawColor, NPC.rotation + MathHelper.ToRadians(5 * sin2), drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-            spriteBatch.Draw(glow, drawPos + bobbing, null, Color.White, NPC.rotation + MathHelper.ToRadians(5 * sin2), drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            float r = NPC.rotation + MathHelper.ToRadians(5 * sin2);
+            spriteBatch.Draw(head, drawPos, null, drawColor, r, drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            spriteBatch.Draw(glow, drawPos, null, Color.White, r, drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            float percent = 1 - (float)NPC.life / NPC.lifeMax;
+            Color c = new Color(100, 100, 100, 0) * percent * percent;
+            for (int i = 0; i < 4; ++i)
+            {
+                Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.PiOver2 * i + MathHelper.ToRadians(SOTSWorld.GlobalCounter * 2));
+                spriteBatch.Draw(hot, drawPos + circular, null, c, r, drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            }
+            spriteBatch.Draw(hot, drawPos, null, c, r, drawOrigin, NPC.scale, NPC.spriteDirection == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
             DrawArmIK(spriteBatch, screenPos - bobbing, NPC.spriteDirection);
             //DrawArmIK(spriteBatch, screenPos, -1);
             return false;
@@ -160,6 +179,41 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
+            if(Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                if (NPC.life <= 0)
+                {
+                    int count = 3;
+                    if (Main.expertMode)
+                        count += Main.rand.Next(2);
+                    if (Main.masterMode)
+                        count += Main.rand.Next(3);
+                    for (int i = 1; i < count + 1; i++)
+                    {
+                        Vector2 RandomVelocity = new Vector2(Main.rand.NextFloat(-i, i) * 0.5f, Main.rand.NextFloat(-9f, -4f)) + NPC.velocity * Main.rand.NextFloat(0.5f, 1.0f);
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.Center.Y - 35), RandomVelocity, ProjectileType<CoalCartCoal>(), NPC.GetBaseDamage() / 2, 0f, Main.myPlayer, i - 1, Main.rand.NextFloat(0.8f, 1f));
+                    }
+                }
+                else if(NPC.life < NPC.lifeMax * 3 / 4)
+                {
+                    int count = 3;
+                    if (Main.expertMode)
+                        count += Main.rand.Next(2);
+                    if (Main.masterMode)
+                        count += Main.rand.Next(2);
+                    for (int i = 1; i < count; ++i)
+                    {
+                        float secondaryChance = 0.04f * hit.Damage;
+                        int chance = Main.masterMode ? 4 : Main.expertMode ? 5 : 6;
+                        if (Main.rand.NextBool(chance) && Main.rand.NextFloat() < secondaryChance)
+                        {
+                            float percent = 1 - (float)NPC.life / NPC.lifeMax;
+                            Vector2 RandomVelocity = new Vector2(Main.rand.NextFloat(-i, i) * 0.5f, Main.rand.NextFloat(-6f, -3f)) + NPC.velocity * Main.rand.NextFloat(0.5f, 1.0f);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), new Vector2(NPC.Center.X, NPC.Center.Y - 35), RandomVelocity, ProjectileType<CoalCartCoal>(), NPC.GetBaseDamage() / 2, 0f, Main.myPlayer, 0, Main.rand.NextFloat(0.0f, percent));
+                        }
+                    }
+                }
+            }
             if (Main.netMode == NetmodeID.Server)
                 return;
             int num = NPC.life > 0 ? (int)(hit.Damage / (float)NPC.lifeMax * 30f) : 60;

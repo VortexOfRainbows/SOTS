@@ -16,7 +16,7 @@ namespace SOTS.Projectiles.AbandonedVillage
     public class FoundryFire : ModProjectile
     {
         private bool runOnce = true;
-		private Vector2[] trail => Projectile.oldPos;
+		private Vector2[] Trail => Projectile.oldPos;
         public override string Texture => "SOTS/Projectiles/AbandonedVillage/Meatball";
         public override void SetStaticDefaults()
         {
@@ -38,23 +38,24 @@ namespace SOTS.Projectiles.AbandonedVillage
 		{
 			Texture2D TrailTexture = SOTSUtils.WhitePixel;
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
-
+            float trailSize = this is CoalCartCoal ? 3 : 4;
+            float colorMult = this is CoalCartCoal ? Projectile.ai[1] : 1;
 			Vector2 drawOrigin = new(0f, TrailTexture.Height * 0.5f);
 			Vector2 previousPosition = Projectile.Center;
-			for (int i = 0; i < trail.Length; i++)
+			for (int i = 0; i < Trail.Length; i++)
             {
-                if (trail[i] == Vector2.Zero)
+                if (Trail[i] == Vector2.Zero)
                 {
                     continue;
                 }
-                float scale = Projectile.scale * (trail.Length - i) / (float)trail.Length;
+                float scale = Projectile.scale * (Trail.Length - i) / (float)Trail.Length;
 				scale *= 1f;
-				Color color = Color.Lerp(Color.Red, Color.Gold, scale);
+				Color color = Color.Lerp(Color.Red, Color.Gold, scale) * colorMult;
                 color.A = 0;
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
                 Vector2 toPrev = previousPosition - center;
-                Main.spriteBatch.Draw(TrailTexture, center - Main.screenPosition, null, color * perc, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, 4 * perc), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(TrailTexture, center - Main.screenPosition, null, color * perc, toPrev.ToRotation(), new Vector2(0, 1), new Vector2(toPrev.Length() / 2f, trailSize * perc), SpriteEffects.None, 0f);
                 previousPosition = center;
 			}
             Color color2 = Color.Lerp(Color.Red, Color.Gold, 0.5f);
@@ -145,6 +146,122 @@ namespace SOTS.Projectiles.AbandonedVillage
 			if(Projectile.owner == Main.myPlayer)
 			{
                 Projectile.NewProjectile(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<FoundryFireBoom>(), Projectile.damage, 0f, Main.myPlayer);
+            }
+        }
+    }
+    public class CoalCartCoal : FoundryFire
+    {
+        public override bool PreDraw(ref Color lightColor)
+        {
+            base.PreDraw(ref lightColor);
+			Texture2D texture = ModContent.Request<Texture2D>("SOTS/Projectiles/AbandonedVillage/CoalCartCoal").Value;
+            Texture2D textureHot = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
+            float percent = Projectile.ai[1];
+            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, lightColor * (1 - percent), Projectile.rotation, texture.Size() / 2f, 1.05f, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(textureHot, Projectile.Center - Main.screenPosition, null, Color.White * percent, Projectile.rotation, texture.Size() / 2f, 1.05f, SpriteEffects.None, 0f);
+            return false;
+        }
+        private bool runOnce = true;
+        private Vector2[] Trail => Projectile.oldPos;
+        public override string Texture => "SOTS/Projectiles/AbandonedVillage/CoalCartCoalHot";
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.TrailCacheLength[Type] = 12;
+            ProjectileID.Sets.TrailingMode[Type] = 0;
+        }
+        public override void SetDefaults()
+        {
+            Projectile.width = 12;
+            Projectile.height = 12;
+            Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.tileCollide = true;
+            Projectile.ignoreWater = false;
+            Projectile.timeLeft = 180;
+            Projectile.alpha = 0;
+        }
+        public override void AI()
+        {
+            if (runOnce && Projectile.ai[0] == -1)
+            {
+                SOTSUtils.PlaySound(SoundID.Item89, Projectile.Center, 1.1f, -0.6f, 0.1f);
+                runOnce = false;
+                float r = Projectile.velocity.ToRotation();
+                float total = 24f;
+                for (float j = 0.5f; j < 1.0f; j += 0.3f)
+                {
+                    for (int i = 0; i < total; i++)
+                    {
+                        Color color = Color.Lerp(Color.Red, Color.Gold, Main.rand.NextFloat(1)) * Projectile.ai[1];
+                        color.A = 0;
+                        Vector2 circular = new Vector2(1, 0).RotatedBy(i / total * MathHelper.TwoPi);
+                        circular.X *= 0.5f;
+                        circular = circular.RotatedBy(r);
+                        Vector2 drawPos = Projectile.Center;
+                        Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color);
+                        dust.noGravity = true;
+                        dust.scale = 1.5f;
+                        dust.velocity *= 0.1f;
+                        dust.velocity += Projectile.velocity * 0.8f * j + circular * 5f * j;
+                        dust.fadeIn = 4;
+                        dust.color.A = 0;
+                        dust.alpha = 120;
+                    }
+                }
+            }
+            else if (Main.rand.NextBool(7))
+            {
+                Color color = Color.Lerp(Color.Red, Color.Gold, Main.rand.NextFloat(1)) * Projectile.ai[1];
+                color.A = 0;
+                Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color);
+                dust.noGravity = true;
+                dust.scale = 1.25f;
+                dust.velocity *= 0.15f;
+                dust.velocity -= Projectile.oldVelocity * Main.rand.NextFloat(0.3f);
+                dust.fadeIn = 0.1f;
+                dust.color.A = 0;
+            }
+            Projectile.velocity.Y += 0.2f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+        }
+        public override void OnKill(int timeLeft)
+        {
+            for (float i = 0; i < Projectile.oldPos.Length; i += 0.5f)
+            {
+                float scale = (Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length;
+                scale *= 1f;
+                Vector2 drawPos = Projectile.oldPos[(int)i] + Projectile.Size / 2 - ((i % 1) * Projectile.oldVelocity);
+                Color color = Color.Lerp(Color.Red, Color.Gold, scale) * Projectile.ai[1];
+                color.A = 0;
+                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color);
+                dust.noGravity = true;
+                dust.scale = 1.5f * scale;
+                dust.velocity *= 0.3f;
+                dust.velocity += Projectile.oldVelocity * Main.rand.NextFloat(0.3f);
+                dust.fadeIn = 0.1f;
+                dust.color.A = 0;
+            }
+            for (int i = 10; i > 0; i--)
+            {
+                Color c2 = Color.Lerp(Color.Red, Color.Gold, Main.rand.NextFloat(1)) * Projectile.ai[1];
+                c2.A = 0;
+                PixelDust.Spawn(Projectile.Center, 0, 0, Projectile.oldVelocity * 0.1f * Main.rand.NextFloat(1) + Main.rand.NextVector2Circular(5, 5), c2, Main.rand.Next(4, 7)).scale = Main.rand.Next(4, 8) / 4f;
+            }
+            Color c = new(155, 155, 155);
+            for (int i = 10; i > 0; i--)
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, DustID.Stone, 0, 0, 0, newColor: c);
+                dust.velocity = dust.velocity * 0.5f;
+                dust.velocity.Y -= Main.rand.NextFloat(2);
+                dust.scale *= 1.15f;
+            }
+            SOTSUtils.PlaySound(SoundID.Tink, Projectile.Center, 0.7f, -0.1f);
+        }
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            if(Main.myPlayer == Projectile.owner && Main.rand.NextFloat() < Projectile.ai[1])
+            {
+                target.AddBuff(BuffID.OnFire, (int)(600 * Projectile.ai[1]) + 120, false);
             }
         }
     }

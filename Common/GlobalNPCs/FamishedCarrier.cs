@@ -115,7 +115,7 @@ namespace SOTS.Common.GlobalNPCs
                     bool underground = npc.Center.Y > Main.rockLayer * 16 - 240;
                     if (underground)
                     {
-                        int chanceToBeInfected = 4;
+                        int chanceToBeInfected = 5;
                         int totalFamishedInTheWorld = 0;
                         for (int i = 0; i < Main.maxNPCs; i++)
                         {
