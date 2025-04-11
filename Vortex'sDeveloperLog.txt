@@ -69,7 +69,8 @@ ImportantTiles code (archaeologist tiles)
 N/A
 
 ---Multiplayer Fixes/Testing Needed---
-N/A
+Collapsing blocks from excavator MP syncing
+Friendly Cart MP syncing
 
 ---Content Needed---
 N/A
@@ -86,6 +87,8 @@ Daily Log:
 3. Allowed sanguine foundry to be famished carrier, alongside coal cart
 4. Reduce spawnrates in AV slightly. Also simplify spawn pools. Now enemies are more biome-specific and less enemies bleed between surface and underground.
 5. Reduce the base chance for an enemy to be a famished carrier in AV mines 25% -> 20%
+6. Add Friendly Cart mount, summoned with Captured Heart (Rhymes with captured cart!)
+	1. Needs: MP syncing, better item sprite!
 
 4/2/25 and 4/7/25 and 4/9/25
 1. Excavator Big Arm rigging WIP

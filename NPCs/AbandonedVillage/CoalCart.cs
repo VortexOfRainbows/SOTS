@@ -23,6 +23,7 @@ namespace SOTS.NPCs.AbandonedVillage
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Position = new Vector2(0, 24),
+                PortraitPositionYOverride = 0,
             };
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
@@ -94,10 +95,6 @@ namespace SOTS.NPCs.AbandonedVillage
             float endHandRot = endToMid.ToRotation();
             float endArmRot = startToMid.ToRotation();
             end -= new Vector2(2, -9 * j).RotatedBy(endArmRot);
-            if (end.Distance(start) > maxSize)
-            {
-
-            }
             Vector2 mid = startToMid.SNormalize() * B + start;
             mid -= new Vector2(2, -9 * j).RotatedBy(endArmRot);
             float stretch = MathF.Max(1, end.Distance(mid) / A);
@@ -128,7 +125,6 @@ namespace SOTS.NPCs.AbandonedVillage
             int height = texture.Height / Main.npcFrameCount[NPC.type];
             Vector2 drawOrigin = new Vector2(texture.Width / 2, height / 2);
             Vector2 drawPos = NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY);
-            Rectangle frame = new Rectangle(0, NPC.frame.Y, texture.Width, height);
             float sin = MathF.Sin(MathHelper.ToRadians(NPC.localAI[3] * 2.0f));
             float sin2 = -MathF.Sin(MathHelper.ToRadians(NPC.localAI[3] * 1.0f));
             Vector2 bobbing = new Vector2(0, 2 * sin);
@@ -262,8 +258,7 @@ namespace SOTS.NPCs.AbandonedVillage
             npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEarth>(), 2, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEvil>(), 2, 1, 1));
             npcLoot.Add(ItemDropRule.Common(ItemType<OldKey>(), 20));
-            npcLoot.Add(ItemDropRule.Common(ItemID.Minecart, 100));
-            npcLoot.Add(ItemDropRule.Common(ItemID.Coal, 100));
+            npcLoot.Add(ItemDropRule.Common(ItemType<CapturedHeart>(), 100));
         }
     }
 }

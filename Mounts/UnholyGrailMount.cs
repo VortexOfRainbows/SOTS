@@ -33,7 +33,7 @@ namespace SOTS.Mounts
 		}
         public override void UpdateEffects(Player player)
 		{
-			SetStaticDefaults();
+			//SetStaticDefaults();
 			player.maxFallSpeed *= 2;
 			player.sitting.isSitting = true;
 			player.statDefense += 12;

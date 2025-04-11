@@ -6826,6 +6826,11 @@ Mods: {
 					Gain 12 defense while active
 					'''
 			}
+
+			CapturedHeart: {
+				DisplayName: Captured Heart
+				Tooltip: Summons a possessed minecart
+			}
 		}
 
 		ItemTooltip: {
@@ -7312,6 +7317,11 @@ Mods: {
 			UnholyGrailBuff: {
 				DisplayName: Slothful Throne
 				Description: Increases defense by 12
+			}
+
+			FriendlyCartBuff: {
+				DisplayName: Friendly Cart
+				Description: "'It's carting time!'"
 			}
 		}
 
