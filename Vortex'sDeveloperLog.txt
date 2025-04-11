@@ -43,7 +43,7 @@ Update Objectives:
 	1. Tiles: Invidia Portal Plating
 	2. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 12. Invidia Gateway Tile (needs: glow, conduit connection)
-13. Taco's Pupa and change AV spawns to be less diverse (right now it feels super chaotic)
+13. Taco's Pupa and Hardmode Void Treasure Slime
 
 ---WIP List---
 Abandoned village generation
@@ -88,7 +88,7 @@ Daily Log:
 4. Reduce spawnrates in AV slightly. Also simplify spawn pools. Now enemies are more biome-specific and less enemies bleed between surface and underground.
 5. Reduce the base chance for an enemy to be a famished carrier in AV mines 25% -> 20%
 6. Add Friendly Cart mount, summoned with Captured Heart (Rhymes with captured cart!)
-	1. Needs: MP syncing, better item sprite!
+	1. A bit buggy in multiplayer, but should not effect gameplay
 
 4/2/25 and 4/7/25 and 4/9/25
 1. Excavator Big Arm rigging WIP

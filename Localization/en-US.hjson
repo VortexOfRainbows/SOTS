@@ -6829,7 +6829,7 @@ Mods: {
 
 			CapturedHeart: {
 				DisplayName: Captured Heart
-				Tooltip: Summons a possessed minecart
+				Tooltip: Summons a possessed minecart mount
 			}
 		}
 

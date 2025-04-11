@@ -37,7 +37,7 @@ namespace SOTS.Mounts
 			MountData.jumpSpeed = 6f;
 			MountData.totalFrames = 1;
 			MountData.usesHover = false;
-			MountData.playerYOffsets = [44];
+			MountData.playerYOffsets = [50];
 			MountData.xOffset = 0;
 			MountData.bodyFrame = 6;
 			MountData.yOffset = 9;
@@ -67,7 +67,7 @@ namespace SOTS.Mounts
             float sin2 = -MathF.Sin(m.moveCounter * 1.0f) * m.Moving;
             float r = rotation2 + MathHelper.ToRadians(5 * sin2);
             Vector2 bobbing = new Vector2(0, 2 * sin);
-            MountData.playerYOffsets = [(int)(50 - 2.5f * sin)];
+            //MountData.playerYOffsets = [(int)(50 - 2.5f * sin)]; //doesn't work in MP
             void DrawBody(List<DrawData> playerDrawData, Vector2 screenPos, Color drawColor)
             {
                 Texture2D texture = texture2;
@@ -163,7 +163,7 @@ namespace SOTS.Mounts
         }
         public override void UpdateEffects(Player player)
         {
-            SetStaticDefaults();
+            //SetStaticDefaults();
             var m = (FriendlyCartSpecificData)player.mount._mountSpecificData;
             Vector2 trueVelo = player.position - player.oldPosition;
             float speed = trueVelo.Length();
