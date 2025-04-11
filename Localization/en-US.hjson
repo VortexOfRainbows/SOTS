@@ -7843,6 +7843,9 @@ Mods: {
 			ExcavatorBody2.DisplayName: Excavator
 			ExcavatorTail.DisplayName: Excavator
 			ExcavatorDrillTail.DisplayName: Excavator
+			CoalCart.DisplayName: Captured Cart
+			Pupa.DisplayName: Pupa
+			PupaFly.DisplayName: Pupa Fly
 		}
 
 		Bestiary: {

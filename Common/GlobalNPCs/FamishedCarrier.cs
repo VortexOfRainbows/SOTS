@@ -88,7 +88,9 @@ namespace SOTS.Common.GlobalNPCs
                     || entity.type == ModContent.NPCType<EarthenGizmo>()
                     || entity.type == ModContent.NPCType<BallOGuts>()
                     || entity.type == ModContent.NPCType<BallOWorms>()
-                    || entity.type == ModContent.NPCType<Fistfull>();
+                    || entity.type == ModContent.NPCType<Fistfull>()
+                    || entity.type == ModContent.NPCType<CoalCart>()
+                    || entity.type == ModContent.NPCType<SanguineFoundry>();
                 return validNPC;
             }
             return false;
