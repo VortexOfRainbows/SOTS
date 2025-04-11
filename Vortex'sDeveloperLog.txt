@@ -80,7 +80,7 @@ N/A
 
 Daily Log:
 
-4/10/25
+4/10/25 to 4/11/25
 1. Small file reorganization and imports for AV enemies
 2. Add Captured Cart (Coal Cart) enemy (seems to work in multiplayer).
 	1. Needs: Banner
@@ -89,6 +89,8 @@ Daily Log:
 5. Reduce the base chance for an enemy to be a famished carrier in AV mines 25% -> 20%
 6. Add Friendly Cart mount, summoned with Captured Heart (Rhymes with captured cart!)
 	1. A bit buggy in multiplayer, but should not effect gameplay
+7. Coal cart coals should now bounce a bit to make them work better in the mines
+8. Blades should now work better with mounts
 
 4/2/25 and 4/7/25 and 4/9/25
 1. Excavator Big Arm rigging WIP

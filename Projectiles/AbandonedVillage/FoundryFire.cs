@@ -264,5 +264,19 @@ namespace SOTS.Projectiles.AbandonedVillage
                 target.AddBuff(BuffID.OnFire, (int)(600 * Projectile.ai[1]) + 120, false);
             }
         }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (Projectile.ai[2] > -2)
+            {
+                --Projectile.ai[2];
+                if (Projectile.velocity.X != oldVelocity.X)
+                    Projectile.velocity.X = -oldVelocity.X;
+                if (Projectile.velocity.Y != oldVelocity.Y)
+                    Projectile.velocity.Y = -oldVelocity.Y;
+                Projectile.velocity.Y *= 0.5f;
+                return false;
+            }
+            return true;
+        }
     }
 }

@@ -1147,7 +1147,8 @@ namespace SOTS.Common.GlobalNPCs
 					flavorText
 				});
             }
-            if (npc.type == ModContent.NPCType<Famished>() || npc.type == ModContent.NPCType<EarthenGizmo>() || npc.type == ModContent.NPCType<Throe>() || npc.type == ModContent.NPCType<CorpseBloom>() || npc.type == ModContent.NPCType<Bridgeburner>() || npc.type == ModContent.NPCType<SanguineFoundry>())
+            if (npc.type == ModContent.NPCType<Famished>() || npc.type == ModContent.NPCType<EarthenGizmo>() || npc.type == ModContent.NPCType<Throe>() || npc.type == ModContent.NPCType<CorpseBloom>() || 
+				npc.type == ModContent.NPCType<Bridgeburner>() || npc.type == ModContent.NPCType<SanguineFoundry>() || npc.type == ModContent.NPCType<CoalCart>())
             {
                 FlavorTextBestiaryInfoElement flavorText = new FlavorTextBestiaryInfoElement("Mods.SOTS.Bestiary.Famished");
                 if (npc.type == ModContent.NPCType<EarthenGizmo>())

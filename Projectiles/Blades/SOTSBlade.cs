@@ -60,7 +60,8 @@ namespace SOTS.Projectiles.Blades
                     g = 0;
             }
             Vector2 gfx = new Vector2(0, g);
-            return player.RotatedRelativePoint(Vector2.Lerp(player.oldPosition, player.position, mult) + player.Size / 2, false, false) + gfx * (1 - mult);
+            Vector2 sizeOffset = player.MountedCenter - player.position;
+            return player.RotatedRelativePoint(Vector2.Lerp(player.oldPosition, player.position, mult) + sizeOffset, false, false) + gfx * (1 - mult);
         }
         public virtual void Draw(SpriteBatch spriteBatch, ref Color lightColor)
         {
@@ -71,7 +72,7 @@ namespace SOTS.Projectiles.Blades
             }
             Vector2 playerToProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
             Vector2 rotateToPosition = playerToProjectile.SNormalize() * HeldDistFromPlayer;
-            Vector2 playerArmPos = player.Center + rotateToPosition;
+            Vector2 playerArmPos = player.MountedCenter + rotateToPosition;
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
             float length = playerToProjectile.Length() - HeldDistFromPlayer;
             Vector2 drawPos = playerArmPos - Main.screenPosition;
