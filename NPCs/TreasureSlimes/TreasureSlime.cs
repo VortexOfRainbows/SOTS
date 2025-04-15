@@ -183,6 +183,7 @@ namespace SOTS.NPCs.TreasureSlimes
 					if (Main.netMode != NetmodeID.MultiplayerClient && (int)runAwayDelay == 0)
                     {
 						int type = 0;
+						int extra = 0;
 						if (NPC.type == NPCType<BasicTreasureSlime>())
 							type = 0;   
 						if (NPC.type == NPCType<GoldenTreasureSlime>())
@@ -205,9 +206,11 @@ namespace SOTS.NPCs.TreasureSlimes
 							type = 9;
                         if (NPC.type == NPCType<MutagenTreasureSlime>())
                             type = 10;
-                        //if (NPC.type == NPCType<SanctuaryTreasureSlime>())
-                        //    type = 11;
-                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type);
+                        if (NPC.type == NPCType<VoidTreasureSlime>()){
+							type = 11;
+							extra = -1;
+						}
+                        Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + new Vector2(0, 4), Vector2.Zero, ProjectileType<TreasureStarPortal>(), 0, 0, Main.myPlayer, 0, type, extra);
 					}
 					runAwayDelay++;
 					if(runAwayDelay >= 70)

@@ -43,13 +43,12 @@ Update Objectives:
 	1. Tiles: Invidia Portal Plating
 	2. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 12. Invidia Gateway Tile (needs: glow, conduit connection)
-13. Taco's Pupa and Hardmode Void Treasure Slime
+13. Taco's Pupa and Petanik's Rotwalker
 
 ---WIP List---
 Abandoned village generation
 Make enemies spawn in the AV and Mines
 Made all available conduits spawn on worldgen
-Make sure archaeologist or treasure slimes drop necessary sanctuary loot
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -70,7 +69,6 @@ N/A
 
 ---Multiplayer Fixes/Testing Needed---
 Collapsing blocks from excavator MP syncing
-Friendly Cart MP syncing
 
 ---Content Needed---
 N/A
@@ -80,10 +78,9 @@ N/A
 
 Daily Log:
 
-4/10/25 to 4/11/25
+4/10/25 to 4/11/25 and 4/14/25
 1. Small file reorganization and imports for AV enemies
-2. Add Captured Cart (Coal Cart) enemy (seems to work in multiplayer).
-	1. Needs: Banner
+2. Add Captured Cart (Coal Cart) enemy (seems to work in multiplayer). + banner
 3. Allowed sanguine foundry to be famished carrier, alongside coal cart
 4. Reduce spawnrates in AV slightly. Also simplify spawn pools. Now enemies are more biome-specific and less enemies bleed between surface and underground.
 5. Reduce the base chance for an enemy to be a famished carrier in AV mines 25% -> 20%
@@ -91,6 +88,8 @@ Daily Log:
 	1. A bit buggy in multiplayer, but should not effect gameplay
 7. Coal cart coals should now bounce a bit to make them work better in the mines
 8. Blades should now work better with mounts
+9. Void Treasure Slime + banner
+10. Add Goblet of Entrails
 
 4/2/25 and 4/7/25 and 4/9/25
 1. Excavator Big Arm rigging WIP

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.ModPlayers;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.Projectiles.AbandonedVillage;
 using System;
@@ -43,8 +44,8 @@ namespace SOTS.NPCs.AbandonedVillage
 			NPC.noTileCollide = false;
             NPC.noGravity = false;
             NPC.localAI[3] = 145; //This is good starting position for the legs in the bestiary
-            //Banner = NPC.type;
-            //BannerItem = ItemType<TeratomaBanner>();
+            Banner = NPC.type;
+            BannerItem = ItemType<CoalCartBanner>();
         }
         public void DrawArmIK(SpriteBatch spriteBatch, Vector2 screenPos, int dir)
         {

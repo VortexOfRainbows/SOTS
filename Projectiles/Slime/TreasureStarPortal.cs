@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using SOTS.Dusts;
 using SOTS.Helpers;
 using SOTS.NPCs.TreasureSlimes;
+using Terraria.Audio;
 
 namespace SOTS.Projectiles.Slime
 {    
@@ -75,7 +76,7 @@ namespace SOTS.Projectiles.Slime
 			color2.A = alpha.A;
 			float num1 =  0.95f + (Projectile.rotation * 0.75f).ToRotationVector2().Y * 0.1f;
 			Color color4 = color2 * num1;
-			float scale = 0.4f + Projectile.scale * 0.8f * num1 * ((int)Projectile.ai[1] == 11 ? 0.5f : 1f);
+			float scale = 0.4f + Projectile.scale * 0.8f * num1 * ((int)Projectile.ai[1] == 11 && Projectile.ai[2] != -1 ? 0.5f : 1f);
 			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, color4, -Projectile.rotation + 0.35f, origin, scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
 			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, alpha, -Projectile.rotation, origin, Projectile.scale, effects1 ^ SpriteEffects.FlipHorizontally, 0.0f);
 			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, alpha * 0.8f, Projectile.rotation * 0.5f, origin, Projectile.scale * 0.9f, effects1, 0.0f);

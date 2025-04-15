@@ -1136,7 +1136,7 @@ namespace SOTS.WorldgenHelpers
                     if (style == 7) //waning crescent
                     {
                         MainItem = ModContent.ItemType<MoonShard8>();
-                        //SecondItem = ModContent.ItemType<LevMirror>(); //Gula
+                        SecondItem = ModContent.ItemType<GobletOfEntrails>(); //Gula
                     }
                     int slot = 0;
                     if (MainItem != -1)

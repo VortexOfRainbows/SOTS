@@ -1,19 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.NPCs;
-using SOTS.NPCs.AbandonedVillage;
-using SOTS.NPCs.Anomaly;
-using SOTS.NPCs.Chaos;
-using SOTS.NPCs.Gizmos;
-using SOTS.NPCs.Inferno;
 using SOTS.NPCs.Phase;
-using SOTS.NPCs.Tide;
-using SOTS.NPCs.TreasureSlimes;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
@@ -429,6 +418,22 @@ namespace SOTS.Items.Banners
         {
             Item.createTile = TileType<SOTSBanners>();
             Item.placeStyle = 43;
+        }
+    }
+    public class CoalCartBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners>();
+            Item.placeStyle = 48;
+        }
+    }
+    public class VoidTreasureSlimeBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners>();
+            Item.placeStyle = 50;
         }
     }
     public class HoloSlimeBanner : ModBanner

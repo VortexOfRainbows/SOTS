@@ -57,7 +57,7 @@ namespace SOTS.Items.Invidia.MoonShard
 		{
 			Item.width = 26;
 			Item.height = 26;
-			Item.maxStack = 1;
+			Item.maxStack = 9999;
 			Item.rare = ModContent.RarityType<StrangeGreenRarity>();
 			Item.value = Item.sellPrice(0, 0, 0, 0);
 			Item.shopCustomPrice = Item.buyPrice(1, 0, 0, 0);

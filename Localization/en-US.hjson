@@ -6831,6 +6831,21 @@ Mods: {
 				DisplayName: Captured Heart
 				Tooltip: Summons a possessed minecart mount
 			}
+
+			CoalCartBanner: {
+				DisplayName: Captured Cart Banner
+				Tooltip: ""
+			}
+
+			VoidTreasureSlimeBanner: {
+				DisplayName: Void Treasure Slime Banner
+				Tooltip: ""
+			}
+
+			GobletOfEntrails: {
+				DisplayName: Goblet of Entrails
+				Tooltip: Not consumable
+			}
 		}
 
 		ItemTooltip: {
@@ -7856,6 +7871,7 @@ Mods: {
 			CoalCart.DisplayName: Captured Cart
 			Pupa.DisplayName: Pupa
 			PupaFly.DisplayName: Pupa Fly
+			VoidTreasureSlime.DisplayName: Void Treasure Slime
 		}
 
 		Bestiary: {
