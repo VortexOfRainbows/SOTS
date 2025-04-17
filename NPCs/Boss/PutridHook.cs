@@ -58,6 +58,11 @@ namespace SOTS.NPCs.Boss
         {
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                Hide = true
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
 		public override void SetDefaults()
 		{
@@ -77,11 +82,11 @@ namespace SOTS.NPCs.Boss
             NPC.DeathSound = SoundID.NPCDeath5;
             NPC.netAlways = true;
 		}
-		float counter2 = 0;
-		float randMult = 1f;
-		bool runOnce = true;
-		float[] counterArr = new float[12];
-		float[] randSeed1 = new float[12];
+		private float counter2 = 0;
+		private float randMult = 1f;
+		private bool runOnce = true;
+		private float[] counterArr = new float[12];
+		private float[] randSeed1 = new float[12];
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Texture2D texture;

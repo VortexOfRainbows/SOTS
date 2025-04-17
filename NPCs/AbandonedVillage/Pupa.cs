@@ -9,6 +9,7 @@ using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Fragments;
 using Terraria.GameContent.ItemDropRules;
+using SOTS.Items.Banners;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
@@ -33,7 +34,9 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.aiStyle = 3;
             NPC.value = Item.buyPrice(0, 0, 3, 0);
             AIType = NPCID.Crab;
-		}
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<PupaBanner>();
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			NPCTexture ??= ModContent.Request<Texture2D>(Texture);
@@ -88,7 +91,7 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         public override void OnKill()
         {
-            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
+            SOTSUtils.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center, 1.0f, 0.5f);
             int Fly = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PupaFly>());
             Main.npc[Fly].velocity.X = Main.rand.NextFloat(-1f, 1f);
             Main.npc[Fly].velocity.Y = Main.rand.NextFloat(-9f, -3f);

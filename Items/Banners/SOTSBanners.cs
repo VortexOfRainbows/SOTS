@@ -420,6 +420,24 @@ namespace SOTS.Items.Banners
             Item.placeStyle = 43;
         }
     }
+
+    public class PupaFlyBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners>();
+            Item.placeStyle = 46;
+        }
+    }
+
+    public class PupaBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners>();
+            Item.placeStyle = 47;
+        }
+    }
     public class CoalCartBanner : ModBanner
     {
         public override void SafeSetDefaults()

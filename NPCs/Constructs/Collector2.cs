@@ -28,11 +28,6 @@ namespace SOTS.NPCs.Constructs
         {
             Main.npcFrameCount[NPC.type] = 1;
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
-			{
-				Hide = true
-			};
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SetDefaults()
 		{
@@ -50,16 +45,16 @@ namespace SOTS.NPCs.Constructs
 			NPC.HitSound = SoundID.NPCHit4;
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.dontTakeDamage = true;
-			NPC.alpha = 255;
 		}
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-			if (runOnce)
-				return false;
-			DrawLightning(spriteBatch, screenPos, drawColor, 0);
-			DrawLightning(spriteBatch, screenPos, drawColor, 1);
-			DrawLightning(spriteBatch, screenPos, drawColor, 2);
-			DrawLightning(spriteBatch, screenPos, drawColor, 3);
+			if (!runOnce)
+            {
+                DrawLightning(spriteBatch, screenPos, drawColor, 0);
+                DrawLightning(spriteBatch, screenPos, drawColor, 1);
+                DrawLightning(spriteBatch, screenPos, drawColor, 2);
+                DrawLightning(spriteBatch, screenPos, drawColor, 3);
+            }
 			Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
 			Texture2D textureDrill = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Drill").Value;
 			Texture2D textureSpirit = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Spirit").Value;
@@ -97,8 +92,6 @@ namespace SOTS.NPCs.Constructs
 		}
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-			if (runOnce)
-				return;
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2Booster").Value;
 			Texture2D texture3 = Mod.Assets.Request<Texture2D>("NPCs/Constructs/Collector2BoosterEffect").Value;
 			Vector2 drawOrigin = new Vector2(texture2.Width * 0.5f, texture2.Height / 2);
@@ -318,13 +311,22 @@ namespace SOTS.NPCs.Constructs
 					}
 					if(ai3 > 150)
                     {
-						NPC.active = false;
+						Despawn();
                     }
 				}
 			}
 			SetUpTrails();
 			Lighting.AddLight(NPC.Center, (255 - NPC.alpha) * 0.15f / 155f, (255 - NPC.alpha) * 0.25f / 155f, (255 - NPC.alpha) * 0.65f / 155f);
 			return true;
-		}
-	}
+        }
+        public void Despawn()
+        {
+            if (NPC.active)
+            {
+				if(Main.netMode != NetmodeID.Server)
+					Main.BestiaryTracker.Kills.RegisterKill(NPC);
+                NPC.active = false;
+            }
+        }
+    }
 }

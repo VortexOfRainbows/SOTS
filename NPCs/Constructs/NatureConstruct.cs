@@ -13,11 +13,11 @@ namespace SOTS.NPCs.Constructs
 {
 	public class NatureConstruct : ModNPC
 	{
-		int initiateSpeed = 1;
-		int ai2 = 30;
-		float dir;
-		float speedMod = 1f;
-		bool canSpell = false;
+		private int initiateSpeed = 1;
+		private int ai2 = 30;
+		private float dir;
+		private float speedMod = 1f;
+		private bool canSpell = false;
 		private float delay = 360;
 		public override void SendExtraAI(BinaryWriter writer) 
 		{
@@ -74,7 +74,11 @@ namespace SOTS.NPCs.Constructs
             {
 				flip = true;
             }
-			float bonusDir = !flip ? MathHelper.ToRadians(180) : 0;
+            if (screenPos != Main.screenPosition) //bestiary
+            {
+				flip = !flip;
+            }
+            float bonusDir = !flip ? MathHelper.ToRadians(180) : 0;
 			spriteBatch.Draw(texture, drawPos, null, drawColor, dir - bonusDir, drawOrigin, NPC.scale, flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 			spriteBatch.Draw(texture2, drawPos, null, Color.White, dir - bonusDir, drawOrigin, NPC.scale, flip ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
 		}
@@ -116,7 +120,7 @@ namespace SOTS.NPCs.Constructs
 				NPC.frameCounter = 0;
 			}
 		}
-		int shootingAI = 0;
+		private int shootingAI = 0;
 		public override void AI()
 		{
 			Player player = Main.player[NPC.target];

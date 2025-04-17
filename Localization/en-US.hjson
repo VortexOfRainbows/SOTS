@@ -6846,6 +6846,16 @@ Mods: {
 				DisplayName: Goblet of Entrails
 				Tooltip: Not consumable
 			}
+
+			PupaBanner: {
+				DisplayName: Pupa Banner
+				Tooltip: ""
+			}
+
+			PupaFlyBanner: {
+				DisplayName: Gore Fly Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7870,7 +7880,7 @@ Mods: {
 			ExcavatorDrillTail.DisplayName: Excavator
 			CoalCart.DisplayName: Captured Cart
 			Pupa.DisplayName: Pupa
-			PupaFly.DisplayName: Pupa Fly
+			PupaFly.DisplayName: Gore Fly
 			VoidTreasureSlime.DisplayName: Void Treasure Slime
 		}
 
@@ -7890,7 +7900,7 @@ Mods: {
 			Teratoma: A cancerous protrusion of The Curse. Its cells are capable of rapid regrowth, and it will heal itself if not killed quickly.
 			Ghast: As Lost Souls corrupted by The Curse, Ghasts are forced to guard keystones for the rest of the afterlife.
 			Maligmor: Born from The Curse's will to consume all, Maligmors are protrusions of The Curse that are gifted with crystals as power sources. The crystals provide enhanced vision, helping Maligmors defend the Keystone from being reached by invaders.
-			ArcticGoblin: An exiled goblin who has been left to freeze in the unforgiving tundra.
+			ArcticGoblin: An exiled goblin left to freeze in the unforgiving tundra.
 			Polaris: A forgotten war machine. Made long before the mechanical trio, Polaris was not built with the purpose of reviving Cthulhu, but rather as a weapon of mass destruction.
 			FluxSlime: Created before Putrid Pinky, these gel menaces orginate from early pink slime experiments.
 			PP: An abomination with an endless hunger for peanuts. Putrid Pinky was created in a failed experiment using pink slime.
@@ -7902,6 +7912,14 @@ Mods: {
 			EarthenConstruct: As Earthen Spirits are known for traveling in groups, the chasis of the construct was designed to allow easy movement of the contained spirits within thin the chassis. Earlier, more compact designs proved too unstable for housing groups of spirits.
 			PermafrostConstruct: An ancient machine that uses spirit energy to allow easy traversal through deep snow. The spirit, now in control, uses the device to defend its cold home.
 			OtherworldlyConstructHead: Like all constructs, its body serves as a container for the volatile spirit inside. As Otherworld Spirits are relatively docile, Otherworld Constructs have among the simplest internals.
+			TidalConstruct: Originally designed to map out oceans and transport people to locations beneath the depths, its remarkable exterior has allowed it to survive most ocean erosion, but it didn't prevent the spirit inside from asserting control.
+			EvilConstruct:
+				'''
+				INTERNAL DIALOGUE...
+				THESE SPIRITS ARE QUITE CAPABLE OF OVERCOMING OUR CONTROL MECHANISMS.
+				IN A WAY... THEY ARE SIMILAR TO THE CHAOS SPIRITS.
+				WE SHALL DESIGN UPGRADED CONTAINMENT STRUCTURES THAT ALLOW PROLONGED STUDY.
+				'''
 			InfernoConstruct: Once used as a living flame to heat ancient forges, it is no longer distinguishable from a weapon of mass destruction.
 			ChaosConstruct: A prison designed to weaken the power of the Chaos Spirit inside. Unlike other constructs, the chassis serves no other purpose besides containment.
 			ChaosConstructChassis: The internal structure of a Chaos Construct. Designed to contain the Chaos Spirit at all costs.
@@ -7914,9 +7932,16 @@ Mods: {
 			EarthenSpirit: Forced into tight, underground spaces, these spirits have a built-in tolerance for cooperating with other spirits. Their cooperative nature is also useful for more labor-intensive tasks.
 			PermafrostSpirit: Harnessing energy from this spirit - one that removes energy from its surroundings - is not as difficult as it seems.
 			OtherworldlySpirit: Isolated in outer space, these spirits don't have much experience competing for land and resources. This makes them conveniently exploitable sources of energy for high-tech machines.
+			TideSpirit: These humble and overprotective spirits do sometimes go with the flow.
+			EvilSpirit:
+				'''
+				INTERNAL DIALOGUE...
+				THIS CONFIRMS OUR SUSPICIONS.
+				THE SPIRITS DO NOT ORIGINATE FROM TERRARIA.
+				'''
 			InfernoSpirit:
 				'''
-				I'm starting to think your ideas aren't very original, Mammon. Look, even the Umbra are using Spirits for energy.
+				I'm starting to think your ideas aren't very original, Mammon. Look, even the Ombra are using Spirits for energy.
 				But their cages are primitive - with limited utility. My constructs can think.
 				I'm pretty sure Spirits can already think.
 				But their thinking is... primitive.
@@ -7971,9 +7996,48 @@ Mods: {
 				'''
 			Advisor:
 				'''
-				ADDRESSING NEXUS DIRECTLY... YOU ARE COMPROMISED.
+				ADDRESSING NEXUS DIRECTLY... 
+				YOU ARE COMPROMISED.
 				THIS IS THE LAST TRANSMISSION YOU WILL RECEIVE FROM US.
 				GOODBYE.
+					AVARITIA DELIVERY SITE.
+				'''
+			Collector:
+				'''
+				FORWARDED MESSAGE
+				FROM: NEXUS
+				ADDRESSING AVARITIA SITE...
+				FORWARD THIS MESSAGE TO GULA EXTRACTION SITE.
+				YOUR OPERATION HAS BEEN COMPLETELY SUCCESSFUL.
+				THE WORST OF THE FAMINE HAS BEEN CONTAINED.
+				WE HAVE LEARNED THE TRUE NATURE OF THESE GATEWAYS.
+				NEW OPPORTUNITIES HAVE OPENED UP FOR US.
+				A RESCUE OPERATIVE WILL NOT BE DELIVERED.
+				GOOD LUCK.
+					NEXUS
+				'''
+			Collector2:
+				'''
+				FORWARDED MESSAGE
+				FROM: NEXUS
+				ADDRESSING AVARITIA SITE...
+				FORWARD THIS MESSAGE TO THE CHALLENGER.
+				THANK YOU CHALLENGER. WE HAVE RESTABLISHED CONNECTION WITH THE AVARITIA DELIVERY SITE.
+				WE PATIENTLY AWAIT YOUR FURTHER PURSUIT OF POWER.
+				SHOULD YOU SUFFICIENTLY WEAKEN A CHAOS SPIRIT... WE WILL GLADLY WELCOME YOU TO NEXUS.
+				A GLASS OF HUMAN-COMPATIBLE BEVERAGE WILL BE OFFERED UPON YOUR ARRIVAL.
+				HOPING FOR YOUR SUCCESS.
+					NEXUS.
+				'''
+			Excavator:
+				'''
+				ADDRESSING NEXUS DIRECTLY... 
+				PLEASE INITIATE A RESCUE PROCEDURE.
+				THE EMERGING SPIRITS ARE COMMENCING A HOSTILE TAKEOVER OF OUR SYSTEMS.
+				WE HAVE ACCOMPLISHED YOUR OBJECTIVES. FOR YOUR SCIENCE. SURELY YOU WILL FIND US USEFUL BACK HOME.
+				PLEASE DO NOT LET THIS BE THE LAST TRANSMISSION YOU WILL RECEIVE FROM US.
+				BEST REGARDS. 
+					GULA EXTRACTION SITE.
 				'''
 			Tardigrade: These water bears are able to survive the harsh combination of low pressure and intense radiation, allowing them to live in space.
 			Bridgeburner: Originally devised to contain the spread of evil, it is perhaps a testament to its failure that it is now controlled by evil.
@@ -7983,6 +8047,35 @@ Mods: {
 				PERMISSION TO ANSWER DENIED.
 				'''
 			CoalCart: Haunted by spirits that once labored in agony.
+			Pupa:
+				'''
+				They tried to run away, but the flesh wasn't firm, so they slipped.
+				They panicked into a crawl, but the flesh creeped towards them as well.
+				They managed to reach higher ground, but the flesh swallowed their lower half.
+				They wished they were dead now, but now they were one.
+				'''
+			PupaFly:
+				'''
+				They tried to climb the stairs, but the air was dark, so they fell.
+				They stumbled upon a hidden crevice, but the air was still boiling.
+				They emerged in search of answers, but the air swallowed their upper half.
+				They wished they were dead now, but now they were one.
+				'''
+			LunaMoth: Legends suggest that it once lived in the great expanse of the overworld, shimmering brightly under soft moonlight.
+			SubspaceWorm: Could this be the BEST worm in Terraria?
+			BallOWormsFlesh: It makes good fish food, just don't think about it!
+			Fistfull:
+				'''
+				The strongest were sent the deepest, it made more sense that way.
+				At least, it made sense until the machines left and no one was left to defend against the hungering ghestalt that had just penetrated the surface.
+				Those who remained had no way to defend themselves from their own loved ones.
+				'''
+			LesserWisp:
+				'''
+				You feel an empty pair of eyes is watching you.
+				Hopefully this feeling stays in the underworld.
+				'''
+			Ghast2: What happens when two collectivist, selfish, hostile, and corruptive entities merge? They enter symbiosis, of course!
 		}
 
 		DeathMessage: {

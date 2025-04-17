@@ -209,6 +209,7 @@ namespace SOTS.NPCs.AbandonedVillage
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 2));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Worm, 5, 1, 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 5));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 100));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PintOPunch>(), 200));

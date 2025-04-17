@@ -12,11 +12,6 @@ namespace SOTS.NPCs.Constructs
         {
             Main.npcFrameCount[NPC.type] = 1;
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
-			{
-				Hide = true
-			};
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
@@ -39,11 +34,9 @@ namespace SOTS.NPCs.Constructs
 			NPC.knockBackResist = 0.1f;
 			NPC.width = 102;
 			NPC.height = 58;
-			NPC.value = 7075;
 			NPC.npcSlots = 3f;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.alpha = 255;
 			NPC.HitSound = SoundID.NPCHit4;
 			NPC.DeathSound = SoundID.NPCDeath14;
 			NPC.dontTakeDamage = true;
@@ -241,11 +234,20 @@ namespace SOTS.NPCs.Constructs
 					}
 					if(ai3 > 240)
                     {
-						NPC.active = false;
+						Despawn();
                     }
 				}
             }
 			return true;
 		}
-	}
+		public void Despawn()
+        {
+			if(NPC.active)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                    Main.BestiaryTracker.Kills.RegisterKill(NPC);
+                NPC.active = false;
+            }
+        }
+    }
 }

@@ -14,6 +14,11 @@ namespace SOTS.NPCs.Critters
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             Texture2D texture = ModContent.Request<Texture2D>(Texture + "Glow").Value;
+            Rectangle frame = NPC.frame;
+            if (frame.Y < 0)
+            {
+                frame.Y = 0;
+            }
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2 / Main.npcFrameCount[Type]);
             Vector2 drawPos = NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY);
             //Main.spriteBatch.Draw(texture, drawPos, null, drawColor * ((255 - NPC.alpha) / 255f), 0f, drawOrigin, NPC.scale, SpriteEffects.None, 0f);
@@ -21,9 +26,9 @@ namespace SOTS.NPCs.Critters
             for (int k = 0; k < 4; k++)
             {
                 Vector2 offset = new Vector2(2.5f, 0).RotatedBy(MathHelper.ToRadians(Main.GameUpdateCount * 2 + k * 90));
-                spriteBatch.Draw(texture, drawPos + offset, NPC.frame, color, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(texture, drawPos + offset, frame, color, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
-            spriteBatch.Draw(Terraria.GameContent.TextureAssets.Npc[Type].Value, drawPos, NPC.frame, drawColor, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(Terraria.GameContent.TextureAssets.Npc[Type].Value, drawPos, frame, drawColor, NPC.rotation, drawOrigin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             return false;
         }
         public virtual Color GoreColor => new Color(86, 226, 100, 0);
@@ -49,6 +54,7 @@ namespace SOTS.NPCs.Critters
             NPC.height = 34;
             NPC.catchItem = CatchItem;
             NPC.lavaImmune = true;
+            NPC.ai[2] = 1; //In order to not screw up butterfly AI
         }
         public override bool PreAI()
         {
