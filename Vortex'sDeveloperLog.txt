@@ -78,6 +78,9 @@ N/A
 
 Daily Log:
 
+4/16/25
+1. WIP Pupa stuff
+
 4/10/25 to 4/11/25 and 4/14/25
 1. Small file reorganization and imports for AV enemies
 2. Add Captured Cart (Coal Cart) enemy (seems to work in multiplayer). + banner

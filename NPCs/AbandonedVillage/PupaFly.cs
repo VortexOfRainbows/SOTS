@@ -1,13 +1,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.Audio;
-using ReLogic.Content;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
@@ -17,12 +10,11 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             Main.npcFrameCount[NPC.type] = 6;
         }
-
         public override void SetDefaults()
         {
-            NPC.lifeMax = 75;
-            NPC.damage = 30;
-            NPC.defense = 0;
+            NPC.lifeMax = 25;
+            NPC.damage = 20;
+            NPC.defense = 6;
             NPC.width = 46;
             NPC.height = 46;
             NPC.npcSlots = 1f;
@@ -35,7 +27,6 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.aiStyle = 14;
             AIType = NPCID.Raven;
         }
-
         public override void FindFrame(int frameHeight)
         {
             //flying animation

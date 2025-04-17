@@ -1,60 +1,51 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Bestiary;
 using Terraria.Audio;
 using ReLogic.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
-
 using SOTS.Dusts;
+using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Fragments;
+using Terraria.GameContent.ItemDropRules;
 
 namespace SOTS.NPCs.AbandonedVillage
 {
     public class Pupa : ModNPC
     {
-		int ScaleTimerLimit = 10;
-		float ScaleAmount = 0.05f;
-
 		private static Asset<Texture2D> NPCTexture;
-
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[NPC.type] = 5;
         }
-        
         public override void SetDefaults()
 		{
-            NPC.lifeMax = 120;
-            NPC.damage = 30;
+            NPC.lifeMax = 100;
+            NPC.damage = 20;
             NPC.defense = 10;
             NPC.width = 38;
 			NPC.height = 58;
             NPC.npcSlots = 1f;
-			NPC.knockBackResist = 0f;
+			NPC.knockBackResist = 0.15f;
             NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.DeathSound = SoundID.Item171;
             NPC.aiStyle = 3;
+            NPC.value = Item.buyPrice(0, 0, 3, 0);
             AIType = NPCID.Crab;
 		}
-
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
 		{
 			NPCTexture ??= ModContent.Request<Texture2D>(Texture);
-
 			var effects = NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-			Main.EntitySpriteDraw(NPCTexture.Value, NPC.Center - screenPos, NPC.frame, NPC.GetNPCColorTintedByBuffs(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
-
+			Main.EntitySpriteDraw(NPCTexture.Value, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY + 2), NPC.frame, NPC.GetNPCColorTintedByBuffs(drawColor), NPC.rotation, NPC.frame.Size() / 2, NPC.scale, effects, 0);
 			return false;
 		}
-
         public override void FindFrame(int frameHeight)
         {
             //walking animation
             NPC.frameCounter++;
-            if (NPC.frameCounter > 10)
+            if (NPC.frameCounter > 9)
             {
                 NPC.frame.Y = NPC.frame.Y + frameHeight;
                 NPC.frameCounter = 0;
@@ -70,68 +61,45 @@ namespace SOTS.NPCs.AbandonedVillage
                 NPC.frame.Y = 2 * frameHeight;
             }
         }
-        
         public override void AI()
 		{
+            NPC.TargetClosest(true);
             NPC.spriteDirection = NPC.direction;
-
-            if (NPC.localAI[0] == 0)
+        }
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            int DustType = ModContent.DustType<FamishedDustCrimson>();
+            if (NPC.life > 0)
             {
-                foreach (Player player in Main.ActivePlayers)
-                {
-                    if (player.Distance(NPC.Center) < 100)
-                    {
-                        NPC.localAI[0] = 1;
-                    }
-                }
+                for (int num = 0; num < hit.Damage / (float)NPC.lifeMax * 40f; num++)
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.0f * hit.HitDirection), -1.4f, 0, default, 1.2f);
             }
             else
             {
-                NPC.aiStyle = -1;
-                NPC.velocity.X = 0;
-
-                NPC.localAI[0]++;
-				NPC.localAI[1]++;
-				if (NPC.localAI[1] < 2)
-				{
-					NPC.scale -= 0.12f;
-				}
-				if (NPC.localAI[1] >= 2)
-				{
-					NPC.scale += 0.12f;
-				}
-
-				if (NPC.localAI[1] > 4)
-				{
-					NPC.localAI[1] = 0;
-					NPC.scale = 1f;
-				}
-
-                if (NPC.localAI[0] >= 60)
-                {
-                    SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
-                    SoundEngine.PlaySound(SoundID.Item171, NPC.Center);
-
-                    //todo: dust and gores explosion should spawn here
-
-                    for (int i = 0; i < 3; i++)
-                    {
-                        int Fly = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PupaFly>());
-                        Main.npc[Fly].velocity.X = Main.rand.Next(-5, 6);
-                        Main.npc[Fly].velocity.Y = Main.rand.Next(-5, 0);
-                    }
-
-                    NPC.active = false;
-                }
-			}
-        }
-
-        public override void HitEffect(NPC.HitInfo hit) 
-        {
-			if (NPC.life <= 0) 
-            {
-                //gore here
+                for (int k = 0; k < 20; k++)
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.1f * hit.HitDirection), -1.4f, 0, default, 1.55f);
+                string dir = "Gores/Pupa/PupaGore";
+                Vector2 velo = new(NPC.velocity.X * 0.5f + hit.HitDirection, NPC.velocity.Y * 0.2f - 1);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 14), velo, ModGores.GoreType($"{dir}3"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(10, 14), velo, ModGores.GoreType($"{dir}4"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(8, 42), velo, ModGores.GoreType($"{dir}1"), 1f);
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(22, 42), velo, ModGores.GoreType($"{dir}2"), 1f);
             }
+        }
+        public override void OnKill()
+        {
+            SoundEngine.PlaySound(SoundID.DD2_ExplosiveTrapExplode, NPC.Center);
+            int Fly = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<PupaFly>());
+            Main.npc[Fly].velocity.X = Main.rand.NextFloat(-1f, 1f);
+            Main.npc[Fly].velocity.Y = Main.rand.NextFloat(-9f, -3f);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae, 2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEvil>(), 5));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 50));
+            npcLoot.Add(ItemDropRule.Common(ItemID.BloodySpine, 50));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PintOPunch>(), 200));
         }
     }
 }

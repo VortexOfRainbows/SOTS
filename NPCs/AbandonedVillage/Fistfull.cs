@@ -236,8 +236,8 @@ namespace SOTS.NPCs.AbandonedVillage
 				return;
 			if (NPC.life > 0)
             {
-                for (int num = 0; num < hit.Damage / NPC.lifeMax * 40f; num++)
-                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.0f * hit.HitDirection), -1.4f, 0, default, 1.5f);
+                for (int num = 0; num < hit.Damage / (float)NPC.lifeMax * 40f; num++)
+                    Dust.NewDust(NPC.position, NPC.width, NPC.height, DustType, (float)(2.0f * hit.HitDirection), -1.4f, 0, default, 1.2f);
             }
 			else
             {
