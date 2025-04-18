@@ -446,6 +446,14 @@ namespace SOTS.Items.Banners
             Item.placeStyle = 48;
         }
     }
+    public class RotWalkerBanner : ModBanner
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSBanners>();
+            Item.placeStyle = 49;
+        }
+    }
     public class VoidTreasureSlimeBanner : ModBanner
     {
         public override void SafeSetDefaults()

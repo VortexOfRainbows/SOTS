@@ -42,11 +42,9 @@ Update Objectives:
 	1. Tiles: Invidia Portal Plating
 	2. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 11. Invidia Gateway Tile (needs: glow, conduit connection)
-12. Petanik's Rotwalker
 
 ---WIP List---
 Abandoned village generation
-Make enemies spawn in the AV and Mines
 Made all available conduits spawn on worldgen
 
 ---Code Refactoring Needed List---
@@ -58,7 +56,7 @@ ImportantTiles code (archaeologist tiles)
 ---Balance Needed List (by Severity, -weak, +strong)---
 5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot, +Little Woes, +Accretion Disc, -Street Cleaner
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
-3. Earthen Gizmo, Corpsebloom, Throe, Famished
+3. AV Enemies
 2. +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
 1. +++Challenger's Ring
 
@@ -84,6 +82,10 @@ Daily Log:
 	2. Evil Construct, Evil Spirit, Tidal Construct, Tidal Spirit, Flaming Ghast, Bleeding Ghast
 3. Separate file for bestiary management + some implementation of helpers for the bestiary
 4. Nature construct now faces the correct way in bestiary
+5. Added Rotwalker (Corruption pupa variant). Has unique AI, Gore, Bestiary, Banner...
+	1. Seems to work in MP
+	2. Hides in the ground and applies voidburn upon dealing damage, but does not have a constant hitbox and relies on animation to deal damage
+6. Dramatically reduce earthen gizmo spawn rates in AV mines 
 
 4/10/25 to 4/11/25 and 4/14/25
 1. Small file reorganization and imports for AV enemies

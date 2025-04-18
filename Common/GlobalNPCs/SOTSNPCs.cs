@@ -731,7 +731,7 @@ namespace SOTS.Common.GlobalNPCs
                     pool.Add(ModContent.NPCType<Fistfull>(), underground ? 0.4f : 0.3f);
                     if (underground)
 					{
-                        pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.5f / gizmoCount); //Spawn gizmos less often the more of them there area
+                        pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.25f / gizmoCount); //Spawn gizmos less often the more of them there area
                         pool.Add(ModContent.NPCType<CoalCart>(), 0.4f); //Spawn gizmos less often the more of them there area
                     }
 
@@ -744,7 +744,7 @@ namespace SOTS.Common.GlobalNPCs
                         }
 						else
 						{
-                            pool.Add(ModContent.NPCType<Pupa>(), 0.3f);
+                            pool.Add(ModContent.NPCType<Pupa>(), 0.4f);
                         }
                         pool.Add(ModContent.NPCType<BallOGuts>(), 0.4f);
                         pool.Add(ModContent.NPCType<CrimsonTreasureSlime>(), 0.01f);
@@ -755,6 +755,7 @@ namespace SOTS.Common.GlobalNPCs
                             pool.Add(ModContent.NPCType<CorpseBloom>(), 1f);
 						pool.Add(ModContent.NPCType<BallOWorms>(), 0.4f);
                         pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.01f);
+						pool.Add(ModContent.NPCType<RotWalker>(), 0.4f);
                     }
                     if (underground && Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2].WallType == WallID.None)
 					{

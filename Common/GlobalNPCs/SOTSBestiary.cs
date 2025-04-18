@@ -344,11 +344,12 @@ namespace SOTS.Common.GlobalNPCs
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<Collector2>(), [Planetarium]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<Excavator>(), [AbandonedVillage]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<EvilSpirit>(), [AbandonedVillage, UndergroundCorruption, UndergroundCrimson, Crimson, Corruption]);
-            bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<EvilConstruct>(), [AbandonedVillage, UndergroundCorruption, UndergroundCrimson, Crimson, Corruption]);
+            bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<EvilConstruct>(), [UndergroundCorruption, UndergroundCrimson, Crimson, Corruption]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<TidalConstruct>(), [Ocean]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<TidalSpirit>(), [Ocean]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<BleedingGhast>(), [Pyramid], "Ghast2");
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<FlamingGhast>(), [Pyramid], "Ghast2");
+            bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<RotWalker>(), [AbandonedVillage]);
         }
     }
 }

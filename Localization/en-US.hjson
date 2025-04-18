@@ -6856,6 +6856,11 @@ Mods: {
 				DisplayName: Gore Fly Banner
 				Tooltip: ""
 			}
+
+			RotWalkerBanner: {
+				DisplayName: Rotwalker Banner
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7882,6 +7887,7 @@ Mods: {
 			Pupa.DisplayName: Pupa
 			PupaFly.DisplayName: Gore Fly
 			VoidTreasureSlime.DisplayName: Void Treasure Slime
+			RotWalker.DisplayName: Rotwalker
 		}
 
 		Bestiary: {
@@ -8075,7 +8081,12 @@ Mods: {
 				You feel an empty pair of eyes is watching you.
 				Hopefully this feeling stays in the underworld.
 				'''
-			Ghast2: What happens when two collectivist, selfish, hostile, and corruptive entities merge? They enter symbiosis, of course!
+			Ghast2: What happens when two hostile and corruptive entities merge? They enter symbiosis, of course!
+			RotWalker:
+				'''
+				He survived the worst of it: the smell of rot and burning flesh, the screams and cries of horror...
+				He wished he hadn't.
+				'''
 		}
 
 		DeathMessage: {
