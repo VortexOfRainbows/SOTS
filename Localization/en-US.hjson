@@ -6861,6 +6861,11 @@ Mods: {
 				DisplayName: Rotwalker Banner
 				Tooltip: ""
 			}
+
+			InvidiaPortalPlating: {
+				DisplayName: Invidia Portal Plating
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7679,7 +7684,7 @@ Mods: {
 			ArchaeologistDialogueIceMonument: This keyhole is deceiving. I doubt this structure actually serves as a vessel for anything.
 			ArchaeologistDialogueInvidia1: This Sanctuary is one of my favorite places to visit. It's always so quiet here.
 			ArchaeologistDialogueInvidia2: This serpent carving is excellently detailed, don't you agree?
-			ArchaeologistDialogueInvidia3: I feel a void of evil and infernal energy in this area.
+			ArchaeologistDialogueInvidia3: I feel a void of tidal and infernal energy in this area.
 		}
 
 		NPCs: {
@@ -7938,7 +7943,7 @@ Mods: {
 			EarthenSpirit: Forced into tight, underground spaces, these spirits have a built-in tolerance for cooperating with other spirits. Their cooperative nature is also useful for more labor-intensive tasks.
 			PermafrostSpirit: Harnessing energy from this spirit - one that removes energy from its surroundings - is not as difficult as it seems.
 			OtherworldlySpirit: Isolated in outer space, these spirits don't have much experience competing for land and resources. This makes them conveniently exploitable sources of energy for high-tech machines.
-			TideSpirit: These humble and overprotective spirits do sometimes go with the flow.
+			TidalSpirit: These humble and overprotective spirits do sometimes go with the flow.
 			EvilSpirit:
 				'''
 				INTERNAL DIALOGUE...

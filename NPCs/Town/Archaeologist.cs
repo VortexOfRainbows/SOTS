@@ -518,8 +518,8 @@ namespace SOTS.NPCs.Town
 				.Add<EarthenConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AcediaPortal || currentLocationType == ImportantTileID.GulaPortal))
 				.Add<PermafrostConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.iceMonument))
                 .Add<OtherworldConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal))
-				.Add<TidalConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.coconutIslandMonument || currentLocationType == ImportantTileID.coconutIslandMonumentBroken))
-				.Add<EvilConduit>(new Condition(ShopKey, () => (currentLocationType == ImportantTileID.GulaPortal || currentLocationType == ImportantTileID.InvidiaPortal) && Main.hardMode))
+				.Add<TidalConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.coconutIslandMonument || currentLocationType == ImportantTileID.coconutIslandMonumentBroken || currentLocationType == ImportantTileID.InvidiaPortal))
+				.Add<EvilConduit>(new Condition(ShopKey, () => (currentLocationType == ImportantTileID.GulaPortal) && Main.hardMode))
 				.Add<InfernoConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.InvidiaPortal && Main.hardMode))
 				.Add<ChaosConduit>(new Condition(ShopKey, () => currentLocationType == ImportantTileID.AvaritiaPortal && Main.hardMode))
 
