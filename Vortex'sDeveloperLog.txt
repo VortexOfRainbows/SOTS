@@ -39,13 +39,11 @@ Update Objectives:
 8. Upgrade item to the Hydrokinetic Antennae (Pending)
 9. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 10. Sanctuary! (In Progress)
-	1. Tiles: Invidia Portal Plating
-	2. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
+	1. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 11. Invidia Gateway Tile (needs: glow, conduit connection)
 
 ---WIP List---
 Abandoned village generation
-Made all available conduits spawn on worldgen
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -74,9 +72,10 @@ N/A
 
 Daily Log:
 
-4/18/25
-1. Invidia Portal Plating added (not spawning yet)
+4/18/25 and 4/21/25
+1. Invidia Portal Plating added
 2. Some consistency changes for tidal conduit being used in the sanctuary now
+3. All conduits (except permafrost, which can be bought at archaeologist) now spawn in the world on generation
 
 4/16/25
 1. Pupa and Gore Fly modifications

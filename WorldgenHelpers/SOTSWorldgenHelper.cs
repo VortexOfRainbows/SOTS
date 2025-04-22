@@ -226,11 +226,8 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										if (direction == 1)
-										{
-											WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<NatureConduitTile>(), true, true, -1, 0);
-											ModTileEntity.PlaceEntityNet(k, l, ModContent.TileEntityType<ConduitCounterTE>());
-										}
+										WorldGen.PlaceTile(k, l, (ushort)(direction == 1 ? ModContent.TileType<NatureConduitTile>() : ModContent.TileType<EarthenConduitTile>()), true, true, -1, 0);
+										ModTileEntity.PlaceEntityNet(k, l, ModContent.TileEntityType<ConduitCounterTE>());
 									}
 									break;
 								case 13:
@@ -239,12 +236,9 @@ namespace SOTS.WorldgenHelpers
 										tile.HasTile = false;
 										tile.Slope = 0;
 										tile.IsHalfBlock = false;
-										if (direction == -1)
-										{
-											WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<NatureConduitTile>(), true, true, -1, 0);
-											ModTileEntity.PlaceEntityNet(k, l, ModContent.TileEntityType<ConduitCounterTE>());
-										}
-									}
+										WorldGen.PlaceTile(k, l, (ushort)(direction == -1 ? ModContent.TileType<NatureConduitTile>() : ModContent.TileType<EarthenConduitTile>()), true, true, -1, 0);
+										ModTileEntity.PlaceEntityNet(k, l, ModContent.TileEntityType<ConduitCounterTE>());
+                                    }
 									break;
 							}
 						}
@@ -408,7 +402,7 @@ namespace SOTS.WorldgenHelpers
 				{0,0,0,0,0,2,2,2,2,2,2,1,1,3,3,3,3,3,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,3,3,3,3,3,1,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,2,2,2,2,2,2,1,3,3,3,3,3,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,0,0,0,3,3,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,2,2,2,2,2,2,1,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,2,2,2,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,2,2,2,2,2,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,0,0,0,0,0,1,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,15,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,2,2,2,2,2,1,3,3,3,3,3,3,3,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,3,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,2,2,2,2,1,3,3,3,3,3,3,3,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,0,4,0,0,5,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,3,3,0,0,0,3,3,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,2,2,2,1,1,3,3,3,3,3,1,1,2,2,2,2,2,2,0,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,1,1,3,3,3,3,3,1,1,2,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -618,6 +612,18 @@ namespace SOTS.WorldgenHelpers
 									tile.IsHalfBlock = false;
 									WorldGen.PlaceTile(k, l, ModContent.TileType<AvaritianGatewayTile>(), true, true, -1, 0);
 									break;
+								case 15:
+                                    if (confirmPlatforms == 1)
+                                    {
+                                        tile.HasTile = false;
+                                        tile.Slope = 0;
+                                        tile.IsHalfBlock = false;
+                                        WorldGen.PlaceTile(k, l, (ushort)ModContent.TileType<ChaosConduitTile>(), true, true, -1, 0);
+                                        WorldGen.PlaceTile(k2, l, (ushort)ModContent.TileType<OtherworldConduitTile>(), true, true, -1, 0);
+                                        ModTileEntity.PlaceEntityNet(k, l, ModContent.TileEntityType<ConduitCounterTE>());
+                                        ModTileEntity.PlaceEntityNet(k2, l, ModContent.TileEntityType<ConduitCounterTE>());
+                                    }
+                                    break;
 							}
 						}
 					}
