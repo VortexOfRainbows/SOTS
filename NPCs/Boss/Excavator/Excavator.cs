@@ -74,7 +74,6 @@ namespace SOTS.NPCs.Boss.Excavator
             //        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
             //}
         }
-        private NPC owner => Main.npc[(int)NPC.ai[3]];
         public override bool PreAI()
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -155,10 +154,38 @@ namespace SOTS.NPCs.Boss.Excavator
     }
     public class Excavator : ModNPC
     {
-        public float AI1
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(MoveStyle);
+            for(int i = 0; i < segments.Length; ++i)
+            writer.Write(segments[i]);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            MoveStyle = reader.ReadSingle();
+            for (int i = 0; i < segments.Length; ++i)
+              segments[i] = reader.ReadInt32();
+        }
+        public float AIPhase
+        {
+            get => NPC.ai[0];
+            set => NPC.ai[0] = value;
+        }
+        public float MoveStyle = 0;
+        public float WalkCounter
         {
             get => NPC.ai[1];
             set => NPC.ai[1] = value;
+        }
+        public float AI1
+        {
+            get => NPC.ai[2];
+            set => NPC.ai[2] = value;
+        }
+        public float AI2
+        {
+            get => NPC.ai[3];
+            set => NPC.ai[3] = value;
         }
         public List<Vector2> neckSegments;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -363,7 +390,20 @@ namespace SOTS.NPCs.Boss.Excavator
             int j = SOTSUtils.SignNoZero(dir);
             Texture2D body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
             Texture2D arm = ModContent.Request<Texture2D>(isBigArm ? "SOTS/NPCs/Boss/Excavator/bigArmLeft" : "SOTS/NPCs/Boss/Excavator/arm").Value;
-            Texture2D hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/hand").Value;
+            Texture2D hand = null;
+            int armType = 2;
+            if(armType == 1)
+            {
+                hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handSaw").Value;
+            }
+            else if (armType == 2)
+            {
+                hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handNoWeapon").Value;
+            }
+            else
+            {
+                hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/hand").Value;
+            }
             Vector2 armOrigin = isBigArm ? new Vector2(95, 47): new Vector2(50, 14);
             Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
             Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height);
@@ -404,7 +444,11 @@ namespace SOTS.NPCs.Boss.Excavator
             float endArmRot = startToMid.ToRotation();
             if (isBigArm)
             {
-                end -= new Vector2(0, 14 * j).RotatedBy(endArmRot);
+                end -= new Vector2(0, 13 * j).RotatedBy(endArmRot);
+            }
+            else
+            {
+                end += new Vector2(1, 0).RotatedBy(endArmRot);
             }
 
             if (isBigArm)
@@ -435,7 +479,7 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             int j = SOTSUtils.SignNoZero(i);
             i = Math.Abs(i) - 1;
-            float r = NPC.ai[0] * 2.0f;
+            float r = WalkCounter * 2.0f;
             float legSwayAmt = i == 0 ? 22 : 18;
             float legMoveSin = MathF.Sin(MathHelper.ToRadians(r + i * 120 + (j == -1 ? 180 : 0)));
             legMoveSin = (legMoveSin * 0.2f + 0.8f * MathF.Sign(legMoveSin) * MathF.Sqrt(MathF.Abs(legMoveSin))) * legSwayAmt * j;
@@ -486,19 +530,31 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.npcSlots = 3f;
             NPC.behindTiles = true;
             NPC.aiStyle = -1;
-            neckSegments = new List<Vector2>();
+            NPC.boss = true;
+            neckSegments = [];
         }
         private int[] segments = [-1, -1, -1, -1, -1, -1, -1, -1];
-        public override bool PreAI()
+        private int DespawnCounter = 0;
+        private Player target => Main.player[NPC.target];
+        public bool DespawnCheck()
         {
-            UpdateNeckSegments();
-            NPC.TargetClosest(true);
-            Player player = Main.player[NPC.target];
-            if (player.dead || Vector2.Distance(player.Center, NPC.Center) > 4800)
+            if (target.dead || Vector2.Distance(target.Center, NPC.Center) > 4800)
+            {
+                DespawnCounter++;
+            }
+            else if(DespawnCounter > 0)
+            {
+                DespawnCounter--;
+            }
+            if (DespawnCounter >= 600)
             {
                 NPC.active = false;
-                return false;
+                return true;
             }
+            return false;
+        }
+        private void WormSetup()
+        {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (NPC.ai[0] == 0)
@@ -519,8 +575,38 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
                 NPC.netUpdate = true;
             }
-
-            Vector2 toPlayer = player.Center - NPC.Center;
+        }
+        private void IdleMoveStyle()
+        {
+            Vector2 toPlayer = target.Center - NPC.Center;
+            if(MoveStyle == -2) //Debug move style = right click to move to player
+            {
+                NPC.velocity *= 0.95f;
+                if (Main.mouseRight)
+                {
+                    Vector2 toMouse = Main.MouseWorld - NPC.Center;
+                    NPC.velocity += toMouse * 0.001f;
+                }
+            }
+            if(MoveStyle == 0)
+            {
+                float dist = toPlayer.Length();
+                if(dist > 200)
+                {
+                    NPC.velocity += toPlayer.SNormalize() * (0.6f + dist * 0.001f);
+                    NPC.velocity *= 0.925f;
+                }
+            }
+        }
+        public override bool PreAI()
+        {
+            Vector2 toPlayer = target.Center - NPC.Center;
+            UpdateNeckSegments();
+            if (DespawnCheck())
+                return false;
+            NPC.TargetClosest(true);
+            WormSetup();
+            IdleMoveStyle();
 
             if(NPC.velocity.LengthSquared() > 0.1f)
             {
@@ -532,31 +618,16 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             return false;
         }
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-
-        }
         public override void PostAI()
         {
             Vector2 trueVelo = NPC.position - NPC.oldPosition;
             float speed = trueVelo.Length();
             if (speed < 1000)
             {
-                NPC.ai[0] += 2 * MathF.Sqrt(speed);
-            }
-            NPC.velocity *= 0.95f;
-            if(Main.mouseRight)
-            {
-                Vector2 toMouse = Main.MouseWorld - NPC.Center;
-                NPC.velocity += toMouse * 0.001f;
+                WalkCounter += 2 * MathF.Sqrt(speed);
             }
             if (!NPC.active)
                 return;
-
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {

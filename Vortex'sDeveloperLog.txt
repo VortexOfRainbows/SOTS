@@ -72,6 +72,10 @@ N/A
 
 Daily Log:
 
+4/24/25
+1. Excavator arm adjustments + weapon drawing testing (it works)
+2. 
+
 4/18/25 and 4/21/25
 1. Invidia Portal Plating added
 2. Some consistency changes for tidal conduit being used in the sanctuary now
