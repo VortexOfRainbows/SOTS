@@ -724,7 +724,7 @@ Mods: {
 				Tooltip:
 					'''
 					The second charge of a Crusher has a 33% chance to not consume void
-					The fourth charge of Crushers no longer consumes void
+					The fourth charge of Crushers no longer consume void
 					Extends the range of Crushers by 1
 					Increases attack speed by 25% and melee damage by 5%
 					Reduces void cost by 10%
@@ -1279,7 +1279,7 @@ Mods: {
 
 			CrushingCapacitor: {
 				DisplayName: Crushing Capacitor
-				Tooltip: Makes the fourth charge of Crushers no longer consumes void
+				Tooltip: Makes the fourth charge of Crushers no longer consume void
 			}
 
 			CrushingResistor: {
