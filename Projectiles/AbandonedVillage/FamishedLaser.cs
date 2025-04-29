@@ -15,7 +15,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 {
 	public class FamishedLaser : ModProjectile
 	{
-		public Color color => this is not BridgeburnerLaser ? Famished.GlowColor : ColorHelper.RedEvilColor;
+		public Color color => this is not BridgeburnerLaser ? this is ExcavatorLightning ? ExcavatorOrb.Color : Famished.GlowColor : ColorHelper.RedEvilColor;
         public override string Texture => WorldGen.crimson ? "SOTS/Projectiles/AbandonedVillage/FamishedLaserCrimson" : "SOTS/Projectiles/AbandonedVillage/FamishedLaserCorruption";
         public override void SetStaticDefaults() 
 		{
@@ -40,7 +40,7 @@ namespace SOTS.Projectiles.AbandonedVillage
         }
 		public virtual void PlaySound() => SOTSUtils.PlaySound(SoundID.Item94, Projectile.Center, 0.6f, 0.2f);
 		public virtual int DeadzoneType() => ModContent.ProjectileType<FamishedDeadzone>();
-        public void InitializeLaser()
+        public virtual void InitializeLaser()
 		{
 			if(!HasInit)
             {
@@ -56,6 +56,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     }
                 PlaySound();
             }
+			float dustScaleMult = this is ExcavatorLightning ? 1.5f : 1f;
 			Vector2 destination = new Vector2(Projectile.ai[0], Projectile.ai[1]);
 			Vector2 startingPosition = Projectile.Center;
 			Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero);
@@ -76,9 +77,9 @@ namespace SOTS.Projectiles.AbandonedVillage
 				int chance = SOTS.Config.lowFidelityMode ? 50 : 25;
 				if(Main.rand.NextBool(chance) || extra)
 				{
-					Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, ModContent.DustType<PixelDust>(), 0, 0, 0, color * Percent, 0.75f);
+					Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, ModContent.DustType<PixelDust>(), 0, 0, 0, color * Percent, 0.75f * dustScaleMult);
 					dust.noGravity = true;
-                    dust.velocity *= 1.25f * Percent;
+                    dust.velocity *= 1.25f * Percent * dustScaleMult;
                     dust.velocity += Projectile.velocity * Main.rand.NextFloat(6f, 8f) * Percent;
                     dust.fadeIn = 12;
                     dust.scale *= 0.5f + 0.75f * Percent;
@@ -95,10 +96,9 @@ namespace SOTS.Projectiles.AbandonedVillage
 			}
 			if(!HasInit)
 			{
-				if(Main.myPlayer == Projectile.owner)
+				if(Main.myPlayer == Projectile.owner && this is not ExcavatorLightning)
 				{
-					int Type = 
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), FinalPosition, Vector2.Zero, DeadzoneType(), Projectile.damage, 0, Main.myPlayer);
+					int Type = Projectile.NewProjectile(Projectile.GetSource_FromThis(), FinalPosition, Vector2.Zero, DeadzoneType(), Projectile.damage, 0, Main.myPlayer);
 				}
 			}
 			HasInit = true;

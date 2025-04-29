@@ -13,10 +13,8 @@ namespace SOTS.Projectiles.Chaos
 	{
 		public override void SetStaticDefaults() 
 		{
-			// DisplayName.SetDefault("Hyperlight Beam");
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2400;
 		}
-
 		public override void SetDefaults() 
 		{
 			Projectile.width = 8;
@@ -28,16 +26,16 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.tileCollide = false;
 			Projectile.ignoreWater = true;
 		}
-		float counter = 0;
+        private float counter = 0;
         public override bool ShouldUpdatePosition()
         {
 			return false;
         }
 		public const float windUpAngle = 80f;
 		public const float windUpLength = 90f;
-		bool runOnce = true;
-		Vector2 ogVelo = Vector2.Zero;
-		float scaleMult = 1f;
+		private bool runOnce = true;
+		private Vector2 ogVelo = Vector2.Zero;
+		private float scaleMult = 1f;
 		public override void AI() 
 		{
 			if(runOnce)

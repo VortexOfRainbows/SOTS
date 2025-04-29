@@ -58,7 +58,8 @@ namespace SOTS.Projectiles.AbandonedVillage
             Vector2 final = FinalPosition;
 			Vector2 toEnd = (final - start).SNormalize();
 			float dist = Vector2.Distance(start, final);
-            Color color = NPCs.AbandonedVillage.Famished.GlowColor;
+            Color color = this.color;
+            color.A = 0;
 			Vector2 prevPosition = Projectile.Center;
 			//float prevRot = Projectile.velocity.ToRotation();
 			float scale = 0.1f;

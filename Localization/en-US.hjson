@@ -8936,6 +8936,8 @@ Mods: {
 			HardlightHook.DisplayName: Hardlight Hook
 			CollapseBlock.DisplayName: Collapse Block
 			CoalCartCoal.DisplayName: Coal Cart Coal
+			ExcavatorLightning.DisplayName: Excavator Lightning
+			ExcavatorOrb.DisplayName: Excavator Orb
 		}
 
 		DamageClasses: {
