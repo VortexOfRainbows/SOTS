@@ -72,11 +72,13 @@ N/A
 
 Daily Log:
 
-4/24/25 and 4/28/25 and 5/1/2025
+4/24/25 and 4/28/25 and 5/1/2025 to 5/2/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)
 2. Work on Excavator orb and Excavator missile projectiles
 	1. Needs: Multiplayer Syncing and integration to boss as pattern
 3. Next: Excavator Sawblade projectile, Beam projectile (different from thunder)
+4. WIP Excavator summoning station
+	1. Spawns in world but the summoning animation can be improved
 
 4/18/25 and 4/21/25
 1. Invidia Portal Plating added

@@ -1,18 +1,13 @@
 using Microsoft.Xna.Framework;
-using SOTS.Buffs;
 using SOTS.Helpers;
 using SOTS.Items.Pyramid;
 using SOTS.NPCs.Boss.Polaris;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
-using SOTS.Void;
 using Terraria;
-using Terraria.Chat;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.UI.ModBrowser;
 using Terraria.ObjectData;
 
 namespace SOTS.Items.Permafrost

@@ -6866,6 +6866,11 @@ Mods: {
 				DisplayName: Invidia Portal Plating
 				Tooltip: ""
 			}
+
+			SeismicStation: {
+				DisplayName: Seismic Station
+				Tooltip: "'You feel activating this may track some unwanted attention...'"
+			}
 		}
 
 		ItemTooltip: {
@@ -7650,6 +7655,7 @@ Mods: {
 			InvidiaGatewayTile.MapEntry: Strange Gateway
 			SanctuaryMusicBoxTile.MapEntry: Sanctuary Music Box Tile
 			EvostonePots.MapEntry: Pots
+			SeismicStationTile.MapEntry: Seismic Station
 		}
 
 		WorldGeneration: {
@@ -7880,14 +7886,14 @@ Mods: {
 			TardigradeGreen.DisplayName: Tardigrade
 			TardigradePink.DisplayName: Tardigrade
 			Bridgeburner.DisplayName: Bridgeburner
-			Excavator.DisplayName: Excavator
-			ExcavatorBody.DisplayName: Excavator
+			Excavator.DisplayName: The Excavator
+			ExcavatorBody.DisplayName: The Excavator
 			SubspaceWorm.DisplayName: Subspace Worm
 			SanguineFoundry.DisplayName: Sanguine Foundry
 			LunaMoth.DisplayName: Luna Moth
-			ExcavatorBody2.DisplayName: Excavator
-			ExcavatorTail.DisplayName: Excavator
-			ExcavatorDrillTail.DisplayName: Excavator
+			ExcavatorBody2.DisplayName: The Excavator
+			ExcavatorTail.DisplayName: The Excavator
+			ExcavatorDrillTail.DisplayName: The Excavator
 			CoalCart.DisplayName: Captured Cart
 			Pupa.DisplayName: Pupa
 			PupaFly.DisplayName: Gore Fly

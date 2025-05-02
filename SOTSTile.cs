@@ -24,6 +24,7 @@ using SOTS.NPCs.AbandonedVillage;
 using SOTS.WorldgenHelpers;
 using SOTS.Items.Invidia;
 using SOTS.Dusts;
+using System.Net.Security;
 
 namespace SOTS
 {
@@ -320,28 +321,29 @@ namespace SOTS
         public bool IsValidTileAbove(int i, int j, int type)
         {
             Tile tileAbove = Main.tile[i, j - 1];
-            if (tileAbove.TileType == (ushort)TileType<AvaritianGatewayTile>() || tileAbove.TileType == (ushort)TileType<AcediaGatewayTile>() || tileAbove.TileType == (ushort)TileType<GulaGatewayTile>())
+            int tileAboveType = tileAbove.TileType;
+            if (tileAboveType == (ushort)TileType<AvaritianGatewayTile>() || tileAboveType == (ushort)TileType<AcediaGatewayTile>() || tileAboveType == (ushort)TileType<GulaGatewayTile>())
             {
                 int TileFrame = tileAbove.TileFrameX / 18 + (tileAbove.TileFrameY / 18 * 9);
                 if (TileFrame >= 65 && TileFrame <= 69)
                     return false;
             }
-            if (tileAbove.TileType == (ushort)TileType<BigCrystalTile>())
+            if (tileAboveType == (ushort)TileType<BigCrystalTile>())
             {
                 int TileFrameX = tileAbove.TileFrameX / 18;
                 int TileFrameY = tileAbove.TileFrameY / 18;
                 if (TileFrameY == 13 && TileFrameX >= 2 && TileFrameX <= 11)
                     return false;
             }
-            if (tileAbove.TileType == (ushort)TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
+            if (tileAboveType == (ushort)TileType<PotGeneratorTile>() && !SOTSWorld.downedAdvisor)
             {
                 return false;
             }
-            if (tileAbove.TileType == (ushort)TileType<SarcophagusTile>() || tileAbove.TileType == (ushort)TileType<RubyKeystoneTile>() || tileAbove.TileType == (ushort)TileType<Items.Earth.Glowmoth.SilkCocoonTile>() || tileAbove.TileType == (ushort)TileType<InvidiaGatewayTile>())
+            if (tileAboveType == (ushort)TileType<SarcophagusTile>() || tileAboveType == (ushort)TileType<RubyKeystoneTile>() || tileAboveType == (ushort)TileType<Items.Earth.Glowmoth.SilkCocoonTile>() || tileAboveType == (ushort)TileType<InvidiaGatewayTile>())
             {
                 return false;
             }
-            if (tileAbove.TileType == (ushort)TileType<AncientGoldGateTile>() && tileAbove.TileFrameY < 360)
+            if (tileAboveType == (ushort)TileType<AncientGoldGateTile>() && tileAbove.TileFrameY < 360)
             {
                 return false;
             }
@@ -353,11 +355,11 @@ namespace SOTS
             {
                 return false;
             }
-            if (tileAbove.TileType == (ushort)TileType<FrostArtifactTile>() && !SOTSWorld.downedAmalgamation)
+            if (tileAboveType == (ushort)TileType<FrostArtifactTile>() && !SOTSWorld.downedAmalgamation)
             {
                 return false;
             }
-            if (tileAbove.TileType == (ushort)TileType<PinkyTestTube>())
+            if (tileAboveType == (ushort)TileType<PinkyTestTube>() || tileAboveType == (ushort)TileType<SeismicStationTile>())
             {
                 return false;
             }

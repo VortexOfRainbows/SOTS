@@ -4,15 +4,13 @@ using Terraria;
 using Terraria.ModLoader;
 using SOTS.Dusts;
 using System.Linq;
+using SOTS.NPCs.Boss.Excavator;
+using Terraria.ID;
 
 namespace SOTS.Projectiles
 {    
     public class ConstructFinder : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Construct Finder");
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 16;
@@ -59,13 +57,27 @@ namespace SOTS.Projectiles
 			dust.fadeIn = 0.1f;
 			dust.scale = 1.2f;
 			dust.alpha = Projectile.alpha;
-			if (Projectile.ai[0] > 20)
+			bool lookingForExcavator = Projectile.ai[1] <= -1;
+			int followThreshold = 20;
+            if (lookingForExcavator)
+            {
+				followThreshold = 120;
+				if (Projectile.ai[0] >= 100 && Projectile.ai[1] == -1)
+				{
+					SOTSUtils.PlaySound(SoundID.Roar, Projectile.Center, 1.0f, -0.34f);
+					NPC.SpawnOnPlayer(Projectile.owner, ModContent.NPCType<Excavator>()); //should work in multiplayer
+					Projectile.ai[1] = -2;
+				}
+            }
+            if (Projectile.ai[0] > followThreshold)
 			{
 				int npcId = -1;
 				for (int i = 0; i < 200; i++)
 				{
 					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy() && Common.GlobalNPCs.DebuffNPC.Constructs.Contains(npc.type) && npc.Distance(Projectile.Center) > 64)
+					if (npc.CanBeChasedBy() && 
+						((Common.GlobalNPCs.DebuffNPC.Constructs.Contains(npc.type) && !lookingForExcavator) || (lookingForExcavator && npc.type == ModContent.NPCType<Excavator>()))
+                        && npc.Distance(Projectile.Center) > 64)
 					{
 						npcId = i;
 						break;
@@ -79,11 +91,14 @@ namespace SOTS.Projectiles
 				{
 					NPC npc = Main.npc[npcId];
 					Vector2 toNPC = npc.Center - Projectile.Center;
-					Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * 3, 0.03f);
+					float speed = 3 + Projectile.ai[2];
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * speed, 0.03f);
+					if (lookingForExcavator)
+						Projectile.ai[2] += 0.02f;
 				}
 			}
 			else
-				Projectile.velocity *= 0.95f;
+				Projectile.velocity *= lookingForExcavator ? 0.975f : 0.95f;
 		}	
 	}
 }
