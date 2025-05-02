@@ -8938,6 +8938,7 @@ Mods: {
 			CoalCartCoal.DisplayName: Coal Cart Coal
 			ExcavatorLightning.DisplayName: Excavator Lightning
 			ExcavatorOrb.DisplayName: Excavator Orb
+			ExcavatorRocket.DisplayName: Excavator Rocket
 		}
 
 		DamageClasses: {

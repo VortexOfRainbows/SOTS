@@ -25,7 +25,7 @@ namespace SOTS.Items.Planetarium.FromChests
 			Item.DamageType = DamageClass.Throwing;
 			Item.rare = ItemRarityID.Green;
 			Item.autoReuse = false;            
-			Item.shoot = ModContent.ProjectileType<ExcavatorOrb>(); 
+			Item.shoot = ModContent.ProjectileType<ExcavatorRocket>(); 
             Item.shootSpeed = 3.0f;
 			Item.consumable = true;
 		}
@@ -73,8 +73,12 @@ namespace SOTS.Items.Planetarium.FromChests
 			//sPlayer.UniqueVisionNumber++;
 			//sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 40;
 			//player.VoidPlayer().ResetAllVoidBonuses();
-			//Projectile.NewProjectile(position, new Vector2(0, 1), ModContent.ProjectileType<ThunderSpawnBeam>(), 0, 0, Main.myPlayer, Main.MouseWorld.X, Main.MouseWorld.Y);
-			return true; 
+			for(int i = 0; i < 20; i++)
+			{
+				Vector2 target = Main.MouseWorld + Main.rand.NextVector2Circular(640, 640);
+                Projectile.NewProjectile(source, position, Main.rand.NextVector2Circular(4, 4), type, damage, knockback, Main.myPlayer, target.X, target.Y);
+            }
+            return false; 
 		}
 		/*public void DrawTexture()
         {
