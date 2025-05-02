@@ -115,6 +115,8 @@ namespace SOTS.Projectiles.Blades
             else
             {
                 spriteBatch.Draw(texture, drawPos, null, lightColor, rotation, origin, scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+                if(this is KingSlash)
+                    spriteBatch.Draw(ModContent.Request<Texture2D>("SOTS/Items/Permafrost/KingBladeGlow").Value, drawPos, null, Color.White, rotation, origin, scaleMultiplier, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             }
 
             //Draw a dot on the tipe of the blade

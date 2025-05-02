@@ -4,11 +4,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 using System;
-using SOTS.Projectiles.Temple;
 using System.Collections.Generic;
-using SOTS.Projectiles.Evil;
-using SOTS.Projectiles.Blades;
-using SOTS.FakePlayer;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 
 namespace SOTS.Prim.Trails

@@ -197,9 +197,9 @@ namespace SOTS.Projectiles.Blades
 			if (runOnce)
 				return true;
 			Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation + (initialDirection == 1 ? MathHelper.PiOver2 : 0), new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, initialDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(lightColor), Projectile.rotation + (initialDirection == 1 ? MathHelper.PiOver2 : 0), new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, initialDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 			return false;
 		}
-	}
+    }
 }
 		

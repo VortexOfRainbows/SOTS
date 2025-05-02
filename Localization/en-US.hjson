@@ -6871,6 +6871,15 @@ Mods: {
 				DisplayName: Seismic Station
 				Tooltip: "'You feel activating this may track some unwanted attention...'"
 			}
+
+			KingBlade: {
+				DisplayName: King Blade
+				Tooltip:
+					'''
+					Strike with 6 slashes, then toss a spinning blade for 100% damage
+					Each slash will additionally call down a blade from the sky
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -8945,6 +8954,8 @@ Mods: {
 			ExcavatorLightning.DisplayName: Excavator Lightning
 			ExcavatorOrb.DisplayName: Excavator Orb
 			ExcavatorRocket.DisplayName: Excavator Rocket
+			KingSlash.DisplayName: King Slash
+			KingSlashThrow.DisplayName: King Slash Throw
 		}
 
 		DamageClasses: {

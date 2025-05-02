@@ -9,6 +9,7 @@ namespace SOTS.Projectiles.Blades
 {    
     public class ToothAcheSlash : SOTSBlade
     {
+        public override Color? DrawColor => null;
 
         public static Color toothAcheLime = new Color(174, 213, 56);
         public static Color toothAcheGreen = new Color(110, 132, 22);

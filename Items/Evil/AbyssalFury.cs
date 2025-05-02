@@ -26,7 +26,7 @@ namespace SOTS.Items.Evil
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 50;
+			Item.damage = 45;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 68;
 			Item.height = 68;
@@ -51,7 +51,7 @@ namespace SOTS.Items.Evil
 		}
 		public override int GetVoid(Player player)
 		{
-			return 12;
+			return 14;
 		}
 		int rotate = 0;
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

@@ -135,8 +135,17 @@ namespace SOTS.Prim.Trails
 					if (throwSword.initialDirection != ClockWiseOrCounterClockwise)
 						Destroyed = true;
 					Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 32); // - new Vector2(Width / 2, Width / 2));
-				}
-				else if (proj.ModProjectile is VertebraekerThrow throwSword2 && Entity.active && Entity != null)
+                }
+                else if (proj.ModProjectile is KingSlashThrow kingSword && Entity.active && Entity != null)
+                {
+                    WidthList.Add(22);
+                    //ownerCenter = projOwner.Center;
+                    toOwner.Add(new Vector2(1, -1).RotatedBy(proj.rotation));
+                    if (kingSword.initialDirection != ClockWiseOrCounterClockwise)
+                        Destroyed = true;
+                    Points.Add(Entity.Center + toOwner[toOwner.Count - 1] * 46); // - new Vector2(Width / 2, Width / 2));
+                }
+                else if (proj.ModProjectile is VertebraekerThrow throwSword2 && Entity.active && Entity != null)
 				{
 					WidthList.Add(26);
 					//ownerCenter = projOwner.Center;

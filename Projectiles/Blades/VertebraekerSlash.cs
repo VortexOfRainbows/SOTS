@@ -9,6 +9,7 @@ namespace SOTS.Projectiles.Blades
 {    
     public class VertebraekerSlash : SOTSBlade
     {
+        public override Color? DrawColor => null;
         public static Color vertebraekerRed = new Color(255, 185, 81);
         public static Color vertebraekerOrange = new Color(209, 117, 61);
         public override Color color1 => vertebraekerRed;

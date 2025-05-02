@@ -79,6 +79,10 @@ Daily Log:
 3. Next: Excavator Sawblade projectile, Beam projectile (different from thunder)
 4. WIP Excavator summoning station
 	1. Spawns in world but the summoning animation can be improved
+5. Abyssal Fury damage 50 -> 45, void cost 12 -> 14. This thing does too much dps for being able to hit instantly through walls with area damage
+6. WIP King Blade
+	1. Needs: sky blade effect (helix laser blades come in from the sky really fast, homing, with lingering hitbox afterwards), balancing (might move recipe to later in hm, like post plantera), recipe, multiplayer syncing
+7. Fix issue Vertebraeker and Toothache sprites were unaffected by light
 
 4/18/25 and 4/21/25
 1. Invidia Portal Plating added
