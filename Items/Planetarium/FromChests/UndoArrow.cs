@@ -73,10 +73,11 @@ namespace SOTS.Items.Planetarium.FromChests
 			//sPlayer.UniqueVisionNumber++;
 			//sPlayer.UniqueVisionNumber = sPlayer.UniqueVisionNumber % 40;
 			//player.VoidPlayer().ResetAllVoidBonuses();
-			for(int i = 0; i < 20; i++)
+			for(int i = 0; i < 1; i++)
 			{
 				Vector2 target = Main.MouseWorld + Main.rand.NextVector2Circular(640, 640);
-                Projectile.NewProjectile(source, position, Main.rand.NextVector2Circular(4, 4), type, damage, knockback, Main.myPlayer, target.X, target.Y);
+				Projectile.NewProjectile(source, position, Main.rand.NextVector2Circular(4, 4), type, damage, knockback, player.whoAmI, target.X, target.Y);
+                Projectile.NewProjectile(source, position, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), damage, knockback, player.whoAmI);
             }
             return false; 
 		}

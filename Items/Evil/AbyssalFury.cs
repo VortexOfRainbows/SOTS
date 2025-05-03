@@ -26,12 +26,12 @@ namespace SOTS.Items.Evil
 		}
 		public override void SafeSetDefaults()
 		{
-			Item.damage = 45;
+			Item.damage = 41;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 68;
 			Item.height = 68;
-			Item.useTime = 11;
-			Item.useAnimation = 33;
+			Item.useTime = 12;
+			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(0, 20, 0, 0);

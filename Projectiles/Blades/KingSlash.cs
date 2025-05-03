@@ -4,13 +4,12 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Void;
-using SOTS.Helpers;
 using SOTS.Dusts;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Prim.Trails;
 using SOTS.Prim;
 using System.IO;
-using SOTS.Items.AbandonedVillage;
+using SOTS.Projectiles.Laser;
 
 namespace SOTS.Projectiles.Blades
 {    
@@ -46,7 +45,7 @@ namespace SOTS.Projectiles.Blades
             Projectile.timeLeft = 7200;
             Projectile.DamageType = ModContent.GetInstance<VoidMelee>();
             Projectile.friendly = true;
-            Projectile.localNPCHitCooldown = 12;
+            Projectile.localNPCHitCooldown = 11;
             Projectile.extraUpdates = 2;
         }
         public override void SwingSound(Player player)
@@ -57,9 +56,9 @@ namespace SOTS.Projectiles.Blades
         public override float HitboxWidth => 44f;
         public override Vector2 drawOrigin => new Vector2(12, 60);
         public override float ArmAngleOffset => 12;
-        public override float MaxSwipeDistance => 170;
-        public override float MinSwipeDistance => 170;
-        public override float MeleeSpeedMultiplier => 0.3f;
+        public override float MaxSwipeDistance => 180;
+        public override float MinSwipeDistance => 180;
+        public override float MeleeSpeedMultiplier => 0.75f;
         public override float GetBaseSpeed(float swordLength)
         {
 			if((int)Math.Abs(Projectile.ai[0]) == 2)
@@ -67,6 +66,26 @@ namespace SOTS.Projectiles.Blades
             return 2.2f + (1.2f / (float)Math.Pow(swordLength / MaxSwipeDistance, 2f));
         }
         public override float ArcStartDegrees => 200 + 15f / speedModifier;
+        public bool RunOnce = true;
+        public override void PostAI()
+        {
+            base.PostAI();
+            if(RunOnce)
+            {
+                if(Projectile.owner == Main.myPlayer)
+                {
+                    Player player = Main.player[Projectile.owner];
+                    Vector2 spawnPos = new Vector2((float)(player.Center.X + (240f * -player.direction * Main.rand.Next(8, 13)) + (Main.mouseX + Main.screenPosition.X - player.position.X)), player.Center.Y - 26f * Main.rand.Next(8, 13));
+                    spawnPos.Y += 0.5f * (player.Center.Y - Main.MouseWorld.Y);
+                    Vector2 circularPos = new Vector2(196, 0).RotatedBy(Main.rand.NextFloat(MathF.PI * 2));
+                    spawnPos += circularPos;
+                    Vector2 speed = Main.MouseWorld - spawnPos;
+                    speed = speed.SNormalize();
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPos, speed * 8f, ModContent.ProjectileType<LightspeedKingblade>(), Projectile.damage, Projectile.knockBack * 0.5f, Main.myPlayer, 0.0f, Main.MouseWorld.X);
+                    RunOnce = false;
+                }
+            }
+        }
         public override void SlashPattern(Player player, int slashNumber)
         {
             int damage = Projectile.damage;
@@ -136,15 +155,13 @@ namespace SOTS.Projectiles.Blades
         private float rotation = 0;
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(Projectile.tileCollide);
-            writer.Write(Projectile.velocity.X);
-            writer.Write(Projectile.velocity.Y);
+            writer.WriteVector2(initialVelo);
+            writer.WriteVector2(Projectile.velocity);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            Projectile.tileCollide = reader.ReadBoolean();
-            Projectile.velocity.X = reader.ReadSingle();
-            Projectile.velocity.Y = reader.ReadSingle();
+            initialVelo = reader.ReadVector2();
+            Projectile.velocity = reader.ReadVector2();
         }
         public override void SetDefaults()
         {
@@ -158,7 +175,7 @@ namespace SOTS.Projectiles.Blades
             Projectile.hostile = false;
             Projectile.alpha = 0;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 6;
+            Projectile.localNPCHitCooldown = 9;
             Projectile.extraUpdates = 2;
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox)
@@ -197,7 +214,7 @@ namespace SOTS.Projectiles.Blades
                     Vector2 mouse = new Vector2(Projectile.ai[1], Projectile.ai[2]);
                     float toMouse = mouse.Distance(player.Center);
                     Projectile.ai[1] = toMouse;
-                    Projectile.netUpdate = true;
+                    Projectile.ai[2] = 0;
                 }
                 SOTSUtils.PlaySound(SoundID.DD2_GhastlyGlaivePierce, (int)player.Center.X, (int)player.Center.Y, 1.6f, -0.1f);
                 runOnce = false;
@@ -215,8 +232,11 @@ namespace SOTS.Projectiles.Blades
                 initialCenter = player.Center;
                 Projectile.ai[0] = -180 * initialDirection;
                 Projectile.scale = 1.65f;
-                BladeTrail myTrail = new BladeTrail(Projectile, clockWise: initialDirection, KingSlash.Blue.ToVector4(), KingSlash.SecondBlue.ToVector4(), 40, 2);
-                SOTS.primitives.CreateTrail(myTrail);
+                if(Main.netMode != NetmodeID.Server)
+                {
+                    BladeTrail myTrail = new BladeTrail(Projectile, clockWise: initialDirection, KingSlash.Blue.ToVector4(), KingSlash.SecondBlue.ToVector4(), 40, 2);
+                    SOTS.primitives.CreateTrail(myTrail);
+                }
             }
             else if (Projectile.timeLeft % 20 == 0)
                 SOTSUtils.PlaySound(SoundID.DD2_MonkStaffSwing, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.2f, 0.1f);
@@ -226,14 +246,32 @@ namespace SOTS.Projectiles.Blades
             if (Projectile.ai[0] * initialDirection < -30)
             {
                 Projectile.ai[0] += 2.4f * initialDirection;
+                if ((int)(Projectile.ai[0] / 2.4f) % 5 == 0)
+                    Projectile.netUpdate = true;
             }
             else
+            {
+                Projectile.ai[2]++;
+                if (Projectile.ai[2] >= 12 && Projectile.timeLeft >= 90)
+                {
+                    Projectile.netUpdate = true;
+                    Projectile.ai[2] = 0;
+                    if (Projectile.owner == Main.myPlayer)
+                    {
+                        Vector2 spawnPos = Projectile.Center + new Vector2(1200, 0).RotatedByRandom(MathF.PI);
+                        Vector2 circularPos = new Vector2(32, 0).RotatedByRandom(MathF.PI);
+                        spawnPos += circularPos;
+                        Vector2 speed = (Projectile.Center - spawnPos).SNormalize();
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), spawnPos, speed * 8f, ModContent.ProjectileType<LightspeedKingblade>(), Projectile.damage, Projectile.knockBack * 0.5f, Main.myPlayer, 0.0f, Projectile.Center.X);
+                    }
+                }
                 Projectile.ai[0] += 0.6f * initialDirection;
+            }
             if (Projectile.timeLeft >= 90)
             {
                 Vector2 initialCenter = this.initialCenter;
-                float length = MathF.Max(Projectile.ai[1] * 0.5f, 132);
-                float multiplier = 0.6f * 132f / length;
+                float length = MathF.Max(Projectile.ai[1] * 0.5f, 64);
+                float multiplier = 64f / length;
                 float rad = MathHelper.ToRadians(Projectile.ai[0]);
                 Vector2 ovalArea = new Vector2(length, 0).RotatedBy(initialVelo.ToRotation());
                 Vector2 ovalArea2 = new Vector2(length, 0).RotatedBy(rad);

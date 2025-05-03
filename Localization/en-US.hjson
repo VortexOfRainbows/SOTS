@@ -8956,6 +8956,7 @@ Mods: {
 			ExcavatorRocket.DisplayName: Excavator Rocket
 			KingSlash.DisplayName: King Slash
 			KingSlashThrow.DisplayName: King Slash Throw
+			LightspeedKingblade.DisplayName: Lightspeed Kingblade
 		}
 
 		DamageClasses: {

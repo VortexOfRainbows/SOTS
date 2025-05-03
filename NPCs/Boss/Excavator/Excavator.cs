@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
+using SOTS.Projectiles.AbandonedVillage;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -607,6 +609,16 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.TargetClosest(true);
             WormSetup();
             IdleMoveStyle();
+            AI1++;
+            if(AI1 > 120)
+            {
+                if(Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorRocket>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, target.Center.X, target.Center.Y);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
+                }
+                AI1 = -70;
+            }
 
             if(NPC.velocity.LengthSquared() > 0.1f)
             {

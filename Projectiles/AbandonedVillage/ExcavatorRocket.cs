@@ -35,11 +35,10 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Projectile.width = 24;
 			Projectile.height = 24;
 			Projectile.penetrate = -1;
-			Projectile.friendly = false;
-			Projectile.timeLeft = 540;
+			Projectile.friendly = true; //just for testing
+            Projectile.timeLeft = 540;
 			Projectile.tileCollide = true;
 			Projectile.hostile = true;
-			Projectile.netImportant = true;
 		}
         public override bool PreAI()
         {
@@ -126,6 +125,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 ConfirmTargetSpot();
                 RunOnce = false;
             }
+            Main.NewText(target + ": " + Main.myPlayer + ": " + Projectile.owner);
 			float approaching = ((540f - Projectile.timeLeft) / 540f);
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.65f, 0.75f);

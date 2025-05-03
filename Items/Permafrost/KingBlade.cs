@@ -14,12 +14,12 @@ namespace SOTS.Items.Permafrost
         public override void SetStaticDefaults() => this.SetResearchCost(1);
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 57;
+            Item.damage = 61;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 74;
             Item.height = 74;  
-            Item.useTime = 15; 
-            Item.useAnimation = 15;
+            Item.useTime = 14; 
+            Item.useAnimation = 14;
             Item.useStyle = ItemUseStyleID.Shoot;		
             Item.knockBack = 4f;
             Item.value = Item.sellPrice(0, 25, 0, 0);
@@ -42,8 +42,8 @@ namespace SOTS.Items.Permafrost
         }
         public override void AddRecipes()
         {
-            //CreateRecipe(1).AddIngredient<AbsoluteBar>(20).AddIngredient<AbyssalFury>(1).AddIngredient<ShatterBlade>(1).AddIngredient<ToothAche>(1).AddTile(TileID.MythrilAnvil).Register();
-            //CreateRecipe(1).AddIngredient<AbsoluteBar>(20).AddIngredient<AbyssalFury>(1).AddIngredient<ShatterBlade>(1).AddIngredient<Vertebraeker>(1).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<AbsoluteBar>(20).AddIngredient<AbyssalFury>(1).AddIngredient<ShatterBlade>(1).AddIngredient<ToothAche>(1).AddIngredient(ItemID.BrokenHeroSword, 1).AddTile(TileID.MythrilAnvil).Register();
+            CreateRecipe(1).AddIngredient<AbsoluteBar>(20).AddIngredient<AbyssalFury>(1).AddIngredient<ShatterBlade>(1).AddIngredient<Vertebraeker>(1).AddIngredient(ItemID.BrokenHeroSword, 1).AddTile(TileID.MythrilAnvil).Register();
         }
     }
 }
