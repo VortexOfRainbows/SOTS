@@ -1,12 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using SOTS.Projectiles.AbandonedVillage;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
  

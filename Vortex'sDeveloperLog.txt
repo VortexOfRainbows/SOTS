@@ -36,6 +36,7 @@ Update Objectives:
 	2. Thorium: Move amber gem structure to bottom of oceanic depths
 	3. Sand Floating Islands: Make pyramid start the desert check lower to the ground
 	4. Calamity: See if void reforges can be included in the calamity reforge system
+	5. Pyramid: Fix floating trees
 8. Upgrade item to the Hydrokinetic Antennae (Pending)
 9. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 10. Sanctuary! (In Progress)
@@ -44,6 +45,8 @@ Update Objectives:
 
 ---WIP List---
 Abandoned village generation
+Knockback Resist on AV enemies should be adjusted
+Modify AV Spawn rate
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -72,7 +75,7 @@ N/A
 
 Daily Log:
 
-4/24/25 and 4/28/25 and 5/1/2025 to 5/2/2025
+4/24/25 and 4/28/25 and 5/1/2025 to 5/3/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)
 2. Work on Excavator orb and Excavator missile projectiles (seems to work in multiplayer when owned by an enemy)
 	1. Excavator orb Needs: Multiplayer Syncing and integration to boss as pattern
@@ -85,6 +88,7 @@ Daily Log:
 	2. It was originally balanced around requiring a broken hero sword. It's about time its damage was nerfed to compensate
 6. Added King Blade (Works in multiplayer)
 7. Fix issue Vertebraeker and Toothache sprites were unaffected by light
+8. Backup bow no longer acts on Guide-spawned arrows
 
 4/18/25 and 4/21/25
 1. Invidia Portal Plating added

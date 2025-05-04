@@ -931,9 +931,12 @@ namespace SOTS
                 if (Main.myPlayer == projectile.owner && (projectile.arrow || CountsAsArrow(projectile)) && modPlayer.backUpBow && !SpawningProjectile)
                 {
 					bool canSpawn = true;
-					if(source is EntitySource_Parent e && e.Entity is Projectile p) //If my source is a projectile
+					if(source is EntitySource_Parent e) //If my source is a projectile
                     {
-						canSpawn = player.SOTSPlayer().oldHeldProj == p.whoAmI || player.heldProj == p.whoAmI;
+						if(e.Entity is Projectile p)
+							canSpawn = player.SOTSPlayer().oldHeldProj == p.whoAmI || player.heldProj == p.whoAmI;
+						if(e.Entity is NPC npc && npc.type == NPCID.Guide)
+							canSpawn = false;
 					}
 					if(canSpawn)
 					{
