@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 ConfirmTargetSpot();
                 RunOnce = false;
             }
-            Main.NewText(target + ": " + Main.myPlayer + ": " + Projectile.owner);
+            //Main.NewText(target + ": " + Main.myPlayer + ": " + Projectile.owner);
 			float approaching = ((540f - Projectile.timeLeft) / 540f);
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.65f, 0.75f);

@@ -1,19 +1,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Helpers;
-using SOTS.Void;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Laser
 {
 	public class VibrantRing : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Vibrant Ring");
-		}
 		public override void SetDefaults()
 		{
 			Projectile.width = 48;
@@ -24,11 +18,7 @@ namespace SOTS.Projectiles.Laser
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 20;
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
+			Projectile.localNPCHitCooldown = 30;
 		}
 		public override bool PreDraw(ref Color lightColor)
 		{

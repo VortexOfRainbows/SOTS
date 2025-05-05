@@ -75,12 +75,13 @@ N/A
 
 Daily Log:
 
-4/24/25 and 4/28/25 and 5/1/2025 to 5/3/2025
+4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)
-2. Work on Excavator orb and Excavator missile projectiles (seems to work in multiplayer when owned by an enemy)
+2. Work on Excavator orb, missile, beam projectiles (seems to work in multiplayer when owned by an enemy)
 	1. Excavator orb Needs: Multiplayer Syncing and integration to boss as pattern
 	2. Excavator missile Needs: Multiplayer Syncing and integration to boss as pattern
-3. Next: Excavator Sawblade projectile, Beam projectile (different from thunder)
+	3. Excavator beam Needs: Multiplayer Syncing and integration to boss as pattern
+3. Next: Excavator Sawblade projectile
 4. WIP Excavator summoning station
 	1. Spawns in world but the summoning animation can be improved
 5. Abyssal Fury damage 50 -> 41, void cost 12 -> 14, use time 11 -> 12. This thing does too much dps for being able to hit instantly through walls with area damage
@@ -89,6 +90,15 @@ Daily Log:
 6. Added King Blade (Works in multiplayer)
 7. Fix issue Vertebraeker and Toothache sprites were unaffected by light
 8. Backup bow no longer acts on Guide-spawned arrows
+9. Attempt to fix palm tree deleting themselves problem
+10. Gold Glaive damage 26 -> 20
+11. Vibrant Blade damage 22 -> 21, ring total hits 3 -> 2
+12. Vibrant Pistol damage 15 -> 14, usetime 12 -> 14
+13. Blongus usetime 20 -> 22, also reduced damage scaling
+14. Coconut gun damage 17 -> 16, void cost 20 -> 25
+15. Abandoned village no longer has increased spawnrates over the normal crimson/corruption rates
+16. Reduce spawnrate of fistful on surface by ~33%
+17. Reduce spawnrate of rotwalker on surface by 50%
 
 4/18/25 and 4/21/25
 1. Invidia Portal Plating added

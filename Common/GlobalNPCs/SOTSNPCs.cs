@@ -550,8 +550,8 @@ namespace SOTS.Common.GlobalNPCs
             }
             else if (sPlayer.AbandonedVillageBiome)
             {
-                spawnRate = (int)(spawnRate * 0.9f); //Increase spawn rates
-                maxSpawns = (int)(maxSpawns * 1.3f); //Increase spawn rate cap
+                //spawnRate = (int)(spawnRate * 0.9f); //Increase spawn rates
+                maxSpawns = (int)(maxSpawns * 1.2f); //Increase spawn rate cap
             }
             if (sPlayer.PlanetariumBiome) //spawnrates for this biome have to be very high due to how npc spawning in sky height works.
 			{
@@ -728,7 +728,7 @@ namespace SOTS.Common.GlobalNPCs
 					float throeCount = 1f + NPC.CountNPCS(ModContent.NPCType<Throe>());
 					float gizmoCount = 1f + NPC.CountNPCS(ModContent.NPCType<EarthenGizmo>());
                     pool.Add(ModContent.NPCType<Throe>(), (underground ? 0.45f : 0.05f) / throeCount); //Spawn throes less often the more of them there are
-                    pool.Add(ModContent.NPCType<Fistfull>(), underground ? 0.4f : 0.3f);
+                    pool.Add(ModContent.NPCType<Fistfull>(), underground ? 0.4f : 0.2f);
                     if (underground)
 					{
                         pool.Add(ModContent.NPCType<EarthenGizmo>(), 0.25f / gizmoCount); //Spawn gizmos less often the more of them there area
@@ -738,7 +738,7 @@ namespace SOTS.Common.GlobalNPCs
                     pool.Add(ModContent.NPCType<MutagenTreasureSlime>(), 0.05f);
                     if (crimson)
                     {
-                        if (!underground){
+                        if (!underground) {
 							pool.Add(ModContent.NPCType<SanguineFoundry>(), 1f);
                             pool.Add(ModContent.NPCType<PupaFly>(), 0.5f);
                         }
@@ -755,7 +755,7 @@ namespace SOTS.Common.GlobalNPCs
                             pool.Add(ModContent.NPCType<CorpseBloom>(), 1f);
 						pool.Add(ModContent.NPCType<BallOWorms>(), 0.4f);
                         pool.Add(ModContent.NPCType<CorruptionTreasureSlime>(), 0.01f);
-						pool.Add(ModContent.NPCType<RotWalker>(), 0.4f);
+						pool.Add(ModContent.NPCType<RotWalker>(), underground ? 0.4f : 0.2f);
                     }
                     if (underground && Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 2].WallType == WallID.None)
 					{

@@ -5148,12 +5148,13 @@ namespace SOTS.WorldgenHelpers
 		{
 			for (int i = 100; i < Main.maxTilesX - 100; i++)
 			{
-				for (int j = (int)GenVars.worldSurface; j > 100; j--)
+				for (int j = (int)GenVars.worldSurface + 100; j > 100; j--)
 				{
 					Tile tile = Main.tile[i, j];
 					Tile tileD = Main.tile[i, j + 1];
 					ModTile tileBelowModtile = ModContent.GetModTile(tile.TileType);
-					if (tile.HasTile && tile.TileType == TileID.PalmTree && (!tileD.HasTile || tileBelowModtile == null || tileBelowModtile.Mod != SOTS.Instance))
+					if (tile.HasTile && tile.TileType == TileID.PalmTree && 
+						(!tileD.HasTile || (tileBelowModtile != null && tileBelowModtile.Mod == SOTS.Instance)))
 					{
 						tile.ClearTile();
 					}

@@ -16,7 +16,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 17;
+            Item.damage = 16;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 38;
             Item.height = 36;
@@ -35,7 +35,7 @@ namespace SOTS.Items.ChestItems
 		}
 		public override int GetVoid(Player player)
 		{
-			return 20;
+			return 25;
 		}
 		public override Vector2? HoldoutOffset()
 		{

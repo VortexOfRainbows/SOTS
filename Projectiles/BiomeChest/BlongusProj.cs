@@ -174,8 +174,8 @@ namespace SOTS.Projectiles.BiomeChest
                 target = Main.npc[StuckTo];
                 if (target.active)
                 {
-                    float flatLifeBonus = MathF.Min(target.life * 0.05f, 40); //Max 40 damage from life
-                    float maxLifeBonus = MathF.Min(target.lifeMax * 0.1f, 30); //Max 30 damage from max life
+                    float flatLifeBonus = MathF.Min(target.life * 0.04f, 40); //Max 40 damage from life
+                    float maxLifeBonus = MathF.Min(target.lifeMax * 0.1f, 25); //Max 25 damage from max life
                     if (flatLifeBonus >= 40)
                         flatLifeBonus += MathF.Min(target.life * 0.01f - 40, 60); //Then 1% more damage per life, up to 100
                     if (flatLifeBonus >= 100)
@@ -185,7 +185,7 @@ namespace SOTS.Projectiles.BiomeChest
                     if (flatLifeBonus >= 1000)
                         flatLifeBonus += target.life * 0.0005f; //Then 0.05% more damage per life
                     float bleedMultiplier = 2.5f;
-                    float damageBonus = flatLifeBonus + maxLifeBonus;
+                    float damageBonus = (int)(flatLifeBonus * 0.95f) + maxLifeBonus;
                     float bonusDamagePercent = 1.0f + 0.2f * target.life / target.lifeMax; //Deal up to 20% more damage based on enemy health percent
                     if(target.HasBuff(BuffID.Bleeding) || (target.TryGetGlobalNPC(out DebuffNPC dNPC) && dNPC.BleedingCurse > 0))
                     {

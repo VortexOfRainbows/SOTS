@@ -23,12 +23,12 @@ namespace SOTS.Items.Earth
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 15;
+            Item.damage = 14;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 36;
             Item.height = 24;
-            Item.useTime = 12; 
-            Item.useAnimation = 12;
+            Item.useTime = 14; 
+            Item.useAnimation = 14;
             Item.useStyle = ItemUseStyleID.Shoot;    
             Item.noMelee = true;
 			Item.knockBack = 2f;  
