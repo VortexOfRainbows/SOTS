@@ -23,6 +23,7 @@ Acknowledged But Likely Delayed:
 13. Void Minions to be effected by void cost reductions. Resulting in reserved void that cannot be used for summons, but can be used for other things.
 14. Tide structure that catches enemies like a fishing net (kinda like the hydraulic press)
 15. Add Achievements (waiting on ModAchievement)
+16. Fire Spitter rework
 
 Update Objectives:
 1. Ghost Town! (In Progress)	
@@ -42,7 +43,7 @@ Update Objectives:
 10. Sanctuary! (In Progress)
 	1. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 11. Invidia Gateway Tile (needs: glow, conduit connection)
-12. Fire Spitter rework
+12. Bridgeburner flight
 
 ---WIP List---
 Abandoned village generation
@@ -79,6 +80,7 @@ Daily Log:
 
 5/5/25
 1. WIP Excavator attack patterns
+2. Reduce topspeed of captured cart (hostile) 6 -> 5.63
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)

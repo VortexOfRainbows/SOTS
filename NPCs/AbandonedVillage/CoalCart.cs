@@ -169,7 +169,10 @@ namespace SOTS.NPCs.AbandonedVillage
             {
                 NPC.velocity.X += MathF.Sign(toPlayer.X) * 0.1f;
             }
-		}
+            if (MathF.Abs(NPC.velocity.X) > 5.0f)
+                NPC.velocity.X = MathHelper.Lerp(NPC.velocity.X, MathF.Sign(NPC.velocity.X) * 5.0f, 0.1f);
+            Main.NewText(NPC.velocity.X);
+        }
         public override void PostAI()
         {
 
