@@ -24,6 +24,8 @@ using Terraria.DataStructures;
 using SOTS.Items.Conduit;
 using Terraria.WorldBuilding;
 using SOTS.Items.Furniture.Evostone;
+using SOTS.Items.Furniture.Tidal;
+using System.Text.Json.Serialization.Metadata;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -5227,5 +5229,116 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
+		public static int CountCloudBlocks(int x, int y)
+		{
+			Tile t = Main.tile[x, y];
+			int count = 0;
+			while(t.HasTile && (t.TileType == TileID.Cloud || t.TileType == TileID.RainCloud || t.TileType == TileID.SnowCloud))
+			{
+				count++;
+                t = Main.tile[x, ++y];
+            }
+			return count;
+		}
+		public static void GenerateBubbleMonument(int x, int y, int height = 10)
+		{
+			height += 5;
+			x -= 4;
+			y -= 2;
+			for (int j = 0; j < height; ++j)
+			{
+				for (int i = 0; i < 10; ++i)
+				{
+					Point coords = new(x + i, y + j);
+					Tile t = Main.tile[coords.X, coords.Y];
+					if (i >= 1 && i < 9 && j > 0 && j < height - 1)
+					{
+						t.WallType = 0;
+						if (i >= 3 && i < 7)
+							t.ClearTile();
+						WorldGen.PlaceWall(coords.X, coords.Y, ModContent.WallType<TidalPlatingWallWall>());
+					}
+					if (j < 2 || j >= height - 2)
+					{
+						if ((i >= 0 && i < 3) || (i >= 7 && i < 10))
+						{
+							t.ClearTile();
+							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidePlatingTile>());
+						}
+						else if (j == 1 || j == height - 2)
+						{
+							t.ClearTile();
+							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidalPlatingPlatformTile>());
+						}
+						else if (j == 0)
+						{
+							t.ClearTile();
+							WorldGen.PlaceTile(coords.X, coords.Y, TileID.Bubble);
+						}
+					}
+					else
+					{
+						if (i == 1 || i == 8)
+						{
+							t.ClearTile();
+							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidePlatingTile>());
+						}
+						if (i == 2 || i == 7)
+						{
+							t.ClearTile();
+							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<DissolvingDelugeTile>());
+						}
+					}
+				}
+			}
+			height += WorldGen.genRand.Next(10, 17);
+			for(int j = height + 2; j >= height; --j)
+			{
+                for (int i = 0; i < 10; ++i)
+                {
+                    Point coords = new(x + i, y + j);
+                    Tile t = Main.tile[coords.X, coords.Y];
+					if(j == height)
+					{
+						if(i > 0 && i < 9)
+							WorldGen.PlaceWall(coords.X, coords.Y, ModContent.WallType<TidalPlatingWallWall>());
+						if(i == 1 || i == 8)
+						{
+							t.ClearTile();
+							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<SkyChainTile>());
+						}
+						if(i == 4)
+						{
+							t.ClearTile();
+							Main.tile[coords.X + 1, coords.Y].ClearTile();
+							Main.tile[coords.X + 1, coords.Y - 1].ClearTile();
+							Main.tile[coords.X, coords.Y - 1].ClearTile();
+                            WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidalPlatingChestTile>());
+                        }
+                    }
+					else
+					{
+						if(j == height + 1)
+						{
+							if(i == 0)
+							{
+								for(int k = 1; k < 5; ++k)
+								{
+                                    WorldGen.PlaceTile(coords.X - k, coords.Y, ModContent.TileType<TidalPlatingPlatformTile>());
+                                }
+                            }
+                            if (i == 9)
+                            {
+                                for (int k = 1; k < 5; ++k)
+                                {
+                                    WorldGen.PlaceTile(coords.X + k, coords.Y, ModContent.TileType<TidalPlatingPlatformTile>());
+                                }
+                            }
+                        }
+						WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidePlatingTile>());
+                    }
+                }
+            }
+		}
     }
 }

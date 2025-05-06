@@ -67,6 +67,8 @@ namespace SOTS.NPCs.AbandonedVillage
 		{
             NPC.TargetClosest(true);
             NPC.spriteDirection = NPC.direction;
+            if (Main.player[NPC.target].Distance(NPC.Center) < 2000)
+                NPC.DiscourageDespawn(30);
         }
         public override void HitEffect(NPC.HitInfo hit)
         {

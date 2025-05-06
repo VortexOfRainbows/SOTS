@@ -35,7 +35,8 @@ namespace SOTS.Items.Tools
 			int x2 = (int)tileLocation.X;
             int y2 = (int)tileLocation.Y;
             //SanctuaryWorldgenHelper.GenerateGrandArch(x2, y2, 20, 20);
-            SanctuaryWorldgenHelper.GenerateSanctuary();
+            WorldgenHelpers.SOTSWorldgenHelper.GenerateBubbleMonument(x2, y2, SOTSWorldgenHelper.CountCloudBlocks(x2, y2));
+            // SanctuaryWorldgenHelper.GenerateSanctuary();
             //AbandonedVillageWorldgenHelper.PlaceStairDecor(x2, )
             //WorldGen.PlaceTile(x2, y2, ModContent.TileType<FakeMarble>());
             //AbandonedVillageWorldgenHelper.TryPlacingImportantTiles(0);

@@ -13,7 +13,7 @@ namespace SOTS.Items.Slime
         }
         public override void SetDefaults()
         {
-            Item.damage = 10;
+            Item.damage = 5;
             Item.DamageType = DamageClass.Ranged;
             Item.width = 44;
             Item.height = 24;

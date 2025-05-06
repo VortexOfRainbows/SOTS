@@ -42,6 +42,7 @@ Update Objectives:
 10. Sanctuary! (In Progress)
 	1. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 11. Invidia Gateway Tile (needs: glow, conduit connection)
+12. Fire Spitter rework
 
 ---WIP List---
 Abandoned village generation
@@ -99,6 +100,9 @@ Daily Log:
 15. Abandoned village no longer has increased spawnrates over the normal crimson/corruption rates
 16. Reduce spawnrate of fistful on surface by ~33%
 17. Reduce spawnrate of rotwalker on surface by 50%
+18. Fire Spitter damage 10 -> 5
+19. Fistfull, Pupa, and Rotwalker no longer despawn especially easily during the day, making them practically now appear on the surface during the day.
+20. WIP Bubble Monument generation
 
 4/18/25 and 4/21/25
 1. Invidia Portal Plating added

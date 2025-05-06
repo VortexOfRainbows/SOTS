@@ -145,6 +145,8 @@ namespace SOTS.NPCs.AbandonedVillage
             runOnce = false;
             NPC.spriteDirection = NPC.direction;
             Vector2 toPlayer = Main.player[NPC.target].Center - NPC.Center;
+            if (Main.player[NPC.target].Distance(NPC.Center) < 2000)
+                NPC.DiscourageDespawn(30);
             if (Buried)
             {
                 NPC.behindTiles = true;

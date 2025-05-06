@@ -147,6 +147,8 @@ namespace SOTS.NPCs.AbandonedVillage
             UpdateSegments();
             NPC.TargetClosest(true);
             Player player = Main.player[NPC.target];
+            if (player.Distance(NPC.Center) < 2000)
+                NPC.DiscourageDespawn(30);
             if (runOnce)
             {
                 fistPosition = NPC.Center;
