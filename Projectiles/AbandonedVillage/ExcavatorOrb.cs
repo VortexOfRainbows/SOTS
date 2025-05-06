@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.NPCs.Boss.Excavator;
 using SOTS.Void;
 using SOTS.WorldgenHelpers;
 using System;
@@ -8,11 +9,13 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using tModPorter;
 
 namespace SOTS.Projectiles.AbandonedVillage
 {
 	public class ExcavatorOrb : ModProjectile
 	{
+        public int Timer = 0;
         public override void OnHitPlayer(Player target, Player.HurtInfo info)
         {
             VoidPlayer.VoidBurn(Mod, target, 3, 180);
@@ -28,8 +31,8 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Projectile.width = 48;
 			Projectile.height = 48;
 			Projectile.hostile = true;
-			Projectile.friendly = true; //just for testing
-			Projectile.timeLeft = 500;
+			Projectile.friendly = false;
+			Projectile.timeLeft = 1200;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.scale = 1f;
@@ -117,18 +120,75 @@ namespace SOTS.Projectiles.AbandonedVillage
 				Projectile.scale = 0;
 				Projectile.alpha = 0;
 			}
-            Projectile.rotation += Projectile.velocity.X * 0.01f;
-            Projectile.velocity *= 0.989f;
-            if (Projectile.ai[0] <= 120)
+            int target = (int)Projectile.ai[0];
+            bool activated = true;
+            if (target >= 0)
             {
-                float scaleMult = Projectile.ai[0] / 120f;
+                NPC owner = Main.npc[target];
+                if(owner.ModNPC is Excavator exc)
+                {
+                    Vector2 perceivedVelo = new Vector2(1, 0).RotatedBy(owner.rotation);
+                    Projectile.velocity = Vector2.Zero;
+                    Projectile.Center = Vector2.Lerp(Projectile.Center, owner.Center + perceivedVelo * 92 * MathF.Min(Timer / 150f, 1), 0.12f);
+                    Projectile.rotation += perceivedVelo.X * 0.01f;
+                    if (Timer >= 200)
+                    {
+                        Projectile.velocity = perceivedVelo * 8f;
+                        Projectile.ai[0] = -1;
+                        Projectile.netUpdate = true;
+                        exc.AI2 = -1;
+                        owner.netUpdate = true;
+                    }
+                    activated = false;
+                }
+                else
+                {
+                    Projectile.ai[0] = -1;
+                    return;
+                }
+            }
+            Projectile.rotation += Projectile.velocity.X * 0.01f;
+            Projectile.velocity *= 0.98f;
+            if (Timer <= 150)
+            {
+                float scaleMult = Timer / 150f;
                 if (scaleMult > 1)
                     scaleMult = 1;
                 Projectile.scale = MathF.Sqrt(scaleMult) * 1.4f;
+                if(Timer % 50 == 0)
+                {
+                    SOTSUtils.PlaySound(SoundID.Item15, Projectile.Center, 1.0f, 0.1f + 0.1f * Timer / 50f);
+                }
             }
-            Projectile.ai[0]++;
-			if(Projectile.ai[0] >= 80)
+            Timer++;
+            if (Timer >= 110 && activated)
             {
+                if(Projectile.ai[2] == 0)
+                {
+                    float r = Projectile.velocity.ToRotation();
+                    SOTSUtils.PlaySound(SoundID.Item92, Projectile.Center, 1.0f, 0);
+                    for(int j = 1; j <= 3; ++j)
+                    {
+                        for (int i = 0; i < 36; ++i)
+                        {
+                            Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.ToRadians(i / 36f * 360));
+                            circular.X *= 0.4f;
+                            circular = circular.RotatedBy(r);
+                            PixelDust.Spawn(Projectile.Center + circular * (64 - (j * 4)), 0, 0, Main.rand.NextVector2Circular(0.5f, 0.5f) + Projectile.velocity * j, Color, 6).scale = Main.rand.NextFloat(1.0f, 2.0f);
+                        }
+                    }
+                }
+                Projectile.tileCollide = true;
+                if (Projectile.ai[2] % 20 == 0 && Projectile.ai[2] <= 80)
+                {
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    {
+                        for (int j = -1; j <= 1; j += 2)
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.PiOver2 * j), ModContent.ProjectileType<ExcavatorBolt>(), Projectile.damage, Projectile.knockBack, Main.myPlayer);
+                        }
+                    }
+                }
                 Projectile.ai[2]++;
             }
             if (Projectile.ai[2] < 270 && Main.rand.NextBool(3))
@@ -137,7 +197,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 float w = Projectile.scale * Projectile.width / 2 + 24;
                 PixelDust.Spawn(Projectile.Center + circular * w, 0, 0, Main.rand.NextVector2Circular(2, 2) - circular * 3 + Projectile.velocity, Color, 8).scale = Main.rand.NextFloat(1.0f, 2.0f);
             }
-            else if(Main.rand.NextBool(3) && Projectile.ai[2] < 200)
+            else if (Main.rand.NextBool(3) && Projectile.ai[2] < 200)
             {
                 PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, Main.rand.NextVector2Circular(2, 2), Color, 5).scale = Main.rand.NextFloat(Projectile.scale, 1.5f);
             }
@@ -149,7 +209,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     float sin = MathF.Sin(percent * MathF.PI) * 1.2f - percent + 1;
                     Projectile.scale = MathHelper.Lerp(Projectile.scale, sin, 0.1f);
                 }
-                else if (Projectile.ai[0] > 120)
+                else if (Timer > 150)
                     Projectile.scale = MathHelper.Lerp(Projectile.scale, 0.6f, 0.005f);
                 if (Projectile.ai[2] < 280)
                 {
@@ -173,15 +233,25 @@ namespace SOTS.Projectiles.AbandonedVillage
             SOTSUtils.PlaySound(SoundID.Item15, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1f, -0.2f);
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int amt = 2;
-                if (Main.expertMode)
-                    amt = 3;
+                int amt = 3;
                 float deg = 360f / amt;
                 for (int i = 0; i < amt; i++)
                 {
                     Vector2 circular = new Vector2(0, -5).RotatedBy(MathHelper.ToRadians(i * deg) + Projectile.rotation);
                     Vector2 target = Projectile.Center + circular * 10;
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<ExcavatorLightning>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, target.X, target.Y);
+                }
+            }
+            if(Main.expertMode)
+            {
+                int num = Main.masterMode ? 12 : 8;
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for (int j = 0; j < num; j++)
+                    {
+                        Vector2 circular = new Vector2(0.5f, 0).RotatedBy(j * MathF.PI * 2f / num);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, circular, ModContent.ProjectileType<ExcavatorBolt>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, 2);
+                    }
                 }
             }
             DoDust(1.75f, -1);
@@ -213,6 +283,20 @@ namespace SOTS.Projectiles.AbandonedVillage
                 dust.fadeIn = 0.1f;
                 dust.scale = dust.scale * 0.45f + 1.25f;
             }
+        }
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
+        {
+            width = 40;
+            height = 40;
+            return true;
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            if (Projectile.velocity.X != oldVelocity.X)
+                Projectile.velocity.X = -oldVelocity.X;
+            if (Projectile.velocity.Y != oldVelocity.Y)
+                Projectile.velocity.Y = -oldVelocity.Y;
+            return false;
         }
     }
     public class ExcavatorLightning : FamishedLaser

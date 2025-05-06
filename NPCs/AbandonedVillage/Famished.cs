@@ -1405,7 +1405,7 @@ namespace SOTS.NPCs.AbandonedVillage
             LeadingConditionRule worldCorrupt = new LeadingConditionRule(new Conditions.IsCorruption());
             npcLoot.Add(ItemDropRule.Common(ItemType<FragmentOfEvil>()));
             npcLoot.Add(ItemDropRule.Common(ItemType<OldKey>(), 4));
-            npcLoot.Add(ItemDropRule.Common(ItemID.LifeCrystal, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.LifeCrystal, 5));
             worldCrimson.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCrimson>(), 1, 20, 40));
             worldCorrupt.OnSuccess(ItemDropRule.Common(ItemType<FamishedBlockCorruption>(), 1, 20, 40));
             npcLoot.Add(ItemDropRule.Common(ItemType<RotHeart>(), 25));

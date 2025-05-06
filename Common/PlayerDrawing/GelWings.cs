@@ -31,7 +31,7 @@ namespace SOTS.Common.PlayerDrawing
 			int drawY = (int)(drawInfo.Position.Y - Main.screenPosition.Y);*/
 			Vector2 Position = drawInfo.Position;
 			Vector2 origin = new Vector2(wingsTexture.Value.Width / 2, wingsTexture.Value.Height / 12);
-			Vector2 pos = new Vector2((float)((int)(Position.X - Main.screenPosition.X + (float)(drawPlayer.width / 2) - (float)(9 * drawPlayer.direction))), (float)(Position.Y - Main.screenPosition.Y + (float)(drawPlayer.height / 2) - 5f * drawPlayer.gravDir));
+			Vector2 pos = new Vector2((int)(Position.X - Main.screenPosition.X + (drawPlayer.width / 2) - (10 * drawPlayer.direction)), (int)(Position.Y - Main.screenPosition.Y + (drawPlayer.height / 2) - 5f * drawPlayer.gravDir));
 			Color lightColor = Lighting.GetColor((int)drawPlayer.Center.X / 16, (int)drawPlayer.Center.Y / 16, Color.White);
 			Color color = MachinaBooster.changeColorBasedOnStealth(lightColor, drawInfo) * (175f / 255f) * alpha;
 			DrawData data = new DrawData(wingsTexture.Value, pos, new Rectangle(0, wingsTexture.Value.Height / 6 * drawPlayer.wingFrame, wingsTexture.Value.Width, wingsTexture.Value.Height / 6), color, 0f, origin, 1f, drawInfo.playerEffect, 0);

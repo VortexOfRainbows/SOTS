@@ -296,6 +296,17 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                 }
             }
+            for (int i = 0; i < segments.Length; i++)
+            {
+                int segment = segments[i];
+                if (segment > 0)
+                {
+                    NPC other = Main.npc[segment];
+                    other.position += recoil * 2;
+                }
+            }
+            NPC.position += recoil;
+            recoil *= 0.94f;
         }
         public void UpdateChildPos(NPC child, int neckPos)
         {
@@ -515,8 +526,8 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override void SetDefaults()
         {
-            NPC.lifeMax = 5000;
-            NPC.damage = 25;
+            NPC.lifeMax = 14000;
+            NPC.damage = 42;
             NPC.defense = 20;
             NPC.knockBackResist = 0f;
             NPC.width = 68;
@@ -533,8 +544,14 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.boss = true;
             neckSegments = [];
         }
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.75f); 
+            NPC.damage = (int)(NPC.damage * 0.75f);
+        }
         private int[] segments = [-1, -1, -1, -1, -1, -1, -1, -1];
         private int DespawnCounter = 0;
+        public Vector2 recoil = Vector2.Zero;
         private Player target => Main.player[NPC.target];
         public bool DespawnCheck()
         {
@@ -557,7 +574,7 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
-                if (NPC.ai[0] == 0)
+                if (AIPhase == 0)
                 {
                     NPC.realLife = NPC.whoAmI;
                     int latestNPC = NPC.whoAmI;
@@ -571,7 +588,7 @@ namespace SOTS.NPCs.Boss.Excavator
                         Main.npc[latestNPC].ai[2] = i + 1;
                         segments[i] = latestNPC;
                     }
-                    NPC.ai[0] = 1;
+                    AIPhase = 1;
                 }
                 NPC.netUpdate = true;
             }
@@ -588,14 +605,28 @@ namespace SOTS.NPCs.Boss.Excavator
                     NPC.velocity += toMouse * 0.001f;
                 }
             }
-            if(MoveStyle == 0)
+            if(MoveStyle == 0 || MoveStyle == 1)
             {
                 float dist = toPlayer.Length();
-                if(dist > 200)
+                if(dist > 240)
                 {
-                    NPC.velocity += toPlayer.SNormalize() * (0.6f + dist * 0.001f);
+                    NPC.velocity += toPlayer.SNormalize().RotatedBy(MathHelper.ToRadians(-30) * (MoveStyle * 2 - 1)) * (0.6f + dist * 0.001f);
                     NPC.velocity *= 0.925f;
                 }
+                else
+                {
+                    NPC.velocity += toPlayer.SNormalize().RotatedBy(MathHelper.ToRadians(-31) * (MoveStyle * 2 - 1)) * (0.2f + dist * 0.001f);
+                    NPC.velocity *= 0.9f;
+                }
+            }
+            if (MoveStyle == 2)
+            {
+                float dist = toPlayer.Length();
+                if (dist > 200)
+                    NPC.velocity += toPlayer.SNormalize() * (0.2f + dist * 0.0005f);
+                else
+                    NPC.velocity += toPlayer.SNormalize() * (0.1f + dist * 0.0002f);
+                NPC.velocity *= 0.9f;
             }
         }
         public override bool PreAI()
@@ -608,15 +639,40 @@ namespace SOTS.NPCs.Boss.Excavator
             WormSetup();
             IdleMoveStyle();
             AI1++;
-            if(AI1 > 120)
+            if(AIPhase == 1)
             {
-                if(Main.netMode != NetmodeID.MultiplayerClient)
+                AI1++;
+                if(AI1 > 200)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorRocket>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, target.Center.X, target.Center.Y);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
+                    MoveStyle = 2;
+                    if(AI1 >= 260)
+                    {
+                        if(AI1 == 260)
+                        {
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, NPC.whoAmI);
+                        }
+                    }
+                    if(AI2 == -1)
+                    {
+                        recoil = -toPlayer.SNormalize() * 8;
+                        NPC.velocity *= 0.1f;
+                        AI2 = 0;
+                    }
+                    if(AI1 > 540)
+                    {
+                        AI1 = 0;
+                    }
                 }
-                AI1 = -70;
             }
+            //if(AI1 > 120)
+            //{
+            //    if(Main.netMode != NetmodeID.MultiplayerClient)
+            //    {
+            //        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorRocket>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, target.Center.X, target.Center.Y);
+            //        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
+            //    }
+            //    AI1 = -70;
+            //}
 
             if(NPC.velocity.LengthSquared() > 0.1f)
             {

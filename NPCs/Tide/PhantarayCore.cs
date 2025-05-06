@@ -1,22 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Items.Banners;
-using SOTS.Items.Conduit;
-using SOTS.Items.Pyramid;
-using SOTS.Projectiles;
-using SOTS.Projectiles.Anomaly;
-using SOTS.Projectiles.Pyramid;
 using SOTS.Projectiles.Tide;
-using SOTS.WorldgenHelpers;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 

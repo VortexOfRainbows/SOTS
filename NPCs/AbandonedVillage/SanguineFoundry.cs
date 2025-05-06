@@ -36,7 +36,7 @@ namespace SOTS.NPCs.AbandonedVillage
         public override void SetDefaults()
 		{
             NPC.lifeMax = 60;
-            NPC.damage = 30;
+            NPC.damage = 25;
             NPC.defense = 14;
             NPC.width = 48;
 			NPC.height = 48;

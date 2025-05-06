@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Projectile.width = 24;
 			Projectile.height = 24;
 			Projectile.penetrate = -1;
-			Projectile.friendly = true; //just for testing
+			Projectile.friendly = false;
             Projectile.timeLeft = 540;
 			Projectile.tileCollide = true;
 			Projectile.hostile = true;

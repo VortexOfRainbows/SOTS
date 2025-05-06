@@ -46,8 +46,6 @@ Update Objectives:
 
 ---WIP List---
 Abandoned village generation
-Knockback Resist on AV enemies should be adjusted
-Modify AV Spawn rate
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -67,6 +65,9 @@ N/A
 
 ---Multiplayer Fixes/Testing Needed---
 Collapsing blocks from excavator MP syncing
+Excavator orb
+Excavator missile
+Excavator beam
 
 ---Content Needed---
 N/A
@@ -76,12 +77,12 @@ N/A
 
 Daily Log:
 
+5/5/25
+1. WIP Excavator attack patterns
+
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)
 2. Work on Excavator orb, missile, beam projectiles (seems to work in multiplayer when owned by an enemy)
-	1. Excavator orb Needs: Multiplayer Syncing and integration to boss as pattern
-	2. Excavator missile Needs: Multiplayer Syncing and integration to boss as pattern
-	3. Excavator beam Needs: Multiplayer Syncing and integration to boss as pattern
 3. Next: Excavator Sawblade projectile
 4. WIP Excavator summoning station
 	1. Spawns in world but the summoning animation can be improved
@@ -103,6 +104,10 @@ Daily Log:
 18. Fire Spitter damage 10 -> 5
 19. Fistfull, Pupa, and Rotwalker no longer despawn especially easily during the day, making them practically now appear on the surface during the day.
 20. Bubble Monument generation (needs loot)
+21. Doubled the rate at which famished drop life crystals (10% -> 20%)
+22. Corpsebloom damage (35, 70, 105) -> (30, 60, 90)
+23. Sanguine Foundry damage (30, 60, 90) -> (25, 50, 75)
+24. Fix small visual inconsistency with Gel Wings being in between pixels
 
 4/18/25 and 4/21/25
 1. Invidia Portal Plating added
