@@ -5217,18 +5217,40 @@ namespace SOTS.WorldgenHelpers
 			int x = (int)Main.MouseWorld.X / 16;
 			int y = (int)Main.MouseWorld.Y / 16;
 
-			for(int i = 0; i < 100; i++)
+			for (int i = 0; i < 100; i++)
 			{
-                for (int j = 0; j < 50; j++)
-                {
+				for (int j = 0; j < 50; j++)
+				{
 					int x2 = x + i;
 					int y2 = y + j;
 					WorldGen.PlaceWall(x2, y2, WallID.DiamondGemspark, true);
 					Tile t = Main.tile[x2, y2];
 					t.WallColor = PaintID.ShadowPaint;
+				}
+			}
+		}
+		public static void PlaceBubbleMonumentFull()
+		{
+			int offset = WorldGen.genRand.Next(GenVars.floatingIslandHouseX.Length);
+			for(int i = 0; i < GenVars.floatingIslandHouseX.Length; ++i)
+			{
+				int Index = (i + offset) % GenVars.floatingIslandHouseX.Length;
+                int x = GenVars.floatingIslandHouseX[Index];
+				int y = GenVars.floatingIslandHouseY[Index];
+				if (GenVars.skyLake[Index])
+				{
+					for(int j = 0; j < 20; ++j)
+					{
+						int n = CountCloudBlocks(x, y + j);
+                        if (n > 0)
+                        {
+                            GenerateBubbleMonument(x, y + j, n);
+							return;
+                        }
+					}
                 }
-            }
-        }
+			}
+		}
 		public static int CountCloudBlocks(int x, int y)
 		{
 			Tile t = Main.tile[x, y];
@@ -5313,7 +5335,7 @@ namespace SOTS.WorldgenHelpers
 							Main.tile[coords.X + 1, coords.Y].ClearTile();
 							Main.tile[coords.X + 1, coords.Y - 1].ClearTile();
 							Main.tile[coords.X, coords.Y - 1].ClearTile();
-                            WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidalPlatingChestTile>());
+                            WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidalPlatingChestTile>(), style: 1);
                         }
                     }
 					else

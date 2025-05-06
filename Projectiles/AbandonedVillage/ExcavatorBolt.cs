@@ -33,7 +33,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 				Color c = ExcavatorOrb.Color;
 				Texture2D textureTe = ModContent.Request<Texture2D>("SOTS/Assets/LongGradient").Value;
 				Vector2 originT = new Vector2(0, textureTe.Height / 2);
-				float alphaMult2 = Math.Clamp(MathF.Sin(MathF.Min(Projectile.ai[2] / 3f, 1) * MathF.PI), 0, 1);
+				float alphaMult2 = Math.Clamp(MathF.Sin(MathF.Min(Projectile.ai[2] / 2f, 1) * MathF.PI), 0, 1);
                 float length = Projectile.velocity.Length() * alphaMult2;
                 Main.spriteBatch.Draw(textureTe, Projectile.Center - Main.screenPosition, null, c * alphaMult2 * 0.5f, Projectile.velocity.ToRotation(), originT, new Vector2(length / 6f, 1f + alphaMult2 * 0.5f), SpriteEffects.None, 0f);
             }

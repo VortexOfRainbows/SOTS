@@ -102,7 +102,7 @@ Daily Log:
 17. Reduce spawnrate of rotwalker on surface by 50%
 18. Fire Spitter damage 10 -> 5
 19. Fistfull, Pupa, and Rotwalker no longer despawn especially easily during the day, making them practically now appear on the surface during the day.
-20. WIP Bubble Monument generation
+20. Bubble Monument generation (needs loot)
 
 4/18/25 and 4/21/25
 1. Invidia Portal Plating added

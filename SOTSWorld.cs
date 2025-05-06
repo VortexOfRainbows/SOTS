@@ -52,6 +52,7 @@ using SOTS.Items.Invidia;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Helpers;
+using SOTS.Items.Furniture.Tidal;
 
 namespace SOTS
 {
@@ -683,6 +684,7 @@ namespace SOTS
 				}
 				SOTSWorldgenHelper.FindAndGenerateDamocles(dungeonSide);
 				GemStructureWorldgenHelper.GenerateGemStructures();
+				SOTSWorldgenHelper.PlaceBubbleMonumentFull();
 				SOTSWorldgenHelper.CleanUpFloatingTrees(); //Updates tile frames for trees
 			}));
 		}
@@ -992,7 +994,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.TileType == ModContent.TileType<EarthenPlatingStorageTile>())
+				else if (tile.TileType == ModContent.TileType<EarthenPlatingStorageTile>())
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
@@ -1037,7 +1039,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.TileType == ModContent.TileType<NaturePlatingCapsuleTile>())
+                else if (tile.TileType == ModContent.TileType<NaturePlatingCapsuleTile>())
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
@@ -1070,7 +1072,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.TileType == ModContent.TileType<PermafrostPlatingCapsuleTile>() && tile.WallType == ModContent.WallType<HardIceBrickWallWall>())
+                else if (tile.TileType == ModContent.TileType<PermafrostPlatingCapsuleTile>() && tile.WallType == ModContent.WallType<HardIceBrickWallWall>())
 				{
 					int slot = 0;
 					chest.item[slot].SetDefaults(ModContent.ItemType<GlazeBow>()); //Will be replaced with Glaze Repeater
@@ -1086,7 +1088,7 @@ namespace SOTS
 					chest.item[slot].stack = Main.rand.Next(3) + 1; // 1 to 3
 					slot++;
 				}
-				if (tile.TileType == ModContent.TileType<RuinedChestTile>())
+                else if (tile.TileType == ModContent.TileType<RuinedChestTile>())
 				{
 					int slot = 0;
 					Tile tile2 = Main.tile[chest.x, chest.y + 2];
@@ -1140,7 +1142,7 @@ namespace SOTS
 						slot++;
 					}
 				}
-				if (tile.TileType == ModContent.TileType<PyramidChestTile>())
+                else if (tile.TileType == ModContent.TileType<PyramidChestTile>())
 				{
 					int slot = 0;
                     int primaryTreasure = PyramidPoolAfter[Main.rand.Next(lightItemPool2.Count)];
@@ -1325,8 +1327,17 @@ namespace SOTS
 						chest.item[slot].stack = WorldGen.genRand.Next(51) + 50;
 						slot++;
 					}
-				}
-				if (tile.TileType == TileID.Containers || tile.TileType == TileID.Containers2)
+                }
+                else if (tile.TileType == ModContent.TileType<TidalPlatingChestTile>() && tile.TileFrameX >= 36 && Main.tile[chest.x, chest.y + 1].WallType == ModContent.WallType<TidalPlatingWallWall>()) //locked tidal plating chest
+                {
+					int slot = 0;
+					chest.AddItemToChest(ItemID.BubbleWand, ref slot);
+					chest.AddItemToChest(ItemID.Bubble, ref slot, 100);
+                    chest.AddItemToChest(ItemID.LifeCrystal, ref slot);
+                    chest.AddItemToChest(ItemID.ManaCrystal, ref slot);
+                    chest.AddItemToChest(ItemID.GoldCoin, ref slot, WorldGen.genRand.Next(3, 6));
+                }
+                else if (tile.TileType == TileID.Containers || tile.TileType == TileID.Containers2)
 				{
 					int slot = 39;
 					for (int i = 0; i < 39; i++)
