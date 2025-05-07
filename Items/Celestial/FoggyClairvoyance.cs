@@ -23,21 +23,24 @@ namespace SOTS.Items.Celestial
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient(ModContent.ItemType<SanguiteBar>(), 15).AddIngredient(ModContent.ItemType<Fragments.PrecariousCluster>(), 1).AddTile(TileID.MythrilAnvil).Register();
+			CreateRecipe(1).AddIngredient<SanguiteBar>(15).AddIngredient<Fragments.PrecariousCluster>(1).AddTile(TileID.MythrilAnvil).Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			player.AddBuff(ModContent.BuffType<FluidCurse>(), 3);
-			List<int> bList = new List<int>() { BuffID.PotionSickness, ModContent.BuffType<FluidCurse>(), ModContent.BuffType<VoidRecovery>(), ModContent.BuffType<VoidShock>(), ModContent.BuffType<VoidSickness>(), BuffID.ManaSickness, ModContent.BuffType<Satiated>(), ModContent.BuffType<VoidMetamorphosis>(), BuffID.ChaosState };
 			for(int i = 0; i < player.buffImmune.Length; i++)
-            {
-				bool debuff = Main.debuff[i];
-				if(debuff && !bList.Contains(i))
-                {
+				if(ValidImmunableDebuff(i))
 					player.buffImmune[i] = true;
-                }
-            }
 			player.GetDamage(DamageClass.Generic) += 0.15f;
 		}
+        public static List<int> bList = 
+			[BuffID.PotionSickness, ModContent.BuffType<FluidCurse>(), ModContent.BuffType<VoidRecovery>(), 
+			ModContent.BuffType<VoidShock>(), ModContent.BuffType<VoidSickness>(), BuffID.ManaSickness,
+			ModContent.BuffType<Satiated>(), ModContent.BuffType<VoidMetamorphosis>(), BuffID.ChaosState];
+		public static bool ValidImmunableDebuff(int i)
+		{
+			return Main.debuff[i] && !bList.Contains(i) && 
+				(i < BuffID.Count || BuffLoader.GetBuff(i).Mod == SOTS.Instance); //Only effects vanilla and SOTS debuffs
+        }
 	}
 }

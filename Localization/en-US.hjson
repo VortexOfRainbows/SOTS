@@ -606,7 +606,7 @@ Mods: {
 				DisplayName: Foggy Clairvoyance
 				Tooltip:
 					'''
-					Increases damage by 15% and grants immunity to almost every debuff
+					Increases damage by 15% and grants immunity to most debuffs
 					'Cursed'
 					'''
 			}
@@ -953,7 +953,7 @@ Mods: {
 				Tooltip:
 					'''
 					Increases void received from food by 25%
-					Receiving the same buff multiple times will increase buff duration instead of resetting it, up to double the duration
+					Receiving the same buff multiple times will increase buff duration instead of resetting it, up to double the original duration
 					Debuff durations are drained faster, prolonging the duration of all active buffs
 					'''
 			}
@@ -2136,7 +2136,7 @@ Mods: {
 					'''
 					Killed enemies have a 50% chance to drop additional hearts
 					This chance increases to 100% with critical strikes
-					Collecting hearts lengthens the duration of active buffs
+					Collecting hearts lengthens the duration of active buffs, up to double the original duration
 					'''
 			}
 

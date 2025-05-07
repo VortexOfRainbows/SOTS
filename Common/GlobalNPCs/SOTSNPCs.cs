@@ -254,11 +254,11 @@ namespace SOTS.Common.GlobalNPCs
         {
             base.ModifyIncomingHit(npc, ref modifiers);
         }
-        public void Assassinate(NPC npc, Player player, ref NPC.HitModifiers modifiers)
+        public static void Assassinate(NPC npc, Player player, ref NPC.HitModifiers modifiers)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			//VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
-			if (modPlayer.assassinate && !npc.boss)
+			if (modPlayer.assassinate && !npc.boss && npc.realLife == -1)
 			{
 				npc.AddBuff(ModContent.BuffType<Assassination>(), 30 * modPlayer.assassinateFlat);
 				float mult = 1 - modPlayer.assassinateNum;

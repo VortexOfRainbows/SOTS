@@ -59,6 +59,7 @@ namespace SOTS
 {
 	public class SOTSPlayer : ModPlayer
 	{
+		public Dictionary<int, int> OriginalBuffDurations = [];
 		private int LogInMessageTimer = 7;
 		public override void SetControls()
 		{
@@ -2011,7 +2012,7 @@ namespace SOTS
 			PotionBuffDegradeRate = 1f;
             InverseAmberRing = false;
         }
-		public static void IncreaseBuffDurations(Player player, int time, float timeBonusMultiplier = 0, int maximumTimeBonus = 1, bool affectAll = false, bool allowUnder30Seconds = false)
+		public static void IncreaseBuffDurations(Player player, int time, float timeBonusMultiplier = 0, int maximumTimeBonus = 1, bool affectAll = false, bool allowUnder30Seconds = false, bool cap = false)
 		{
 			for (int i = 0; i < player.buffTime.Length; i++)
 			{
@@ -2021,11 +2022,21 @@ namespace SOTS
 					if (type == ModContent.BuffType<Attuned>())
 						continue;
 					int totalIncrease = time;
-					if(timeBonusMultiplier != 0)
-                    {
+					if (timeBonusMultiplier != 0)
+					{
 						int bonusTime = (int)(timeBonusMultiplier * player.buffTime[i]); //gets a percentage increase
 						totalIncrease += bonusTime;
-                    }
+					}
+					if (cap)
+					{
+						SOTSPlayer sPlayer = player.SOTSPlayer();
+						if(sPlayer.OriginalBuffDurations.TryGetValue(type, out int originalDuration))
+						{
+							maximumTimeBonus = Math.Min(maximumTimeBonus, originalDuration * 2 - player.buffTime[i]);
+							if (maximumTimeBonus < 0)
+								maximumTimeBonus = 0;
+						}
+					}
 					if (totalIncrease > maximumTimeBonus)
 						totalIncrease = maximumTimeBonus;
 					player.buffTime[i] += totalIncrease;

@@ -78,9 +78,13 @@ N/A
 
 Daily Log:
 
-5/5/25
+5/5/25 to 5/6/25
 1. WIP Excavator attack patterns
 2. Reduce topspeed of captured cart (hostile) 6 -> 5.63
+3. Foggy Clairvoyance should no longer effect debuffs from other mods whatsoever
+4. Beelzebub's ring is now capped at double the original buff duration, but can now effect more buffs with low durations that were previously blacklisted.
+	1. should work in multiplayer, as buffs are mostly client-authoritative. Not thoroughly checked, though.
+5. Assassination effect will no longer work on worm-segments and Wall of Flesh eyes
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)

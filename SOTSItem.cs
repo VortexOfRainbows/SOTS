@@ -687,7 +687,7 @@ namespace SOTS
         {
             if (SOTSPlayer.ModPlayer(player).RubyRing && (item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.CandyCane))
             {
-				SOTSPlayer.IncreaseBuffDurations(player, 240, 0.05f, 540, true); //increases buff duration by 5 seconds + 5% of the remaining buff duration, caps at 10 seconds
+				SOTSPlayer.IncreaseBuffDurations(player, 240, 0.05f, 540, true, true, true); //increases buff duration by 5 seconds + 5% of the remaining buff duration, caps at 10 seconds
 			}
             return base.OnPickup(item, player);
         }

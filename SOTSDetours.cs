@@ -706,9 +706,19 @@ namespace SOTS
 		}
 		private static void Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet = true, bool foodHack = false)
 		{
-			if (SOTSPlayer.ModPlayer(self).PotionStacking && self.whoAmI == Main.myPlayer && (!quiet || Main.netMode == NetmodeID.SinglePlayer))
+			SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(self);
+			int originalTimeToAdd = timeToAdd;
+			if(sPlayer.RubyRing)
+            {
+				int currentTime = 0;
+				int index = self.FindBuffIndex(type);
+				if(index != -1)
+                    currentTime = self.buffTime[index];
+				sPlayer.OriginalBuffDurations[type] = Math.Max(currentTime, originalTimeToAdd);
+				//Main.NewText(type + ": " + sPlayer.OriginalBuffDurations[type]);
+            }
+            if (sPlayer.PotionStacking && self.whoAmI == Main.myPlayer && (!quiet || Main.netMode == NetmodeID.SinglePlayer))
 			{
-				int originalTimeToAdd = timeToAdd;
                 int currentTime = 0;
                 if (type == BuffID.WellFed || type == BuffID.WellFed2 || type == BuffID.WellFed3)
 				{
