@@ -3455,7 +3455,7 @@ namespace SOTS.WorldgenHelpers
 									if (confirmPlatforms == 0)
 										tile.HasTile = false;
 									else
-									{
+									{	
 										WorldGen.PlaceTile(k, l, ModContent.TileType<ArkhalisChainTile>(), true, true, -1, 0);
 										tile.TileFrameX = 18;
 										tile.Slope = 0;
@@ -5269,20 +5269,20 @@ namespace SOTS.WorldgenHelpers
 			y -= 2;
 			for (int j = 0; j < height; ++j)
 			{
-				for (int i = 0; i < 10; ++i)
+				for (int i = 0; i < 11; ++i)
 				{
 					Point coords = new(x + i, y + j);
 					Tile t = Main.tile[coords.X, coords.Y];
-					if (i >= 1 && i < 9 && j > 0 && j < height - 1)
+					if (i >= 1 && i < 10 && j > 0 && j < height - 1)
 					{
 						t.WallType = 0;
-						if (i >= 3 && i < 7)
+						if (i >= 3 && i < 8)
 							t.ClearTile();
 						WorldGen.PlaceWall(coords.X, coords.Y, ModContent.WallType<TidalPlatingWallWall>());
 					}
 					if (j < 2 || j >= height - 2)
 					{
-						if ((i >= 0 && i < 3) || (i >= 7 && i < 10))
+						if ((i >= 0 && i < 3) || (i >= 8 && i < 11))
 						{
 							t.ClearTile();
 							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidePlatingTile>());
@@ -5300,12 +5300,12 @@ namespace SOTS.WorldgenHelpers
 					}
 					else
 					{
-						if (i == 1 || i == 8)
+						if (i == 1 || i == 9)
 						{
 							t.ClearTile();
 							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidePlatingTile>());
 						}
-						if (i == 2 || i == 7)
+						if (i == 2 || i == 8)
 						{
 							t.ClearTile();
 							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<DissolvingDelugeTile>());
@@ -5316,26 +5316,31 @@ namespace SOTS.WorldgenHelpers
 			height += WorldGen.genRand.Next(10, 17);
 			for(int j = height + 2; j >= height; --j)
 			{
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < 11; ++i)
                 {
                     Point coords = new(x + i, y + j);
                     Tile t = Main.tile[coords.X, coords.Y];
 					if(j == height)
 					{
-						if(i > 0 && i < 9)
+						if(i > 0 && i < 10)
 							WorldGen.PlaceWall(coords.X, coords.Y, ModContent.WallType<TidalPlatingWallWall>());
-						if(i == 1 || i == 8)
+						if(i == 1 || i == 9)
 						{
 							t.ClearTile();
 							WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<SkyChainTile>());
 						}
 						if(i == 4)
 						{
-							t.ClearTile();
+							Tile chain = Main.tile[coords.X + 1, coords.Y + 3];
+                            t.ClearTile();
 							Main.tile[coords.X + 1, coords.Y].ClearTile();
 							Main.tile[coords.X + 1, coords.Y - 1].ClearTile();
 							Main.tile[coords.X, coords.Y - 1].ClearTile();
                             WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidalPlatingChestTile>(), style: 1);
+                            WorldGen.PlaceTile(coords.X + 1, coords.Y + 3, ModContent.TileType<ArkhalisChainTile>(), true, true, -1, 0);
+                            chain.TileFrameX = 18;
+                            chain.Slope = 0;
+                            chain.IsHalfBlock = false;
                         }
                     }
 					else
@@ -5349,7 +5354,7 @@ namespace SOTS.WorldgenHelpers
                                     WorldGen.PlaceTile(coords.X - k, coords.Y, ModContent.TileType<TidalPlatingPlatformTile>());
                                 }
                             }
-                            if (i == 9)
+                            if (i == 10)
                             {
                                 for (int k = 1; k < 5; ++k)
                                 {
