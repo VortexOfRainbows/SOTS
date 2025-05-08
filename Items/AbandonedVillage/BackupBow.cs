@@ -18,8 +18,9 @@ namespace SOTS.Items.AbandonedVillage
             Item.rare = ItemRarityID.Blue;
 			Item.accessory = true;
 			Item.hasVanityEffects = true;
-		}
-		public override void UpdateAccessory(Player player, bool hideVisual)
+            Item.value = Item.sellPrice(0, 1, 0, 0);
+        }
+        public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.backUpBow = true;
