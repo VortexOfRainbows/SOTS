@@ -23,6 +23,7 @@ using SOTS.Items.ChestItems;
 using SOTS.Items.Tools;
 using SOTS.Items.Potions;
 using SOTS.Items.Conduit;
+using SOTS.Items.CritBonus;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -3783,8 +3784,8 @@ namespace SOTS.WorldgenHelpers
             ushort soot = (ushort)ModContent.TileType<SootBlockTile>();
             ushort sootSlab = (ushort)ModContent.TileType<SootSlabTile>();
             int ruinedChests = 11;
-            int earthenChests = 11;
-            int gulaChests = 6;
+            int earthenChests = 12;
+            int gulaChests = 7;
             int forceBreak = 13000;
             bool hasPlacedPinkyTestTube = false;
             while((ruinedChests > 0 || earthenChests > 0 || gulaChests > 0) && forceBreak > 0)
@@ -4100,12 +4101,17 @@ namespace SOTS.WorldgenHelpers
         {
             int bestC = BestEvilBiome();
             CorruptionRectangle cR = Corruptions[bestC];
-            List<int> Tier1Items = [ModContent.ItemType<FizzleStar>(), ModContent.ItemType<SteelerWheeler>(), ModContent.ItemType<VisionAmulet>(), ItemID.MiningHelmet, ModContent.ItemType<AncientSteelSword>(), 
-                ModContent.ItemType<RockingHorse>(), ModContent.ItemType<MrBurns>(), ModContent.ItemType<AncientSteelLongbow>(), ModContent.ItemType<EarthenLeggings>()];
-            List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(),
-                ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>(), ModContent.ItemType<AncientSteelLantern>(), ModContent.ItemType<EarthenChestplate>()];
+
+            List<int> Tier1Items = [ModContent.ItemType<FizzleStar>(), ModContent.ItemType<SteelerWheeler>(), ModContent.ItemType<AncientSteelGreatHamaxe>(), ItemID.MiningHelmet, ModContent.ItemType<AncientSteelSword>(), 
+                ModContent.ItemType<RockingHorse>(), ModContent.ItemType<MrBurns>(), ModContent.ItemType<AncientSteelLongbow>(), 
+                (WorldGen.crimson ? ModContent.ItemType<BloodstainedCoin>() : ModContent.ItemType<PutridCoin>())]; //9
+
+            List<int> Tier2Items = [ModContent.ItemType<Lockpick>(), ModContent.ItemType<AutoClicker>(), ModContent.ItemType<BrassWhip>(), ModContent.ItemType<HandCannon>(), ModContent.ItemType<AncientSteelGreatPickaxe>(),
+                ModContent.ItemType<MineralSpewer>(), ModContent.ItemType<BackupBow>(), ModContent.ItemType<AncientSteelHalberd>(), ModContent.ItemType<AncientSteelLantern>(), ModContent.ItemType<EarthenHelmet>()]; //10
+
             List<int> Tier3Items = [ModContent.ItemType<PixelBlaster>(), ModContent.ItemType<AcidicInjection>(), 
-                ModContent.ItemType<AncientSteelGreatPickaxe>(), ModContent.ItemType<AncientSteelGreatHamaxe>(), ModContent.ItemType<EarthenHelmet>()];
+                 ModContent.ItemType<EarthenLeggings>(), ModContent.ItemType<VisionAmulet>(),  ModContent.ItemType<EarthenChestplate>()]; //5
+
             List<int> Tier4Items = [ModContent.ItemType<StarshardSaber>(), ModContent.ItemType<Icebreaker>(), ModContent.ItemType<SandstormPouch>(), ModContent.ItemType<PlagueSpitter>(), ModContent.ItemType<JarOfPineapple>()];
             int tier1 = WorldGen.genRand.Next(Tier1Items.Count), 
                 tier2 = WorldGen.genRand.Next(Tier2Items.Count), 

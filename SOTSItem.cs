@@ -214,7 +214,8 @@ namespace SOTS
 		public static int[] DedicatedKekcroc;
 		public static int[] DedicatedTaco;
         public static int[] PiscesFishItems;
-		public static void LoadArrays() //called in SOTS.Load()
+        public static int[] DedicatedGlewpie;
+        public static void LoadArrays() //called in SOTS.Load()
 		{
 			DarkBlueRarity = [ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>()]; //Dark Blue
 			DarkRedRarity = [ItemType<RefractingCrystal>(), ItemType<CursedApple>(), ItemType<RubyKeystone>()]; //Dark Red
@@ -231,6 +232,7 @@ namespace SOTS
 			DedicatedTaco = [ItemType<Baguette>(), ItemType<Taco>()]; //Coolio/Taco
             DedicatedKoolaid = [ItemType<PintOPunch>()]; //Koolaid
             DedicatedKekcroc = [ItemType<BlinkBlade>()]; //Kekcroc
+            DedicatedGlewpie = [ItemType<JarOfPineapple>()]; //Glewpie (#1 SOTS Glazer)
 
             PiscesFishItems = [-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
 			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
@@ -343,6 +345,8 @@ namespace SOTS
 				dedicatedColor = new Color(252, 254, 56);
 			if (DedicatedKekcroc.Contains(item.type))
 				dedicatedColor = new Color(139, 63, 150);
+            if (DedicatedGlewpie.Contains(item.type))
+                dedicatedColor = new Color(85, 212, 69);
             if (rarityColor != Color.White)
             {
                 foreach (TooltipLine line in tooltips)

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Dusts;
 using SOTS.Projectiles.AbandonedVillage;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
- 
+
 namespace SOTS.NPCs.Boss.Excavator
 {
     public class ExcavatorBody : ModNPC
@@ -141,6 +142,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.damage = 12;
             NPC.defense = 12;
             NPC.dontTakeDamage = true;
+            NPC.alpha = 255;
         }
     }
     public class ExcavatorDrillTail : ExcavatorTail
@@ -150,6 +152,7 @@ namespace SOTS.NPCs.Boss.Excavator
             base.SetDefaults();
             NPC.damage = 40;
             NPC.dontTakeDamage = false;
+            NPC.alpha = 255;
         }
     }
     public class Excavator : ModNPC
@@ -296,16 +299,22 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                 }
             }
+            ProcessRecoil();
+        }
+        public void ProcessRecoil()
+        {
+            for (int i = 0; i < neckSegments.Count; i++)
+                neckSegments[i] += recoil;
             for (int i = 0; i < segments.Length; i++)
             {
                 int segment = segments[i];
                 if (segment > 0)
                 {
                     NPC other = Main.npc[segment];
-                    other.position += recoil * 2;
+                    other.position += recoil * 1f;
                 }
             }
-            NPC.position += recoil;
+            NPC.position += recoil * 1.1f;
             recoil *= 0.94f;
         }
         public void UpdateChildPos(NPC child, int neckPos)
@@ -395,37 +404,43 @@ namespace SOTS.NPCs.Boss.Excavator
                     spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             }
         }
-        public static void DrawArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir)
+        public Vector2[] handPos = new Vector2[4];
+        public Vector2[] handNorm = new Vector2[4];
+        public void DrawArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir, bool draw = true)
         {
             bool isBigArm = MathF.Abs(dir) == 2;
             int j = SOTSUtils.SignNoZero(dir);
-            Texture2D body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
-            Texture2D arm = ModContent.Request<Texture2D>(isBigArm ? "SOTS/NPCs/Boss/Excavator/bigArmLeft" : "SOTS/NPCs/Boss/Excavator/arm").Value;
+            int armType = !isBigArm ? 0 : 2;
+            Texture2D body = null;
+            Texture2D arm = null;
             Texture2D hand = null;
-            int armType = 2;
-            if(armType == 1)
+            if (draw)
             {
-                hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handSaw").Value;
+                body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
+                arm = ModContent.Request<Texture2D>(isBigArm ? "SOTS/NPCs/Boss/Excavator/bigArmLeft" : "SOTS/NPCs/Boss/Excavator/arm").Value;
+                if (armType == 1)
+                    hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handSaw").Value;
+                else if (armType == 2)
+                    hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handNoWeapon").Value;
+                else
+                    hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/hand").Value;
             }
-            else if (armType == 2)
-            {
-                hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handNoWeapon").Value;
-            }
-            else
-            {
-                hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/hand").Value;
-            }
+            int armWidth = isBigArm ? 118 : 56;
+            int handWidth = armType == 1 ? 26 : armType == 2 ? 30 : 38;
+            int handHeight = armType == 1 ? 76 : armType == 2 ? 70 : 64;
+            int bodyWidth = 126;
+            int bodyHeight = 104;
             Vector2 armOrigin = isBigArm ? new Vector2(95, 47): new Vector2(50, 14);
-            Vector2 revArmOrigin = new Vector2(arm.Width - armOrigin.X, armOrigin.Y);
-            Vector2 handOrigin = new Vector2(hand.Width / 2, hand.Height);
+            Vector2 revArmOrigin = new(armWidth - armOrigin.X, armOrigin.Y);
+            Vector2 handOrigin = new(handWidth / 2, handHeight);
             float armRotation = other.rotation;
-            Vector2 armPosition = isBigArm ? new Vector2((-body.Width / 2 + 13) * j, body.Height / 2 - 31) : new Vector2((-body.Width / 2 + 4) * j, -body.Height / 2 + 16);
+            Vector2 armPosition = isBigArm ? new Vector2((-bodyWidth / 2 + 13) * j, bodyHeight / 2 - 31) : new Vector2((-bodyWidth / 2 + 4) * j, -bodyHeight / 2 + 16);
             armPosition = armPosition.RotatedBy(armRotation) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
 
             float r = other.ai[0] * j + (isBigArm ? (j == -2 ? 45 : 135) : (j * 45));
             float outwardSize = (isBigArm ? 72 : 38) - 16 * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
-            Vector2 targetHandPos = new Vector2(-(body.Width / 2 + outwardSize) * j, isBigArm ? -30 : -100).RotatedBy(armRotation);
+            Vector2 targetHandPos = new Vector2(-(bodyWidth / 2 + outwardSize) * j, isBigArm ? -30 : -100).RotatedBy(armRotation);
             targetHandPos = targetHandPos + other.Center;
             Vector2 circular = new Vector2(isBigArm ? 32 : 20, 0).RotatedBy(MathHelper.ToRadians(r));
             circular.X *= 0.25f;
@@ -433,8 +448,8 @@ namespace SOTS.NPCs.Boss.Excavator
             targetHandPos += circular;
 
 
-            float A = isBigArm ? hand.Height : hand.Height; //size of hand
-            float B = isBigArm ? arm.Width - 36 : arm.Width - 20; //size of arm
+            float A = isBigArm ? handHeight : handHeight; //size of hand
+            float B = isBigArm ? armWidth - 36 : armWidth - 20; //size of arm
             Vector2 end = targetHandPos;
             Vector2 start = armPosition;
             if(end.Distance(start) > (A + B))
@@ -466,19 +481,43 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 Vector2 mid = startToMid.SNormalize() * 84 + start;
                 mid -= new Vector2(0, 14 * j).RotatedBy(endArmRot);
-                Texture2D bigDrill = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bigDrill").Value;
-                Vector2 drillOrigin = new Vector2(42, 72);
-                Vector2 revDrillOrigin = new Vector2(bigDrill.Width - drillOrigin.X, drillOrigin.Y);
+                int bigDrillWidth = 38;
+                Vector2 drillOrigin = new(42, 72);
+                Vector2 revDrillOrigin = new(bigDrillWidth - drillOrigin.X, drillOrigin.Y);
                 float deg = -j * ((j == 1 ? 180 : 0) + -70);
-                spriteBatch.Draw(bigDrill, mid - screenPos, null, drawColor, endHandRot + MathHelper.ToRadians(deg), j == 1 ? drillOrigin : revDrillOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                if(draw)
+                {
+                    Texture2D bigDrill = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bigDrill").Value;
+                    spriteBatch.Draw(bigDrill, mid - screenPos, null, drawColor, endHandRot + MathHelper.ToRadians(deg), j == 1 ? drillOrigin : revDrillOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                }
+            }
+            
+            if(draw)
+            {
+                spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                //Dust.NewDust(end, 0, 0, DustID.LifeDrain);
+            }
+            else
+            {
+                if (dir == -2)
+                    dir = 3;
+                else if(dir == -1)
+                    dir = 1;
+                else if(dir == 1)
+                    dir = 0;
+                else if(dir == 2)
+                    dir = 2;
+                handPos[dir] = end;
+                handNorm[dir] = new Vector2(-1, 0).RotatedBy(endHandRot);
             }
 
-            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-
             //Visual representations of the IK happening
-            //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-            //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endToMid.ToRotation(), new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
+            //if (draw)
+            //{
+            //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+            //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endToMid.ToRotation(), new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
+            //}
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, startToMid.ToRotation(), new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
 
@@ -595,6 +634,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         private void IdleMoveStyle()
         {
+            float prevSpeed = NPC.velocity.Length();
             Vector2 toPlayer = target.Center - NPC.Center;
             if(MoveStyle == -2) //Debug move style = right click to move to player
             {
@@ -628,16 +668,41 @@ namespace SOTS.NPCs.Boss.Excavator
                     NPC.velocity += toPlayer.SNormalize() * (0.1f + dist * 0.0002f);
                 NPC.velocity *= 0.9f;
             }
+            if (MoveStyle == 3)
+            {
+                float dist = toPlayer.Length();
+                if (dist > 300)
+                    NPC.velocity += toPlayer.SNormalize() * (2.5f + dist * 0.001f);
+                else
+                    NPC.velocity += toPlayer.SNormalize() * (0.1f + dist * 0.0002f);
+                NPC.velocity *= 0.99f;
+            }
         }
         public override bool PreAI()
         {
+            NPC.TargetClosest(true);
             Vector2 toPlayer = target.Center - NPC.Center;
             UpdateNeckSegments();
             if (DespawnCheck())
                 return false;
-            NPC.TargetClosest(true);
             WormSetup();
             IdleMoveStyle();
+
+            if (segments.Length > 0)
+            {
+                int segment = segments[0];
+                if (segment >= 0)
+                {
+                    NPC other = Main.npc[segment];
+                    if (other.ModNPC is ExcavatorBody)
+                    {
+                        for (int j = -2; j <= 2; ++j)
+                            if (j != 0)
+                                DrawArmIK(other, null, Main.screenPosition, j, false);
+                    }
+                }
+            }
+
             AI1++;
             if(AIPhase == 1)
             {
@@ -649,7 +714,8 @@ namespace SOTS.NPCs.Boss.Excavator
                     {
                         if(AI1 == 260)
                         {
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, NPC.whoAmI);
+                            if(Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, NPC.whoAmI);
                         }
                     }
                     if(AI2 == -1)
@@ -658,10 +724,41 @@ namespace SOTS.NPCs.Boss.Excavator
                         NPC.velocity *= 0.1f;
                         AI2 = 0;
                     }
-                    if(AI1 > 540)
+                    if(AI1 > 900)
                     {
                         AI1 = 0;
+                        AI2 = 0;
+                        AIPhase = 2;
                     }
+                }
+            }
+            if(AIPhase == 2)
+            {
+                MoveStyle = 2;
+                AI1++;
+                if(AI1 > 50)
+                {
+                    AI1 = 0;
+                    for (int i = 0; i < 2; ++i)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                        {
+                            for(int j = -1; j <= 1; ++j)
+                            {
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), handPos[i], handNorm[i].RotatedBy(MathHelper.ToRadians(j * 14)) * 6.5f, ModContent.ProjectileType<ExcavatorBolt>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
+
+                            }
+                        }
+                        SOTSUtils.PlaySound(SoundID.Item91, handPos[i], 1.0f, -0.4f);
+                        PixelDust.Spawn(handPos[i], 0, 0, Main.rand.NextVector2Circular(1, 1), ExcavatorOrb.Color, 12);
+                    }
+                    AI2++;
+                }
+                if(AI2 > 4)
+                {
+                    AI1 = 0;
+                    AI2 = 0;
+                    AIPhase = 1;
                 }
             }
             //if(AI1 > 120)
@@ -674,18 +771,22 @@ namespace SOTS.NPCs.Boss.Excavator
             //    AI1 = -70;
             //}
 
-            if(NPC.velocity.LengthSquared() > 0.1f)
-            {
-                float movementTargetR = NPC.velocity.ToRotation();
-                float distToPlayer = toPlayer.Length();
-                float playerFacingTargetR = toPlayer.ToRotation();
-                float lerpAmt = 0.1f * MathF.Max(1 - distToPlayer / 480f, 0);
-                NPC.rotation = SOTSUtils.AngularLerp(movementTargetR, playerFacingTargetR, lerpAmt);
-            }
             return false;
         }
         public override void PostAI()
         {
+            Vector2 toPlayer = target.Center - NPC.Center;
+            if(segments.Length > 0)
+                AvoidCollision();
+
+            if (NPC.velocity.LengthSquared() > 0.1f)
+            {
+                float movementTargetR = NPC.velocity.ToRotation();
+                float distToPlayer = toPlayer.Length();
+                float playerFacingTargetR = toPlayer.ToRotation();
+                float lerpAmt = 0.05f * MathF.Max(1 - distToPlayer / 480f, 0);
+                NPC.rotation = SOTSUtils.AngularLerp(movementTargetR, playerFacingTargetR, lerpAmt);
+            }
             Vector2 trueVelo = NPC.position - NPC.oldPosition;
             float speed = trueVelo.Length();
             if (speed < 1000)
@@ -694,6 +795,41 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             if (!NPC.active)
                 return;
+        }
+        public void AvoidCollision()
+        {
+            NPC body = Main.npc[segments[0]];
+            //Rectangle me = NPC.Hitbox;
+            //Rectangle other = body.Hitbox;
+            Vector2 toPlayer = target.Center - body.Center;
+            Vector2 toBody = body.Center - NPC.Center;
+            float len = 64;
+            float dist = toBody.Length();
+            if (dist < len)
+            {
+                float distNeeded = len - toBody.Length();
+                NPC.Center -= toBody.SNormalize() * distNeeded;
+            }
+            float nextRotation = NPC.velocity.ToRotation();
+            float bodyRotation = body.rotation - MathHelper.PiOver2;
+            float rotationDifference = bodyRotation - nextRotation;
+            rotationDifference = MathHelper.WrapAngle(rotationDifference);
+            float maxTurnAngle = MathHelper.ToRadians(64);
+            float speed = 1.0f;
+            if(MathF.Abs(rotationDifference) > maxTurnAngle)
+            {
+                rotationDifference = (MathF.Abs(rotationDifference) - maxTurnAngle) * MathF.Sign(rotationDifference);
+                float percent = MathF.Min(MathF.Abs(MathHelper.ToDegrees(rotationDifference)) / 90f, 1);
+                float playerDist = target.Distance(body.Center);
+                float playerPercent = MathF.Min(1, playerDist / 160f);
+                recoil -= new Vector2(1, 0).RotatedBy(nextRotation * 1.0f) * MathF.Sqrt(percent) * .3f * playerPercent * playerPercent;
+                speed += percent;
+            }
+            else
+            {
+                rotationDifference = 0;
+            }
+            NPC.velocity = NPC.velocity.RotatedBy(rotationDifference) * speed;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
