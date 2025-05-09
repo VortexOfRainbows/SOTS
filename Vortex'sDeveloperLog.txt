@@ -78,7 +78,7 @@ N/A
 
 Daily Log:
 
-5/5/25 to 5/7/25
+5/5/25 to 5/8/25
 1. WIP Excavator attack patterns
 2. Reduce topspeed of captured cart (hostile) 6 -> 5.63
 3. Foggy Clairvoyance should no longer effect debuffs from other mods whatsoever
@@ -94,6 +94,7 @@ Daily Log:
 	5. Ancient Steel Pickaxe 3 -> 2
 	6. Ancient Steel Hammaxe 3 -> 1
 	7. Putrid/Bloodstain Coin now spawns in tier 1 chests
+8. WIP excavator design changes
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)

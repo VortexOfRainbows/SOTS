@@ -14,7 +14,6 @@ namespace SOTS.Items.AbandonedVillage
 		{
             Item.width = 36;     
             Item.height = 60;   
-            Item.value = 0;
             Item.rare = ItemRarityID.Blue;
 			Item.accessory = true;
 			Item.hasVanityEffects = true;
