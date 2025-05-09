@@ -5332,15 +5332,16 @@ namespace SOTS.WorldgenHelpers
 						if(i == 4)
 						{
 							Tile chain = Main.tile[coords.X + 1, coords.Y + 3];
+                            WorldGen.PlaceTile(coords.X + 1, coords.Y + 3, ModContent.TileType<TideChainTile>(), true, true, -1, 0);
+                            chain.TileFrameX = 18;
+                            chain.Slope = 0;
+                            chain.IsHalfBlock = false;
+							coords.X += WorldGen.genRand.Next(2);
                             t.ClearTile();
 							Main.tile[coords.X + 1, coords.Y].ClearTile();
 							Main.tile[coords.X + 1, coords.Y - 1].ClearTile();
 							Main.tile[coords.X, coords.Y - 1].ClearTile();
                             WorldGen.PlaceTile(coords.X, coords.Y, ModContent.TileType<TidalPlatingChestTile>(), style: 1);
-                            WorldGen.PlaceTile(coords.X + 1, coords.Y + 3, ModContent.TileType<ArkhalisChainTile>(), true, true, -1, 0);
-                            chain.TileFrameX = 18;
-                            chain.Slope = 0;
-                            chain.IsHalfBlock = false;
                         }
                     }
 					else

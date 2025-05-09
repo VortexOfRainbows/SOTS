@@ -6880,6 +6880,16 @@ Mods: {
 					Each slash will additionally call down a blade from the sky
 					'''
 			}
+
+			TideChain: {
+				DisplayName: Tide Chain
+				Tooltip: ""
+			}
+
+			BWand: {
+				DisplayName: B. Wand
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7665,6 +7675,7 @@ Mods: {
 			SanctuaryMusicBoxTile.MapEntry: Sanctuary Music Box Tile
 			EvostonePots.MapEntry: Pots
 			SeismicStationTile.MapEntry: Seismic Station
+			TideChainTile.MapEntry: Tide Chain Tile
 		}
 
 		WorldGeneration: {

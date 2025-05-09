@@ -5,6 +5,4 @@
     <AssemblyName>SOTS</AssemblyName>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
-  <ItemGroup>
-  </ItemGroup>
 </Project>
