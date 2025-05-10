@@ -99,6 +99,7 @@ Daily Log:
 	1. Also adjusted AV loot tables to fit these new items, and they should work in MP (Though I did not test)
 10. Adjusted abandoned village generation formula to slightly change priority of which structures are more okay to overlap than others
 11. Jar of Pineapple (Fresh Greeny) damage 20 -> 19. Armor penetration base 6 -> 4, per extra summon 3 -> 2
+12. Increased rate of Book of Virtues appearing in shadow treasure slime pool (weight 0.05 -> 0.5)
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)

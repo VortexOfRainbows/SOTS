@@ -406,11 +406,26 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public Vector2[] handPos = new Vector2[4];
         public Vector2[] handNorm = new Vector2[4];
+        public void SwitchArm(int i)
+        {
+            if (ArmType != i)
+            {
+                ArmSwitchTimer++;
+                if (ArmSwitchTimer > 60)
+                {
+                    ArmSwitchTimer = 0;
+                    ArmType = i;
+                }
+            }
+            else
+                ArmSwitchTimer = 0;
+        }
+        public float ArmSwitchTimer;
+        public float ArmType = 0;
         public void DrawArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir, bool draw = true)
         {
             bool isBigArm = MathF.Abs(dir) == 2;
             int j = SOTSUtils.SignNoZero(dir);
-            int armType = !isBigArm ? 0 : 2;
             Texture2D body = null;
             Texture2D arm = null;
             Texture2D hand = null;
@@ -418,9 +433,9 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
                 arm = ModContent.Request<Texture2D>(isBigArm ? "SOTS/NPCs/Boss/Excavator/bigArmLeft" : "SOTS/NPCs/Boss/Excavator/arm").Value;
-                if (armType == 1)
+                if (ArmType == 1)
                     hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handSaw").Value;
-                else if (armType == 2)
+                else if (ArmType == 2)
                     hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handNoWeapon").Value;
                 else
                     hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/hand").Value;
@@ -428,8 +443,8 @@ namespace SOTS.NPCs.Boss.Excavator
                     hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrill").Value;
             }
             int armWidth = isBigArm ? 118 : 56;
-            int handWidth = isBigArm ? 38 : armType == 1 ? 26 : armType == 2 ? 30 : 38;
-            int handHeight = isBigArm ? 120 : armType == 1 ? 76 : armType == 2 ? 70 : 64;
+            int handWidth = isBigArm ? 38 : ArmType == 1 ? 26 : ArmType == 2 ? 30 : 38;
+            int handHeight = isBigArm ? 120 : ArmType == 1 ? 76 : ArmType == 2 ? 70 : 64;
             int bodyWidth = 126;
             int bodyHeight = 104;
             Vector2 armOrigin = isBigArm ? new Vector2(95, 47): new Vector2(50, 14);
@@ -532,7 +547,7 @@ namespace SOTS.NPCs.Boss.Excavator
             endHandRot = endToMid.ToRotation();
             endArmRot = startToMid.ToRotation();
         }
-        public void DrawLeg(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i)
+        public void DrawLeg(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i, int dir = 1)
         {
             int j = SOTSUtils.SignNoZero(i);
             i = Math.Abs(i) - 1;
@@ -544,19 +559,19 @@ namespace SOTS.NPCs.Boss.Excavator
             float scale = i == 2 ? 0.9f : 0.8f;
             float rotation = i == 2 ? -12.5f : i == 0 ? 5 : -6.25f;
             int outward = i == 1 ? 26 : i == 2 ? 48 : 22;
-            Texture2D arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/leg").Value;
-            Vector2 legOrig = new Vector2(73, 15);
-            Vector2 revLegOrig = new Vector2(arm.Width - legOrig.X, legOrig.Y);
-            float legRot = other.rotation;
+            //arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/leg").Value;
+            //Vector2 legOrig = new Vector2(73, 15);
+            //Vector2 revLegOrig = new Vector2(arm.Width - legOrig.X, legOrig.Y);
+            //float legRot = other.rotation;
             Vector2 armPosition = new Vector2(outward * j, 18 - separation);
-            armPosition = armPosition.RotatedBy(legRot) + other.Center;
+            //armPosition = armPosition.RotatedBy(legRot) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), new Color(210, 210, 210));
-            legRot += MathHelper.ToRadians(legMoveSin);
+            //legRot += MathHelper.ToRadians(legMoveSin);
             //spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, legRot + MathHelper.ToRadians(rotation * j), j == -1 ? legOrig : revLegOrig, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
             float A = 64; //size of hand
             float B = 36; //size of arm
-            Vector2 circular = new Vector2(46 * j, 0).RotatedBy(MathHelper.ToRadians(r + i * 120 + (j == -1 ? 180 : 0)) * j * -1);
+            Vector2 circular = new Vector2(46 * j, 0).RotatedBy(MathHelper.ToRadians(r + i * 120 + (j == -1 ? 180 : 0)) * j);
             circular.X *= 0.42f;
             Vector2 target = armPosition + new Vector2(82 * j + circular.X, circular.Y).RotatedBy(other.rotation);
             Vector2 end = target;
@@ -569,12 +584,12 @@ namespace SOTS.NPCs.Boss.Excavator
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
 
             Texture2D hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handNoWeapon").Value;
-            arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/arm").Value;
+            Texture2D arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/arm").Value;
             Vector2 armOrigin = new Vector2(50, 14);
             Vector2 revArmOrigin = new(arm.Width - armOrigin.X, armOrigin.Y);
             Vector2 handOrigin = new(hand.Width / 2, hand.Height);
             spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == 1 ? MathF.PI : 0), j == 1 ? armOrigin : revArmOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
         public override void SetStaticDefaults()
