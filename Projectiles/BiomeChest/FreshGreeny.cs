@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.BiomeChest
         {
             int c = Stabbies.Count;
             modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
-            modifiers.ArmorPenetration += c * 3;
+            modifiers.ArmorPenetration += c * 2;
             modifiers.SourceDamage.Base += (c - 2) * 1.5f;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

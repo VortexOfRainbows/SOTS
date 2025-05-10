@@ -6890,6 +6890,22 @@ Mods: {
 				DisplayName: B. Wand
 				Tooltip: ""
 			}
+
+			AncientSteelArrow: {
+				DisplayName: Scrap Metal Arrow
+				Tooltip:
+					'''
+					Critical strikes may apply a stacking, permanent bleed for 5 damage per second
+					'''
+			}
+
+			AncientSteelBullet: {
+				DisplayName: Scrap Metal Bullet
+				Tooltip:
+					'''
+					Critical strikes may apply a stacking, permanent bleed for 5 damage per second
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -8969,6 +8985,8 @@ Mods: {
 			KingSlashThrow.DisplayName: King Slash Throw
 			LightspeedKingblade.DisplayName: Lightspeed Kingblade
 			ExcavatorBolt.DisplayName: Excavator Bolt
+			AncientSteelArrow.DisplayName: Scrap Metal Arrow
+			AncientSteelBullet.DisplayName: Scrap Metal Bullet
 		}
 
 		DamageClasses: {

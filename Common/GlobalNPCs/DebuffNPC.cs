@@ -41,6 +41,7 @@ using SOTS.Helpers;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.Projectiles.Anomaly;
 using MonoMod.Utils;
+using SOTS.Projectiles.AbandonedVillage;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -531,6 +532,19 @@ namespace SOTS.Common.GlobalNPCs
                     if(Main.rand.NextFloat(DamageCurse / 4f) < Main.rand.NextFloat(1f) && hit.SourceDamage > Main.rand.Next(20))
                         StackDebuff(npc, player, ref DamageCurse, 1, 2);
                 }
+            }
+            if (Main.myPlayer == player.whoAmI && projectile.ModProjectile != null && projectile.ModProjectile is AncientSteelAmmo && hit.Crit)
+            {
+                bool worm = npc.realLife != -1;
+                float baseChance = 0.4f;
+                int baseStacks = 1;
+                if (worm)
+                {
+                    baseStacks = 2;
+                    baseChance = 0.1f;
+                }
+                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse * 1.6f))
+                    StackDebuff(npc, player, ref BleedingCurse, 1, 0);
             }
         }
         private bool hitByRay = false;

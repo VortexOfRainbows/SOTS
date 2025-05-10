@@ -2669,7 +2669,7 @@ namespace SOTS.WorldgenHelpers
         }
         public static bool ValidLocation(Rectangle rect, int attempts)
         {
-            if (GenVars.shimmerPosition.ToPoint().ToVector2().Distance(rect.Center.ToVector2()) < rect.Width * 1.4f)
+            if (GenVars.shimmerPosition.ToPoint().ToVector2().Distance(rect.Center.ToVector2()) < rect.Width * 1.1f)
             {
                 return false;
             }
@@ -2830,8 +2830,8 @@ namespace SOTS.WorldgenHelpers
                 Vector2 c = Corruptions[i].rect.Center.ToVector2();
                 float toDung = Vector2.Distance(dungeon, c);
                 float toPyra = Vector2.Distance(pyramid, c);
-                float toShimmer = MathF.Abs((float)GenVars.shimmerPosition.X - c.X);
-                float toOcean = Math.Min(Corruptions[i].rect.Left, Main.maxTilesX - Corruptions[i].rect.Right);
+                float toShimmer = MathF.Abs((float)GenVars.shimmerPosition.X - c.X) * 1.75f; //Shimmer and ocean are not considered as important to stay far away from
+                float toOcean = Math.Min(Corruptions[i].rect.Left, Main.maxTilesX - Corruptions[i].rect.Right) * 1.25f;
                 float farthestWins = Math.Min(Math.Min(toDung, toPyra), Math.Min(toShimmer, toOcean));
                 if(farthestWins > bestL)
                 {
@@ -4259,6 +4259,8 @@ namespace SOTS.WorldgenHelpers
                         chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.Torch, WorldGen.crimson ? ItemID.CrimsonTorch : ItemID.CorruptTorch,
                             ModContent.ItemType<EarthenPlatingTorch>(),
                             ItemID.Glowstick), ref slot, WorldGen.genRand.Next(15, 31));
+                    if (WorldGen.genRand.NextBool(2) && WorldGen.genRand.NextBool(reduceItemChances))
+                        chest.AddItemToChest(WorldGen.genRand.NextFromList(ModContent.ItemType<AncientSteelArrow>(), ModContent.ItemType<AncientSteelBullet>()), ref slot, WorldGen.genRand.Next(25, 76));
                     if (WorldGen.genRand.NextBool(reduceItemChances))
                         chest.AddItemToChest(ItemID.GoldCoin, ref slot);
                 }

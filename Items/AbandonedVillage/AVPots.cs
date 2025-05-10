@@ -227,8 +227,8 @@ namespace SOTS.Items.AbandonedVillage
                 }
                 else if (num3 == 3)
                 {
-                    int Stack = Main.rand.Next(20, 31);
-                    int Type = ItemID.MusketBall;
+                    int Stack = Main.rand.Next(20, 41);
+                    int Type = ItemType<AncientSteelBullet>();
                     if (Main.hardMode)
                         Type = ItemID.ExplodingBullet;
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, Type, Stack, false, 0, false, false);
@@ -255,7 +255,7 @@ namespace SOTS.Items.AbandonedVillage
                 else if (num3 == 5)
                 {
                     int Stack = Main.rand.Next(20, 31);
-                    int Type = ItemID.UnholyArrow;
+                    int Type = ItemType<AncientSteelArrow>();
                     Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 16, 16, Type, Stack, false, 0, false, false);
                 }
                 else if (num3 == 6 && Main.rand.NextBool(5))
