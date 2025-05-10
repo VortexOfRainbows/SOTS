@@ -27,8 +27,8 @@ namespace SOTS.Items.Tide
             Item.rare = ModContent.RarityType<AnomalyRarity>();
             Item.UseSound = null;
 			Item.autoReuse = true;
-			Item.shoot = ModContent.ProjectileType<AtlantisProj>(); 
-            Item.shootSpeed = 16f;
+			Item.shoot = ModContent.ProjectileType<Bubble>(); 
+            Item.shootSpeed = 0f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.channel = true;
@@ -40,15 +40,8 @@ namespace SOTS.Items.Tide
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			if(player.altFunctionUse == 0)
-            {
-                Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, Main.MouseWorld.X, Main.MouseWorld.Y);
-            }
-			else if(player.altFunctionUse == 2)
-            {
-                Projectile.NewProjectile(source, position, velocity * 0.25f, ModContent.ProjectileType<AtlantisGlaive>(), damage, knockback, player.whoAmI);
-            }
-            return false;
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, Main.MouseWorld.X, Main.MouseWorld.Y);
+			return false;
         }
         public override bool BeforeDrainVoid(Player player)
 		{
