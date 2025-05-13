@@ -411,10 +411,42 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             if (ArmType != i)
             {
+                NextArmType = i;
                 ArmSwitchTimer++;
                 if (ArmSwitchTimer > 60)
                 {
                     ArmSwitchTimer = 0;
+                    if(Main.netMode != NetmodeID.Server)
+                    {
+                        Vector2 size = ArmType == 0 ? new Vector2(-19, -16) : ArmType == 1 ? new Vector2(-7, -21) : new Vector2(-15, -19);
+                        float xOff = 20;
+                        for (int j = 0; j < 2; j++)
+                        {
+                            float r = handNorm[j].ToRotation();
+                            Vector2 offset = size - (handNorm[j] * xOff);
+                            Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos[j] + offset, NPC.velocity + handNorm[j] * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/handGore" + (ArmType + 1)), 1f);
+                            g.rotation = r - MathHelper.PiOver2;
+                            SOTSUtils.PlaySound(SoundID.Item62, handPos[j], 1, 0.5f, 0);
+                            for(int k = 0; k < 17; k++)
+                            {
+                                Dust d = PixelDust.Spawn(handPos[j], 0, 0, Main.rand.NextVector2Circular(3, 3) + handNorm[j] * Main.rand.NextFloat(-2, 3) + NPC.velocity * Main.rand.NextFloat(0.1f, 1.5f), ExcavatorOrb.Color, 5);
+                                d.scale *= Main.rand.NextFloat(1, 3);
+                                if(k % 2 == 0)
+                                {
+                                    d = Dust.NewDustDirect(handPos[j] - new Vector2(5), 0, 0, DustID.Smoke);
+                                    d.velocity += handNorm[j] * Main.rand.NextFloat(-2, 3) + NPC.velocity * Main.rand.NextFloat(0.1f, 1.5f);
+                                    d.velocity *= 0.5f;
+                                    d.scale += Main.rand.NextFloat(0.4f);
+                                }
+                                if(Main.rand.NextBool(6))
+                                {
+                                    g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos[j] + offset, NPC.velocity + handNorm[j] * Main.rand.NextFloat(), Main.rand.NextFromList(GoreID.Smoke1, GoreID.Smoke2, GoreID.Smoke3), 1f);
+                                    g.scale *= 0.75f;
+                                    g.velocity *= 0.5f;
+                                }
+                            }
+                        }
+                    }
                     ArmType = i;
                 }
             }
@@ -422,7 +454,15 @@ namespace SOTS.NPCs.Boss.Excavator
                 ArmSwitchTimer = 0;
         }
         public float ArmSwitchTimer;
-        public float ArmType = 0;
+        public int ArmType = 0;
+        public int NextArmType = 0;
+        public float handWidth;
+        public float handHeight = 64;
+        public void AdjustHandSize()
+        {
+            float targetH = ArmType == 1 ? 76 : ArmType == 2 ? 70 : 64;
+            handHeight = MathHelper.Lerp(handHeight, targetH, 0.1f);
+        }
         public void DrawArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir, bool draw = true)
         {
             bool isBigArm = MathF.Abs(dir) == 2;
@@ -430,22 +470,31 @@ namespace SOTS.NPCs.Boss.Excavator
             Texture2D body = null;
             Texture2D arm = null;
             Texture2D hand = null;
+            Texture2D handOverheat = null;
+            Texture2D handGlow = null;
             if (draw)
             {
                 body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
                 arm = ModContent.Request<Texture2D>(isBigArm ? "SOTS/NPCs/Boss/Excavator/bigArmLeft" : "SOTS/NPCs/Boss/Excavator/arm").Value;
-                if (ArmType == 1)
-                    hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handSaw").Value;
-                else if (ArmType == 2)
-                    hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handNoWeapon").Value;
-                else
-                    hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/hand").Value;
-                if(isBigArm)
+                if (isBigArm)
+                {
                     hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrill").Value;
+                }
+                else
+                {
+                    string handVal = "SOTS/NPCs/Boss/Excavator/hand";
+                    if (ArmType == 1)
+                        handVal = "SOTS/NPCs/Boss/Excavator/handSaw";
+                    else if (ArmType == 2)
+                        handVal = "SOTS/NPCs/Boss/Excavator/handNoWeapon";
+                    hand = ModContent.Request<Texture2D>(handVal).Value;
+                    handOverheat = ModContent.Request<Texture2D>(handVal + "Overheat").Value;
+                    handGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handGlow").Value;
+                }
             }
             int armWidth = isBigArm ? 118 : 56;
-            int handWidth = isBigArm ? 38 : ArmType == 1 ? 26 : ArmType == 2 ? 30 : 38;
-            int handHeight = isBigArm ? 120 : ArmType == 1 ? 76 : ArmType == 2 ? 70 : 64;
+            float handWidth = isBigArm ? 38 : ArmType == 1 ? 26 : ArmType == 2 ? 30 : 38;
+            float handHeight = isBigArm ? 120 : this.handHeight;
             int bodyWidth = 126;
             int bodyHeight = 104;
             Vector2 armOrigin = isBigArm ? new Vector2(95, 47): new Vector2(50, 14);
@@ -498,6 +547,20 @@ namespace SOTS.NPCs.Boss.Excavator
             if (draw)
             {
                 spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                if(ArmType == 0 && !isBigArm)
+                    spriteBatch.Draw(handGlow, end - screenPos, null, Color.White, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                if (!isBigArm)
+                {
+                    float percent = ArmSwitchTimer / 60f;
+                    if (percent > 0)
+                    {
+                        for (int i = 0; i < 6; ++i)
+                        {
+                            Vector2 circular2 = new Vector2(3 + percent, 0).RotatedBy((percent + i / 3f) * MathF.PI);
+                            spriteBatch.Draw(handOverheat, circular2 + end - screenPos, null, ExcavatorOrb.Color * 0.45f * percent, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                        }
+                    }
+                }
                 spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                 //Dust.NewDust(end, 0, 0, DustID.LifeDrain);
             }
@@ -739,6 +802,10 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override bool PreAI()
         {
+            if (ArmSwitchTimer > 0)
+                SwitchArm(NextArmType);
+            else
+                AdjustHandSize();
             NPC.TargetClosest(true);
             Vector2 toPlayer = target.Center - NPC.Center;
             UpdateNeckSegments();
@@ -805,7 +872,6 @@ namespace SOTS.NPCs.Boss.Excavator
                             for(int j = -1; j <= 1; ++j)
                             {
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), handPos[i], handNorm[i].RotatedBy(MathHelper.ToRadians(j * 14)) * 6.5f, ModContent.ProjectileType<ExcavatorBolt>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
-
                             }
                         }
                         SOTSUtils.PlaySound(SoundID.Item91, handPos[i], 1.0f, -0.4f);
@@ -823,6 +889,12 @@ namespace SOTS.NPCs.Boss.Excavator
             if(AIPhase == 3)
             {
                 MoveStyle = -2;
+                AI1++;
+                if(AI1 >= 200)
+                {
+                    AI1 = 0;
+                    SwitchArm(((int)ArmType + 1) % 3);
+                }
             }
             //if(AI1 > 120)
             //{
