@@ -390,16 +390,17 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 if(arms)
                 {
-                    DrawLeg(other, spriteBatch, screenPos, 3);
-                    DrawLeg(other, spriteBatch, screenPos, -3);
+                    DrawLeg(other, spriteBatch, screenPos, 3, -1);
+                    DrawLeg(other, spriteBatch, screenPos, -3, -1);
                     for(int k = -1; k <= 1; k += 2)
                         for (int j = 1; j <= 2; ++j)
                             DrawArmIK(other, spriteBatch, screenPos, j * k);
                 }
-                if (legs)
+                if (legs) {
                     for (int k = -1; k <= 1; k += 2)
                         for (int j = 1; j <= 2; ++j)
                             DrawLeg(other, spriteBatch, screenPos, j * k);
+                }
                 if(body != null)
                     spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             }
@@ -455,7 +456,7 @@ namespace SOTS.NPCs.Boss.Excavator
             armPosition = armPosition.RotatedBy(armRotation) + other.Center;
             Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
 
-            float r = other.ai[0] * j + (isBigArm ? (j == -2 ? 45 : 135) : (j * 45));
+            float r = other.ai[0] * 1.2f * j + (isBigArm ? (j == -2 ? 45 : 135) : (j * 45));
             float outwardSize = (isBigArm ? 80 : 38) - (isBigArm ? 4 : 16) * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
             Vector2 targetHandPos = new Vector2(-(bodyWidth / 2 + outwardSize) * j, isBigArm ? -70 : -100).RotatedBy(armRotation);
             targetHandPos = targetHandPos + other.Center;
@@ -552,34 +553,48 @@ namespace SOTS.NPCs.Boss.Excavator
             int j = SOTSUtils.SignNoZero(i);
             i = Math.Abs(i) - 1;
             float r = WalkCounter * 1.2f;
-            float legSwayAmt = i == 0 ? 22 : 18;
-            float legMoveSin = MathF.Sin(MathHelper.ToRadians(r + i * 120 + (j == -1 ? 180 : 0)));
-            legMoveSin = (legMoveSin * 0.2f + 0.8f * MathF.Sign(legMoveSin) * MathF.Sqrt(MathF.Abs(legMoveSin))) * legSwayAmt * j;
+            //float legSwayAmt = i == 0 ? 22 : 18;
+            //float legMoveSin = MathF.Sin(MathHelper.ToRadians(r + i * 120 + (j == -1 ? 180 : 0)));
+            //legMoveSin = (legMoveSin * 0.2f + 0.8f * MathF.Sign(legMoveSin) * MathF.Sqrt(MathF.Abs(legMoveSin))) * legSwayAmt * j;
             int separation = i == 2 ?  12 : i * 32;
-            float scale = i == 2 ? 0.9f : 0.8f;
-            float rotation = i == 2 ? -12.5f : i == 0 ? 5 : -6.25f;
+            //float scale = i == 2 ? 0.9f : 0.8f;
+            //float rotation = i == 2 ? -12.5f : i == 0 ? 5 : -6.25f;
             int outward = i == 1 ? 26 : i == 2 ? 48 : 22;
             //arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/leg").Value;
             //Vector2 legOrig = new Vector2(73, 15);
             //Vector2 revLegOrig = new Vector2(arm.Width - legOrig.X, legOrig.Y);
-            //float legRot = other.rotation;
+            float legRot = other.rotation;
             Vector2 armPosition = new Vector2(outward * j, 18 - separation);
-            //armPosition = armPosition.RotatedBy(legRot) + other.Center;
-            Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), new Color(210, 210, 210));
+            armPosition = armPosition.RotatedBy(legRot) + other.Center;
             //legRot += MathHelper.ToRadians(legMoveSin);
             //spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, legRot + MathHelper.ToRadians(rotation * j), j == -1 ? legOrig : revLegOrig, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
             float A = 64; //size of hand
             float B = 36; //size of arm
-            Vector2 circular = new Vector2(46 * j, 0).RotatedBy(MathHelper.ToRadians(r + i * 120 + (j == -1 ? 180 : 0)) * j);
-            circular.X *= 0.42f;
-            Vector2 target = armPosition + new Vector2(82 * j + circular.X, circular.Y).RotatedBy(other.rotation);
+            Vector2 circular = new Vector2(50 * j, 0).RotatedBy(MathHelper.ToRadians(r + i * 120 + (j == dir ? 180 : 0)) * j * dir);
+            Vector2 offset = new Vector2(82 * j, 0);
+            if (i == 0) {
+                offset = new Vector2(70 * j, 32);
+                circular.X *= 0.5f;
+                circular *= 0.8f;
+            }
+            if(i == 1)
+            {
+                circular.X *= 0.25f;
+            }
+            if (i == 2)
+            {
+                offset = new Vector2(70 * j, -32);
+                circular.X *= 0.5f;
+                circular *= 0.8f;
+            }
+            Vector2 target = armPosition + new Vector2(offset.X + circular.X, offset.Y + circular.Y).RotatedBy(other.rotation);
             Vector2 end = target;
             Vector2 start = armPosition;
-            DoArmJoint(ref start, ref end, A, B, j * -1, out float endArmRot, out float endHandRot);
+            DoArmJoint(ref start, ref end, A, B, j * dir, out float endArmRot, out float endHandRot);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
-            //spriteBatch.Draw(SOTSUtils.WhitePixel, target - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+            //spriteBatch.Draw(SOTSUtils.WhitePixel, target - screenPos, null, Color.White, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
 
@@ -588,8 +603,9 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector2 armOrigin = new Vector2(50, 14);
             Vector2 revArmOrigin = new(arm.Width - armOrigin.X, armOrigin.Y);
             Vector2 handOrigin = new(hand.Width / 2, hand.Height);
+            Color drawColor = Lighting.GetColor(start.ToTileCoordinates(), new Color(210, 210, 210));
             spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -dir ? MathF.PI : 0), j == -dir ? armOrigin : revArmOrigin, other.scale, j == -dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
         public override void SetStaticDefaults()

@@ -850,9 +850,9 @@ namespace SOTS.Common.GlobalNPCs
 							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.005f * constructRateMultiplier);
 						else if(player.ZoneUndergroundDesert)
 							pool.Add(ModContent.NPCType<EarthenConstruct>(), 0.002f * constructRateMultiplier);
-
+                        
 					}
-				}
+                }
 			}
 			if((player.ZoneCrimson || player.ZoneCorrupt) && Main.hardMode)
 			{

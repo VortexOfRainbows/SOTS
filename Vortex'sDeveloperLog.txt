@@ -95,7 +95,7 @@ Daily Log:
 	5. Ancient Steel Pickaxe 3 -> 2
 	6. Ancient Steel Hammaxe 3 -> 1
 	7. Putrid/Bloodstain Coin now spawns in tier 1 chests
-8. WIP excavator design changes
+8. WIP excavator design and animation changes
 9. Added Ancient Steel Bullet and Arrow, which have a chance to bleed on crit
 	1. Also adjusted AV loot tables to fit these new items, and they should work in MP (Though I did not test)
 10. Adjusted abandoned village generation formula to slightly change priority of which structures are more okay to overlap than others
