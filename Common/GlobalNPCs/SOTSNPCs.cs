@@ -832,7 +832,7 @@ namespace SOTS.Common.GlobalNPCs
                     }
                 }
             }
-			else if (!player.ZoneBeach)
+			else if (!player.ZoneBeach && !player.ZoneSkyHeight)
 			{
 				if (player.ZoneDesert || player.ZoneUndergroundDesert || (player.ZoneRockLayerHeight && !player.ZoneDungeon && !player.ZoneJungle && !player.ZoneSnow))
 				{

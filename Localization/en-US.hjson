@@ -6893,18 +6893,12 @@ Mods: {
 
 			AncientSteelArrow: {
 				DisplayName: Scrap Metal Arrow
-				Tooltip:
-					'''
-					Critical strikes may apply a stacking, permanent bleed for 5 damage per second
-					'''
+				Tooltip: Critical strikes may apply a stacking, permanent bleed for 5 damage per second
 			}
 
 			AncientSteelBullet: {
 				DisplayName: Scrap Metal Bullet
-				Tooltip:
-					'''
-					Critical strikes may apply a stacking, permanent bleed for 5 damage per second
-					'''
+				Tooltip: Critical strikes may apply a stacking, permanent bleed for 5 damage per second
 			}
 		}
 

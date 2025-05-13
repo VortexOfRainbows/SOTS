@@ -105,8 +105,9 @@ namespace SOTS.Items.Conduit
             DrawTrail(position, scale, rotation, Inventory, true);
         }
 		public override void SetStaticDefaults()
-		{
-			ItemID.Sets.ItemNoGravity[Type] = true;
+        {
+            ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<RiftCookie>();
+            ItemID.Sets.ItemNoGravity[Type] = true;
 			this.SetResearchCost(10);
 		}
 		public override void SetDefaults()

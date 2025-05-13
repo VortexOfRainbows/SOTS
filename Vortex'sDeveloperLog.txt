@@ -44,6 +44,7 @@ Update Objectives:
 	1. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 11. Invidia Gateway Tile (needs: glow, conduit connection)
 12. Bridgeburner flight
+13. Magic Storage compatibility for Rift Crafting
 
 ---WIP List---
 Abandoned village generation
@@ -78,7 +79,7 @@ N/A
 
 Daily Log:
 
-5/5/25 to 5/9/25
+5/5/25 to 5/12/25
 1. WIP Excavator attack patterns
 2. Reduce topspeed of captured cart (hostile) 6 -> 5.63
 3. Foggy Clairvoyance should no longer effect debuffs from other mods whatsoever
@@ -100,6 +101,9 @@ Daily Log:
 10. Adjusted abandoned village generation formula to slightly change priority of which structures are more okay to overlap than others
 11. Jar of Pineapple (Fresh Greeny) damage 20 -> 19. Armor penetration base 6 -> 4, per extra summon 3 -> 2
 12. Increased rate of Book of Virtues appearing in shadow treasure slime pool (weight 0.05 -> 0.5)
+13. Earthen construct no longer spawns in space in rare cases
+14. Shimmering Essence of Emptiness / Dissolving Nihility now yields Rift Cookie
+
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025
 1. Excavator arm adjustments + weapon drawing testing (it works)
