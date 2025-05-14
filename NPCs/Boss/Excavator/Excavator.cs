@@ -3,13 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Projectiles.AbandonedVillage;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Transactions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
 
 namespace SOTS.NPCs.Boss.Excavator
 {
@@ -46,14 +45,6 @@ namespace SOTS.NPCs.Boss.Excavator
         public override void ModifyHoverBoundingBox(ref Rectangle boundingBox)
         {
             boundingBox = NPC.Hitbox;
-        }
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-
-        }
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
@@ -163,7 +154,7 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             writer.Write(MoveStyle);
             for(int i = 0; i < segments.Length; ++i)
-            writer.Write(segments[i]);
+                writer.Write(segments[i]);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -407,6 +398,10 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public Vector2[] handPos = new Vector2[4];
         public Vector2[] handNorm = new Vector2[4];
+        public Vector2 armTarget = Vector2.Zero;
+        public Vector2 curArmTarget = Vector2.Zero;
+        public float armTargetPercent = 0;
+        public bool armTargetting = false;
         public void SwitchArm(int i)
         {
             if (ArmType != i)
@@ -452,6 +447,11 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             else
                 ArmSwitchTimer = 0;
+        }
+        public void TargetArm(Vector2 pos)
+        {
+            armTargetting = true;
+            armTarget = pos;
         }
         public float ArmSwitchTimer;
         public int ArmType = 0;
@@ -509,6 +509,10 @@ namespace SOTS.NPCs.Boss.Excavator
             float outwardSize = (isBigArm ? 80 : 38) - (isBigArm ? 4 : 16) * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
             Vector2 targetHandPos = new Vector2(-(bodyWidth / 2 + outwardSize) * j, isBigArm ? -70 : -100).RotatedBy(armRotation);
             targetHandPos = targetHandPos + other.Center;
+            if (!isBigArm) {
+                Vector2 toTargetFromHand = armTarget - targetHandPos;
+                targetHandPos = Vector2.Lerp(targetHandPos, targetHandPos + toTargetFromHand.SNormalize() * 32, MathHelper.Clamp(armTargetPercent, 0, 1));
+            }
             Vector2 circular = new Vector2(isBigArm ? 8 : 20, 0).RotatedBy(MathHelper.ToRadians(r));
             circular.X *= 0.25f;
             circular = circular.RotatedBy(armRotation);
@@ -579,14 +583,14 @@ namespace SOTS.NPCs.Boss.Excavator
             }
 
             //Visual representations of the IK happening
-            //if (draw)
-            //{
-                //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
-                //spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
-            //}
+            if (draw)
+            {
+                spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
+            }
 
             //Visual location of the actual center of the arm
             //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
@@ -895,6 +899,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     AI1 = 0;
                     SwitchArm(((int)ArmType + 1) % 3);
                 }
+                TargetArm(target.Center);
             }
             //if(AI1 > 120)
             //{
@@ -910,10 +915,11 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override void PostAI()
         {
+            if (!NPC.active)
+                return;
             Vector2 toPlayer = target.Center - NPC.Center;
             if(segments.Length > 0)
                 AvoidCollision();
-
             if (NPC.velocity.LengthSquared() > 0.1f)
             {
                 float movementTargetR = NPC.velocity.ToRotation();
@@ -928,8 +934,17 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 WalkCounter += 2 * MathF.Sqrt(speed);
             }
-            if (!NPC.active)
-                return;
+            if(armTargetting)
+            {
+                armTargetPercent = MathHelper.Lerp(armTargetPercent, 1, 0.09f);
+            }
+            else{
+                armTargetPercent = MathHelper.Lerp(armTargetPercent, 0, 0.09f);
+                armTargetPercent -= 0.01f;
+                if (armTargetPercent < 0)
+                    armTargetPercent = 0;
+            }
+            armTargetting = false;
         }
         public void AvoidCollision()
         {
