@@ -1733,7 +1733,8 @@ namespace SOTS
 				ItemID.TopazRobe,
 				ItemID.SapphireRobe,
 				ItemID.EmeraldRobe,
-				ItemID.DiamondRobe
+				ItemID.DiamondRobe,
+				ItemID.AmberRobe,
 			});
 			RecipeGroup.RegisterGroup("SOTS:GemRobes", group);
 

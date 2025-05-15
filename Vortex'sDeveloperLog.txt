@@ -104,6 +104,7 @@ Daily Log:
 13. Earthen construct no longer spawns in space in rare cases
 14. Shimmering Essence of Emptiness / Dissolving Nihility now yields Rift Cookie
 15. WIP excavator arm tracking
+16. Amber Robe can now be used in Cursed Robe recipe
 
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025

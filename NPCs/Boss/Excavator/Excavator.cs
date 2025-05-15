@@ -507,23 +507,33 @@ namespace SOTS.NPCs.Boss.Excavator
 
             float r = other.ai[0] * 1.2f * j + (isBigArm ? (j == -2 ? 45 : 135) : (j * 45));
             float outwardSize = (isBigArm ? 80 : 38) - (isBigArm ? 4 : 16) * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
-            Vector2 targetHandPos = new Vector2(-(bodyWidth / 2 + outwardSize) * j, isBigArm ? -70 : -100).RotatedBy(armRotation);
-            targetHandPos = targetHandPos + other.Center;
-            if (!isBigArm) {
-                Vector2 toTargetFromHand = armTarget - targetHandPos;
-                targetHandPos = Vector2.Lerp(targetHandPos, targetHandPos + toTargetFromHand.SNormalize() * 32, MathHelper.Clamp(armTargetPercent, 0, 1));
+            if (!isBigArm)
+            {
+                //outwardSize = 0;
             }
+            Vector2 targetHandPos = new Vector2(-(bodyWidth / 2 + outwardSize) * j, isBigArm ? -70 : -100).RotatedBy(armRotation);
             Vector2 circular = new Vector2(isBigArm ? 8 : 20, 0).RotatedBy(MathHelper.ToRadians(r));
             circular.X *= 0.25f;
             circular = circular.RotatedBy(armRotation);
-            targetHandPos += circular;
-
+            if (!isBigArm)
+            {
+                //targetHandPos = targetHandPos.RotatedBy((armTarget - NPC.Center).ToRotation());
+                //Vector2 toTargetFromHand = armTarget - other.Center - targetHandPos;
+                //float dist = toTargetFromHand.Length();
+                //float wierdFloat = MathHelper.Clamp(MathF.Sqrt(dist / 160f), 0.25f, 1);
+                //targetHandPos *= wierdFloat;
+                //if(dist > 0)
+                //    circular = toTargetFromHand.SNormalize() * (36 - 500f / dist);
+                //Main.NewText(dist);
+            }
+            targetHandPos += circular + other.Center;
 
             float A = isBigArm ? handHeight : handHeight; //size of hand
             float B = isBigArm ? armWidth - 36 : armWidth - 20; //size of arm
             Vector2 end = targetHandPos;
             Vector2 start = armPosition;
             DoArmJoint(ref start, ref end, A, B, j, out float endArmRot, out float endHandRot);
+            Vector2 mid = start + new Vector2(B, 0).RotatedBy(endArmRot);
             if (isBigArm)
             {
                 end -= new Vector2(0, 13 * j).RotatedBy(endArmRot);
@@ -531,6 +541,28 @@ namespace SOTS.NPCs.Boss.Excavator
             else
             {
                 end += new Vector2(1, 0).RotatedBy(endArmRot);
+                if(true) //IF WE ARE TARGETTING A HAND SPECIFICALLY
+                {
+                    Vector2 midToTarget = -armTarget + mid;
+                    float toPR = MathHelper.WrapAngle(midToTarget.ToRotation() - endArmRot);
+                    if(j == -1)
+                    {
+                        if (toPR < 0 && toPR < -MathHelper.PiOver2)
+                            toPR += MathHelper.TwoPi;
+                        toPR = MathHelper.Clamp(toPR, MathHelper.ToRadians(30), MathF.PI);
+                    }
+                    else
+                    {
+                        if(toPR > 0 && toPR > MathHelper.PiOver2)
+                            toPR -= MathHelper.TwoPi;
+                        toPR = MathHelper.Clamp(toPR, -MathF.PI, -MathHelper.ToRadians(30));
+                    }
+                    toPR += endArmRot;
+                    float rot = -endHandRot + toPR;
+                    end = end.RotatedBy(rot, mid);
+                    endHandRot += rot;
+                    Main.NewText(MathHelper.WrapAngle(toPR - endArmRot));
+                }
             }
 
             //if (isBigArm)
@@ -585,11 +617,15 @@ namespace SOTS.NPCs.Boss.Excavator
             //Visual representations of the IK happening
             if (draw)
             {
+                drawColor *= 0.4f;
                 spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, MathF.PI + endHandRot, new Vector2(0, 1), new Vector2(500, 1), SpriteEffects.None, 0);
                 spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
-                spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
                 spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
                 spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
+                spriteBatch.Draw(SOTSUtils.WhitePixel, mid - screenPos, null, Color.Yellow, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             }
 
             //Visual location of the actual center of the arm
@@ -879,7 +915,7 @@ namespace SOTS.NPCs.Boss.Excavator
                             }
                         }
                         SOTSUtils.PlaySound(SoundID.Item91, handPos[i], 1.0f, -0.4f);
-                        PixelDust.Spawn(handPos[i], 0, 0, Main.rand.NextVector2Circular(1, 1), ExcavatorOrb.Color, 12);
+                        //PixelDust.Spawn(handPos[i], 0, 0, Main.rand.NextVector2Circular(1, 1), ExcavatorOrb.Color, 12);
                     }
                     AI2++;
                 }
@@ -897,7 +933,10 @@ namespace SOTS.NPCs.Boss.Excavator
                 if(AI1 >= 200)
                 {
                     AI1 = 0;
-                    SwitchArm(((int)ArmType + 1) % 3);
+                    //SwitchArm(((int)ArmType + 1) % 3);
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        for (int i = 0; i < 2; ++i)
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), handPos[i], handNorm[i] * 6.5f, ModContent.ProjectileType<ExcavatorBolt>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
                 }
                 TargetArm(target.Center);
             }
