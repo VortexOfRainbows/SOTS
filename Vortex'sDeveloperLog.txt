@@ -70,6 +70,7 @@ Collapsing blocks from excavator MP syncing
 Excavator orb
 Excavator missile
 Excavator beam
+Excavator saw
 
 ---Content Needed---
 N/A
@@ -106,6 +107,7 @@ Daily Log:
 15. WIP excavator arm tracking
 16. Amber Robe can now be used in Cursed Robe recipe
 17. Sanctuary chests will now additionally contain a life crystal, healing potions, buff potions, ammo, and coins
+18. Excavator saw projectiles
 
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025
