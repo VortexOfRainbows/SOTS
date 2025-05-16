@@ -79,7 +79,7 @@ N/A
 
 Daily Log:
 
-5/5/25 to 5/14/25
+5/5/25 to 5/15/25
 1. WIP Excavator attack patterns
 2. Reduce topspeed of captured cart (hostile) 6 -> 5.63
 3. Foggy Clairvoyance should no longer effect debuffs from other mods whatsoever
@@ -105,6 +105,7 @@ Daily Log:
 14. Shimmering Essence of Emptiness / Dissolving Nihility now yields Rift Cookie
 15. WIP excavator arm tracking
 16. Amber Robe can now be used in Cursed Robe recipe
+17. Sanctuary chests will now additionally contain a life crystal, healing potions, buff potions, ammo, and coins
 
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025

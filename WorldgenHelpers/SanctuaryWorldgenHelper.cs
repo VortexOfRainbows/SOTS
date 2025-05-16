@@ -14,6 +14,7 @@ using Microsoft.CodeAnalysis;
 using SOTS.Items.Furniture.Earthen;
 using Terraria.WorldBuilding;
 using SOTS.Items.Conduit;
+using SOTS.Items.Potions;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -53,8 +54,6 @@ namespace SOTS.WorldgenHelpers
             EvostonePlatform = (ushort)ModContent.TileType<EvostonePlatformTile>();
             DarkShingles = (ushort)ModContent.TileType<DarkShinglesTile>();
             InvidiaPlating = (ushort)ModContent.TileType<InvidiaPlatingTile>();
-            if(SpawnPos <= 0)
-                SpawnPos = DetermineSpawnLocation();
             Rectangle = SetRect();
         }
         public static int DetermineSpawnLocation()
@@ -1086,7 +1085,7 @@ namespace SOTS.WorldgenHelpers
                 }
             }
         }
-        public static void FillChestWithLoot()
+        public static void FillChestsWithLoot()
         {
             foreach (Chest chest in Main.chest.Where(c => c != null))
             {
@@ -1144,6 +1143,11 @@ namespace SOTS.WorldgenHelpers
                         chest.AddItemToChest(MainItem, ref slot);
                     if (SecondItem != -1)
                         chest.AddItemToChest(SecondItem, ref slot);
+                    chest.AddItemToChest(ItemID.LifeCrystal, ref slot);
+                    chest.AddItemToChest(WorldGen.genRand.NextFromList(ItemID.GreaterHealingPotion, ItemID.GreaterManaPotion, ItemID.RestorationPotion), ref slot, WorldGen.genRand.Next(10, 21));
+                    chest.AddItemToChest(WorldGen.genRand.NextFromList(ModContent.ItemType<BluefirePotion>(), ModContent.ItemType<NightmarePotion>(), ModContent.ItemType<RipplePotion>(), ModContent.ItemType<VigorPotion>()), ref slot, WorldGen.genRand.Next(2, 5));
+                    chest.AddItemToChest(WorldGen.genRand.NextFromList(ModContent.ItemType<SkipArrow>(), ModContent.ItemType<SkipBullet>()), ref slot, WorldGen.genRand.Next(200, 501));
+                    chest.AddItemToChest(ItemID.GoldCoin, ref slot, WorldGen.genRand.Next(5, 11));
                 }
             }
         }

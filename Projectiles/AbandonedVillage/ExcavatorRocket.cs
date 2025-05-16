@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Projectile.penetrate = -1;
 			Projectile.friendly = false;
             Projectile.timeLeft = 540;
-			Projectile.tileCollide = true;
+			Projectile.tileCollide = false;
 			Projectile.hostile = true;
 		}
         public override bool PreAI()
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             Vector2 origin = texture.Size() / 2;
             Color color = Color.White;
             float percent2 = MathF.Min(Projectile.timeLeft / 30f, 1);
-            float percent = MathF.Min(1, Projectile.ai[2] / 45f);
+            float percent = MathF.Min(1, Projectile.ai[2] / 36f);
             float percent3 = percent2 * percent;
             float sin = MathF.Sin(percent3 * MathF.PI) * 0.9f + MathF.Sqrt(percent3) * 1.2f;
             float r = MathF.PI * MathF.Sqrt(percent);
@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             {
                 Vector2 corners = new Vector2(16, 16).RotatedBy(i * MathHelper.PiOver2 + r) * scale;
                 Vector2 toCorners = corners + target - Projectile.Center;
-                Main.spriteBatch.Draw(SOTSUtils.WhitePixel, Projectile.Center - Main.screenPosition, null, new Color(251, 129, 13, 50) * spawnPercent * 0.4f, toCorners.ToRotation(), Vector2.UnitY, new Vector2(toCorners.Length() / 2f, 1f), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(SOTSUtils.WhitePixel, Projectile.Center - Main.screenPosition, null, new Color(251, 129, 13, 50) * spawnPercent * 0.2f, toCorners.ToRotation(), Vector2.UnitY, new Vector2(toCorners.Length() / 2f, 1f), SpriteEffects.None, 0f);
             }
             for (int i = 0; i < 4; ++i)
             {
@@ -118,15 +118,27 @@ namespace SOTS.Projectiles.AbandonedVillage
             }
         }
         private bool RunOnce = true;
+        public bool SpawnedInWall = false;
         public override void AI()
 		{
             if(RunOnce)
             {
                 ConfirmTargetSpot();
                 RunOnce = false;
+                Point p = Projectile.Center.ToTileCoordinates();
+                SpawnedInWall = !SOTSWorldgenHelper.Empty(p.X - 1, p.Y - 1, 3, 3, 2, true);
+            }
+            else if(!SpawnedInWall)
+            {
+                Projectile.tileCollide = true;
+            }
+            else
+            {
+                Point p = Projectile.Center.ToTileCoordinates();
+                SpawnedInWall = !SOTSWorldgenHelper.Empty(p.X - 1, p.Y - 1, 3, 3, 2, true);
             }
             //Main.NewText(target + ": " + Main.myPlayer + ": " + Projectile.owner);
-			float approaching = ((540f - Projectile.timeLeft) / 540f);
+            float approaching = ((540f - Projectile.timeLeft) / 540f);
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(90);
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.65f, 0.75f);
 			Vector2 norm = Projectile.velocity.SNormalize();

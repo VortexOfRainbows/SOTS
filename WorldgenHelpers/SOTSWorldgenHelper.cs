@@ -26,6 +26,7 @@ using Terraria.WorldBuilding;
 using SOTS.Items.Furniture.Evostone;
 using SOTS.Items.Furniture.Tidal;
 using System.Text.Json.Serialization.Metadata;
+using SOTS.Projectiles.AbandonedVillage;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -344,8 +345,18 @@ namespace SOTS.WorldgenHelpers
 				return true;
 			return false;
 		}
-		public static bool Empty(int x, int y, int lengthX, int lengthY, int max = 1)
+		/// <summary>
+		/// Returns false if the number of blocks in an area is greater than max
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		/// <param name="lengthX"></param>
+		/// <param name="lengthY"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static bool Empty(int x, int y, int lengthX, int lengthY, int max = 1, bool onlySolid = false)
 		{
+			int total = 0;
 			for (int i = 0; i < lengthY; i++)
 			{
 				for (int j = 0; j < lengthX; j++)
@@ -355,9 +366,11 @@ namespace SOTS.WorldgenHelpers
 					if (WorldGen.InWorld(k, l, 30))
 					{
 						Tile tile = Framing.GetTileSafely(k, l);
-						if (tile.HasTile)
+						if (tile.HasTile && (!onlySolid || SOTSWorldgenHelper.TrueTileSolid(k, l)))
 						{
-							return false;
+                            total++;
+							if(total >= max)
+								return false;
 						}
 					}
 					else

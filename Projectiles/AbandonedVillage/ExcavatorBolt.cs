@@ -37,18 +37,20 @@ namespace SOTS.Projectiles.AbandonedVillage
                 float length = Projectile.velocity.Length() * alphaMult2;
                 Main.spriteBatch.Draw(textureTe, Projectile.Center - Main.screenPosition, null, c * alphaMult2 * 0.5f, Projectile.velocity.ToRotation(), originT, new Vector2(length / 6f, 1f + alphaMult2 * 0.5f), SpriteEffects.None, 0f);
             }
-			if(Projectile.timeLeft < 480)
-				for (int k = 0; k < Projectile.oldPos.Length; k++)
+			if(Projectile.timeLeft < 480){
+                Vector2 originT = new Vector2(texture.Width / 3 * 2, texture.Height / 2);
+                for (int k = 0; k < Projectile.oldPos.Length; k++)
 				{
 					Vector2 drawPos = Projectile.oldPos[k] + Projectile.Size / 2;
 					float length = (drawPos - previous).Length();
-					if(length < 300)
-                    {
-                        float trailMult = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
-                        Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, Projectile.GetAlpha(color) * trailMult * trailMult, Projectile.rotation, origin, new Vector2(length / 6f, 0.8f), SpriteEffects.None, 0.0f);
-                        previous = drawPos;
-                    }
+					if (length < 300)
+					{
+						float trailMult = ((float)(Projectile.oldPos.Length - k) / (float)Projectile.oldPos.Length);
+						Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, Projectile.GetAlpha(color) * trailMult * trailMult, Projectile.rotation, originT, new Vector2(length / 8f, 0.8f), SpriteEffects.None, 0.0f);
+						previous = drawPos;
+					}
 				}
+			}
             if (outLine)
 				for (int i = 0; i < 4; i++)
 				{

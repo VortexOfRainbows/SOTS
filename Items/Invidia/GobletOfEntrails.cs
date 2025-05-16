@@ -14,7 +14,6 @@ namespace SOTS.Items.Invidia
             Item.height = 36;   
             Item.value = Item.sellPrice(0, 1, 0, 0);
 			Item.rare = ItemRarityID.Green;
-			Item.accessory = true;
             Item.useTurn = true;
             Item.useAnimation = 16;
             Item.useTime = 16;

@@ -49,9 +49,7 @@ using SOTS.Items.Furniture.Functional;
 using SOTS.Items.Conduit;
 using Terraria.Graphics.Light;
 using SOTS.Items.Invidia;
-using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Helpers;
 using SOTS.Items.Furniture.Tidal;
 
 namespace SOTS
@@ -826,7 +824,7 @@ namespace SOTS
             // Iterate chests
             GemStructureWorldgenHelper.FillChestsWithLoot();
             AbandonedVillageWorldgenHelper.FillChestsWithLoot();
-			SanctuaryWorldgenHelper.FillChestWithLoot();
+			SanctuaryWorldgenHelper.FillChestsWithLoot();
 			foreach (Chest chest in Main.chest.Where(c => c != null))
 			{
 				// Get a chest
