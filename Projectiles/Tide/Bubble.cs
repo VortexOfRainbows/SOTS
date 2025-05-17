@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using System;
 using System.Collections.Generic;
+using System.Security.Policy;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,14 +17,7 @@ namespace SOTS.Projectiles.Tide
             Texture2D t = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
             int trueHeight = t.Height / Main.projFrames[Projectile.type];
             Vector2 origin = new Vector2(t.Width, 0) / 2;
-            Vector2 stretch = new Vector2(1, 1);
-            if (Projectile.ai[2] < 0 && Projectile.timeLeft > 15)
-            {
-                int pix = Projectile.ai[2] >= -7 ? 4 : 12;
-                float target = pix / (float)trueHeight;
-                stretch.Y -= target;
-            }
-            Main.EntitySpriteDraw(t, new Vector2(Projectile.Center.X, Projectile.position.Y) - Main.screenPosition, new Rectangle(0, trueHeight * Projectile.frame, t.Width, trueHeight), Color.Lerp(Color.White, lightColor, 0.9f), Projectile.rotation, origin, stretch, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(t, new Vector2(Projectile.Center.X, Projectile.position.Y) - Main.screenPosition, new Rectangle(0, trueHeight * Projectile.frame, t.Width, trueHeight), Color.Lerp(Color.White, lightColor, 0.9f), Projectile.rotation, origin, 1f, SpriteEffects.None, 0);
             return false;
         }
 		public override void SetStaticDefaults()
@@ -84,8 +78,10 @@ namespace SOTS.Projectiles.Tide
 				PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, -Projectile.velocity * Main.rand.NextFloat(0.5f) + Main.rand.NextVector2Square(-0.2f, 0.2f), c, -10).scale = Main.rand.NextFloat(0.5f, 1.0f);
             Projectile.scale = MathF.Min(1.0f, Projectile.scale * 1.02f + 0.05f);
 			if (Projectile.ai[2] >= 0) //ToDo: Skip if standing on bubble
-			{
-				Projectile.velocity.Y = MathHelper.Lerp(Projectile.velocity.Y, -1, 0.05f);
+            {
+                if (Projectile.timeLeft > 15)
+                    Projectile.frame = 0;
+                Projectile.velocity.Y = MathHelper.Lerp(Projectile.velocity.Y, -1, 0.05f);
 				float sin = MathF.Sin(MathHelper.ToRadians(Projectile.ai[1])) * 0.05f;
 				Projectile.velocity.X += sin;
                 Projectile.velocity.X *= 0.92f;
@@ -102,10 +98,23 @@ namespace SOTS.Projectiles.Tide
                 {
                     ++Projectile.ai[2];
                 }
+                if (Projectile.timeLeft > 15)
+                {
+                    if(fall >= -3)
+                    {
+                        Projectile.frame = 6;
+                    }
+                    else
+                    {
+                        Projectile.frame = 7;
+                    }
+                }
             }
             Projectile.ai[0]++;
 			if(Projectile.timeLeft <= 15)
             {
+                if (Projectile.frame >= 6)
+                    Projectile.frame = 0;
                 if(Projectile.frame == 0)
                 {
                     for (int i = 0; i < 12; ++i)

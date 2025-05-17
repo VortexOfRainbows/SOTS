@@ -42,7 +42,7 @@ namespace SOTS.Items.Tide
 		{
 			velocity += player.velocity;
 			if (velocity.Y < 0)
-				velocity *= 0.5f;
+				velocity.Y *= 0.5f;
 			Projectile.NewProjectile(source, position + new Vector2(0, 10), velocity, type, damage, knockback, player.whoAmI, 0, velocity.X > 0 ? 180 : 0);
 			return false;
         }
