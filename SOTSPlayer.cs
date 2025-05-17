@@ -54,6 +54,7 @@ using SOTS.Helpers;
 using SOTS.Projectiles.AbandonedVillage;
 using System.ComponentModel;
 using SOTS.NPCs.Critters;
+using Humanizer;
 
 namespace SOTS
 {
@@ -66,7 +67,7 @@ namespace SOTS
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 			{
 				if (LogInMessageTimer > 0)
-					LogInMessageTimer -= 1; 
+					LogInMessageTimer -= 1;
 				if (LogInMessageTimer == 0)
 				{
 					SOTSTexturePackEnabled = IsSOTSTexturePackEnabled();
@@ -84,7 +85,7 @@ namespace SOTS
 				}
 			}
 		}
-        public override void OnEnterWorld()
+		public override void OnEnterWorld()
 		{
 			SOTSTexturePackEnabled = IsSOTSTexturePackEnabled();
 			if (Main.netMode != NetmodeID.Server)
@@ -95,7 +96,7 @@ namespace SOTS
 					Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
 			}
 		}
-        public static SOTSPlayer ModPlayer(Player player)
+		public static SOTSPlayer ModPlayer(Player player)
 		{
 			return player.GetModPlayer<SOTSPlayer>();
 		}
@@ -107,8 +108,8 @@ namespace SOTS
 		public static void LoadArrays()
 		{
 			FakePlayerHelper.Initialize();
-			typhonBlacklist = [ ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(), 
-				ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(), 
+			typhonBlacklist = [ ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(),
+				ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(),
 				ModContent.ProjectileType<BlazingArrow>(), ModContent.ProjectileType<DimensionShredderLightning>() ];
 			symbioteBlacklist = [ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter, ModContent.ProjectileType<FreshGreenyCounter>()];
 			typhonWhitelist = [ModContent.ProjectileType<HardlightArrow>()];
@@ -117,9 +118,9 @@ namespace SOTS
 		public const int TotalVisionNumber = 56;
 		public int UniqueVisionNumber = -1;
 		public static Color VoidMageColor(Player player, bool sourceTimeFreeze = true)
-        {
+		{
 			SOTSPlayer sPlayer = ModPlayer(player);
-			if(SOTS.Config.coloredTimeFreeze || !sourceTimeFreeze)
+			if (SOTS.Config.coloredTimeFreeze || !sourceTimeFreeze)
 			{
 				switch (sPlayer.UniqueVisionNumber % 8)
 				{
@@ -142,53 +143,53 @@ namespace SOTS
 				}
 			}
 			return Color.White;
-        }
-        public static Color VisionColor(Player player)
-        {
-            SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-            Color DestinationColor = Color.DarkGray;
-            int uniqueGem = modPlayer.UniqueVisionNumber % 8;
-            switch (uniqueGem)
-            {
-                case 0: //geo
-                    DestinationColor = Color.Orange;
-                    break;
-                case 1: //electro
-                    DestinationColor = Color.BlueViolet;
-                    break;
-                case 2: //anemo
-                    DestinationColor = Color.Turquoise;
-                    break;
-                case 3: //cyro
-                    DestinationColor = Color.LightSkyBlue;
-                    break;
-                case 4: //pyro
-                    DestinationColor = Color.OrangeRed;
-                    break;
-                case 5: //hydro
-                    DestinationColor = Color.DodgerBlue;
-                    break;
-                case 6: //dendro
-                    DestinationColor = Color.Green;
-                    break;
-            }
-            return DestinationColor;
-        }
-        public override void SaveData(TagCompound tag)
+		}
+		public static Color VisionColor(Player player)
+		{
+			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
+			Color DestinationColor = Color.DarkGray;
+			int uniqueGem = modPlayer.UniqueVisionNumber % 8;
+			switch (uniqueGem)
+			{
+				case 0: //geo
+					DestinationColor = Color.Orange;
+					break;
+				case 1: //electro
+					DestinationColor = Color.BlueViolet;
+					break;
+				case 2: //anemo
+					DestinationColor = Color.Turquoise;
+					break;
+				case 3: //cyro
+					DestinationColor = Color.LightSkyBlue;
+					break;
+				case 4: //pyro
+					DestinationColor = Color.OrangeRed;
+					break;
+				case 5: //hydro
+					DestinationColor = Color.DodgerBlue;
+					break;
+				case 6: //dendro
+					DestinationColor = Color.Green;
+					break;
+			}
+			return DestinationColor;
+		}
+		public override void SaveData(TagCompound tag)
 		{
 			tag["UniqueVisionNumber"] = UniqueVisionNumber;
 			tag["VigorDashes"] = VigorDashes;
-        }
-        public override void LoadData(TagCompound tag)
+		}
+		public override void LoadData(TagCompound tag)
 		{
 			UniqueVisionNumber = tag.GetInt("UniqueVisionNumber");
-            VigorDashes = tag.GetInt("VigorDashes");
-        }
-        public void TrailStuff()
+			VigorDashes = tag.GetInt("VigorDashes");
+		}
+		public void TrailStuff()
 		{
 			FluidCurse = false;
 			if (Player.HasBuff(ModContent.BuffType<FluidCurse>()))
-            {
+			{
 				PetFluidCurse();
 				FluidCurse = true;
 			}
@@ -221,13 +222,12 @@ namespace SOTS
 		public int petPinky = -1;
 		public int petFreeWisp = -1;
 		public int symbioteDamage = -1, BundleSnakeDamage = -1, LittleWoeDamage = -1;
-        public bool rippleEffect = false;
+		public bool rippleEffect = false;
 		public int rippleTimer = 0;
 		public int rippleBonusDamage = 0;
 		public bool doomDrops = false;
 		public bool baguetteDrops = false;
-		public int baguetteLength = 0;
-		public int baguetteLengthCounter = 0;
+		public int baguetteLength = 0, baguetteLengthCounter = 0;
 		public int halfLifeRegen = 0;
 		public int additionalHeal = 0;
 		public int additionalPotionMana = 0;
@@ -246,18 +246,18 @@ namespace SOTS
 		public int BlinkType = 0;
 		public int BlinkDamage = 0;
 		public bool ElementalBlink = false;
-        public bool ElementalBlinkBuff = false;
-        public int typhonRange = 0;
+		public bool ElementalBlinkBuff = false;
+		public int typhonRange = 0;
 		public bool weakerCurse = false;
 		public bool VibrantArmor = false;
 		public int brokenFrigidSword = 0;
 		public int shardSpellExtra = 0;
 		public int frigidJavelinBoost = 0;
 		public bool frigidJavelinNoCost = false;
-        public int orbitalCounter
-        {
+		public int orbitalCounter
+		{
 			get => SOTSWorld.GlobalCounter + Player.whoAmI * 30;
-        }
+		}
 		public int shardOnHit = 0;
 		public int bonusShardDamage = 0;
 		public int phaseCannonIndex = -1;
@@ -271,7 +271,7 @@ namespace SOTS
 
 		public bool RotHeart = false, Embattle = false;
 
-        public bool VoidspaceFlames = false;
+		public bool VoidspaceFlames = false;
 		public bool AutoReuseAnything = false;
 		public bool InfinityPouch = false;
 
@@ -279,14 +279,14 @@ namespace SOTS
 		public bool PhaseBiome => Player.InModBiome<Biomes.PhaseBiome>();
 		public bool AnomalyBiome => Player.InModBiome<Biomes.AnomalyBiome>();
 		public bool PyramidBiome => Player.InModBiome<Biomes.PyramidBiome>();
-        public bool AbandonedVillageBiome => Player.InModBiome<Biomes.AbandonedVillageBiome>();
-        public bool SanctuaryBiome => Player.InModBiome<Biomes.SanctuaryBiome>();
-        public bool backUpBow = false;
-        public bool backUpBowVisual = false;
+		public bool AbandonedVillageBiome => Player.InModBiome<Biomes.AbandonedVillageBiome>();
+		public bool SanctuaryBiome => Player.InModBiome<Biomes.SanctuaryBiome>();
+		public bool backUpBow = false;
+		public bool backUpBowVisual = false;
 		public bool DoubleVisionActive = false, VigorActive = false;
-        public int BonusFishingLines = 0, VigorDashes = 0;
-        public bool Lockpick = false;
-        public int onhit = 0;
+		public int BonusFishingLines = 0, VigorDashes = 0;
+		public bool Lockpick = false;
+		public int onhit = 0;
 		public int onhitdamage = 0;
 		public int OnHitCD = 0;
 		public float attackSpeedMod = 1;
@@ -334,17 +334,17 @@ namespace SOTS
 		public bool PlasmaShrimp = false;
 		public bool RubyRing = false;
 		public bool AmberRing = false;
-        public bool InverseAmberRing = false;
-        public bool TopazRing = false;
+		public bool InverseAmberRing = false;
+		public bool TopazRing = false;
 		public bool InverseTopazRing = false;
 		private int InverseTopazRingCD = 0;
 		public bool EmeraldRing = false;
 		public bool DiamondRing = false;
-        public bool InverseDiamondRing = false;
-        public bool AmethystRing = false;
+		public bool InverseDiamondRing = false;
+		public bool AmethystRing = false;
 		public bool LazyCrafterAmulet = false;
-        public bool ScalingArmorPenetration = false;
-        public int bonusPickaxePower = 0;
+		public bool ScalingArmorPenetration = false;
+		public int bonusPickaxePower = 0;
 		public int previousDefense = 0;
 		public float AmmoConsumptionModifier = 0.0f;
 		public bool AmmoRegather = false;
@@ -358,15 +358,15 @@ namespace SOTS
 		public bool GoldenTrowel = false;
 		public bool AnomalyLocator = false;
 		public bool StatShareMeleeAndSummon = false;
-        public bool StatShareMeleeAndMagic = false;
-        public bool StatShareAll = false;
+		public bool StatShareMeleeAndMagic = false;
+		public bool StatShareAll = false;
 		public int BrassWhipDelay = 0;
 		public float DamageGenerateMoney = 0;
 		public bool KeepersBox = false;
-        public bool PrevKeepersBox = false;
+		public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
 		public bool AcidInject = false, Earthdrive = false, Sunbulb = false, Dreamcatcher = false;
-        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
 			VoidPlayer voidPlayer = Player.GetModPlayer<VoidPlayer>();
@@ -377,15 +377,15 @@ namespace SOTS
 			packet.Write(voidPlayer.lootingSouls);
 			packet.Send(toWho, fromWho);
 		}
-        public override void CopyClientState(ModPlayer clientClone)/* tModPorter Suggestion: Replace Item.Clone usages with Item.CopyNetStateTo */
-        {
+		public override void CopyClientState(ModPlayer clientClone)/* tModPorter Suggestion: Replace Item.Clone usages with Item.CopyNetStateTo */
+		{
 			//will need to fix this later...
-        }
-        public override void SendClientChanges(ModPlayer clientPlayer)
-        {
+		}
+		public override void SendClientChanges(ModPlayer clientPlayer)
+		{
 			// Here we would sync something like an RPG stat whenever the player changes it.
 			SOTSPlayer clone = clientPlayer as SOTSPlayer;
-			if(netUpdate)
+			if (netUpdate)
 			{
 				if (clone.skywardBlades != skywardBlades)
 				{
@@ -397,9 +397,9 @@ namespace SOTS
 					packet.Write(cursorRadians);
 					packet.Send();
 				}
-                if (clone.UniqueVisionNumber != UniqueVisionNumber)
-                {
-                    var packet = Mod.GetPacket();
+				if (clone.UniqueVisionNumber != UniqueVisionNumber)
+				{
+					var packet = Mod.GetPacket();
 					packet.Write((byte)SOTSMessageType.SyncVisionNumber);
 					packet.Write((byte)Player.whoAmI);
 					packet.Write(UniqueVisionNumber);
@@ -407,9 +407,9 @@ namespace SOTS
 				}
 				netUpdate = false;
 			}
-        }
-        public int bladeAlpha = 0;
-        int foamParticleCounter = 0;
+		}
+		public int bladeAlpha = 0;
+		int foamParticleCounter = 0;
 		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
 		public void FoamStuff()
 		{
@@ -458,34 +458,34 @@ namespace SOTS
 			}
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet)
-        {
-            bool canBlink = !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen && !Player.CCed && !Player.dead;
-            if (SOTS.BlinkHotKey.JustPressed)
-            {
+		{
+			bool canBlink = !Player.mount.Active && !(Player.grappling[0] >= 0) && !Player.frozen && !Player.CCed && !Player.dead;
+			if (SOTS.BlinkHotKey.JustPressed)
+			{
 				if (!Player.HasBuff(BuffID.ChaosState) && BlinkType == 1 && canBlink)
 				{
 					Vector2 toCursor = Main.MouseWorld - Player.Center;
-					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero), 
+					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero),
 						ModContent.ProjectileType<Blink1>(), 0, 0, Player.whoAmI);
 				}
 			}
 			if (SOTS.ArmorSetHotKey.JustPressed)
-            {
-                if (!Player.HasBuff<ChaosState2>() && ElementalBlink && canBlink && Player.whoAmI == Main.myPlayer)
-                {
+			{
+				if (!Player.HasBuff<ChaosState2>() && ElementalBlink && canBlink && Player.whoAmI == Main.myPlayer)
+				{
 					Vector2 finalLocation = Main.MouseWorld - new Vector2(0, Player.height / 2);
-                    Vector2 toCursor = finalLocation - Player.Center;
+					Vector2 toCursor = finalLocation - Player.Center;
 					float damage = Player.statDefense * 2f;
 					int type = -1;
-					if(ElementalBlinkBuff)
+					if (ElementalBlinkBuff)
 					{
 						type = -2;
 						damage = Player.GetTotalDamage<VoidGeneric>().ApplyTo(damage);
 					}
-                    Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero), 
+					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Blink"), Player.Center, toCursor.SafeNormalize(Vector2.Zero),
 						ModContent.ProjectileType<RelocatorBeam>(), (int)damage, 0, Player.whoAmI, finalLocation.X, finalLocation.Y, type);
-                }
-                if (!HoloEyeIsVanity)
+				}
+				if (!HoloEyeIsVanity)
 					HoloEyeAttack = true;
 				if (CanCurseSwap)
 					CurseSwap = true;
@@ -508,17 +508,17 @@ namespace SOTS
 		private int[] probes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 		private int[] probesAqueduct = [-1, -1, -1, -1, -1, -1, -1, -1];
 		private int[] probesTinyPlanet = [-1, -1, -1, -1, -1, -1, -1, -1];
-        private int[] ArtifactProbes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
-        public int aqueductNum = 0;
+		private int[] ArtifactProbes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+		public int aqueductNum = 0;
 		public int aqueductDamage = -1;
-        public int artifactProbeDamage = -1;
-        public int artifactProbeNum = 0;
+		public int artifactProbeDamage = -1;
+		public int artifactProbeNum = 0;
 		public int tPlanetNum = 0;
 		public int tPlanetDamage = -1;
-        private int lastAqueductMax = 0;
-        private int lastPlanetMax = 0;
+		private int lastAqueductMax = 0;
+		private int lastPlanetMax = 0;
 		private int lastArtifactMax = 0;
-        public void runPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false, float ai0 = 0f, float ai1 = 0f)
+		public void runPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false, float ai0 = 0f, float ai1 = 0f)
 		{
 			if (Main.myPlayer == Player.whoAmI)
 			{
@@ -530,7 +530,7 @@ namespace SOTS
 				{
 					Probe = Projectile.NewProjectile(Player.GetSource_Misc("SOTS:Pets"), Player.Center, Vector2.Zero, type, damage, knockback, Player.whoAmI, ai0, ai1);
 				}
-				if(!skipTimeleftReset)
+				if (!skipTimeleftReset)
 					Main.projectile[Probe].timeLeft = 6;
 			}
 		}
@@ -543,8 +543,8 @@ namespace SOTS
 		{
 			if (aqueductNum > 8) aqueductNum = 8;
 			if (tPlanetNum > 8) tPlanetNum = 8;
-            if (artifactProbeNum > 16) artifactProbeNum = 16;
-            if (lastAqueductMax != aqueductNum)
+			if (artifactProbeNum > 16) artifactProbeNum = 16;
+			if (lastAqueductMax != aqueductNum)
 			{
 				for (int i = 0; i < 8; i++)
 					probesAqueduct[i] = -1;
@@ -561,29 +561,29 @@ namespace SOTS
 			for (int i = 0; i < tPlanetNum; i++)
 			{
 				runPets(ref probesTinyPlanet[i], ModContent.ProjectileType<TinyPlanetTear>(), tPlanetDamage + 1);
-            }
-			if(lastArtifactMax != artifactProbeNum)
-            {
-                for (int i = 0; i < 16; i++)
-                    ArtifactProbes[i] = -1;
-            }
-			if(artifactProbeNum > 8)
+			}
+			if (lastArtifactMax != artifactProbeNum)
+			{
+				for (int i = 0; i < 16; i++)
+					ArtifactProbes[i] = -1;
+			}
+			if (artifactProbeNum > 8)
 			{
 				artifactProbeDamage = (int)(artifactProbeDamage * 0.75f);
 			}
-            for (int i = 0; i < artifactProbeNum; i++)
-            {
+			for (int i = 0; i < artifactProbeNum; i++)
+			{
 				float special = i;
 				if (i >= 8)
 					special += 0.5f;
-                runPets(ref ArtifactProbes[i], ModContent.ProjectileType<BlizzardProbe>(), artifactProbeDamage, 0f, false, special, special / 8f * 90f);
-            }
+				runPets(ref ArtifactProbes[i], ModContent.ProjectileType<BlizzardProbe>(), artifactProbeDamage, 0f, false, special, special / 8f * 90f);
+			}
 			lastArtifactMax = artifactProbeNum;
-            artifactProbeDamage = artifactProbeNum = 0;
-        }
+			artifactProbeDamage = artifactProbeNum = 0;
+		}
 		public void DoCurseAura()
-        {
-			if(CurseAura || CurseVision)
+		{
+			if (CurseAura || CurseVision)
 			{
 				int idClosest = -1;
 				float visionDist = 1600;
@@ -595,7 +595,7 @@ namespace SOTS
 					float distance = Vector2.Distance(npc.Center, Player.Center);
 					if (npc.CanBeChasedBy() && distance <= visionDist && npc.realLife == -1)
 					{
-						if(distance < bestDist && !npc.buffImmune[ModContent.BuffType<CurseVision>()])
+						if (distance < bestDist && !npc.buffImmune[ModContent.BuffType<CurseVision>()])
 						{
 							idClosest = i;
 							bestDist = distance;
@@ -607,13 +607,13 @@ namespace SOTS
 				if (!CurseVision)
 					return;
 				float mult = (1 - 1f * curseVisionCounter / 60f);
-				if (mult < 0) 
+				if (mult < 0)
 					mult = 0;
 				if (idClosest >= 0)
 				{
 					NPC npc = Main.npc[idClosest];
 					npc.AddBuff(ModContent.BuffType<CurseVision>(), 3);
-					if(Main.myPlayer == Player.whoAmI)
+					if (Main.myPlayer == Player.whoAmI)
 					{
 						Vector2 spawnLoc = new Vector2(npc.Center.X, npc.position.Y - 32);
 						float hypo = (float)Math.Sqrt(npc.width * npc.width + npc.height * npc.height);
@@ -643,15 +643,15 @@ namespace SOTS
 					}
 				}
 			}
-        }
-        public override void PostUpdateMiscEffects()
+		}
+		public override void PostUpdateMiscEffects()
 		{
 			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
 			{
 				return;
 			}
 			Vector2 detect = AncientGoldSpikeTile.HurtTiles(Player.position, Player.width, Player.height);
-			if(detect.Y != 0f)
+			if (detect.Y != 0f)
 			{
 				int damage3 = Main.DamageVar(50);
 				Player.Hurt(PlayerDeathReason.ByOther(3), damage3, 0, false, false, -1, false, knockback: 3.0f);
@@ -668,13 +668,13 @@ namespace SOTS
 			else
 				number = 0;
 		}
-        public override void PostUpdate()
+		public override void PostUpdate()
 		{
 			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
 			{
 				return;
 			}
-			else if(Player.whoAmI == Main.myPlayer && SanctuaryBiome)
+			else if (Player.whoAmI == Main.myPlayer && SanctuaryBiome)
 			{
 				SOTSWorld.TryDoingLiquidScreenEffects();
 			}
@@ -686,7 +686,7 @@ namespace SOTS
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(Player);
 			maxCritVoidStealPerSecond = (VoidPlayer.baseVoidGain + voidPlayer.bonusVoidGain) * 2; //max stored voidgain is 2x the void gain stat
 			maxCritVoidStealPerSecondTimer += (VoidPlayer.baseVoidGain + voidPlayer.bonusVoidGain + CritVoidsteal) / 300f; //takes 10 seconds to fully restore the available pool of critsteal
-			//Add critvoidsteal to the timer in some way to make it scale well with multiple voidsteal accessories. Same logic applies to other stat steals
+																														   //Add critvoidsteal to the timer in some way to make it scale well with multiple voidsteal accessories. Same logic applies to other stat steals
 			if (maxCritVoidStealPerSecondTimer > maxCritVoidStealPerSecond)
 			{
 				maxCritVoidStealPerSecondTimer = maxCritVoidStealPerSecond;
@@ -706,28 +706,28 @@ namespace SOTS
 				maxCritManastealPerSecondTimer = maxCritManastealPerSecond;
 			}
 			PrevKeepersBox = KeepersBox;
-            KeepersBox = false;
-        }
-        public override bool? CanHitNPCWithItem(Item item, NPC target)
-        {
-			if(CanKillNPC && item.DamageType == DamageClass.Melee && target.townNPC)
+			KeepersBox = false;
+		}
+		public override bool? CanHitNPCWithItem(Item item, NPC target)
+		{
+			if (CanKillNPC && item.DamageType == DamageClass.Melee && target.townNPC)
 			{
 				return null;
-            }
-            return base.CanHitNPCWithItem(item, target);
-        }
+			}
+			return base.CanHitNPCWithItem(item, target);
+		}
 		public void ResetVisionID(bool serverCommand = false)
-        {
+		{
 			UniqueVisionNumber = Main.rand.Next(TotalVisionNumber);
-			if(NetmodeID.Server == Main.netMode && serverCommand)
+			if (NetmodeID.Server == Main.netMode && serverCommand)
 			{
-                var packet = Mod.GetPacket();
-                packet.Write((byte)SOTSMessageType.SyncVisionNumber);
-                packet.Write((byte)Player.whoAmI);
-                packet.Write(UniqueVisionNumber);
-                packet.Send(-1, -1);
-            }
-        }
+				var packet = Mod.GetPacket();
+				packet.Write((byte)SOTSMessageType.SyncVisionNumber);
+				packet.Write((byte)Player.whoAmI);
+				packet.Write(UniqueVisionNumber);
+				packet.Send(-1, -1);
+			}
+		}
 		public override void PreUpdate()
 		{
 			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
@@ -739,42 +739,42 @@ namespace SOTS
 			base.PreUpdate();
 		}
 		public static int ApplyDamageClassModWithGeneric(Player player, DamageClass damageClass, int startingDamage)
-        {
+		{
 			int originalDamage = startingDamage;
 			StatModifier AndGeneric = player.GetTotalDamage(damageClass);
 			return (int)AndGeneric.ApplyTo(originalDamage);
-        }
-        public static float GetAttackSpeedMultWithGeneric(Player player, DamageClass damageClass)
-        {
-            float AndGeneric = player.GetTotalAttackSpeed(damageClass);
-            return AndGeneric;
-        }
-        public static int ApplyAttackSpeedClassModWithGeneric(Player player, DamageClass damageClass, float startingUseTime)
+		}
+		public static float GetAttackSpeedMultWithGeneric(Player player, DamageClass damageClass)
 		{
 			float AndGeneric = player.GetTotalAttackSpeed(damageClass);
-            return (int)(startingUseTime / AndGeneric);
+			return AndGeneric;
 		}
-        public override void UpdateEquips()
-        {
-            int defenseToConvert = Player.statDefense;
-            if (defenseToConvert > 30)
-            {
-                defenseToConvert = 30;
-            }
-            previousDefense = defenseToConvert;
-            if (DiamondRing)
-            {
-                Player.statDefense -= defenseToConvert / 3;
-                Player.GetDamage(DamageClass.Generic) += defenseToConvert * 0.01f;
-            }
-            DiamondRing = false;
-        }
-        public override void PostUpdateEquips()
+		public static int ApplyAttackSpeedClassModWithGeneric(Player player, DamageClass damageClass, float startingUseTime)
+		{
+			float AndGeneric = player.GetTotalAttackSpeed(damageClass);
+			return (int)(startingUseTime / AndGeneric);
+		}
+		public override void UpdateEquips()
+		{
+			int defenseToConvert = Player.statDefense;
+			if (defenseToConvert > 30)
+			{
+				defenseToConvert = 30;
+			}
+			previousDefense = defenseToConvert;
+			if (DiamondRing)
+			{
+				Player.statDefense -= defenseToConvert / 3;
+				Player.GetDamage(DamageClass.Generic) += defenseToConvert * 0.01f;
+			}
+			DiamondRing = false;
+		}
+		public override void PostUpdateEquips()
 		{
 			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
-            {
+			{
 				return;
-            }
+			}
 			TrailStuff();
 			DoCurseAura();
 			if (petAdvisor)
@@ -832,190 +832,190 @@ namespace SOTS
 				Player.rocketTimeMax = 7;
 			}
 			ReplaceCritWithDamage();
-            StatShare();
-        }
-        public void ReplaceCritWithDamage()
+			StatShare();
+		}
+		public void ReplaceCritWithDamage()
 		{
-			if(InverseDiamondRing)
-            {
-                float critGeneric = Player.GetCritChance(DamageClass.Generic);
-                float critMelee = Player.GetCritChance(DamageClass.Melee);
-                float critRanged = Player.GetCritChance(DamageClass.Ranged);
-                float critMagic = Player.GetCritChance(DamageClass.Magic);
-                float critVGeneric = Player.GetCritChance<VoidGeneric>();
-                float critVMelee = Player.GetCritChance<VoidMelee>();
-                float critVRanged = Player.GetCritChance<VoidRanged>();
-                float critVMagic = Player.GetCritChance<VoidMagic>();
-                Player.GetCritChance(DamageClass.Generic) -= critGeneric + 4;
-                Player.GetCritChance(DamageClass.Melee) -= critMelee + 4;
-                Player.GetCritChance(DamageClass.Ranged) -= critRanged + 4;
-                Player.GetCritChance(DamageClass.Magic) -= critMagic + 4;
-                Player.GetCritChance<VoidGeneric>() -= critVGeneric + 4;
-                Player.GetCritChance<VoidMelee>() -= critVMelee + 4;
-                Player.GetCritChance<VoidRanged>() -= critVRanged + 4;
-                Player.GetCritChance<VoidMagic>() -= critVMagic + 4;
+			if (InverseDiamondRing)
+			{
+				float critGeneric = Player.GetCritChance(DamageClass.Generic);
+				float critMelee = Player.GetCritChance(DamageClass.Melee);
+				float critRanged = Player.GetCritChance(DamageClass.Ranged);
+				float critMagic = Player.GetCritChance(DamageClass.Magic);
+				float critVGeneric = Player.GetCritChance<VoidGeneric>();
+				float critVMelee = Player.GetCritChance<VoidMelee>();
+				float critVRanged = Player.GetCritChance<VoidRanged>();
+				float critVMagic = Player.GetCritChance<VoidMagic>();
+				Player.GetCritChance(DamageClass.Generic) -= critGeneric + 4;
+				Player.GetCritChance(DamageClass.Melee) -= critMelee + 4;
+				Player.GetCritChance(DamageClass.Ranged) -= critRanged + 4;
+				Player.GetCritChance(DamageClass.Magic) -= critMagic + 4;
+				Player.GetCritChance<VoidGeneric>() -= critVGeneric + 4;
+				Player.GetCritChance<VoidMelee>() -= critVMelee + 4;
+				Player.GetCritChance<VoidRanged>() -= critVRanged + 4;
+				Player.GetCritChance<VoidMagic>() -= critVMagic + 4;
 				Player.GetDamage(DamageClass.Generic) *= 1 + critGeneric / 100f;
-                Player.GetDamage(DamageClass.Melee) *= 1 + critMelee / 100f;
-                Player.GetDamage(DamageClass.Ranged) *= 1 + critRanged / 100f;
-                Player.GetDamage(DamageClass.Magic) *= 1 + critMagic / 100f;
+				Player.GetDamage(DamageClass.Melee) *= 1 + critMelee / 100f;
+				Player.GetDamage(DamageClass.Ranged) *= 1 + critRanged / 100f;
+				Player.GetDamage(DamageClass.Magic) *= 1 + critMagic / 100f;
 				Player.GetDamage<VoidGeneric>() *= 1 + critVGeneric / 100f;
-                Player.GetDamage<VoidMelee>() *= 1 + critVMelee / 100f;
-                Player.GetDamage<VoidRanged>() *= 1 + critVRanged / 100f;
-                Player.GetDamage<VoidMagic>() *= 1 + critVMagic / 100f;
-            }
-            InverseDiamondRing = false;
-        }
+				Player.GetDamage<VoidMelee>() *= 1 + critVMelee / 100f;
+				Player.GetDamage<VoidRanged>() *= 1 + critVRanged / 100f;
+				Player.GetDamage<VoidMagic>() *= 1 + critVMagic / 100f;
+			}
+			InverseDiamondRing = false;
+		}
 		public void StatShare()
-        {
-            float meleeAdditiveBonus = (Player.GetDamage(DamageClass.Melee).Additive - 1) * 0.5f;
-            float meleeFlatBonus = Player.GetDamage(DamageClass.Melee).Flat * 0.5f;
-            float meleeMultiplicativeBonus = (Player.GetDamage(DamageClass.Melee).Multiplicative - 1) * 0.5f + 1;
-            float meleeBaseBonus = Player.GetDamage(DamageClass.Melee).Base * 0.5f;
-            float rangedAdditiveBonus = (Player.GetDamage(DamageClass.Ranged).Additive - 1) * 0.5f;
-            float rangedFlatBonus = Player.GetDamage(DamageClass.Ranged).Flat * 0.5f;
-            float rangedMultiplicativeBonus = (Player.GetDamage(DamageClass.Ranged).Multiplicative - 1) * 0.5f + 1;
-            float rangedBaseBonus = Player.GetDamage(DamageClass.Ranged).Base * 0.5f;
-            float magicAdditiveBonus = (Player.GetDamage(DamageClass.Magic).Additive - 1) * 0.5f;
-            float magicFlatBonus = Player.GetDamage(DamageClass.Magic).Flat * 0.5f;
-            float magicMultiplicativeBonus = (Player.GetDamage(DamageClass.Magic).Multiplicative - 1) * 0.5f + 1;
-            float magicBaseBonus = Player.GetDamage(DamageClass.Magic).Base * 0.5f;
-            float summonAdditiveBonus = (Player.GetDamage(DamageClass.Summon).Additive - 1) * 0.5f;
-            float summonFlatBonus = Player.GetDamage(DamageClass.Summon).Flat * 0.5f;
-            float summonMultiplicativeBonus = (Player.GetDamage(DamageClass.Summon).Multiplicative - 1) * 0.5f + 1;
-            float summonBaseBonus = Player.GetDamage(DamageClass.Summon).Base * 0.5f;
-            if (StatShareMeleeAndSummon)
-            {
-                if (meleeAdditiveBonus > 0)
-                    Player.GetDamage(DamageClass.Summon) += meleeAdditiveBonus;
-                if (meleeFlatBonus > 0)
-                    Player.GetDamage(DamageClass.Summon).Flat += meleeFlatBonus;
-                if (meleeMultiplicativeBonus > 1)
-                    Player.GetDamage(DamageClass.Summon) *= meleeMultiplicativeBonus;
-                if (meleeBaseBonus > 0)
-                    Player.GetDamage(DamageClass.Summon).Base += meleeBaseBonus;
-                if (summonAdditiveBonus > 0)
-                    Player.GetDamage(DamageClass.Melee) += summonAdditiveBonus;
-                if (summonFlatBonus > 0)
-                    Player.GetDamage(DamageClass.Melee).Flat += summonFlatBonus;
-                if (summonMultiplicativeBonus > 1)
-                    Player.GetDamage(DamageClass.Melee) *= summonMultiplicativeBonus;
-                if (summonBaseBonus > 0)
-                    Player.GetDamage(DamageClass.Melee).Base += summonBaseBonus;
-            }
-            if (StatShareMeleeAndMagic)
-            {
-                if (meleeAdditiveBonus > 0)
-                    Player.GetDamage(DamageClass.Magic) += meleeAdditiveBonus;
-                if (meleeFlatBonus > 0)
-                    Player.GetDamage(DamageClass.Magic).Flat += meleeFlatBonus;
-                if (meleeMultiplicativeBonus > 1)
-                    Player.GetDamage(DamageClass.Magic) *= meleeMultiplicativeBonus;
-                if (meleeBaseBonus > 0)
-                    Player.GetDamage(DamageClass.Magic).Base += meleeBaseBonus;
-                if (magicAdditiveBonus > 0)
-                    Player.GetDamage(DamageClass.Melee) += magicAdditiveBonus;
-                if (magicFlatBonus > 0)
-                    Player.GetDamage(DamageClass.Melee).Flat += magicFlatBonus;
-                if (magicMultiplicativeBonus > 1)
-                    Player.GetDamage(DamageClass.Melee) *= magicMultiplicativeBonus;
-                if (magicBaseBonus > 0)
-                    Player.GetDamage(DamageClass.Melee).Base += magicBaseBonus;
-            }
-			if(StatShareAll)
-            {
-                if (meleeAdditiveBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic) += meleeAdditiveBonus;
-                    Player.GetDamage(DamageClass.Melee) -= meleeAdditiveBonus;
-                }
-                if (meleeFlatBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic).Flat += meleeFlatBonus;
-                    Player.GetDamage(DamageClass.Melee).Flat -= meleeFlatBonus;
-                }
-                if (meleeMultiplicativeBonus > 1)
-                {
-                    Player.GetDamage(DamageClass.Generic) *= meleeMultiplicativeBonus;
-                    Player.GetDamage(DamageClass.Melee) /= meleeMultiplicativeBonus;
-                }
-                if (meleeBaseBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic).Base += meleeBaseBonus;
-                    Player.GetDamage(DamageClass.Melee).Base -= meleeBaseBonus;
-                }
-                if (rangedAdditiveBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic) += rangedAdditiveBonus;
-                    Player.GetDamage(DamageClass.Ranged) -= rangedAdditiveBonus;
-                }
-                if (rangedFlatBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic).Flat += rangedFlatBonus;
-                    Player.GetDamage(DamageClass.Ranged).Flat -= rangedFlatBonus;
-                }
-                if (rangedMultiplicativeBonus > 1)
-                {
-                    Player.GetDamage(DamageClass.Generic) *= rangedMultiplicativeBonus;
-                    Player.GetDamage(DamageClass.Ranged) /= rangedMultiplicativeBonus;
-                }
-                if (rangedBaseBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic).Base += rangedBaseBonus;
-                    Player.GetDamage(DamageClass.Ranged).Base -= rangedBaseBonus;
-                }
-                if (magicAdditiveBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic) += magicAdditiveBonus;
-                    Player.GetDamage(DamageClass.Magic) -= magicAdditiveBonus;
-                }
-                if (magicFlatBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic).Flat += magicFlatBonus;
-                    Player.GetDamage(DamageClass.Magic).Flat -= magicFlatBonus;
-                }
-                if (magicMultiplicativeBonus > 1)
-                {
-                    Player.GetDamage(DamageClass.Generic) *= magicMultiplicativeBonus;
-                    Player.GetDamage(DamageClass.Magic) /= magicMultiplicativeBonus;
-                }
-                if (magicBaseBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic).Base += magicBaseBonus;
-                    Player.GetDamage(DamageClass.Magic).Base -= magicBaseBonus;
-                }
-                if (summonAdditiveBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic) += summonAdditiveBonus;
-                    Player.GetDamage(DamageClass.Summon) -= summonAdditiveBonus;
-                }
-                if (summonFlatBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic).Flat += summonFlatBonus;
-                    Player.GetDamage(DamageClass.Summon).Flat -= summonFlatBonus;
-                }
-                if (summonMultiplicativeBonus > 1)
-                {
-                    Player.GetDamage(DamageClass.Generic) *= summonMultiplicativeBonus;
-                    Player.GetDamage(DamageClass.Summon) /= summonMultiplicativeBonus;
-                }
-                if (summonBaseBonus > 0)
-                {
-                    Player.GetDamage(DamageClass.Generic).Base += summonBaseBonus;
-                    Player.GetDamage(DamageClass.Summon).Base -= summonBaseBonus;
-                }
-            }
-			if(Earthdrive)
+		{
+			float meleeAdditiveBonus = (Player.GetDamage(DamageClass.Melee).Additive - 1) * 0.5f;
+			float meleeFlatBonus = Player.GetDamage(DamageClass.Melee).Flat * 0.5f;
+			float meleeMultiplicativeBonus = (Player.GetDamage(DamageClass.Melee).Multiplicative - 1) * 0.5f + 1;
+			float meleeBaseBonus = Player.GetDamage(DamageClass.Melee).Base * 0.5f;
+			float rangedAdditiveBonus = (Player.GetDamage(DamageClass.Ranged).Additive - 1) * 0.5f;
+			float rangedFlatBonus = Player.GetDamage(DamageClass.Ranged).Flat * 0.5f;
+			float rangedMultiplicativeBonus = (Player.GetDamage(DamageClass.Ranged).Multiplicative - 1) * 0.5f + 1;
+			float rangedBaseBonus = Player.GetDamage(DamageClass.Ranged).Base * 0.5f;
+			float magicAdditiveBonus = (Player.GetDamage(DamageClass.Magic).Additive - 1) * 0.5f;
+			float magicFlatBonus = Player.GetDamage(DamageClass.Magic).Flat * 0.5f;
+			float magicMultiplicativeBonus = (Player.GetDamage(DamageClass.Magic).Multiplicative - 1) * 0.5f + 1;
+			float magicBaseBonus = Player.GetDamage(DamageClass.Magic).Base * 0.5f;
+			float summonAdditiveBonus = (Player.GetDamage(DamageClass.Summon).Additive - 1) * 0.5f;
+			float summonFlatBonus = Player.GetDamage(DamageClass.Summon).Flat * 0.5f;
+			float summonMultiplicativeBonus = (Player.GetDamage(DamageClass.Summon).Multiplicative - 1) * 0.5f + 1;
+			float summonBaseBonus = Player.GetDamage(DamageClass.Summon).Base * 0.5f;
+			if (StatShareMeleeAndSummon)
+			{
+				if (meleeAdditiveBonus > 0)
+					Player.GetDamage(DamageClass.Summon) += meleeAdditiveBonus;
+				if (meleeFlatBonus > 0)
+					Player.GetDamage(DamageClass.Summon).Flat += meleeFlatBonus;
+				if (meleeMultiplicativeBonus > 1)
+					Player.GetDamage(DamageClass.Summon) *= meleeMultiplicativeBonus;
+				if (meleeBaseBonus > 0)
+					Player.GetDamage(DamageClass.Summon).Base += meleeBaseBonus;
+				if (summonAdditiveBonus > 0)
+					Player.GetDamage(DamageClass.Melee) += summonAdditiveBonus;
+				if (summonFlatBonus > 0)
+					Player.GetDamage(DamageClass.Melee).Flat += summonFlatBonus;
+				if (summonMultiplicativeBonus > 1)
+					Player.GetDamage(DamageClass.Melee) *= summonMultiplicativeBonus;
+				if (summonBaseBonus > 0)
+					Player.GetDamage(DamageClass.Melee).Base += summonBaseBonus;
+			}
+			if (StatShareMeleeAndMagic)
+			{
+				if (meleeAdditiveBonus > 0)
+					Player.GetDamage(DamageClass.Magic) += meleeAdditiveBonus;
+				if (meleeFlatBonus > 0)
+					Player.GetDamage(DamageClass.Magic).Flat += meleeFlatBonus;
+				if (meleeMultiplicativeBonus > 1)
+					Player.GetDamage(DamageClass.Magic) *= meleeMultiplicativeBonus;
+				if (meleeBaseBonus > 0)
+					Player.GetDamage(DamageClass.Magic).Base += meleeBaseBonus;
+				if (magicAdditiveBonus > 0)
+					Player.GetDamage(DamageClass.Melee) += magicAdditiveBonus;
+				if (magicFlatBonus > 0)
+					Player.GetDamage(DamageClass.Melee).Flat += magicFlatBonus;
+				if (magicMultiplicativeBonus > 1)
+					Player.GetDamage(DamageClass.Melee) *= magicMultiplicativeBonus;
+				if (magicBaseBonus > 0)
+					Player.GetDamage(DamageClass.Melee).Base += magicBaseBonus;
+			}
+			if (StatShareAll)
+			{
+				if (meleeAdditiveBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic) += meleeAdditiveBonus;
+					Player.GetDamage(DamageClass.Melee) -= meleeAdditiveBonus;
+				}
+				if (meleeFlatBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic).Flat += meleeFlatBonus;
+					Player.GetDamage(DamageClass.Melee).Flat -= meleeFlatBonus;
+				}
+				if (meleeMultiplicativeBonus > 1)
+				{
+					Player.GetDamage(DamageClass.Generic) *= meleeMultiplicativeBonus;
+					Player.GetDamage(DamageClass.Melee) /= meleeMultiplicativeBonus;
+				}
+				if (meleeBaseBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic).Base += meleeBaseBonus;
+					Player.GetDamage(DamageClass.Melee).Base -= meleeBaseBonus;
+				}
+				if (rangedAdditiveBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic) += rangedAdditiveBonus;
+					Player.GetDamage(DamageClass.Ranged) -= rangedAdditiveBonus;
+				}
+				if (rangedFlatBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic).Flat += rangedFlatBonus;
+					Player.GetDamage(DamageClass.Ranged).Flat -= rangedFlatBonus;
+				}
+				if (rangedMultiplicativeBonus > 1)
+				{
+					Player.GetDamage(DamageClass.Generic) *= rangedMultiplicativeBonus;
+					Player.GetDamage(DamageClass.Ranged) /= rangedMultiplicativeBonus;
+				}
+				if (rangedBaseBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic).Base += rangedBaseBonus;
+					Player.GetDamage(DamageClass.Ranged).Base -= rangedBaseBonus;
+				}
+				if (magicAdditiveBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic) += magicAdditiveBonus;
+					Player.GetDamage(DamageClass.Magic) -= magicAdditiveBonus;
+				}
+				if (magicFlatBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic).Flat += magicFlatBonus;
+					Player.GetDamage(DamageClass.Magic).Flat -= magicFlatBonus;
+				}
+				if (magicMultiplicativeBonus > 1)
+				{
+					Player.GetDamage(DamageClass.Generic) *= magicMultiplicativeBonus;
+					Player.GetDamage(DamageClass.Magic) /= magicMultiplicativeBonus;
+				}
+				if (magicBaseBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic).Base += magicBaseBonus;
+					Player.GetDamage(DamageClass.Magic).Base -= magicBaseBonus;
+				}
+				if (summonAdditiveBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic) += summonAdditiveBonus;
+					Player.GetDamage(DamageClass.Summon) -= summonAdditiveBonus;
+				}
+				if (summonFlatBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic).Flat += summonFlatBonus;
+					Player.GetDamage(DamageClass.Summon).Flat -= summonFlatBonus;
+				}
+				if (summonMultiplicativeBonus > 1)
+				{
+					Player.GetDamage(DamageClass.Generic) *= summonMultiplicativeBonus;
+					Player.GetDamage(DamageClass.Summon) /= summonMultiplicativeBonus;
+				}
+				if (summonBaseBonus > 0)
+				{
+					Player.GetDamage(DamageClass.Generic).Base += summonBaseBonus;
+					Player.GetDamage(DamageClass.Summon).Base -= summonBaseBonus;
+				}
+			}
+			if (Earthdrive)
 			{
 				float meleeSpeed = Player.GetAttackSpeed(DamageClass.Melee) - 1;
-                float miningSpeed = 1 - Player.pickSpeed;
+				float miningSpeed = 1 - Player.pickSpeed;
 				if (meleeSpeed > 0)
 					Player.pickSpeed -= meleeSpeed;
 				//Main.NewText(Player.pickSpeed);
 				if (miningSpeed > 0)
 					Player.GetAttackSpeed(DamageClass.Melee) += miningSpeed;
-            }
-            StatShareMeleeAndSummon = StatShareMeleeAndMagic = StatShareAll = Earthdrive = false;
-        }
+			}
+			StatShareMeleeAndSummon = StatShareMeleeAndMagic = StatShareAll = Earthdrive = false;
+		}
 		public override void ResetEffects()
 		{
 			if (Player.isDisplayDollOrInanimate || Player.isHatRackDoll || Player.isFirstFractalAfterImage)
@@ -1026,17 +1026,17 @@ namespace SOTS
 			BlazingQuiver = WishingStar = AcidInject = Sunbulb = Dreamcatcher = Embattle = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
-			if(VMincubator)
-            {
-				if(SOTSWorld.GlobalFrozen)
-                {
+			if (VMincubator)
+			{
+				if (SOTSWorld.GlobalFrozen)
+				{
 					Player.AddBuff(ModContent.BuffType<VoidMetamorphosis>(), 30, true);
 					Player.AddBuff(ModContent.BuffType<DilationSickness>(), SOTSWorld.GlobalTimeFreeze * 3 + 1200, true);
-                }
-            }
-			if(SanctuaryBiome)
+				}
+			}
+			if (SanctuaryBiome)
 			{
-				if(Player.wet)
+				if (Player.wet)
 				{
 					Player.AddBuff(ModContent.BuffType<Boiling>(), 6, true);
 				}
@@ -1046,66 +1046,66 @@ namespace SOTS
 			zoneLux = zonePolaris = false;
 			if (NPC.AnyNPCs(ModContent.NPCType<Lux>()) || NPC.AnyNPCs(ModContent.NPCType<NewPolaris>()))
 			{
-				for(int i = 0; i < Main.npc.Length; i++)
-                {
-					if(Main.npc[i].active && Main.npc[i].Distance(Player.Center) < 3200)
-                    {
-                        if (Main.npc[i].type == ModContent.NPCType<NewPolaris>())
-                        {
-                            zonePolaris = true;
-                        }
-                        if (Main.npc[i].type == ModContent.NPCType<Lux>())
-                        {
-                            zoneLux = true;
-                        }
-                    }
-                }
-            }
+				for (int i = 0; i < Main.npc.Length; i++)
+				{
+					if (Main.npc[i].active && Main.npc[i].Distance(Player.Center) < 3200)
+					{
+						if (Main.npc[i].type == ModContent.NPCType<NewPolaris>())
+						{
+							zonePolaris = true;
+						}
+						if (Main.npc[i].type == ModContent.NPCType<Lux>())
+						{
+							zoneLux = true;
+						}
+					}
+				}
+			}
 			CactusSpineDamage = 0;
 			HarvestersScythe = false;
 			ParticleRelocator = false;
 			pyramidBattle = false;
 			if (normalizedGravity && !Player.GetModPlayer<MachinaBoosterPlayer>().creativeFlight)
-            {
+			{
 				Player.gravity = Player.defaultGravity;
-            }
-			normalizedGravity = false; 
+			}
+			normalizedGravity = false;
 			noMoreConstructs = false;
 			CanKillNPC = false;
 			baguetteDrops = false;
 			if (baguetteLengthCounter >= 180)
 			{
-				if(baguetteLength > 0)
+				if (baguetteLength > 0)
 					baguetteLength--;
 				baguetteLengthCounter = baguetteLength * 3;
 			}
 			if (baguetteLength > 0)
 				baguetteLengthCounter++;
 			else
-            {
+			{
 				baguetteLengthCounter = 0;
-            }
+			}
 			doomDrops = false;
 			Player.lifeRegen += halfLifeRegen / 2;
 			halfLifeRegen = 0;
 			if (Player.HasBuff(BuffID.ChaosState))
-            {
+			{
 				BlinkedAmount = 0;
 			}
-			if(BlinkedAmount > 0 && BlinkedAmount < 2)
-            {
+			if (BlinkedAmount > 0 && BlinkedAmount < 2)
+			{
 				BlinkedAmount -= 0.002f;
 				if (BlinkedAmount < 0) BlinkedAmount = 0;
 			}
-			if(Player.whoAmI == Main.myPlayer)
+			if (Player.whoAmI == Main.myPlayer)
 			{
 				cursorRadians = (Main.MouseWorld - Player.Center).ToRotation();
-				if(skywardBlades >= 0)
+				if (skywardBlades >= 0)
 				{
 					netUpdate = true;
 				}
-				if(skywardBlades == 0)
-                {
+				if (skywardBlades == 0)
+				{
 					skywardBlades = -1;
 					netUpdate = true;
 				}
@@ -1149,7 +1149,7 @@ namespace SOTS
 			RubyMonolithIsNOTVanity = AnomalyLocator = false;
 			int voidspacePiecesWorn = 0, chaosPiecesWorn = 0;
 			for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
-            {
+			{
 				Item item = Player.armor[i];
 				if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
 					AnomalyLocator = true;
@@ -1172,7 +1172,7 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
 				{
 					if (!HoloEye)
-                    {
+					{
 						HoloEyeIsVanity = true;
 						int damage = ApplyDamageClassModWithGeneric(Player, DamageClass.Summon, 33);
 						HoloEyeDamage += damage;
@@ -1182,7 +1182,7 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<CursedRobe>())
 					RubyMonolith = true;
 				if (item.type == ModContent.ItemType<VisionAmulet>())
-                {
+				{
 					VisionVanity = true;
 				}
 				if (item.type == ModContent.ItemType<BackupBow>())
@@ -1190,8 +1190,8 @@ namespace SOTS
 				if (item.type == ModContent.ItemType<MachinaBooster>())
 				{
 					MachinaBoosterPlayer MachinaBoosterPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
-					if(!MachinaBoosterPlayer.canCreativeFlight)
-                    {
+					if (!MachinaBoosterPlayer.canCreativeFlight)
+					{
 						MachinaBoosterPlayer.HaloDust();
 					}
 				}
@@ -1237,42 +1237,42 @@ namespace SOTS
 					HoloEyeIsVanity = false;
 				}
 				if (item.type == ModContent.ItemType<VoidspaceLeggings>() ||
-					item.type == ModContent.ItemType<VoidspaceBreastplate>() || 
+					item.type == ModContent.ItemType<VoidspaceBreastplate>() ||
 					item.type == ModContent.ItemType<VoidspaceMask>())
 				{
 					voidspacePiecesWorn++;
-                }
-                if (item.type == ModContent.ItemType<ElementalLeggings>() ||
-                    item.type == ModContent.ItemType<ElementalBreastplate>() ||
-                    item.type == ModContent.ItemType<ElementalHelmet>())
-                {
-                    chaosPiecesWorn++;
-                }
-                if (item.type == ModContent.ItemType<EarthenHelmet>())
-                {
+				}
+				if (item.type == ModContent.ItemType<ElementalLeggings>() ||
+					item.type == ModContent.ItemType<ElementalBreastplate>() ||
+					item.type == ModContent.ItemType<ElementalHelmet>())
+				{
+					chaosPiecesWorn++;
+				}
+				if (item.type == ModContent.ItemType<EarthenHelmet>())
+				{
 					EarthHelmet = true;
-                }
-                /*if (item.type == ModContent.ItemType<SubspaceLocket>())
+				}
+				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
 				}*/
-            }
-			if(voidspacePiecesWorn > 0)
+			}
+			if (voidspacePiecesWorn > 0)
 			{
 				Lighting.AddLight(Player.Center, new Vector3(0.5f, 0.88f, 0.62f) * voidspacePiecesWorn * 0.3f);
-            }
-            if (chaosPiecesWorn > 0)
-            {
-                Lighting.AddLight(Player.Center, Vector3.Lerp(Vector3.One, ColorHelper.ChaosPink.ToVector3(), 0.5f) * chaosPiecesWorn * 0.5f);
-            }
-			if(EarthHelmet)
+			}
+			if (chaosPiecesWorn > 0)
 			{
-                Lighting.AddLight(Player.Center, Vector3.One * 1.1f);
-            }
-            typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
-            assassinateNum = 1;
+				Lighting.AddLight(Player.Center, Vector3.Lerp(Vector3.One, ColorHelper.ChaosPink.ToVector3(), 0.5f) * chaosPiecesWorn * 0.5f);
+			}
+			if (EarthHelmet)
+			{
+				Lighting.AddLight(Player.Center, Vector3.One * 1.1f);
+			}
+			typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
+			assassinateNum = 1;
 			assassinate = VibrantArmor = frigidJavelinNoCost = false;
-            brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
+			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
 			if (SOTSWorld.GlobalCounter % 360 == 0)
 			{
 				netUpdate = true;
@@ -1297,7 +1297,7 @@ namespace SOTS
 				if (curseVisionCounter < 60)
 				{
 					curseVisionCounter++;
-					if(Player.HasBuff(ModContent.BuffType<RubyMonolithAttack>()))
+					if (Player.HasBuff(ModContent.BuffType<RubyMonolithAttack>()))
 					{
 						curseVisionCounter += 4;
 					}
@@ -1325,13 +1325,13 @@ namespace SOTS
 			EndothermicAfterburner = false;
 			ParticleRelocator = false;
 			if (PyramidBiome)
-				Player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false); 
+				Player.AddBuff(ModContent.BuffType<Buffs.PharaohsCurse>(), 16, false);
 			polarCannons = 0;
 			meleeItemScale = 1f;
 			SerpentSpine = MeleeShred = false;
 			PlasmaShrimpVanity = false;
 			PlasmaShrimp = false;
-			if(LazyCrafterAmulet) //this needs to be done in both Detours and Here due to how the original recipe functions determine when to update recipes
+			if (LazyCrafterAmulet) //this needs to be done in both Detours and Here due to how the original recipe functions determine when to update recipes
 			{
 				Player.adjTile[TileID.WorkBenches] = true;
 				Player.adjTile[TileID.Furnaces] = true;
@@ -1341,18 +1341,18 @@ namespace SOTS
 				Player.adjTile[TileID.Tables] = true;
 				Player.alchemyTable = true;
 			}
-			if(InverseTopazRing && Main.myPlayer == Player.whoAmI)
+			if (InverseTopazRing && Main.myPlayer == Player.whoAmI)
 			{
-				if(InverseTopazRingCD <= 0)
+				if (InverseTopazRingCD <= 0)
 				{
-                    GrantRandomRingBuff(Player);
-                    InverseTopazRingCD = 1200;
-                }
+					GrantRandomRingBuff(Player);
+					InverseTopazRingCD = 1200;
+				}
 				else
 				{
 					InverseTopazRingCD--;
 				}
-            }
+			}
 			RubyRing = AmberRing = TopazRing = EmeraldRing = AmethystRing = LazyCrafterAmulet = InverseTopazRing = ScalingArmorPenetration = false;
 			AmmoConsumptionModifier = DamageGenerateMoney = 0.0f;
 			bonusPickaxePower = 0;
@@ -1362,28 +1362,28 @@ namespace SOTS
 				AmmoRegatherDelay++;
 			if (BrassWhipDelay > 0)
 				BrassWhipDelay--;
-        }
-        public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
-        {
-            return base.AddStartingItems(mediumCoreDeath);
-        }
-        public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
-        {
+		}
+		public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath)
+		{
+			return base.AddStartingItems(mediumCoreDeath);
+		}
+		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition)
+		{
 			//Fish Set 1
 			int power = attempt.playerFishingConditions.BaitPower + attempt.playerFishingConditions.PolePower;
 			int baitType = attempt.playerFishingConditions.BaitItemType;
 			int liquidType = attempt.inHoney ? 2 : attempt.inLava ? 1 : 0;
 			if (ScaleCatch2(power, 0, 100, 8, 24) && (Player.ZoneSkyHeight || Player.Center.Y < Main.worldSurface * 16 * 0.5f))
 				itemDrop = ModContent.ItemType<TinyPlanetFish>();
-			if(Player.ZoneBeach && liquidType == 0 && ScaleCatch2(power, 0, 100, 100, 200))
+			if (Player.ZoneBeach && liquidType == 0 && ScaleCatch2(power, 0, 100, 100, 200))
 				itemDrop = ModContent.ItemType<PistolShrimp>();
 
 			if (Player.ZoneBeach && liquidType == 0 && Main.rand.NextBool(225))
-				itemDrop = ModContent.ItemType<CrabClaw>(); 
+				itemDrop = ModContent.ItemType<CrabClaw>();
 
 
 			if (ScaleCatch2(power, 0, 90, 150, 750) && Player.ZoneBeach && liquidType == 0)
-				itemDrop = ModContent.ItemType<PinkJellyfishStaff>(); 
+				itemDrop = ModContent.ItemType<PinkJellyfishStaff>();
 			else if (ScaleCatch2(power, 0, 70, 30, 150) && Player.ZoneBeach && liquidType == 0 && baitType == ItemID.PinkJellyfish) //Checks for pink jellyfish bait
 				itemDrop = ModContent.ItemType<PinkJellyfishStaff>();
 
@@ -1395,50 +1395,50 @@ namespace SOTS
 				itemDrop = ModContent.ItemType<BlueJellyfishStaff>();
 
 			if (ScaleCatch2(power, 0, 30, 5, 10) && PyramidBiome && liquidType == 0)
-				itemDrop = ModContent.ItemType<SeaSnake>(); 
+				itemDrop = ModContent.ItemType<SeaSnake>();
 			else if (ScaleCatch2(power, 0, 40, 7, 11) && PyramidBiome && liquidType == 0)
-				itemDrop = ModContent.ItemType<PhantomFish>(); 
+				itemDrop = ModContent.ItemType<PhantomFish>();
 			else if (ScaleCatch2(power, 20, 80, 7, 20) && PyramidBiome && liquidType == 0) //gains the same rarity as Phantom Fish when at 80, fails to catch below 20 power
-				itemDrop = ModContent.ItemType<Curgeon>(); 
+				itemDrop = ModContent.ItemType<Curgeon>();
 			else if (ScaleCatch2(power, 0, 200, 100, 300) && PyramidBiome && liquidType == 0) //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
-				itemDrop = ModContent.ItemType<ZephyrousZeppelin>(); 
+				itemDrop = ModContent.ItemType<ZephyrousZeppelin>();
 			else if (ScaleCatch2(power, 0, 200, 100, 300) && PyramidBiome && liquidType == 0) //1/300 at 0, 1/200 at 100, 1/100 at 200, etc
-				itemDrop = ItemID.ZephyrFish; 
+				itemDrop = ItemID.ZephyrFish;
 			else if (!Player.HasBuff(BuffID.Crate))
 			{
 				if (ScaleCatch2(power, 0, 200, 20, 200) && PyramidBiome && liquidType == 0)
-					itemDrop = ModContent.ItemType<PyramidCrate>(); 
+					itemDrop = ModContent.ItemType<PyramidCrate>();
 			}
 			else if (ScaleCatch2(power, 0, 200, 10, 100) && PyramidBiome && liquidType == 0)
-					itemDrop = ModContent.ItemType<PyramidCrate>(); 
-			
+				itemDrop = ModContent.ItemType<PyramidCrate>();
+
 			bool cratePotion = Player.HasBuff(BuffID.Crate);
 			bool canCatchPlanetariumCrate = attempt.playerFishingConditions.PoleItemType == ModContent.ItemType<TwilightFishingPole>()
-				|| (SOTSWorld.downedAdvisor && (attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<BrownTardigrade>() 
+				|| (SOTSWorld.downedAdvisor && (attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<BrownTardigrade>()
 				|| attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<BlueTardigrade>()
-                || attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<GreenTardigrade>()
-                || attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<PinkTardigrade>()));
-            if (canCatchPlanetariumCrate && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
-            {
-                itemDrop = Main.hardMode ? ModContent.ItemType<OtherworldCrate>() : ModContent.ItemType<PlanetariumCrate>();
-            }
+				|| attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<GreenTardigrade>()
+				|| attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<PinkTardigrade>()));
+			if (canCatchPlanetariumCrate && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
+			{
+				itemDrop = Main.hardMode ? ModContent.ItemType<OtherworldCrate>() : ModContent.ItemType<PlanetariumCrate>();
+			}
 
-			bool canCatchObsidianInOtherLiquids = liquidType != 1 && 
+			bool canCatchObsidianInOtherLiquids = liquidType != 1 &&
 				(attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<SubspaceWormItem>() ||
 				attempt.playerFishingConditions.BaitItemType == ModContent.ItemType<LunaMothItem>());
 
-			if(canCatchObsidianInOtherLiquids && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
-            {
-                itemDrop = Main.hardMode ? ItemID.LavaCrateHard : ItemID.LavaCrate;
-            }
-        }
-        /** minPower is the minimum power required, and yields a 1/maxRate chance of catching
+			if (canCatchObsidianInOtherLiquids && ScaleCatch2(power, 0, 100, cratePotion ? 8 : 16, cratePotion ? 80 : 160))
+			{
+				itemDrop = Main.hardMode ? ItemID.LavaCrateHard : ItemID.LavaCrate;
+			}
+		}
+		/** minPower is the minimum power required, and yields a 1/maxRate chance of catching
 		*	maxPower is the maximum power required, and yields a 1/minRate chance of catching
 		*	rates are overall rounded down
 		*	anything below minPower will fail to catch
 		*	pre condition: minPower < maxPower, minRate < maxRate
 		*	post condition: returns true at a specific chance.	*/
-        public static bool ScaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
+		public static bool ScaleCatch2(int power, int minPower, int maxPower, int minRate, int maxRate)
 		{
 			if (power < minPower)
 			{
@@ -1459,7 +1459,7 @@ namespace SOTS
 		{
 			if (PushBack)
 			{
-				if(Main.myPlayer == Player.whoAmI)
+				if (Main.myPlayer == Player.whoAmI)
 				{
 					Vector2 toNPC = (Player.Center - npc.Center).SafeNormalize(Vector2.Zero);
 					int Proj = Projectile.NewProjectile(Player.GetSource_OnHurt(npc), npc.Center - toNPC * 5, toNPC, ProjectileID.JavelinFriendly, 12, 25f, Player.whoAmI);
@@ -1493,12 +1493,12 @@ namespace SOTS
 					{
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
 					}
-                }
-                if (SupernovaEmblem && projectile.type != ModContent.ProjectileType<Seeker>() && target.realLife == -1)
-                {
-                    Projectiles.Planetarium.SupernovaHammer.SpawnSeekers(new EntitySource_OnHit(Player, target), target.Center, 1, (int)(hit.SourceDamage * 1.5f), -1);
-                }
-            }
+				}
+				if (SupernovaEmblem && projectile.type != ModContent.ProjectileType<Seeker>() && target.realLife == -1)
+				{
+					Projectiles.Planetarium.SupernovaHammer.SpawnSeekers(new EntitySource_OnHit(Player, target), target.Center, 1, (int)(hit.SourceDamage * 1.5f), -1);
+				}
+			}
 			if (Main.myPlayer == Player.whoAmI && AmmoRegather && !target.immortal && projectile != null)
 			{
 				if (projectile.CountsAsClass(DamageClass.Ranged))
@@ -1521,7 +1521,7 @@ namespace SOTS
 				}
 			}
 		}
-        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
+		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
 		{
 			if (hit.Crit && CritNightmare)
 			{
@@ -1545,27 +1545,27 @@ namespace SOTS
 					{
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, new Vector2(Main.rand.NextFloat(6f, 8f), 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360))), ModContent.ProjectileType<AmmoRegainProj>(), 0, 0, Main.myPlayer, localizedAmmoList[i]);
 					}
-                }
-                if (SupernovaEmblem)
-                {
-                    Projectiles.Planetarium.SupernovaHammer.SpawnSeekers(new EntitySource_OnHit(Player, target), target.Center, 1, (int)(hit.SourceDamage * 1.5f), -1);
-                }
-            }
+				}
+				if (SupernovaEmblem)
+				{
+					Projectiles.Planetarium.SupernovaHammer.SpawnSeekers(new EntitySource_OnHit(Player, target), target.Center, 1, (int)(hit.SourceDamage * 1.5f), -1);
+				}
+			}
 		}
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers)
 		{
 			if (ParticleRelocator)
 			{
 				NPC collidingNPC = null;
-				for(int i = 0; i < 200; i++)
-                {
+				for (int i = 0; i < 200; i++)
+				{
 					NPC npc = Main.npc[i];
-					if(npc.active && !npc.friendly && npc.Hitbox.Intersects(Player.Hitbox))
-                    {
+					if (npc.active && !npc.friendly && npc.Hitbox.Intersects(Player.Hitbox))
+					{
 						collidingNPC = npc;
 						break;
-                    }
-                }
+					}
+				}
 				if (collidingNPC != null && Main.myPlayer == Player.whoAmI && !Player.HasBuff(BuffID.ChaosState))
 				{
 					Vector2 toNPC = collidingNPC.Center - Player.Center;
@@ -1580,7 +1580,7 @@ namespace SOTS
 				}
 			}
 		}
-        public override void OnHurt(Player.HurtInfo info)
+		public override void OnHurt(Player.HurtInfo info)
 		{
 			if (Main.myPlayer == Player.whoAmI)
 			{
@@ -1631,23 +1631,23 @@ namespace SOTS
 			}
 			if (AmberRing && Main.myPlayer == Player.whoAmI)
 				GrantRandomRingBuff(Player);
-			if(InverseAmberRing)
-            {
-                if (Player.statLife <= Player.statLifeMax2 * 0.9f)
-                {
+			if (InverseAmberRing)
+			{
+				if (Player.statLife <= Player.statLifeMax2 * 0.9f)
+				{
 					IncreaseBuffDurations(Player, 0, -0.5f, 0, true);
-                }
-            }
-			if(DamageGenerateMoney > 0 && Main.myPlayer == Player.whoAmI)
+				}
+			}
+			if (DamageGenerateMoney > 0 && Main.myPlayer == Player.whoAmI)
 			{
 				VoidPlayer.SpawnCoins(Player, DamageGenerateMoney * (10 + info.Damage + info.SourceDamage));
 			}
-        }
-        //int shotCounter = 0;
-        public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
+		}
+		//int shotCounter = 0;
+		public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+		{
 			//shotCounter++;
-			if(PurpleBalloon && item.fishingPole > 0)
+			if (PurpleBalloon && item.fishingPole > 0)
 			{
 				Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(50));
 				Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, ModContent.ProjectileType<PurpleBobber>(), damage, type, Player.whoAmI);
@@ -1662,9 +1662,9 @@ namespace SOTS
 				Vector2 perturbedSpeed = -velocity;
 				Projectile.NewProjectile(source, position, perturbedSpeed, ModContent.ProjectileType<BackupArrow>(), (int)(damage * 0.45f) + 1, knockback, Player.whoAmI);
 			}*/
-			if(DoubleVisionActive && item.fishingPole > 0)
+			if (DoubleVisionActive && item.fishingPole > 0)
 			{
-				for(int i = BonusFishingLines; i > 0; i--)
+				for (int i = BonusFishingLines; i > 0; i--)
 				{
 					Vector2 perturbedSpeed = velocity.RotatedBy(MathHelper.ToRadians(i % 2 == 0 ? i * 6 : i * -6));
 					Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X, perturbedSpeed.Y, type, damage, knockback, Player.whoAmI);
@@ -1672,18 +1672,18 @@ namespace SOTS
 			}
 			return true;
 		}
-        public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
-        {
-			if(item.useAmmo == AmmoID.Arrow && BlazingQuiver)
-            {
-				if(type == ProjectileID.WoodenArrowFriendly)
-                {
+		public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+		{
+			if (item.useAmmo == AmmoID.Arrow && BlazingQuiver)
+			{
+				if (type == ProjectileID.WoodenArrowFriendly)
+				{
 					type = ModContent.ProjectileType<BlazingArrow>();
 					damage += 2;
-                }
-            }
-        }
-        public override float UseAnimationMultiplier(Item item)
+				}
+			}
+		}
+		public override float UseAnimationMultiplier(Item item)
 		{
 			return UseTimeMultiplier(item);
 		}
@@ -1726,7 +1726,7 @@ namespace SOTS
 			}
 			modifiers.CritDamage *= damageMultiplier;
 		}
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
 		{
 			if (ModPlayer(Player).SpiritSymphony)
 			{
@@ -1738,15 +1738,15 @@ namespace SOTS
 			if (InverseDiamondRing)
 				modifiers.DisableCrit();
 			else
-            {
-                modifiers.CritDamage.Flat += CritBonusDamage;
-            }
-			if(ScalingArmorPenetration)
+			{
+				modifiers.CritDamage.Flat += CritBonusDamage;
+			}
+			if (ScalingArmorPenetration)
 			{
 				modifiers.DefenseEffectiveness *= 0.5f;
 			}
 		}
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
 		{
 			if (curseVisionCounter >= 60)
 			{
@@ -1757,7 +1757,7 @@ namespace SOTS
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<VisionFlare>(), (int)(hit.SourceDamage * 1.4f), 0, Player.whoAmI);
 				}
 			}
-			if(hit.Crit)
+			if (hit.Crit)
 			{
 				if (CritManasteal > 0 && maxCritManastealPerSecondTimer > 0)
 				{
@@ -1848,46 +1848,46 @@ namespace SOTS
 					else if (BlueFireOrange)
 					{
 						Projectile.NewProjectile(new EntitySource_OnHit(Player, target), target.Center, Vector2.Zero, ModContent.ProjectileType<BluefireCrush>(), (int)(hit.SourceDamage * 0.3f), 0, Main.myPlayer, 1);
-                    }
-                    if (TopazRing)
-                    {
+					}
+					if (TopazRing)
+					{
 						GrantRandomRingBuff(Player);
-                    }
-                }
+					}
+				}
 			}
 		}
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
-        {
-			if(healValue > 0)
+		{
+			if (healValue > 0)
 				healValue += additionalHeal;
-        }
-        public override void GetHealMana(Item item, bool quickHeal, ref int healValue)
-        {
-            if (healValue > 0)
-                healValue += additionalPotionMana;
 		}
-        public override bool PreItemCheck()
+		public override void GetHealMana(Item item, bool quickHeal, ref int healValue)
+		{
+			if (healValue > 0)
+				healValue += additionalPotionMana;
+		}
+		public override bool PreItemCheck()
 		{
 			return base.PreItemCheck();
-        }
+		}
 		public float screenShakeMultiplier = 0f;
-        public override void ModifyScreenPosition()
-        {
+		public override void ModifyScreenPosition()
+		{
 			Vector2 screenDimensions = new Vector2(Main.screenWidth, Main.screenHeight);
 			bool seenSubspace = false;
 			bool seenCamera = false;
-			for(int i = 0; i < 1000; i++)
-            {
+			for (int i = 0; i < 1000; i++)
+			{
 				Projectile projectile = Main.projectile[i];
-				if(projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && projectile.active)
-                {
+				if (projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && projectile.active)
+				{
 					seenSubspace = true;
 					int current = projectile.alpha;
 					current -= 50;
 					if (current < 0)
 						current = 0;
 					float percent = current / 205f;
-					if((int)projectile.ai[1] == -1)
+					if ((int)projectile.ai[1] == -1)
 					{
 						percent *= 0.5f;
 						Vector2 toSubEye = projectile.Center - Player.Center;
@@ -1901,8 +1901,8 @@ namespace SOTS
 							Main.screenPosition = (Main.screenPosition * (1f - percent)) + ((new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2)) * percent);
 					}
 					break;
-                }
-				if(!seenSubspace)
+				}
+				if (!seenSubspace)
 				{
 					if (projectile.type == ModContent.ProjectileType<DreamingFrame>() && projectile.active && projectile.owner == Main.myPlayer) //need to include a lerp back to normal so the transition isn't jarring (this will be done with a new death projectile)
 					{
@@ -1920,8 +1920,8 @@ namespace SOTS
 							Main.screenPosition = new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2);
 					}
 				}
-            }
-			if(screenShakeMultiplier > 0)
+			}
+			if (screenShakeMultiplier > 0)
 			{
 				Vector2 offset = new Vector2(0, Main.rand.NextFloat(1f) * screenShakeMultiplier).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
 				Main.screenPosition += offset;
@@ -1929,55 +1929,55 @@ namespace SOTS
 				screenShakeMultiplier *= 0.95f;
 			}
 			else
-            {
+			{
 				screenShakeMultiplier = 0;
-            }
+			}
 			base.ModifyScreenPosition();
-        }
-        public override void UpdateLifeRegen()
-        {
+		}
+		public override void UpdateLifeRegen()
+		{
 			if (RotHeart)
 			{
 				if (Player.lifeRegen > 0)
 				{
 					VoidPlayer.ModPlayer(Player).bonusVoidGain += Player.lifeRegen;
-                    Player.lifeRegen = 0;
-                }
+					Player.lifeRegen = 0;
+				}
 			}
 			if (Player.HasBuff<Boiling>())
 			{
 				Player.lifeRegen -= 20;
 			}
 			RotHeart = false;
-        }
-        public override void UpdateBadLifeRegen()
+		}
+		public override void UpdateBadLifeRegen()
 		{
 			if (Player.HasBuff(ModContent.BuffType<AbyssalInferno>()))
-            {
-				if(Player.lifeRegen > 0)
+			{
+				if (Player.lifeRegen > 0)
 					Player.lifeRegen = 0;
 				Player.lifeRegenTime = 0;
 				Player.lifeRegen -= 60;
-            }
+			}
 			base.UpdateBadLifeRegen();
-        }
+		}
 		float delayPotionCounter = 0;
-        public override void PreUpdateBuffs()
-        {
+		public override void PreUpdateBuffs()
+		{
 			bool DelayPotionDegrade = false;
-			if(PotionBuffDegradeRate <= 1f)
-            {
+			if (PotionBuffDegradeRate <= 1f)
+			{
 				float Increment = 1f - PotionBuffDegradeRate;
 				delayPotionCounter += Increment;
-				if(delayPotionCounter >= 1)
-                {
+				if (delayPotionCounter >= 1)
+				{
 					delayPotionCounter -= 1;
 					DelayPotionDegrade = true;
 				}
 			}
 			bool inverseAmberRingInRange = InverseAmberRing && Player.statLife > Player.statLifeMax2 * 0.9f;
 
-            if (DrainDebuffs && !inverseAmberRingInRange)
+			if (DrainDebuffs && !inverseAmberRingInRange)
 			{
 				int totalDrainedDebuffs = 0;
 				for (int i = 0; i < Player.buffTime.Length; i++)
@@ -1989,8 +1989,8 @@ namespace SOTS
 						&& type != BuffID.PotionSickness
 						&& type != BuffID.Chilled)
 					{
-						if(Player.buffTime[i] > 30) 
-                        {
+						if (Player.buffTime[i] > 30)
+						{
 							Player.buffTime[i]--;
 							totalDrainedDebuffs++;
 						}
@@ -2000,18 +2000,18 @@ namespace SOTS
 				if (totalDrainedDebuffs >= 1)
 					IncreaseBuffDurations(Player, drainAmt, 0f, drainAmt, true);
 			}
-			if(inverseAmberRingInRange)
+			if (inverseAmberRingInRange)
 			{
 				DelayPotionDegrade = true;
 			}
 			DrainDebuffs = false;
 			if (Player.HasBuff(ModContent.BuffType<Harmony>()) || DelayPotionDegrade)
-            {
+			{
 				IncreaseBuffDurations(Player, 1, 0, 1, false, InverseAmberRing);
 			}
 			PotionBuffDegradeRate = 1f;
-            InverseAmberRing = false;
-        }
+			InverseAmberRing = false;
+		}
 		public static void IncreaseBuffDurations(Player player, int time, float timeBonusMultiplier = 0, int maximumTimeBonus = 1, bool affectAll = false, bool allowUnder30Seconds = false, bool cap = false)
 		{
 			for (int i = 0; i < player.buffTime.Length; i++)
@@ -2030,7 +2030,7 @@ namespace SOTS
 					if (cap)
 					{
 						SOTSPlayer sPlayer = player.SOTSPlayer();
-						if(sPlayer.OriginalBuffDurations.TryGetValue(type, out int originalDuration))
+						if (sPlayer.OriginalBuffDurations.TryGetValue(type, out int originalDuration))
 						{
 							maximumTimeBonus = Math.Min(maximumTimeBonus, originalDuration * 2 - player.buffTime[i]);
 							if (maximumTimeBonus < 0)
@@ -2044,37 +2044,37 @@ namespace SOTS
 			}
 		}
 		public static void GrantRandomRingBuff(Player player)
-        {
+		{
 			player.AddBuff(Main.rand.NextFromList(BuffID.Swiftness,
 				BuffID.Regeneration, BuffID.Ironskin, BuffID.Wrath,
 				BuffID.Rage, ModContent.BuffType<SoulAccess>(), ModContent.BuffType<Roughskin>(),
 				BuffID.Thorns, BuffID.ManaRegeneration, ModContent.BuffType<DiamondSkin>()), 1800, false);
-        }
+		}
 		public static void GrantRandomWishingStarBuff(Player player, int duration)
-        {
+		{
 			player.AddBuff(Main.rand.NextFromList(BuffID.Swiftness, BuffID.Wrath,
 				BuffID.Rage, BuffID.ManaRegeneration, BuffID.MagicPower), duration * 60 + 50, false);
-        }
+		}
 		public static bool ZoneForest(Player player)
 		{
 			return !player.GetModPlayer<SOTSPlayer>().PyramidBiome && player.ZoneForest;
 		}
-        public override void ModifyItemScale(Item item, ref float scale)
-        {
-			if(item.CountsAsClass(DamageClass.Melee))
+		public override void ModifyItemScale(Item item, ref float scale)
+		{
+			if (item.CountsAsClass(DamageClass.Melee))
 				scale *= meleeItemScale;
 		}
-        public override bool CanConsumeAmmo(Item weapon, Item ammo)
-        {
-			if(AmmoConsumptionModifier > 0)
-            {
+		public override bool CanConsumeAmmo(Item weapon, Item ammo)
+		{
+			if (AmmoConsumptionModifier > 0)
+			{
 				if (Main.rand.NextFloat(1f) < AmmoConsumptionModifier)
 					return false;
-            }
-            return base.CanConsumeAmmo(weapon, ammo);
-        }
-        public override void OnConsumeAmmo(Item weapon, Item ammo)
-        {
+			}
+			return base.CanConsumeAmmo(weapon, ammo);
+		}
+		public override void OnConsumeAmmo(Item weapon, Item ammo)
+		{
 			if (InfinityPouch)
 			{
 				ammo.stack++;
@@ -2082,48 +2082,48 @@ namespace SOTS
 				if (ammo.value >= 100) //If item is worth silver, cost more
 				{
 					voidCost = 2;
-                }
+				}
 				if (ammo.value >= 10000) //gold
 				{
 					voidCost = 3;
 				}
-				if( ammo.value >= 1000000) //platinum
+				if (ammo.value >= 1000000) //platinum
 				{
 					voidCost = 4;
 				}
-                Player.VoidPlayer().voidMeter -= voidCost;
-            }
-        }
-        public override bool? CanAutoReuseItem(Item item)
-        {
-			if(AutoReuseAnything)
+				Player.VoidPlayer().voidMeter -= voidCost;
+			}
+		}
+		public override bool? CanAutoReuseItem(Item item)
+		{
+			if (AutoReuseAnything)
 			{
 				return true;
 			}
-            return base.CanAutoReuseItem(item);
-        }
+			return base.CanAutoReuseItem(item);
+		}
 		public int ManaSpentCounter = 0;
-        public override void OnConsumeMana(Item item, int manaConsumed)
-        {
-			if(Player.whoAmI == Main.myPlayer && item.CountsAsClass(DamageClass.Magic))
-            {
+		public override void OnConsumeMana(Item item, int manaConsumed)
+		{
+			if (Player.whoAmI == Main.myPlayer && item.CountsAsClass(DamageClass.Magic))
+			{
 				if (WishingStar)
 				{
 					if (!Items.ChestItems.WishingStar.IsAlternate)
 					{
 						ManaSpentCounter += manaConsumed;
 						if (ManaSpentCounter >= 100)
-                        {
-                            GrantRandomWishingStarBuff(Player, ManaSpentCounter);
-                            CastWishingStar(Player, Main.MouseWorld, 100);
+						{
+							GrantRandomWishingStarBuff(Player, ManaSpentCounter);
+							CastWishingStar(Player, Main.MouseWorld, 100);
 							ManaSpentCounter -= 100;
 						}
 					}
 				}
 				else
 					ManaSpentCounter = 0;
-            }
-        }
+			}
+		}
 		public static void CastWishingStar(Player player, Vector2 position, int damage)
 		{
 			if (player.whoAmI == Main.myPlayer)
@@ -2131,24 +2131,67 @@ namespace SOTS
 				int direction = player.Center.X < position.X ? 1 : -1;
 				Vector2 spawnPos = new Vector2(MathHelper.Lerp(player.Center.X - Main.rand.NextFloat(1250, 1450) * direction, position.X, 0.4f), MathHelper.Lerp(player.Center.Y, position.Y, 0.25f) - Main.rand.NextFloat(750, 950));
 
-                Projectile.NewProjectile(player.GetSource_Misc("SOTS:WishingStar"), spawnPos, Main.rand.NextVector2Circular(32, 32), ModContent.ProjectileType<WishingStarProj>(), damage, 1f, Main.myPlayer, position.X, position.Y, Items.ChestItems.WishingStar.IsAlternate ? -1 : 0);
+				Projectile.NewProjectile(player.GetSource_Misc("SOTS:WishingStar"), spawnPos, Main.rand.NextVector2Circular(32, 32), ModContent.ProjectileType<WishingStarProj>(), damage, 1f, Main.myPlayer, position.X, position.Y, Items.ChestItems.WishingStar.IsAlternate ? -1 : 0);
 			}
 		}
-        public override void UpdateDead()
-        {
-			if(Sunbulb && !SOTSWorld.SunbulbFailed)
-            {
-                SOTSUtils.PlaySound(SoundID.Shatter, Player.Center, 2.0f, -0.1f);
-				for(int i = 0; i < 60; i++)
+		public override void UpdateDead()
+		{
+			if (Sunbulb && !SOTSWorld.SunbulbFailed)
+			{
+				SOTSUtils.PlaySound(SoundID.Shatter, Player.Center, 2.0f, -0.1f);
+				for (int i = 0; i < 60; i++)
 				{
 					Dust d = Dust.NewDustDirect(Player.position - new Vector2(5), Player.width, Player.height, DustID.YellowTorch, 0, 0, 0, default, 2.4f);
 					d.velocity = Main.rand.NextVector2Circular(6, 6);
 					d.velocity /= d.scale;
-                }
-                SOTSWorld.SunbulbFailed = true;
-                if (Main.netMode != NetmodeID.SinglePlayer)
-                    SOTSWorld.SyncGemLocks(Main.LocalPlayer);
-            }
-        }
-    }
+				}
+				SOTSWorld.SunbulbFailed = true;
+				if (Main.netMode != NetmodeID.SinglePlayer)
+					SOTSWorld.SyncGemLocks(Main.LocalPlayer);
+			}
+		}
+		public override void PreUpdateMovement()
+		{
+			int bubble = ModContent.ProjectileType<Bubble>();
+			//Most of the time there will be only one bubble, but this is for multiplayer and future compatability;\
+			for (int i = Bubble.BubbleListeners.Count - 1; i >= 0; --i)
+			{
+				int index = Bubble.BubbleListeners[i];
+				Projectile proj = Main.projectile[index];
+				if (proj.type == bubble && proj.active && proj.timeLeft > 2)
+				{
+					if (proj.ai[0] > 15 || proj.timeLeft <= 15)
+						FakeTileCollision(proj, proj.Hitbox.Modified(1, 3, -2, -5));
+				}
+				else
+				{
+					Bubble.BubbleListeners.RemoveAt(i);
+				}
+			}
+		}
+		public void FakeTileCollision(Projectile proj, Rectangle hitbox)
+		{
+			Point offsetPos = (Player.position + Player.velocity + new Vector2(0, 2 * Player.gravDir)).ToPoint();
+			Rectangle current = Player.Hitbox;
+			Rectangle offset = new Rectangle(offsetPos.X, offsetPos.Y, Player.width, Player.height);
+			int curDiff = hitbox.Top - current.Bottom;
+			int offDiff = hitbox.Top - offset.Bottom;
+            if (offset.Intersects(hitbox))
+            {
+                if (curDiff > -2) //if I am currently above the bubble, but becoming below it
+				{
+					Player.position.Y = hitbox.Top - Player.height + proj.velocity.Y + Player.gravity;
+					Player.velocity.Y = 0;
+					Player.noFallDmg = true;
+					proj.ai[2] = Player.controlDown ? -28 : -7;
+					proj.netUpdate = true;
+				}
+			}
+			else if (Player.justJumped && current.Intersects(proj.Hitbox) && curDiff > -2)
+			{
+				proj.ai[2] = -35;
+				proj.netUpdate = true;
+			}
+		}
+	}
 }

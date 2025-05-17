@@ -17,40 +17,38 @@ namespace SOTS.Items.Tide
 		}
 		public override void SafeSetDefaults()
         {
-            Item.width = 66;    
-            Item.height = 62;
-			Item.useAnimation = 36;
-			Item.useTime = 36;
+            Item.width = 48;    
+            Item.height = 48;
+			Item.useAnimation = 20;
+			Item.useTime = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 5.25f;
 			Item.value = Item.sellPrice(0, 3, 0, 0);
             Item.rare = ModContent.RarityType<AnomalyRarity>();
-            Item.UseSound = null;
-			Item.autoReuse = true;
+            Item.UseSound = SoundID.Item85;
+			Item.autoReuse = false;
 			Item.shoot = ModContent.ProjectileType<Bubble>(); 
-            Item.shootSpeed = 0f;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.channel = true;
-			Item.useTurn = true;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.shootSpeed = 8;
 		}
         public override bool AltFunctionUse(Player player)
         {
-            return true;
+            return false;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
 		{
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, Main.MouseWorld.X, Main.MouseWorld.Y);
+			velocity += player.velocity;
+			if (velocity.Y < 0)
+				velocity *= 0.5f;
+			Projectile.NewProjectile(source, position + new Vector2(0, 10), velocity, type, damage, knockback, player.whoAmI, 0, velocity.X > 0 ? 180 : 0);
 			return false;
         }
-        public override bool BeforeDrainVoid(Player player)
-		{
-			return true;
-		}
-		
-		public override float UseTimeMultiplier(Player player)
-		{
-			return 1f;
-		}
-	}
+        public override int GetVoid(Player player)
+        {
+            return 5;
+        }
+    }
 }

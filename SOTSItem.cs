@@ -215,6 +215,7 @@ namespace SOTS
 		public static int[] DedicatedTaco;
         public static int[] PiscesFishItems;
         public static int[] DedicatedGlewpie;
+        public static int[] DedicatedAstrobit;
         public static void LoadArrays() //called in SOTS.Load()
 		{
 			DarkBlueRarity = [ItemType<StarlightAlloy>(), ItemType<HardlightAlloy>(), ItemType<OtherworldlyAlloy>(), ItemType<PotGenerator>(), ItemType<PrecariousCluster>(), ItemType<Calculator>(), ItemType<BookOfVirtues>()]; //Dark Blue
@@ -233,6 +234,7 @@ namespace SOTS
             DedicatedKoolaid = [ItemType<PintOPunch>()]; //Koolaid
             DedicatedKekcroc = [ItemType<BlinkBlade>()]; //Kekcroc
             DedicatedGlewpie = [ItemType<JarOfPineapple>()]; //Glewpie (#1 SOTS Glazer)
+            DedicatedAstrobit = [ItemType<BWand>()]; //Astrobit
 
             PiscesFishItems = [-6, -5, -4, -3, -2, -1, ItemID.AmanitaFungifin, ItemID.Angelfish, ItemID.Batfish, ItemID.BloodyManowar, ItemID.Bonefish, ItemID.BumblebeeTuna, ItemID.Bunnyfish, ItemID.CapnTunabeard, ItemID.Catfish, ItemID.Cloudfish, ItemID.Clownfish, ItemID.Cursedfish, ItemID.DemonicHellfish, ItemID.Derpfish,
 			ItemID.Dirtfish, ItemID.DynamiteFish, ItemID.EaterofPlankton, ItemID.FallenStarfish, ItemID.TheFishofCthulu, ItemID.Fishotron, ItemID.Fishron, ItemID.GuideVoodooFish, ItemID.Harpyfish, ItemID.Hungerfish, ItemID.Ichorfish, ItemID.InfectedScabbardfish, ItemID.Jewelfish, ItemID.MirageFish, ItemID.Mudfish,
@@ -347,6 +349,8 @@ namespace SOTS
 				dedicatedColor = new Color(139, 63, 150);
             if (DedicatedGlewpie.Contains(item.type))
                 dedicatedColor = new Color(85, 212, 69);
+            if (DedicatedAstrobit.Contains(item.type))
+                dedicatedColor = new Color(73, 93, 158);
             if (rarityColor != Color.White)
             {
                 foreach (TooltipLine line in tooltips)
@@ -985,15 +989,16 @@ namespace SOTS
         public static void InitializeWormholeRecipes()
         {
 			WormholeRecipes = new HashSet<WormholeRecipe>() { 
-				new WormholeRecipe(ItemType<TwilightGel>(), ItemType<SkipSoul>()), 
-				new WormholeRecipe("SOTS:AnyGem", ItemType<SkipShard>()),
-				new WormholeRecipe(ItemType<RoyalRubyShard>(), ItemType<TaintedKeystoneShard>()),
-				new WormholeRecipe(ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()),
-                new WormholeRecipe(ItemType<Riptide>(), ItemType<Atlantis>()),
-                new WormholeRecipe(ItemType<BagOfAmmoGathering>(), ItemType<InfinityPouch>()),
-                new WormholeRecipe(ItemType<AlmondMilk>(), ItemType<Taco>()),
-				new WormholeRecipe(ItemType<WishingStar>(), ItemType<WishingStar>()),
-				new WormholeRecipe("SOTS:DissolvingElement", ItemType<DissolvingNihility>()),
+				new(ItemType<TwilightGel>(), ItemType<SkipSoul>()), 
+				new("SOTS:AnyGem", ItemType<SkipShard>()),
+				new(ItemType<RoyalRubyShard>(), ItemType<TaintedKeystoneShard>()),
+				new(ItemType<TaintedKeystone>(), ItemType<VoidAnomaly>()),
+                new(ItemType<Riptide>(), ItemType<Atlantis>()),
+                new(ItemType<BagOfAmmoGathering>(), ItemType<InfinityPouch>()),
+                new(ItemType<AlmondMilk>(), ItemType<Taco>()),
+				new(ItemType<WishingStar>(), ItemType<WishingStar>()),
+				new("SOTS:DissolvingElement", ItemType<DissolvingNihility>()),
+                new(ItemID.BubbleWand, ItemType<BWand>()),
             };
         }
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)

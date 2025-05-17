@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 using SOTS.Items.Tide;
 using SOTS.Items;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Invidia;
 
 namespace SOTS.Void
 {
@@ -184,7 +185,7 @@ namespace SOTS.Void
 			{
 				return false;
 			}
-			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || Item.useAnimation < 2 || (player.altFunctionUse != 2 && Item.CountsAsClass(DamageClass.Summon) && currentVoid < finalCost))
+			if(!canUse || player.FindBuffIndex(ModContent.BuffType<VoidRecovery>()) > -1 || (Item.useAnimation < 2 && Item.type != ModContent.ItemType<HardlightHook>()) || (player.altFunctionUse != 2 && Item.CountsAsClass(DamageClass.Summon) && currentVoid < finalCost))
 			{
 				return false;
 			}

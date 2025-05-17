@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Void;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.Invidia
 {
-	public class HardlightHook : ModItem
+	public class HardlightHook : VoidItem
     {
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
@@ -55,7 +56,7 @@ namespace SOTS.Items.Invidia
 		{
 			this.SetResearchCost(1);
 		}
-		public override void SetDefaults()
+		public override void SafeSetDefaults()
 		{
 			Item.CloneDefaults(ItemID.AmethystHook);
             Item.width = 28;  
@@ -65,5 +66,9 @@ namespace SOTS.Items.Invidia
             Item.shoot = ModContent.ProjectileType<Projectiles.Sanctuary.HardlightHook>(); 
             Item.shootSpeed = 15f;
 		}
-	}
+        public override int GetVoid(Player player)
+        {
+            return 5;
+        }
+    }
 }
