@@ -80,6 +80,10 @@ N/A
 
 Daily Log:
 
+5/16/25
+1. Refactor to excavator arm internals to allow different weapon wielding and more specialized control
+2. WIP Excavator attacks
+
 5/5/25 to 5/15/25
 1. WIP Excavator attack patterns
 2. Reduce topspeed of captured cart (hostile) 6 -> 5.63
@@ -108,6 +112,7 @@ Daily Log:
 16. Amber Robe can now be used in Cursed Robe recipe
 17. Sanctuary chests will now additionally contain a life crystal, healing potions, buff potions, ammo, and coins
 18. Excavator saw projectiles
+19. WIP Excavator refactor
 
 
 4/24/25 and 4/28/25 and 5/1/2025 to 5/5/2025

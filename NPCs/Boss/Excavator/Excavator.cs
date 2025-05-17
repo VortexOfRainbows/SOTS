@@ -1,10 +1,15 @@
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Items.Gems;
 using SOTS.Projectiles.AbandonedVillage;
+using SOTS.Projectiles.BiomeChest;
+using SOTS.Projectiles.Planetarium;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection.Metadata.Ecma335;
 using System.Transactions;
 using Terraria;
 using Terraria.ID;
@@ -150,17 +155,412 @@ namespace SOTS.NPCs.Boss.Excavator
     }
     public class Excavator : ModNPC
     {
+        public class ExcavatorArm(Excavator owner, int dir, bool bigArm = false)
+        {
+            public float SawBladeRotation;
+            public float sawBladePercent;
+            public static void DoArmJoint(ref Vector2 start, ref Vector2 end, float A, float B, int dir, out float endArmRot, out float endHandRot)
+            {
+                if (end.Distance(start) > (A + B))
+                {
+                    end = start + (end - start).SNormalize() * (A + B);
+                }
+                if (end.Distance(start) < 32)
+                {
+                    end = start + (end - start).SNormalize() * 32;
+                }
+                Vector2 startToEnd = end - start;
+                float C = startToEnd.Length();
+                float angleA = C - A - B > 0 ? 0 : MathF.Acos((B * B + C * C - A * A) / (2 * B * C));
+                float angleB = C - A - B > 0 ? 0 : MathF.Acos((A * A + C * C - B * B) / (2 * A * C));
+                Vector2 endToMid = -startToEnd.RotatedBy(angleB * dir);
+                Vector2 startToMid = startToEnd.RotatedBy(-angleA * dir);
+                endHandRot = endToMid.ToRotation();
+                endArmRot = startToMid.ToRotation();
+            }
+            public void DoArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir, bool draw = true)
+            {
+                int j = SOTSUtils.SignNoZero(dir);
+                Texture2D body = null;
+                Texture2D arm = null;
+                Texture2D hand = null;
+                Texture2D handOverheat = null;
+                Texture2D handGlow = null;
+                Texture2D handSaw = null;
+                if (draw)
+                {
+                    body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
+                    arm = ModContent.Request<Texture2D>(isBigArm ? "SOTS/NPCs/Boss/Excavator/bigArmLeft" : "SOTS/NPCs/Boss/Excavator/arm").Value;
+                    if (isBigArm)
+                    {
+                        hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrill").Value;
+                    }
+                    else
+                    {
+                        string handVal = "SOTS/NPCs/Boss/Excavator/hand";
+                        if (ArmType == 1)
+                        {
+                            handVal = "SOTS/NPCs/Boss/Excavator/handSaw";
+                            handSaw = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/saw").Value;
+                        }
+                        else if (ArmType == 2)
+                            handVal = "SOTS/NPCs/Boss/Excavator/handNoWeapon";
+                        hand = ModContent.Request<Texture2D>(handVal).Value;
+                        handOverheat = ModContent.Request<Texture2D>(handVal + "Overheat").Value;
+                        handGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handGlow").Value;
+                    }
+                }
+                int armWidth = isBigArm ? 118 : 56;
+                float handWidth = isBigArm ? 38 : ArmType == 1 ? 26 : ArmType == 2 ? 30 : 38;
+                float handHeight = isBigArm ? 120 : this.handHeight;
+                int bodyWidth = 126;
+                int bodyHeight = 104;
+                Vector2 armOrigin = isBigArm ? new Vector2(95, 47) : new Vector2(50, 14);
+                Vector2 revArmOrigin = new(armWidth - armOrigin.X, armOrigin.Y);
+                Vector2 handOrigin = new(handWidth / 2, handHeight);
+                float armRotation = other.rotation;
+                Vector2 armPosition = isBigArm ? new Vector2((-bodyWidth / 2 + 13) * j, bodyHeight / 2 - 31) : new Vector2((-bodyWidth / 2 + 4) * j, -bodyHeight / 2 + 16);
+                armPosition = armPosition.RotatedBy(armRotation) + other.Center;
+                Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
+
+                float r = other.ai[0] * 1.2f * j + (isBigArm ? (j == -2 ? 45 : 135) : (j * 45));
+                float outwardSize = (isBigArm ? 80 : 38) - (isBigArm ? 4 : 16) * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
+                if (!isBigArm)
+                {
+                    outwardSize *= 1 - armTargetPercent * 0.9f;
+                }
+                Vector2 targetHandPos = new Vector2(-(bodyWidth / 2 + outwardSize) * j, isBigArm ? -70 : -100).RotatedBy(armRotation);
+                Vector2 circular = new Vector2(isBigArm ? 8 : 20, 0).RotatedBy(MathHelper.ToRadians(r));
+                circular.X *= 0.25f;
+                circular = circular.RotatedBy(armRotation);
+                if (!isBigArm)
+                    circular *= 1 - armTargetPercent * 0.8f;
+                float sin = 0;
+                if (!isBigArm && armTargetPercent > 0)
+                {
+                    float percent = ArmType == 1 ? MathF.Sqrt(MathF.Abs(MathF.Sin(sawBladePercent * MathF.PI))) : 1;
+                    float bonusMax = ArmType == 1 ? 52 * percent : 24;
+                    float bonusRate = ArmType == 1 ? 18 : 24;
+                    float bonusMin = ArmType == 1 ? 12 : 0;
+                    Vector2 toArm = Vector2.Lerp(armTarget, forceArmTarget, forceArmTargetPercent) - armPosition;
+                    float angle = MathHelper.WrapAngle(toArm.ToRotation() - armRotation);
+                    bool targetBehindMe = angle > 0;
+                    sin = MathF.Sin(-angle);
+                    if (!targetBehindMe)
+                    {
+                        targetHandPos += sin * armTargetPercent * toArm.SNormalize() * MathF.Min(bonusMax, bonusMin + (armTarget - armPosition).Length() / bonusRate);
+                    }
+                }
+                targetHandPos += circular + other.Center;
+                if(sin != 0)
+                    targetHandPos = Vector2.Lerp(targetHandPos, forceArmTarget, forceArmTargetPercent * sin);
+                float A = isBigArm ? handHeight : handHeight; //size of hand
+                float B = isBigArm ? armWidth - 36 : armWidth - 20; //size of arm
+                Vector2 end = targetHandPos;
+                Vector2 start = armPosition;
+                DoArmJoint(ref start, ref end, A, B, j, out float endArmRot, out float endHandRot);
+                Vector2 mid = start + new Vector2(B, 0).RotatedBy(endArmRot);
+                if (isBigArm)
+                {
+                    end -= new Vector2(0, 13 * j).RotatedBy(endArmRot);
+                }
+                else
+                {
+                    int num = dir == -1 ? 1 : 0;
+                    end += new Vector2(1, 0).RotatedBy(endArmRot);
+
+                    Vector2 midToTarget = -armTarget + mid;
+                    float toPR = MathHelper.WrapAngle(midToTarget.ToRotation() - endArmRot);
+                    if (j == -1)
+                    {
+                        if (toPR < 0 && toPR < -MathHelper.PiOver2)
+                            toPR += MathHelper.TwoPi;
+                        toPR = MathHelper.Clamp(toPR, MathHelper.ToRadians(30), MathF.PI);
+                    }
+                    else
+                    {
+                        if (toPR > 0 && toPR > MathHelper.PiOver2)
+                            toPR -= MathHelper.TwoPi;
+                        toPR = MathHelper.Clamp(toPR, -MathF.PI, -MathHelper.ToRadians(30));
+                    }
+                    toPR += endArmRot;
+                    float rot = -endHandRot + toPR;
+                    if (!draw)
+                    {
+                        ArmAngleSpecial = SOTSUtils.AngularLerp(ArmAngleSpecial, rot, 0.12f * armTargetPercent);
+                        ArmAngleSpecial = SOTSUtils.AngularLerp(ArmAngleSpecial, 0, 0.12f * (1 - armTargetPercent));
+                    }
+                    end = end.RotatedBy(ArmAngleSpecial, mid);
+                    endHandRot += ArmAngleSpecial;
+
+
+                    //Main.NewText(MathHelper.WrapAngle(toPR - endArmRot));
+                }
+
+                //if (isBigArm)
+                //{
+                //Vector2 mid = startToMid.SNormalize() * 84 + start;
+                //mid -= new Vector2(0, 14 * j).RotatedBy(endArmRot);
+                //int bigDrillWidth = 38;
+                //Vector2 drillOrigin = new(42, 72);
+                //Vector2 revDrillOrigin = new(bigDrillWidth - drillOrigin.X, drillOrigin.Y);
+                //float deg = -j * ((j == 1 ? 180 : 0) + -70);
+                //if(draw)
+                //{
+                //Texture2D bigDrill = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bigDrill").Value;
+                //spriteBatch.Draw(bigDrill, mid - screenPos, null, drawColor, endHandRot + MathHelper.ToRadians(deg), j == 1 ? drillOrigin : revDrillOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                //}
+                //}
+
+                if (draw)
+                {
+                    if (ArmType == 1 && handSaw != null)
+                    {
+                        float scalePercent = sawBladeTimer >= 150 ? 1 : MathF.Min(sawBladePercent * 6.667f, 1f);
+                        scalePercent += MathF.Sin(scalePercent * scalePercent * MathF.PI) * 0.4f;
+                        float percent = sawBladeTimer >= 150 ? 1 : sawBladePercent;
+                        float rotation = MathHelper.ToRadians(SawBladeRotation);
+                        Vector2 sawOrigin = handSaw.Size() / 2;
+                        for (int i = 0; i < 6; ++i)
+                        {
+                            Vector2 circular2 = new Vector2(4 * percent, 0).RotatedBy(MathHelper.ToRadians(i * 60 + SOTSWorld.GlobalCounter * j));
+                            spriteBatch.Draw(handSaw, circular2 + end - screenPos + new Vector2(5, 0).RotatedBy(endHandRot), null, ExcavatorOrb.Color * 0.5f * percent, rotation * j, sawOrigin, other.scale * scalePercent, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                        }
+                        spriteBatch.Draw(handSaw, end - screenPos + new Vector2(5, 0).RotatedBy(endHandRot), null, drawColor, rotation * j, sawOrigin, other.scale * scalePercent, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                    }
+                    spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                    if (ArmType == 0 && !isBigArm)
+                        spriteBatch.Draw(handGlow, end - screenPos, null, Color.White, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                    if (!isBigArm)
+                    {
+                        float percent = ArmSwitchTimer / 60f;
+                        if (percent > 0)
+                        {
+                            for (int i = 0; i < 6; ++i)
+                            {
+                                Vector2 circular2 = new Vector2(3 + percent, 0).RotatedBy((percent + i / 3f) * MathF.PI);
+                                spriteBatch.Draw(handOverheat, circular2 + end - screenPos, null, ExcavatorOrb.Color * 0.45f * percent, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                            }
+                        }
+                    }
+                    spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                    //Dust.NewDust(end, 0, 0, DustID.LifeDrain);
+                }
+                else
+                {
+                    if (dir == -2)
+                        dir = 3;
+                    else if (dir == -1)
+                        dir = 1;
+                    else if (dir == 1)
+                        dir = 0;
+                    else if (dir == 2)
+                        dir = 2;
+                    handPos = end;
+                    handNorm = new Vector2(-1, 0).RotatedBy(endHandRot);
+                }
+
+                //Visual representations of the IK happening
+                if (draw)
+                {
+                    drawColor *= 0.4f;
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, MathF.PI + endHandRot, new Vector2(0, 1), new Vector2(500, 1), SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, mid - screenPos, null, Color.Yellow, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, forceArmTarget - screenPos, null, Color.Green, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                }
+
+                //Visual location of the actual center of the arm
+                //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
+                //spriteBatch.Draw(SOTSUtils.WhitePixel, realEnd - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+            }
+            public void SwitchArm(int i)
+            {
+                if (ArmType != i)
+                {
+                    NextArmType = i;
+                    if(ArmType != 1 || sawBladeTimer == 0)
+                        ArmSwitchTimer++;
+                    if (ArmSwitchTimer > 60)
+                    {
+                        ArmSwitchTimer = 0;
+                        if (Main.netMode != NetmodeID.Server)
+                        {
+                            Vector2 size = ArmType == 0 ? new Vector2(-19, -16) : ArmType == 1 ? new Vector2(-7, -21) : new Vector2(-15, -19);
+                            float xOff = 20;
+                            float r = handNorm.ToRotation();
+                            Vector2 offset = size - (handNorm * xOff);
+                            Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/handGore" + (ArmType + 1)), 1f);
+                            g.rotation = r - MathHelper.PiOver2;
+                            SOTSUtils.PlaySound(SoundID.Item62, handPos, 1, 0.5f, 0);
+                            for (int k = 0; k < 17; k++)
+                            {
+                                Dust d = PixelDust.Spawn(handPos, 0, 0, Main.rand.NextVector2Circular(3, 3) + handNorm * Main.rand.NextFloat(-2, 3) + NPC.velocity * Main.rand.NextFloat(0.1f, 1.5f), ExcavatorOrb.Color, 5);
+                                d.scale *= Main.rand.NextFloat(1, 3);
+                                if (k % 2 == 0)
+                                {
+                                    d = Dust.NewDustDirect(handPos - new Vector2(5), 0, 0, DustID.Smoke);
+                                    d.velocity += handNorm * Main.rand.NextFloat(-2, 3) + NPC.velocity * Main.rand.NextFloat(0.1f, 1.5f);
+                                    d.velocity *= 0.5f;
+                                    d.scale += Main.rand.NextFloat(0.4f);
+                                }
+                                if (Main.rand.NextBool(6))
+                                {
+                                    g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), Main.rand.NextFromList(GoreID.Smoke1, GoreID.Smoke2, GoreID.Smoke3), 1f);
+                                    g.scale *= 0.75f;
+                                    g.velocity *= 0.5f;
+                                }
+                            }
+                        }
+                        if (ArmType != 1 && NextArmType == 1)
+                        {
+                            sawBladeTimer = 0;
+                            if (dir == -1)
+                                sawBladeTimer = -71;
+                        }
+                        ArmType = i;
+                    }
+                }
+                else
+                    ArmSwitchTimer = 0;
+            }
+            public void TargetArm(Vector2 pos, bool force = false)
+            {
+                if(force)
+                {
+                    forceArmTarget = pos;
+                    forceArmTargetting = true;
+                }
+                armTargetting = true;
+                armTarget = pos;
+            }
+            public void AdjustHandSize()
+            {
+                float targetH = ArmType == 1 ? 76 : ArmType == 2 ? 70 : 64;
+                handHeight = MathHelper.Lerp(handHeight, targetH, 0.1f);
+            }
+            public NPC NPC => owner.NPC;
+            public Vector2 handPos;
+            public Vector2 handNorm;
+            public Vector2 armTarget;
+            public Vector2 forceArmTarget;
+            public float armTargetPercent, forceArmTargetPercent;
+            public bool armTargetting, forceArmTargetting;
+            public float ArmSwitchTimer;
+            public int ArmType = 2, NextArmType = 2;
+            public float handWidth;
+            public float handHeight;
+            public float ArmAngleSpecial;
+            public float sawBladeTimer = 0;
+            public bool isBigArm = bigArm;
+            public Excavator owner = owner;
+            public int dir = dir;
+            public void PreUpdate()
+            {
+                if (ArmSwitchTimer > 0)
+                    SwitchArm(NextArmType);
+                else
+                    AdjustHandSize();
+            }
+            public void PostUpdate()
+            {
+                if (armTargetting)
+                    armTargetPercent = MathHelper.Lerp(armTargetPercent + 0.01f, 1, 0.08f);
+                else
+                    armTargetPercent = MathHelper.Lerp(armTargetPercent - 0.01f, 0, 0.09f);
+
+                if (forceArmTargetting)
+                    forceArmTargetPercent = MathHelper.Lerp(forceArmTargetPercent + 0.01f, 1, 0.1f);
+                else
+                    forceArmTargetPercent = MathHelper.Lerp(forceArmTargetPercent - 0.01f, 0, 0.15f);
+
+                armTargetPercent = MathHelper.Clamp(armTargetPercent, 0, 1);
+                forceArmTargetPercent = MathHelper.Clamp(forceArmTargetPercent, 0, 1);
+                armTargetting = forceArmTargetting = false;
+            }
+            public bool sawSwingingDown = false;
+            public void SawUpdate()
+            {
+                sawSwingingDown = false;
+                sawBladePercent = 0;
+                if (sawBladeTimer >= 150)
+                {
+                    TargetArm(owner.target.Center, false);
+                    sawBladePercent = (sawBladeTimer - 150) / 30f;
+                    if(sawBladeTimer == 150)
+                    {
+                        SOTSUtils.PlaySound(SoundID.Item22, handPos, 0.7f, -0.3f);
+                    }
+                    sawBladeTimer++;
+                    if (sawBladeTimer > 180)
+                    {
+                        if (Main.netMode != NetmodeID.MultiplayerClient)
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), handPos, handNorm * 14.5f + NPC.velocity, ModContent.ProjectileType<ExcavatorSaw>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
+                        sawBladeTimer = 0;
+                        SOTSUtils.PlaySound(SoundID.Item23, handPos, 0.7f, -0.3f);
+                        SOTSUtils.PlaySound(SoundID.Item23, handPos, 0.7f, -0.3f);
+                    }
+                    SawBladeRotation = sawBladePercent * 480;
+                }
+                else if(sawBladeTimer > 0 || (sawBladeTimer == 0 && NextArmType == 1))
+                {
+                    int bodyWidth = 126;
+                    int bodyHeight = 104;
+                    NPC body = Main.npc[owner.segments[0]];
+                    float percent = sawBladeTimer / 150f;
+                    sawBladeTimer++;
+                    float sin = MathF.Sin(percent * percent * MathF.PI);
+                    float iPercent = 1 - percent;
+                    sawBladePercent = percent;
+
+                    Vector2 armPosition = new Vector2((-bodyWidth / 2 + 4) * dir, -bodyHeight / 2 + 16);
+                    armPosition = armPosition.RotatedBy(body.rotation) + body.Center;
+                    float afterMidPercent = MathF.Max(0, percent * 2 - 1);
+                    float r = MathHelper.ToRadians(90 * sin - 40 * afterMidPercent) * -dir;
+                    float maxExtension = 96 + 64 * percent;
+                    Vector2 handSwingPos = armPosition + new Vector2(0, -maxExtension).RotatedBy(body.rotation + r) * 0.8f;
+                    TargetArm(handSwingPos, true);
+                    if (afterMidPercent > 0)
+                    {
+                        if(afterMidPercent > 0.6f)
+                            sawSwingingDown = true;
+                        sawBladeTimer++;
+                    }
+                    if (sawBladeTimer >= 150)
+                    {
+                        sawBladeTimer = 150;
+                    }
+                    SawBladeRotation = sawBladePercent * sawBladePercent * 2400;
+                }
+                else if(NextArmType == 1)
+                {
+                    sawBladeTimer++;
+                }
+            }
+        }
+        public ExcavatorArm[] arms;
+        public ExcavatorArm[] GenArms()
+        {
+            return [new(this, 1), new(this, -1), new(this, 2, true), new(this, -2, true)]; //This is a really funny looking declaration
+        }
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(MoveStyle);
             for(int i = 0; i < segments.Length; ++i)
                 writer.Write(segments[i]);
+            writer.Write(AI3);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             MoveStyle = reader.ReadSingle();
             for (int i = 0; i < segments.Length; ++i)
               segments[i] = reader.ReadInt32();
+            AI3 = reader.ReadSingle();
         }
         public float AIPhase
         {
@@ -183,6 +583,7 @@ namespace SOTS.NPCs.Boss.Excavator
             get => NPC.ai[3];
             set => NPC.ai[3] = value;
         }
+        public float AI3;
         public List<Vector2> neckSegments;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -383,9 +784,8 @@ namespace SOTS.NPCs.Boss.Excavator
                 {
                     DrawLeg(other, spriteBatch, screenPos, 3, -1);
                     DrawLeg(other, spriteBatch, screenPos, -3, -1);
-                    for(int k = -1; k <= 1; k += 2)
-                        for (int j = 1; j <= 2; ++j)
-                            DrawArmIK(other, spriteBatch, screenPos, j * k);
+                    foreach(ExcavatorArm arm in this.arms)
+                        arm.DoArmIK(other, spriteBatch, screenPos, arm.dir, true);
                 }
                 if (legs) {
                     for (int k = -1; k <= 1; k += 2)
@@ -395,294 +795,6 @@ namespace SOTS.NPCs.Boss.Excavator
                 if(body != null)
                     spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             }
-        }
-        public Vector2[] handPos = new Vector2[4];
-        public Vector2[] handNorm = new Vector2[4];
-        public Vector2 armTarget = Vector2.Zero;
-        public Vector2 curArmTarget = Vector2.Zero;
-        public float armTargetPercent = 0;
-        public bool armTargetting = false;
-        public void SwitchArm(int i)
-        {
-            if (ArmType != i)
-            {
-                NextArmType = i;
-                ArmSwitchTimer++;
-                if (ArmSwitchTimer > 60)
-                {
-                    ArmSwitchTimer = 0;
-                    if(Main.netMode != NetmodeID.Server)
-                    {
-                        Vector2 size = ArmType == 0 ? new Vector2(-19, -16) : ArmType == 1 ? new Vector2(-7, -21) : new Vector2(-15, -19);
-                        float xOff = 20;
-                        for (int j = 0; j < 2; j++)
-                        {
-                            float r = handNorm[j].ToRotation();
-                            Vector2 offset = size - (handNorm[j] * xOff);
-                            Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos[j] + offset, NPC.velocity + handNorm[j] * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/handGore" + (ArmType + 1)), 1f);
-                            g.rotation = r - MathHelper.PiOver2;
-                            SOTSUtils.PlaySound(SoundID.Item62, handPos[j], 1, 0.5f, 0);
-                            for(int k = 0; k < 17; k++)
-                            {
-                                Dust d = PixelDust.Spawn(handPos[j], 0, 0, Main.rand.NextVector2Circular(3, 3) + handNorm[j] * Main.rand.NextFloat(-2, 3) + NPC.velocity * Main.rand.NextFloat(0.1f, 1.5f), ExcavatorOrb.Color, 5);
-                                d.scale *= Main.rand.NextFloat(1, 3);
-                                if(k % 2 == 0)
-                                {
-                                    d = Dust.NewDustDirect(handPos[j] - new Vector2(5), 0, 0, DustID.Smoke);
-                                    d.velocity += handNorm[j] * Main.rand.NextFloat(-2, 3) + NPC.velocity * Main.rand.NextFloat(0.1f, 1.5f);
-                                    d.velocity *= 0.5f;
-                                    d.scale += Main.rand.NextFloat(0.4f);
-                                }
-                                if(Main.rand.NextBool(6))
-                                {
-                                    g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos[j] + offset, NPC.velocity + handNorm[j] * Main.rand.NextFloat(), Main.rand.NextFromList(GoreID.Smoke1, GoreID.Smoke2, GoreID.Smoke3), 1f);
-                                    g.scale *= 0.75f;
-                                    g.velocity *= 0.5f;
-                                }
-                            }
-                        }
-                    }
-                    ArmType = i;
-                }
-            }
-            else
-                ArmSwitchTimer = 0;
-        }
-        public void TargetArm(Vector2 pos)
-        {
-            armTargetting = true;
-            armTarget = pos;
-        }
-        public float ArmSwitchTimer;
-        public int ArmType = 2;
-        public int NextArmType = 0;
-        public float handWidth;
-        public float handHeight = 64;
-        public float[] ArmAngleSpecial = new float[2] { 0, 0 };
-        public float sawBladeTimer = 0;
-        public void AdjustHandSize()
-        {
-            float targetH = ArmType == 1 ? 76 : ArmType == 2 ? 70 : 64;
-            handHeight = MathHelper.Lerp(handHeight, targetH, 0.1f);
-        }
-        public void DrawArmIK(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int dir, bool draw = true)
-        {
-            bool isBigArm = MathF.Abs(dir) == 2;
-            int j = SOTSUtils.SignNoZero(dir);
-            Texture2D body = null;
-            Texture2D arm = null;
-            Texture2D hand = null;
-            Texture2D handOverheat = null;
-            Texture2D handGlow = null;
-            Texture2D handSaw = null;
-            if (draw)
-            {
-                body = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/body").Value;
-                arm = ModContent.Request<Texture2D>(isBigArm ? "SOTS/NPCs/Boss/Excavator/bigArmLeft" : "SOTS/NPCs/Boss/Excavator/arm").Value;
-                if (isBigArm)
-                {
-                    hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrill").Value;
-                }
-                else
-                {
-                    string handVal = "SOTS/NPCs/Boss/Excavator/hand";
-                    if (ArmType == 1){
-                        handVal = "SOTS/NPCs/Boss/Excavator/handSaw";
-                        handSaw = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/saw").Value;
-                    }
-                    else if (ArmType == 2)
-                        handVal = "SOTS/NPCs/Boss/Excavator/handNoWeapon";
-                    hand = ModContent.Request<Texture2D>(handVal).Value;
-                    handOverheat = ModContent.Request<Texture2D>(handVal + "Overheat").Value;
-                    handGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handGlow").Value;
-                }
-            }
-            int armWidth = isBigArm ? 118 : 56;
-            float handWidth = isBigArm ? 38 : ArmType == 1 ? 26 : ArmType == 2 ? 30 : 38;
-            float handHeight = isBigArm ? 120 : this.handHeight;
-            int bodyWidth = 126;
-            int bodyHeight = 104;
-            Vector2 armOrigin = isBigArm ? new Vector2(95, 47): new Vector2(50, 14);
-            Vector2 revArmOrigin = new(armWidth - armOrigin.X, armOrigin.Y);
-            Vector2 handOrigin = new(handWidth / 2, handHeight);
-            float armRotation = other.rotation;
-            Vector2 armPosition = isBigArm ? new Vector2((-bodyWidth / 2 + 13) * j, bodyHeight / 2 - 31) : new Vector2((-bodyWidth / 2 + 4) * j, -bodyHeight / 2 + 16);
-            armPosition = armPosition.RotatedBy(armRotation) + other.Center;
-            Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
-
-            float r = other.ai[0] * 1.2f * j + (isBigArm ? (j == -2 ? 45 : 135) : (j * 45));
-            float outwardSize = (isBigArm ? 80 : 38) - (isBigArm ? 4 : 16) * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
-            if (!isBigArm)
-            {
-                outwardSize *= 1 - armTargetPercent * 0.9f;
-            }
-            Vector2 targetHandPos = new Vector2(-(bodyWidth / 2 + outwardSize) * j, isBigArm ? -70 : -100).RotatedBy(armRotation);
-            Vector2 circular = new Vector2(isBigArm ? 8 : 20, 0).RotatedBy(MathHelper.ToRadians(r));
-            circular.X *= 0.25f;
-            circular = circular.RotatedBy(armRotation);
-            if (!isBigArm)
-                circular *= 1 - armTargetPercent * 0.8f;
-            if (!isBigArm && armTargetPercent > 0)
-            {
-                float percent = ArmType == 1 ? MathF.Sqrt(MathF.Abs(MathF.Sin(sawBladeTimer / 200f * MathF.PI))) : 1;
-                float bonusMax = ArmType == 1 ? 52 * percent : 24;
-                float bonusRate = ArmType == 1 ? 18 : 24;
-                float bonusMin = ArmType == 1 ? 12 : 0;
-                Vector2 toArm = armTarget - armPosition;
-                float angle = MathHelper.WrapAngle(toArm.ToRotation() - armRotation);
-                bool targetBehindMe = angle > 0;
-                if(!targetBehindMe)
-                {
-                    float sin = MathF.Sin(-angle);
-                    targetHandPos += sin * armTargetPercent * toArm.SNormalize() * MathF.Min(bonusMax, bonusMin + (armTarget - armPosition).Length() / bonusRate);
-                }
-            }
-            targetHandPos += circular + other.Center;
-
-            float A = isBigArm ? handHeight : handHeight; //size of hand
-            float B = isBigArm ? armWidth - 36 : armWidth - 20; //size of arm
-            Vector2 end = targetHandPos;
-            Vector2 start = armPosition;
-            DoArmJoint(ref start, ref end, A, B, j, out float endArmRot, out float endHandRot);
-            Vector2 mid = start + new Vector2(B, 0).RotatedBy(endArmRot);
-            if (isBigArm)
-            {
-                end -= new Vector2(0, 13 * j).RotatedBy(endArmRot);
-            }
-            else
-            {
-                int num = dir == -1 ? 1 : 0;
-                end += new Vector2(1, 0).RotatedBy(endArmRot);
-
-                Vector2 midToTarget = -armTarget + mid;
-                float toPR = MathHelper.WrapAngle(midToTarget.ToRotation() - endArmRot);
-                if (j == -1)
-                {
-                    if (toPR < 0 && toPR < -MathHelper.PiOver2)
-                        toPR += MathHelper.TwoPi;
-                    toPR = MathHelper.Clamp(toPR, MathHelper.ToRadians(30), MathF.PI);
-                }
-                else
-                {
-                    if (toPR > 0 && toPR > MathHelper.PiOver2)
-                        toPR -= MathHelper.TwoPi;
-                    toPR = MathHelper.Clamp(toPR, -MathF.PI, -MathHelper.ToRadians(30));
-                }
-                toPR += endArmRot;
-                float rot = -endHandRot + toPR;
-                if (!draw)
-                {
-                    ArmAngleSpecial[num] =
-                        SOTSUtils.AngularLerp(ArmAngleSpecial[num], rot, 0.12f * armTargetPercent);
-                    ArmAngleSpecial[num] =
-                        SOTSUtils.AngularLerp(ArmAngleSpecial[num], 0, 0.12f * (1 - armTargetPercent));
-                }
-                end = end.RotatedBy(ArmAngleSpecial[num], mid);
-                endHandRot += ArmAngleSpecial[num];
-
-
-                //Main.NewText(MathHelper.WrapAngle(toPR - endArmRot));
-            }
-
-            //if (isBigArm)
-            //{
-            //Vector2 mid = startToMid.SNormalize() * 84 + start;
-            //mid -= new Vector2(0, 14 * j).RotatedBy(endArmRot);
-            //int bigDrillWidth = 38;
-            //Vector2 drillOrigin = new(42, 72);
-            //Vector2 revDrillOrigin = new(bigDrillWidth - drillOrigin.X, drillOrigin.Y);
-            //float deg = -j * ((j == 1 ? 180 : 0) + -70);
-            //if(draw)
-            //{
-            //Texture2D bigDrill = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bigDrill").Value;
-            //spriteBatch.Draw(bigDrill, mid - screenPos, null, drawColor, endHandRot + MathHelper.ToRadians(deg), j == 1 ? drillOrigin : revDrillOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            //}
-            //}
-
-            if (draw)
-            {
-                if (ArmType == 1 && handSaw != null)
-                {
-                    float scalePercent = MathF.Min(sawBladeTimer / 30f, 1f);
-                    scalePercent += MathF.Sin(scalePercent * scalePercent * MathF.PI) * 0.4f;
-                    float percent = sawBladeTimer / 200f;
-                    float rotation = MathHelper.ToRadians(percent * percent * 2400);
-                    Vector2 sawOrigin = handSaw.Size() / 2;
-                    for(int i = 0; i < 6; ++i)
-                    {
-                        Vector2 circular2 = new Vector2(4 * percent, 0).RotatedBy(MathHelper.ToRadians(i * 60 + SOTSWorld.GlobalCounter * j));
-                        spriteBatch.Draw(handSaw, circular2 + end - screenPos + new Vector2(5, 0).RotatedBy(endHandRot), null, ExcavatorOrb.Color * 0.5f * percent, rotation * j, sawOrigin, other.scale * scalePercent, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                    }
-                    spriteBatch.Draw(handSaw, end - screenPos + new Vector2(5, 0).RotatedBy(endHandRot), null, drawColor, rotation * j, sawOrigin, other.scale * scalePercent, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                }
-                spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                if(ArmType == 0 && !isBigArm)
-                    spriteBatch.Draw(handGlow, end - screenPos, null, Color.White, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                if (!isBigArm)
-                {
-                    float percent = ArmSwitchTimer / 60f;
-                    if (percent > 0)
-                    {
-                        for (int i = 0; i < 6; ++i)
-                        {
-                            Vector2 circular2 = new Vector2(3 + percent, 0).RotatedBy((percent + i / 3f) * MathF.PI);
-                            spriteBatch.Draw(handOverheat, circular2 + end - screenPos, null, ExcavatorOrb.Color * 0.45f * percent, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                        }
-                    }
-                }
-                spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                //Dust.NewDust(end, 0, 0, DustID.LifeDrain);
-            }
-            else
-            {
-                if (dir == -2)
-                    dir = 3;
-                else if(dir == -1)
-                    dir = 1;
-                else if(dir == 1)
-                    dir = 0;
-                else if(dir == 2)
-                    dir = 2;
-                handPos[dir] = end;
-                handNorm[dir] = new Vector2(-1, 0).RotatedBy(endHandRot);
-            }
-
-            //Visual representations of the IK happening
-            //if (draw)
-            //{
-            //    drawColor *= 0.4f;
-            //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-            //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, MathF.PI + endHandRot, new Vector2(0, 1), new Vector2(500, 1), SpriteEffects.None, 0);
-            //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
-            //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-            //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-            //    spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-            //    spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
-            //    spriteBatch.Draw(SOTSUtils.WhitePixel, mid - screenPos, null, Color.Yellow, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-            //}
-
-            //Visual location of the actual center of the arm
-            //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
-            //spriteBatch.Draw(SOTSUtils.WhitePixel, realEnd - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-        }
-        public void DoArmJoint(ref Vector2 start, ref Vector2 end, float A, float B, int dir, out float endArmRot, out float endHandRot)
-        {
-            if (end.Distance(start) > (A + B))
-            {
-                end = start + (end - start).SNormalize() * (A + B);
-            }
-            if (end.Distance(start) < 32)
-            {
-                end = start + (end - start).SNormalize() * 32;
-            }
-            Vector2 startToEnd = end - start;
-            float C = startToEnd.Length();
-            float angleA = C - A - B > 0 ? 0 : MathF.Acos((B * B + C * C - A * A) / (2 * B * C));
-            float angleB = C - A - B > 0 ? 0 : MathF.Acos((A * A + C * C - B * B) / (2 * A * C));
-            Vector2 endToMid = -startToEnd.RotatedBy(angleB * dir);
-            Vector2 startToMid = startToEnd.RotatedBy(-angleA * dir);
-            endHandRot = endToMid.ToRotation();
-            endArmRot = startToMid.ToRotation();
         }
         public void DrawLeg(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i, int dir = 1)
         {
@@ -727,7 +839,7 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector2 target = armPosition + new Vector2(offset.X + circular.X, offset.Y + circular.Y).RotatedBy(other.rotation);
             Vector2 end = target;
             Vector2 start = armPosition;
-            DoArmJoint(ref start, ref end, A, B, j * dir, out float endArmRot, out float endHandRot);
+            ExcavatorArm.DoArmJoint(ref start, ref end, A, B, j * dir, out float endArmRot, out float endHandRot);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, target - screenPos, null, Color.White, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
@@ -777,6 +889,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.aiStyle = -1;
             NPC.boss = true;
             neckSegments = [];
+            arms = GenArms();
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
@@ -881,14 +994,51 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             //Main.NewText(MoveStyle);
         }
+        public void SwitchArm(int type, int index = -1)
+        {
+            if(index == -1)
+            {
+                SwitchArm(type, 0);
+                SwitchArm(type, 1);
+            }
+            else
+            {
+                arms[index].SwitchArm(type);
+            }
+        }
+        public void TargetArm(Vector2 area, int index = -1)
+        {
+            if (index == -1)
+            {
+                TargetArm(area, 0);
+                TargetArm(area, 1);
+            }
+            else
+            {
+                arms[index].TargetArm(area);
+            }
+        }
+        public bool ArmsFinishedSwitching()
+        {
+            foreach(ExcavatorArm arm in arms)
+                if (arm.NextArmType != arm.ArmType)
+                    return false;
+            return true;
+        }
+        public bool SwingingSawArm()
+        {
+            foreach (ExcavatorArm arm in arms)
+                if (arm.sawSwingingDown)
+                    return true;
+            return false;
+        }
         public override bool PreAI()
         {
-            if (ArmSwitchTimer > 0)
-                SwitchArm(NextArmType);
-            else
-                AdjustHandSize();
+            foreach (ExcavatorArm arm in arms)
+                arm.PreUpdate();
             NPC.TargetClosest(true);
             Vector2 toPlayer = target.Center - NPC.Center;
+            Vector2 norm = toPlayer.SNormalize();
             UpdateNeckSegments();
             if (DespawnCheck())
                 return false;
@@ -902,24 +1052,20 @@ namespace SOTS.NPCs.Boss.Excavator
                 {
                     NPC other = Main.npc[segment];
                     if (other.ModNPC is ExcavatorBody)
-                    {
-                        for (int j = -2; j <= 2; ++j)
-                            if (j != 0)
-                                DrawArmIK(other, null, Main.screenPosition, j, false);
-                    }
+                        foreach (ExcavatorArm arm in this.arms)
+                            arm.DoArmIK(other, null, Main.screenPosition, arm.dir, false);
                 }
             }
 
-            AI1++;
             if(AIPhase == 1)
             {
                 AI1++;
-                if(AI1 > 200)
+                if(AI1 > 120)
                 {
                     MoveStyle = 2;
-                    if(AI1 >= 260)
+                    if(AI1 >= 150)
                     {
-                        if(AI1 == 260)
+                        if(AI1 == 150)
                         {
                             if(Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, NPC.whoAmI);
@@ -931,7 +1077,7 @@ namespace SOTS.NPCs.Boss.Excavator
                         NPC.velocity *= 0.1f;
                         AI2 = 0;
                     }
-                    if(AI1 > 900)
+                    if(AI1 > 450)
                     {
                         SwapPhase(2);
                     }
@@ -940,55 +1086,54 @@ namespace SOTS.NPCs.Boss.Excavator
             if(AIPhase == 2)
             {
                 MoveStyle = 2;
-                if(ArmType == 0)
-                {
-                    AI1++;
-                    int fireRate = Main.expertMode ? 25 : 30;
-                    if (AI1 >= 110)
-                        TargetArm(target.Center);
-                    if (AI1 >= 100 + fireRate)
-                    {
-                        AI1 -= fireRate;
-                        for (int i = 0; i < 2; ++i)
-                        {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), handPos[i], handNorm[i] * 3.5f + NPC.velocity, ModContent.ProjectileType<ExcavatorBolt>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
-                            SOTSUtils.PlaySound(SoundID.Item91, handPos[i], 1.0f, -0.4f);
-                        }
-                        AI2++;
-                    }
-                }
-                if(AI2 > 24)
+                if (AI2 > 20)
                 {
                     SwapPhase(3);
                     SwitchArm(2);
                 }
                 else
                     SwitchArm(0);
+                if (ArmsFinishedSwitching())
+                {
+                    AI1++;
+                    int fireRate = Main.expertMode ? 14 : 16;
+                    if (AI1 >= 97)
+                        TargetArm(target.Center);
+                    if (AI1 >= 90 + fireRate)
+                    {
+                        AI1 -= fireRate;
+                        for (int i = 0; i < 2; ++i)
+                        {
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
+                                Projectile.NewProjectile(NPC.GetSource_FromThis(), arms[i].handPos, arms[i].handNorm * 3.5f + NPC.velocity, ModContent.ProjectileType<ExcavatorBolt>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
+                            SOTSUtils.PlaySound(SoundID.Item91, arms[i].handPos, 1.0f, -0.4f);
+                        }
+                        AI2++;
+                    }
+                }
             }
             if(AIPhase == 3)
             {
                 MoveStyle = 3;
-                if (ArmType == 2)
+                SwitchArm(2);
+                if (ArmsFinishedSwitching())
                     ++AI1;
-                else
-                    SwitchArm(2);
-                int fireCooldown = Main.expertMode ? 100 : 90;
-                int totalRockets = Main.expertMode ? 24 : 18;
-                if (AI1 > 120)
+                int fireCooldown = Main.expertMode ? 11 : 13;
+                int totalRockets = Main.expertMode ? 30 : 24;
+                if (AI1 > 70)
                 {
                     int dir = (int)AI2 % 2 * 2 - 1;
                     NPC body = Main.npc[segments[0]];
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         Vector2 missileSiloSpots = body.Center + new Vector2(-30 * dir, 23).RotatedBy(body.rotation);
-                        Vector2 oppositeVelo = new Vector2(0, 1f).RotatedBy(body.rotation);
-                        Vector2 targetPosition = target.Center + Main.rand.NextVector2Circular(320, 320);
+                        Vector2 oppositeVelo = new Vector2(0, 0.5f).RotatedBy(body.rotation);
+                        Vector2 targetPosition = target.Center + Main.rand.NextVector2Circular(320, 320) + target.velocity * 15f;
                         Projectile.NewProjectile(NPC.GetSource_FromThis(), missileSiloSpots, Main.rand.NextVector2CircularEdge(1, 1) + oppositeVelo, ModContent.ProjectileType<ExcavatorRocket>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, targetPosition.X, targetPosition.Y);
                         //PixelDust.Spawn(body.Center + new Vector2(-30 * dir, 23).RotatedBy(body.rotation), 0, 0, Vector2.Zero, Color.White, 5).scale = 1;
                     }
                     SOTSUtils.PlaySound(SoundID.Item61, body.Center, 1.1f, 0.1f);
-                    AI1 = fireCooldown;
+                    AI1 -= fireCooldown;
                     AI2++;
                 }
                 if(AI2 > totalRockets)
@@ -998,32 +1143,57 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             if (AIPhase == 4)
             {
-                if (ArmType == 1)
+                //Main.NewText(AI3);
+                if (AI3 > 8)
                 {
-                    TargetArm(target.Center);
-                    AI1++;
-                    if (AI1 > 100)
+                    SwitchArm(2);
+                    if (ArmsFinishedSwitching())
                     {
-                        sawBladeTimer++;
-                        if (sawBladeTimer > 200)
-                        {
-                            for (int i = 0; i < 2; ++i)
-                            {
-                                if (Main.netMode != NetmodeID.MultiplayerClient)
-                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), handPos[i], handNorm[i] * 14.5f + NPC.velocity, ModContent.ProjectileType<ExcavatorSaw>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
-                                //SOTSUtils.PlaySound(SoundID.Item91, handPos[i], 1.0f, -0.4f);
-                            }
-                            sawBladeTimer = 0;
-                        }
+                        SwapPhase(1);
                     }
                 }
                 else
+                {
                     SwitchArm(1);
-                MoveStyle = -2;
+                }
+                if (ArmsFinishedSwitching() || AI1 > 0)
+                {
+                    AI1++;
+                    if (AI1 > 100)
+                    {
+                        for (int i = 0; i < 2; ++i)
+                        {
+                            arms[i].SawUpdate();
+                        }
+                    }
+                }
+                MoveStyle = 2;
+                bool armSwinging = SwingingSawArm();
+                if (armSwinging)
+                {
+                    if(AI2 == 0)
+                    {
+                        AI3++;
+                        AI2++;
+                        SOTSUtils.PlaySound(SoundID.Item71, NPC.Center, 1, -0.3f);
+                    }
+                    recoil *= 0.95f;
+                    NPC.velocity *= 0.95f;
+                    recoil += norm * 1.2f;
+                    NPC.velocity += norm * 0.4f + toPlayer * 0.0008f;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        NPC other = i == 2 ? NPC : Main.npc[segments[i]];
+                        Dust d= PixelDust.Spawn(other.position, other.width, other.height, -recoil * Main.rand.NextFloat(1) - NPC.velocity * Main.rand.NextFloat() + Main.rand.NextVector2Circular(1, 1), ExcavatorOrb.Color, 3);
+                        d.scale = Main.rand.NextFloat(1, 2);
+                    }
+                }
+                else
+                {
+                    NPC.velocity *= 0.875f;
+                    AI2 = 0;
+                }
             }
-            else
-                SwapPhase(4);
-
             return false;
         }
         public override void PostAI()
@@ -1047,20 +1217,8 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 WalkCounter += 2 * MathF.Sqrt(speed);
             }
-            if(armTargetting)
-            {
-                armTargetPercent = MathHelper.Lerp(armTargetPercent, 1, 0.08f);
-                armTargetPercent += 0.01f;
-                if (armTargetPercent > 1)
-                    armTargetPercent = 1;
-            }
-            else{
-                armTargetPercent = MathHelper.Lerp(armTargetPercent, 0, 0.09f);
-                armTargetPercent -= 0.01f;
-                if (armTargetPercent < 0)
-                    armTargetPercent = 0;
-            }
-            armTargetting = false;
+            foreach (ExcavatorArm arm in arms)
+                arm.PostUpdate();
         }
         public void AvoidCollision()
         {
@@ -1102,8 +1260,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public void SwapPhase(int phase)
         {
-            AI1 = 0;
-            AI2 = 0;
+            AI1 = AI2 = AI3 = 0;
             AIPhase = phase;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)

@@ -48,6 +48,8 @@ using SOTS.NPCs.Boss.Advisor;
 using SOTS.Buffs.Debuffs;
 using System;
 using SOTS.NPCs.Critters;
+using rail;
+using SOTS.NPCs.Boss.Excavator;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -561,6 +563,8 @@ namespace SOTS.Common.GlobalNPCs
             {
 				spawnRate = (int)(spawnRate * 10); //makes thing spawn at 1/10th the speed
 				maxSpawns = (int)(maxSpawns * 0.5f); //cut max spawns in half
+				if(NPC.AnyNPCs(ModContent.NPCType<Excavator>()))
+					maxSpawns = 0; 
             }
 			if(player.HasBuff<SanctuarySilence>())
 			{
@@ -614,9 +618,12 @@ namespace SOTS.Common.GlobalNPCs
 			bool ZonePyramid = sPlayer.PyramidBiome;
 			bool ZoneAV = sPlayer.AbandonedVillageBiome;
 			bool ZoneTown = spawnInfo.PlayerInTown;
-            if (sPlayer.noMoreConstructs || player.HasBuff(ModContent.BuffType<IntimidatingPresence>()) || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
-				constructRateMultiplier = 0f;
-			if(Main.invasionType != InvasionID.None || NPC.AnyNPCs(NPCID.DD2EterniaCrystal))
+			bool playerBoss = player.HasBuff(ModContent.BuffType<IntimidatingPresence>());
+            if (sPlayer.noMoreConstructs || playerBoss || player.HasBuff(ModContent.BuffType<DEFEBuff>()))
+			{
+                constructRateMultiplier = 0f;
+            }
+            if (Main.invasionType != InvasionID.None || NPC.AnyNPCs(NPCID.DD2EterniaCrystal))
             {
 				constructRateMultiplier *= 0.0f;
             }

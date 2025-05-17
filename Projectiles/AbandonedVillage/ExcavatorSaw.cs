@@ -12,6 +12,10 @@ namespace SOTS.Projectiles.AbandonedVillage
 {
 	public class ExcavatorSaw : ModProjectile
 	{
+        public override void OnHitPlayer(Player target, Player.HurtInfo info)
+        {
+            target.AddBuff(BuffID.Bleeding, 1200, false);
+        }
         public override void SendExtraAI(BinaryWriter writer)
         {
             base.SendExtraAI(writer);
@@ -33,7 +37,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 			Projectile.height = 48;
 			Projectile.hostile = true;
 			Projectile.friendly = false;
-			Projectile.timeLeft = 360;
+			Projectile.timeLeft = 540;
 			Projectile.tileCollide = true;
 			Projectile.penetrate = -1;
             Projectile.ignoreWater = true;
@@ -63,7 +67,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 Main.spriteBatch.Draw(texture, drawPos + circular - Main.screenPosition, null, color * 0.8f, Projectile.rotation, drawOrigin, Projectile.scale * 1.0f, s, 0f);
             }
             Main.spriteBatch.Draw(texture, drawPos - Main.screenPosition, null, Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Projectile.rotation, drawOrigin, Projectile.scale * 1.0f, s, 0f);
-            float deathPercent = 1 - Projectile.timeLeft / 360f;
+            float deathPercent = 1 - Projectile.timeLeft / 540f;
             deathPercent = deathPercent * deathPercent * deathPercent;
             for (int k = 0; k < 7; k++)
             {
@@ -110,6 +114,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             {
                 speedModifier = Projectile.velocity.Length() / 2f;
                 Projectile.velocity.Y += 0.09f;
+                PixelDust.Spawn(Projectile.position, Projectile.width, Projectile.height, -Projectile.velocity * Main.rand.NextFloat(-0.1f, 1.0f) + Main.rand.NextVector2Circular(1, 1), ExcavatorOrb.Color, 5).scale = Main.rand.NextFloat(0.7f, 1f);
             }
         }
         public bool collideX;
@@ -164,6 +169,10 @@ namespace SOTS.Projectiles.AbandonedVillage
                     Projectile.ai[1] = 0f;
                     directionFlip *= -1;
                 }
+            }
+            if(!collideX && !collideY)
+            {
+                hasCollidedOnce = false;
             }
             Projectile.velocity.X = speedModifier * direction;
             Projectile.velocity.Y = speedModifier * directionY;
