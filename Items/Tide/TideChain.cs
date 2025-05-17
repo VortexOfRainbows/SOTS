@@ -91,7 +91,7 @@ namespace SOTS.Items.Tide
 			else if(Main.tile[i, j].TileFrameX >= 18)
 			{
 				SOTSUtils.PlaySound(SoundID.Grab, (int)player.Center.X, (int)player.Center.Y, 1.1f, -0.2f);
-				int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 16) * 16, 16, 16, ModContent.ItemType<BWand>(), 1, false, 0, true);
+				int item = Item.NewItem(new EntitySource_TileInteraction(player, i, j), i * 16, (j + 11) * 16, 16, 16, ModContent.ItemType<BWand>(), 1, false, 0, true);
 				NetMessage.SendData(MessageID.SyncItem, player.whoAmI, -1, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
 				tile.TileFrameX = 0;
 				NetMessage.SendTileSquare(-1, i, j, 2);
@@ -130,7 +130,7 @@ namespace SOTS.Items.Tide
 				zero = Vector2.Zero;
 			}
 			bool wave = true;
-			int maxLength = 16;
+			int maxLength = 11; //Any higher than this and it will have rendering issues due to zoom levels
 			if(Main.tile[i, j].TileFrameX < 18)
 			{
 				for (int j2 = 1; j2 < maxLength; j2++)
