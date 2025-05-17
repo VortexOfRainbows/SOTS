@@ -26,7 +26,6 @@ namespace SOTS.Projectiles.Tide
             Main.EntitySpriteDraw(t, new Vector2(Projectile.Center.X, Projectile.position.Y) - Main.screenPosition, new Rectangle(0, trueHeight * Projectile.frame, t.Width, trueHeight), Color.Lerp(Color.White, lightColor, 0.9f), Projectile.rotation, origin, stretch, SpriteEffects.None, 0);
             return false;
         }
-        public static List<int> BubbleListeners = new List<int>();
 		public override void SetStaticDefaults()
         {
             Main.projFrames[Projectile.type] = 8;
@@ -62,23 +61,18 @@ namespace SOTS.Projectiles.Tide
 		{
 			if (runOnce)
 			{
-				if(Projectile.owner == Main.myPlayer)
+                for (int i = 0; i < Main.projectile.Length; i++) //Kill all other bubbles owned by this player when I am spawned
                 {
-                    for (int i = 0; i < Main.projectile.Length; i++) //Kill all other bubbles owned by this player when I am spawned
+                    Projectile other = Main.projectile[i];
+                    if (other != Projectile && other.active && other.type == Type && other.owner == Projectile.owner && other.timeLeft > 15)
                     {
-                        Projectile other = Main.projectile[i];
-                        if (other != Projectile && other.active && other.type == Type && other.owner == Projectile.owner && other.timeLeft > 15)
-                        {
-							other.timeLeft = 15;
-							other.netUpdate = true;
-                        }
+						other.timeLeft = 15;
                     }
                 }
 				Main.player[Main.myPlayer].itemRotation = 0;
 				Projectile.scale = 0.1f;
                 Projectile.hide = false;
 				runOnce = false;
-				BubbleListeners.Add(Projectile.whoAmI); //WhoAmI values are not synced in multiplayer, so it is pointless to sync this anyways. It must be deterministic.
             }
 			return true;
 		}

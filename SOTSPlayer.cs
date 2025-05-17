@@ -2154,18 +2154,12 @@ namespace SOTS
 		{
 			int bubble = ModContent.ProjectileType<Bubble>();
 			//Most of the time there will be only one bubble, but this is for multiplayer and future compatability;\
-			for (int i = Bubble.BubbleListeners.Count - 1; i >= 0; --i)
+			foreach (Projectile proj in Main.projectile)
 			{
-				int index = Bubble.BubbleListeners[i];
-				Projectile proj = Main.projectile[index];
 				if (proj.type == bubble && proj.active && proj.timeLeft > 2)
 				{
 					if (proj.ai[0] > 15 || proj.timeLeft <= 15)
 						FakeTileCollision(proj, proj.Hitbox.Modified(1, 3, -2, -5));
-				}
-				else
-				{
-					Bubble.BubbleListeners.RemoveAt(i);
 				}
 			}
 		}
@@ -2185,7 +2179,7 @@ namespace SOTS
 					Player.noFallDmg = true;
 					proj.ai[2] = Player.controlDown ? -28 : -7;
 					proj.netUpdate = true;
-				}
+                }
 			}
 			else if (Player.justJumped && current.Intersects(proj.Hitbox) && curDiff > -2)
 			{
