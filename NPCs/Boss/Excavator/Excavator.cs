@@ -212,7 +212,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                 }
                 int armWidth = isBigArm ? 118 : 56;
-                float handWidth = isBigArm ? 38 : ArmType == 1 ? 26 : ArmType == 2 ? 30 : 38;
+                float handWidth = isBigArm ? 38 : ArmType == 1 ? 26 : ArmType == 2 ? 34 : 38;
                 float handHeight = isBigArm ? 120 : this.handHeight;
                 int bodyWidth = 126;
                 int bodyHeight = 104;
@@ -392,7 +392,7 @@ namespace SOTS.NPCs.Boss.Excavator
                         ArmSwitchTimer = 0;
                         if (Main.netMode != NetmodeID.Server)
                         {
-                            Vector2 size = ArmType == 0 ? new Vector2(-19, -16) : ArmType == 1 ? new Vector2(-7, -21) : new Vector2(-15, -25);
+                            Vector2 size = ArmType == 0 ? new Vector2(-19, -16) : ArmType == 1 ? new Vector2(-7, -21) : new Vector2(-17, -25);
                             float xOff = 20;
                             float r = handNorm.ToRotation();
                             Vector2 offset = size - (handNorm * xOff);
@@ -853,7 +853,7 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector2 revArmOrigin = new(arm.Width - armOrigin.X, armOrigin.Y);
             Vector2 handOrigin = new(hand.Width / 2, hand.Height);
             Color drawColor = Lighting.GetColor(start.ToTileCoordinates(), new Color(210, 210, 210));
-            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
             spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -dir ? MathF.PI : 0), j == -dir ? armOrigin : revArmOrigin, other.scale, j == -dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
