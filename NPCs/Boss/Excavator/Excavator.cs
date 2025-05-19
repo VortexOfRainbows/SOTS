@@ -1,4 +1,5 @@
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Operations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
@@ -391,7 +392,7 @@ namespace SOTS.NPCs.Boss.Excavator
                         ArmSwitchTimer = 0;
                         if (Main.netMode != NetmodeID.Server)
                         {
-                            Vector2 size = ArmType == 0 ? new Vector2(-19, -16) : ArmType == 1 ? new Vector2(-7, -21) : new Vector2(-15, -19);
+                            Vector2 size = ArmType == 0 ? new Vector2(-19, -16) : ArmType == 1 ? new Vector2(-7, -21) : new Vector2(-15, -25);
                             float xOff = 20;
                             float r = handNorm.ToRotation();
                             Vector2 offset = size - (handNorm * xOff);
@@ -441,7 +442,7 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             public void AdjustHandSize()
             {
-                float targetH = ArmType == 1 ? 76 : ArmType == 2 ? 70 : 64;
+                float targetH = ArmType == 1 ? 76 : ArmType == 2 ? 82 : 64;
                 handHeight = MathHelper.Lerp(handHeight, targetH, 0.1f);
             }
             public NPC NPC => owner.NPC;
@@ -817,7 +818,7 @@ namespace SOTS.NPCs.Boss.Excavator
             //legRot += MathHelper.ToRadians(legMoveSin);
             //spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, legRot + MathHelper.ToRadians(rotation * j), j == -1 ? legOrig : revLegOrig, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
-            float A = 64; //size of hand
+            float A = 82; //size of hand
             float B = 36; //size of arm
             Vector2 circular = new Vector2(50 * j, 0).RotatedBy(MathHelper.ToRadians(r + i * 120 + (j == dir ? 180 : 0)) * j * dir);
             Vector2 offset = new Vector2(82 * j, 0);
@@ -1318,6 +1319,23 @@ namespace SOTS.NPCs.Boss.Excavator
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 4, 7));
+        }
+        public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
+        {
+            if(arms != null)
+            {
+                for (int i = 0; i < 4; ++i)
+                {
+                    int size = arms[i].isBigArm ? 48 : arms[i].ArmType == 1 ? 32 : 16;
+                    Vector2 pos = arms[i].isBigArm ? arms[i].handPos - arms[i].handNorm * 30 : arms[i].handPos;
+                    Rectangle r = new Rectangle((int)pos.X - size / 2, (int)pos.Y - size / 2, size, size);
+                    if(r.Intersects(victimHitbox))
+                    {
+                        npcHitbox = victimHitbox;
+                    }
+                }
+            }
+            return false;
         }
     }
 }
