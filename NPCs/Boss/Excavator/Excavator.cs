@@ -818,7 +818,7 @@ namespace SOTS.NPCs.Boss.Excavator
             //legRot += MathHelper.ToRadians(legMoveSin);
             //spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, legRot + MathHelper.ToRadians(rotation * j), j == -1 ? legOrig : revLegOrig, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
 
-            float A = 82; //size of hand
+            float A = 72; //size of hand
             float B = 36; //size of arm
             Vector2 circular = new Vector2(50 * j, 0).RotatedBy(MathHelper.ToRadians(r + i * 120 + (j == dir ? 180 : 0)) * j * dir);
             Vector2 offset = new Vector2(82 * j, 0);
