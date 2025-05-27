@@ -31,10 +31,11 @@ namespace SOTS.NPCs.AbandonedVillage
 		private static Asset<Texture2D> GlowTexture;
 		public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[NPC.type] = 11;
+            Main.npcFrameCount[NPC.type] = 18;
         }
         public override void SetDefaults()
-		{
+        {
+            Main.npcFrameCount[NPC.type] = 18;
             NPC.lifeMax = 60;
             NPC.damage = 25;
             NPC.defense = 14;
@@ -67,28 +68,23 @@ namespace SOTS.NPCs.AbandonedVillage
 			{
 				if (NPC.velocity.Y == 0)
 				{
-					if (NPC.frame.Y >= frameHeight * 4)
+					if (NPC.frame.Y < frameHeight * 11)
 					{
-						NPC.frame.Y = 0 * frameHeight;
-					}
-				}
+						NPC.frame.Y = 11 * frameHeight;
+                    }
+                    if (NPC.frame.Y >= frameHeight * 14 && NPC.frame.Y < frameHeight * 15)
+                    {
+                        NPC.frame.Y = 17 * frameHeight;
+                    }
+                    if (NPC.frame.Y >= frameHeight * 18)
+                    {
+                        NPC.frame.Y = 11 * frameHeight;
+                    }
+                }
 				else
-				{
-					if (NPC.velocity.Y < 0)
-					{
-						if (NPC.frame.Y >= frameHeight * 2)
-						{
-							NPC.frame.Y = 1 * frameHeight;
-						}
-					}
-					else
-					{
-						if (NPC.frame.Y >= frameHeight * 4)
-						{
-							NPC.frame.Y = 3 * frameHeight;
-						}
-					}
-				}
+                {
+                    NPC.frame.Y = 15 * frameHeight;
+                }
 			}
 			else
 			{
@@ -123,7 +119,7 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             GlowTexture ??= ModContent.Request<Texture2D>("SOTS/NPCs/AbandonedVillage/SanguineFoundryGlow");
 
-            Main.EntitySpriteDraw(GlowTexture.Value, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY - 10), 
+            Main.EntitySpriteDraw(GlowTexture.Value, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY - 10.5f), 
             NPC.frame, Color.White, NPC.rotation, NPC.frame.Size() / 2f, NPC.scale, NPC.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
         }
         public override void AI()
