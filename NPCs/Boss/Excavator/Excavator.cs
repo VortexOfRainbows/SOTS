@@ -1,17 +1,13 @@
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Operations;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.Items.Gems;
 using SOTS.Projectiles.AbandonedVillage;
-using SOTS.Projectiles.BiomeChest;
-using SOTS.Projectiles.Planetarium;
+using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection.Metadata.Ecma335;
-using System.Transactions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -156,6 +152,11 @@ namespace SOTS.NPCs.Boss.Excavator
     }
     public class Excavator : ModNPC
     {
+        public static readonly int EnergyBallPhase = 1;
+        public static readonly int LaserPhase = 2;
+        public static readonly int SawPhase = 3;
+        public static readonly int RocketPhase = 4;
+        public static readonly int SecondPhaseTransition = 5;
         public class ExcavatorArm(Excavator owner, int dir, bool bigArm = false)
         {
             public float SawBladeRotation;
@@ -585,15 +586,42 @@ namespace SOTS.NPCs.Boss.Excavator
             set => NPC.ai[3] = value;
         }
         public float AI3;
+        public static float TelegraphSize => 2400;
+        public float TelegraphCounter = 0;
+        public float TelegraphFadeOut = 0;
+        public Vector2 leftTelegraph => new(TelegraphLocation.X - TelegraphSize * 0.85f, TelegraphLocation.Y);
+        public Vector2 rightTelegraph => new(TelegraphLocation.X + TelegraphSize * 0.85f, TelegraphLocation.Y);
+        public Vector2 ClosestTelegraphEndLocation()
+        {
+            float toLeft = leftTelegraph.Distance(NPC.Center);
+            float toRight = rightTelegraph.Distance(NPC.Center);
+            if (toLeft > toRight)
+                return rightTelegraph;
+            else
+                return leftTelegraph;
+        }
+        public Vector2 FarthestTelegraphEndLocation()
+        {
+            float toLeft = leftTelegraph.Distance(NPC.Center);
+            float toRight = rightTelegraph.Distance(NPC.Center);
+            if (toLeft > toRight)
+                return leftTelegraph;
+            else
+                return rightTelegraph;
+        }
+        public Vector2 TelegraphLocation;
+        public bool NeedsToGoIntoPhase2 => !InPhase2 && NPC.life < NPC.lifeMax / 2f;
+        public bool InPhase2 = false;
         public List<Vector2> neckSegments;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            DrawDashTelegraph(spriteBatch, screenPos);
             Texture2D head = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/head").Value;
             Texture2D headGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/headGlow").Value;
             Texture2D neck = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/neck").Value;
             Texture2D neckGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/neckGlow").Value;
-            Vector2 origin = new Vector2(head.Width * 0.5f, head.Height * 0.5f);
-            Vector2 neckOrigin = new Vector2(neck.Width * 0.5f, neck.Height);
+            Vector2 origin = new(head.Width * 0.5f, head.Height * 0.5f);
+            Vector2 neckOrigin = new(neck.Width * 0.5f, neck.Height);
 
 
             for (int i = segments.Length - 1; i >= 0; --i)
@@ -639,6 +667,72 @@ namespace SOTS.NPCs.Boss.Excavator
             spriteBatch.Draw(head, NPC.Center - screenPos, null, drawColor, NPC.rotation + 1.57f, origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             spriteBatch.Draw(headGlow, NPC.Center - screenPos, null, Color.White, NPC.rotation + 1.57f, origin, NPC.scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             return false;
+        }
+        public void DrawDashTelegraph(SpriteBatch spriteBatch, Vector2 screenPos)
+        {
+            float fadeOutPercent = 1 - MathF.Min(TelegraphFadeOut / 50, 1);
+            if (fadeOutPercent <= 0 || TelegraphCounter == 0)
+                return;
+            float telegraphSize = TelegraphSize;
+            Vector2 size1 = new(telegraphSize, 1);
+            float percent2 = TelegraphCounter / 100f;
+            Texture2D texture = SOTSUtils.WhitePixel;
+            Vector2 origin = new(1, 1);
+            Color white = Color.White;
+            Color c = ExcavatorOrb.Color;
+            int start = (int)(24 * percent2);
+            int end = (int)(start + 24 * percent2);
+            float between = end - start;
+            float minColor = 0.14f;
+            float maxColor = 1 - minColor;
+            Vector2 position = Vector2.Lerp(new Vector2(target.Center.X, NPC.Center.Y), TelegraphLocation, percent2 * percent2);
+            for(int i = -1; i <= 1; i += 2)
+            {
+                for (int j = start; j <= end; ++j)
+                {
+                    float percent = j >= start ? (MathF.Abs(j - start) / between) : 0;
+                    float trippleP = percent * percent * percent;
+                    percent = trippleP * maxColor + minColor;
+                    Vector2 pos = position + new Vector2(0, 2 * j * i);
+                    Color c2 = Color.Lerp(c, white, trippleP) * percent * fadeOutPercent * percent2;
+                    spriteBatch.Draw(texture, pos - screenPos, null, c2, 0, origin, size1, SpriteEffects.None, 0);
+                }
+                if(i == 1)
+                {
+                    spriteBatch.Draw(texture, position - screenPos, null, c * minColor * percent2 * fadeOutPercent, 0, origin, new Vector2(telegraphSize, start * 2 - 1), SpriteEffects.None, 0);
+                }
+            }
+        }
+        public void DashTelegraphDust()
+        {
+            float fadeOutPercent = 1 - MathF.Min(TelegraphFadeOut / 50, 1);
+            if (fadeOutPercent <= 0 || TelegraphCounter == 0)
+                return;
+            float telegraphSize = TelegraphSize;
+            float percent2 = TelegraphCounter / 100f;
+            if (percent2 <= 0)
+                return;
+            Vector2 position = Vector2.Lerp(new Vector2(target.Center.X, NPC.Center.Y), TelegraphLocation, percent2 * percent2);
+            int start = (int)(24 * percent2);
+            int end = (int)(start + 24 * percent2);
+            for(int i = 0; i < (float)(7 * fadeOutPercent); ++i)
+            {
+                float m = i <= 1 ? 0 : Main.rand.NextFloat(1);
+                for (int j = -1; j <= 1; j += 2)
+                {
+                    Vector2 pos = position + new Vector2(Main.rand.NextFloat(-telegraphSize, telegraphSize), 2 * end * j * m);
+                    PixelDust.Spawn(pos, 0, 0, Main.rand.NextVector2Circular(1, 1) + new Vector2(Main.rand.NextFloat(-0.2f, 0.2f), 2 * j), Color.Lerp(ExcavatorOrb.Color, Color.White, percent2 * Main.rand.NextFloat(1)) * fadeOutPercent, 5);
+                }
+            }
+            Vector3 lColor = ExcavatorOrb.Color.ToVector3() * 0.2f * percent2 * fadeOutPercent;
+            for (float pY = 0; pY <= 1; pY += 0.2f)
+            {
+                for (float p = 0; p <= 1; p += 0.005f)
+                {
+                    Vector2 position2 = new(MathHelper.Lerp(position.X - telegraphSize, position.X + telegraphSize, p), MathHelper.Lerp(position.Y - end * 2, position.Y + end * 2, pY));
+                    Lighting.AddLight(position2, lColor);
+                }
+            }
         }
         public void UpdateNeckSegments()
         {
@@ -859,6 +953,7 @@ namespace SOTS.NPCs.Boss.Excavator
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.MustAlwaysDraw[Type] = true;
             //NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             //NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             //{
@@ -903,7 +998,7 @@ namespace SOTS.NPCs.Boss.Excavator
         private Player target => Main.player[NPC.target];
         public bool DespawnCheck()
         {
-            if (target.dead || Vector2.Distance(target.Center, NPC.Center) > 4800)
+            if (target.dead || Vector2.Distance(target.Center, NPC.Center) > 6400 || !target.SOTSPlayer().AbandonedVillageBiome)
             {
                 DespawnCounter++;
             }
@@ -915,6 +1010,10 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 NPC.active = false;
                 return true;
+            }
+            else
+            {
+                NPC.DiscourageDespawn(1000);
             }
             return false;
         }
@@ -955,7 +1054,15 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
             }
             int dir = (int)MoveStyle % 2;
-            if(MoveStyle == 0 || MoveStyle == 1)
+            if (MoveStyle == 4)
+            {
+                Vector2 targetPosition = ClosestTelegraphEndLocation();
+                toPlayer = targetPosition - NPC.Center;
+                float dist = toPlayer.Length();
+                NPC.velocity += toPlayer.SNormalize() * (0.55f + dist * 0.0025f);
+                NPC.velocity *= 0.95f;
+            }
+            if (MoveStyle == 0 || MoveStyle == 1)
             {
                 float dist = toPlayer.Length();
                 if(dist > 240)
@@ -1035,6 +1142,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override bool PreAI()
         {
+            DashTelegraphDust();
             foreach (ExcavatorArm arm in arms)
                 arm.PreUpdate();
             NPC.TargetClosest(true);
@@ -1058,7 +1166,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
             }
 
-            if(AIPhase == 1)
+            if(AIPhase == EnergyBallPhase)
             {
                 AI1++;
                 if(AI1 > 120)
@@ -1080,16 +1188,16 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                     if(AI1 > 450)
                     {
-                        SwapPhase(2);
+                        SwapPhase(LaserPhase);
                     }
                 }
             }
-            if(AIPhase == 2)
+            if(AIPhase == LaserPhase)
             {
                 MoveStyle = 2;
                 if (AI2 > 20)
                 {
-                    SwapPhase(3);
+                    SwapPhase(RocketPhase);
                     SwitchArm(2);
                 }
                 else
@@ -1113,7 +1221,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                 }
             }
-            if(AIPhase == 3)
+            if(AIPhase == RocketPhase)
             {
                 MoveStyle = 3;
                 SwitchArm(2);
@@ -1139,10 +1247,10 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
                 if(AI2 > totalRockets)
                 {
-                    SwapPhase(4);
+                    SwapPhase(SawPhase);
                 }
             }
-            if (AIPhase == 4)
+            if(AIPhase == SawPhase)
             {
                 //Main.NewText(AI3);
                 if (AI3 > 8)
@@ -1150,7 +1258,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     SwitchArm(2);
                     if (ArmsFinishedSwitching())
                     {
-                        SwapPhase(1);
+                        SwapPhase(InPhase2 ? SecondPhaseTransition : EnergyBallPhase);
                     }
                 }
                 else
@@ -1195,6 +1303,89 @@ namespace SOTS.NPCs.Boss.Excavator
                     AI2 = 0;
                 }
             }
+            if (AIPhase == SecondPhaseTransition)
+            {
+                if (AI1++ <= 10)
+                {
+                    TelegraphCounter = TelegraphFadeOut = 0;
+                    TelegraphLocation = target.Center;
+                }
+                if (AI1 > 1200)
+                {
+                    AI1 = 0;
+                    SwapPhase(EnergyBallPhase);
+                }
+                if (AI1 > 130)
+                {
+                    int dashTime = 320;
+                    if (AI1 > dashTime)
+                    {
+                        if(AI1 > dashTime + 50)
+                            TelegraphFadeOut++;
+                        Vector2 otherSide = AI2 == -1 ? leftTelegraph : rightTelegraph;
+                        MoveStyle = -1;
+                        NPC.velocity.X += AI2 * 1.9f;
+                        NPC.velocity.Y += MathF.Sign(TelegraphLocation.Y - NPC.Center.Y) * 0.4f;
+                        NPC.velocity += (otherSide - NPC.Center).SNormalize() * 0.7f;
+                        NPC.velocity *= 0.925f;
+                        if(Vector2.Distance(otherSide, NPC.Center) < 120)
+                        {
+                            AI1 = 1200;
+                        }
+                        if(AI1 > dashTime + 30)
+                        { 
+                            if(AI1 % 15 == 0)
+                            {
+                                SOTSUtils.PlaySound(SoundID.Item23, NPC.Center, 2f, 0.5f, 0.05f);
+                            }
+                            int dropRate = Main.expertMode ? 8 : 9;
+                            if(AI1 % dropRate == 0)
+                            {
+                                Vector2 spawnLocation = NPC.Center + new Vector2(0, -120);
+                                Point p = spawnLocation.ToTileCoordinates();
+                                CollapseBlock.Spawn(NPC.GetSource_FromThis(), p.X, p.Y, NPC.GetBaseDamage() / 2);
+                                SOTSUtils.PlaySound(SoundID.Tink, NPC.Center, 0.8f, -0.4f, 0.05f);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MoveStyle = 4;
+                        if (AI1 > 200)
+                        {
+                            Vector2 toFarthest = FarthestTelegraphEndLocation() - NPC.Center;
+                            AI2 = MathF.Sign(toFarthest.X);
+                        }
+                    }
+                }
+                else
+                {
+                    MoveStyle = 2;
+                    if (TelegraphCounter < 100)
+                    {
+                        Point p = (target.Center + new Vector2(0, -32)).ToTileCoordinates();
+                        for (int j = 0; j < 65; ++j)
+                        {
+                            --p.Y;
+                            if (SOTSWorldgenHelper.TrueTileSolid(p.X, p.Y, true) && SOTSWorldgenHelper.TrueTileSolid(p.X, p.Y - 1, true) && SOTSWorldgenHelper.TrueTileSolid(p.X, p.Y - 2, true))
+                            {
+                                TelegraphLocation = Vector2.Lerp(TelegraphLocation, p.ToWorldCoordinates() + new Vector2(0, 96), 0.2f);
+                                break;
+                            }
+                        }
+                        ++TelegraphCounter;
+                    }
+                }
+                NPC.velocity *= 0.95f;
+            }
+            /*
+            one where excavator will dash across the screen with drills and cause debris to fall
+            one where excavator will use the laser and saw at the same time
+            one where it will spawn earthen gizmos 
+            earthen gizmo attack would probably signify transition into the second phase
+            where the other two attacks would appear now
+            and it would also have a desparation phase with an unstable "Gula" spirit which is an Evil+Earthen spirit that explodes violently
+            */
             return false;
         }
         public override void PostAI()
@@ -1262,6 +1453,11 @@ namespace SOTS.NPCs.Boss.Excavator
         public void SwapPhase(int phase)
         {
             AI1 = AI2 = AI3 = 0;
+            if(NeedsToGoIntoPhase2)
+            {
+                phase = SecondPhaseTransition;
+                InPhase2 = true;
+            }
             AIPhase = phase;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
