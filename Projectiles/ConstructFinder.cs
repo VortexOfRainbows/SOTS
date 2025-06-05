@@ -6,6 +6,7 @@ using SOTS.Dusts;
 using System.Linq;
 using SOTS.NPCs.Boss.Excavator;
 using Terraria.ID;
+using SOTS.Projectiles.AbandonedVillage;
 
 namespace SOTS.Projectiles
 {    
@@ -36,7 +37,23 @@ namespace SOTS.Projectiles
 		}
         public override void OnKill(int timeLeft)
         {
-			for(int i = 0; i < 20; i++)
+            bool lookingForExcavator = Projectile.ai[1] <= -1;
+            if (lookingForExcavator)
+            {
+                for(int i = 0; i < 40; ++i)
+                {
+                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.TwoPi * i / 40f);
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+                    dust.velocity = dust.velocity * 0.25f + circular * Main.rand.NextFloat(1, 4);
+                    dust.noGravity = true;
+                    dust.color = ExcavatorOrb.Color;
+                    dust.fadeIn = 0.1f;
+                    dust.scale = 1.35f;
+                    dust.alpha = Projectile.alpha;
+                }
+                return;
+            }
+            for (int i = 0; i < 20; i++)
 			{
 				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
 				dust.velocity *= 0.8f;
@@ -50,55 +67,78 @@ namespace SOTS.Projectiles
         public override void AI()
 		{
 			Projectile.ai[0]++;
-			Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
-			dust.velocity *= 0.1f;
-			dust.noGravity = true;
-			dust.color = Color.Lerp(new Color(0, 192, 255, 100), new Color(0, 90, 136, 100), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[0])));
-			dust.fadeIn = 0.1f;
-			dust.scale = 1.2f;
-			dust.alpha = Projectile.alpha;
 			bool lookingForExcavator = Projectile.ai[1] <= -1;
 			int followThreshold = 20;
             if (lookingForExcavator)
             {
 				followThreshold = 120;
-				if (Projectile.ai[0] >= 100 && Projectile.ai[1] == -1)
+				if (Projectile.ai[0] >= followThreshold && Projectile.ai[1] == -1)
 				{
 					SOTSUtils.PlaySound(SoundID.Roar, Projectile.Center, 1.0f, -0.34f);
 					NPC.SpawnOnPlayer(Projectile.owner, ModContent.NPCType<Excavator>()); //should work in multiplayer
-					Projectile.ai[1] = -2;
+                    Projectile.Kill();
+                    return;
 				}
+                else
+                {
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+                    dust.velocity *= 0.1f;
+                    dust.noGravity = true;
+                    dust.color = ExcavatorOrb.Color;
+                    dust.fadeIn = 0.1f;
+                    dust.scale = 1.35f;
+                    dust.alpha = Projectile.alpha;
+                    float r = MathHelper.ToRadians(Projectile.ai[0] * 2.5f);
+                    float radiusSize = 32 + Projectile.ai[0] * 0.25f;
+                    for(int i = -1; i <= 1; i += 2)
+                    {
+                        Vector2 offset = new Vector2(i, 0).RotatedBy(r) * radiusSize;
+                        offset.Y *= 0.5f;
+                        dust = PixelDust.Spawn(Projectile.Center + offset, 0, 0, Main.rand.NextVector2Circular(1, 1) * 0.2f, ExcavatorOrb.Color, 5);
+                        dust.scale = 1.0f;
+                    }
+                }
             }
-            if (Projectile.ai[0] > followThreshold)
-			{
-				int npcId = -1;
-				for (int i = 0; i < 200; i++)
-				{
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy() && 
-						((Common.GlobalNPCs.DebuffNPC.Constructs.Contains(npc.type) && !lookingForExcavator) || (lookingForExcavator && npc.type == ModContent.NPCType<Excavator>()))
-                        && npc.Distance(Projectile.Center) > 64)
-					{
-						npcId = i;
-						break;
-					}
-				}
-				if (npcId == -1)
-				{
-					Projectile.Kill();
-				}
-				else
-				{
-					NPC npc = Main.npc[npcId];
-					Vector2 toNPC = npc.Center - Projectile.Center;
-					float speed = 3 + Projectile.ai[2];
-					Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * speed, 0.03f);
-					if (lookingForExcavator)
-						Projectile.ai[2] += 0.02f;
-				}
-			}
 			else
-				Projectile.velocity *= lookingForExcavator ? 0.975f : 0.95f;
+            {
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+                dust.velocity *= 0.1f;
+                dust.noGravity = true;
+                dust.color = Color.Lerp(new Color(0, 192, 255, 100), new Color(0, 90, 136, 100), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[0])));
+                dust.fadeIn = 0.1f;
+                dust.scale = 1.2f;
+                dust.alpha = Projectile.alpha;
+                if (Projectile.ai[0] > followThreshold)
+                {
+                    int npcId = -1;
+                    for (int i = 0; i < 200; i++)
+                    {
+                        NPC npc = Main.npc[i];
+                        if (npc.CanBeChasedBy() &&
+                            ((Common.GlobalNPCs.DebuffNPC.Constructs.Contains(npc.type) && !lookingForExcavator) || (lookingForExcavator && npc.type == ModContent.NPCType<Excavator>()))
+                            && npc.Distance(Projectile.Center) > 64)
+                        {
+                            npcId = i;
+                            break;
+                        }
+                    }
+                    if (npcId == -1)
+                    {
+                        Projectile.Kill();
+                    }
+                    else
+                    {
+                        NPC npc = Main.npc[npcId];
+                        Vector2 toNPC = npc.Center - Projectile.Center;
+                        float speed = 3 + Projectile.ai[2];
+                        Projectile.velocity = Vector2.Lerp(Projectile.velocity, toNPC.SafeNormalize(Vector2.Zero) * speed, 0.03f);
+                        if (lookingForExcavator)
+                            Projectile.ai[2] += 0.02f;
+                    }
+                }
+                else
+                    Projectile.velocity *= lookingForExcavator ? 0.975f : 0.95f;
+            }
 		}	
 	}
 }
