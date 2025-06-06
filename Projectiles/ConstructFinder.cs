@@ -40,16 +40,29 @@ namespace SOTS.Projectiles
             bool lookingForExcavator = Projectile.ai[1] <= -1;
             if (lookingForExcavator)
             {
-                for(int i = 0; i < 40; ++i)
+                float dustCount = 90;
+                int type = ModContent.DustType<CopyDust4>();
+                for (int i = 0; i < dustCount; ++i)
                 {
-                    Vector2 circular = new Vector2(1, 0).RotatedBy(MathHelper.TwoPi * i / 40f);
-                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
-                    dust.velocity = dust.velocity * 0.25f + circular * Main.rand.NextFloat(1, 4);
+                    float r = MathHelper.TwoPi * i / dustCount;
+                    Vector2 circular = new Vector2(Main.rand.NextFloat(11.5f, 12.5f) + MathF.Sin(r * 12), 0).RotatedBy(r);
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, type);
+                    dust.velocity = dust.velocity * 0.1f + circular;
                     dust.noGravity = true;
                     dust.color = ExcavatorOrb.Color;
                     dust.fadeIn = 0.1f;
-                    dust.scale = 1.35f;
+                    dust.scale *= 1.7f;
                     dust.alpha = Projectile.alpha;
+                    if(i % 2 == 0)
+                    {
+                        dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, type);
+                        dust.velocity = dust.velocity * 0.1f + circular * (1 - Main.rand.NextFloat(1) * Main.rand.NextFloat(1));
+                        dust.noGravity = true;
+                        dust.color = ExcavatorOrb.Color;
+                        dust.fadeIn = 0.1f;
+                        dust.scale *= 1.7f;
+                        dust.alpha = Projectile.alpha;
+                    }
                 }
                 return;
             }
@@ -71,7 +84,14 @@ namespace SOTS.Projectiles
 			int followThreshold = 20;
             if (lookingForExcavator)
             {
-				followThreshold = 120;
+                if(Projectile.extraUpdates < 5)
+                {
+                    Projectile.extraUpdates = 5;
+                    SOTSUtils.PlaySound(SoundID.Item121, Projectile.Center, 1.0f, -0.15f);
+                }
+                followThreshold = 390;
+                float percent = Projectile.ai[0] / followThreshold;
+                Projectile.velocity.Y = -0.1f + percent * percent * -0.95f;
 				if (Projectile.ai[0] >= followThreshold && Projectile.ai[1] == -1)
 				{
 					SOTSUtils.PlaySound(SoundID.Roar, Projectile.Center, 1.0f, -0.34f);
@@ -82,20 +102,25 @@ namespace SOTS.Projectiles
                 else
                 {
                     Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
-                    dust.velocity *= 0.1f;
+                    dust.velocity *= 0.1f + 0.2f * percent;
                     dust.noGravity = true;
                     dust.color = ExcavatorOrb.Color;
                     dust.fadeIn = 0.1f;
-                    dust.scale = 1.35f;
+                    dust.scale = 0.1f + 1.4f * percent;
                     dust.alpha = Projectile.alpha;
                     float r = MathHelper.ToRadians(Projectile.ai[0] * 2.5f);
-                    float radiusSize = 32 + Projectile.ai[0] * 0.25f;
+                    float radiusSize = 12 + Projectile.ai[0] * 0.25f;
                     for(int i = -1; i <= 1; i += 2)
                     {
                         Vector2 offset = new Vector2(i, 0).RotatedBy(r) * radiusSize;
                         offset.Y *= 0.5f;
-                        dust = PixelDust.Spawn(Projectile.Center + offset, 0, 0, Main.rand.NextVector2Circular(1, 1) * 0.2f, ExcavatorOrb.Color, 5);
-                        dust.scale = 1.0f;
+                        dust = PixelDust.Spawn(Projectile.Center + offset, 0, 0, Main.rand.NextVector2Circular(0.1f, 0.1f), ExcavatorOrb.Color, 8);
+                        dust.scale = 1.0f + percent * 0.5f;
+                        if(Main.rand.NextBool(8))
+                        {
+                            dust = PixelDust.Spawn(Projectile.Center, 0, 0, offset * 0.17f + Projectile.velocity * 2f, ExcavatorOrb.Color, 11);
+                            dust.scale = 0.9f + percent * 0.4f;
+                        }
                     }
                 }
             }

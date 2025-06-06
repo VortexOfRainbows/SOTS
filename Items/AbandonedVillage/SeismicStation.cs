@@ -80,7 +80,7 @@ namespace SOTS.Items.AbandonedVillage
 					return true;
 			if (NPC.AnyNPCs(ModContent.NPCType<Excavator>()))
 				return true;
-			Projectile.NewProjectile(player.GetSource_TileInteraction(i, j), new Vector2(left * 16 + 24, top * 16 + 8) + new Vector2(0, -32), new Vector2(0, -4), type, 0, 0, Main.myPlayer, 0, -1);
+			Projectile.NewProjectile(player.GetSource_TileInteraction(i, j), new Vector2(left * 16 + 24, top * 16 + 8) + new Vector2(0, -32), new Vector2(0, -1), type, 0, 0, Main.myPlayer, 0, -1);
             return true;
 		}  
 		public override void MouseOver(int i, int j)
