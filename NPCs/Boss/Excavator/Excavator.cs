@@ -197,6 +197,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     if (isBigArm)
                     {
                         hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrill").Value;
+                        handGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrillGlow").Value;
                     }
                     else
                     {
@@ -205,16 +206,18 @@ namespace SOTS.NPCs.Boss.Excavator
                         {
                             handVal = "SOTS/NPCs/Boss/Excavator/handSaw";
                             handSaw = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/saw").Value;
+                            handGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handSawGlow").Value;
                         }
                         else if (ArmType == 2)
                             handVal = "SOTS/NPCs/Boss/Excavator/handNoWeapon";
+                        else
+                            handGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handGlow").Value;
                         hand = ModContent.Request<Texture2D>(handVal).Value;
                         handOverheat = ModContent.Request<Texture2D>(handVal + "Overheat").Value;
-                        handGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handGlow").Value;
                     }
                 }
                 int armWidth = isBigArm ? 118 : 56;
-                float handWidth = isBigArm ? 42 : ArmType == 1 ? 26 : ArmType == 2 ? 34 : 38;
+                float handWidth = isBigArm ? 46 : ArmType == 1 ? 26 : ArmType == 2 ? 34 : 38;
                 float handHeight = isBigArm ? 120 : this.handHeight;
                 int bodyWidth = 126;
                 int bodyHeight = 104;
@@ -258,14 +261,14 @@ namespace SOTS.NPCs.Boss.Excavator
                 if(sin != 0)
                     targetHandPos = Vector2.Lerp(targetHandPos, forceArmTarget, forceArmTargetPercent * sin);
                 float A = isBigArm ? handHeight : handHeight; //size of hand
-                float B = isBigArm ? armWidth - 36 : armWidth - 20; //size of arm
+                float B = isBigArm ? armWidth - 35 : armWidth - 20; //size of arm
                 Vector2 end = targetHandPos;
                 Vector2 start = armPosition;
                 DoArmJoint(ref start, ref end, A, B, j, out float endArmRot, out float endHandRot);
                 Vector2 mid = start + new Vector2(B, 0).RotatedBy(endArmRot);
                 if (isBigArm)
                 {
-                    end -= new Vector2(0, 13 * j).RotatedBy(endArmRot);
+                    end -= new Vector2(0, 21 * j).RotatedBy(endArmRot);
                 }
                 else
                 {
@@ -332,7 +335,7 @@ namespace SOTS.NPCs.Boss.Excavator
                         spriteBatch.Draw(handSaw, end - screenPos + new Vector2(5, 0).RotatedBy(endHandRot), null, drawColor, rotation * j, sawOrigin, other.scale * scalePercent, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                     }
                     spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                    if (ArmType == 0 && !isBigArm)
+                    if (ArmType == 0 || isBigArm)
                         spriteBatch.Draw(handGlow, end - screenPos, null, Color.White, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                     if (!isBigArm)
                     {
@@ -347,36 +350,31 @@ namespace SOTS.NPCs.Boss.Excavator
                         }
                     }
                     spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                    if (isBigArm)
+                        spriteBatch.Draw(ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bigArmLeftGlow").Value, start - screenPos, null, Color.White,
+                            endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                     //Dust.NewDust(end, 0, 0, DustID.LifeDrain);
                 }
                 else
                 {
-                    if (dir == -2)
-                        dir = 3;
-                    else if (dir == -1)
-                        dir = 1;
-                    else if (dir == 1)
-                        dir = 0;
-                    else if (dir == 2)
-                        dir = 2;
                     handPos = end;
                     handNorm = new Vector2(-1, 0).RotatedBy(endHandRot);
                 }
 
                 //Visual representations of the IK happening
-                if (draw)
-                {
-                    drawColor *= 0.4f;
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, MathF.PI + endHandRot, new Vector2(0, 1), new Vector2(500, 1), SpriteEffects.None, 0);
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, mid - screenPos, null, Color.Yellow, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                    //spriteBatch.Draw(SOTSUtils.WhitePixel, forceArmTarget - screenPos, null, Color.Green, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                }
+                //if (draw)
+                //{
+                //    drawColor *= 0.4f;
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, MathF.PI + endHandRot, new Vector2(0, 1), new Vector2(500, 1), SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, mid - screenPos, null, Color.Yellow, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, forceArmTarget - screenPos, null, Color.Green, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                //}
 
                 //Visual location of the actual center of the arm
                 //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
@@ -898,7 +896,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     i % 2 == 0 ? ModContent.Request<Texture2D>($"{dir}tail").Value :
                     ModContent.Request<Texture2D>($"{dir}tail2").Value;
                 //bodyTop = ModContent.Request<Texture2D>($"{dir}tailTop").Value;
-                //bodyGlow = ModContent.Request<Texture2D>($"{dir}tailGlow").Value;
+                bodyGlow = ModContent.Request<Texture2D>(i % 2 == 0 ? $"{dir}tailGlow" : $"{dir}tail2Glow").Value;
                 scale *= MathF.Pow(0.94f, i - 2);
             }
             Vector2 bodyOrigin = bodyTop.Size() / 2;

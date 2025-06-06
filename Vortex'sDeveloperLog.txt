@@ -91,6 +91,7 @@ Daily Log:
 7. Excavator drill run attack and other changes
 8. Excavator tail changes and other animation fixes
 9. Excavator summon particles changes
+10. Fix some arm animation for Excavator and add Glowmask to remaining segments
 
 5/5/25 to 5/15/25
 1. WIP Excavator attack patterns
