@@ -81,7 +81,7 @@ N/A
 
 Daily Log:
 
-5/16/25 and 5/19/25 and 5/26/25 to 6/4/25
+5/16/25 and 5/19/25 and 5/26/25 to 6/5/25
 1. Refactor to excavator arm internals to allow different weapon wielding and more specialized control
 2. WIP Excavator attacks
 3. Added the B. Wand; works in multiplayer

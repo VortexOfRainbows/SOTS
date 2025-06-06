@@ -214,7 +214,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                 }
                 int armWidth = isBigArm ? 118 : 56;
-                float handWidth = isBigArm ? 38 : ArmType == 1 ? 26 : ArmType == 2 ? 34 : 38;
+                float handWidth = isBigArm ? 42 : ArmType == 1 ? 26 : ArmType == 2 ? 34 : 38;
                 float handHeight = isBigArm ? 120 : this.handHeight;
                 int bodyWidth = 126;
                 int bodyHeight = 104;
