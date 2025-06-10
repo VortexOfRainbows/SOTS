@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.NPCs.Gizmos;
 using SOTS.Projectiles.AbandonedVillage;
 using SOTS.WorldgenHelpers;
 using System;
@@ -379,9 +380,9 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             public void SwitchArm(int i)
             {
+                NextArmType = i;
                 if (ArmType != i)
                 {
-                    NextArmType = i;
                     if(ArmType != 1 || sawBladeTimer == 0)
                         ArmSwitchTimer++;
                     if (ArmSwitchTimer > 60)
@@ -552,6 +553,7 @@ namespace SOTS.NPCs.Boss.Excavator
             for(int i = 0; i < segments.Length; ++i)
                 writer.Write(segments[i]);
             writer.Write(AI3);
+            writer.Write(AI4);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -559,12 +561,14 @@ namespace SOTS.NPCs.Boss.Excavator
             for (int i = 0; i < segments.Length; ++i)
               segments[i] = reader.ReadInt32();
             AI3 = reader.ReadSingle();
+            AI4 = reader.ReadSingle();
         }
         public float AIPhase
         {
             get => NPC.ai[0];
             set => NPC.ai[0] = value;
         }
+        public float NextAIPhase = -1;
         public float MoveStyle = 0;
         public float WalkCounter
         {
@@ -582,6 +586,7 @@ namespace SOTS.NPCs.Boss.Excavator
             set => NPC.ai[3] = value;
         }
         public float AI3;
+        public float AI4;
         public static float TelegraphSize => 2400;
         public float TelegraphCounter = 0;
         public float TelegraphFadeOut = 0;
@@ -606,8 +611,8 @@ namespace SOTS.NPCs.Boss.Excavator
                 return rightTelegraph;
         }
         public Vector2 TelegraphLocation;
-        public bool NeedsToGoIntoPhase2 => !InPhase2 && NPC.life < NPC.lifeMax / 2f;
-        public bool InPhase2 = false;
+        public bool NeedsToGoIntoPhase2 => !InSecondPhase && NPC.life < NPC.lifeMax / 2f;
+        public bool InSecondPhase = false;
         public List<Vector2> neckSegments;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
@@ -666,7 +671,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public void DrawDashTelegraph(SpriteBatch spriteBatch, Vector2 screenPos)
         {
-            float fadeOutPercent = 1 - MathF.Min(TelegraphFadeOut / 50, 1);
+            float fadeOutPercent = 1 - MathF.Min(TelegraphFadeOut / 40f, 1);
             if (fadeOutPercent <= 0 || TelegraphCounter == 0)
                 return;
             float telegraphSize = TelegraphSize;
@@ -701,7 +706,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public void DashTelegraphDust()
         {
-            float fadeOutPercent = 1 - MathF.Min(TelegraphFadeOut / 50, 1);
+            float fadeOutPercent = 1 - MathF.Min(TelegraphFadeOut / 40f, 1);
             if (fadeOutPercent <= 0 || TelegraphCounter == 0)
                 return;
             float telegraphSize = TelegraphSize;
@@ -1174,6 +1179,21 @@ namespace SOTS.NPCs.Boss.Excavator
                     return true;
             return false;
         }
+        public void LaunchRocket(int dir, Vector2 targetPosition = default, bool sound = true, float precisionMult = 1.0f)
+        {
+            NPC body = Main.npc[segments[0]];
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                Vector2 missileSiloSpots = body.Center + new Vector2(-30 * dir, 23).RotatedBy(body.rotation);
+                Vector2 oppositeVelo = new Vector2(0, 0.5f).RotatedBy(body.rotation);
+                if(targetPosition == default)
+                    targetPosition = target.Center + Main.rand.NextVector2Circular(320, 320) * precisionMult + target.velocity * 15f;
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), missileSiloSpots, Main.rand.NextVector2CircularEdge(precisionMult, precisionMult) + oppositeVelo, ModContent.ProjectileType<ExcavatorRocket>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, targetPosition.X, targetPosition.Y);
+                //PixelDust.Spawn(body.Center + new Vector2(-30 * dir, 23).RotatedBy(body.rotation), 0, 0, Vector2.Zero, Color.White, 5).scale = 1;
+            }
+            if(sound)
+                SOTSUtils.PlaySound(SoundID.Item61, body.Center, 1.1f, 0.1f);
+        }
         public override bool PreAI()
         {
             DashTelegraphDust();
@@ -1199,28 +1219,32 @@ namespace SOTS.NPCs.Boss.Excavator
                             arm.DoArmIK(other, null, Main.screenPosition, arm.dir, false);
                 }
             }
-
-            if(AIPhase == EnergyBallPhase)
+            if (AIPhase == EnergyBallPhase)
             {
                 AI1++;
-                if(AI1 > 120)
+                if (AI2 == -1)
+                {
+                    recoil = -toPlayer.SNormalize() * 8;
+                    NPC.velocity *= 0.1f;
+                    AI2 = 0;
+                }
+                if (AI1 > 120)
                 {
                     MoveStyle = 2;
-                    if(AI1 >= 150)
+                    if (AI1 >= 150)
                     {
-                        if(AI1 == 150)
+                        if (AI1 == 150)
                         {
-                            if(Main.netMode != NetmodeID.MultiplayerClient)
+                            if (Main.netMode != NetmodeID.MultiplayerClient)
                                 Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Main.rand.NextVector2Circular(4, 4), ModContent.ProjectileType<ExcavatorOrb>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, NPC.whoAmI);
+                            if (InSecondPhase && AI3 < 1)
+                            {
+                                AI1 = -30;
+                                AI3 = 1;
+                            }
                         }
                     }
-                    if(AI2 == -1)
-                    {
-                        recoil = -toPlayer.SNormalize() * 8;
-                        NPC.velocity *= 0.1f;
-                        AI2 = 0;
-                    }
-                    if(AI1 > 450)
+                    if (AI1 > 450)
                     {
                         SwapPhase(LaserPhase);
                     }
@@ -1229,9 +1253,13 @@ namespace SOTS.NPCs.Boss.Excavator
             if(AIPhase == LaserPhase)
             {
                 MoveStyle = 2;
-                if (AI2 > 20)
+                int totalShots = 20;
+                if (AI2 >= totalShots)
                 {
-                    SwapPhase(RocketPhase);
+                    if(InSecondPhase)
+                        SwapPhase(SawPhase);
+                    else
+                        SwapPhase(RocketPhase);
                     SwitchArm(2);
                 }
                 else
@@ -1240,16 +1268,46 @@ namespace SOTS.NPCs.Boss.Excavator
                 {
                     AI1++;
                     int fireRate = Main.expertMode ? 14 : 16;
+                    bool nextShotIsBig = AI4 >= 3;
+                    if (nextShotIsBig)
+                    {
+                        fireRate = Main.expertMode ? 50 : 60;
+                    }
+                    else if (InSecondPhase)
+                    {
+                        fireRate -= 5;
+                        NPC.velocity *= 0.995f;
+                    }
                     if (AI1 >= 97)
                         TargetArm(target.Center);
-                    if (AI1 >= 90 + fireRate)
+                    if (AI1 >= 104)
                     {
                         AI1 -= fireRate;
-                        for (int i = 0; i < 2; ++i)
+                        if(!nextShotIsBig)
                         {
-                            if (Main.netMode != NetmodeID.MultiplayerClient)
-                                Projectile.NewProjectile(NPC.GetSource_FromThis(), arms[i].handPos, arms[i].handNorm * 3.5f + NPC.velocity, ModContent.ProjectileType<ExcavatorBolt>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
-                            SOTSUtils.PlaySound(SoundID.Item91, arms[i].handPos, 1.0f, -0.4f);
+                            float speed = 3.5f;
+                            if (InSecondPhase)
+                            {
+                                AI4++;
+                                speed = 6f;
+                            }
+                            for (int i = 0; i < 2; ++i)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), arms[i].handPos, arms[i].handNorm * speed + NPC.velocity, ModContent.ProjectileType<ExcavatorBolt>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer);
+                                SOTSUtils.PlaySound(SoundID.Item91, arms[i].handPos, 1.0f, -0.4f);
+                            }
+                        }
+                        else
+                        {
+                            AI4 = 0;
+                            for (int i = 0; i < 2; ++i)
+                            {
+                                if (Main.netMode != NetmodeID.MultiplayerClient)
+                                    Projectile.NewProjectile(NPC.GetSource_FromThis(), arms[i].handPos, arms[i].handNorm * 3f + NPC.velocity, ModContent.ProjectileType<ExcavatorBoltBig>(), (int)(NPC.GetBaseDamage() / 2 * 1.5f), 1, Main.myPlayer);
+                                SOTSUtils.PlaySound(SoundID.Item91, arms[i].handPos, 1.0f, -0.7f);
+                            }
+                            recoil -= toPlayer.SNormalize() * 8;
                         }
                         AI2++;
                     }
@@ -1263,36 +1321,46 @@ namespace SOTS.NPCs.Boss.Excavator
                     ++AI1;
                 int fireCooldown = Main.expertMode ? 11 : 13;
                 int totalRockets = Main.expertMode ? 30 : 24;
+                if(InSecondPhase)
+                {
+                    totalRockets = 3;
+                    fireCooldown = 20;
+                }
                 if (AI1 > 70)
                 {
                     int dir = (int)AI2 % 2 * 2 - 1;
-                    NPC body = Main.npc[segments[0]];
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (!InSecondPhase)
                     {
-                        Vector2 missileSiloSpots = body.Center + new Vector2(-30 * dir, 23).RotatedBy(body.rotation);
-                        Vector2 oppositeVelo = new Vector2(0, 0.5f).RotatedBy(body.rotation);
-                        Vector2 targetPosition = target.Center + Main.rand.NextVector2Circular(320, 320) + target.velocity * 15f;
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), missileSiloSpots, Main.rand.NextVector2CircularEdge(1, 1) + oppositeVelo, ModContent.ProjectileType<ExcavatorRocket>(), NPC.GetBaseDamage() / 2, 1, Main.myPlayer, targetPosition.X, targetPosition.Y);
-                        //PixelDust.Spawn(body.Center + new Vector2(-30 * dir, 23).RotatedBy(body.rotation), 0, 0, Vector2.Zero, Color.White, 5).scale = 1;
+                        LaunchRocket(dir);
                     }
-                    SOTSUtils.PlaySound(SoundID.Item61, body.Center, 1.1f, 0.1f);
+                    else
+                    {
+                        for(int i = 0; i < 5; ++i)
+                        {
+                            LaunchRocket(dir, precisionMult: 0.75f);
+                        }
+                    }
                     AI1 -= fireCooldown;
                     AI2++;
                 }
                 if(AI2 > totalRockets)
                 {
-                    SwapPhase(SawPhase);
+                    if(InSecondPhase)
+                        SwapPhase((int)NextAIPhase);
+                    else
+                        SwapPhase(SawPhase);
                 }
             }
             if(AIPhase == SawPhase)
             {
+                int total = InSecondPhase ? 6 : 8;
                 //Main.NewText(AI3);
-                if (AI3 > 8)
+                if (AI3 > total)
                 {
                     SwitchArm(2);
                     if (ArmsFinishedSwitching())
                     {
-                        SwapPhase(InPhase2 ? SecondPhaseTransition : EnergyBallPhase);
+                        SwapPhase(InSecondPhase ? SecondPhaseTransition : EnergyBallPhase);
                     }
                 }
                 else
@@ -1307,6 +1375,10 @@ namespace SOTS.NPCs.Boss.Excavator
                         for (int i = 0; i < 2; ++i)
                         {
                             arms[i].SawUpdate();
+                            if (arms[i].sawBladeTimer <= 30 && arms[i].sawBladeTimer > 0 && arms[i].sawBladeTimer % 10 == 0 && AI3 <= total && InSecondPhase)
+                            {
+                                LaunchRocket(i * 2 - 1, precisionMult: 0.4f);
+                            }
                         }
                     }
                 }
@@ -1349,12 +1421,13 @@ namespace SOTS.NPCs.Boss.Excavator
                     AI1 = 0;
                     SwapPhase(EnergyBallPhase);
                 }
-                if (AI1 > 130)
+                bool isDrill = AI3 % 2 == 0;
+                if (AI1 > 20)
                 {
-                    int dashTime = 320;
+                    int dashTime = 110;
                     if (AI1 > dashTime)
                     {
-                        if(AI1 > dashTime + 50)
+                        if (AI1 > dashTime + 50)
                             TelegraphFadeOut++;
                         Vector2 otherSide = AI2 == -1 ? leftTelegraph : rightTelegraph;
                         MoveStyle = -1;
@@ -1362,40 +1435,68 @@ namespace SOTS.NPCs.Boss.Excavator
                         NPC.velocity.Y += MathF.Sign(TelegraphLocation.Y - NPC.Center.Y) * 0.4f;
                         NPC.velocity += (otherSide - NPC.Center).SNormalize() * 0.7f;
                         NPC.velocity *= 0.925f;
-                        if(Vector2.Distance(otherSide, NPC.Center) < 120)
+                        if (Vector2.Distance(otherSide, NPC.Center) < 140)
                         {
-                            AI1 = 1200;
-                        }
-                        if(AI1 > dashTime + 30)
-                        { 
-                            if(AI1 % 15 == 0)
+                            AI1 = 0;
+                            if(AI3 >= 1)
                             {
-                                SOTSUtils.PlaySound(SoundID.Item23, NPC.Center, 2f, 0.5f, 0.05f);
+                                AI1 = 1200;
+                                return true;
                             }
-                            int dropRate = Main.expertMode ? 8 : 9;
-                            if(AI1 % dropRate == 0)
+                            AI3++;
+                        }
+                        if (AI1 > dashTime + 50)
+                        {
+                            if(isDrill)
                             {
-                                Vector2 spawnLocation = NPC.Center + new Vector2(0, -120);
-                                Point p = spawnLocation.ToTileCoordinates();
-                                CollapseBlock.Spawn(NPC.GetSource_FromThis(), p.X, p.Y, NPC.GetBaseDamage() / 2);
-                                SOTSUtils.PlaySound(SoundID.Tink, NPC.Center, 0.8f, -0.4f, 0.05f);
+                                if (AI1 % 15 == 0)
+                                {
+                                    SOTSUtils.PlaySound(SoundID.Item23, NPC.Center, 2f, 0.5f, 0.05f);
+                                }
+                                int dropRate = Main.expertMode ? 8 : 9;
+                                if (AI1 % dropRate == 0)
+                                {
+                                    Vector2 spawnLocation = NPC.Center + new Vector2(0, -120);
+                                    Point p = spawnLocation.ToTileCoordinates();
+                                    CollapseBlock.Spawn(NPC.GetSource_FromThis(), p.X, p.Y, NPC.GetBaseDamage() / 2);
+                                    SOTSUtils.PlaySound(SoundID.Tink, NPC.Center, 0.8f, -0.4f, 0.05f);
+                                }
+                            }
+                            else
+                            {
+                                int dropRate = Main.expertMode ? 5 : 6;
+                                if (AI1 % dropRate == 0)
+                                {
+                                    int dir = (int)AI4 % 2 * 2 - 1;
+                                    Vector2 target = NPC.Center;
+                                    Point p;
+                                    for (int i = 0; i < 40; ++i)
+                                    {
+                                        target += new Vector2(0, 16 * dir);
+                                        p = target.ToTileCoordinates();
+                                        if (SOTSWorldgenHelper.TrueTileSolid(p.X, p.Y, false))
+                                            break;
+                                    }
+                                    LaunchRocket(dir, target, dir == 1);
+                                    ++AI4;
+                                }
                             }
                         }
                     }
                     else
                     {
                         MoveStyle = 4;
-                        if (AI1 > 200)
-                        {
-                            Vector2 toFarthest = FarthestTelegraphEndLocation() - NPC.Center;
-                            AI2 = MathF.Sign(toFarthest.X);
-                        }
+                        Vector2 toFarthest = FarthestTelegraphEndLocation() - NPC.Center;
+                        AI2 = MathF.Sign(toFarthest.X);
                     }
                 }
                 else
                 {
                     MoveStyle = 2;
-                    if (TelegraphCounter < 100)
+                }
+                if (TelegraphCounter < 100)
+                {
+                    if(isDrill)
                     {
                         Point p = (target.Center + new Vector2(0, -32)).ToTileCoordinates();
                         for (int j = 0; j < 65; ++j)
@@ -1407,25 +1508,22 @@ namespace SOTS.NPCs.Boss.Excavator
                                 break;
                             }
                         }
-                        ++TelegraphCounter;
                     }
+                    else
+                    {
+                        TelegraphLocation = Vector2.Lerp(TelegraphLocation, target.Center, 0.3f);
+                    }
+                    ++TelegraphCounter;
                 }
                 NPC.velocity *= 0.95f;
             }
             else
             {
-                SwapPhase(6);
-            }
-            if(AIPhase == 6)
-            {
-                MoveStyle = -2;
-            }
+                TelegraphCounter = TelegraphFadeOut = 0;
+                TelegraphLocation = target.Center;
+            }    
             /*
-            one where excavator will dash across the screen with drills and cause debris to fall
             one where excavator will use the laser and saw at the same time
-            one where it will spawn earthen gizmos 
-            earthen gizmo attack would probably signify transition into the second phase
-            where the other two attacks would appear now
             and it would also have a desparation phase with an unstable "Gula" spirit which is an Evil+Earthen spirit that explodes violently
             */
             return false;
@@ -1494,13 +1592,36 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public void SwapPhase(int phase)
         {
-            AI1 = AI2 = AI3 = 0;
-            if(NeedsToGoIntoPhase2 || phase == SecondPhaseTransition)
+            AI1 = AI2 = AI3 = AI4 = 0;
+            if(NeedsToGoIntoPhase2)
             {
-                phase = SecondPhaseTransition;
-                InPhase2 = true;
+                if (!InSecondPhase && Main.netMode != NetmodeID.MultiplayerClient)
+                {
+                    for(int i = -2; i <= 2; ++i)
+                    {
+                        Vector2 spawn = target.Center + new Vector2(i * 800, 540);
+                        NPC.NewNPCDirect(NPC.GetSource_FromAI(), spawn, ModContent.NPCType<EarthenGizmo>());
+                    }
+                }
+                AIPhase = SecondPhaseTransition;
+                InSecondPhase = true;
             }
-            AIPhase = phase;
+            else if(InSecondPhase)
+            {
+                if (NextAIPhase != phase && AIPhase != SecondPhaseTransition)
+                {
+                    NextAIPhase = phase;
+                    AIPhase = RocketPhase;
+                }
+                else
+                {
+                    AIPhase = phase;
+                }
+            }
+            else
+            {
+                AIPhase = phase;
+            }
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {

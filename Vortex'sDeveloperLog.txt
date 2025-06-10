@@ -46,7 +46,7 @@ Update Objectives:
 12. Bridgeburner flight
 
 ---WIP List---
-Abandoned village generation
+N/A
 
 ---Code Refactoring Needed List---
 If any other issues come up with Gilded Blade Wings trail interfering with how other mods draw players, it might be worthwhile to rework the trails. To do this, the position of the trails would be simulated in an UPDATE function instead of inside the draw functions (so multiple calls to the draw function won't break the trails).
@@ -80,18 +80,20 @@ N/A
 
 Daily Log:
 
-5/16/25 and 5/19/25 and 5/26/25 to 6/6/25
+5/16/25 and 5/19/25 and 5/26/25 to 6/10/25
 1. Refactor to excavator arm internals to allow different weapon wielding and more specialized control
 2. WIP Excavator attacks
 3. Added the B. Wand; works in multiplayer
 4. Hardlight hook now costs 5 void
 5. Excavator arms have hitbox now
 6. Modify animation of Sanguine Foundry
-7. Excavator drill run attack and other changes
+7. Excavator drill run attack + missile run attack and other changes
 8. Excavator tail changes and other animation fixes
 9. Excavator summon particles changes
 10. Fix some arm animation for Excavator and add Glowmask to remaining segments
 11. Looks like its not possible to make anomaly crafting work for magic storage :(
+12. Enchanted boomerang can appear in traveling merchant for literally no reason
+13. Second phase excavator attacks!
 
 5/5/25 to 5/15/25
 1. WIP Excavator attack patterns

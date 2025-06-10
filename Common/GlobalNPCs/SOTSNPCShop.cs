@@ -15,33 +15,31 @@ namespace SOTS.Common.GlobalNPCs
         {
 			if (Main.rand.NextBool(5))
 			{
-				shop[nextSlot] = ModContent.ItemType<SafetySwitch>();
-				nextSlot++;
+				shop[nextSlot++] = ModContent.ItemType<SafetySwitch>();
 			}
 			if (Main.rand.NextBool(4))
 			{
-				shop[nextSlot] = ModContent.ItemType<CrushingCapacitor>();
-				nextSlot++;
+				shop[nextSlot++] = ModContent.ItemType<CrushingCapacitor>();
 			}
 			if (Main.hardMode && Main.rand.NextBool(4))
 			{
-				shop[nextSlot] = ModContent.ItemType<BoreBullet>();
-				nextSlot++;
+				shop[nextSlot++] = ModContent.ItemType<BoreBullet>();
 			}
 			if (Main.rand.NextBool(10) && NPC.downedPlantBoss)
 			{
-				shop[nextSlot] = ModContent.ItemType<Traingun>();
-				nextSlot++;
+				shop[nextSlot++] = ModContent.ItemType<Traingun>();
 			}
 			if (Main.rand.NextBool(10))
 			{
-				shop[nextSlot] = ModContent.ItemType<RecursiveBow>();
-				nextSlot++;
-			}
-			if (Main.rand.NextBool(500))
+				shop[nextSlot++] = ModContent.ItemType<RecursiveBow>();
+            }
+            if (Main.rand.NextBool(5))
+            {
+                shop[nextSlot++] = ItemID.EnchantedBoomerang;
+            }
+            if (Main.rand.NextBool(500))
 			{
-				shop[nextSlot] = ModContent.ItemType<SupremSticker>();
-				nextSlot++;
+				shop[nextSlot++] = ModContent.ItemType<SupremSticker>();
 			}
 		}
         public override void ModifyShop(NPCShop shop)

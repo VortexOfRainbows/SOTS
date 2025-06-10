@@ -8983,6 +8983,8 @@ Mods: {
 			AncientSteelArrow.DisplayName: Scrap Metal Arrow
 			AncientSteelBullet.DisplayName: Scrap Metal Bullet
 			ExcavatorSaw.DisplayName: Excavator Saw
+			ExcavatorBoltBig.DisplayName: Excavator Bolt Big
+			ExcavatorBoltSmall.DisplayName: Excavator Bolt Small
 		}
 
 		DamageClasses: {

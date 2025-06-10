@@ -30,7 +30,11 @@ namespace SOTS.Projectiles.AbandonedVillage
             }
         }
 		public Vector2 target => new Vector2(Projectile.ai[0], Projectile.ai[1]);
-		public override void SetDefaults()
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.DrawScreenCheckFluff[Type] = 960;
+        }
+        public override void SetDefaults()
         {
 			Projectile.width = 24;
 			Projectile.height = 24;

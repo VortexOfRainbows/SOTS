@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.NPCs.AbandonedVillage;
+using SOTS.NPCs.Boss.Excavator;
 using SOTS.NPCs.Gizmos;
 using System;
 using System.Collections.Generic;
@@ -90,7 +91,8 @@ namespace SOTS.Common.GlobalNPCs
                     || entity.type == ModContent.NPCType<BallOWorms>()
                     || entity.type == ModContent.NPCType<Fistfull>()
                     || entity.type == ModContent.NPCType<CoalCart>()
-                    || entity.type == ModContent.NPCType<SanguineFoundry>();
+                    || entity.type == ModContent.NPCType<SanguineFoundry>()
+                    || entity.type == ModContent.NPCType<Pupa>();
                 return validNPC;
             }
             return false;
@@ -110,7 +112,7 @@ namespace SOTS.Common.GlobalNPCs
             if(RunOnce)
             {
                 RunOnce = false;
-                if(Main.netMode != NetmodeID.MultiplayerClient)
+                if(Main.netMode != NetmodeID.MultiplayerClient && !NPC.AnyNPCs(ModContent.NPCType<Excavator>()))
                 {
                     bool underground = npc.Center.Y > Main.rockLayer * 16 - 240;
                     if (underground)
@@ -184,13 +186,15 @@ namespace SOTS.Common.GlobalNPCs
         }
         public override void OnKill(NPC npc)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient && Infected)
+            if (!Infected)
+                return;
+            if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 NPC npc2 = NPC.NewNPCDirect(npc.GetSource_Death(), (int)SeedPos.X, (int)SeedPos.Y, ModContent.NPCType<Famished>());
                 npc2.velocity += Main.rand.NextVector2Circular(5, 5) + myVelo.SNormalize() * Main.rand.NextFloat(3f, 9f) + new Vector2(0, -2);
                 npc2.netUpdate = true;
             }
-            if(Infected && OldPositions != null)
+            if(OldPositions != null)
             {
                 Vector2 previous = SeedPos;
                 for (int i = 0; i < OldPositions.Count; i++)

@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             if (target >= 0)
             {
                 NPC owner = Main.npc[target];
-                if(owner.ModNPC is Excavator exc)
+                if(owner.ModNPC is Excavator exc && owner.active)
                 {
                     Vector2 perceivedVelo = new Vector2(1, 0).RotatedBy(owner.rotation);
                     Projectile.velocity = Vector2.Zero;
@@ -139,6 +139,12 @@ namespace SOTS.Projectiles.AbandonedVillage
                         exc.AI2 = -1;
                         owner.netUpdate = true;
                     }
+                    //if (exc.InSecondPhase && Projectile.ai[0] == -1)
+                    //{
+                        //Player p = Main.player[owner.target];
+                        //Vector2 toPlayer = p.Center - Projectile.Center;
+                        //Projectile.velocity += toPlayer.SNormalize() * 0.5f;
+                    //}
                     activated = false;
                 }
                 else
@@ -148,7 +154,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 }
             }
             Projectile.rotation += Projectile.velocity.X * 0.01f;
-            Projectile.velocity *= 0.98f;
+            Projectile.velocity *= 0.9825f;
             if (Timer <= 150)
             {
                 float scaleMult = Timer / 150f;
@@ -367,7 +373,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 {
                     break;
                 }
-                if(b == 40 && !HasInit && splitPower < 2)
+                if(b == 44 && !HasInit && splitPower < 2)
                 {
                     if(Main.netMode != NetmodeID.MultiplayerClient)
                     {
