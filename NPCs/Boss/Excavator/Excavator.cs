@@ -1,5 +1,3 @@
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
@@ -8,7 +6,6 @@ using SOTS.WorldgenHelpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Policy;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
