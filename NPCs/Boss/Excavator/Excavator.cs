@@ -149,6 +149,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.alpha = 255;
         }
     }
+    [AutoloadBossHead]
     public class Excavator : ModNPC
     {
         public static readonly int EnergyBallPhase = 1;
@@ -156,6 +157,7 @@ namespace SOTS.NPCs.Boss.Excavator
         public static readonly int SawPhase = 3;
         public static readonly int RocketPhase = 4;
         public static readonly int SecondPhaseTransition = 5;
+        public static readonly int DrillDashPhase = 6;
         public class ExcavatorArm(Excavator owner, int dir, bool bigArm = false)
         {
             public float SawBladeRotation;
@@ -216,7 +218,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
                 int armWidth = isBigArm ? 118 : 56;
                 float handWidth = isBigArm ? 46 : ArmType == 1 ? 26 : ArmType == 2 ? 34 : 38;
-                float handHeight = isBigArm ? 120 : this.handHeight;
+                float handHeight = isBigArm ? 132 : this.handHeight;
                 int bodyWidth = 126;
                 int bodyHeight = 104;
                 Vector2 armOrigin = isBigArm ? new Vector2(95, 47) : new Vector2(50, 14);
@@ -893,8 +895,8 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             else
             {
-                bodyTop = //i == segments.Length - 1 ? 
-                //    ModContent.Request<Texture2D>($"{dir}tailDrill").Value :
+                bodyTop = i == segments.Length - 1 ? 
+                    ModContent.Request<Texture2D>($"{dir}tailDrill").Value :
                     i % 2 == 0 ? ModContent.Request<Texture2D>($"{dir}tail").Value :
                     ModContent.Request<Texture2D>($"{dir}tail2").Value;
                 //bodyTop = ModContent.Request<Texture2D>($"{dir}tailTop").Value;
@@ -902,14 +904,18 @@ namespace SOTS.NPCs.Boss.Excavator
                 scale *= MathF.Pow(0.94f, i - 2);
             }
             Vector2 bodyOrigin = bodyTop.Size() / 2;
+            if(i == segments.Length - 1)
+            {
+                bodyOrigin = new Vector2(bodyTop.Width / 2, bodyTop.Height - 87);
+            }
             if(top)
             {
                 if (other.ModNPC is ExcavatorBody)
                 {
                     if(bodyTop != null)
-                        spriteBatch.Draw(bodyTop, other.Center - screenPos, null, drawColor, other.rotation, bodyTop.Size() / 2, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                        spriteBatch.Draw(bodyTop, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
                     if(bodyGlow != null)
-                        spriteBatch.Draw(bodyGlow, other.Center - screenPos, null, Color.White, other.rotation, bodyTop.Size() / 2, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                        spriteBatch.Draw(bodyGlow, other.Center - screenPos, null, Color.White, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
                 }
             }
             else
@@ -1067,7 +1073,10 @@ namespace SOTS.NPCs.Boss.Excavator
                     int WormLength = segments.Length;
                     for (int i = 0; i < WormLength; i++)
                     {
-                        int type = i == 0 ? ModContent.NPCType<ExcavatorBody>() : i == 1 ? ModContent.NPCType<ExcavatorBody2>() : i == segments.Length - 1 ? ModContent.NPCType<ExcavatorDrillTail>() : ModContent.NPCType<ExcavatorTail>();
+                        int type = i == 0 ? ModContent.NPCType<ExcavatorBody>() : 
+                            i == 1 ? ModContent.NPCType<ExcavatorBody2>() : 
+                            i == segments.Length - 1 ? ModContent.NPCType<ExcavatorDrillTail>() 
+                            : ModContent.NPCType<ExcavatorTail>();
                         latestNPC = NPC.NewNPC(NPC.GetSource_Misc("SOTS:WormEnemy"), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI, i * 180f, latestNPC);
                         Main.npc[latestNPC].realLife = NPC.whoAmI;
                         Main.npc[latestNPC].ai[3] = NPC.whoAmI;
@@ -1207,7 +1216,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 return false;
             WormSetup();
             IdleMoveStyle();
-
+            AIPhase = DrillDashPhase;
             if (segments.Length > 0)
             {
                 int segment = segments[0];
@@ -1218,6 +1227,12 @@ namespace SOTS.NPCs.Boss.Excavator
                         foreach (ExcavatorArm arm in this.arms)
                             arm.DoArmIK(other, null, Main.screenPosition, arm.dir, false);
                 }
+            }
+            if(AIPhase == DrillDashPhase)
+            {
+                MoveStyle = 3;
+                TargetArm(NPC.Center, 2);
+                TargetArm(NPC.Center, 3);
             }
             if (AIPhase == EnergyBallPhase)
             {
@@ -1651,6 +1666,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override void OnKill()
         {
+            SOTSWorld.downedExcavator = true;
             /*if(Main.netMode != NetmodeID.MultiplayerClient)
             {
                 int type = ModContent.NPCType<EarthenSpirit>();

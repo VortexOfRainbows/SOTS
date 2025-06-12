@@ -6869,7 +6869,7 @@ Mods: {
 
 			SeismicStation: {
 				DisplayName: Seismic Station
-				Tooltip: "'You feel activating this may track some unwanted attention...'"
+				Tooltip: "'You feel activating this may attract some unwanted attention...'"
 			}
 
 			KingBlade: {
@@ -7916,7 +7916,17 @@ Mods: {
 			TardigradeGreen.DisplayName: Tardigrade
 			TardigradePink.DisplayName: Tardigrade
 			Bridgeburner.DisplayName: Bridgeburner
-			Excavator.DisplayName: The Excavator
+
+			Excavator: {
+				DisplayName: The Excavator
+
+				BossChecklistIntegration: {
+					EntryName: The Excavator
+					SpawnInfo: Awaken by activating the [i:SOTS/SeismicStation] in the Abandoned Village Mines
+					DespawnMessage: The Excavator is no longer after you
+				}
+			}
+
 			ExcavatorBody.DisplayName: The Excavator
 			SubspaceWorm.DisplayName: Subspace Worm
 			SanguineFoundry.DisplayName: Sanguine Foundry

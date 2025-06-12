@@ -23,6 +23,8 @@ using SOTS.NPCs.Boss.Lux;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
 using SOTS.NPCs.Boss.Curse;
 using SOTS.Items.Celestial;
+using SOTS.NPCs.Boss.Excavator;
+using SOTS.Items.AbandonedVillage;
 
 namespace SOTS
 {
@@ -57,7 +59,8 @@ namespace SOTS
             {nameof(TheAdvisorHead), 6.9f},
             {nameof(NewPolaris), 11.01f},
             {nameof(Lux), 16.5f},
-            {nameof(SubspaceSerpentHead), 17.9f}
+            {nameof(SubspaceSerpentHead), 17.9f},
+            {nameof(Excavator), 6.8f}
         };
 
         private void BossChecklistCompatibility()
@@ -159,6 +162,27 @@ namespace SOTS
                         Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
                         sb.Draw(texture, centered, color);
                     }
+                });
+
+            Add("Boss",
+                nameof(Excavator),
+                () => SOTSWorld.downedExcavator,
+                [ModContent.NPCType<Excavator>()],
+                new Dictionary<string, object>()
+                {
+                    ["displayName"] = Language.GetText("Mods.SOTS.NPCs.Excavator.DisplayName"),
+                    ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.Excavator.BossChecklistIntegration.SpawnInfo"),
+                    ["spawnItems"] = ModContent.ItemType<SeismicStation>(),
+                    //["collectibles"] = new List<int>() { ModContent.ItemType<AdvisorMusicBox>(), ModContent.ItemType<AdvisorTrophy>() },
+                    ["availability"] = (Func<bool>)(() => true),
+                    //["overrideHeadTextures"] = ,
+                    ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Excavator.BossChecklistIntegration.DespawnMessage"),
+                    //["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
+                    //{
+                    //    Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/ExcavatorPortrait").Value;
+                    //    Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
+                    //    sb.Draw(texture, centered, color);
+                    //}
                 });
 
             Add("Boss",

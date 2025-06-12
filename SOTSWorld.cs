@@ -258,8 +258,9 @@ namespace SOTS
         public static bool downedGlowmoth = false;
 		public static bool downedPinky = false;
 		public static bool downedCurse = false;
+        public static bool downedExcavator = false;
 
-		public static bool downedAmalgamation = false;
+        public static bool downedAmalgamation = false;
 		public static bool downedLux = false;
 		public static bool downedSubspace = false;
 		public static bool downedAdvisor = false;
@@ -289,8 +290,9 @@ namespace SOTS
 			downedAmalgamation = false;
 			downedLux = false;
 			downedSubspace = false;
+			downedExcavator = false;
 
-			RubyKeySlotted = false;
+            RubyKeySlotted = false;
 			SapphireKeySlotted = false;
 			EmeraldKeySlotted = false;
 			TopazKeySlotted = false;
@@ -322,8 +324,9 @@ namespace SOTS
 			tag["DownedAmalgamation"] = downedAmalgamation;
 			tag["DownedLux"] = downedLux;
 			tag["DownedSubspace"] = downedSubspace;
+            tag["DownedExcavator"] = downedExcavator;
 
-			tag["RubyKey"] = RubyKeySlotted;
+            tag["RubyKey"] = RubyKeySlotted;
 			tag["SapphireKey"] = SapphireKeySlotted;
 			tag["EmeraldKey"] = EmeraldKeySlotted;
 			tag["TopazKey"] = TopazKeySlotted;
@@ -347,8 +350,9 @@ namespace SOTS
 			downedAmalgamation = tag.GetBool("DownedAmalgamation");
 			downedLux = tag.GetBool("DownedLux");
 			downedSubspace = tag.GetBool("DownedSubspace");
+            downedExcavator = tag.GetBool("DownedExcavator");
 
-			RubyKeySlotted = tag.GetBool("RubyKey");
+            RubyKeySlotted = tag.GetBool("RubyKey");
 			SapphireKeySlotted = tag.GetBool("SapphireKey");
 			EmeraldKeySlotted = tag.GetBool("EmeraldKey");
 			TopazKeySlotted = tag.GetBool("TopazKey");
@@ -375,8 +379,9 @@ namespace SOTS
 			flags[4] = downedLux;
 			flags[5] = downedSubspace;
 			flags[6] = downedGlowmoth;
+            flags[7] = downedExcavator;
 
-			BitsByte gemFlags = new BitsByte();
+            BitsByte gemFlags = new BitsByte();
 			gemFlags[0] = RubyKeySlotted;
 			gemFlags[1] = SapphireKeySlotted;
 			gemFlags[2] = EmeraldKeySlotted;
@@ -403,8 +408,9 @@ namespace SOTS
 			downedLux = flags[4];
 			downedSubspace = flags[5];
 			downedGlowmoth = flags[6];
+            downedExcavator = flags[7];
 
-			BitsByte gemFlags = reader.ReadByte();
+            BitsByte gemFlags = reader.ReadByte();
 			RubyKeySlotted = gemFlags[0];
 			SapphireKeySlotted = gemFlags[1];
 			EmeraldKeySlotted = gemFlags[2];
