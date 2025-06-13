@@ -261,7 +261,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 if(sin != 0)
                     targetHandPos = Vector2.Lerp(targetHandPos, forceArmTarget, forceArmTargetPercent * sin);
                 float A = isBigArm ? handHeight : handHeight; //size of hand
-                float B = isBigArm ? armWidth - 35 : armWidth - 20; //size of arm
+                float B = isBigArm ? armWidth - 34 : armWidth - 20; //size of arm
                 Vector2 end = targetHandPos;
                 Vector2 start = armPosition;
                 DoArmJoint(ref start, ref end, A, B, j, out float endArmRot, out float endHandRot);
@@ -743,7 +743,7 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector3 glow = new Vector3(1f, .55f, .05f);
             Lighting.AddLight(NPC.Center, glow * 0.3f);
             float neckHeight = 26;
-            while (neckSegments.Count < 7)
+            while (neckSegments.Count < 8)
             {
                 neckSegments.Add(NPC.Center);
             }
@@ -900,13 +900,13 @@ namespace SOTS.NPCs.Boss.Excavator
                     i % 2 == 0 ? ModContent.Request<Texture2D>($"{dir}tail").Value :
                     ModContent.Request<Texture2D>($"{dir}tail2").Value;
                 //bodyTop = ModContent.Request<Texture2D>($"{dir}tailTop").Value;
-                bodyGlow = ModContent.Request<Texture2D>(i % 2 == 0 ? $"{dir}tailGlow" : $"{dir}tail2Glow").Value;
+                bodyGlow = i == segments.Length - 1 ? ModContent.Request<Texture2D>($"{dir}tailDrillGlow").Value : ModContent.Request<Texture2D>(i % 2 == 0 ? $"{dir}tailGlow" : $"{dir}tail2Glow").Value;
                 scale *= MathF.Pow(0.94f, i - 2);
             }
             Vector2 bodyOrigin = bodyTop.Size() / 2;
             if(i == segments.Length - 1)
             {
-                bodyOrigin = new Vector2(bodyTop.Width / 2, bodyTop.Height - 87);
+                bodyOrigin = new Vector2(bodyTop.Width / 2, bodyTop.Height / 2 - 18);
             }
             if(top)
             {
@@ -1037,7 +1037,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.75f); 
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
-        private int[] segments = [-1, -1, -1, -1, -1, -1];
+        private int[] segments = [-1, -1, -1, -1, -1, -1, -1];
         private int DespawnCounter = 0;
         public Vector2 recoil = Vector2.Zero;
         private Player target => Main.player[NPC.target];
