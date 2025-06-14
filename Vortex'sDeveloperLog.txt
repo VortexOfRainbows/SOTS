@@ -95,6 +95,7 @@ Daily Log:
 12. Enchanted boomerang can appear in traveling merchant for literally no reason
 13. Second phase excavator attacks!
 14. Excavator drill tail and WIP Boss checklist compat
+15. Drill arm targeting animations
 
 5/5/25 to 5/15/25
 1. WIP Excavator attack patterns

@@ -223,7 +223,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 int bodyHeight = 104;
                 Vector2 armOrigin = isBigArm ? new Vector2(95, 47) : new Vector2(50, 14);
                 Vector2 revArmOrigin = new(armWidth - armOrigin.X, armOrigin.Y);
-                Vector2 handOrigin = new(handWidth / 2, handHeight);
+                Vector2 handOrigin = new(handWidth / 2, handHeight + (isBigArm ? 7 : 0));
                 float armRotation = other.rotation;
                 Vector2 armPosition = isBigArm ? new Vector2((-bodyWidth / 2 + 13) * j, bodyHeight / 2 - 31) : new Vector2((-bodyWidth / 2 + 4) * j, -bodyHeight / 2 + 16);
                 armPosition = armPosition.RotatedBy(armRotation) + other.Center;
@@ -239,15 +239,14 @@ namespace SOTS.NPCs.Boss.Excavator
                 Vector2 circular = new Vector2(isBigArm ? 8 : 20, 0).RotatedBy(MathHelper.ToRadians(r));
                 circular.X *= 0.25f;
                 circular = circular.RotatedBy(armRotation);
-                if (!isBigArm)
-                    circular *= 1 - armTargetPercent * 0.8f;
+                circular *= 1 - armTargetPercent * 0.8f;
                 float sin = 0;
-                if (!isBigArm && armTargetPercent > 0)
+                if (armTargetPercent > 0)
                 {
-                    float percent = ArmType == 1 ? MathF.Sqrt(MathF.Abs(MathF.Sin(sawBladePercent * MathF.PI))) : 1;
-                    float bonusMax = ArmType == 1 ? 52 * percent : 24;
-                    float bonusRate = ArmType == 1 ? 18 : 24;
-                    float bonusMin = ArmType == 1 ? 12 : 0;
+                    float percent = isBigArm ? 1 : ArmType == 1 ? MathF.Sqrt(MathF.Abs(MathF.Sin(sawBladePercent * MathF.PI))) : 1;
+                    float bonusMax = isBigArm ? 92 : ArmType == 1 ? 52 * percent : 24;
+                    float bonusRate = isBigArm ? 4 : ArmType == 1 ? 18 : 24;
+                    float bonusMin = isBigArm ? 32 : ArmType == 1 ? 12 : 0;
                     Vector2 toArm = Vector2.Lerp(armTarget, forceArmTarget, forceArmTargetPercent) - armPosition;
                     float angle = MathHelper.WrapAngle(toArm.ToRotation() - armRotation);
                     bool targetBehindMe = angle > 0;
@@ -258,7 +257,8 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                 }
                 targetHandPos += circular + other.Center;
-                if(sin != 0)
+                #region arm targetting rotation
+                if (sin != 0)
                     targetHandPos = Vector2.Lerp(targetHandPos, forceArmTarget, forceArmTargetPercent * sin);
                 float A = isBigArm ? handHeight : handHeight; //size of hand
                 float B = isBigArm ? armWidth - 34 : armWidth - 20; //size of arm
@@ -266,57 +266,40 @@ namespace SOTS.NPCs.Boss.Excavator
                 Vector2 start = armPosition;
                 DoArmJoint(ref start, ref end, A, B, j, out float endArmRot, out float endHandRot);
                 Vector2 mid = start + new Vector2(B, 0).RotatedBy(endArmRot);
-                if (isBigArm)
+                Vector2 midToTarget = -armTarget + mid;
+                float toPR = MathHelper.WrapAngle(midToTarget.ToRotation() - endArmRot);
+                if (j == -1)
                 {
-                    end -= new Vector2(0, 21 * j).RotatedBy(endArmRot);
+                    if (toPR < 0 && toPR < -MathHelper.PiOver2)
+                        toPR += MathHelper.TwoPi;
+                    toPR = MathHelper.Clamp(toPR, MathHelper.ToRadians(30), MathF.PI);
                 }
                 else
                 {
-                    int num = dir == -1 ? 1 : 0;
-                    end += new Vector2(1, 0).RotatedBy(endArmRot);
-
-                    Vector2 midToTarget = -armTarget + mid;
-                    float toPR = MathHelper.WrapAngle(midToTarget.ToRotation() - endArmRot);
-                    if (j == -1)
-                    {
-                        if (toPR < 0 && toPR < -MathHelper.PiOver2)
-                            toPR += MathHelper.TwoPi;
-                        toPR = MathHelper.Clamp(toPR, MathHelper.ToRadians(30), MathF.PI);
-                    }
-                    else
-                    {
-                        if (toPR > 0 && toPR > MathHelper.PiOver2)
-                            toPR -= MathHelper.TwoPi;
-                        toPR = MathHelper.Clamp(toPR, -MathF.PI, -MathHelper.ToRadians(30));
-                    }
-                    toPR += endArmRot;
-                    float rot = -endHandRot + toPR;
-                    if (!draw)
-                    {
-                        ArmAngleSpecial = SOTSUtils.AngularLerp(ArmAngleSpecial, rot, 0.12f * armTargetPercent);
-                        ArmAngleSpecial = SOTSUtils.AngularLerp(ArmAngleSpecial, 0, 0.12f * (1 - armTargetPercent));
-                    }
-                    end = end.RotatedBy(ArmAngleSpecial, mid);
-                    endHandRot += ArmAngleSpecial;
-
-
-                    //Main.NewText(MathHelper.WrapAngle(toPR - endArmRot));
+                    if (toPR > 0 && toPR > MathHelper.PiOver2)
+                        toPR -= MathHelper.TwoPi;
+                    toPR = MathHelper.Clamp(toPR, -MathF.PI, -MathHelper.ToRadians(30));
                 }
+                toPR += endArmRot;
+                float rot = -endHandRot + toPR;
+                if (!draw)
+                {
+                    ArmAngleSpecial = SOTSUtils.AngularLerp(ArmAngleSpecial, rot, 0.12f * armTargetPercent);
+                    ArmAngleSpecial = SOTSUtils.AngularLerp(ArmAngleSpecial, 0, 0.12f * (1 - armTargetPercent));
+                }
+                end = end.RotatedBy(ArmAngleSpecial, mid);
+                endHandRot += ArmAngleSpecial;
+                #endregion
 
-                //if (isBigArm)
-                //{
-                //Vector2 mid = startToMid.SNormalize() * 84 + start;
-                //mid -= new Vector2(0, 14 * j).RotatedBy(endArmRot);
-                //int bigDrillWidth = 38;
-                //Vector2 drillOrigin = new(42, 72);
-                //Vector2 revDrillOrigin = new(bigDrillWidth - drillOrigin.X, drillOrigin.Y);
-                //float deg = -j * ((j == 1 ? 180 : 0) + -70);
-                //if(draw)
-                //{
-                //Texture2D bigDrill = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/bigDrill").Value;
-                //spriteBatch.Draw(bigDrill, mid - screenPos, null, drawColor, endHandRot + MathHelper.ToRadians(deg), j == 1 ? drillOrigin : revDrillOrigin, other.scale, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                //}
-                //}
+
+                if (isBigArm)
+                {
+                    end -= new Vector2(2, 14 * j).RotatedBy(endArmRot);
+                }
+                else
+                {
+                    end += new Vector2(1, 0).RotatedBy(endArmRot);
+                }
 
                 if (draw)
                 {
@@ -368,8 +351,8 @@ namespace SOTS.NPCs.Boss.Excavator
                 //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
                 //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, MathF.PI + endHandRot, new Vector2(0, 1), new Vector2(500, 1), SpriteEffects.None, 0);
                 //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 3, SpriteEffects.None, 0);
+                //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 3, SpriteEffects.None, 0);
                 //    spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
                 //    spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
                 //    spriteBatch.Draw(SOTSUtils.WhitePixel, mid - screenPos, null, Color.Yellow, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
@@ -1230,9 +1213,9 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             if(AIPhase == DrillDashPhase)
             {
-                MoveStyle = 3;
-                TargetArm(NPC.Center, 2);
-                TargetArm(NPC.Center, 3);
+                MoveStyle = true ? -2 : 3;
+                TargetArm(target.Center, 2);
+                TargetArm(target.Center, 3);
             }
             if (AIPhase == EnergyBallPhase)
             {
