@@ -20,7 +20,7 @@ namespace SOTS.Items.Tools
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 15;
+            Item.damage = 18;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 44;   
             Item.height = 44;   
@@ -28,10 +28,10 @@ namespace SOTS.Items.Tools
 			Item.useTurn = true;
             Item.useTime = 15;
             Item.useAnimation = 30;
-			Item.pick = 59;
+			Item.pick = 100;
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(0, 2, 0, 0);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item1;
 			Item.tileBoost = 3;
 			Item.autoReuse = true;

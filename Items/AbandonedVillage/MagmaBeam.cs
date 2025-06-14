@@ -28,7 +28,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 12;
+            Item.damage = 16;
             Item.DamageType = DamageClass.Magic;
             Item.width = 44;
             Item.height = 32;
@@ -38,7 +38,7 @@ namespace SOTS.Items.AbandonedVillage
             Item.noMelee = true;
 			Item.knockBack = 0.05f;
             Item.value = Item.sellPrice(0, 2, 0, 0);
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Orange;
             Item.UseSound = null;
             Item.autoReuse = false;
             Item.shoot = ModContent.ProjectileType<Projectiles.AbandonedVillage.MagmaBeam>(); 

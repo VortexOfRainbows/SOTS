@@ -18,15 +18,15 @@ namespace SOTS.Items.Tools
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 20;
+            Item.damage = 24;
             Item.DamageType = DamageClass.Melee;
 			Item.width = 56;   
             Item.height = 58;   
 			Item.useTurn = true;
 			Item.useTime = 6;
 			Item.useAnimation = 24;
-			Item.hammer = 55;
-			Item.axe = 16;
+			Item.hammer = 60;
+			Item.axe = 20;
 			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(0, 2, 0, 0);
 			Item.rare = ItemRarityID.Green;

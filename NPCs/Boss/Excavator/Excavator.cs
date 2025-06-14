@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil.Cil;
 using SOTS.Dusts;
 using SOTS.NPCs.Gizmos;
 using SOTS.Projectiles.AbandonedVillage;
 using SOTS.WorldgenHelpers;
+using SteelSeries.GameSense;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -134,8 +136,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.width = 40;
             NPC.height = 40;
             NPC.damage = 12;
-            NPC.defense = 24;
-            NPC.dontTakeDamage = true;
+            NPC.defense = 32;
             NPC.alpha = 255;
         }
     }
@@ -145,7 +146,6 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             base.SetDefaults();
             NPC.damage = 40;
-            NPC.dontTakeDamage = false;
             NPC.alpha = 255;
         }
     }
@@ -542,6 +542,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 writer.Write(segments[i]);
             writer.Write(AI3);
             writer.Write(AI4);
+            writer.Write(InSecondPhase);
         }
         public override void ReceiveExtraAI(BinaryReader reader)
         {
@@ -550,6 +551,7 @@ namespace SOTS.NPCs.Boss.Excavator
               segments[i] = reader.ReadInt32();
             AI3 = reader.ReadSingle();
             AI4 = reader.ReadSingle();
+            InSecondPhase = reader.ReadBoolean();
         }
         public float AIPhase
         {
@@ -672,8 +674,8 @@ namespace SOTS.NPCs.Boss.Excavator
             int start = (int)(24 * percent2);
             int end = (int)(start + 24 * percent2);
             float between = end - start;
-            float minColor = 0.14f;
-            float maxColor = 1 - minColor;
+            float minColor = 0.1f;
+            float maxColor = 0.9f - minColor;
             Vector2 position = Vector2.Lerp(new Vector2(target.Center.X, NPC.Center.Y), TelegraphLocation, percent2 * percent2);
             for(int i = -1; i <= 1; i += 2)
             {
@@ -795,8 +797,6 @@ namespace SOTS.NPCs.Boss.Excavator
                     NPC other = Main.npc[segment];
                     if (other.ModNPC is ExcavatorTail)
                     {
-                        if(j == segments.Length - 3)
-                            other.dontTakeDamage = false;
                         UpdateChildPos(other, 1 + j);
                     }
                     else if (other.ModNPC is ExcavatorBody2)
@@ -1069,7 +1069,8 @@ namespace SOTS.NPCs.Boss.Excavator
                         Main.npc[latestNPC].ai[2] = i + 1;
                         segments[i] = latestNPC;
                     }
-                    AIPhase = 1;
+                    SwapPhase(DrillDashPhase);
+                    AI1 = -100;
                 }
                 NPC.netUpdate = true;
             }
@@ -1202,7 +1203,6 @@ namespace SOTS.NPCs.Boss.Excavator
                 return false;
             WormSetup();
             IdleMoveStyle();
-            AIPhase = DrillDashPhase;
             if (segments.Length > 0)
             {
                 int segment = segments[0];
@@ -1216,11 +1216,18 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             if(AIPhase == DrillDashPhase)
             {
-                MoveStyle = true ? - 2 : 3;
+                MoveStyle = 3;
+                if (InSecondPhase && (AI1 < 60 || AI1 > 160))
+                    AI1++;
                 AI1++;
                 if(AI1 >= 200)
                 {
+                    AI2++;
                     AI1 = 0;
+                    if(AI2 >= 4)
+                    {
+                        SwapPhase(EnergyBallPhase);
+                    }
                 }
                 if(AI1 >= 0)
                 {
@@ -1239,6 +1246,10 @@ namespace SOTS.NPCs.Boss.Excavator
                             dPercent = 1;
                         dPercent = MathF.Sin(dPercent * MathF.PI);
                     }
+                    if(AI1 == 36)
+                    {
+                        SOTSUtils.PlaySound(SoundID.Item15, NPC.Center, 1.6f, -0.3f);
+                    }
                     for (int i = 2; i <= 3; ++i)
                     {
                         int dir = i == 2 ? -1 : 1;
@@ -1251,6 +1262,52 @@ namespace SOTS.NPCs.Boss.Excavator
                             windBackPosition = Vector2.Lerp(windBackPosition, inFront, dPercent);
                         }
                         TargetArm(windBackPosition, i);
+                        if(AI1 >= 100 && AI1 < 140)
+                        {
+                            Vector2 dustSpawn = arms[i].handPos;
+                            for (float k = 0; k < 1; k += 0.25f)
+                            {
+                                float percent2 = 0.1f + 1 - (AI1 + k - 100) / 40f;
+                                float iPer2 = 1.1f - percent2;
+                                for (int j = 0; j < 3; j++)
+                                {
+                                    Vector2 circular = new Vector2(dir, 0).RotatedBy(MathHelper.ToRadians((AI1 + k) * 5 + j * 120));
+                                    Vector2 velo = NPC.velocity + circular * Main.rand.NextFloat(3, 3.5f) + Main.rand.NextVector2Circular(iPer2, iPer2);
+                                    PixelDust.Spawn(dustSpawn + velo * k, 0, 0, velo * percent2, ExcavatorOrb.Color, 7).scale = 1;
+                                }
+                            }
+                            if(AI1 % 5 == 0)
+                            {
+                                Point p = dustSpawn.ToTileCoordinates();
+                                if (SOTSWorldgenHelper.TrueTileSolid(p.X, p.Y, false))
+                                {
+                                    SOTSUtils.PlaySound(SoundID.Item23, NPC.Center, 2f, 0.5f, 0.05f);
+                                    CollapseBlock.Spawn(NPC.GetSource_FromThis(), p.X, p.Y, NPC.GetBaseDamage() / 2, new Vector2(NPC.velocity.X * 0.6f, -NPC.velocity.Y * 0.25f + toPlayer.Y < 0 ? -5.5f : 0) + norm * Main.rand.NextFloat(1, 5));
+                                    SOTSUtils.PlaySound(SoundID.Tink, NPC.Center, 0.8f, -0.4f, 0.05f);
+                                    NPC.velocity *= 0.75f;
+                                }
+                            }
+                        }
+                    }
+
+                    if(AI1 >= 100 && AI1 < 150)
+                    {
+                        if (AI1 == 100)
+                        {
+                            SOTSUtils.PlaySound(SoundID.Item92, NPC.Center, 1.6f, -0.3f);
+                            float amt = InSecondPhase ? 14.5f : 13.5f;
+                            NPC.velocity += norm * amt;
+                        }
+                        else
+                        {
+                            float amt = InSecondPhase ? 0.14f : 0.125f;
+                            NPC.velocity += norm * amt;
+                        }
+                        MoveStyle = -1;
+                    }
+                    else
+                    {
+                        NPC.velocity *= 0.995f;
                     }
                 }
             }
@@ -1281,7 +1338,10 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                     if (AI1 > 450)
                     {
-                        SwapPhase(LaserPhase);
+                        if(InSecondPhase)
+                            SwapPhase(LaserPhase);
+                        else
+                            SwapPhase(Main.rand.NextFromList(LaserPhase, RocketPhase));
                     }
                 }
             }
@@ -1292,7 +1352,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 if (AI2 >= totalShots)
                 {
                     if(InSecondPhase)
-                        SwapPhase(SawPhase);
+                        SwapPhase(Main.rand.NextFromList(SawPhase, SawPhase, DrillDashPhase));
                     else
                         SwapPhase(RocketPhase);
                     SwitchArm(2);
@@ -1383,7 +1443,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     if(InSecondPhase)
                         SwapPhase((int)NextAIPhase);
                     else
-                        SwapPhase(SawPhase);
+                        SwapPhase(Main.rand.NextFromList(SawPhase, SawPhase, DrillDashPhase));
                 }
             }
             if(AIPhase == SawPhase)
@@ -1657,6 +1717,7 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 AIPhase = phase;
             }
+            NPC.netUpdate = true;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
@@ -1715,6 +1776,10 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 4, 7));
         }
+        //public override void BossLoot(ref string name, ref int potionType)
+        //{
+        //    base.BossLoot(ref name, ref potionType);
+        //}
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
         {
             if(arms != null)

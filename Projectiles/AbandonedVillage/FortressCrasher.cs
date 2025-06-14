@@ -152,7 +152,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 				if (Projectile.ai[1] == -1)
                 {
                     Explosion(10);
-                    Projectile.velocity *= 0.2f;
+                    Projectile.velocity *= 0.17f;
 					saveVelo *= 0.8f;
                     Projectile.ai[2] = -10;
                 }

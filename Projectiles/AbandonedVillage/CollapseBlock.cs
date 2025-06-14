@@ -19,9 +19,11 @@ namespace SOTS.Projectiles.AbandonedVillage
 {    
     public class CollapseBlock : ModProjectile 
     {
-        public static void Spawn(IEntitySource spawn, int i, int j, int damage)
+        public static void Spawn(IEntitySource spawn, int i, int j, int damage, Vector2 veloOffset = default)
 		{
-			Vector2 pos = new Vector2(i * 16 + 8, j * 16 + 8);
+            if (veloOffset == default)
+                veloOffset = Vector2.Zero;
+            Vector2 pos = new Vector2(i * 16 + 8, j * 16 + 8);
             SOTSUtils.PlaySound(SoundID.Item62, pos, 0.6f, -0.5f);
             if(SOTS.Config.screenShake)
             {
@@ -35,7 +37,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 for (int a = 0; a < 5; a++)
                 {
                     pos = new Vector2(i * 16 + 8, j * 16 + 8);
-                    Projectile.NewProjectile(spawn, pos, Main.rand.NextVector2Circular(1, 1), ModContent.ProjectileType<CollapseBlock>(), damage, 0, Main.myPlayer, 0, Main.rand.Next(2), pos.Y + 80);
+                    Projectile.NewProjectile(spawn, pos, Main.rand.NextVector2Circular(1, 1) + veloOffset, ModContent.ProjectileType<CollapseBlock>(), damage, 0, Main.myPlayer, 0, Main.rand.Next(2), pos.Y + 80);
                     i = origI + Main.rand.Next(-1, 2);
                     j = origJ + Main.rand.Next(-1, 2);
                 }

@@ -17,7 +17,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SafeSetDefaults()
 		{
-            Item.damage = 30;
+            Item.damage = 36;
             Item.DamageType = DamageClass.Melee;  
             Item.width = 58;
             Item.height = 58;  
@@ -26,7 +26,7 @@ namespace SOTS.Items.AbandonedVillage
             Item.useStyle = ItemUseStyleID.Shoot;		
             Item.knockBack = 7f;
             Item.value = Item.sellPrice(0, 2, 0, 0);
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Orange;
             Item.UseSound = null;
             Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<GuardianGreatswordSlash>(); 

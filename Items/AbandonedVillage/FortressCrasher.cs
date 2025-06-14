@@ -14,7 +14,7 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SetDefaults()
 		{
-            Item.damage = 20;  
+            Item.damage = 24;  
             Item.DamageType = DamageClass.Ranged;  
             Item.width = 64;    
             Item.height = 64;
@@ -22,7 +22,7 @@ namespace SOTS.Items.AbandonedVillage
 			Item.useTime = 30;
 			Item.useStyle = ItemUseStyleID.Shoot;    
             Item.knockBack = 3f;
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Orange;
             Item.value = Item.sellPrice(0, 2, 0, 0);
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
