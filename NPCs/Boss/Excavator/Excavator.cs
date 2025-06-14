@@ -244,8 +244,8 @@ namespace SOTS.NPCs.Boss.Excavator
                 if (armTargetPercent > 0)
                 {
                     float percent = isBigArm ? 1 : ArmType == 1 ? MathF.Sqrt(MathF.Abs(MathF.Sin(sawBladePercent * MathF.PI))) : 1;
-                    float bonusMax = isBigArm ? 92 : ArmType == 1 ? 52 * percent : 24;
-                    float bonusRate = isBigArm ? 4 : ArmType == 1 ? 18 : 24;
+                    float bonusMax = isBigArm ? 98 : ArmType == 1 ? 52 * percent : 24;
+                    float bonusRate = isBigArm ? 3.5f : ArmType == 1 ? 18 : 24;
                     float bonusMin = isBigArm ? 32 : ArmType == 1 ? 12 : 0;
                     Vector2 toArm = Vector2.Lerp(armTarget, forceArmTarget, forceArmTargetPercent) - armPosition;
                     float angle = MathHelper.WrapAngle(toArm.ToRotation() - armRotation);
@@ -345,19 +345,22 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
 
                 //Visual representations of the IK happening
-                //if (draw)
-                //{
-                //    drawColor *= 0.4f;
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, MathF.PI + endHandRot, new Vector2(0, 1), new Vector2(500, 1), SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 3, SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 3, SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, mid - screenPos, null, Color.Yellow, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                //    spriteBatch.Draw(SOTSUtils.WhitePixel, forceArmTarget - screenPos, null, Color.Green, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
-                //}
+                if (draw)
+                {
+                    //drawColor *= 0.4f;
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, MathF.PI + endHandRot, new Vector2(0, 1), new Vector2(500, 1), SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, end - screenPos, null, drawColor, endHandRot, new Vector2(0, 1), new Vector2(A * 0.5f, 2), SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - circular - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 3, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, targetHandPos - screenPos, null, Color.Red, 0, Vector2.One, other.scale * 3, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, mid - screenPos, null, Color.Yellow, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, forceArmTarget - screenPos, null, Color.Green, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
+
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, armTarget - circular - screenPos, null, Color.YellowGreen, 0, Vector2.One, other.scale * 3, SpriteEffects.None, 0);
+                    //spriteBatch.Draw(SOTSUtils.WhitePixel, armTarget - screenPos, null, Color.YellowGreen, 0, Vector2.One, other.scale * 3, SpriteEffects.None, 0);
+                }
 
                 //Visual location of the actual center of the arm
                 //Vector2 realEnd = end + new Vector2(5, 4 * j).RotatedBy(endToMid.ToRotation());
@@ -1213,9 +1216,43 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             if(AIPhase == DrillDashPhase)
             {
-                MoveStyle = true ? -2 : 3;
-                TargetArm(target.Center, 2);
-                TargetArm(target.Center, 3);
+                MoveStyle = true ? - 2 : 3;
+                AI1++;
+                if(AI1 >= 200)
+                {
+                    AI1 = 0;
+                }
+                if(AI1 >= 0)
+                {
+                    float dPercent = 0f;
+                    float percent = AI1 / 170f;
+                    if (percent > 1)
+                        percent = 1;
+                    percent = MathF.Sin(percent * MathF.PI);
+                    float iPer = 1 - percent;
+                    float rotation = Main.npc[segments[0]].rotation - MathF.PI / 2f;
+                    Vector2 inFront = Vector2.Zero;
+                    if (AI1 > 100)
+                    {
+                        dPercent = (AI1 - 100) / 50f;
+                        if (dPercent > 1)
+                            dPercent = 1;
+                        dPercent = MathF.Sin(dPercent * MathF.PI);
+                    }
+                    for (int i = 2; i <= 3; ++i)
+                    {
+                        int dir = i == 2 ? -1 : 1;
+                        inFront = NPC.Center + new Vector2(240 * dPercent, (25 + 100 * (1 - dPercent)) * dir).RotatedBy(rotation);
+                        Vector2 fwd = new Vector2(-135 * percent, 125 * dir).RotatedBy(rotation);
+                        Vector2 inBack = NPC.Center + fwd;
+                        Vector2 windBackPosition = inBack;
+                        if (inFront != Vector2.Zero)
+                        {
+                            windBackPosition = Vector2.Lerp(windBackPosition, inFront, dPercent);
+                        }
+                        TargetArm(windBackPosition, i);
+                    }
+                }
             }
             if (AIPhase == EnergyBallPhase)
             {
