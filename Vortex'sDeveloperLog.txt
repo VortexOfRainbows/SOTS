@@ -98,6 +98,7 @@ Daily Log:
 15. Drill arm targeting animations
 16. Excavator drill dash attack
 17. Increase damage of excavator weapons
+18. Excavator boss bag
 
 5/5/25 to 5/15/25
 1. WIP Excavator attack patterns

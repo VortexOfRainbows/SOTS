@@ -6900,6 +6900,11 @@ Mods: {
 				DisplayName: Scrap Metal Bullet
 				Tooltip: Critical strikes may apply a stacking, permanent bleed for 5 damage per second
 			}
+
+			ExcavatorBossBag: {
+				DisplayName: Treasure Bag
+				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+			}
 		}
 
 		ItemTooltip: {

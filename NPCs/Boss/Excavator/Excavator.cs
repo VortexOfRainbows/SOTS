@@ -1,15 +1,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil.Cil;
 using SOTS.Dusts;
+using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Tools;
 using SOTS.NPCs.Gizmos;
 using SOTS.Projectiles.AbandonedVillage;
 using SOTS.WorldgenHelpers;
-using SteelSeries.GameSense;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -1010,7 +1011,7 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.noTileCollide = true;
             NPC.HitSound = SoundID.NPCHit4;
             NPC.DeathSound = SoundID.NPCDeath14;
-            NPC.value = Item.buyPrice();
+            NPC.value = Item.buyPrice(0, 12, 50, 0);
             NPC.npcSlots = 3f;
             NPC.behindTiles = true;
             NPC.aiStyle = -1;
@@ -1774,12 +1775,26 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 4, 7));
+            npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<ExcavatorBossBag>()));
+            LeadingConditionRule notExpertRule = new LeadingConditionRule(new Conditions.NotExpert());
+
+            notExpertRule.OnSuccess(ItemDropRule.FewFromOptions(2, 1,
+                ModContent.ItemType<EarthBreaker>(),
+                ModContent.ItemType<EarthGrinder>(),
+                ModContent.ItemType<GuardianGreatsword>(),
+                ModContent.ItemType<Items.AbandonedVillage.FortressCrasher>(),
+                ModContent.ItemType<Items.AbandonedVillage.MagmaBeam>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 1, 1, 3));
+            notExpertRule.OnSuccess(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Excavator>()));
+
+            npcLoot.Add(notExpertRule);
+            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PolarisRelic>()));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PolarisTrophy>(), 10));
         }
-        //public override void BossLoot(ref string name, ref int potionType)
-        //{
-        //    base.BossLoot(ref name, ref potionType);
-        //}
+        public override void BossLoot(ref string name, ref int potionType)
+        {
+            potionType = ItemID.HealingPotion;
+        }
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
         {
             if(arms != null)

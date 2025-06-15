@@ -16,7 +16,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.NPCs.Boss.Polaris.NewPolaris
-{	[AutoloadBossHead]
+{	
+    [AutoloadBossHead]
 	public class NewPolaris : ModNPC
     {
         public override void SendExtraAI(BinaryWriter writer)
@@ -51,14 +52,14 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
         }
         public static class AttackID
         {
-            public static int BulletStorm = 0;
-            public static int BeamsAndMineShotgun = 1;
-            public static int SecondPhaseTransitionAttack = 2;
-            public static int LaserSpinAttack = 3;
-            public static int DashWithBeams1 = 4;
-            public static int DashWithBeams2 = 5;
-            public static int MortarRain = 6;
-            public static int QuickBeamCircle = 7;
+            public static readonly int BulletStorm = 0;
+            public static readonly int BeamsAndMineShotgun = 1;
+            public static readonly int SecondPhaseTransitionAttack = 2;
+            public static readonly int LaserSpinAttack = 3;
+            public static readonly int DashWithBeams1 = 4;
+            public static readonly int DashWithBeams2 = 5;
+            public static readonly int MortarRain = 6;
+            public static readonly int QuickBeamCircle = 7;
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
@@ -1165,7 +1166,7 @@ namespace SOTS.NPCs.Boss.Polaris.NewPolaris
             notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.HallowedBar, 1, 15, 30));
             npcLoot.Add(notExpertRule);
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PolarisRelic>()));
-	    npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PolarisTrophy>(), 10));
+	        npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PolarisTrophy>(), 10));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {
