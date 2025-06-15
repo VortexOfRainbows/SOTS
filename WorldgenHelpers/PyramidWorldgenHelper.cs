@@ -424,7 +424,7 @@ namespace SOTS.WorldgenHelpers
                 int xCheck = dungeonSide == 1 ? WorldGen.genRand.Next(500, Main.maxTilesX / 2) : WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500);
                 for (; xCheck != -1; xCheck = (dungeonSide == 1 ? WorldGen.genRand.Next(500, Main.maxTilesX / 2) : WorldGen.genRand.Next(Main.maxTilesX / 2, Main.maxTilesX - 500)))
                 {
-                    for (int ydown = 0; ydown != -1; ydown++)
+                    for (int ydown = 150; ydown != -1; ydown++)
                     {
                         int widthRect = 90 - checks / 10;
                         Rectangle CheckInteract = new Rectangle(xCheck - widthRect / 2, ydown, widthRect, 200);

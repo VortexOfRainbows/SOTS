@@ -5167,7 +5167,7 @@ namespace SOTS.WorldgenHelpers
 				{
 					Tile tile = Main.tile[i, j];
 					Tile tileD = Main.tile[i, j + 1];
-					ModTile tileBelowModtile = ModContent.GetModTile(tile.TileType);
+					ModTile tileBelowModtile = ModContent.GetModTile(tileD.TileType);
 					bool iAmPalmTree = tile.HasTile && tile.TileType == TileID.PalmTree;
                     if (iAmPalmTree && (!tileD.HasTile || (tileBelowModtile != null && tileBelowModtile.Mod == SOTS.Instance)))
 					{
