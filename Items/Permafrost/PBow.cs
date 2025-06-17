@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Earth;
 using SOTS.Items.Pyramid;
@@ -10,8 +11,15 @@ using Terraria.ModLoader;
 namespace SOTS.Items.Permafrost
 {
 	public class PBow : ModItem
-	{
-		public override void SetStaticDefaults()
+    {
+        public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI)
+        {
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Permafrost/PBowGlow").Value;
+            Color color = Color.White;
+            Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Item[Item.type].Value.Width * 0.5f, Item.height * 0.5f);
+            Main.spriteBatch.Draw(texture, new Vector2((float)(Item.Center.X - (int)Main.screenPosition.X), (float)(Item.Center.Y - (int)Main.screenPosition.Y)), null, color, rotation, drawOrigin, scale, SpriteEffects.None, 0f);
+        }
+        public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);
 		}

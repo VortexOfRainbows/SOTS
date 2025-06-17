@@ -32,6 +32,7 @@ namespace SOTS.Projectiles.Permafrost
             Vector2 drawOrigin = new Vector2(texture.Width / 2, texture.Height / 2);
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
             Main.spriteBatch.Draw(texture, drawPos, null, lightColor, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(ModContent.Request<Texture2D>("SOTS/Projectiles/Permafrost/PBowGlow").Value, drawPos, null, Color.White, Projectile.rotation, drawOrigin, Projectile.scale, Projectile.direction != 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
             DrawArrows(Main.spriteBatch, lightColor);
             return false;
         }

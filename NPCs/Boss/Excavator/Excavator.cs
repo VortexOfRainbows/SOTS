@@ -21,15 +21,11 @@ namespace SOTS.NPCs.Boss.Excavator
         public override string Texture => "SOTS/NPCs/Boss/Excavator/body";
         public override void SetStaticDefaults()
         {
-            //NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-            //NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
-            //NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
-            //NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
         }
         public override void SetDefaults()
         {
@@ -54,23 +50,6 @@ namespace SOTS.NPCs.Boss.Excavator
         {
             if (Main.netMode == NetmodeID.Server)
                 return;
-            //if (NPC.life <= 0)
-            //{
-            //    for (int k = 0; k < 10; k++)
-            //    {
-            //        Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)hit.HitDirection, -2.5f, 0, default(Color), 0.7f);
-            //    }
-            //    if(Main.rand.NextBool(3))
-            //        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);
-            //    if (Main.rand.NextBool(3))
-            //        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore3"), 1f);
-            //    if (Main.rand.NextBool(3))
-            //        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore4"), 1f);
-            //    if (Main.rand.NextBool(3))
-            //        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore5"), 1f);
-            //    for (int i = 0; i < 4; i++)
-            //        Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
-            //}
         }
         public override bool PreAI()
         {
@@ -228,7 +207,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 float armRotation = other.rotation;
                 Vector2 armPosition = isBigArm ? new Vector2((-bodyWidth / 2 + 13) * j, bodyHeight / 2 - 31) : new Vector2((-bodyWidth / 2 + 4) * j, -bodyHeight / 2 + 16);
                 armPosition = armPosition.RotatedBy(armRotation) + other.Center;
-                Color drawColor = Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
+                Color drawColor = !draw ? default : Lighting.GetColor(armPosition.ToTileCoordinates(), Color.White);
 
                 float r = other.ai[0] * 1.2f * j + (isBigArm ? (j == -2 ? 45 : 135) : (j * 45));
                 float outwardSize = (isBigArm ? 80 : 38) - (isBigArm ? 4 : 16) * MathF.Sin(MathHelper.ToRadians(r + 90 * j));
@@ -383,8 +362,11 @@ namespace SOTS.NPCs.Boss.Excavator
                             float xOff = 20;
                             float r = handNorm.ToRotation();
                             Vector2 offset = size - (handNorm * xOff);
-                            Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/handGore" + (ArmType + 1)), 1f);
-                            g.rotation = r - MathHelper.PiOver2;
+                            if(Main.netMode != NetmodeID.Server)
+                            {
+                                Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/handGore" + (ArmType + 1)), 1f);
+                                g.rotation = r - MathHelper.PiOver2;
+                            }
                             SOTSUtils.PlaySound(SoundID.Item62, handPos, 1, 0.5f, 0);
                             for (int k = 0; k < 17; k++)
                             {
@@ -397,11 +379,14 @@ namespace SOTS.NPCs.Boss.Excavator
                                     d.velocity *= 0.5f;
                                     d.scale += Main.rand.NextFloat(0.4f);
                                 }
-                                if (Main.rand.NextBool(6))
+                                if (Main.netMode != NetmodeID.Server)
                                 {
-                                    g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), Main.rand.NextFromList(GoreID.Smoke1, GoreID.Smoke2, GoreID.Smoke3), 1f);
-                                    g.scale *= 0.75f;
-                                    g.velocity *= 0.5f;
+                                    if (Main.rand.NextBool(6))
+                                    {
+                                        Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), Main.rand.NextFromList(GoreID.Smoke1, GoreID.Smoke2, GoreID.Smoke3), 1f);
+                                        g.scale *= 0.75f;
+                                        g.velocity *= 0.5f;
+                                    }
                                 }
                             }
                         }
@@ -531,7 +516,10 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
             }
         }
-        public ExcavatorArm[] arms;
+        public const int TotalSegments = 7;
+        private int[] segments = [-1, -1, -1, -1, -1, -1, -1];
+        public List<Vector2> neckSegments = [];
+        public ExcavatorArm[] arms = null;
         public ExcavatorArm[] GenArms()
         {
             return [new(this, 1), new(this, -1), new(this, 2, true), new(this, -2, true)]; //This is a really funny looking declaration
@@ -539,8 +527,13 @@ namespace SOTS.NPCs.Boss.Excavator
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(MoveStyle);
-            for(int i = 0; i < segments.Length; ++i)
-                writer.Write(segments[i]);
+            for(int i = 0; i < TotalSegments; ++i)
+            {
+                if (segments == null)
+                    writer.Write(-1);
+                else
+                    writer.Write(segments[i]);
+            }
             writer.Write(AI3);
             writer.Write(AI4);
             writer.Write(InSecondPhase);
@@ -548,8 +541,12 @@ namespace SOTS.NPCs.Boss.Excavator
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             MoveStyle = reader.ReadSingle();
-            for (int i = 0; i < segments.Length; ++i)
-              segments[i] = reader.ReadInt32();
+            for (int i = 0; i < TotalSegments; ++i)
+            {
+                int num = reader.ReadInt32();
+                if (segments != null)
+                    segments[i] = num;
+            }
             AI3 = reader.ReadSingle();
             AI4 = reader.ReadSingle();
             InSecondPhase = reader.ReadBoolean();
@@ -604,7 +601,6 @@ namespace SOTS.NPCs.Boss.Excavator
         public Vector2 TelegraphLocation;
         public bool NeedsToGoIntoPhase2 => !InSecondPhase && NPC.life < NPC.lifeMax / 2f;
         public bool InSecondPhase = false;
-        public List<Vector2> neckSegments;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
             DrawDashTelegraph(spriteBatch, screenPos);
@@ -1016,15 +1012,13 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.behindTiles = true;
             NPC.aiStyle = -1;
             NPC.boss = true;
-            neckSegments = [];
-            arms = GenArms();
+            InitializeDataStructures();
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.75f); 
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
-        private int[] segments = [-1, -1, -1, -1, -1, -1, -1];
         private int DespawnCounter = 0;
         public Vector2 recoil = Vector2.Zero;
         private Player target => Main.player[NPC.target];
@@ -1191,8 +1185,18 @@ namespace SOTS.NPCs.Boss.Excavator
             if(sound)
                 SOTSUtils.PlaySound(SoundID.Item61, body.Center, 1.1f, 0.1f);
         }
+        public void InitializeDataStructures()
+        {
+            segments ??= [-1, -1, -1, -1, -1, -1, -1];
+            neckSegments ??= [];
+            arms ??= GenArms();
+        }
         public override bool PreAI()
         {
+            InitializeDataStructures();
+            WormSetup();
+            if (segments[0] == -1)
+                return false;
             DashTelegraphDust();
             foreach (ExcavatorArm arm in arms)
                 arm.PreUpdate();
@@ -1202,7 +1206,6 @@ namespace SOTS.NPCs.Boss.Excavator
             Vector2 norm = toPlayer.SNormalize();
             if (DespawnCheck())
                 return false;
-            WormSetup();
             IdleMoveStyle();
             if (segments.Length > 0)
             {
@@ -1626,10 +1629,10 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override void PostAI()
         {
-            if (!NPC.active)
+            if (!NPC.active || segments == null || segments[0] == -1)
                 return;
             Vector2 toPlayer = target.Center - NPC.Center;
-            if(segments.Length > 0)
+            if(segments != null && segments.Length > 0)
                 AvoidCollision();
             if (NPC.velocity.LengthSquared() > 0.1f)
             {
@@ -1650,40 +1653,43 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public void AvoidCollision()
         {
-            NPC body = Main.npc[segments[0]];
-            //Rectangle me = NPC.Hitbox;
-            //Rectangle other = body.Hitbox;
-            Vector2 toPlayer = target.Center - body.Center;
-            Vector2 toBody = body.Center - NPC.Center;
-            float len = 64;
-            float dist = toBody.Length();
-            if (dist < len)
+            if (segments[0] != -1)
             {
-                float distNeeded = len - toBody.Length();
-                NPC.Center -= toBody.SNormalize() * distNeeded;
-            }
-            if(NPC.velocity.LengthSquared() > 0.01f)
-            {
-                float nextRotation = NPC.velocity.ToRotation();
-                float bodyRotation = body.rotation - MathHelper.PiOver2;
-                float rotationDifference = bodyRotation - nextRotation;
-                rotationDifference = MathHelper.WrapAngle(rotationDifference);
-                float maxTurnAngle = MathHelper.ToRadians(64);
-                float speed = 1.0f;
-                if (MathF.Abs(rotationDifference) > maxTurnAngle)
+                NPC body = Main.npc[segments[0]];
+                //Rectangle me = NPC.Hitbox;
+                //Rectangle other = body.Hitbox;
+                Vector2 toPlayer = target.Center - body.Center;
+                Vector2 toBody = body.Center - NPC.Center;
+                float len = 64;
+                float dist = toBody.Length();
+                if (dist < len)
                 {
-                    rotationDifference = (MathF.Abs(rotationDifference) - maxTurnAngle) * MathF.Sign(rotationDifference);
-                    float percent = MathF.Min(MathF.Abs(MathHelper.ToDegrees(rotationDifference)) / 90f, 1);
-                    float playerDist = target.Distance(body.Center);
-                    float playerPercent = MathF.Min(1, playerDist / 160f);
-                    recoil -= new Vector2(1, 0).RotatedBy(nextRotation * 1.0f) * MathF.Sqrt(percent) * .3f * playerPercent * playerPercent;
-                    speed += percent;
+                    float distNeeded = len - toBody.Length();
+                    NPC.Center -= toBody.SNormalize() * distNeeded;
                 }
-                else
+                if (NPC.velocity.LengthSquared() > 0.01f)
                 {
-                    rotationDifference = 0;
+                    float nextRotation = NPC.velocity.ToRotation();
+                    float bodyRotation = body.rotation - MathHelper.PiOver2;
+                    float rotationDifference = bodyRotation - nextRotation;
+                    rotationDifference = MathHelper.WrapAngle(rotationDifference);
+                    float maxTurnAngle = MathHelper.ToRadians(64);
+                    float speed = 1.0f;
+                    if (MathF.Abs(rotationDifference) > maxTurnAngle)
+                    {
+                        rotationDifference = (MathF.Abs(rotationDifference) - maxTurnAngle) * MathF.Sign(rotationDifference);
+                        float percent = MathF.Min(MathF.Abs(MathHelper.ToDegrees(rotationDifference)) / 90f, 1);
+                        float playerDist = target.Distance(body.Center);
+                        float playerPercent = MathF.Min(1, playerDist / 160f);
+                        recoil -= new Vector2(1, 0).RotatedBy(nextRotation * 1.0f) * MathF.Sqrt(percent) * .3f * playerPercent * playerPercent;
+                        speed += percent;
+                    }
+                    else
+                    {
+                        rotationDifference = 0;
+                    }
+                    NPC.velocity = NPC.velocity.RotatedBy(rotationDifference) * speed;
                 }
-                NPC.velocity = NPC.velocity.RotatedBy(rotationDifference) * speed;
             }
         }
         public void SwapPhase(int phase)

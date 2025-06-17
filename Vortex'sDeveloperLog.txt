@@ -73,7 +73,10 @@ N/A
 
 Daily Log:
 
-5/16/25 and 5/19/25 and 5/26/25 to 6/14/25
+6/16/25
+1. Preliminary Excavator multiplayer syncing (now spawns in multiplayer and attacks generally seem to work)
+
+5/16/25 and 5/19/25 and 5/26/25 to 6/16/25
 1. Refactor to excavator arm internals to allow different weapon wielding and more specialized control
 2. WIP Excavator attacks
 3. Added the B. Wand; works in multiplayer
@@ -93,6 +96,7 @@ Daily Log:
 17. Increase damage of excavator weapons
 18. Excavator boss bag
 19. Pyramid floating trees should FINALLY be fixed. Also, pyramid spawning now starts a bit lower so it hopefully should less often spawn on floating sand islands.
+20. Compound bow resprite and glowmask (Petaniks)
 
 5/5/25 to 5/15/25
 1. WIP Excavator attack patterns

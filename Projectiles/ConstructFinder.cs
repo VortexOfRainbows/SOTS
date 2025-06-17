@@ -40,6 +40,8 @@ namespace SOTS.Projectiles
             bool lookingForExcavator = Projectile.ai[1] <= -1;
             if (lookingForExcavator)
             {
+                SOTSUtils.PlaySound(SoundID.Roar, Projectile.Center, 1.0f, -0.34f);
+                NPC.SpawnOnPlayer(Projectile.owner, ModContent.NPCType<Excavator>()); //should work in multiplayer
                 float dustCount = 90;
                 int type = ModContent.DustType<CopyDust4>();
                 for (int i = 0; i < dustCount; ++i)
@@ -94,8 +96,6 @@ namespace SOTS.Projectiles
                 Projectile.velocity.Y = -0.1f + percent * percent * -0.95f;
 				if (Projectile.ai[0] >= followThreshold && Projectile.ai[1] == -1)
 				{
-					SOTSUtils.PlaySound(SoundID.Roar, Projectile.Center, 1.0f, -0.34f);
-					NPC.SpawnOnPlayer(Projectile.owner, ModContent.NPCType<Excavator>()); //should work in multiplayer
                     Projectile.Kill();
                     return;
 				}
