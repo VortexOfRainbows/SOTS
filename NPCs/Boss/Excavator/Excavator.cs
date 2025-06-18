@@ -96,6 +96,19 @@ namespace SOTS.NPCs.Boss.Excavator
             return false;
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) => false;
+        public virtual void CreateGore(Vector2 ownerVelo, int HitDirection)
+        {
+            Vector2 outward = NPC.velocity + new Vector2(HitDirection, 0) + ownerVelo * 0.8f;
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(8, 0), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBodyGore1"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(38, 0), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBodyGore2"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 72), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBodyGore3"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(8, 80), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBodyGore4"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(40, 58), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBodyGore5"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(82, 72), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBodyGore6"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width * Main.rand.NextFloat() - 24, NPC.height * Main.rand.NextFloat() - 24), NPC.velocity, Main.rand.Next(61, 64), 1f);
+            for (int k = 0; k < 24; k++)
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * HitDirection, -2.5f, 0, default, 0.7f);
+        }
     }
     public class ExcavatorBody2 : ExcavatorBody
     {
@@ -106,6 +119,16 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.height = 60;
             NPC.damage = 20;
             NPC.defense = 20;
+        }
+        public override void CreateGore(Vector2 ownerVelo, int HitDirection)
+        {
+            Vector2 outward = NPC.velocity + new Vector2(HitDirection, 0) + ownerVelo * 0.8f;
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, -2), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBody2Gore1"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 4), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBody2Gore2"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(34, 30), outward, ModGores.GoreType("Gores/Excavator/ExcavatorBody2Gore3"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width * Main.rand.NextFloat() - 24, NPC.height * Main.rand.NextFloat() - 24), NPC.velocity, Main.rand.Next(61, 64), 1f);
+            for (int k = 0; k < 16; k++)
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * HitDirection, -2.5f, 0, default, 0.7f);
         }
     }
     public class ExcavatorTail : ExcavatorBody
@@ -119,6 +142,14 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.defense = 32;
             NPC.alpha = 255;
         }
+        public override void CreateGore(Vector2 ownerVelo, int HitDirection)
+        {
+            Vector2 outward = NPC.velocity + new Vector2(0, -1) + ownerVelo * 0.8f;
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, -2), outward, ModGores.GoreType("Gores/Excavator/ExcavatorTailGore" + HitDirection), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width * Main.rand.NextFloat() - 24, NPC.height * Main.rand.NextFloat() - 24), NPC.velocity, Main.rand.Next(61, 64), 1f);
+            for (int k = 0; k < 8; k++)
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * HitDirection, -2.5f, 0, default, 0.7f);
+        }
     }
     public class ExcavatorDrillTail : ExcavatorTail
     {
@@ -127,6 +158,15 @@ namespace SOTS.NPCs.Boss.Excavator
             base.SetDefaults();
             NPC.damage = 40;
             NPC.alpha = 255;
+        }
+        public override void CreateGore(Vector2 ownerVelo, int HitDirection)
+        {
+            Vector2 outward = NPC.velocity + new Vector2(HitDirection, 0) + ownerVelo * 0.8f;
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(2, 0), outward, ModGores.GoreType("Gores/Excavator/ExcavatorDrillTailGore1"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(0, 44), outward, ModGores.GoreType("Gores/Excavator/ExcavatorDrillTailGore2"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width * Main.rand.NextFloat() - 24, NPC.height * Main.rand.NextFloat() - 24), NPC.velocity, Main.rand.Next(61, 64), 1f);
+            for (int k = 0; k < 12; k++)
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * HitDirection, -2.5f, 0, default, 0.7f);
         }
     }
     [AutoloadBossHead]
@@ -320,6 +360,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 }
                 else
                 {
+                    armPos = start;
                     handPos = end;
                     handNorm = new Vector2(-1, 0).RotatedBy(endHandRot);
                 }
@@ -420,6 +461,7 @@ namespace SOTS.NPCs.Boss.Excavator
             public NPC NPC => owner.NPC;
             public Vector2 handPos;
             public Vector2 handNorm;
+            public Vector2 armPos;
             public Vector2 armTarget;
             public Vector2 forceArmTarget;
             public float armTargetPercent, forceArmTargetPercent;
@@ -513,6 +555,50 @@ namespace SOTS.NPCs.Boss.Excavator
                 else if(NextArmType == 1)
                 {
                     sawBladeTimer++;
+                }
+            }
+            public void DoGore()
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    Vector2 size = ArmType == 0 ? new Vector2(-19, -16) : ArmType == 1 ? new Vector2(-7, -21) : new Vector2(-17, -25);
+                    if (isBigArm)
+                        size = new Vector2(-23, -66);
+                    float xOff = 20;
+                    float r = handNorm.ToRotation();
+                    Vector2 offset = size - (handNorm * xOff);
+                    if(!isBigArm)
+                    {
+                        Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos - offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorSmallHandGore"), 1f);
+                        g.rotation = r - MathHelper.PiOver2;
+                        g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/handGore" + (ArmType + 1)), 1f);
+                        g.rotation = r - MathHelper.PiOver2;
+                    }
+                    else
+                    {
+                        Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos - offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorBigDrillGore1"), 1f);
+                        g.rotation = r - MathHelper.PiOver2;
+                        g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos - offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorBigDrillGore2"), 1f);
+                        g.rotation = r - MathHelper.PiOver2;
+                        g = Gore.NewGoreDirect(NPC.GetSource_Death(), handPos - offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorBigDrillGore3"), 1f);
+                        g.rotation = r - MathHelper.PiOver2;
+                    }
+                    size = isBigArm ? new Vector2(-59, -27) : new Vector2(-28, -12);
+                    xOff = 20;
+                    r = handNorm.ToRotation();
+                    offset = size - (handNorm * xOff);
+                    if (!isBigArm)
+                    {
+                        Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), armPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorSmallArmGore"), 1f);
+                        g.rotation = r - MathHelper.PiOver2;
+                    }
+                    else
+                    {
+                        Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), armPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorBigArmGore1"), 1f);
+                        g.rotation = r - MathHelper.PiOver2;
+                        g = Gore.NewGoreDirect(NPC.GetSource_Death(), armPos + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorBigArmGore2"), 1f);
+                        g.rotation = r - MathHelper.PiOver2;
+                    }
                 }
             }
         }
@@ -919,27 +1005,16 @@ namespace SOTS.NPCs.Boss.Excavator
                     spriteBatch.Draw(body, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
             }
         }
-        public void DrawLeg(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i, int dir = 1)
+        public void DrawLeg(NPC other, SpriteBatch spriteBatch, Vector2 screenPos, int i, int dir = 1, bool gore = false)
         {
             int j = SOTSUtils.SignNoZero(i);
             i = Math.Abs(i) - 1;
             float r = WalkCounter * 1.2f;
-            //float legSwayAmt = i == 0 ? 22 : 18;
-            //float legMoveSin = MathF.Sin(MathHelper.ToRadians(r + i * 120 + (j == -1 ? 180 : 0)));
-            //legMoveSin = (legMoveSin * 0.2f + 0.8f * MathF.Sign(legMoveSin) * MathF.Sqrt(MathF.Abs(legMoveSin))) * legSwayAmt * j;
             int separation = i == 2 ?  12 : i * 32;
-            //float scale = i == 2 ? 0.9f : 0.8f;
-            //float rotation = i == 2 ? -12.5f : i == 0 ? 5 : -6.25f;
             int outward = i == 1 ? 26 : i == 2 ? 48 : 22;
-            //arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/leg").Value;
-            //Vector2 legOrig = new Vector2(73, 15);
-            //Vector2 revLegOrig = new Vector2(arm.Width - legOrig.X, legOrig.Y);
             float legRot = other.rotation;
             Vector2 armPosition = new Vector2(outward * j, 18 - separation);
             armPosition = armPosition.RotatedBy(legRot) + other.Center;
-            //legRot += MathHelper.ToRadians(legMoveSin);
-            //spriteBatch.Draw(arm, armPosition - screenPos, null, drawColor, legRot + MathHelper.ToRadians(rotation * j), j == -1 ? legOrig : revLegOrig, other.scale * scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-
             float A = 72; //size of hand
             float B = 36; //size of arm
             Vector2 circular = new Vector2(50 * j, 0).RotatedBy(MathHelper.ToRadians(r + i * 120 + (j == dir ? 180 : 0)) * j * dir);
@@ -968,15 +1043,38 @@ namespace SOTS.NPCs.Boss.Excavator
             //spriteBatch.Draw(SOTSUtils.WhitePixel, target - screenPos, null, Color.White, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, 0, Vector2.One, other.scale * 4, SpriteEffects.None, 0);
             //spriteBatch.Draw(SOTSUtils.WhitePixel, start - screenPos, null, drawColor, endArmRot, new Vector2(0, 1), new Vector2(B * 0.5f, 2), SpriteEffects.None, 0);
+            if(gore)
+            {
+                if (Main.netMode != NetmodeID.Server)
+                {
+                    Vector2 size = new Vector2(-17, -25);
+                    float xOff = 20;
+                    r = endHandRot;
+                    Vector2 handNorm = new Vector2(1, 0).RotatedBy(r);
+                    offset = size - (handNorm * xOff);
+                    Gore g = Gore.NewGoreDirect(NPC.GetSource_Death(), end - offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorSmallHandGore"), 1f);
+                    g = Gore.NewGoreDirect(NPC.GetSource_Death(), end + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/handGore3"), 1f);
+                    g.rotation = r - MathHelper.PiOver2;
 
-            Texture2D hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handNoWeapon").Value;
-            Texture2D arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/arm").Value;
-            Vector2 armOrigin = new Vector2(50, 14);
-            Vector2 revArmOrigin = new(arm.Width - armOrigin.X, armOrigin.Y);
-            Vector2 handOrigin = new(hand.Width / 2, hand.Height);
-            Color drawColor = Lighting.GetColor(start.ToTileCoordinates(), new Color(210, 210, 210));
-            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -dir ? MathF.PI : 0), j == -dir ? armOrigin : revArmOrigin, other.scale, j == -dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                    size = new Vector2(-28, -12);
+                    xOff = 20;
+                    r = endArmRot;
+                    offset = size - (handNorm * xOff);
+                    g = Gore.NewGoreDirect(NPC.GetSource_Death(), start + offset, NPC.velocity + handNorm * Main.rand.NextFloat(), ModGores.GoreType("Gores/Excavator/ExcavatorSmallArmGore"), 1f);
+                    g.rotation = r - MathHelper.PiOver2;
+                }
+            }
+            else
+            {
+                Texture2D hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handNoWeapon").Value;
+                Texture2D arm = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/arm").Value;
+                Vector2 armOrigin = new(50, 14);
+                Vector2 revArmOrigin = new(arm.Width - armOrigin.X, armOrigin.Y);
+                Vector2 handOrigin = new(hand.Width / 2, hand.Height);
+                Color drawColor = Lighting.GetColor(start.ToTileCoordinates(), new Color(210, 210, 210));
+                spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -dir ? MathF.PI : 0), j == -dir ? armOrigin : revArmOrigin, other.scale, j == -dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            }
         }
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
         public override void SetStaticDefaults()
@@ -1733,24 +1831,50 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public void CreateGore(int HitDirection)
         {
-            for (int k = 0; k < 20; k++)
+            for (int k = 0; k < 16; k++)
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Iron, 2.5f * HitDirection, -2.5f, 0, default, 0.7f);
+            Vector2 outward = NPC.velocity + new Vector2(HitDirection, 0);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position, outward, ModGores.GoreType("Gores/Excavator/ExcavatorHeadGore1"), 1f);
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(44, 0), outward, ModGores.GoreType("Gores/Excavator/ExcavatorHeadGore2"), 1f);
+            for(int i = 0; i < segments.Length; ++i)
             {
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Lead, 2.5f * (float)HitDirection, -2.5f, 0, default(Color), 0.7f);
+                int index = segments[i];
+                if(index >= 0)
+                {
+                    NPC dude = Main.npc[index];
+                    if(dude.ModNPC != null && dude.active && dude.ModNPC is ExcavatorBody eb)
+                    {
+                        if(i >= 2 && i != segments.Length - 1)
+                            eb.CreateGore(NPC.velocity, 2 - i % 2);
+                        else
+                            eb.CreateGore(NPC.velocity, HitDirection);
+                    }
+                    if (i == 0)
+                    {
+                        DrawLeg(dude, null, default, 3, -1, true);
+                        DrawLeg(dude, null, default, -3, -1, true);
+                    }
+                    if (i == 1)
+                    {
+                        for (int k = -1; k <= 1; k += 2)
+                            for (int j = 1; j <= 2; ++j)
+                                DrawLeg(dude, null, default, j * k, 1, true);
+                    }
+                }
             }
-            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore1"), 1f);
-            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore2"), 1f);
-            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore3"), 1f);
-            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore4"), 1f);
-            Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, ModGores.GoreType("Gores/EarthenConstructGore5"), 1f);
-            for (int i = 0; i < 9; i++)
-                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
+            foreach(ExcavatorArm arm in arms)
+                arm.DoGore();
+            Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(NPC.width * Main.rand.NextFloat() - 24, NPC.height * Main.rand.NextFloat() - 24), NPC.velocity, Main.rand.Next(61, 64), 1f);
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
+
+        }
+        public override bool SpecialOnKill()
+        {
             if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
-            {
-                //CreateGore(hit.HitDirection);
-            }
+                CreateGore(SOTSUtils.SignNoZero(NPC.velocity.X));
+            return base.SpecialOnKill();
         }
         public override void OnKill()
         {

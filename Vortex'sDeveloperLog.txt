@@ -73,9 +73,10 @@ N/A
 
 Daily Log:
 
-6/16/25 to 6/17/25
+6/16/25 to 6/18/25
 1. Preliminary Excavator multiplayer syncing (now spawns in multiplayer and attacks generally seem to work)
 2. Import gore sprites (astrobit)
+3. Excavator gore upon dying (seems to work in multiplayer)
 
 5/16/25 and 5/19/25 and 5/26/25 to 6/16/25
 1. Refactor to excavator arm internals to allow different weapon wielding and more specialized control
