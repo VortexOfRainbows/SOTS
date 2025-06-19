@@ -343,6 +343,7 @@ namespace SOTS.Common.GlobalNPCs
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<Collector>(), [Planetarium]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<Collector2>(), [Planetarium]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<Excavator>(), [AbandonedVillage]);
+            bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<GulaSpirit>(), [AbandonedVillage]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<EvilSpirit>(), [AbandonedVillage, UndergroundCorruption, UndergroundCrimson, Crimson, Corruption]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<EvilConstruct>(), [UndergroundCorruption, UndergroundCrimson, Crimson, Corruption]);
             bestiaryEntry.AddToBestiary(npc, ModContent.NPCType<TidalConstruct>(), [Ocean]);

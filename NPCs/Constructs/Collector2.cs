@@ -323,7 +323,7 @@ namespace SOTS.NPCs.Constructs
         {
             if (NPC.active)
             {
-				if(Main.netMode != NetmodeID.Server)
+				if(Main.netMode != NetmodeID.MultiplayerClient)
 					Main.BestiaryTracker.Kills.RegisterKill(NPC);
                 NPC.active = false;
             }

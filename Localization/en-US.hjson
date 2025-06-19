@@ -7944,6 +7944,7 @@ Mods: {
 			PupaFly.DisplayName: Gore Fly
 			VoidTreasureSlime.DisplayName: Void Treasure Slime
 			RotWalker.DisplayName: Rotwalker
+			GulaSpirit.DisplayName: Gula Spirit
 		}
 
 		Bestiary: {
@@ -8101,6 +8102,7 @@ Mods: {
 				BEST REGARDS. 
 					GULA EXTRACTION SITE.
 				'''
+			GulaSpirit: Water and oil don't mix.
 			Tardigrade: These water bears are able to survive the harsh combination of low pressure and intense radiation, allowing them to live in space.
 			Bridgeburner: Originally devised to contain the spread of evil, it is perhaps a testament to its failure that it is now controlled by evil.
 			SanguineFoundry:
@@ -9000,6 +9002,8 @@ Mods: {
 			ExcavatorSaw.DisplayName: Excavator Saw
 			ExcavatorBoltBig.DisplayName: Excavator Bolt Big
 			ExcavatorBoltSmall.DisplayName: Excavator Bolt Small
+			EvilBolt2.DisplayName: Evil Bolt
+			EvilEye.DisplayName: Evil Eye
 		}
 
 		DamageClasses: {

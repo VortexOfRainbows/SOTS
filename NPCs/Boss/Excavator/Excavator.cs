@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Fragments;
 using SOTS.Items.Tools;
 using SOTS.NPCs.Gizmos;
 using SOTS.Projectiles.AbandonedVillage;
@@ -26,6 +27,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 Hide = true
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
         }
         public override void SetDefaults()
         {
@@ -1079,18 +1081,18 @@ namespace SOTS.NPCs.Boss.Excavator
         public override string Texture => "SOTS/NPCs/Boss/Excavator/head";
         public override void SetStaticDefaults()
         {
+            NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
-            //NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
+            NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
+            NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
             //NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             //{
             //    CustomTexturePath = "SOTS/NPCs/Constructs/EarthenConstructHead",
             //    PortraitScale = 1.1f
             //};
             //NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-            //NPCID.Sets.MPAllowedEnemies[Type] = true;
-            //NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
-            //NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
-            //NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
         }
         public override void SetDefaults()
         {
@@ -1879,29 +1881,23 @@ namespace SOTS.NPCs.Boss.Excavator
         public override void OnKill()
         {
             SOTSWorld.downedExcavator = true;
-            /*if(Main.netMode != NetmodeID.MultiplayerClient)
+            if(Main.netMode != NetmodeID.MultiplayerClient)
             {
-                int type = ModContent.NPCType<EarthenSpirit>();
-                int j = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 0);
-                Main.npc[j].velocity.Y = -10f;
-                Main.npc[j].netUpdate = true;
-
-                int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 1, j);
-                Main.npc[n].velocity = new Vector2(1, -9f);
-                Main.npc[n].netUpdate = true;
-
-                n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 2, j);
-                Main.npc[n].velocity = new Vector2(-1, -9f);
-                Main.npc[n].netUpdate = true;
-
-                n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 3, j);
-                Main.npc[n].velocity = new Vector2(2, -8f);
-                Main.npc[n].netUpdate = true;
-
-                n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, type, 0, 0, 4, j);
-                Main.npc[n].velocity = new Vector2(-2, -8f);
-                Main.npc[n].netUpdate = true;
-            }*/
+                if(segments != null && segments[0] != -1)
+                {
+                    NPC dude = Main.npc[segments[0]];
+                    if(dude.active && dude.type == ModContent.NPCType<ExcavatorBody>())
+                    {
+                        NPC npc2 = NPC.NewNPCDirect(NPC.GetSource_Death(), (int)dude.Center.X, (int)dude.Center.Y, ModContent.NPCType<GulaSpirit>());
+                        npc2.velocity.Y = -10f;
+                        npc2.netUpdate = true;
+                        return;
+                    }
+                }
+                NPC npc = NPC.NewNPCDirect(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<GulaSpirit>());
+                npc.velocity.Y = -10f;
+                npc.netUpdate = true;
+            }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -1916,6 +1912,8 @@ namespace SOTS.NPCs.Boss.Excavator
                 ModContent.ItemType<Items.AbandonedVillage.MagmaBeam>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 1, 1, 3));
             notExpertRule.OnSuccess(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Excavator>()));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 10, 20));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 60, 100));
 
             npcLoot.Add(notExpertRule);
             //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PolarisRelic>()));

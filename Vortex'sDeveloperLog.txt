@@ -42,6 +42,9 @@ Update Objectives:
 	1. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 11. Invidia Gateway Tile (needs: glow, conduit connection)
 12. Bridgeburner flight
+13. Bestiary and Boss Checklist screenshot for Excavator
+14. Items still needed:
+	1. Expert drop
 
 ---WIP List---
 N/A
@@ -63,7 +66,7 @@ ImportantTiles code (archaeologist tiles)
 N/A
 
 ---Multiplayer Fixes/Testing Needed---
-Excavator boss fight in its entirety
+N/A
 
 ---Content Needed---
 N/A
@@ -73,10 +76,11 @@ N/A
 
 Daily Log:
 
-6/16/25 to 6/18/25
+6/16/25 to 6/19/25
 1. Preliminary Excavator multiplayer syncing (now spawns in multiplayer and attacks generally seem to work)
 2. Import gore sprites (astrobit)
 3. Excavator gore upon dying (seems to work in multiplayer)
+4. Add Gula Spirit (excavator post-death phase), seems to work in multiplayer
 
 5/16/25 and 5/19/25 and 5/26/25 to 6/16/25
 1. Refactor to excavator arm internals to allow different weapon wielding and more specialized control

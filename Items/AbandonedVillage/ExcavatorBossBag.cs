@@ -1,3 +1,4 @@
+using SOTS.Items.Fragments;
 using SOTS.Items.Tools;
 using SOTS.NPCs.Boss.Excavator;
 using Terraria;
@@ -37,6 +38,8 @@ namespace SOTS.Items.AbandonedVillage
 				ModContent.ItemType<MagmaBeam>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 1, 1, 4));
 			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Excavator>()));
-		}
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 10, 20));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 60, 100));
+        }
 	}
 }
