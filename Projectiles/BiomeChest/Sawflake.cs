@@ -72,7 +72,9 @@ namespace SOTS.Projectiles.BiomeChest
 		private Vector2[] trailPos2 = new Vector2[14];
 		private Vector2[] trailPos3 = new Vector2[14];
 		private Vector2[] trailPos4 = new Vector2[14];
-		public void cataloguePos(Vector2 catalogue, Vector2[] trialArray, float rotation)
+        private Vector2[] trailPos5 = new Vector2[14];
+        private Vector2[] trailPos6 = new Vector2[14];
+        public void cataloguePos(Vector2 catalogue, Vector2[] trialArray, float rotation)
 		{
 			Vector2 current = catalogue;
 			Vector2 velo = new Vector2(7.5f, 0);
@@ -82,7 +84,8 @@ namespace SOTS.Projectiles.BiomeChest
             {
 				velo *= 0;
 				current = Projectile.Center;
-			}
+
+            }
 			for (int i = 0; i < trailPos.Length; i++)
 			{
 				Vector2 previousPosition = trialArray[i];
@@ -171,19 +174,26 @@ namespace SOTS.Projectiles.BiomeChest
 				Projectile.alpha = 255;
             }
 			Player player = Main.player[Projectile.owner];
-			Vector2 circularLocation = new Vector2(Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation));
+			float size = Projectile.width * 0.4f;
+            Vector2 circularLocation = new Vector2(size, 0).RotatedBy(MathHelper.ToRadians(rotation));
 			cataloguePos(circularLocation + Projectile.Center, trailPos, MathHelper.ToRadians(rotation));
 
-			circularLocation = new Vector2(Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 90));
-			cataloguePos(circularLocation + Projectile.Center, trailPos2, MathHelper.ToRadians(rotation + 90));
+			circularLocation = new Vector2(size, 0).RotatedBy(MathHelper.ToRadians(rotation + 60));
+			cataloguePos(circularLocation + Projectile.Center, trailPos2, MathHelper.ToRadians(rotation + 60));
 
-			circularLocation = new Vector2(Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 180));
-			cataloguePos(circularLocation + Projectile.Center, trailPos3, MathHelper.ToRadians(rotation + 180));
+			circularLocation = new Vector2(size, 0).RotatedBy(MathHelper.ToRadians(rotation + 120));
+			cataloguePos(circularLocation + Projectile.Center, trailPos3, MathHelper.ToRadians(rotation + 120));
 
-			circularLocation = new Vector2(Projectile.width / 2, 0).RotatedBy(MathHelper.ToRadians(rotation + 270));
-			cataloguePos(circularLocation + Projectile.Center, trailPos4, MathHelper.ToRadians(rotation + 270));
+			circularLocation = new Vector2(size, 0).RotatedBy(MathHelper.ToRadians(rotation + 180));
+			cataloguePos(circularLocation + Projectile.Center, trailPos4, MathHelper.ToRadians(rotation + 180));
 
-			rotation += initialDirection * 11.5f;
+            circularLocation = new Vector2(size, 0).RotatedBy(MathHelper.ToRadians(rotation + 240));
+            cataloguePos(circularLocation + Projectile.Center, trailPos5, MathHelper.ToRadians(rotation + 240));
+
+            circularLocation = new Vector2(size, 0).RotatedBy(MathHelper.ToRadians(rotation + 300));
+            cataloguePos(circularLocation + Projectile.Center, trailPos6, MathHelper.ToRadians(rotation + 300));
+
+            rotation += initialDirection * 11.5f;
 			Projectile.rotation = rotation;
 			Projectile.spriteDirection = 1;
 			if(Projectile.timeLeft <= 30)
@@ -203,7 +213,9 @@ namespace SOTS.Projectiles.BiomeChest
 			Draw(trailPos2);
 			Draw(trailPos3);
 			Draw(trailPos4);
-			Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
+            Draw(trailPos5);
+            Draw(trailPos6);
+            Texture2D texture2 = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
 			Main.spriteBatch.Draw(texture2, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), Projectile.rotation, new Vector2(texture2.Width / 2, texture2.Height / 2), Projectile.scale, SpriteEffects.None, 0f);
 			return false;
 		}
@@ -214,7 +226,7 @@ namespace SOTS.Projectiles.BiomeChest
 				return false;
 			}
 			Vector2[] trailArray = trailPos;
-			for(int k = 0; k < 4; k++)
+			for(int k = 0; k < 6; k++)
 			{
 				if(k == 0)
 					trailArray = trailPos;
@@ -224,7 +236,11 @@ namespace SOTS.Projectiles.BiomeChest
 					trailArray = trailPos3;
 				if (k == 3)
 					trailArray = trailPos4;
-				for (int i = 0; i < trailArray.Length - 2; i++)
+                if (k == 4)
+                    trailArray = trailPos5;
+                if (k == 5)
+                    trailArray = trailPos6;
+                for (int i = 0; i < trailArray.Length - 2; i++)
 				{
 					float scale = Projectile.scale * (trailArray.Length - i) / (float)trailArray.Length;
 					scale *= 1f;
@@ -249,6 +265,7 @@ namespace SOTS.Projectiles.BiomeChest
 			Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/SawflakeTrail").Value;
 			Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
 			Vector2 previousPosition = Projectile.Center;
+			Vector2 pixelOrigin = new Vector2(0, 1);
 			Color color = new Color(140, 140, 205, 0);
 			for (int k = 0; k < trailArray.Length; k++)
 			{
@@ -258,28 +275,15 @@ namespace SOTS.Projectiles.BiomeChest
 				{
 					return;
 				}
-				Vector2 drawPos = trailArray[k] - Main.screenPosition;
-				Vector2 currentPos = trailArray[k];
-				Vector2 betweenPositions = previousPosition - currentPos;
-				color *= 0.95f;
-				float max = betweenPositions.Length() / (texture2.Width  * 0.6f * scale);
-				for (int i = 0; i < max; i++)
-				{
-					drawPos = previousPosition + -betweenPositions * (i / max) - Main.screenPosition;
-					for (int j = 0; j < 3; j++)
-					{
-						float x = Main.rand.Next(-10, 11) * 0.1f * scale;
-						float y = Main.rand.Next(-10, 11) * 0.1f * scale;
-						if (j <= 1)
-						{
-							x = 0;
-							y = 0;
-						}
-						Main.spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color, Projectile.rotation, drawOrigin2, scale, Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
-					}
-				}
-				previousPosition = currentPos;
-			}
+				if (trailArray[k] == Projectile.Center)
+					continue;
+                Vector2 currentPos = trailArray[k];
+                Vector2 toPrevious = previousPosition - currentPos;
+                Main.spriteBatch.Draw(SOTSUtils.WhitePixel, currentPos - Main.screenPosition, null, color, toPrevious.ToRotation(), pixelOrigin, new Vector2(toPrevious.Length() * 0.5f, 2 * scale), SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture2, currentPos - Main.screenPosition, null, color, Projectile.rotation + MathHelper.PiOver4, drawOrigin2, scale, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(texture2, currentPos - Main.screenPosition, null, color, Projectile.rotation, drawOrigin2, scale, SpriteEffects.None, 0f);
+                previousPosition = currentPos;
+            }
 		}
 	}
 }

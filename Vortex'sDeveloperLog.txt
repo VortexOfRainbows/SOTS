@@ -44,7 +44,7 @@ Update Objectives:
 12. Bridgeburner flight
 13. Bestiary and Boss Checklist screenshot for Excavator
 14. Items still needed:
-	1. Expert drop
+	1. Expert drop, Ira Gateway, Mastermode Relic, Suspicious Watch, Lux Golf Ball (master mode drop), Excavator (master mode drop)
 
 ---WIP List---
 N/A
@@ -59,7 +59,7 @@ ImportantTiles code (archaeologist tiles)
 5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Sandstorm Pouch, -Compound Bow, -Starshard Saber, +Lungrot, +Little Woes, +Accretion Disc, -Street Cleaner
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. AV Enemies
-2. +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, ++Blongus
+2. +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, +Blongus
 1. +++Challenger's Ring
 
 ---Visual Upgrade Needed---
@@ -75,6 +75,10 @@ N/A
 N/A
 
 Daily Log:
+
+6/19/25
+1. Rework sawflake visuals (this may be a small buff to hitbox size)
+2. Blongus damage 6 -> 5, use time 22 -> 24. Dramatically nerf damage scaling
 
 6/16/25 to 6/19/25
 1. Preliminary Excavator multiplayer syncing (now spawns in multiplayer and attacks generally seem to work)

@@ -23,12 +23,12 @@ namespace SOTS.Items.ChestItems
 		}
 		public override void SetDefaults()
 		{
-			Item.damage = 6;
+			Item.damage = 5;
 			Item.DamageType = DamageClass.Magic;
 			Item.width = 54;
 			Item.height = 64;
-			Item.useTime = 22;
-			Item.useAnimation = 22;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 2.5f;
             Item.value = Item.sellPrice(0, 5, 0, 0);

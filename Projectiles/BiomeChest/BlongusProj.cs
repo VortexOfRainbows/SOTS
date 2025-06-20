@@ -1,7 +1,5 @@
-using Humanizer;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using SOTS.Common.GlobalNPCs;
 using SOTS.Dusts;
 using SOTS.Helpers;
@@ -35,7 +33,7 @@ namespace SOTS.Projectiles.BiomeChest
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
             Texture2D textureGlow = ModContent.Request<Texture2D>(this.Texture + "Glow").Value;
-            Vector2 drawOrigin = new Vector2(Projectile.direction == -1 ? texture.Width - 50 : 50, 36);
+            Vector2 drawOrigin = new(Projectile.direction == -1 ? texture.Width - 50 : 50, 36);
             int height = texture.Height / Main.projFrames[Type];
             Rectangle rect = new Rectangle(0, Projectile.frame * height, texture.Width, height);
             float framePercent = (MathF.Max(1, Projectile.frame) - 1) / ((float)Main.projFrames[Type] - 1);
@@ -174,18 +172,18 @@ namespace SOTS.Projectiles.BiomeChest
                 target = Main.npc[StuckTo];
                 if (target.active)
                 {
-                    float flatLifeBonus = MathF.Min(target.life * 0.04f, 40); //Max 40 damage from life
-                    float maxLifeBonus = MathF.Min(target.lifeMax * 0.1f, 25); //Max 25 damage from max life
-                    if (flatLifeBonus >= 40)
-                        flatLifeBonus += MathF.Min(target.life * 0.01f - 40, 60); //Then 1% more damage per life, up to 100
-                    if (flatLifeBonus >= 100)
-                        flatLifeBonus += MathF.Min(target.life * 0.0025f - 100, 100); //Then 0.25% more damage per life, up to 200
-                    if (flatLifeBonus >= 200)
-                        flatLifeBonus += MathF.Min(target.life * 0.001f - 200, 700); //Then 0.1% more damage per life, up to 1000
-                    if (flatLifeBonus >= 1000)
-                        flatLifeBonus += target.life * 0.0005f; //Then 0.05% more damage per life
-                    float bleedMultiplier = 2.5f;
-                    float damageBonus = (int)(flatLifeBonus * 0.95f) + maxLifeBonus;
+                    float flatLifeBonus = MathF.Min(target.life * 0.04f, 30); //Max 30 damage from life
+                    float maxLifeBonus = MathF.Min(target.lifeMax * 0.04f, 20); //Max 20 damage from max life
+                    if (flatLifeBonus >= 30)
+                        flatLifeBonus += MathF.Min(target.life * 0.008f - 30, 60); //Then 0.8% more damage per life, up to 90
+                    if (flatLifeBonus >= 90)
+                        flatLifeBonus += MathF.Min(target.life * 0.002f - 90, 80); //Then 0.2% more damage per life, up to 170
+                    if (flatLifeBonus >= 170)
+                        flatLifeBonus += MathF.Min(target.life * 0.001f - 170, 330); //Then 0.1% more damage per life, up to 500
+                    if (flatLifeBonus >= 500)
+                        flatLifeBonus += target.life * 0.0004f; //Then 0.04% more damage per life
+                    float bleedMultiplier = 2.0f;
+                    float damageBonus = (int)((flatLifeBonus + maxLifeBonus) * 0.8f) ; //Nerf flat life bonus by 20% after all calcuulation
                     float bonusDamagePercent = 1.0f + 0.2f * target.life / target.lifeMax; //Deal up to 20% more damage based on enemy health percent
                     if(target.HasBuff(BuffID.Bleeding) || (target.TryGetGlobalNPC(out DebuffNPC dNPC) && dNPC.BleedingCurse > 0))
                     {
