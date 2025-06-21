@@ -42,9 +42,9 @@ Update Objectives:
 	1. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 11. Invidia Gateway Tile (needs: glow, conduit connection)
 12. Bridgeburner flight
-13. Bestiary and Boss Checklist screenshot for Excavator
+13. Bestiary and Boss Checklist screenshot for Excavator (and excavator glowing)
 14. Items still needed:
-	1. Expert drop, Ira Gateway, Mastermode Relic, Suspicious Watch, Lux Golf Ball (master mode drop), Excavator (master mode drop)
+	1. Expert drop, Ira Gateway, Mastermode Relic, Suspicious Watch, Excavator (master mode drop)
 
 ---WIP List---
 N/A
@@ -76,9 +76,10 @@ N/A
 
 Daily Log:
 
-6/19/25
+6/19/25 to 6/20/25
 1. Rework sawflake visuals (this may be a small buff to hitbox size)
 2. Blongus damage 6 -> 5, use time 22 -> 24. Dramatically nerf damage scaling
+3. Lux master mode drop
 
 6/16/25 to 6/19/25
 1. Preliminary Excavator multiplayer syncing (now spawns in multiplayer and attacks generally seem to work)

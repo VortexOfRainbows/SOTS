@@ -345,8 +345,10 @@ namespace SOTS.NPCs.Boss.Lux
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PhaseOre>(), 1, 90, 150));
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.SoulofLight, 1, 10, 20));
 			npcLoot.Add(notExpertRule);
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<LuxBall>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<LuxRelic>()));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LuxTrophy>(), 10));
+
         }
         public override void OnKill()
 		{

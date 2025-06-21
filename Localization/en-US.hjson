@@ -6905,6 +6905,11 @@ Mods: {
 				DisplayName: Treasure Bag
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
+
+			LuxBall: {
+				DisplayName: Spirit Golf Ball
+				Tooltip: Can be hit with a golf club and deals damage increasing with velocity
+			}
 		}
 
 		ItemTooltip: {
@@ -9004,6 +9009,7 @@ Mods: {
 			ExcavatorBoltSmall.DisplayName: Excavator Bolt Small
 			EvilBolt2.DisplayName: Evil Bolt
 			EvilEye.DisplayName: Evil Eye
+			LuxBallProjectile.DisplayName: Spirit Golf Ball
 		}
 
 		DamageClasses: {
