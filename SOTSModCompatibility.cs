@@ -177,12 +177,12 @@ namespace SOTS
                     ["availability"] = (Func<bool>)(() => true),
                     //["overrideHeadTextures"] = ,
                     ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Excavator.BossChecklistIntegration.DespawnMessage"),
-                    //["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
-                    //{
-                    //    Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/ExcavatorPortrait").Value;
-                    //    Vector2 centered = new Vector2(rect.X + (rect.Width / 2) - (texture.Width / 2), rect.Y + (rect.Height / 2) - (texture.Height / 2));
-                    //    sb.Draw(texture, centered, color);
-                    //}
+                    ["customPortrait"] = (SpriteBatch sb, Rectangle rect, Color color) =>
+                    {
+                        Texture2D texture = ModContent.Request<Texture2D>("SOTS/BossCL/ExcavatorPortrait").Value;
+                        Vector2 centered = new Vector2(rect.X + (rect.Width / 2), rect.Y + (rect.Height / 2));
+                        sb.Draw(texture, centered, null, color, 0, texture.Size() / 2, 0.425f, SpriteEffects.None, 0);
+                    }
                 });
 
             Add("Boss",

@@ -1090,12 +1090,15 @@ namespace SOTS.NPCs.Boss.Excavator
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Frostburn] = true;
             NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
-            //NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
-            //{
-            //    CustomTexturePath = "SOTS/NPCs/Constructs/EarthenConstructHead",
-            //    PortraitScale = 1.1f
-            //};
-            //NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                CustomTexturePath = "SOTS/BossCL/ExcavatorPortrait",
+                PortraitScale = 0.25f,
+                PortraitPositionXOverride = -5,
+                Position = new Vector2(-55, 0),
+                Scale = 0.25f,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
         public override void SetDefaults()
         {
@@ -1116,6 +1119,16 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.aiStyle = -1;
             NPC.boss = true;
             InitializeDataStructures();
+
+            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                CustomTexturePath = "SOTS/BossCL/ExcavatorPortrait",
+                PortraitScale = 0.255f,
+                PortraitPositionXOverride = -10,
+                Position = new Vector2(-94, -3),
+                Scale = 0.32f,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset[Type] = drawModifiers;
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
