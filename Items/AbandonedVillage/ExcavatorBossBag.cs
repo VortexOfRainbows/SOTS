@@ -18,8 +18,8 @@ namespace SOTS.Items.AbandonedVillage
 		}
 		public override void SetDefaults()
 		{
-			Item.width = 58;
-			Item.height = 34;
+			Item.width = 48;
+			Item.height = 32;
 			Item.value = 0;
 			Item.rare = ItemRarityID.Orange;
 			Item.expert = true;

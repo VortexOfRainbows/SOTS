@@ -6910,6 +6910,11 @@ Mods: {
 				DisplayName: Spirit Golf Ball
 				Tooltip: Can be hit with a golf club and deals damage increasing with velocity
 			}
+
+			ExcavatorRelic: {
+				DisplayName: The Excavator Relic
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {

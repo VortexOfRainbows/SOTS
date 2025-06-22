@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
 using SOTS.Items.Tools;
 using SOTS.NPCs.Gizmos;
@@ -55,6 +56,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override bool PreAI()
         {
+            Lighting.AddLight(NPC.Center, Excavator.Glow * 0.5f);
             if (Main.netMode != NetmodeID.MultiplayerClient)
             {
                 if (!Main.npc[(int)NPC.ai[1]].active)
@@ -174,6 +176,7 @@ namespace SOTS.NPCs.Boss.Excavator
     [AutoloadBossHead]
     public class Excavator : ModNPC
     {
+        public static readonly Vector3 Glow = new(1f, 0.5f, 0.05f);
         public static readonly int EnergyBallPhase = 1;
         public static readonly int LaserPhase = 2;
         public static readonly int SawPhase = 3;
@@ -1293,6 +1296,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override bool PreAI()
         {
+            Lighting.AddLight(NPC.Center, Glow * 0.5f);
             InitializeDataStructures();
             WormSetup();
             if (segments[0] == -1)
@@ -1916,7 +1920,7 @@ namespace SOTS.NPCs.Boss.Excavator
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 60, 100));
 
             npcLoot.Add(notExpertRule);
-            //npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PolarisRelic>()));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ExcavatorRelic>()));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PolarisTrophy>(), 10));
         }
         public override void BossLoot(ref string name, ref int potionType)

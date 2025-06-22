@@ -19,20 +19,24 @@ namespace SOTS.Items.Banners
 		public const int FrameHeight = 18 * 4;
 		public Asset<Texture2D> RelicTexture;
 		public Asset<Texture2D> GlowmothRelicTexture;
-		public virtual string RelicTextureName => "SOTS/Items/Banners/Relic";
-		public virtual string GlowmothRelicTextureName => "SOTS/Items/Banners/GlowmothRelic2";
-		public override void Load()
+        public Asset<Texture2D> ExcavatorRelicTexture;
+        public virtual string RelicTextureName => "SOTS/Items/Banners/Relic";
+        public static readonly string GlowmothRelicTextureName = "SOTS/Items/Banners/GlowmothRelic2";
+        public static readonly string ExcavatorRelicTextureName = "SOTS/Items/Banners/ExcavatorRelic2";
+        public override void Load()
 		{
 			if (!Main.dedServ)
 			{
 				RelicTexture = ModContent.Request<Texture2D>(RelicTextureName);
 				GlowmothRelicTexture = ModContent.Request<Texture2D>(GlowmothRelicTextureName);
-			}
+                ExcavatorRelicTexture = ModContent.Request<Texture2D>(ExcavatorRelicTextureName);
+            }
 		}
 		public override void Unload()
 		{
 			RelicTexture = null;
 			GlowmothRelicTexture = null;
+			ExcavatorRelicTexture = null;
 		}
 		public override void SetStaticDefaults()
 		{
@@ -87,8 +91,13 @@ namespace SOTS.Items.Banners
 			{
 				texture = GlowmothRelicTexture.Value;
 				frameX = 0;
-			}
-			Rectangle frame = texture.Frame(texture.Width / texture.Height, 1, frameX, 0);
+            }
+            if (tile.TileFrameX / FrameWidth == 7)
+            {
+                texture = ExcavatorRelicTexture.Value;
+                frameX = 0;
+            }
+            Rectangle frame = texture.Frame(texture.Width / texture.Height, 1, frameX, 0);
 
 			Vector2 origin = frame.Size() / 2f;
 			Vector2 worldPos = p.ToWorldCoordinates(24f, 64f);
@@ -194,5 +203,14 @@ namespace SOTS.Items.Banners
 			Item.height = 44;
 			Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 6);
 		}
-	}
+    }
+    public class ExcavatorRelic : ModRelic
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.width = 38;
+            Item.height = 44;
+            Item.DefaultToPlaceableTile(ModContent.TileType<SOTSRelics>(), 7);
+        }
+    }
 }

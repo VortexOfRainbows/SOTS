@@ -42,9 +42,9 @@ Update Objectives:
 	1. Lighting tiles (perhaps a chandelier or GRAND chandelier?)
 11. Invidia Gateway Tile (needs: glow, conduit connection)
 12. Bridgeburner flight
-13. Bestiary and Boss Checklist screenshot for Excavator (and excavator glowing)
+13. Bestiary and Boss Checklist screenshot for Excavator
 14. Items still needed:
-	1. Expert drop, Ira Gateway, Mastermode Relic, Suspicious Watch, Excavator (master mode drop)
+	1. Expert drop, Ira Gateway, Suspicious Watch, Excavator (master mode drop)
 
 ---WIP List---
 N/A
