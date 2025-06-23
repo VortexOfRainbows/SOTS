@@ -40,6 +40,7 @@ namespace SOTS.Items.AbandonedVillage
 			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Excavator>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 10, 20));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 60, 100));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExcavatorMask>(), 7));
         }
 	}
 }

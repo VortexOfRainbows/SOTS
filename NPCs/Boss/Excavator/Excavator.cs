@@ -1093,10 +1093,10 @@ namespace SOTS.NPCs.Boss.Excavator
             NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
             {
                 CustomTexturePath = "SOTS/BossCL/ExcavatorPortrait",
-                PortraitScale = 0.25f,
-                PortraitPositionXOverride = -5,
-                Position = new Vector2(-55, 0),
-                Scale = 0.25f,
+                PortraitScale = 0.255f,
+                PortraitPositionXOverride = -10,
+                Position = new Vector2(-94, -3),
+                Scale = 0.32f,
             };
             NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
         }
@@ -1119,16 +1119,6 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.aiStyle = -1;
             NPC.boss = true;
             InitializeDataStructures();
-
-            NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers()
-            {
-                CustomTexturePath = "SOTS/BossCL/ExcavatorPortrait",
-                PortraitScale = 0.255f,
-                PortraitPositionXOverride = -10,
-                Position = new Vector2(-94, -3),
-                Scale = 0.32f,
-            };
-            NPCID.Sets.NPCBestiaryDrawOffset[Type] = drawModifiers;
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
@@ -1931,6 +1921,7 @@ namespace SOTS.NPCs.Boss.Excavator
             notExpertRule.OnSuccess(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Excavator>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 10, 20));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 60, 100));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ExcavatorMask>(), 7));
 
             npcLoot.Add(notExpertRule);
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ExcavatorRelic>()));

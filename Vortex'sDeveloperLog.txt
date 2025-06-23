@@ -80,6 +80,7 @@ Daily Log:
 2. Blongus damage 6 -> 5, use time 22 -> 24. Dramatically nerf damage scaling
 3. Lux master mode drop
 4. Bestiary and boss checklist for Excavator
+5. Excavator mask
 
 6/16/25 to 6/19/25
 1. Preliminary Excavator multiplayer syncing (now spawns in multiplayer and attacks generally seem to work)

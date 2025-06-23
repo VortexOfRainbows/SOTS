@@ -173,7 +173,7 @@ namespace SOTS
                     ["displayName"] = Language.GetText("Mods.SOTS.NPCs.Excavator.DisplayName"),
                     ["spawnInfo"] = Language.GetText("Mods.SOTS.NPCs.Excavator.BossChecklistIntegration.SpawnInfo"),
                     ["spawnItems"] = ModContent.ItemType<SeismicStation>(),
-                    //["collectibles"] = new List<int>() { ModContent.ItemType<AdvisorMusicBox>(), ModContent.ItemType<AdvisorTrophy>() },
+                    ["collectibles"] = new List<int>() { ModContent.ItemType<ExcavatorMask>() },
                     ["availability"] = (Func<bool>)(() => true),
                     //["overrideHeadTextures"] = ,
                     ["despawnMessage"] = Language.GetText("Mods.SOTS.NPCs.Excavator.BossChecklistIntegration.DespawnMessage"),
