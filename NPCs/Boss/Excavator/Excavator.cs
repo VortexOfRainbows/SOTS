@@ -1925,7 +1925,7 @@ namespace SOTS.NPCs.Boss.Excavator
 
             npcLoot.Add(notExpertRule);
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ExcavatorRelic>()));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PolarisTrophy>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExcavatorTrophy>(), 10));
         }
         public override void BossLoot(ref string name, ref int potionType)
         {

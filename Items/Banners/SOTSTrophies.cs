@@ -150,4 +150,12 @@ namespace SOTS.Items.Banners
             }
         }
     }
+    public class ExcavatorTrophy : ModTrophy
+    {
+        public override void SafeSetDefaults()
+        {
+            Item.createTile = TileType<SOTSTrophies>();
+            Item.placeStyle = 6;
+        }
+    }
 }

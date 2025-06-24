@@ -6920,6 +6920,11 @@ Mods: {
 				DisplayName: Excavator Mask
 				Tooltip: ""
 			}
+
+			ExcavatorTrophy: {
+				DisplayName: Excavator Trophy
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
