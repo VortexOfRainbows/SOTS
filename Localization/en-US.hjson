@@ -643,7 +643,7 @@ Mods: {
 			}
 
 			SubspaceBag: {
-				DisplayName: Treasure Bag
+				DisplayName: Treasure Bag (Subspace Serpent)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
@@ -737,7 +737,7 @@ Mods: {
 			}
 
 			LuxBag: {
-				DisplayName: Treasure Bag
+				DisplayName: Treasure Bag (Lux)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
@@ -1470,7 +1470,7 @@ Mods: {
 			}
 
 			GlowmothBag: {
-				DisplayName: Treasure Bag
+				DisplayName: Treasure Bag (Glowmoth)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
@@ -2896,7 +2896,7 @@ Mods: {
 			}
 
 			TheAdvisorBossBag: {
-				DisplayName: Treasure Bag
+				DisplayName: Treasure Bag (The Advisor)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
@@ -3048,7 +3048,7 @@ Mods: {
 			}
 
 			PolarisBossBag: {
-				DisplayName: Treasure Bag
+				DisplayName: Treasure Bag (Polaris)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
@@ -3365,7 +3365,7 @@ Mods: {
 			}
 
 			CurseBag: {
-				DisplayName: Treasure Bag
+				DisplayName: Treasure Bag (Pharaoh's Curse)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
@@ -3739,7 +3739,7 @@ Mods: {
 			}
 
 			PinkyBag: {
-				DisplayName: Treasure Bag
+				DisplayName: Treasure Bag (Putrid Pinky)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
@@ -6902,7 +6902,7 @@ Mods: {
 			}
 
 			ExcavatorBossBag: {
-				DisplayName: Treasure Bag
+				DisplayName: Treasure Bag (The Excavator)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
