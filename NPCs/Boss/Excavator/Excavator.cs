@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using rail;
 using SOTS.Dusts;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Banners;
@@ -223,6 +224,7 @@ namespace SOTS.NPCs.Boss.Excavator
                     {
                         hand = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrill").Value;
                         handGlow = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrillGlow").Value;
+                        handOverheat = ModContent.Request<Texture2D>("SOTS/NPCs/Boss/Excavator/handDrillDrill").Value;
                     }
                     else
                     {
@@ -342,19 +344,27 @@ namespace SOTS.NPCs.Boss.Excavator
                         }
                         spriteBatch.Draw(handSaw, end - screenPos + new Vector2(5, 0).RotatedBy(endHandRot), null, drawColor, rotation * j, sawOrigin, other.scale * scalePercent, j == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                     }
-                    spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                    if (ArmType == 0 || isBigArm)
-                        spriteBatch.Draw(handGlow, end - screenPos, null, Color.White, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                    if (!isBigArm)
+                    float percent3 = !isBigArm ? ArmSwitchTimer / 60f : owner.bigArmChargePercent;
+                    float spread = isBigArm ? 4 : 3;
+                    if (!isBigArm || percent3 <= 0)
                     {
-                        float percent = ArmSwitchTimer / 60f;
-                        if (percent > 0)
+                        spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                        if (ArmType == 0 || isBigArm)
+                            spriteBatch.Draw(handGlow, end - screenPos, null, Color.White, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                    }
+                    if (percent3 > 0)
+                    {
+                        float mult = isBigArm ? 1f : 0.45f;
+                        for (int i = 0; i < 6; ++i)
                         {
-                            for (int i = 0; i < 6; ++i)
-                            {
-                                Vector2 circular2 = new Vector2(3 + percent, 0).RotatedBy((percent + i / 3f) * MathF.PI);
-                                spriteBatch.Draw(handOverheat, circular2 + end - screenPos, null, ExcavatorOrb.Color * 0.45f * percent, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-                            }
+                            Vector2 circular2 = new Vector2(spread + percent3, 0).RotatedBy((percent3 + i / 3f) * MathF.PI);
+                            spriteBatch.Draw(handOverheat, circular2 + end - screenPos, null, ExcavatorOrb.Color * mult * percent3, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                        }
+                        if(isBigArm)
+                        {
+                            spriteBatch.Draw(hand, end - screenPos, null, drawColor, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+                            if (ArmType == 0 || isBigArm)
+                                spriteBatch.Draw(handGlow, end - screenPos, null, Color.White, endHandRot + MathHelper.PiOver2, handOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
                         }
                     }
                     spriteBatch.Draw(arm, start - screenPos, null, drawColor, endArmRot + (j == -1 ? MathF.PI : 0), j == -1 ? armOrigin : revArmOrigin, other.scale, j == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
@@ -669,6 +679,7 @@ namespace SOTS.NPCs.Boss.Excavator
         public static float TelegraphSize => 2400;
         public float TelegraphCounter = 0;
         public float TelegraphFadeOut = 0;
+        public float bigArmChargePercent = 0;
         public Vector2 leftTelegraph => new(TelegraphLocation.X - TelegraphSize * 0.85f, TelegraphLocation.Y);
         public Vector2 rightTelegraph => new(TelegraphLocation.X + TelegraphSize * 0.85f, TelegraphLocation.Y);
         public Vector2 ClosestTelegraphEndLocation()
@@ -1359,7 +1370,12 @@ namespace SOTS.NPCs.Boss.Excavator
                     }
                     if(AI1 == 36)
                     {
-                        SOTSUtils.PlaySound(SoundID.Item15, NPC.Center, 1.6f, -0.3f);
+                        SOTSUtils.PlaySound(SoundID.Item15, NPC.Center, 2f, -0.25f);
+                    }
+                    if(AI1 > 36 && AI1 < 150)
+                    {
+                        float diff = (AI1 - 36) / 114f;
+                        bigArmChargePercent = MathF.Sin(MathF.PI * diff);
                     }
                     for (int i = 2; i <= 3; ++i)
                     {
@@ -1373,7 +1389,7 @@ namespace SOTS.NPCs.Boss.Excavator
                             windBackPosition = Vector2.Lerp(windBackPosition, inFront, dPercent);
                         }
                         TargetArm(windBackPosition, i);
-                        if(AI1 >= 100 && AI1 < 140)
+                        if(AI1 >= 100 && AI1 < 140) //mid-dash particles
                         {
                             Vector2 dustSpawn = arms[i].handPos;
                             for (float k = 0; k < 1; k += 0.25f)
@@ -1400,8 +1416,7 @@ namespace SOTS.NPCs.Boss.Excavator
                             }
                         }
                     }
-
-                    if(AI1 >= 100 && AI1 < 150)
+                    if(AI1 >= 100 && AI1 < 150) //dash towards the player
                     {
                         if (AI1 == 100)
                         {
@@ -1421,6 +1436,16 @@ namespace SOTS.NPCs.Boss.Excavator
                         NPC.velocity *= 0.995f;
                     }
                 }
+            }
+            else
+            {
+                if (bigArmChargePercent > 0)
+                {
+                    bigArmChargePercent -= 0.01f;
+                    bigArmChargePercent *= 0.95f;
+                }
+                else
+                    bigArmChargePercent = 0;
             }
             if (AIPhase == EnergyBallPhase)
             {
@@ -1447,7 +1472,7 @@ namespace SOTS.NPCs.Boss.Excavator
                             }
                         }
                     }
-                    if (AI1 > 450)
+                    if (AI1 > 480)
                     {
                         if(InSecondPhase)
                             SwapPhase(LaserPhase);
