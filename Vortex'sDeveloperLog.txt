@@ -76,8 +76,10 @@ N/A
 
 Daily Log:
 
-6/26/25
+5/25/25 to 6/26/25
 1. Add Ira Gateway and small fixes + optimizations to tile breaking code related to gateways
+2. Fix treasure bag text (now includes boss names)
+3. Modify color of magma concentrator to be more similar to excavator's laser colors now
 
 6/19/25 to 6/24/25
 1. Rework sawflake visuals (this may be a small buff to hitbox size)
