@@ -6925,6 +6925,11 @@ Mods: {
 				DisplayName: Excavator Trophy
 				Tooltip: ""
 			}
+
+			IraGateway: {
+				DisplayName: Ira Gateway
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7711,6 +7716,7 @@ Mods: {
 			EvostonePots.MapEntry: Pots
 			SeismicStationTile.MapEntry: Seismic Station
 			TideChainTile.MapEntry: Tide Chain Tile
+			IraGatewayTile.MapEntry: Ira Gateway Tile
 		}
 
 		WorldGeneration: {

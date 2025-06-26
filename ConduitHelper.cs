@@ -233,18 +233,25 @@ namespace SOTS
             Texture2D textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/AcediaGatewayTileGlowMask" + variant).Value;
             Color defaultColor = new Color(120, 100, 130, 0);
             Color alternatingColor = ColorHelper.AcediaColor * 0.65f;
-            if (tile.TileType == ModContent.TileType<AvaritianGatewayTile>())
+            if (tile.TileType == SOTSTile.AvaritianGatewayTile)
 			{
                 texture = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/AvaritianGatewayTileGlow" + variant).Value;
                 textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/AvaritianGatewayTileGlowMask" + variant).Value;
                 defaultColor = new Color(120, 100, 130, 0);
                 alternatingColor = ColorHelper.OtherworldColor * 0.65f;
             }
-            if (tile.TileType == ModContent.TileType<GulaGatewayTile>())
+            if (tile.TileType == SOTSTile.GulaGatewayTile)
             {
                 texture = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/GulaGatewayTileGlow" + variant).Value;
                 textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/GulaGatewayTileGlowMask" + variant).Value;
                 defaultColor = new Color(130, 100, 110, 0);
+                alternatingColor = ColorHelper.GulaColor * 0.65f;
+            }
+            if (tile.TileType == SOTSTile.IraGatewayTile)
+            {
+                texture = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/IraGatewayTileGlow" + variant).Value;
+                textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/PortalIraGatewayTileGlowMask" + variant).Value;
+                defaultColor = new Color(130, 120, 50, 0);
                 alternatingColor = ColorHelper.GulaColor * 0.65f;
             }
             for (int twice = 0; twice < 2; twice++)

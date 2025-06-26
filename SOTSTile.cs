@@ -25,6 +25,8 @@ using SOTS.WorldgenHelpers;
 using SOTS.Items.Invidia;
 using SOTS.Dusts;
 using System.Net.Security;
+using System.Runtime.InteropServices.Marshalling;
+using SOTS.Items.Temple;
 
 namespace SOTS
 {
@@ -67,10 +69,23 @@ namespace SOTS
         public static Vector3 EvilPlatingLight = new Vector3(.5f, .2f, .2f);
         public static Vector3 InfernoPlatingLight = new Vector3(0.426f, 0.2f, 0.032f);
         public static Vector3 ChaosPlatingLight = new Vector3(0.46f, 0.18f, 0.40f);
-        public static int[] pyramidTiles;                     
+        public static int[] pyramidTiles;
+        public static ushort AcediaGatewayTile { get; private set; }
+        public static ushort GulaGatewayTile { get; private set; }
+        public static ushort IraGatewayTile { get; private set; }
+        public static ushort AvaritianGatewayTile { get; private set; }
+        public static ushort InvidiaGatewayTile { get; private set; }
         public static void LoadArrays() //called in SOTS.Load() 
         {
-            pyramidTiles = new int[] { TileType<CursedHive>(), TileType<PyramidBrickTile>(), TileType<PyramidSlabTile>(), TileType<OvergrownPyramidTile>(), TileType <CursedTumorTile>(), TileType<RuinedPyramidBrickTile>(), TileType<PyramidRubbleTile>() };
+            pyramidTiles = [TileType<CursedHive>(), TileType<PyramidBrickTile>(), TileType<PyramidSlabTile>(), TileType<OvergrownPyramidTile>(), TileType <CursedTumorTile>(), TileType<RuinedPyramidBrickTile>(), TileType<PyramidRubbleTile>()];
+        }
+        public override void SetStaticDefaults()
+        {
+            AcediaGatewayTile = (ushort)TileType<AcediaGatewayTile>();
+            GulaGatewayTile = (ushort)TileType<GulaGatewayTile>();
+            IraGatewayTile = (ushort)TileType<IraGatewayTile>();
+            AvaritianGatewayTile = (ushort)TileType<AvaritianGatewayTile>();
+            InvidiaGatewayTile = (ushort)TileType<InvidiaGatewayTile>();
         }
         public override bool CanReplace(int i, int j, int type, int tileTypeBeingPlaced)
         {
@@ -292,7 +307,7 @@ namespace SOTS
         }
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged)
         {
-            if (!IsValidTileAbove(i, j, type))
+            if (!IsValidTileAbove(i, j))
             {
                 return false;
             }
@@ -304,7 +319,7 @@ namespace SOTS
         }
         public override bool CanExplode(int i, int j, int type)
         {
-            if (!IsValidTileAbove(i, j, type))
+            if (!IsValidTileAbove(i, j))
             {
                 return false;
             }
@@ -312,20 +327,23 @@ namespace SOTS
         }
         public override bool Slope(int i, int j, int type)
         {
-            if (!IsValidTileAbove(i, j, type))
+            if (!IsValidTileAbove(i, j))
             {
                 return false;
             }
             return base.Slope(i, j, type);
         }
-        public bool IsValidTileAbove(int i, int j, int type)
+        public static bool IsValidTileAbove(int i, int j)
         {
             Tile tileAbove = Main.tile[i, j - 1];
             int tileAboveType = tileAbove.TileType;
-            if (tileAboveType == (ushort)TileType<AvaritianGatewayTile>() || tileAboveType == (ushort)TileType<AcediaGatewayTile>() || tileAboveType == (ushort)TileType<GulaGatewayTile>())
+            if (tileAboveType == AvaritianGatewayTile || 
+                tileAboveType == AcediaGatewayTile || 
+                tileAboveType == GulaGatewayTile ||
+                tileAboveType == IraGatewayTile)
             {
                 int TileFrame = tileAbove.TileFrameX / 18 + (tileAbove.TileFrameY / 18 * 9);
-                if (TileFrame >= 65 && TileFrame <= 69)
+                if (TileFrame >= 74 && TileFrame <= 78)
                     return false;
             }
             if (tileAboveType == (ushort)TileType<BigCrystalTile>())
@@ -339,7 +357,7 @@ namespace SOTS
             {
                 return false;
             }
-            if (tileAboveType == (ushort)TileType<SarcophagusTile>() || tileAboveType == (ushort)TileType<RubyKeystoneTile>() || tileAboveType == (ushort)TileType<Items.Earth.Glowmoth.SilkCocoonTile>() || tileAboveType == (ushort)TileType<InvidiaGatewayTile>())
+            if (tileAboveType == (ushort)TileType<SarcophagusTile>() || tileAboveType == (ushort)TileType<RubyKeystoneTile>() || tileAboveType == (ushort)TileType<Items.Earth.Glowmoth.SilkCocoonTile>() || tileAboveType == InvidiaGatewayTile)
             {
                 return false;
             }

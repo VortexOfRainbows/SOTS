@@ -43,7 +43,8 @@ Update Objectives:
 11. Invidia Gateway Tile (needs: glow, conduit connection)
 12. Bridgeburner flight
 13. Items still needed
-	1. Expert drop, Ira Gateway, Suspicious Watch, Excavator (master mode drop)
+	1. Expert drop, Suspicious Watch, Excavator (master mode drop)
+14. Refactor ImportantTiles code and conduit powering code for portals (next update, right now ira portal is unfinished because of this).
 
 ---WIP List---
 N/A
@@ -75,6 +76,9 @@ N/A
 
 Daily Log:
 
+6/26/25
+1. Add Ira Gateway and small fixes + optimizations to tile breaking code related to gateways
+
 6/19/25 to 6/24/25
 1. Rework sawflake visuals (this may be a small buff to hitbox size)
 2. Blongus damage 6 -> 5, use time 22 -> 24. Dramatically nerf damage scaling
@@ -83,6 +87,7 @@ Daily Log:
 5. Excavator mask
 6. Excavator trophy
 7. Excavator laser orb attack now takes slightly longer to end
+8. Excavator drill dash attack now has a better telegraph
 
 6/16/25 to 6/19/25
 1. Preliminary Excavator multiplayer syncing (now spawns in multiplayer and attacks generally seem to work)
