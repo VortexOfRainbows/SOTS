@@ -30,12 +30,12 @@ namespace SOTS.NPCs.AbandonedVillage
             NPC.localAI[3] = reader.ReadSingle();
             Buried = reader.ReadBoolean();
         }
-        public const int AnimSpeed = 4;
+        public const int AnimSpeed = 5;
 		private static Asset<Texture2D> NPCTexture;
         public bool Buried = true;
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[NPC.type] = 15;
+            Main.npcFrameCount[NPC.type] = 25;
         }
         public override void SetDefaults()
 		{
@@ -63,7 +63,7 @@ namespace SOTS.NPCs.AbandonedVillage
                 boundingBox.X = boundingBox.Y = 0; //place it out of bounds so it is basically unhoverable when buried
             }
         }
-        public bool InAttackFrames => NPC.localAI[3] < -3 * AnimSpeed;
+        public bool InAttackFrames => NPC.localAI[3] < -7 * AnimSpeed && NPC.localAI[3] > -10 * AnimSpeed; //frame must be greater than 18
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return InAttackFrames;
@@ -72,8 +72,8 @@ namespace SOTS.NPCs.AbandonedVillage
         {
             if(InAttackFrames)
             {
-                npcHitbox.X -= 24;
-                npcHitbox.Width += 48;
+                npcHitbox.X -= 29;
+                npcHitbox.Width += 58;
                 npcHitbox.Y -= 24;
                 npcHitbox.Height += 24;
             }
@@ -88,6 +88,7 @@ namespace SOTS.NPCs.AbandonedVillage
             bool isBestiary = Main.screenPosition != screenPos;
             if (isBestiary)
                 drawColor = Color.White;
+            origin.X -= 20 * NPC.spriteDirection;
             if (Buried && !isBestiary)
             {
                 Rectangle frame = NPC.frame;
@@ -96,10 +97,6 @@ namespace SOTS.NPCs.AbandonedVillage
                 frame.Height -= amt;
 			    Main.EntitySpriteDraw(NPCTexture.Value, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY + 2 + amt), frame, NPC.GetNPCColorTintedByBuffs(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
                 return false;
-            }
-            if(NPC.frame.Y >= 10 * textureHeight) //Attack animation will have different origin
-            {
-                origin.X -= 8 * NPC.spriteDirection;
             }
 			Main.EntitySpriteDraw(NPCTexture.Value, NPC.Center - screenPos + new Vector2(0, NPC.gfxOffY + 2), NPC.frame, NPC.GetNPCColorTintedByBuffs(drawColor), NPC.rotation, origin, NPC.scale, effects, 0);
 			return false;
@@ -110,14 +107,14 @@ namespace SOTS.NPCs.AbandonedVillage
             if (Buried)
                 return;
             NPC.frameCounter++;
-            if (NPC.frameCounter > AnimSpeed)
+            if (NPC.frameCounter >= AnimSpeed)
             {
                 NPC.frame.Y = NPC.frame.Y + frameHeight;
                 NPC.frameCounter = 0;
             }
             if (NPC.localAI[3] < 0)
             {
-                if (NPC.frame.Y >= frameHeight * 15)
+                if (NPC.frame.Y >= frameHeight * 25)
                 {
                     NPC.frame.Y = 0;
                 }
@@ -129,7 +126,7 @@ namespace SOTS.NPCs.AbandonedVillage
             }
             else if (NPC.velocity.Y > 0 || NPC.velocity.Y < 0 || NPC.localAI[0] > 0)
             {
-                NPC.frame.Y = 12 * frameHeight;
+                NPC.frame.Y = 13 * frameHeight; //Mid air frame
             }
             else if (NPC.frame.Y >= frameHeight * 10) // Walk animation goes up to 10
             {
@@ -192,22 +189,22 @@ namespace SOTS.NPCs.AbandonedVillage
             {
                 if (NPC.localAI[3] % 5 == 0 && Main.netMode == NetmodeID.Server) 
                     NPC.netUpdate = true;
-                if (NPC.localAI[3] == -2 * AnimSpeed)
+                if (NPC.localAI[3] == -7 * AnimSpeed)
                 {
                     SOTSUtils.PlaySound(SoundID.Item1, NPC.Center, 1.0f, 0.3f);
                 }
                 NPC.localAI[3]--;
                 if (NPC.localAI[3] < 0)
                 {
-                    NPC.velocity.X *= 0.5f;
-                    if (NPC.localAI[3] <= -5 * AnimSpeed)
+                    NPC.velocity.X *= 0.35f;
+                    if (NPC.localAI[3] <= -15 * AnimSpeed)
                     {
-                        NPC.localAI[3] = 30;
+                        NPC.localAI[3] = 15;
                     }
                 }
             }
             else
-                NPC.localAI[3] = 30;
+                NPC.localAI[3] = 15;
         }
         public override void HitEffect(NPC.HitInfo hit)
         {
@@ -239,7 +236,7 @@ namespace SOTS.NPCs.AbandonedVillage
         }
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo)
         {
-            VoidPlayer.VoidBurn(SOTS.Instance, target, 3, 600);
+            VoidPlayer.VoidBurn(SOTS.Instance, target, 5, 300);
         }
     }
 }
