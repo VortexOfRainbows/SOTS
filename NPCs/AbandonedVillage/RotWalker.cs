@@ -193,6 +193,10 @@ namespace SOTS.NPCs.AbandonedVillage
                 {
                     SOTSUtils.PlaySound(SoundID.Item1, NPC.Center, 1.0f, 0.3f);
                 }
+                if (NPC.localAI[3] == -8 * AnimSpeed)
+                {
+                    SOTSUtils.PlaySound(SoundID.DD2_MonkStaffGroundImpact, NPC.Center, 1.0f, 0.1f, 0.1f);
+                }
                 NPC.localAI[3]--;
                 if (NPC.localAI[3] < 0)
                 {
