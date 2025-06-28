@@ -4,9 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs.Debuffs;
 using SOTS.Common;
 using SOTS.Common.GlobalNPCs;
-using SOTS.Dusts;
 using SOTS.FakePlayer;
-using SOTS.Helpers;
 using SOTS.Items;
 using SOTS.Items.Celestial;
 using SOTS.Items.Conduit;
@@ -24,12 +22,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Xml.Schema;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.Localization;
@@ -304,11 +300,24 @@ namespace SOTS
 		{
 			if (self != null) //This code only runs on client
             {
+				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(self);
+				if(!sPlayer.HasPick3x3ThisFrame && !Main.SmartCursorIsUsed)
+				{
+					sPlayer.HasPick3x3ThisFrame = true;
+					self.PickTile(x - 1, y, pickPower);
+                    self.PickTile(x + 1, y, pickPower);
+                    self.PickTile(x, y - 1, pickPower);
+                    self.PickTile(x, y + 1, pickPower);
+                    self.PickTile(x - 1, y - 1, pickPower);
+                    self.PickTile(x + 1, y - 1, pickPower);
+                    self.PickTile(x - 1, y + 1, pickPower);
+                    self.PickTile(x + 1, y + 1, pickPower);
+                    //pick 3x3
+                }
 				if (Famished.CheckForListeners(x, y, true)) //Don't break tiles that famished are on top of
 					return;
-				if (SOTSPlayer.ModPlayer(self).bonusPickaxePower > 0)
-					pickPower += SOTSPlayer.ModPlayer(self).bonusPickaxePower;
-				if (SOTSPlayer.ModPlayer(self).ConduitBelt)
+				pickPower += sPlayer.bonusPickaxePower;
+				if (sPlayer.ConduitBelt)
 				{
 					Tile tile = Framing.GetTileSafely(x, y);
 					if (tile.TileType == ModContent.TileType<ConduitChassisTile>() || 
@@ -324,13 +333,13 @@ namespace SOTS
 						pickPower += 300;
                     }
                 }
-				if (SOTSPlayer.ModPlayer(self).AmethystRing)
+				if (sPlayer.AmethystRing)
 				{
 					bool DoNotMineNormally = Helpers.LazyMinerHelper.FakePickTile(self, x, y, pickPower);
 					if (DoNotMineNormally)
 						return;
 				}
-				if (SOTSPlayer.ModPlayer(self).GoldenTrowel)
+				if (sPlayer.GoldenTrowel)
 				{
 					Tile tile = Framing.GetTileSafely(x, y);
 					int num = self.hitTile.HitObject(x, y, 1);

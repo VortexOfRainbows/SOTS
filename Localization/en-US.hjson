@@ -6930,6 +6930,15 @@ Mods: {
 				DisplayName: Ira Gateway
 				Tooltip: ""
 			}
+
+			DrillHand: {
+				DisplayName: Drill Hand
+				Tooltip: 
+				'''
+				Mine in a 3x3 area, but reduce mining speed by 50% and pickaxe power by 10
+				When smart cursor is enabled, increase mining speed by 15% instead
+				'''
+			}
 		}
 
 		ItemTooltip: {

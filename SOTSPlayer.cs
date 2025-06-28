@@ -366,7 +366,9 @@ namespace SOTS
 		public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
 		public bool AcidInject = false, Earthdrive = false, Sunbulb = false, Dreamcatcher = false;
-		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+		public bool Pick3x3 = false;
+		public bool HasPick3x3ThisFrame = false;
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
 			VoidPlayer voidPlayer = Player.GetModPlayer<VoidPlayer>();
@@ -830,8 +832,10 @@ namespace SOTS
 			else
 			{
 				Player.rocketTimeMax = 7;
-			}
-			ReplaceCritWithDamage();
+            }
+            HasPick3x3ThisFrame = !Pick3x3;
+            Pick3x3 = false;
+            ReplaceCritWithDamage();
 			StatShare();
 		}
 		public void ReplaceCritWithDamage()

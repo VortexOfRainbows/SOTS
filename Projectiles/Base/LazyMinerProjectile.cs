@@ -16,6 +16,10 @@ namespace SOTS.Projectiles.Base
 {    
     public class LazyMinerProjectile : ModProjectile 
     {	
+        public static int MaxTiles(Player p)
+        {
+            return p.SOTSPlayer().HasPick3x3ThisFrame ? 150 : 50;
+        }
         public static bool PlayerOwnsLazyMiner(Player owner)
         {
             for(int i = 0; i < 1000; i++)
@@ -132,7 +136,7 @@ namespace SOTS.Projectiles.Base
                     }
                 }
             }
-            if(!foundATile || tileLocations.Count >= 50)
+            if(!foundATile || tileLocations.Count >= MaxTiles(Main.player[Projectile.owner]))
             {
                 Projectile.ai[0] = -1;
                 Projectile.netUpdate = true;

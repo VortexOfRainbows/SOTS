@@ -41,6 +41,7 @@ namespace SOTS.Items.AbandonedVillage
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 10, 20));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 60, 100));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExcavatorMask>(), 7));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<DrillHand>(), 1));
         }
-	}
+    }
 }
