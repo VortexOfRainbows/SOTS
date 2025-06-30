@@ -9,6 +9,7 @@ using SOTS.Items.Tools;
 using SOTS.NPCs.Gizmos;
 using SOTS.Projectiles.AbandonedVillage;
 using SOTS.WorldgenHelpers;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,6 +17,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using UtfUnknown.Core.Models.SingleByte.Finnish;
 
 namespace SOTS.NPCs.Boss.Excavator
 {
@@ -989,6 +991,8 @@ namespace SOTS.NPCs.Boss.Excavator
                 scale *= MathF.Pow(0.94f, i - 2);
             }
             Vector2 bodyOrigin = bodyTop.Size() / 2;
+            if (i == 0)
+                bodyOrigin.Y /= 10;
             if(i == segments.Length - 1)
             {
                 bodyOrigin = new Vector2(bodyTop.Width / 2, bodyTop.Height / 2 - 18);
@@ -998,8 +1002,15 @@ namespace SOTS.NPCs.Boss.Excavator
                 if (other.ModNPC is ExcavatorBody)
                 {
                     if(bodyTop != null)
-                        spriteBatch.Draw(bodyTop, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
-                    if(bodyGlow != null)
+                    {
+                        if(i == 0) //For now this is only draw the first frame
+                        {
+                            spriteBatch.Draw(bodyTop, other.Center - screenPos, new Rectangle(0, 104 * BodyFrame, 126, 104), drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                        }
+                        else
+                            spriteBatch.Draw(bodyTop, other.Center - screenPos, null, drawColor, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                    }
+                    if (bodyGlow != null)
                         spriteBatch.Draw(bodyGlow, other.Center - screenPos, null, Color.White, other.rotation, bodyOrigin, other.scale * scale, other.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
                 }
             }
@@ -1113,7 +1124,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override void SetDefaults()
         {
-            NPC.lifeMax = 14000;
+            NPC.lifeMax = 17500;
             NPC.damage = 42;
             NPC.defense = 20;
             NPC.knockBackResist = 0f;
@@ -1133,7 +1144,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.75f); 
+            NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment * 0.6723f); 
             NPC.damage = (int)(NPC.damage * 0.75f);
         }
         private int DespawnCounter = 0;
@@ -1287,6 +1298,57 @@ namespace SOTS.NPCs.Boss.Excavator
                     return true;
             return false;
         }
+        public int BodyFrame;
+        public int BodyFrameCounter;
+        public void OpenRocketHatch()
+        {
+            if (BodyFrame >= 7)
+            {
+                BodyFrame = 0;
+                BodyFrameCounter = 0;
+            }
+            else if(BodyFrame < 6)
+            {
+                BodyFrameCounter++;
+                if (BodyFrameCounter >= 6)
+                {
+                    BodyFrame++;
+                    BodyFrameCounter = 0;
+                }
+            }
+            else
+            {
+                BodyFrame = 6;
+                BodyFrameCounter = 0;
+            }
+        }
+        public void CloseRocketHatch()
+        {
+            if (BodyFrame != 0)
+            {
+                if (BodyFrame < 6)
+                {
+                    BodyFrame = 6;
+                    BodyFrameCounter = 0;
+                }
+                else
+                {
+                    BodyFrameCounter++;
+                    if (BodyFrameCounter >= 6)
+                    {
+                        BodyFrame++;
+                        BodyFrameCounter = 0;
+                    }
+                }
+            }
+            else
+                BodyFrameCounter = 0;
+            if(BodyFrame >= 9)
+            {
+                BodyFrame = 0;
+                BodyFrameCounter = 0;
+            }
+        }
         public void LaunchRocket(int dir, Vector2 targetPosition = default, bool sound = true, float precisionMult = 1.0f)
         {
             NPC body = Main.npc[segments[0]];
@@ -1310,6 +1372,7 @@ namespace SOTS.NPCs.Boss.Excavator
         }
         public override bool PreAI()
         {
+            bool openHatch = false;
             Lighting.AddLight(NPC.Center, Glow * 0.5f);
             InitializeDataStructures();
             WormSetup();
@@ -1546,6 +1609,7 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             if(AIPhase == RocketPhase)
             {
+                openHatch = true;
                 MoveStyle = 3;
                 SwitchArm(2);
                 if (ArmsFinishedSwitching())
@@ -1584,6 +1648,8 @@ namespace SOTS.NPCs.Boss.Excavator
             }
             if(AIPhase == SawPhase)
             {
+                if (InSecondPhase)
+                    openHatch = true;
                 int total = InSecondPhase ? 6 : 8;
                 //Main.NewText(AI3);
                 if (AI3 > total)
@@ -1653,6 +1719,10 @@ namespace SOTS.NPCs.Boss.Excavator
                     SwapPhase(EnergyBallPhase);
                 }
                 bool isDrill = AI3 % 2 == 0;
+                if(!isDrill)
+                {
+                    openHatch = true;
+                }
                 if (AI1 > 20)
                 {
                     int dashTime = 110;
@@ -1752,11 +1822,12 @@ namespace SOTS.NPCs.Boss.Excavator
             {
                 TelegraphCounter = TelegraphFadeOut = 0;
                 TelegraphLocation = target.Center;
-            }    
-            /*
-            one where excavator will use the laser and saw at the same time
-            and it would also have a desparation phase with an unstable "Gula" spirit which is an Evil+Earthen spirit that explodes violently
-            */
+            }
+
+            if (openHatch)
+                OpenRocketHatch();
+            else
+                CloseRocketHatch();
             return false;
         }
         public override void PostAI()
