@@ -14,7 +14,7 @@ namespace SOTS.Items.AbandonedVillage
 		{
 			Item.maxStack = 1;
             Item.width = 30;
-			Item.height = 26;   
+			Item.height = 52;   
             Item.value = Item.sellPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.Orange;
 			Item.accessory = true;
