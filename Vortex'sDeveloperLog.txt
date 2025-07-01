@@ -76,14 +76,14 @@ N/A
 
 Daily Log:
 
-5/25/25 to 6/29/25
+5/25/25 to 6/30/25
 1. Add Ira Gateway and small fixes + optimizations to tile breaking code related to gateways
 2. Fix treasure bag text (now includes boss names)
 3. Modify color of magma concentrator to be more similar to excavator's laser colors now
 4. Change Rotwalker animation to the new Petaniks animation
 	1. Modified hitbox and some behavior to compensate for slower attack speed
 	2. Adjusted void damage (3 -> 5, burn time 10 -> 5)
-5. Add excavator expert drop (needs sprite, WORKS IN MP)
+5. Add excavator expert drop + animation/equip visual, (seems to WORKS IN MP, but cannot be dyed due to being internally a projectile)
 6. Excavator missile sprite change (petaniks) + opening animation before missiles
 7. Increase excavator health, now (17500, 23530, 30000)
 8. More excavator MP testing (he mostly seems to work outside of some recoil things that don't really matter)

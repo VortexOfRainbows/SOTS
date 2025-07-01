@@ -1,23 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items;
-using SOTS.NPCs.Boss.Curse;
-using System;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
-
 
 namespace SOTS.Projectiles.Tide
 {
 	public class PlasmaShrimp : ModProjectile
 	{
-        public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Plasma Shrimp");
-		}
 		public sealed override void SetDefaults()
 		{
 			Projectile.width = 50;

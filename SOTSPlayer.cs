@@ -366,8 +366,7 @@ namespace SOTS
 		public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
 		public bool AcidInject = false, Earthdrive = false, Sunbulb = false, Dreamcatcher = false;
-		public bool Pick3x3 = false;
-		public bool HasPick3x3ThisFrame = false;
+		public bool Pick3x3 = false, HasPick3x3ThisFrame = false, DrillHand = false, DrillHandVanity = false;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -507,7 +506,7 @@ namespace SOTS
 				CreativeFlightButtonPressed = false;
 			}
 		}
-		private int[] probes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+		private int[] probes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 		private int[] probesAqueduct = [-1, -1, -1, -1, -1, -1, -1, -1];
 		private int[] probesTinyPlanet = [-1, -1, -1, -1, -1, -1, -1, -1];
 		private int[] ArtifactProbes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
@@ -798,8 +797,12 @@ namespace SOTS
 			if (PlasmaShrimp)
 			{
 				runPets(ref probes[10], ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>());
-			}
-			doPlanetAqueduct();
+            }
+            if (DrillHandVanity)
+            {
+                runPets(ref probes[11], ModContent.ProjectileType<Projectiles.AbandonedVillage.DrillHand>());
+            }
+            doPlanetAqueduct();
 			if (rippleEffect)
 			{
 				float healthPercent = (float)Player.statLife / (float)Player.statLifeMax2;
@@ -1333,8 +1336,8 @@ namespace SOTS
 			polarCannons = 0;
 			meleeItemScale = 1f;
 			SerpentSpine = MeleeShred = false;
-			PlasmaShrimpVanity = false;
-			PlasmaShrimp = false;
+			PlasmaShrimpVanity = DrillHandVanity = false;
+			PlasmaShrimp = DrillHand = false;
 			if (LazyCrafterAmulet) //this needs to be done in both Detours and Here due to how the original recipe functions determine when to update recipes
 			{
 				Player.adjTile[TileID.WorkBenches] = true;

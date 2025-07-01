@@ -169,5 +169,9 @@ namespace SOTS
 		{
 			return spinningPoint.RotatedBy(MathHelper.ToRadians(degrees), center);
 		}
+		public static Vector2 ToVector2Int(this Vector2 v, float xRound = 0.0f, float yRound = 0.0f)
+		{
+			return new Vector2((int)(v.X + xRound), (int)(v.Y + yRound));
+		}
     }
 }

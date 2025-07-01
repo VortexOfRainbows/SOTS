@@ -138,10 +138,12 @@ namespace SOTS
 			//Prevent lava slime lava in sanctuary
             On_NPC.VanillaHitEffect += On_NPC_VanillaHitEffect;
 
+            //Drill 3x3
+            On_Player.ItemCheck_UseMiningTools_ActuallyUseMiningTool += Player_ItemCheck_UseMiningTools_ActuallyUseMiningTool;
+
             if (!Main.dedServ)
 				ResizeTargets();
 		}
-
         private static void On_NPC_VanillaHitEffect(On_NPC.orig_VanillaHitEffect orig, NPC self, int hitDirection, double dmg, bool instantKill)
         {
 			int actualNetMode = Main.netMode;
@@ -296,26 +298,35 @@ namespace SOTS
 			}
 			orig(self, i);
 		}
-		private static void Player_PickTile(On_Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
+		private static void Player_ItemCheck_UseMiningTools_ActuallyUseMiningTool(On_Player.orig_ItemCheck_UseMiningTools_ActuallyUseMiningTool orig, Player self, Item sItem, out bool canHitWalls, int x, int y)
+		{
+			orig(self, sItem, out canHitWalls, x, y);
+            if (sItem.pick > 0 && !Main.SmartCursorIsUsed) //pick 3x3
+            {
+				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(self);
+				if(!sPlayer.HasPick3x3ThisFrame)
+                {
+					for(int i = -1; i <= 1; ++i)
+					{
+						for(int j = -1; j <= 1; ++j)
+                        {
+                            if ((i != 0 || j != 0) && Framing.GetTileSafely(x + i, y + j).HasTile)
+                            {
+                                sPlayer.HasPick3x3ThisFrame = true;
+                                orig(self, sItem, out _, x + i, y + j);
+                            }
+                        }
+					}
+                }
+            }
+        }
+        private static void Player_PickTile(On_Player.orig_PickTile orig, Player self, int x, int y, int pickPower)
 		{
 			if (self != null) //This code only runs on client
             {
-				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(self);
-				if(!sPlayer.HasPick3x3ThisFrame && !Main.SmartCursorIsUsed)
-				{
-					sPlayer.HasPick3x3ThisFrame = true;
-					self.PickTile(x - 1, y, pickPower);
-                    self.PickTile(x + 1, y, pickPower);
-                    self.PickTile(x, y - 1, pickPower);
-                    self.PickTile(x, y + 1, pickPower);
-                    self.PickTile(x - 1, y - 1, pickPower);
-                    self.PickTile(x + 1, y - 1, pickPower);
-                    self.PickTile(x - 1, y + 1, pickPower);
-                    self.PickTile(x + 1, y + 1, pickPower);
-                    //pick 3x3
-                }
-				if (Famished.CheckForListeners(x, y, true)) //Don't break tiles that famished are on top of
+                if (Famished.CheckForListeners(x, y, true)) //Don't break tiles that famished are on top of
 					return;
+                SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(self);
 				pickPower += sPlayer.bonusPickaxePower;
 				if (sPlayer.ConduitBelt)
 				{

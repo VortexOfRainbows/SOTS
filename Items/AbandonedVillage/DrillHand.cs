@@ -22,14 +22,22 @@ namespace SOTS.Items.AbandonedVillage
         }
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
-			if (!Main.SmartCursorIsUsed)
+			SOTSPlayer sp = player.SOTSPlayer();
+			sp.DrillHand = true;
+			sp.DrillHandVanity = !hideVisual;
+            if (!Main.SmartCursorIsUsed && player.HeldItem.pick > 0)
 			{
-				player.SOTSPlayer().Pick3x3 = true;
-				player.SOTSPlayer().bonusPickaxePower -= 10;
+				sp.Pick3x3 = true;
+                sp.bonusPickaxePower -= 15;
 				player.pickSpeed += 0.5f;
 			}
 			else
 				player.pickSpeed -= 0.15f;
 		}
-	}
+        public override void UpdateVanity(Player player)
+        {
+            SOTSPlayer sp = player.SOTSPlayer();
+            sp.DrillHandVanity = true;
+        }
+    }
 }

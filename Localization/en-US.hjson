@@ -6932,10 +6932,10 @@ Mods: {
 			}
 
 			DrillHand: {
-				DisplayName: Drill Hand
+				DisplayName: Drill Arm
 				Tooltip:
 					'''
-					Mine in a 3x3 area, but reduce mining speed by 50% and pickaxe power by 10
+					Mine in a 3x3 area, but reduce mining speed by 50% and pickaxe power by 15
 					When smart cursor is enabled, increase mining speed by 15% instead
 					'''
 			}
@@ -9040,6 +9040,7 @@ Mods: {
 			EvilBolt2.DisplayName: Evil Bolt
 			EvilEye.DisplayName: Evil Eye
 			LuxBallProjectile.DisplayName: Spirit Golf Ball
+			DrillHand.DisplayName: Drill Hand
 		}
 
 		DamageClasses: {
