@@ -11,6 +11,10 @@ namespace SOTS.Items.Master
 {
     public class LuxBall : ModItem
     {
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White;
+        }
         public override void SetStaticDefaults() => this.SetResearchCost(1);
         public override void SetDefaults()
         {

@@ -13,8 +13,8 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
-using tModPorter;
 using SOTS.Helpers;
+using SOTS.Items.Master;
 
 namespace SOTS.NPCs.Boss.Advisor
 {	[AutoloadBossHead]
@@ -41,15 +41,15 @@ namespace SOTS.NPCs.Boss.Advisor
 			get => NPC.ai[3];
 			set => NPC.ai[3] = value;
 		}
-		bool runOnce = true;
-		float fireToX = 0;
-		float fireToY = 0;
-		float eyeReset = 2.5f;
-		bool glow = false;
-		int lastAttackPhase1 = -1;
-		int lastAttackPhase2 = -1;
-		Vector2[] hookPos = {new Vector2(-1, -1) , new Vector2(-1, -1) , new Vector2(-1, -1) , new Vector2(-1, -1) };
-		Vector2[] hookPosTrue = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
+		private bool runOnce = true;
+		private float fireToX = 0;
+		private float fireToY = 0;
+		private float eyeReset = 2.5f;
+		private bool glow = false;
+		private int lastAttackPhase1 = -1;
+		private int lastAttackPhase2 = -1;
+		private Vector2[] hookPos = {new Vector2(-1, -1) , new Vector2(-1, -1) , new Vector2(-1, -1) , new Vector2(-1, -1) };
+		private Vector2[] hookPosTrue = { new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1), new Vector2(-1, -1) };
 		public override void SetStaticDefaults()
         {
             NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
@@ -133,15 +133,15 @@ namespace SOTS.NPCs.Boss.Advisor
 			NPC.damage = (int)(NPC.damage * 0.8f); //86
 		}
 		public static int[] ConstructIds = { -1, -1, -1, -1 };
-		bool dormant = true;
-		int dormantCounter = 0;
-		int ai1 = 0;
-		float ai3 = 0;
-		float hookDistortion = 1f;
-		float hookDistortionShake = 0f;
-		float laserDirection = 0f;
-		float nextLaserDirection = 0f;
-		int highlightFrame = 0;
+		private bool dormant = true;
+		private int dormantCounter = 0;
+		private int ai1 = 0;
+		private float ai3 = 0;
+		private float hookDistortion = 1f;
+		private float hookDistortionShake = 0f;
+		private float laserDirection = 0f;
+		private float nextLaserDirection = 0f;
+		private int highlightFrame = 0;
         public override void FindFrame(int frameHeight)
         {
 			NPC.frameCounter++;
@@ -410,9 +410,9 @@ namespace SOTS.NPCs.Boss.Advisor
 			DrawGlow(spriteBatch, screenPos, drawColor);
 			return true;
         }
-		bool moveLegsDynamic = true;
-		bool moveLegsReturn = true;
-		bool watchPlayer = true;
+		private bool moveLegsDynamic = true;
+		private bool moveLegsReturn = true;
+		private bool watchPlayer = true;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return !dormant;
@@ -1173,15 +1173,17 @@ namespace SOTS.NPCs.Boss.Advisor
 				.OnFailedRoll(ItemDropRule.Common(ModContent.ItemType<StrangeKey>(), 1, 1, 1));
 			npcLoot.Add(notExpertRule);
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<AdvisorRelic>()));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<OtherworldlyServiceDevice>(), 4));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<AdvisorTrophy>(), 10));
         }
-		public override void BossLoot(ref string name, ref int potionType)
-		{ 
-			SOTSWorld.downedAdvisor = true;
-			potionType = ItemID.HealingPotion;
-		}
+        public override void BossLoot(ref int potionType)
+        {
+            SOTSWorld.downedAdvisor = true;
+            potionType = ItemID.HealingPotion;
+        }
         public override void OnKill()
         {
+            SOTSWorld.downedAdvisor = true;
 			int n = NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<OtherworldlySpirit>());
 			Main.npc[n].velocity.Y = -10f;
 			if (Main.netMode != NetmodeID.MultiplayerClient)

@@ -366,10 +366,11 @@ namespace SOTS.NPCs.Boss.Lux
 				SOTSWorld.downedLux = true;
 			}
 		}
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
+			SOTSWorld.downedLux = true;
 			potionType = ItemID.GreaterHealingPotion;
-		}
+        }
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return attackPhase != -1 && !NPC.dontTakeDamage;

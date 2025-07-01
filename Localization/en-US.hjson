@@ -6908,7 +6908,7 @@ Mods: {
 
 			LuxBall: {
 				DisplayName: Spirit Golf Ball
-				Tooltip: 
+				Tooltip:
 					'''
 					Can be hit with a golf club and deals damage increasing with velocity
 					'This is one big photon!'
@@ -6946,7 +6946,7 @@ Mods: {
 
 			OtherworldlyServiceDevice: {
 				DisplayName: Otherworldly Service Device
-				Tooltip: 
+				Tooltip:
 					'''
 					Summons a Beepy Boopy Construct to provide light
 					'Need some advice? Ask the experts using this convenient communing-device!'
@@ -7447,7 +7447,7 @@ Mods: {
 
 			BeepBoop: {
 				DisplayName: Beep Boop
-				Description: "While this construct may be just one of many in your adventure, you are its entire otherworld!"
+				Description: While this construct is just one of many you've encounter in your adventures, you are its entire otherworld!
 			}
 		}
 
