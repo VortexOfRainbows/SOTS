@@ -26,7 +26,7 @@ namespace SOTS.Mounts
 		public override void SetStaticDefaults()
 		{
 			MountData.spawnDust = ModContent.DustType<SootDust>();
-			MountData.buff = ModContent.BuffType<Buffs.FriendlyCartBuff>();
+			MountData.buff = ModContent.BuffType<Buffs.Mount.FriendlyCartBuff>();
 			MountData.heightBoost = 50;
 			MountData.runSpeed = 11f;
 			MountData.dashSpeed = 11f;

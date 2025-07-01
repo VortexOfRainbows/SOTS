@@ -10,6 +10,7 @@ using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Chaos;
 using SOTS.Items.Fragments;
+using SOTS.Items.Master;
 using SOTS.NPCs.Constructs;
 using SOTS.Projectiles.Chaos;
 using SOTS.Void;

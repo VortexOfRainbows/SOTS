@@ -1,7 +1,7 @@
 using Terraria;
 using Terraria.ModLoader;
  
-namespace SOTS.Buffs
+namespace SOTS.Buffs.Mount
 {
     public class SpiritSurfer : ModBuff
     {	

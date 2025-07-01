@@ -13,8 +13,8 @@ namespace SOTS.NPCs.Constructs
 {
 	public class OtherworldlyConstructHead : ModNPC
 	{
-		int ai1 = 0;
-		float dir = 0f;
+		private int ai1 = 0;
+		private float dir = 0f;
         public override void SetStaticDefaults()
 		{
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
@@ -47,7 +47,7 @@ namespace SOTS.NPCs.Constructs
 			NPC.rotation = dir + (NPC.spriteDirection - 1) * 0.5f * -MathHelper.ToRadians(180);
 			return true;
 		}
-		bool glow = false;
+		private bool glow = false;
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
 			Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Constructs/OtherworldlyConstructHeadGlow").Value;
@@ -80,7 +80,7 @@ namespace SOTS.NPCs.Constructs
 					Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Main.rand.Next(61, 64), 1f);
 			}
 		}
-		Vector2 aimTo = new Vector2(-1, -1);
+		private Vector2 aimTo = new Vector2(-1, -1);
 		public override bool PreAI()
 		{
 			Player player = Main.player[NPC.target];
@@ -93,8 +93,8 @@ namespace SOTS.NPCs.Constructs
 			aimTo = player.Center;
 			return true;
 		}
-		bool flag = false;
-		Vector2 rotateVector = new Vector2(12, 0);
+		private bool flag = false;
+        private Vector2 rotateVector = new Vector2(12, 0);
 		public override void AI()
 		{
 			Player player = Main.player[NPC.target];

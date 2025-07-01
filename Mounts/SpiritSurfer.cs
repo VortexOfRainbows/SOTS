@@ -16,7 +16,7 @@ namespace SOTS.Mounts
 		public override void SetStaticDefaults()
 		{	
 			MountData.spawnDust = ModContent.DustType<LostSoulDust>();
-			MountData.buff = ModContent.BuffType<Buffs.SpiritSurfer>();
+			MountData.buff = ModContent.BuffType<Buffs.Mount.SpiritSurfer>();
 			MountData.heightBoost = 0;
 			MountData.runSpeed = 16f;
 			MountData.dashSpeed = 16f;

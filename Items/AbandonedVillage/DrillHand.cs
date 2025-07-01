@@ -4,8 +4,8 @@ using Terraria.ModLoader;
 
 namespace SOTS.Items.AbandonedVillage
 {
-	public class DrillHand : ModItem
-	{
+	public class DrillHand : ModItem //FUN FACT: This is the 1000th item to be added to SOTS in the current release!
+    {
 		public override void SetStaticDefaults()
 		{
 			this.SetResearchCost(1);

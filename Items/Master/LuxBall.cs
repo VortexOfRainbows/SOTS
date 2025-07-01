@@ -2,13 +2,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Helpers;
-using SOTS.Projectiles.AbandonedVillage;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace SOTS.Items.Chaos
+namespace SOTS.Items.Master
 {
     public class LuxBall : ModItem
     {
@@ -18,6 +17,7 @@ namespace SOTS.Items.Chaos
             Item.DefaultToGolfBall(ModContent.ProjectileType<LuxBallProjectile>());
             Item.master = true;
             Item.rare = ItemRarityID.Pink;
+            Item.value = Item.sellPrice(0, 5, 0, 0);
         }
         public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) => itemGroup = ContentSamples.CreativeHelper.ItemGroup.Golf;
     }

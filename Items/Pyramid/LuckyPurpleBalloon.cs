@@ -15,7 +15,7 @@ namespace SOTS.Items.Pyramid
         {
             Item.CloneDefaults(ItemID.Carrot);
             Item.shoot = ModContent.ProjectileType<Projectiles.LuckyPurpleBalloon>();
-            Item.buffType = ModContent.BuffType<Buffs.PurpleBalloon>();
+            Item.buffType = ModContent.BuffType<Buffs.Pet.PurpleBalloon>();
             Item.value = Item.sellPrice(0, 2, 25, 0);
             Item.rare = ItemRarityID.Orange;
 			Item.width = 18;

@@ -1,20 +1,16 @@
-using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-
 using Terraria;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles 
 {    
     public class LuckyPurpleBalloon : ModProjectile 
-    {	int wait = 0;
-		int plusY = 0;
+    {	
+		private int wait = 0;
+		private int plusY = 0;
 		public override void SetStaticDefaults()
 		{
-			// DisplayName.SetDefault("Lucky Purple Balloon");
 			Main.projFrames[Projectile.type] = 1;
 			Main.projPet[Projectile.type] = true;
 			ProjectileID.Sets.LightPet[Projectile.type] = true;

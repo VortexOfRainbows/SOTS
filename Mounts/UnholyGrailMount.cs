@@ -9,7 +9,7 @@ namespace SOTS.Mounts
 		public override void SetStaticDefaults()
 		{
 			MountData.spawnDust = DustID.GoldCoin;
-			MountData.buff = ModContent.BuffType<Buffs.UnholyGrailBuff>();
+			MountData.buff = ModContent.BuffType<Buffs.Mount.UnholyGrailBuff>();
 			MountData.heightBoost = 0;
 			MountData.runSpeed = 2f;
 			MountData.dashSpeed = 2f;
