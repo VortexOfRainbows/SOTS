@@ -7,6 +7,7 @@ using Terraria.ObjectData;
 using Microsoft.Xna.Framework;
 using SOTS.Items.Banners;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace SOTS.Items.MusicBoxes
 {
@@ -65,6 +66,21 @@ namespace SOTS.Items.MusicBoxes
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
 			player.cursorItemIconID = ModContent.ItemType<MothMusicBox>();
-		}
-	}
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            int frameX = Main.tile[i, j].TileFrameX / 18;
+            int frameY = Main.tile[i, j].TileFrameY / 18;
+            if (frameX >= 2)
+            {
+                Texture2D glowmask = ModContent.Request<Texture2D>(this.GetPath("Glow")).Value;
+                Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+                if (Main.drawToScreen)
+                {
+                    zero = Vector2.Zero;
+                }
+                Main.spriteBatch.Draw(glowmask, new Vector2(i * 16 - Main.screenPosition.X, j * 16 - Main.screenPosition.Y) + zero, new Rectangle(frameX * 18, frameY * 18, 16, 16), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
+        }
+    }
 }

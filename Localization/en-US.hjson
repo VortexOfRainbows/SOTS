@@ -6952,6 +6952,11 @@ Mods: {
 					'Need some advice? Ask the experts using this convenient communing-device!'
 					'''
 			}
+
+			ExcavatorMusicBox: {
+				DisplayName: Excavator Music Box
+				Tooltip: ""
+			}
 		}
 
 		ItemTooltip: {
@@ -7744,6 +7749,7 @@ Mods: {
 			SeismicStationTile.MapEntry: Seismic Station
 			TideChainTile.MapEntry: Tide Chain Tile
 			IraGatewayTile.MapEntry: Ira Gateway Tile
+			ExcavatorMusicBoxTile.MapEntry: Excavator Music Box Tile
 		}
 
 		WorldGeneration: {
