@@ -1,0 +1,167 @@
+Update 0.25.0.1: The Cities of Soot and Ash
+
+Added 2 new biomes, the Abandoned Village and the Sanctuary
+Added a new pre-hardmode boss, the Excavator
+Added a new mini-structure that can be found in the sky
+Added 249 new items, 28 creatures, and 170 tiles/walls
+Added alternative OST for The Advisor, Putrid Pinky, Pyramid, and the Planetarium, as well as songs for the new biomes
+Many adjustments to existing content
+Many bug fixes
+
+The following lists are not exhaustive, as they do not contain information on many new items, which you'll have to discover for yourself!
+
+Additions:
+1. Added all remaining conduit variants and all remaining elemental plating furniture sets
+2. Added Bestiary Entries for all NPCs that were missing them
+3. Added trophies for all bosses, as well as mastermode drops for Lux and Advisor
+4. Elemental Amulet now has 16 more variants
+5. Added two new secret variant items 
+6. Added a way to convert secret variant items back to their original variants
+7. Added new critters to catch
+8. Added some new recipes for vanilla items using SOTS ingredients, such as the Pocket Mirror
+9. Added some unique shimmer recipes, such as Electromagnetic Lure -> D.E.F.E.
+
+Changes:
+1. Pharaoh's Curse performance changes, which should result in noticeably better framerate
+2. Conduit buffs now stack as the same buff instead of multiple buffs
+3. Ruby and Emerald gem structures now spawn in different areas
+4. SOTS banners now draw function more similarly to vanilla banners, and can be placed on platforms
+5. Patchleather Armor set bonus should function better underwater
+6. Plating platforms are now immune to lava
+7. Elemental Amulet moved to a different loot pool
+8. Jar of Peanuts no longer requires an anvil to craft
+9. Slightly modified formula for increased lighting from Glowmoth expert drop Illuminant Lantern
+10. Elemental Armor now requires either blink pack or particle relocator instead of both
+11. Anomaly Locator no longer needs to be favorited in order to work
+12. Catalyst Bombs no longer break blocks near underworld layer
+13. Subspace Serpent now only spawns in the Sanctuary
+14. Changed some treasure slime loot tables and loot frequencies
+15. Certain previously missing conduits now spawn on world generation
+16. Reduce spawnrate of peanut bushes post-worldgen
+
+Balance Changes:
+1. Earthen constructs now only spawn when player is 160 max life or more, instead of 120 in the desert and 140 in the underground
+2. Polaris: 
+	1. Polaris Max Health Reduced (36000, 46000, 58650) -> (33000, 42000, 53550)
+	2. Polaris Mines now last for 10 -> 8 seconds
+	3. Polaris now fires 3-4 Mortar shells when switching attacks in expert mode instead of 4 (still 4 in master mode)
+	4. Polaris will now more likely do laser dashes in the second phase instead of mine dashes (66.6% -> 75%)
+	5. Polaris now fires less bullets during the bullet spam attack, and the amount is now the same in all modes during all phases of the attack (as much as half bullets in expert mode)
+	6. Replaced laser spam attack with a new, more straightforward attack
+	7. During the second phase bullet storm, Polaris laser attack now rotates 62% slower, and the 
+	8. During the second phase bullet storm and laser spin attack, Polaris is effected by movement tilt 95% less, drastically lowering the unpredictability of the laser attack
+	9. Polaris damage reduced (90, 135, 202) -> (80, 120, 180)
+3. Voidspace Aura staff buff duration 5 seconds => .1 seconds, now grants campfire buff in radius as well
+	1. Reduced radius and radius scaling (105 + 300 * summon damage) -> (320 + 80 * summon damage)
+	2. Knockback should now be more consistent, also buffed knockback 1 -> 3
+	3. Attack speed 45 -> 30
+	4. Damage 90 -> 54
+4. Adjusted homing of flying knife, reduced pierce from 6 -> 5, and reduced lifetime 6000 -> 1200
+5. Glowmoth HP (2400, 3360, 4284) -> (2800, 4200, 5355)
+6. Big Phantarays and Chimeras have 75% reduced spawnrate in towns
+7. Shatter shards now trigger 10 -> 20 frames of immunity, but these are now local immunity frames
+	1. Also slightly modified behavior and visuals, it should look and move nicer now
+	2. Limit on allowed shards per player 60 -> 50
+	3. Max pierce 5 -> 8, no longer reduces lifetime when hitting an enemy
+8. Corruption treasure slime defense 16 -> 12
+9. Planetarium spawn-rate nerfed considerable in towns
+10. Spectre Spirit Storm rework (roughly 2.21x the old power level, but with 25% more cost):
+		1. Damage 70 -> 62
+		2. Use time 15 -> 18
+		3. Now fires 3 arrows at a time
+		4. Void Cost 6 -> 9
+11. Foggy Clairvoyance should no longer effect debuffs from other mods whatsoever
+
+Buffs: 
+1. Perfect star has a better hit rate based on charge tier: (1, 2, 3): (15, 15, 15) -> (12, 10, 8)
+2. Perfect star now deals damage on the tail of the beam after the head has collided with a block, making damage more consistent
+3. Bag of Charms / Icosahedrons now use static immunity frames, no longer interfering with damage from other sources
+4. Arclight Orbs now use static immunity on lightning, boosting overall damage
+5. Cataclysm Sphere damage 45 -> 50
+6. Increased range of Vorpal Knife lightning to better match visuals 176 -> 200
+7. Each piece of Frost Artifact armor now costs 4 less absolute alloy (set cost 60 -> 48)
+	1. Frost Artifact helmet damage boost 14% melee/range -> 20% melee/range
+	2. Frost Artifact chestplate critical strike boost 16% melee/range -> 20% melee/range
+8. Sawflake now has a bigger hitbox due to visual reworks
+
+Nerfs: 
+1. Night Illuminator damage 10 -> 8
+2. Cursed Blade damage 24 -> 21
+3. Beelzebub's Ring (Ruby Ring) no longer works on statues, and has lower duration scaling (min: 5 -> 4 seconds, max 10 -> 9 seconds)
+4. Synthetic liver is now capped at 2x duration and no longer adds duration from draining debuffs, instead just prolonging the duration of buffs. Does not work with inverted amber ring 
+5. Coconut Gun damage 20 -> 17
+6. Armageddon damage 200 -> 190, void cost 8 -> 10
+7. Tesseract now deals 100% -> 70% damage (multiplicative)
+8. Arc Staff Mk2 damage multiplier against non-bosses 250% -> 200%
+	1. Damage 120 -> 100
+9. Voidmage Incubator minimum cooldown 10 seconds -> 20 seconds
+	1. Scaling cooldown factor 2 -> 3
+10. All Polarizers are now slightly more expensive to craft (Unique bar count 2 -> 5)
+	1. Worldly Polarizer endurance, movespeed, and damage buff 3% -> 2%
+11. Spore Sprayer damage 11 -> 10, usetime 18 -> 19, spore rate 66% -> 50%
+12. Abyssal Fury damage 50 -> 41, void cost 12 -> 14, use time 11 -> 12
+13. Gold Glaive damage 26 -> 20
+14. Vibrant Blade damage 22 -> 21, ring total hits 3 -> 2
+15. Vibrant Pistol damage 15 -> 14, usetime 12 -> 14
+16. Coconut gun damage 17 -> 16, void cost 20 -> 25
+17. Fire Spitter damage 10 -> 5
+
+Fixes:
+1. Golden Trowel no longer activates on hitting chests
+2. Hydraulic press ill no longer fail to drop as an item when broken while active
+3. Gilded Bladewings visual fixes with step stool and rope
+4. Riptide no longer boosts players forward with left click
+5. Twilight Beads should now work again
+6. Bundle of Snakes should no longer be unable to spawn when the player is anywhere but the top-left-quarter of the world
+7. Bundle of Snakes should no longer delete random projectiles when unable to spawn snakes
+8. Blast door and other SOTS doors should always drop their items when broken
+9. Starcaller Staff should now be affected by damage modifiers
+10. Creative shock should no longer randomly appear in multiplayer
+11. Void Meter should now save upon rejoining a world
+12. Fix bug where picking up an offscreen teleported (wormholed) item would cause the spiral visual to appear for other players where the item had previously been picked up, but no longer exists
+13. Fixed bug where Rock Candy was erroneously decreasing mining speed
+14. Tesseract should no longer oversend packets in multiplayer when above a count of 10
+15. Fix issue where Fake Players (Tesseract, Subserv, Hydrokinetic, etc.) would fail to right click items if the player was also using a right click item or if the servant was a Hydrokinetic Antennae servant
+16. Vibrant Geodes should no longer count as Marble Biomes
+17. Fixed some tile framing inconsistencies with sots tiles that had unique tile merges
+18. Attack speed modifiers should now work better on most SOTS items, such as Rose Bow, Ancient Steel Bow, Brachial Lance, Glaze Bow, Vespera Longbow, and Dreaming Lamp
+19. Fixed bug where Advisor's Thunder Column and Spiral Death laser attack might be invisible when offscreen
+20. Advisor should now despawn when far away less often
+21. Calculator tentacles should be properly effected by Dyes again, and made visuals from the redirect telegraph more consistent
+22. Accessories with damage stat should now finally be no longer effected by weapon reforges
+23. Lux Chains should now disappear when the chassis is killed in multiplayer
+24. Fix obscure multiplayer bug with vorpal knife that occasionally lead to the screen being blocked by a big visual.
+25. Prim trials (vertex projectile trails) should now get stuck on incorrect projectiles less often, especially in multiplayer
+26. Void + Summon items may be reforged again
+27. Fix issue here  Vertebraeker, Tooth Ache, and Vorpal Knife could be thrown through walls to the right
+28. Fix bug where Catacylsm disc dealt melee damage with the explosion and modified bouncing to be less strange
+29. Fixed bugs where several SOTS minions were dealing inappropriate knockback or lack thereof
+30. All void minions should now deal "Void Summon" damage, and they will be affected by whips and such (except Tesseract, for obvious reasons)
+31. Fixed bug where Arc Staff Mk2 wasn't inheriting void damage type (specifically effects critical strike chances)
+32. Fix bug where Voidspace Aura Staff would attempt to attack critters
+33. Fixed bug where Mineralarium placing frigid ore used unsafe variants, leading to bugged behavior (such as freezing after the first block)
+34. Twilight Devil now drops Jar of Souls again as intended
+35. Can no longer tile replace Hard Ice Bricks until after Polaris
+36. Fix bug where Heart in a Jar was causing enemies to glow strangely, and slightly modified dust visuals
+37. Dissolving Umbra effect in inventory unchanged, but should now display its effect properly
+38. Fix bug where items would occassionally inherit secret variant item names
+39. Subspace Flames debuff from Voidspace Ranger's Armor should no longer occasionally effect town NPCs
+40. Fix bug where putrid pinky laser appeared to be stopped by bubble block. Some other projectiles or interactions regarding bubble block should also be fixed now
+41. Corrupt palm trees should no longer sprout on the pyramid after worldgen
+42. Fixed bug where planetarium crates required crate potion to drop
+43. Fix bug where Golden Trowel chain accidentally decreased mining speed
+44. Fix small visual inconsistency with Gel Wings being in between pixels
+45. Assassination effect will no longer work on worm-segments and Wall of Flesh eyes
+46. Earthen construct no longer spawns in space in rare cases
+
+Misc:
+1. Modifications to various artwork and visual effects across the mod
+2. Sky Chain now goes under actuated blocks
+3. Blades (special SOTS swords) reworked. They are generally bigger and function better with attack speed changes and swing faster in general. Their trails now flow smoother at higher swing speeds. Blades now cut crass and other tiles better. Blades now work better with mounts
+4. Various internal code improvements and optimizations that should reduce some lag
+5. Various localization and tooltip changes that aim to increase clarity
+6. Various changes to bestiary visuals
+
+Removals:
+1. Removed some recipes that have been made obsolete, such as craftable trident recipes
+2. Deleted some unused sound effects

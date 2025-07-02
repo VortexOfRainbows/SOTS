@@ -272,10 +272,10 @@ namespace SOTS
             }
             if(tile.TileType == TileID.Grass && tile.WallType == 0 && SOTS.ServerConfig.NaturallySpawningPeanutBushes)
             {
-                int rate = 3500; //Dye plants = 3000
+                int rate = 4200; //Dye plants = 3000
                 if (WorldGen.genRand.NextBool(rate))
                 {
-                    int nearbyAllowance = 60;
+                    int nearbyAllowance = 70;
                     Tile tileAbove = Main.tile[i, j - 1];
                     if (!(tileAbove.HasTile && tileAbove.TileType != TileID.Plants && tileAbove.TileType != TileID.Cobweb && tileAbove.TileType != TileID.Plants2))
                     {
@@ -294,7 +294,7 @@ namespace SOTS
                                 }
                             }
                         }
-                        if (totalNearby < 2) //Will not grow if there are more than 1 within 60 blocks
+                        if (totalNearby < 2) //Will not grow if there are more than 1 within 70 blocks
                         {
                             WorldGen.KillTile(i, j - 1);
                             WorldGen.PlaceTile(i, j - 1, TileType<PeanutBushTile>(), false, true, -1, WorldGen.genRand.Next(3));

@@ -73,6 +73,11 @@ N/A
 
 Daily Log:
 
+7/2/25
+1. Compile changelogs and make some description adjustments
+2. Adjust Excavator mask
+3. Reduce spawnrate of peanut bushes
+
 6/25/25 to 7/1/25
 1. Add Ira Gateway and small fixes + optimizations to tile breaking code related to gateways
 2. Fix treasure bag text (now includes boss names)
@@ -498,7 +503,7 @@ Daily Log:
 10. Increased range of Vorpal Knife lightning to better match visuals 176 -> 200
 
 10/28/24 and 10/30/24 and 11/1/24
-d
+1. Wishing stars spawns in the vibrant geode instead of the vision amulet
 2. Ruby Gemlock should be spawning the synthetic liver again
 3. WIP spawning loot in chests 
 4. Fix bug where Catacylsm disc dealt melee damage with the explosion. Also reduced tile collide hitbox so it doesn't bounce weirdly off tiles
