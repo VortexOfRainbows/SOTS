@@ -25,7 +25,7 @@ Changes:
 1. Pharaoh's Curse performance changes, which should result in noticeably better framerate
 2. Conduit buffs now stack as the same buff instead of multiple buffs
 3. Ruby and Emerald gem structures now spawn in different areas
-4. SOTS banners now draw function more similarly to vanilla banners, and can be placed on platforms
+4. SOTS banners now function more similarly to vanilla banners, and can be placed on platforms
 5. Patchleather Armor set bonus should function better underwater
 6. Plating platforms are now immune to lava
 7. Elemental Amulet moved to a different loot pool
