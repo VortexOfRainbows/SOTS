@@ -28,5 +28,6 @@ namespace SOTS.Helpers
         public static int AbandonedVillageSurface => MusicLoader.GetMusicSlot("SOTS/Sounds/Music/BananaLizard/AVSurface");
         public static int AbandonedVillageUnderground =>  MusicLoader.GetMusicSlot("SOTS/Sounds/Music/BananaLizard/AVUnderground");
         public static int Secret =>  MusicLoader.GetMusicSlot("SOTS/Sounds/Music/SecretFound");
+        public static int Excavate => MusicLoader.GetMusicSlot("SOTS/Sounds/Music/BananaLizard/Excavate");
     }
 }

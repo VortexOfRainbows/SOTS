@@ -188,7 +188,7 @@ namespace SOTS
 			MusicLoader.AddMusicBox(this, MusicHelper.PharaohsCurse, ModContent.ItemType<CurseMusicBox>(), ModContent.TileType<CurseMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicHelper.AbandonedVillageSurface, ModContent.ItemType<AVMusicBox>(), ModContent.TileType<AVMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicHelper.AbandonedVillageUnderground, ModContent.ItemType<AVMinesMusicBox>(), ModContent.TileType<AVMinesMusicBoxTile>());
-			MusicLoader.AddMusicBox(this, MusicHelper.Secret, ModContent.ItemType<ExcavatorMusicBox>(), ModContent.TileType<ExcavatorMusicBoxTile>());
+			MusicLoader.AddMusicBox(this, MusicHelper.Excavate, ModContent.ItemType<ExcavatorMusicBox>(), ModContent.TileType<ExcavatorMusicBoxTile>());
 			SOTSItem.LoadArrays();
             SOTSTile.LoadArrays();
 			SOTSWall.LoadArrays();

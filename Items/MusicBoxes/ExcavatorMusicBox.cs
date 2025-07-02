@@ -6,10 +6,8 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Projectiles.Chaos;
 using System;
 using System.Collections.Generic;
-using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Projectiles.AbandonedVillage;
 
@@ -52,8 +50,9 @@ namespace SOTS.Items.MusicBoxes
 			Main.tileObsidianKill[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
+			TileObjectData.newTile.CoordinateHeights = [16, 18]; 
 			TileObjectData.newTile.LavaDeath = false;
-			TileObjectData.newTile.DrawYOffset = 2;
+			//TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			LocalizedText name = CreateMapEntryName();

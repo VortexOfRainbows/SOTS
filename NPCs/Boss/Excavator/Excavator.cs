@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using rail;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Banners;
 using SOTS.Items.Fragments;
@@ -1141,6 +1142,8 @@ namespace SOTS.NPCs.Boss.Excavator
             NPC.aiStyle = -1;
             NPC.boss = true;
             InitializeDataStructures();
+            Music = MusicHelper.Excavate;
+            SceneEffectPriority = SceneEffectPriority.BossLow;
         }
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {

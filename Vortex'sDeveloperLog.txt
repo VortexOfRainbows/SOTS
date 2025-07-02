@@ -86,7 +86,7 @@ Daily Log:
 8. More excavator MP testing (he mostly seems to work outside of some recoil things that don't really matter)
 9. Added Advisor Mastermode Drop (works in multiplayer)
 10. Change some tooltips and reorganize some files
-11. Excavator boss music boss (needs music, since its not in game yet, haha...)
+11. Excavator boss music box + music
 12. Add glowmasks to Glowmoth music box and Sanctuary music box, of which had them, but previously was not working
 
 6/19/25 to 6/24/25
