@@ -141,20 +141,23 @@ namespace SOTS.NPCs.Boss
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyFill").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
             float percentShield = (maxDPS - currentDPS) / maxDPS;
-            NPC head = Main.npc[NPC.realLife];
-            SubspaceSerpentHead subHead = head.ModNPC as SubspaceSerpentHead;
-            bool phase2 = subHead.hasEnteredSecondPhase;
-            if (phase2)
-                percentShield = 0.3334f;
-            if (percentShield > 0 || phase2)
+            if (NPC.realLife > -1)
             {
-                float alpha = ((255f - NPC.alpha) / 255f);
-                Color color = new Color(phase2 ? 0 : 255, phase2 ? 255 : 0, 0);
-                for (int i = 0; i < 2; i++)
+                NPC head = Main.npc[NPC.realLife];
+                SubspaceSerpentHead subHead = head.ModNPC as SubspaceSerpentHead;
+                bool phase2 = subHead.hasEnteredSecondPhase;
+                if (phase2)
+                    percentShield = 0.3334f;
+                if (percentShield > 0 || phase2)
                 {
-                    int direction = i * 2 - 1;
-                    Vector2 toTheSide = new Vector2(6 * percentShield * direction, 0).RotatedBy(NPC.rotation);
-                    spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * alpha * alpha * 0.5f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                    float alpha = ((255f - NPC.alpha) / 255f);
+                    Color color = new Color(phase2 ? 0 : 255, phase2 ? 255 : 0, 0);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        int direction = i * 2 - 1;
+                        Vector2 toTheSide = new Vector2(6 * percentShield * direction, 0).RotatedBy(NPC.rotation);
+                        spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * alpha * alpha * 0.5f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                    }
                 }
             }
             texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
@@ -193,6 +196,8 @@ namespace SOTS.NPCs.Boss
         }
         public override void PostAI()
         {
+            if (NPC.realLife < 0)
+                return;
             NPC head = Main.npc[NPC.realLife];
             SubspaceSerpentHead subHead = head.ModNPC as SubspaceSerpentHead;
             bool phase2 = subHead.hasEnteredSecondPhase;

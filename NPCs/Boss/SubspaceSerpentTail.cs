@@ -147,17 +147,20 @@ namespace SOTS.NPCs.Boss
         {
             Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailFill").Value;
             Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
-            NPC head = Main.npc[NPC.realLife];
-            SubspaceSerpentHead subHead = head.ModNPC as SubspaceSerpentHead;
-            bool phase2 = subHead.hasEnteredSecondPhase;
-            if (phase2)
+            if(NPC.realLife > -1)
             {
-                Color color = new Color(phase2 ? 0 : 255, phase2 ? 255 : 0, 0);
-                for (int i = 0; i < 2; i++)
+                NPC head = Main.npc[NPC.realLife];
+                SubspaceSerpentHead subHead = head.ModNPC as SubspaceSerpentHead;
+                bool phase2 = subHead.hasEnteredSecondPhase;
+                if (phase2)
                 {
-                    int direction = i * 2 - 1;
-                    Vector2 toTheSide = new Vector2(2 * direction, 0).RotatedBy(NPC.rotation);
-                    spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                    Color color = new Color(phase2 ? 0 : 255, phase2 ? 255 : 0, 0);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        int direction = i * 2 - 1;
+                        Vector2 toTheSide = new Vector2(2 * direction, 0).RotatedBy(NPC.rotation);
+                        spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                    }
                 }
             }
             DrawTrail(spriteBatch, screenPos);

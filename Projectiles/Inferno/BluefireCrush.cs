@@ -1,9 +1,5 @@
-using System;
-using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
@@ -19,10 +15,6 @@ namespace SOTS.Projectiles.Inferno
 		public Color blue = new Color(51, 95, 179, 0);
 		public Color orange = new Color(255, 130, 8, 0);
 		public bool useBoth = false;
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Bluefire Crush");
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 70;
@@ -38,8 +30,8 @@ namespace SOTS.Projectiles.Inferno
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 30;
 		}
-		List<FireParticle> particleList = new List<FireParticle>();
-		int removedCounter = 0;
+		private List<FireParticle> particleList = new List<FireParticle>();
+		private int removedCounter = 0;
 		public void cataloguePos()
 		{
 			for (int i = 0; i < particleList.Count; i++)
@@ -79,8 +71,8 @@ namespace SOTS.Projectiles.Inferno
 			int width = 160;
 			hitbox = new Rectangle((int)(Projectile.Center.X - width / 2), (int)(Projectile.Center.Y - width / 2), width, width);
 		}
-		int counter = 0;
-		bool runOnce = true;
+		private int counter = 0;
+		private bool runOnce = true;
 		public Color toUseColor = Color.White;
 		public override void AI()
 		{
@@ -132,7 +124,7 @@ namespace SOTS.Projectiles.Inferno
 					{
 						int i2 = (int)(circular.X + Projectile.Center.X) / 16;
 						int j2 = (int)(circular.Y + Projectile.Center.Y) / 16;
-						if (!SOTSWorldgenHelper.TrueTileSolid(i2, j2))
+						if (WorldGen.InWorld(i2, j2) && !SOTSWorldgenHelper.TrueTileSolid(i2, j2))
 							particleList.Add(new FireParticle(Projectile.Center + circular - rotational * 2, rotational + circular * 0.03f, Main.rand.NextFloat(-3f, 3f), Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(0.8f, 0.9f) + (useBoth ? 0.1f : 0)));
 					}
 					if(Main.rand.NextBool(baseRate - currentCounter))

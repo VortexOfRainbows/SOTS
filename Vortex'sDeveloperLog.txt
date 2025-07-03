@@ -70,6 +70,10 @@ N/A
 
 Daily Log:
 
+7/3/25
+1. Fix bug where dissolving umbra was not being properly flipped by the polarizers
+2. Attempt to fix bug where subspace serpent would despawn strangely due to Bluefire potion or mod compatibility issues
+
 
 --- Update 0.25.0.1 and Hotfix 0.25.0.2 ---
 

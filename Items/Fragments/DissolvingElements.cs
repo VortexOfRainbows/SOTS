@@ -298,7 +298,6 @@ namespace SOTS.Items.Fragments
 			PolarizeAurora = false;
 			PolarizeAether = false;
 			PolarizeDeluge = false;
-			PolarizeUmbra = false;
 			PolarizeNether = false;
 			PolarizeBrilliance = false;
 			DissolvingNature = 0;
@@ -402,15 +401,18 @@ namespace SOTS.Items.Fragments
 				if (DissolvingUmbra > 4)
 					DissolvingUmbra = 4;
 				Player.GetDamage(ModContent.GetInstance<VoidGeneric>()) += DissolvingUmbra * 0.03f;
-				return;
 			}
-			VoidPlayer vPlayer = VoidPlayer.ModPlayer(Player);
-			vPlayer.voidMeterMax2 -= 20 * DissolvingUmbra;
-			if (vPlayer.voidMeterMax2 < 20)
-			{
-				vPlayer.voidMeterMax2 = 20;
-			}
-		}
+			else
+            {
+                VoidPlayer vPlayer = VoidPlayer.ModPlayer(Player);
+                vPlayer.voidMeterMax2 -= 20 * DissolvingUmbra;
+                if (vPlayer.voidMeterMax2 < 20)
+                {
+                    vPlayer.voidMeterMax2 = 20;
+                }
+            }
+            PolarizeUmbra = false;
+        }
 		public void NetherEffects()
 		{
 			if (PolarizeNether)
