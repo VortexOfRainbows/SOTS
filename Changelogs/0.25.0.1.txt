@@ -88,6 +88,8 @@ Nerfs:
 1. Night Illuminator damage 10 -> 8
 2. Cursed Blade damage 24 -> 21
 3. Beelzebub's Ring (Ruby Ring) no longer works on statues, and has lower duration scaling (min: 5 -> 4 seconds, max 10 -> 9 seconds)
+	1. Beelzebub's ring is now capped at double the original buff duration
+	2. Can now effect more buffs with low durations that were previously blacklisted
 4. Synthetic liver is now capped at 2x duration and no longer adds duration from draining debuffs, instead just prolonging the duration of buffs. Does not work with inverted amber ring 
 5. Coconut Gun damage 20 -> 17
 6. Armageddon damage 200 -> 190, void cost 8 -> 10
