@@ -555,7 +555,7 @@ namespace SOTS.WorldgenHelpers
         public static int Ceiling => Main.UnderworldLayer;
         public static int Bottom => Main.maxTilesY - 1;
         public static int UnderworldHeight => Main.UnderworldLayer + 65;
-        public static int SideOfWorld => SpawnPos <= 0 ? (SpawnPos = DetermineSpawnLocation()) : SpawnPos;
+        public static int SideOfWorld => (SpawnPos <= 0 || SpawnPos > Main.maxTilesX) ? (SpawnPos = DetermineSpawnLocation()) : SpawnPos;
         public static int SpawnPos = -1;
         public static void PrepareUnderworldArea(int x, int y, int endX, int endY, int style = 0, int heightCutoff = 0)
         {
@@ -621,6 +621,7 @@ namespace SOTS.WorldgenHelpers
         }
         public static void GenerateSanctuary()
         {
+            SpawnPos = -1;
             IsGenerating = true;
             InitTypes();
             int size = 5;

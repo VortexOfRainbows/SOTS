@@ -1,0 +1,4 @@
+Hotfix 0.25.0.2
+
+Fixes: 
+1. Fix issue where the Sanctuary sometimes failed to spawn when first loading or generating a world of smaller size than the next generated world

@@ -369,6 +369,8 @@ namespace SOTS
 			int sanctuaryLocation = tag.GetInt("SanctuaryLocation");
 			if(sanctuaryLocation > 0)
 				SanctuaryWorldgenHelper.SpawnPos = sanctuaryLocation;
+            else
+                SanctuaryWorldgenHelper.SpawnPos = -1;
         }
 		public override void NetSend(BinaryWriter writer) {
 			BitsByte flags = new BitsByte();

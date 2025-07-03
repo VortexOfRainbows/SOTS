@@ -70,10 +70,15 @@ N/A
 
 Daily Log:
 
+
+--- Update 0.25.0.1 and Hotfix 0.25.0.2 ---
+
+
 7/2/25
 1. Compile changelogs and make some description adjustments
 2. Adjust Excavator mask
 3. Reduce spawnrate of peanut bushes
+4. Fix issue where sanctuary sometimes failed to spawn when first loading or generating a world of smaller size than the next generated world
 
 6/25/25 to 7/1/25
 1. Add Ira Gateway and small fixes + optimizations to tile breaking code related to gateways
