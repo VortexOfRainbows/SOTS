@@ -5842,7 +5842,7 @@ Mods: {
 			}
 
 			AVMusicBox: {
-				DisplayName: Abandoned Village Surface Music Box
+				DisplayName: Music Box (Abandoned Village Surface)
 				Tooltip: ""
 			}
 
@@ -6009,7 +6009,7 @@ Mods: {
 			}
 
 			AVMinesMusicBox: {
-				DisplayName: Abandoned Village Underground Music Box
+				DisplayName: Music Box (Abandoned Village Underground)
 				Tooltip: ""
 			}
 
@@ -6126,7 +6126,7 @@ Mods: {
 			}
 
 			MoonShard2: {
-				DisplayName: Waxing Cresent Shard
+				DisplayName: Waxing Crescent Shard
 				Tooltip: ""
 			}
 
@@ -6156,7 +6156,7 @@ Mods: {
 			}
 
 			MoonShard8: {
-				DisplayName: Waning Cresent Shard
+				DisplayName: Waning Crescent Shard
 				Tooltip: ""
 			}
 
@@ -6644,7 +6644,7 @@ Mods: {
 			}
 
 			MothMusicBox: {
-				DisplayName: Glowmoth Music Box
+				DisplayName: Music Box (Glowmoth)
 				Tooltip: ""
 			}
 
@@ -6694,7 +6694,7 @@ Mods: {
 			}
 
 			SanctuaryMusicBox: {
-				DisplayName: Sanctuary Music Box
+				DisplayName: Music Box (Sanctuary)
 				Tooltip: ""
 			}
 
@@ -6954,7 +6954,7 @@ Mods: {
 			}
 
 			ExcavatorMusicBox: {
-				DisplayName: Excavator Music Box
+				DisplayName: Music Box (Excavator)
 				Tooltip: ""
 			}
 		}
@@ -7563,13 +7563,13 @@ Mods: {
 				MapEntry0: Invidia Chest
 				MapEntry1: Locked Invidia Chest
 				MapEntry2: Locked New Moon Invidia Chest
-				MapEntry3: Locked Waxing Cresent Invidia Chest
+				MapEntry3: Locked Waxing Crescent Invidia Chest
 				MapEntry4: Locked First Quarter Invidia Chest
 				MapEntry5: Locked Waxing Gibbous Invidia Chest
 				MapEntry6: Locked Full Moon Invidia Chest
 				MapEntry7: Locked Waning Gibbous Invidia Chest
 				MapEntry8: Locked Third Quarter Invidia Chest
-				MapEntry9: Locked Waning Cresent Invidia Chest
+				MapEntry9: Locked Waning Crescent Invidia Chest
 			}
 
 			HoloEyeBannerTile.MapEntry: Banner
@@ -7692,7 +7692,7 @@ Mods: {
 			TidalConduitTile.MapEntry: Tidal Conduit
 			GulaGatewayTile.MapEntry: Strange Gateway
 			AVPots.MapEntry: Pot
-			AVMusicBoxTile.MapEntry: Abandoned Village Surface Music Box
+			AVMusicBoxTile.MapEntry: Music Box 
 			TidalPlatingBlastDoorTileClosed.MapEntry: Tidal Plating Blast Door
 			TidalPlatingBlastDoorTileOpen.MapEntry: Tidal Plating Blast Door
 
@@ -7702,7 +7702,7 @@ Mods: {
 			}
 
 			TidalPlatingTorchTile.MapEntry: Tidal Plating Torch
-			AVMinesMusicBoxTile.MapEntry: Abandoned Village Mines Music Box
+			AVMinesMusicBoxTile.MapEntry: Music Box
 			PinkyTestTube.MapEntry: Failed Experiment
 			OtherworldPlatingBlastDoorTileClosed.MapEntry: Otherworld Plating Blast Door
 			OtherworldPlatingBlastDoorTileOpen.MapEntry: Otherworld Plating Blast Door
@@ -7740,16 +7740,16 @@ Mods: {
 
 			ChaosPlatingBlastDoorTileOpen.MapEntry: Chaos Plating Blast Door
 			ChaosPlatingBlastDoorTileClosed.MapEntry: Chaos Plating Blast Door
-			MothMusicBoxTile.MapEntry: Moth Music Box Tile
-			RuinedStatueTile.MapEntry: Ruined Statue Tile
-			SerpentStatueTile.MapEntry: Serpent Statue Tile
+			MothMusicBoxTile.MapEntry: Music Box
+			RuinedStatueTile.MapEntry: Ruined Statue
+			SerpentStatueTile.MapEntry: Serpent Statue
 			InvidiaGatewayTile.MapEntry: Strange Gateway
-			SanctuaryMusicBoxTile.MapEntry: Sanctuary Music Box Tile
+			SanctuaryMusicBoxTile.MapEntry: Music Box
 			EvostonePots.MapEntry: Pots
 			SeismicStationTile.MapEntry: Seismic Station
-			TideChainTile.MapEntry: Tide Chain Tile
-			IraGatewayTile.MapEntry: Ira Gateway Tile
-			ExcavatorMusicBoxTile.MapEntry: Excavator Music Box Tile
+			TideChainTile.MapEntry: Tide Chain
+			IraGatewayTile.MapEntry: Ira Gateway
+			ExcavatorMusicBoxTile.MapEntry: Music Box
 		}
 
 		WorldGeneration: {
