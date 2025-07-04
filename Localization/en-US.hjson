@@ -5304,7 +5304,7 @@ Mods: {
 					'''
 					Killed enemies have a 50% chance to drop additional hearts
 					This chance increases to 100% with critical strikes
-					Collecting hearts lengthens the duration of active buffs
+					Collecting hearts lengthens the duration of active buffs, up to double the original duration
 					'''
 				G5:
 					'''

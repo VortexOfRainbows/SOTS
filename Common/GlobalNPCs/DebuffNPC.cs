@@ -425,7 +425,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 if (Main.myPlayer == player.whoAmI && SOTSPlayer.ModPlayer(player).MeleeShred)
                 {
-                    if (Main.rand.NextFloat(DamageCurse / 4f) < Main.rand.NextFloat(1f) && hit.SourceDamage > Main.rand.Next(20))
+                    if (Main.rand.NextFloat(DamageCurse) < Main.rand.NextFloat(1f) && hit.SourceDamage > Main.rand.Next(25))
                         StackDebuff(npc, player, ref DamageCurse, 1, 2);
                 }
             }
@@ -529,7 +529,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 if (Main.myPlayer == player.whoAmI && SOTSPlayer.ModPlayer(player).MeleeShred)
                 {
-                    if(Main.rand.NextFloat(DamageCurse / 4f) < Main.rand.NextFloat(1f) && hit.SourceDamage > Main.rand.Next(20))
+                    if(Main.rand.NextFloat(DamageCurse) < Main.rand.NextFloat(1f) && hit.SourceDamage > Main.rand.Next(25))
                         StackDebuff(npc, player, ref DamageCurse, 1, 2);
                 }
             }
