@@ -40,5 +40,5 @@ namespace SOTS.Items.ChestItems
 			Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<Projectiles.BiomeChest.Icebreaker>(), damage, knockback, player.whoAmI, -1, type);
 			return false;
 		}
-	}
+    }
 }

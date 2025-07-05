@@ -7692,7 +7692,7 @@ Mods: {
 			TidalConduitTile.MapEntry: Tidal Conduit
 			GulaGatewayTile.MapEntry: Strange Gateway
 			AVPots.MapEntry: Pot
-			AVMusicBoxTile.MapEntry: Music Box 
+			AVMusicBoxTile.MapEntry: Music Box
 			TidalPlatingBlastDoorTileClosed.MapEntry: Tidal Plating Blast Door
 			TidalPlatingBlastDoorTileOpen.MapEntry: Tidal Plating Blast Door
 

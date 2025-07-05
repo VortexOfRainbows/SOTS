@@ -72,6 +72,7 @@ Daily Log:
 
 7/4/25
 1. Fix localization issues (EN)
+2. Fix issue where Icebreaker and Compound Bow stopped consuming ammo after their first use
 
 7/3/25
 1. Fix bug where dissolving umbra was not being properly flipped by the polarizers

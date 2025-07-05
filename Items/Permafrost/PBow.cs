@@ -52,6 +52,6 @@ namespace SOTS.Items.Permafrost
 		public override void AddRecipes()
 		{
 			CreateRecipe(1).AddIngredient<PitatiLongbow>().AddIngredient<AncientSteelLongbow>().AddIngredient<SporeSprayer>().AddIngredient<AbsoluteBar>(12).AddTile(TileID.MythrilAnvil).Register();
-		}
-	}
+        }
+    }
 }

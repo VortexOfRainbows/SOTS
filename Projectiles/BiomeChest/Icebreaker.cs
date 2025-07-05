@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SOTS.Projectiles.BiomeChest
 {
@@ -70,6 +71,16 @@ namespace SOTS.Projectiles.BiomeChest
         private bool ended = false;
         private float recoil = 0;
         private float pastRecoil = 0;
+        public bool FirstShotNoConsumeAmmo = true;
+        public void CheckForAmmo(bool consume = false)
+        {
+            Player player = Main.player[Projectile.owner];
+            bool canShoot = player.PickAmmo(player.HeldItem, out int type, out float _, out int _, out float _, out int usedAmmoItemId, !consume);
+            if (type != Projectile.ai[1] || !canShoot)
+            {
+                Projectile.Kill(); //Reset stats by killing when projectile type is not the same 
+            }
+        }
         public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
@@ -216,6 +227,9 @@ namespace SOTS.Projectiles.BiomeChest
             if(!ended)
                 recoil += 30;
             Projectile.netUpdate = true;
+            CheckForAmmo(!FirstShotNoConsumeAmmo);
+            CheckForAmmo();
+            FirstShotNoConsumeAmmo = false;
         }
     }
     public class IcebreakerIce : ModProjectile

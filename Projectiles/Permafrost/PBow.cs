@@ -60,7 +60,16 @@ namespace SOTS.Projectiles.Permafrost
         }
         private float counter = -1;
         private bool ended = false;
-        private bool runOnce = true;
+        private bool FirstShotNoConsumeAmmo = true;
+        public void CheckForAmmo(bool consume = false)
+        {
+            Player player = Main.player[Projectile.owner];
+            bool canShoot = player.PickAmmo(player.HeldItem, out int type, out float _, out int _, out float _, out int usedAmmoItemId, !consume);
+            if (type != Projectile.ai[1] || !canShoot)
+            {
+                Projectile.Kill(); //Reset stats by killing when projectile type is not the same 
+            }
+        }
         public override bool PreAI()
         {
             Player player = Main.player[Projectile.owner];
@@ -105,6 +114,9 @@ namespace SOTS.Projectiles.Permafrost
                     Vector2 fireFrom = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - textureHeight);
                     Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), fireFrom, Projectile.velocity * 0.45f, ModContent.ProjectileType<PBowArrow>(), Projectile.damage, Projectile.knockBack, Main.myPlayer, (int)Projectile.ai[1]);
                 }
+                CheckForAmmo(!FirstShotNoConsumeAmmo);
+                CheckForAmmo();
+                FirstShotNoConsumeAmmo = false;
                 counter = 0;
             }
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -217,8 +229,8 @@ namespace SOTS.Projectiles.Permafrost
     }
     public class PBolt : ModProjectile
     {
-        bool end = false;
-        int bounceCount = -1;
+        private bool end = false;
+        private int bounceCount = -1;
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailCacheLength[Projectile.type] = 50;
