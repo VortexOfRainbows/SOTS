@@ -143,10 +143,10 @@ namespace SOTS
                             }
                         }
                     }
-                    if (ImportantTilesWorld.dreamLamp.HasValue && tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingNatureTile>())
+                    if (ImportantTilesWorld.DreamLamp.HasValue && tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingNatureTile>())
 					{
-						int x = ImportantTilesWorld.dreamLamp.Value.X;
-						int y = ImportantTilesWorld.dreamLamp.Value.Y;
+						int x = ImportantTilesWorld.DreamLamp.Value.X;
+						int y = ImportantTilesWorld.DreamLamp.Value.Y;
 						Tile tile = Main.tile[x, y];
 						if (tile.HasUnactuatedTile && tile.TileType == ModContent.TileType<ForgottenLampTile>())
 						{

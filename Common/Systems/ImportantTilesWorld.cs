@@ -14,51 +14,16 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static SOTS.SOTS;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Invidia;
+using static SOTS.SOTS;
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.Common.Systems
 {
-    public class ImportantTilePlacement : GlobalTile
-    {
-        public override void PlaceInWorld(int i, int j, int type, Item item)
-        {
-            //Manually reassigns a special tile location. Other special tile locations are only reassigned on WorldLoad (and will be by archaelogist when he is added later)
-            //The only reason these are specially assigned is because they are the only ones that can be placed in the world
-            if(type == ModContent.TileType<ForgottenLampTile>())
-            {
-                ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.dreamLamp, type, force: true);
-                ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.dreamLamp, 0, -1);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j - 1), ImportantTileID.dreamLamp);
-                if(ImportantTilesWorld.DebugChatMessages)
-                    Main.NewText("(" + i + ", " + j + ")");
-            }
-            if (type == ModContent.TileType<StrangeKeystoneTile>())
-            {
-                if (item.type == ModContent.ItemType<StrangeKeystone>())
-                {
-                    ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.coconutIslandMonument, type, force : true);
-                    ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.coconutIslandMonument, 0, -1);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j -1), ImportantTileID.coconutIslandMonument);
-                }
-                if (item.type == ModContent.ItemType<StrangeKeystoneBroken>())
-                {
-                    ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.coconutIslandMonumentBroken, type, force: true);
-                    ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.coconutIslandMonumentBroken, 0, -1);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j - 1), ImportantTileID.coconutIslandMonumentBroken);
-                }
-                if (ImportantTilesWorld.DebugChatMessages)
-                    Main.NewText("(" + i + ", " + j + ")");
-            }
-        }
-    }
     public static class ImportantTileID
     {
-        public const int MaxTileLocations = 15;
+        //public const int MaxTileLocations = 15;
         public const int AcediaPortal = 0;
         public const int AvaritiaPortal = 1;
         public const int gemlockAmethyst = 2;
@@ -77,8 +42,118 @@ namespace SOTS.Common.Systems
         public const int GulaPortal = 15;
         public const int InvidiaPortal = 16;
     }
+    public class ImportantTilePlacement : GlobalTile
+    {
+        public override void PlaceInWorld(int i, int j, int type, Item item)
+        {
+            //Manually reassigns a special tile location. Other special tile locations are only reassigned on WorldLoad.
+            //The only reason these are specially assigned is because they are the only ones that can be placed in the world
+            if(type == ModContent.TileType<ForgottenLampTile>())
+            {
+                ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.DreamLamp, type, force: true);
+                ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.DreamLamp, 0, -1);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j - 1), ImportantTileID.dreamLamp);
+                if(ImportantTilesWorld.DebugChatMessages)
+                    Main.NewText("(" + i + ", " + j + ")");
+            }
+            if (type == ModContent.TileType<StrangeKeystoneTile>())
+            {
+                if (item.type == ModContent.ItemType<StrangeKeystone>())
+                {
+                    ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.CoconutIslandMonument, type, force : true);
+                    ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.CoconutIslandMonument, 0, -1);
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j -1), ImportantTileID.coconutIslandMonument);
+                }
+                if (item.type == ModContent.ItemType<StrangeKeystoneBroken>())
+                {
+                    ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.CoconutIslandMonumentBroken, type, force: true);
+                    ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.CoconutIslandMonumentBroken, 0, -1);
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j - 1), ImportantTileID.coconutIslandMonumentBroken);
+                }
+                if (ImportantTilesWorld.DebugChatMessages)
+                    Main.NewText("(" + i + ", " + j + ")");
+            }
+        }
+    }
+    public class ImportantTile(int id, ushort TileType, int TileFrame = -1, int offsetX = 0, int offsetY = 0, Point16? pos = null)
+    {
+        public Point16? Position = pos;
+        public int ID = id;
+        public ushort TileType = TileType;
+        public int TileFrame = TileFrame;
+        public void AssignPoint(Tile tile, int i, int j, bool force = false)
+        {
+            if ((Position == null || force) && tile.TileType == TileType && (TileFrame == -1 || tile.TileFrameX == TileFrame) /*&& tile.HasTile*/) //Do not check hasTile cause that can be done faster outside this method
+            {
+                Position = new Point16(i, j);
+                CenterPoint(offsetX, offsetY);
+            }
+        }
+        public void CenterPoint(int iOffset, int jOffset)
+        {
+            if (Position == null)
+                return;
+            else
+                Position = new Point16(Position.Value.X + iOffset, Position.Value.Y + jOffset);
+        }
+    }
     public class ImportantTilesWorld : ModSystem
     {
+        private static int ListIndex = 0;
+        private static List<ImportantTile> List = new List<ImportantTile>();
+        private static ImportantTile AddToList(int TileType, int TileFrame = -1, int offsetX = 0, int offsetY = 0, Point16? pos = null)
+        {
+            ImportantTile i = new(ListIndex++, (ushort)TileType, TileFrame, offsetX, offsetY, pos);
+            List.Add(i);
+            return i;
+        }
+        public override void PostSetupContent()
+        {
+            base.PostSetupContent();
+        }
+        public static void Initialize()
+        {
+            AcediaPortal = AddToList(TileType<AcediaGatewayTile>(), -1, 4, 7);
+            AvaritiaPortal = AddToList(TileType<AvaritianGatewayTile>(), -1, 4, 7);
+            int i = TileType<SOTSGemLockTiles>();
+            GemlockAmethyst = AddToList(i, 216, 1, 1);
+            GemlockTopaz = AddToList(i, 162, 1, 1);
+            GemlockSapphire = AddToList(i, 54, 1, 1);
+            GemlockEmerald = AddToList(i, 108, 1, 1);
+            GemlockRuby = AddToList(i, 0, 1, 1);
+            GemlockDiamond = AddToList(i, 270, 1, 1);
+            GemlockAmber = AddToList(i, 324, 1, 1);
+            IceMonument = AddToList(TileType<FrostArtifactTile>(), -1, 1, 0);
+            i = TileType<StrangeKeystoneTile>();
+            CoconutIslandMonumentBroken = AddToList(i, 54, 1, 2);
+            CoconutIslandMonument = AddToList(i, -1, 1, 2);
+            DreamLamp = AddToList(TileType<ForgottenLampTile>(), -1, 1, 0);
+            DamoclesChain = AddToList(TileType<Items.Tide.ArkhalisChainTile>());
+            BigCrystal = AddToList(TileType<Items.Earth.BigCrystalTile>(), -1, 6, 8);
+            GulaPortal = AddToList(TileType<GulaGatewayTile>(), -1, 4, 7);
+            InvidiaPortal = AddToList(TileType<InvidiaGatewayTile>(), -1, 14, 20);
+        }
+        public static ImportantTile AcediaPortal { get; private set; }
+        public static ImportantTile AvaritiaPortal { get; private set; }
+        public static ImportantTile GemlockAmethyst { get; private set; }
+        public static ImportantTile GemlockTopaz { get; private set; }
+        public static ImportantTile GemlockSapphire { get; private set; }
+        public static ImportantTile GemlockEmerald { get; private set; }
+        public static ImportantTile GemlockRuby { get; private set; }
+        public static ImportantTile GemlockDiamond { get; private set; }
+        public static ImportantTile GemlockAmber { get; private set; }
+        public static ImportantTile IceMonument { get; private set; }
+        public static ImportantTile CoconutIslandMonumentBroken { get; private set; }
+        public static ImportantTile CoconutIslandMonument { get; private set; }
+        public static ImportantTile DreamLamp { get; private set; }
+        public static ImportantTile DamoclesChain { get; private set; }
+        public static ImportantTile BigCrystal { get; private set; }
+
+        public static ImportantTile GulaPortal { get; private set; }
+        public static ImportantTile InvidiaPortal { get; private set; }
         public static bool DebugChatMessages = false;
         public static void HandlePacket(BinaryReader reader, int whoAmI, int msgType)
         {
@@ -102,43 +177,43 @@ namespace SOTS.Common.Systems
                         AvaritiaPortal = ptToSync;
                         break;
                     case ImportantTileID.gemlockAmethyst:
-                        gemlockAmethyst = ptToSync;
+                        GemlockAmethyst = ptToSync;
                         break;
                     case ImportantTileID.gemlockTopaz:
-                        gemlockTopaz = ptToSync;
+                        GemlockTopaz = ptToSync;
                         break;
                     case ImportantTileID.gemlockSapphire:
-                        gemlockSapphire = ptToSync;
+                        GemlockSapphire = ptToSync;
                         break;
                     case ImportantTileID.gemlockEmerald:
-                        gemlockEmerald = ptToSync;
+                        GemlockEmerald = ptToSync;
                         break;
                     case ImportantTileID.gemlockRuby:
-                        gemlockRuby = ptToSync;
+                        GemlockRuby = ptToSync;
                         break;
                     case ImportantTileID.gemlockDiamond:
-                        gemlockDiamond = ptToSync;
+                        GemlockDiamond = ptToSync;
                         break;
                     case ImportantTileID.gemlockAmber:
-                        gemlockAmber = ptToSync;
+                        GemlockAmber = ptToSync;
                         break;
                     case ImportantTileID.iceMonument:
-                        iceMonument = ptToSync;
+                        IceMonument = ptToSync;
                         break;
                     case ImportantTileID.coconutIslandMonumentBroken:
-                        coconutIslandMonumentBroken = ptToSync;
+                        CoconutIslandMonumentBroken = ptToSync;
                         break;
                     case ImportantTileID.coconutIslandMonument:
-                        coconutIslandMonument = ptToSync;
+                        CoconutIslandMonument = ptToSync;
                         break;
                     case ImportantTileID.dreamLamp:
-                        dreamLamp = ptToSync;
+                        DreamLamp = ptToSync;
                         break;
                     case ImportantTileID.damoclesChain:
-                        damoclesChain = ptToSync;
+                        DamoclesChain = ptToSync;
                         break;
                     case ImportantTileID.bigCrystal:
-                        bigCrystal = ptToSync;
+                        BigCrystal = ptToSync;
                         break;
                     case ImportantTileID.GulaPortal:
                         GulaPortal = ptToSync;
@@ -197,19 +272,19 @@ namespace SOTS.Common.Systems
             //Making a helper class instead of just point16 could really help out with this situation...
             SyncImportantTileLocations(null, AcediaPortal, ImportantTileID.AcediaPortal, toClient);
             SyncImportantTileLocations(null, AvaritiaPortal, ImportantTileID.AvaritiaPortal, toClient);
-            SyncImportantTileLocations(null, gemlockAmethyst, ImportantTileID.gemlockAmethyst, toClient);
-            SyncImportantTileLocations(null, gemlockTopaz, ImportantTileID.gemlockTopaz, toClient);
-            SyncImportantTileLocations(null, gemlockSapphire, ImportantTileID.gemlockSapphire, toClient);
-            SyncImportantTileLocations(null, gemlockEmerald, ImportantTileID.gemlockEmerald, toClient);
-            SyncImportantTileLocations(null, gemlockRuby, ImportantTileID.gemlockRuby, toClient);
-            SyncImportantTileLocations(null, gemlockDiamond, ImportantTileID.gemlockDiamond, toClient);
-            SyncImportantTileLocations(null, gemlockAmber, ImportantTileID.gemlockAmber, toClient);
-            SyncImportantTileLocations(null, iceMonument, ImportantTileID.iceMonument, toClient);
-            SyncImportantTileLocations(null, coconutIslandMonumentBroken, ImportantTileID.coconutIslandMonumentBroken, toClient);
-            SyncImportantTileLocations(null, coconutIslandMonument, ImportantTileID.coconutIslandMonument, toClient);
-            SyncImportantTileLocations(null, dreamLamp, ImportantTileID.dreamLamp, toClient);
-            SyncImportantTileLocations(null, damoclesChain, ImportantTileID.damoclesChain, toClient);
-            SyncImportantTileLocations(null, bigCrystal, ImportantTileID.bigCrystal, toClient);
+            SyncImportantTileLocations(null, GemlockAmethyst, ImportantTileID.gemlockAmethyst, toClient);
+            SyncImportantTileLocations(null, GemlockTopaz, ImportantTileID.gemlockTopaz, toClient);
+            SyncImportantTileLocations(null, GemlockSapphire, ImportantTileID.gemlockSapphire, toClient);
+            SyncImportantTileLocations(null, GemlockEmerald, ImportantTileID.gemlockEmerald, toClient);
+            SyncImportantTileLocations(null, GemlockRuby, ImportantTileID.gemlockRuby, toClient);
+            SyncImportantTileLocations(null, GemlockDiamond, ImportantTileID.gemlockDiamond, toClient);
+            SyncImportantTileLocations(null, GemlockAmber, ImportantTileID.gemlockAmber, toClient);
+            SyncImportantTileLocations(null, IceMonument, ImportantTileID.iceMonument, toClient);
+            SyncImportantTileLocations(null, CoconutIslandMonumentBroken, ImportantTileID.coconutIslandMonumentBroken, toClient);
+            SyncImportantTileLocations(null, CoconutIslandMonument, ImportantTileID.coconutIslandMonument, toClient);
+            SyncImportantTileLocations(null, DreamLamp, ImportantTileID.dreamLamp, toClient);
+            SyncImportantTileLocations(null, DamoclesChain, ImportantTileID.damoclesChain, toClient);
+            SyncImportantTileLocations(null, BigCrystal, ImportantTileID.bigCrystal, toClient);
             SyncImportantTileLocations(null, GulaPortal, ImportantTileID.GulaPortal, toClient);
             SyncImportantTileLocations(null, InvidiaPortal, ImportantTileID.InvidiaPortal, toClient);
         }
@@ -258,27 +333,6 @@ namespace SOTS.Common.Systems
                 }
             }
         }
-        public static Point16? AcediaPortal = null;
-        public static Point16? AvaritiaPortal = null;
-
-        public static Point16? gemlockAmethyst = null;
-        public static Point16? gemlockTopaz = null;
-        public static Point16? gemlockSapphire = null;
-        public static Point16? gemlockEmerald = null;
-        public static Point16? gemlockRuby = null;
-        public static Point16? gemlockDiamond = null;
-        public static Point16? gemlockAmber = null;
-
-        public static Point16? iceMonument = null;
-        public static Point16? coconutIslandMonumentBroken = null;
-        public static Point16? coconutIslandMonument = null;
-
-        public static Point16? dreamLamp = null;
-        public static Point16? damoclesChain = null;
-        public static Point16? bigCrystal = null;
-
-        public static Point16? GulaPortal = null;
-        public static Point16? InvidiaPortal = null;
         public static void AddNewNumberToPrevious(int toAdd)
         {
             PreviousTeleports[4] = PreviousTeleports[3];
@@ -298,18 +352,18 @@ namespace SOTS.Common.Systems
             List<Point16?> destinations = new List<Point16?>() { 
                 AcediaPortal, 
                 AvaritiaPortal,
-                gemlockAmethyst, 
-                gemlockTopaz, 
-                gemlockSapphire, 
-                gemlockEmerald, 
-                gemlockRuby, 
-                gemlockDiamond, 
-                gemlockAmber,
-                iceMonument, 
-                coconutIslandMonumentBroken,
-                coconutIslandMonument,
-                damoclesChain,
-                bigCrystal,
+                GemlockAmethyst, 
+                GemlockTopaz, 
+                GemlockSapphire, 
+                GemlockEmerald, 
+                GemlockRuby, 
+                GemlockDiamond, 
+                GemlockAmber,
+                IceMonument, 
+                CoconutIslandMonumentBroken,
+                CoconutIslandMonument,
+                DamoclesChain,
+                BigCrystal,
                 GulaPortal,
                 InvidiaPortal
             };
@@ -419,19 +473,19 @@ namespace SOTS.Common.Systems
         {
             AcediaPortal = null;
             AvaritiaPortal = null;
-            gemlockAmethyst = null;
-            gemlockTopaz = null;
-            gemlockSapphire = null;
-            gemlockEmerald = null;
-            gemlockRuby = null;
-            gemlockDiamond = null;
-            gemlockAmber = null;
-            iceMonument = null;
-            coconutIslandMonumentBroken = null;
-            coconutIslandMonument = null;
-            dreamLamp = null;
-            damoclesChain = null;
-            bigCrystal = null;
+            GemlockAmethyst = null;
+            GemlockTopaz = null;
+            GemlockSapphire = null;
+            GemlockEmerald = null;
+            GemlockRuby = null;
+            GemlockDiamond = null;
+            GemlockAmber = null;
+            IceMonument = null;
+            CoconutIslandMonumentBroken = null;
+            CoconutIslandMonument = null;
+            DreamLamp = null;
+            DamoclesChain = null;
+            BigCrystal = null;
             GulaPortal = null;
             InvidiaPortal = null;
             for (int i = 15; i < Main.maxTilesX - 15; i++)
@@ -439,41 +493,15 @@ namespace SOTS.Common.Systems
                 for(int j = 15; j < Main.maxTilesY - 15; j++)
                 {
                     Tile tile = Main.tile[i, j];
-                    AssignPoint(tile, i, j, ref AcediaPortal, ModContent.TileType<AcediaGatewayTile>());
-                    AssignPoint(tile, i, j, ref AvaritiaPortal, ModContent.TileType<AvaritianGatewayTile>());
-                    AssignPoint(tile, i, j, ref gemlockAmethyst, ModContent.TileType<SOTSGemLockTiles>(), 216);
-                    AssignPoint(tile, i, j, ref gemlockTopaz, ModContent.TileType<SOTSGemLockTiles>(), 162);
-                    AssignPoint(tile, i, j, ref gemlockSapphire, ModContent.TileType<SOTSGemLockTiles>(), 54);
-                    AssignPoint(tile, i, j, ref gemlockEmerald, ModContent.TileType<SOTSGemLockTiles>(), 108);
-                    AssignPoint(tile, i, j, ref gemlockRuby, ModContent.TileType<SOTSGemLockTiles>(), 0);
-                    AssignPoint(tile, i, j, ref gemlockDiamond, ModContent.TileType<SOTSGemLockTiles>(), 270);
-                    AssignPoint(tile, i, j, ref gemlockAmber, ModContent.TileType<SOTSGemLockTiles>(), 324);
-                    AssignPoint(tile, i, j, ref iceMonument, ModContent.TileType<FrostArtifactTile>());
-                    AssignPoint(tile, i, j, ref coconutIslandMonumentBroken, ModContent.TileType<StrangeKeystoneTile>(), 54);
-                    AssignPoint(tile, i, j, ref coconutIslandMonument, ModContent.TileType<StrangeKeystoneTile>(), 0);
-                    AssignPoint(tile, i, j, ref dreamLamp, ModContent.TileType<ForgottenLampTile>());
-                    AssignPoint(tile, i, j, ref damoclesChain, ModContent.TileType<Items.Tide.ArkhalisChainTile>());
-                    AssignPoint(tile, i, j, ref bigCrystal, ModContent.TileType<Items.Earth.BigCrystalTile>());
-                    AssignPoint(tile, i, j, ref GulaPortal, ModContent.TileType<GulaGatewayTile>());
-                    AssignPoint(tile, i, j, ref InvidiaPortal, ModContent.TileType<InvidiaGatewayTile>());
+                    if(tile.HasTile)
+                    {
+                        foreach(ImportantTile landmark in List)
+                        {
+                            landmark.AssignPoint(tile, i, j);
+                        }
+                    }
                 }
             }
-            CenterPoint(ref AcediaPortal, 4, 7);
-            CenterPoint(ref AvaritiaPortal, 4, 7);
-            CenterPoint(ref gemlockAmethyst, 1, 1);
-            CenterPoint(ref gemlockTopaz, 1, 1);
-            CenterPoint(ref gemlockSapphire, 1, 1);
-            CenterPoint(ref gemlockEmerald, 1, 1);
-            CenterPoint(ref gemlockRuby, 1, 1);
-            CenterPoint(ref gemlockDiamond, 1, 1);
-            CenterPoint(ref gemlockAmber, 1, 1);
-            CenterPoint(ref iceMonument, 1, 0);
-            CenterPoint(ref coconutIslandMonumentBroken, 1, 2);
-            CenterPoint(ref coconutIslandMonument, 1, 2);
-            CenterPoint(ref dreamLamp, 1, 0);
-            CenterPoint(ref bigCrystal, 6, 8);
-            CenterPoint(ref GulaPortal, 4, 7);
-            CenterPoint(ref InvidiaPortal, 14, 20);
             finishedThreading = true;
         }
         public static void CenterPoint(ref Point16? pt, int iOffset, int jOffset)
@@ -534,19 +562,19 @@ namespace SOTS.Common.Systems
         {
             TileInCorrectLocation(ref AcediaPortal, ModContent.TileType<AcediaGatewayTile>());
             TileInCorrectLocation(ref AvaritiaPortal, ModContent.TileType<AvaritianGatewayTile>());
-            TileInCorrectLocation(ref gemlockAmethyst, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref gemlockTopaz, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref gemlockSapphire, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref gemlockEmerald, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref gemlockRuby, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref gemlockDiamond, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref gemlockAmber, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref iceMonument, ModContent.TileType<FrostArtifactTile>());
-            TileInCorrectLocation(ref coconutIslandMonumentBroken, ModContent.TileType<StrangeKeystoneTile>());
-            TileInCorrectLocation(ref coconutIslandMonument, ModContent.TileType<StrangeKeystoneTile>());
-            TileInCorrectLocation(ref dreamLamp, ModContent.TileType<ForgottenLampTile>());
-            TileInCorrectLocation(ref damoclesChain, ModContent.TileType<Items.Tide.ArkhalisChainTile>());
-            TileInCorrectLocation(ref bigCrystal, ModContent.TileType<Items.Earth.BigCrystalTile>());
+            TileInCorrectLocation(ref GemlockAmethyst, ModContent.TileType<SOTSGemLockTiles>());
+            TileInCorrectLocation(ref GemlockTopaz, ModContent.TileType<SOTSGemLockTiles>());
+            TileInCorrectLocation(ref GemlockSapphire, ModContent.TileType<SOTSGemLockTiles>());
+            TileInCorrectLocation(ref GemlockEmerald, ModContent.TileType<SOTSGemLockTiles>());
+            TileInCorrectLocation(ref GemlockRuby, ModContent.TileType<SOTSGemLockTiles>());
+            TileInCorrectLocation(ref GemlockDiamond, ModContent.TileType<SOTSGemLockTiles>());
+            TileInCorrectLocation(ref GemlockAmber, ModContent.TileType<SOTSGemLockTiles>());
+            TileInCorrectLocation(ref IceMonument, ModContent.TileType<FrostArtifactTile>());
+            TileInCorrectLocation(ref CoconutIslandMonumentBroken, ModContent.TileType<StrangeKeystoneTile>());
+            TileInCorrectLocation(ref CoconutIslandMonument, ModContent.TileType<StrangeKeystoneTile>());
+            TileInCorrectLocation(ref DreamLamp, ModContent.TileType<ForgottenLampTile>());
+            TileInCorrectLocation(ref DamoclesChain, ModContent.TileType<Items.Tide.ArkhalisChainTile>());
+            TileInCorrectLocation(ref BigCrystal, ModContent.TileType<Items.Earth.BigCrystalTile>());
             TileInCorrectLocation(ref GulaPortal, ModContent.TileType<GulaGatewayTile>());
             TileInCorrectLocation(ref InvidiaPortal, ModContent.TileType<InvidiaGatewayTile>());
         }

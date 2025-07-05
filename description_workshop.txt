@@ -8,7 +8,7 @@ Wiki has been moved to wiki.gg
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2843080273]SOTS Texture Pack[/url]
 
 [b]!! This mod is in development, and will continue to be supported for the foreseeable future !![/b]
-[b]!! A large world is recommended to avoid major structures overlapping !![/b]
+[b]!! A large world is HIGHLY recommended to avoid major structures overlapping !![/b]
 [b]!! Worldgen may not work on special seeds !![/b]
 
 This mod contains:

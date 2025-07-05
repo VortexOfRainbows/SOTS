@@ -495,9 +495,9 @@ namespace SOTS.Items.Conduit
 					if(powerType <= 0)
                         ConduitHelper.ConduitPowerType(myPlayer, entity.ConduitTile, 1);
                 }
-                if (ImportantTilesWorld.dreamLamp.HasValue && DissolvingTileType == ModContent.TileType<DissolvingNatureTile>())
+                if (ImportantTilesWorld.DreamLamp.HasValue && DissolvingTileType == ModContent.TileType<DissolvingNatureTile>())
 				{
-					Vector2 dreamLamp = new Vector2(ImportantTilesWorld.dreamLamp.Value.X * 16 + 8, ImportantTilesWorld.dreamLamp.Value.Y * 16 + 8);
+					Vector2 dreamLamp = new Vector2(ImportantTilesWorld.DreamLamp.Value.X * 16 + 8, ImportantTilesWorld.DreamLamp.Value.Y * 16 + 8);
 					distance = Vector2.Distance(dreamLamp, new Vector2(i * 16 + 8, j * 16 + 8));
 					if (distance <= 640)
 					{
