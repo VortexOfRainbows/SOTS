@@ -157,9 +157,9 @@ namespace SOTS
 					tileEntity.DrawConduitAura(tileEntity.Position.X, tileEntity.Position.Y);
                 }
 			}
-            DrawGateway(ImportantTilesWorld.AcediaPortal, AcediaPortalMiddleAlpha, hasDrawnToAcediaPortalNature, hasDrawnToAcediaPortalEarth);
-            DrawGateway(ImportantTilesWorld.AvaritiaPortal, AvaritiaPortalMiddleAlpha, hasDrawnToAvaritiaPortalOtherworld, hasDrawnToAvaritiaPortalChaos);
-            DrawGateway(ImportantTilesWorld.GulaPortal, GulaPortalMiddleAlpha, hasDrawnToGulaPortalEarth, hasDrawnToGulaPortalEvil);
+            DrawGateway(ImportantTilesWorld.AcediaPortal.Position, AcediaPortalMiddleAlpha, hasDrawnToAcediaPortalNature, hasDrawnToAcediaPortalEarth);
+            DrawGateway(ImportantTilesWorld.AvaritiaPortal.Position, AvaritiaPortalMiddleAlpha, hasDrawnToAvaritiaPortalOtherworld, hasDrawnToAvaritiaPortalChaos);
+            DrawGateway(ImportantTilesWorld.GulaPortal.Position, GulaPortalMiddleAlpha, hasDrawnToGulaPortalEarth, hasDrawnToGulaPortalEvil);
         }
         public static void DrawGateway(Point16? portal, float percent, bool left, bool right)
         {

@@ -42,54 +42,20 @@ namespace SOTS.Common.Systems
         public const int GulaPortal = 15;
         public const int InvidiaPortal = 16;
     }
-    public class ImportantTilePlacement : GlobalTile
-    {
-        public override void PlaceInWorld(int i, int j, int type, Item item)
-        {
-            //Manually reassigns a special tile location. Other special tile locations are only reassigned on WorldLoad.
-            //The only reason these are specially assigned is because they are the only ones that can be placed in the world
-            if(type == ModContent.TileType<ForgottenLampTile>())
-            {
-                ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.DreamLamp, type, force: true);
-                ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.DreamLamp, 0, -1);
-                if (Main.netMode == NetmodeID.MultiplayerClient)
-                    ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j - 1), ImportantTileID.dreamLamp);
-                if(ImportantTilesWorld.DebugChatMessages)
-                    Main.NewText("(" + i + ", " + j + ")");
-            }
-            if (type == ModContent.TileType<StrangeKeystoneTile>())
-            {
-                if (item.type == ModContent.ItemType<StrangeKeystone>())
-                {
-                    ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.CoconutIslandMonument, type, force : true);
-                    ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.CoconutIslandMonument, 0, -1);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j -1), ImportantTileID.coconutIslandMonument);
-                }
-                if (item.type == ModContent.ItemType<StrangeKeystoneBroken>())
-                {
-                    ImportantTilesWorld.AssignPoint(Main.tile[i, j], i, j, ref ImportantTilesWorld.CoconutIslandMonumentBroken, type, force: true);
-                    ImportantTilesWorld.CenterPoint(ref ImportantTilesWorld.CoconutIslandMonumentBroken, 0, -1);
-                    if (Main.netMode == NetmodeID.MultiplayerClient)
-                        ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, new Point16(i, j - 1), ImportantTileID.coconutIslandMonumentBroken);
-                }
-                if (ImportantTilesWorld.DebugChatMessages)
-                    Main.NewText("(" + i + ", " + j + ")");
-            }
-        }
-    }
     public class ImportantTile(int id, ushort TileType, int TileFrame = -1, int offsetX = 0, int offsetY = 0, Point16? pos = null)
     {
         public Point16? Position = pos;
         public int ID = id;
         public ushort TileType = TileType;
         public int TileFrame = TileFrame;
+        public bool IsArchaeologistSpot = true;
         public void AssignPoint(Tile tile, int i, int j, bool force = false)
         {
             if ((Position == null || force) && tile.TileType == TileType && (TileFrame == -1 || tile.TileFrameX == TileFrame) /*&& tile.HasTile*/) //Do not check hasTile cause that can be done faster outside this method
             {
                 Position = new Point16(i, j);
-                CenterPoint(offsetX, offsetY);
+                if(!force)
+                    CenterPoint(offsetX, offsetY);
             }
         }
         public void CenterPoint(int iOffset, int jOffset)
@@ -98,6 +64,74 @@ namespace SOTS.Common.Systems
                 return;
             else
                 Position = new Point16(Position.Value.X + iOffset, Position.Value.Y + jOffset);
+        }
+        public bool TileInCorrectLocation()
+        {
+            if (Position == null)
+            {
+                if (ImportantTilesWorld.DebugChatMessages)
+                    if (Main.netMode == NetmodeID.Server)
+                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(TileType + ": Does not have a location"), Color.Gray);
+                    else
+                        Main.NewText(TileType + ": Does not have a location");
+                return false;
+            }
+            int x = Position.Value.X;
+            int y = Position.Value.Y;
+            Tile tile = Main.tile[x, y];
+            if (tile.HasTile && tile.TileType == TileType)
+            {
+                return true;
+            }
+            else
+            {
+                Position = null;
+                if (ImportantTilesWorld.DebugChatMessages)
+                    if (Main.netMode == NetmodeID.Server)
+                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(TileType + ": Reset tile location (" + x + ", " + y + ")"), Color.Gray);
+                    else
+                        Main.NewText(TileType + ": Reset tile location");
+                ImportantTilesWorld.TileLocationJustReset = true;
+            }
+            return false;
+        }
+        public Point16 Value => Position.Value;
+        public bool HasValue => Position.HasValue;
+    }
+    public class ImportantTilePlacement : GlobalTile
+    {
+        public override void PlaceInWorld(int i, int j, int type, Item item)
+        {
+            //Manually reassigns a special tile location. Other special tile locations are only reassigned on WorldLoad.
+            //The only reason these are specially assigned is because they are the only ones that can be placed in the world
+            if(type == TileType<ForgottenLampTile>())
+            {
+                ImportantTilesWorld.DreamLamp.AssignPoint(Main.tile[i, j], i, j, true);
+                ImportantTilesWorld.DreamLamp.CenterPoint(0, -1);
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                    ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, ImportantTilesWorld.DreamLamp);
+                if(ImportantTilesWorld.DebugChatMessages)
+                    Main.NewText("(" + i + ", " + j + ")");
+            }
+            if (type == TileType<StrangeKeystoneTile>())
+            {
+                if (item.type == ItemType<StrangeKeystone>())
+                {
+                    ImportantTilesWorld.CoconutIslandMonument.AssignPoint(Main.tile[i, j], i, j, force : true);
+                    ImportantTilesWorld.CoconutIslandMonument.CenterPoint(0, -1);
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, ImportantTilesWorld.CoconutIslandMonument);
+                }
+                if (item.type == ItemType<StrangeKeystoneBroken>())
+                {
+                    ImportantTilesWorld.CoconutIslandMonumentBroken.AssignPoint(Main.tile[i, j], i, j, force: true);
+                    ImportantTilesWorld.CoconutIslandMonumentBroken.CenterPoint(0, -1);
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        ImportantTilesWorld.SyncImportantTileLocations(Main.LocalPlayer, ImportantTilesWorld.CoconutIslandMonumentBroken);
+                }
+                if (ImportantTilesWorld.DebugChatMessages)
+                    Main.NewText("(" + i + ", " + j + ")");
+            }
         }
     }
     public class ImportantTilesWorld : ModSystem
@@ -112,7 +146,7 @@ namespace SOTS.Common.Systems
         }
         public override void PostSetupContent()
         {
-            base.PostSetupContent();
+            Initialize();
         }
         public static void Initialize()
         {
@@ -135,6 +169,8 @@ namespace SOTS.Common.Systems
             BigCrystal = AddToList(TileType<Items.Earth.BigCrystalTile>(), -1, 6, 8);
             GulaPortal = AddToList(TileType<GulaGatewayTile>(), -1, 4, 7);
             InvidiaPortal = AddToList(TileType<InvidiaGatewayTile>(), -1, 14, 20);
+
+            DreamLamp.IsArchaeologistSpot = false;
         }
         public static ImportantTile AcediaPortal { get; private set; }
         public static ImportantTile AvaritiaPortal { get; private set; }
@@ -151,7 +187,6 @@ namespace SOTS.Common.Systems
         public static ImportantTile DreamLamp { get; private set; }
         public static ImportantTile DamoclesChain { get; private set; }
         public static ImportantTile BigCrystal { get; private set; }
-
         public static ImportantTile GulaPortal { get; private set; }
         public static ImportantTile InvidiaPortal { get; private set; }
         public static bool DebugChatMessages = false;
@@ -168,60 +203,7 @@ namespace SOTS.Common.Systems
                     ptToSync = null;
                 else
                     ptToSync = new Point16(pointX, pointY);
-                switch (pointType)
-                {
-                    case ImportantTileID.AcediaPortal:
-                        AcediaPortal = ptToSync;
-                        break;
-                    case ImportantTileID.AvaritiaPortal:
-                        AvaritiaPortal = ptToSync;
-                        break;
-                    case ImportantTileID.gemlockAmethyst:
-                        GemlockAmethyst = ptToSync;
-                        break;
-                    case ImportantTileID.gemlockTopaz:
-                        GemlockTopaz = ptToSync;
-                        break;
-                    case ImportantTileID.gemlockSapphire:
-                        GemlockSapphire = ptToSync;
-                        break;
-                    case ImportantTileID.gemlockEmerald:
-                        GemlockEmerald = ptToSync;
-                        break;
-                    case ImportantTileID.gemlockRuby:
-                        GemlockRuby = ptToSync;
-                        break;
-                    case ImportantTileID.gemlockDiamond:
-                        GemlockDiamond = ptToSync;
-                        break;
-                    case ImportantTileID.gemlockAmber:
-                        GemlockAmber = ptToSync;
-                        break;
-                    case ImportantTileID.iceMonument:
-                        IceMonument = ptToSync;
-                        break;
-                    case ImportantTileID.coconutIslandMonumentBroken:
-                        CoconutIslandMonumentBroken = ptToSync;
-                        break;
-                    case ImportantTileID.coconutIslandMonument:
-                        CoconutIslandMonument = ptToSync;
-                        break;
-                    case ImportantTileID.dreamLamp:
-                        DreamLamp = ptToSync;
-                        break;
-                    case ImportantTileID.damoclesChain:
-                        DamoclesChain = ptToSync;
-                        break;
-                    case ImportantTileID.bigCrystal:
-                        BigCrystal = ptToSync;
-                        break;
-                    case ImportantTileID.GulaPortal:
-                        GulaPortal = ptToSync;
-                        break;
-                    case ImportantTileID.InvidiaPortal:
-                        InvidiaPortal = ptToSync;
-                        break;
-                }
+                List[pointType].Position = ptToSync;
                 if (Main.netMode == NetmodeID.Server)
                 {
                     var packet = Instance.GetPacket();
@@ -247,46 +229,30 @@ namespace SOTS.Common.Systems
             packet.Write((byte)SOTSMessageType.RequestTileLocations);
             packet.Send();
         }
-        public static void SyncImportantTileLocations(Player clientSender, Point16? point, int pointType, int destinationClient = -1)
+        public static void SyncImportantTileLocations(Player clientSender, ImportantTile landmark, int destinationClient = -1)
         {
             int x = 0;
             int y = 0;
-            if (!point.HasValue)
+            if (!landmark.Position.HasValue)
                 x = y = -1;
             else
             {
-                x = point.Value.X; 
-                y = point.Value.Y;
+                x = landmark.Position.Value.X; 
+                y = landmark.Position.Value.Y;
             }
             int playerWhoAmI = clientSender != null ? clientSender.whoAmI : -1;
             var packet = Instance.GetPacket();
             packet.Write((byte)SOTSMessageType.SyncTileLocations);
             packet.Write(playerWhoAmI);
-            packet.Write(pointType);
+            packet.Write(landmark.ID);
             packet.Write(x);
             packet.Write(y);
             packet.Send(destinationClient);
         }
         public static void SyncAllLocations(int toClient = -1)
         {
-            //Making a helper class instead of just point16 could really help out with this situation...
-            SyncImportantTileLocations(null, AcediaPortal, ImportantTileID.AcediaPortal, toClient);
-            SyncImportantTileLocations(null, AvaritiaPortal, ImportantTileID.AvaritiaPortal, toClient);
-            SyncImportantTileLocations(null, GemlockAmethyst, ImportantTileID.gemlockAmethyst, toClient);
-            SyncImportantTileLocations(null, GemlockTopaz, ImportantTileID.gemlockTopaz, toClient);
-            SyncImportantTileLocations(null, GemlockSapphire, ImportantTileID.gemlockSapphire, toClient);
-            SyncImportantTileLocations(null, GemlockEmerald, ImportantTileID.gemlockEmerald, toClient);
-            SyncImportantTileLocations(null, GemlockRuby, ImportantTileID.gemlockRuby, toClient);
-            SyncImportantTileLocations(null, GemlockDiamond, ImportantTileID.gemlockDiamond, toClient);
-            SyncImportantTileLocations(null, GemlockAmber, ImportantTileID.gemlockAmber, toClient);
-            SyncImportantTileLocations(null, IceMonument, ImportantTileID.iceMonument, toClient);
-            SyncImportantTileLocations(null, CoconutIslandMonumentBroken, ImportantTileID.coconutIslandMonumentBroken, toClient);
-            SyncImportantTileLocations(null, CoconutIslandMonument, ImportantTileID.coconutIslandMonument, toClient);
-            SyncImportantTileLocations(null, DreamLamp, ImportantTileID.dreamLamp, toClient);
-            SyncImportantTileLocations(null, DamoclesChain, ImportantTileID.damoclesChain, toClient);
-            SyncImportantTileLocations(null, BigCrystal, ImportantTileID.bigCrystal, toClient);
-            SyncImportantTileLocations(null, GulaPortal, ImportantTileID.GulaPortal, toClient);
-            SyncImportantTileLocations(null, InvidiaPortal, ImportantTileID.InvidiaPortal, toClient);
+            foreach(ImportantTile landmark in List)
+                SyncImportantTileLocations(null, landmark, toClient);
         }
         public static bool awaitTileCheck = true;
         public static bool finishedThreading = false;
@@ -322,9 +288,9 @@ namespace SOTS.Common.Systems
                 }
                 if ((finishedFirstPacketSend || Main.netMode == NetmodeID.SinglePlayer) && SOTSWorld.GlobalCounter % 120 == 0 && SOTSWorld.GlobalCounter > 600) //this will be checked every 2 second
                 {
-                    wasTileLocationJustReset = false;
+                    TileLocationJustReset = false;
                     CheckCurrentLocations();
-                    if(wasTileLocationJustReset && Main.netMode == NetmodeID.Server)
+                    if(TileLocationJustReset && Main.netMode == NetmodeID.Server)
                     {
                         if(DebugChatMessages)
                             Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("SyncedData"), Color.Gray);
@@ -349,53 +315,21 @@ namespace SOTS.Common.Systems
         public static Vector2? RandomImportantLocation(ref int importantTileID, ref int directionToGo)
         {
             importantTileID = -1;
-            List<Point16?> destinations = new List<Point16?>() { 
-                AcediaPortal, 
-                AvaritiaPortal,
-                GemlockAmethyst, 
-                GemlockTopaz, 
-                GemlockSapphire, 
-                GemlockEmerald, 
-                GemlockRuby, 
-                GemlockDiamond, 
-                GemlockAmber,
-                IceMonument, 
-                CoconutIslandMonumentBroken,
-                CoconutIslandMonument,
-                DamoclesChain,
-                BigCrystal,
-                GulaPortal,
-                InvidiaPortal
-            };
-            List<int> destinationIDs = new List<int>() {
-                0,
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9,
-                10,
-                11,
-                13,
-                14,
-                15,
-                16
-            };
+            List<ImportantTile> validLandmarks = new();
+            foreach(ImportantTile landmark in List)
+                if(landmark.IsArchaeologistSpot)
+                    validLandmarks.Add(landmark);
             Vector2? myDestination = null;
             int totalAttempts = 0;
-            while (myDestination == null && destinations.Count > 0)
+            while (myDestination == null && validLandmarks.Count > 0)
             {
                 int yOffset = 0;
-                int randomPossibilites = Main.rand.Next(destinations.Count);
-                Point16? destination = destinations[randomPossibilites];
-                importantTileID = destinationIDs[randomPossibilites];
-                if (destination != null && (!PreviousTeleports.Contains(importantTileID) || Main.rand.NextBool(4) || destinations.Count < 4))
+                int randomPossibilites = Main.rand.Next(validLandmarks.Count);
+                ImportantTile destination = validLandmarks[randomPossibilites];
+                importantTileID = destination.ID;
+                if (destination.HasValue && (!PreviousTeleports.Contains(importantTileID) || Main.rand.NextBool(4) || validLandmarks.Count < 4))
                 {
-                    Vector2 testDestination = new Vector2(destination.Value.X * 16, destination.Value.Y * 16);
+                    Vector2 testDestination = new Vector2(destination.Position.Value.X * 16, destination.Position.Value.Y * 16);
                     bool valid = false;
                     int attempts = 55;
                     while(attempts > 0)
@@ -410,8 +344,8 @@ namespace SOTS.Common.Systems
                         if (xOffset == 1)
                             xOffset = 2;
                         directionToGo = -Math.Sign(xOffset);
-                        int tileX = destination.Value.X + xOffset;
-                        int tileY = destination.Value.Y + yOffset;
+                        int tileX = destination.Position.Value.X + xOffset;
+                        int tileY = destination.Position.Value.Y + yOffset;
                         bool tileSpace = false;
                         for (int j = -6; j <= 12; j++)
                         {
@@ -445,16 +379,10 @@ namespace SOTS.Common.Systems
                     if (valid)
                         myDestination = testDestination;
                     else
-                    {
-                        destinations.RemoveAt(randomPossibilites);
-                        destinationIDs.RemoveAt(randomPossibilites);
-                    }
+                        validLandmarks.RemoveAt(randomPossibilites);
                 }
                 else
-                {
-                    destinations.RemoveAt(randomPossibilites);
-                    destinationIDs.RemoveAt(randomPossibilites);
-                }
+                    validLandmarks.RemoveAt(randomPossibilites);
                 totalAttempts++;
             }
             if (!myDestination.HasValue)
@@ -471,23 +399,8 @@ namespace SOTS.Common.Systems
         }
         public static void ResetTileLocations(object state)
         {
-            AcediaPortal = null;
-            AvaritiaPortal = null;
-            GemlockAmethyst = null;
-            GemlockTopaz = null;
-            GemlockSapphire = null;
-            GemlockEmerald = null;
-            GemlockRuby = null;
-            GemlockDiamond = null;
-            GemlockAmber = null;
-            IceMonument = null;
-            CoconutIslandMonumentBroken = null;
-            CoconutIslandMonument = null;
-            DreamLamp = null;
-            DamoclesChain = null;
-            BigCrystal = null;
-            GulaPortal = null;
-            InvidiaPortal = null;
+            foreach (ImportantTile landmark in List)
+                landmark.Position = null;
             for (int i = 15; i < Main.maxTilesX - 15; i++)
             {
                 for(int j = 15; j < Main.maxTilesY - 15; j++)
@@ -504,79 +417,16 @@ namespace SOTS.Common.Systems
             }
             finishedThreading = true;
         }
-        public static void CenterPoint(ref Point16? pt, int iOffset, int jOffset)
-        {
-            if (pt == null)
-                return;
-            else
-            {
-                pt = new Point16(pt.Value.X + iOffset, pt.Value.Y + jOffset);
-            }
-        }
-        public static void AssignPoint(Tile tile, int i, int j, ref Point16? pt, int typeToCheck, int frameXRequired = -1, bool force = false)
-        {
-            if ((pt == null || force) && tile.HasTile && tile.TileType == typeToCheck && (frameXRequired == -1 || tile.TileFrameX == frameXRequired))
-            {
-                pt = new Point16(i, j);
-            }
-        }
-        public static bool wasTileLocationJustReset = false;
-        public static bool TileInCorrectLocation(ref Point16? pt, int typeToCheck)
-        {
-            if (pt == null)
-            {
-                if(DebugChatMessages)
-                {
-                    if (Main.netMode == NetmodeID.Server)
-                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(typeToCheck + ": Does not have a location"), Color.Gray);
-                    else
-                        Main.NewText(typeToCheck + ": Does not have a location");
-                }
-                return false;
-            }
-            int x = pt.Value.X;
-            int y = pt.Value.Y;
-            Tile tile = Main.tile[x, y];
-            if (tile.HasTile && tile.TileType == typeToCheck)
-            {
-                return true;
-            }
-            else
-            {
-                pt = null;
-                if (DebugChatMessages)
-                {
-                    if (Main.netMode == NetmodeID.Server)
-                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(typeToCheck + ": Reset tile location (" + x + ", " + y + ")"), Color.Gray);
-                    else
-                        Main.NewText(typeToCheck + ": Reset tile location");
-                }
-                wasTileLocationJustReset = true;
-            }
-            return false;
-        }
+        public static bool TileLocationJustReset { get; set; }
         ///<summary>
         /// Checks if a saved value for a special tile position is still valid. If not, the tile is removed from being a special position tile
         ///</summary>
         public static void CheckCurrentLocations()
         {
-            TileInCorrectLocation(ref AcediaPortal, ModContent.TileType<AcediaGatewayTile>());
-            TileInCorrectLocation(ref AvaritiaPortal, ModContent.TileType<AvaritianGatewayTile>());
-            TileInCorrectLocation(ref GemlockAmethyst, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref GemlockTopaz, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref GemlockSapphire, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref GemlockEmerald, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref GemlockRuby, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref GemlockDiamond, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref GemlockAmber, ModContent.TileType<SOTSGemLockTiles>());
-            TileInCorrectLocation(ref IceMonument, ModContent.TileType<FrostArtifactTile>());
-            TileInCorrectLocation(ref CoconutIslandMonumentBroken, ModContent.TileType<StrangeKeystoneTile>());
-            TileInCorrectLocation(ref CoconutIslandMonument, ModContent.TileType<StrangeKeystoneTile>());
-            TileInCorrectLocation(ref DreamLamp, ModContent.TileType<ForgottenLampTile>());
-            TileInCorrectLocation(ref DamoclesChain, ModContent.TileType<Items.Tide.ArkhalisChainTile>());
-            TileInCorrectLocation(ref BigCrystal, ModContent.TileType<Items.Earth.BigCrystalTile>());
-            TileInCorrectLocation(ref GulaPortal, ModContent.TileType<GulaGatewayTile>());
-            TileInCorrectLocation(ref InvidiaPortal, ModContent.TileType<InvidiaGatewayTile>());
+            foreach(ImportantTile landmark in List)
+            {
+                landmark.TileInCorrectLocation();
+            }
         }
     }
 }
