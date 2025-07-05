@@ -72,7 +72,7 @@ Daily Log:
 7/4/25 to 7/5/25
 1. Fix localization issues (EN)
 2. Fix issue where Icebreaker and Compound Bow stopped consuming ammo after their first use
-3. WIP Refactor of important tiles code. Now it should be more readable and sustainable
+3. WIP Refactor of important tiles code. Now it should be more readable and sustainable (seems to work in MP)
 
 7/3/25
 1. Fix bug where dissolving umbra was not being properly flipped by the polarizers
