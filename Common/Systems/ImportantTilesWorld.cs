@@ -18,6 +18,10 @@ using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Invidia;
 using static SOTS.SOTS;
 using static Terraria.ModLoader.ModContent;
+using SOTS.Items.Temple;
+using Mono.Cecil.Cil;
+using SOTS.Items.Fragments;
+using SOTS.Helpers;
 
 namespace SOTS.Common.Systems
 {
@@ -41,6 +45,7 @@ namespace SOTS.Common.Systems
         public const int bigCrystal = 14;
         public const int GulaPortal = 15;
         public const int InvidiaPortal = 16;
+        public const int IraPortal = 17;
     }
     public class ImportantTile(int id, ushort TileType, int TileFrame = -1, int offsetX = 0, int offsetY = 0, Point16? pos = null)
     {
@@ -98,6 +103,48 @@ namespace SOTS.Common.Systems
         public Point16 Value => Position.Value;
         public bool HasValue => Position.HasValue;
     }
+    public class GatewayImportantTile(int id, ushort TileType, int TileFrame = -1, int offsetX = 0, int offsetY = 0, Point16? pos = null) : ImportantTile(id, TileType, TileFrame, offsetX, offsetY, pos)
+    {
+        public bool IsPowered = false;
+        public int LeftElementType;
+        public int RightElementType;
+        public bool IsConnectedLeftElement = false;
+        public bool IsConnectedRightElement = false;
+        public float MiddlePercent = 0f;
+        //public void TryConnectingToConduit()
+        //{
+        //    if (ImportantTilesWorld.AvaritiaPortal.HasValue)
+        //    {
+        //        int x = ImportantTilesWorld.AvaritiaPortal.Value.X;
+        //        int y = ImportantTilesWorld.AvaritiaPortal.Value.Y;
+        //        Tile tile = Main.tile[x, y];
+        //        bool chaos = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingBrillianceTile>();
+        //        bool otherworld = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingAetherTile>();
+        //        if (tile.HasUnactuatedTile && tile.TileType == ModContent.TileType<AvaritianGatewayTile>() &&
+        //            (chaos || otherworld))
+        //        {
+        //            Vector2 avaritiaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
+        //            bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, avaritiaPortal, 1f, ColorHelper.OtherworldColor);
+        //            if (otherworld && !hasDrawnToAvaritiaPortalOtherworld && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
+        //            {
+        //                float Percent = tileEntity.DissolvingTileCount / 20f;
+        //                Percent *= Percent;
+        //                hasDrawnToAvaritiaPortalOtherworld = true;
+        //                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
+        //                AvaritiaPortalMiddleAlpha += Percent * 0.5f;
+        //            }
+        //            if (chaos && !hasDrawnToAvaritiaPortalChaos && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
+        //            {
+        //                float Percent = tileEntity.DissolvingTileCount / 20f;
+        //                Percent *= Percent;
+        //                hasDrawnToAvaritiaPortalChaos = true;
+        //                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
+        //                AvaritiaPortalMiddleAlpha += Percent * 0.5f;
+        //            }
+        //        }
+        //    }
+        //}
+    }
     public class ImportantTilePlacement : GlobalTile
     {
         public override void PlaceInWorld(int i, int j, int type, Item item)
@@ -144,14 +191,20 @@ namespace SOTS.Common.Systems
             List.Add(i);
             return i;
         }
+        private static GatewayImportantTile AddGatewayToList(int TileType, int TileFrame = -1, int offsetX = 0, int offsetY = 0, Point16? pos = null)
+        {
+            GatewayImportantTile i = new(ListIndex++, (ushort)TileType, TileFrame, offsetX, offsetY, pos);
+            List.Add(i);
+            return i;
+        }
         public override void PostSetupContent()
         {
             Initialize();
         }
         public static void Initialize()
         {
-            AcediaPortal = AddToList(TileType<AcediaGatewayTile>(), -1, 4, 7);
-            AvaritiaPortal = AddToList(TileType<AvaritianGatewayTile>(), -1, 4, 7);
+            AcediaPortal = AddGatewayToList(TileType<AcediaGatewayTile>(), -1, 4, 7);
+            AvaritiaPortal = AddGatewayToList(TileType<AvaritianGatewayTile>(), -1, 4, 7);
             int i = TileType<SOTSGemLockTiles>();
             GemlockAmethyst = AddToList(i, 216, 1, 1);
             GemlockTopaz = AddToList(i, 162, 1, 1);
@@ -167,13 +220,29 @@ namespace SOTS.Common.Systems
             DreamLamp = AddToList(TileType<ForgottenLampTile>(), -1, 1, 0);
             DamoclesChain = AddToList(TileType<Items.Tide.ArkhalisChainTile>());
             BigCrystal = AddToList(TileType<Items.Earth.BigCrystalTile>(), -1, 6, 8);
-            GulaPortal = AddToList(TileType<GulaGatewayTile>(), -1, 4, 7);
-            InvidiaPortal = AddToList(TileType<InvidiaGatewayTile>(), -1, 14, 20);
+            GulaPortal = AddGatewayToList(TileType<GulaGatewayTile>(), -1, 4, 7);
+            InvidiaPortal = AddGatewayToList(TileType<InvidiaGatewayTile>(), -1, 14, 20);
+            IraPortal = AddGatewayToList(TileType<IraGatewayTile>(), -1, 4, 7);
 
             DreamLamp.IsArchaeologistSpot = false;
+
+            AcediaPortal.LeftElementType = TileType<DissolvingNatureTile>();
+            AcediaPortal.RightElementType = TileType<DissolvingEarthTile>();
+
+            AvaritiaPortal.LeftElementType = TileType<DissolvingAetherTile>();
+            AvaritiaPortal.RightElementType = TileType<DissolvingBrillianceTile>();
+
+            GulaPortal.LeftElementType = TileType<DissolvingEarthTile>();
+            GulaPortal.RightElementType = TileType<DissolvingUmbraTile>();
+
+            IraPortal.LeftElementType = TileType<DissolvingNatureTile>();
+            IraPortal.RightElementType = TileType<DissolvingNetherTile>();
+
+            InvidiaPortal.LeftElementType = TileType<DissolvingDelugeTile>();
+            InvidiaPortal.RightElementType = TileType<DissolvingNetherTile>();
         }
-        public static ImportantTile AcediaPortal { get; private set; }
-        public static ImportantTile AvaritiaPortal { get; private set; }
+        public static GatewayImportantTile AcediaPortal { get; private set; }
+        public static GatewayImportantTile AvaritiaPortal { get; private set; }
         public static ImportantTile GemlockAmethyst { get; private set; }
         public static ImportantTile GemlockTopaz { get; private set; }
         public static ImportantTile GemlockSapphire { get; private set; }
@@ -187,8 +256,9 @@ namespace SOTS.Common.Systems
         public static ImportantTile DreamLamp { get; private set; }
         public static ImportantTile DamoclesChain { get; private set; }
         public static ImportantTile BigCrystal { get; private set; }
-        public static ImportantTile GulaPortal { get; private set; }
-        public static ImportantTile InvidiaPortal { get; private set; }
+        public static GatewayImportantTile GulaPortal { get; private set; }
+        public static GatewayImportantTile InvidiaPortal { get; private set; }
+        public static GatewayImportantTile IraPortal { get; private set; }
         public static bool DebugChatMessages = false;
         public static void HandlePacket(BinaryReader reader, int whoAmI, int msgType)
         {

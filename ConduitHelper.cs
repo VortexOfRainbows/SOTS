@@ -15,10 +15,8 @@ using System;
 using System.IO;
 using System.Linq;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace SOTS
