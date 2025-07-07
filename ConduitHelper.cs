@@ -25,11 +25,10 @@ namespace SOTS
 	{
 		public static void PreDrawBeforePlayers()
 		{
-			bool hasDrawnToAcediaPortalNature = false, hasDrawnToAcediaPortalEarth = false;
-            bool hasDrawnToAvaritiaPortalChaos = false, hasDrawnToAvaritiaPortalOtherworld = false;
-            bool hasDrawnToGulaPortalEarth = false, hasDrawnToGulaPortalEvil = false;
+            foreach(GatewayImportantTile gateway in ImportantTilesWorld.GatewayList)
+                if (gateway != ImportantTilesWorld.InvidiaPortal)
+                    gateway.ResetConduitValues();
             //bool hasDrawnToDreamLamp = false;
-            float AcediaPortalMiddleAlpha = 0.0f, AvaritiaPortalMiddleAlpha = 0.0f, GulaPortalMiddleAlpha = 0.0f;
             foreach (ConduitCounterTE tileEntity in TileEntity.ByID.Values.OfType<ConduitCounterTE>())
 			{
 				if (tileEntity.ConduitTile != null)
@@ -50,97 +49,10 @@ namespace SOTS
 							}
 							tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, player.Center, 0.9f * mult);
 						}
-					}
-					if (ImportantTilesWorld.AcediaPortal.HasValue)
-					{
-						int x = ImportantTilesWorld.AcediaPortal.Value.X;
-						int y = ImportantTilesWorld.AcediaPortal.Value.Y;
-						Tile tile = Main.tile[x, y];
-						bool nature = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingNatureTile>();
-						bool earthen = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingEarthTile>();
-                        if (tile.HasUnactuatedTile && tile.TileType == ModContent.TileType<AcediaGatewayTile>() &&
-							(nature || earthen))
-						{
-							Vector2 acediaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
-							bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, acediaPortal, 1f, ColorHelper.AcediaColor);
-							if (nature && !hasDrawnToAcediaPortalNature && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
-							{
-								float Percent = tileEntity.DissolvingTileCount / 20f;
-								Percent *= Percent;
-								hasDrawnToAcediaPortalNature = true;
-                                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
-								AcediaPortalMiddleAlpha += Percent * 0.5f;
-							}
-							if (earthen && !hasDrawnToAcediaPortalEarth && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
-							{
-								float Percent = tileEntity.DissolvingTileCount / 20f;
-								Percent *= Percent;
-								hasDrawnToAcediaPortalEarth = true;
-                                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
-								AcediaPortalMiddleAlpha += Percent * 0.5f;
-							}
-						}
-					}
-					if (ImportantTilesWorld.AvaritiaPortal.HasValue)
-                    {
-                        int x = ImportantTilesWorld.AvaritiaPortal.Value.X;
-                        int y = ImportantTilesWorld.AvaritiaPortal.Value.Y;
-                        Tile tile = Main.tile[x, y];
-                        bool chaos = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingBrillianceTile>();
-                        bool otherworld = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingAetherTile>();
-                        if (tile.HasUnactuatedTile && tile.TileType == ModContent.TileType<AvaritianGatewayTile>() &&
-                            (chaos || otherworld))
-                        {
-                            Vector2 avaritiaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
-                            bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, avaritiaPortal, 1f, ColorHelper.OtherworldColor);
-                            if (otherworld && !hasDrawnToAvaritiaPortalOtherworld && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
-                            {
-                                float Percent = tileEntity.DissolvingTileCount / 20f;
-                                Percent *= Percent;
-                                hasDrawnToAvaritiaPortalOtherworld = true;
-                                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
-                                AvaritiaPortalMiddleAlpha += Percent * 0.5f;
-                            }
-                            if (chaos && !hasDrawnToAvaritiaPortalChaos && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
-                            {
-                                float Percent = tileEntity.DissolvingTileCount / 20f;
-                                Percent *= Percent;
-                                hasDrawnToAvaritiaPortalChaos = true;
-                                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
-                                AvaritiaPortalMiddleAlpha += Percent * 0.5f;
-                            }
-                        }
                     }
-                    if (ImportantTilesWorld.GulaPortal.HasValue)
-                    {
-                        int x = ImportantTilesWorld.GulaPortal.Value.X;
-                        int y = ImportantTilesWorld.GulaPortal.Value.Y;
-                        Tile tile = Main.tile[x, y];
-                        bool earth = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingEarthTile>();
-                        bool evil = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingUmbraTile>();
-                        if (tile.HasUnactuatedTile && tile.TileType == ModContent.TileType<GulaGatewayTile>() &&
-                            (earth || evil))
-                        {
-                            Vector2 gulaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
-                            bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, gulaPortal, 1f, ColorHelper.RedEvilColor);
-                            if (earth && !hasDrawnToGulaPortalEarth && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
-                            {
-                                float Percent = tileEntity.DissolvingTileCount / 20f;
-                                Percent *= Percent;
-                                hasDrawnToGulaPortalEarth = true;
-                                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
-                                GulaPortalMiddleAlpha += Percent * 0.5f;
-                            }
-                            if (evil && !hasDrawnToGulaPortalEvil && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
-                            {
-                                float Percent = tileEntity.DissolvingTileCount / 20f;
-                                Percent *= Percent;
-                                hasDrawnToGulaPortalEvil = true;
-                                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
-                                GulaPortalMiddleAlpha += Percent * 0.5f;
-                            }
-                        }
-                    }
+                    foreach (GatewayImportantTile gateway in ImportantTilesWorld.GatewayList)
+                        if (gateway != ImportantTilesWorld.InvidiaPortal)
+                            gateway.TryConnectingToConduit(tileEntity);
                     if (ImportantTilesWorld.DreamLamp.HasValue && tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingNatureTile>())
 					{
 						int x = ImportantTilesWorld.DreamLamp.Value.X;
@@ -155,18 +67,20 @@ namespace SOTS
 					tileEntity.DrawConduitAura(tileEntity.Position.X, tileEntity.Position.Y);
                 }
 			}
-            DrawGateway(ImportantTilesWorld.AcediaPortal.Position, AcediaPortalMiddleAlpha, hasDrawnToAcediaPortalNature, hasDrawnToAcediaPortalEarth);
-            DrawGateway(ImportantTilesWorld.AvaritiaPortal.Position, AvaritiaPortalMiddleAlpha, hasDrawnToAvaritiaPortalOtherworld, hasDrawnToAvaritiaPortalChaos);
-            DrawGateway(ImportantTilesWorld.GulaPortal.Position, GulaPortalMiddleAlpha, hasDrawnToGulaPortalEarth, hasDrawnToGulaPortalEvil);
+            foreach(GatewayImportantTile gateway in ImportantTilesWorld.GatewayList)
+            {
+                if(gateway != ImportantTilesWorld.InvidiaPortal)
+                    DrawGateway(gateway);
+            }
         }
-        public static void DrawGateway(Point16? portal, float percent, bool left, bool right)
+        public static void DrawGateway(GatewayImportantTile portal)
         {
-            if (portal.HasValue && (left || right))
+            if (portal.HasValue && (portal.IsConnectedLeftElement || portal.IsConnectedRightElement))
             {
                 int x = portal.Value.X;
                 int y = portal.Value.Y;
-                if (percent > 0.0f)
-                    DrawGatewayGlowmask(x, y, Main.spriteBatch, percent, 0);
+                if (portal.MiddlePercent > 0.0f)
+                    DrawGatewayGlowmask(x, y, Main.spriteBatch, portal.MiddlePercent, 0);
             }
         }
         public static int ConduitPowerType(Player player, ConduitTile cT, int change = 0)
@@ -248,7 +162,7 @@ namespace SOTS
             if (tile.TileType == SOTSTile.IraGatewayTile)
             {
                 texture = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/IraGatewayTileGlow" + variant).Value;
-                textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/PortalIraGatewayTileGlowMask" + variant).Value;
+                textureMask = ModContent.Request<Texture2D>("SOTS/Items/Conduit/Portal/IraGatewayTileGlowMask" + variant).Value;
                 defaultColor = new Color(130, 120, 50, 0);
                 alternatingColor = ColorHelper.GulaColor * 0.65f;
             }

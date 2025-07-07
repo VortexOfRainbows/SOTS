@@ -16,12 +16,12 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Invidia;
-using static SOTS.SOTS;
-using static Terraria.ModLoader.ModContent;
 using SOTS.Items.Temple;
-using Mono.Cecil.Cil;
 using SOTS.Items.Fragments;
 using SOTS.Helpers;
+using SOTS.Items.Conduit;
+using static SOTS.SOTS;
+using static Terraria.ModLoader.ModContent;
 
 namespace SOTS.Common.Systems
 {
@@ -111,39 +111,59 @@ namespace SOTS.Common.Systems
         public bool IsConnectedLeftElement = false;
         public bool IsConnectedRightElement = false;
         public float MiddlePercent = 0f;
-        //public void TryConnectingToConduit()
-        //{
-        //    if (ImportantTilesWorld.AvaritiaPortal.HasValue)
-        //    {
-        //        int x = ImportantTilesWorld.AvaritiaPortal.Value.X;
-        //        int y = ImportantTilesWorld.AvaritiaPortal.Value.Y;
-        //        Tile tile = Main.tile[x, y];
-        //        bool chaos = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingBrillianceTile>();
-        //        bool otherworld = tileEntity.ConduitTile.DissolvingTileType == ModContent.TileType<DissolvingAetherTile>();
-        //        if (tile.HasUnactuatedTile && tile.TileType == ModContent.TileType<AvaritianGatewayTile>() &&
-        //            (chaos || otherworld))
-        //        {
-        //            Vector2 avaritiaPortal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
-        //            bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, avaritiaPortal, 1f, ColorHelper.OtherworldColor);
-        //            if (otherworld && !hasDrawnToAvaritiaPortalOtherworld && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
-        //            {
-        //                float Percent = tileEntity.DissolvingTileCount / 20f;
-        //                Percent *= Percent;
-        //                hasDrawnToAvaritiaPortalOtherworld = true;
-        //                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
-        //                AvaritiaPortalMiddleAlpha += Percent * 0.5f;
-        //            }
-        //            if (chaos && !hasDrawnToAvaritiaPortalChaos && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
-        //            {
-        //                float Percent = tileEntity.DissolvingTileCount / 20f;
-        //                Percent *= Percent;
-        //                hasDrawnToAvaritiaPortalChaos = true;
-        //                DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
-        //                AvaritiaPortalMiddleAlpha += Percent * 0.5f;
-        //            }
-        //        }
-        //    }
-        //}
+        public Color ConnectionColor()
+        {
+            if(TileType == TileType<AcediaGatewayTile>())
+                return ColorHelper.AcediaColor;
+            else if (TileType == TileType<AvaritianGatewayTile>())
+                return ColorHelper.OtherworldColor;
+            else if (TileType == TileType<GulaGatewayTile>())
+                return ColorHelper.RedEvilColor;
+            else if (TileType == TileType<IraGatewayTile>())
+                return ColorHelper.EarthColor; //Temporary color choice
+            else if (TileType == TileType<InvidiaGatewayTile>())
+                return ColorHelper.NatureColor; //Temporary color choice
+            return ColorHelper.AcediaColor;
+        }
+        public void ResetConduitValues()
+        {
+            IsConnectedLeftElement = false;
+            IsConnectedRightElement = false;
+            MiddlePercent = 0;
+        }
+        public void TryConnectingToConduit(ConduitCounterTE tileEntity)
+        {
+            if (HasValue)
+            {
+                int x = Value.X;
+                int y = Value.Y;
+                Tile tile = Main.tile[x, y];
+                bool left = tileEntity.ConduitTile.DissolvingTileType == LeftElementType;
+                bool right = tileEntity.ConduitTile.DissolvingTileType == RightElementType;
+                if (tile.HasUnactuatedTile && tile.TileType == TileType &&
+                    (right || left))
+                {
+                    Vector2 portal = new Vector2(x * 16, y * 16) + new Vector2(8, 8);
+                    bool succeededDraw = tileEntity.DrawConduitToLocation(tileEntity.Position.X, tileEntity.Position.Y, portal, 1f, ConnectionColor());
+                    if (left && !IsConnectedLeftElement && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
+                    {
+                        float Percent = tileEntity.DissolvingTileCount / 20f;
+                        Percent *= Percent;
+                        IsConnectedLeftElement = true;
+                        ConduitHelper.DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, -1);
+                        MiddlePercent += Percent * 0.5f;
+                    }
+                    if (right && !IsConnectedRightElement && succeededDraw) //This way, it only draws the acedia portal glow once, no matter how many conduits
+                    {
+                        float Percent = tileEntity.DissolvingTileCount / 20f;
+                        Percent *= Percent;
+                        IsConnectedRightElement = true;
+                        ConduitHelper.DrawGatewayGlowmask(x, y, Main.spriteBatch, Percent, 1);
+                        MiddlePercent += Percent * 0.5f;
+                    }
+                }
+            }
+        }
     }
     public class ImportantTilePlacement : GlobalTile
     {
@@ -184,7 +204,8 @@ namespace SOTS.Common.Systems
     public class ImportantTilesWorld : ModSystem
     {
         private static int ListIndex = 0;
-        private static List<ImportantTile> List = new List<ImportantTile>();
+        private static readonly List<ImportantTile> List = [];
+        public static readonly List<GatewayImportantTile> GatewayList = [];
         private static ImportantTile AddToList(int TileType, int TileFrame = -1, int offsetX = 0, int offsetY = 0, Point16? pos = null)
         {
             ImportantTile i = new(ListIndex++, (ushort)TileType, TileFrame, offsetX, offsetY, pos);
@@ -195,6 +216,7 @@ namespace SOTS.Common.Systems
         {
             GatewayImportantTile i = new(ListIndex++, (ushort)TileType, TileFrame, offsetX, offsetY, pos);
             List.Add(i);
+            GatewayList.Add(i);
             return i;
         }
         public override void PostSetupContent()
