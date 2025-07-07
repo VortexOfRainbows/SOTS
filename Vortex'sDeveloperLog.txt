@@ -39,6 +39,7 @@ Update Objectives:
 8. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 9. Bridgeburner flight
 10. Adjust Excavator laser orb attack to not get as close to the player
+11. Peanuts bug in and out of existence while zooming ?
 
 ---WIP List---
 N/A
