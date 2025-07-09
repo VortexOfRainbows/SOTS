@@ -10,6 +10,7 @@ using SOTS.Buffs;
 using Terraria.Audio;
 using SOTS.Void;
 using SOTS.Helpers;
+using Terraria.Localization;
 
 namespace SOTS.Items
 {
@@ -25,27 +26,27 @@ namespace SOTS.Items
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
 			List<int> CapableNPCs = CapableNPCS(Main.LocalPlayer);
-			tooltips.Add(new TooltipLine(Mod, "Construct0", "Possible constructs:"));
+			tooltips.Add(new TooltipLine(Mod, "Construct0", Language.GetTextValue("Mods.SOTS.Items.ElectromagneticLure.PossibleConstructs")));
 			if (CapableNPCs.Contains(ModContent.NPCType<NatureConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct1", "Nature Construct") { OverrideColor = ColorHelper.NatureColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct1", Lang.GetNPCName(ModContent.NPCType<NatureConstruct>()).Value) { OverrideColor = ColorHelper.NatureColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<EarthenConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct2", "Earthen Construct") { OverrideColor = ColorHelper.EarthColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct2", Lang.GetNPCName(ModContent.NPCType<EarthenConstruct>()).Value) { OverrideColor = ColorHelper.EarthColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<PermafrostConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct3", "Permafrost Construct") { OverrideColor = ColorHelper.PermafrostColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct3", Lang.GetNPCName(ModContent.NPCType<PermafrostConstruct>()).Value) { OverrideColor = ColorHelper.PermafrostColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<OtherworldlyConstructHead>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct4", "Otherworldly Construct") { OverrideColor = ColorHelper.OtherworldColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct4", Lang.GetNPCName(ModContent.NPCType<OtherworldlyConstructHead>()).Value) { OverrideColor = ColorHelper.OtherworldColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<TidalConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct5", "Tidal Construct") { OverrideColor = ColorHelper.TideColor });
+				tooltips.Add(new TooltipLine(Mod, "Construct5", Lang.GetNPCName(ModContent.NPCType<TidalConstruct>()).Value) { OverrideColor = ColorHelper.TideColor });
 			if (CapableNPCs.Contains(ModContent.NPCType<EvilConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct6", "Evil Construct") { OverrideColor = new Color(ColorHelper.EvilColor.R + 50, ColorHelper.EvilColor.G + 50, ColorHelper.EvilColor.B + 50)  });
+				tooltips.Add(new TooltipLine(Mod, "Construct6", Lang.GetNPCName(ModContent.NPCType<EvilConstruct>()).Value) { OverrideColor = new Color(ColorHelper.EvilColor.R + 50, ColorHelper.EvilColor.G + 50, ColorHelper.EvilColor.B + 50)  });
             if (CapableNPCs.Contains(ModContent.NPCType<Bridgeburner>()))
-                tooltips.Add(new TooltipLine(Mod, "Construct6", "Bridgeburner") { OverrideColor = new Color(ColorHelper.EvilColor.R + 50, ColorHelper.EvilColor.G + 50, ColorHelper.EvilColor.B + 50) });
+                tooltips.Add(new TooltipLine(Mod, "Construct6", Lang.GetNPCName(ModContent.NPCType<Bridgeburner>()).Value) { OverrideColor = new Color(ColorHelper.EvilColor.R + 50, ColorHelper.EvilColor.G + 50, ColorHelper.EvilColor.B + 50) });
             if (CapableNPCs.Contains(ModContent.NPCType<ChaosConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct7", "Chaos Construct") { OverrideColor = ColorHelper.PastelRainbow });
+				tooltips.Add(new TooltipLine(Mod, "Construct7", Lang.GetNPCName(ModContent.NPCType<ChaosConstruct>()).Value) { OverrideColor = ColorHelper.PastelRainbow });
 			if (CapableNPCs.Contains(ModContent.NPCType<InfernoConstruct>()))
-				tooltips.Add(new TooltipLine(Mod, "Construct8", "Inferno Construct") { OverrideColor = ColorHelper.Inferno1 });
+				tooltips.Add(new TooltipLine(Mod, "Construct8", Lang.GetNPCName(ModContent.NPCType<InfernoConstruct>()).Value) { OverrideColor = ColorHelper.Inferno1 });
 			if(CapableNPCs.Count <= 0)
-				tooltips.Add(new TooltipLine(Mod, "Construct8", "None") { OverrideColor = new Color(150, 150, 150) });
+				tooltips.Add(new TooltipLine(Mod, "Construct8", Language.GetTextValue("Mods.SOTS.Items.ElectromagneticLure.None")) { OverrideColor = new Color(150, 150, 150) });
 		}
         public override void SetDefaults()
 		{

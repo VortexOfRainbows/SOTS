@@ -4321,6 +4321,8 @@ Mods: {
 			ElectromagneticLure: {
 				DisplayName: Electromagnetic Lure
 				Tooltip: Attracts a single biome construct
+				PossibleConstructs: "Possible constructs: "
+				None: None
 			}
 
 			ExplosiveKnife: {
