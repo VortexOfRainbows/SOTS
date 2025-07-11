@@ -9,8 +9,8 @@ namespace SOTS.Items
 {
 	public class ElectromagneticDeterrent : ModItem
 	{
-		int frameCounter = 0;
-		int frame = 0;
+		private int frameCounter = 0;
+		private int frame = 0;
 		public override void SetStaticDefaults()
 		{
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 15));
@@ -70,7 +70,7 @@ namespace SOTS.Items
 		{
 			if (Item.favorited)
             {
-				player.AddBuff(ModContent.BuffType<Buffs.DEFEBuff>(), 6);
+				player.AddBuff(ModContent.BuffType<Buffs.DEFEBuff>(), 18);
 				SOTSPlayer.ModPlayer(player).noMoreConstructs = true;
 			}
         }

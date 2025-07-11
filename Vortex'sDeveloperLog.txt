@@ -42,8 +42,7 @@ Update Objectives:
 11. Fix NON-EN localization:
 	1. The information shown in the lower-left corner after using the Planetary Analyzer (this should probably be reworked altogether).
 12. Look into bug with sanctuary pillars being strange/not present
-13. Add extra info to conduits to let people know they need the toolbelt
-14. Prevent wormholes near town npcs
+13. Prevent wormholes near town npcs
 
 
 ---WIP List---
@@ -75,8 +74,11 @@ N/A
 
 Daily Log:
 
-7/9/25
+7/9/25 to 7/10/25
 1. Add localization support for Electromagnetic Lure
+2. Triple duration of D.E.F.E buff to make up for some strange edge cases where it repeatedly gets removed and reapplied
+3. Fix wormhole barrier flipping upside down with reversed gravity
+4. Conduit tiles now have additional tooltip text in order to make it clear that you need Archaeologist's Toolbelt to place
 
 7/4/25 to 7/6/25
 1. Fix localization issues (EN)

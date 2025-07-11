@@ -992,7 +992,11 @@ Mods: {
 
 			ConduitChassis: {
 				DisplayName: Conduit Chassis
-				Tooltip: Completes the carapace of a conduit, allowing for energy redirection
+				Tooltip: 
+					'''
+					Completes the carapace of a conduit, allowing for energy redirection
+					Can only be placed with an Archaeologist's Toolbelt equipped
+					'''
 			}
 
 			NatureConduit: {
@@ -1001,6 +1005,7 @@ Mods: {
 					'''
 					An incomplete redirector of nature energy: it lacks a support chassis
 					When fully charged, it will focus nearby nature energy into valid repositories
+					Can only be placed with an Archaeologist's Toolbelt equipped
 					'''
 			}
 
@@ -1010,6 +1015,7 @@ Mods: {
 					'''
 					An incomplete redirector of earth energy: it lacks a support chassis
 					When fully charged, it will focus nearby earth energy into valid repositories
+					Can only be placed with an Archaeologist's Toolbelt equipped
 					'''
 			}
 
@@ -5522,6 +5528,7 @@ Mods: {
 					'''
 					An incomplete redirector of chaos energy: it lacks a support chassis
 					When fully charged, it will focus nearby chaos energy into valid repositories
+					Can only be placed with an Archaeologist's Toolbelt equipped
 					'''
 			}
 
@@ -5531,6 +5538,7 @@ Mods: {
 					'''
 					An incomplete redirector of otherworldly energy: it lacks a support chassis
 					When fully charged, it will focus nearby otherworldly energy into valid repositories
+					Can only be placed with an Archaeologist's Toolbelt equipped
 					'''
 			}
 
@@ -5545,6 +5553,7 @@ Mods: {
 					'''
 					An incomplete redirector of evil energy: it lacks a support chassis
 					When fully charged, it will focus nearby evil energy into valid repositories
+					Can only be placed with an Archaeologist's Toolbelt equipped
 					'''
 			}
 
@@ -5554,6 +5563,7 @@ Mods: {
 					'''
 					An incomplete redirector of inferno energy: it lacks a support chassis
 					When fully charged, it will focus nearby inferno energy into valid repositories
+					Can only be placed with an Archaeologist's Toolbelt equipped
 					'''
 			}
 
@@ -5563,6 +5573,7 @@ Mods: {
 					'''
 					An incomplete redirector of permafrost energy: it lacks a support chassis
 					When fully charged, it will focus nearby permafrost energy into valid repositories
+					Can only be placed with an Archaeologist's Toolbelt equipped
 					'''
 			}
 
@@ -5572,6 +5583,7 @@ Mods: {
 					'''
 					An incomplete redirector of tide energy: it lacks a support chassis
 					When fully charged, it will focus nearby tide energy into valid repositories
+					Can only be placed with an Archaeologist's Toolbelt equipped
 					'''
 			}
 

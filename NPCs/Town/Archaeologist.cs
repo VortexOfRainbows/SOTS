@@ -37,6 +37,7 @@ using SOTS.Items;
 using SOTS.Helpers;
 using Terraria.Enums;
 using SOTS.Items.Invidia.MoonShard;
+using Microsoft.Xna.Framework.Input;
 
 namespace SOTS.NPCs.Town
 {
@@ -1036,7 +1037,7 @@ namespace SOTS.NPCs.Town
 				float scaleMult = (bonusWidth + sinusoidalBonus) / barrierWidth;
 				Texture2D BarrierTexture = TextureAssets.Extra[195].Value;
 				Main.spriteBatch.End();
-				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.EffectMatrix * Main.GameViewMatrix.ZoomMatrix);
 				SOTS.BarrierShader.Parameters["size"].SetValue(scaleMult);
 				SOTS.BarrierShader.Parameters["pixelSize"].SetValue(12);
 				SOTS.BarrierShader.CurrentTechnique.Passes[0].Apply();

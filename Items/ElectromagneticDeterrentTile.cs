@@ -36,8 +36,7 @@ namespace SOTS.Items
         }
         public override void NearbyEffects(int i, int j, bool closer)
 		{
-			Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.DEFEBuff>(), 6);
-			base.NearbyEffects(i, j, closer);
+			Main.LocalPlayer.AddBuff(ModContent.BuffType<Buffs.DEFEBuff>(), 18);
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
 		{
