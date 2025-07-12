@@ -15,7 +15,7 @@ Fixes:
 4. Fix issue where Icebreaker and Compound Bow stopped consuming ammo after their first use
 5. Fix wormhole barrier flipping upside down with reversed gravity
 6. Triple duration of D.E.F.E buff to make up for some strange edge cases where it repeatedly gets removed and reapplied
-7. The search for a pyramid spawn location starts slighly lower on the world to decrease chances of hitting a sand island (also might slighly increase worldgen speed)
+7. The search for a pyramid spawn location starts slightly lower on the world to decrease chances of hitting a sand island (also might slightly increase worldgen speed)
 
 Misc:
 1. Add localization support for Electromagnetic Lure text
