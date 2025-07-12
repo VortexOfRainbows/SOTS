@@ -1,0 +1,22 @@
+Hotfix 0.25.0.3
+
+Changes: 
+1. Conduit tiles now have additional tooltip text in order to make it clear that you need Archaeologist's Toolbelt to place
+2. Excavator moves slightly slower during orb attack
+3. Sanctuary pillars no longer draw behind tiles, which should make the sanctuary less laggy
+
+Nerfs:
+1. Greatly reduce the chance of Earthen Armor set bonus melee shred (about a factor of 1/4), as it is already considerably powerful in conjunction with the higher attack speed
+
+Fixes: 
+1. Fix issue where dissolving umbra still had negative effect when polarized
+2. Attempt to fix bug where subspace serpent would despawn strangely due to Bluefire potion or mod compatibility issues
+3. Update erroneous challenger ring tooltip for ruby ring
+4. Fix issue where Icebreaker and Compound Bow stopped consuming ammo after their first use
+5. Fix wormhole barrier flipping upside down with reversed gravity
+6. Triple duration of D.E.F.E buff to make up for some strange edge cases where it repeatedly gets removed and reapplied
+7. The search for a pyramid spawn location starts slighly lower on the world to decrease chances of hitting a sand island (also might slighly increase worldgen speed)
+
+Misc:
+1. Add localization support for Electromagnetic Lure text
+2. Some naming or localization consistency

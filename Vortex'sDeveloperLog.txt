@@ -73,6 +73,10 @@ N/A
 
 Daily Log:
 
+
+--- Hotfix 0.25.0.3 ---
+
+
 7/12/25
 1. Sanctuary pillars no longer draw behind tiles, which should make the sanctuary less laggy
 2. Excavator moves slightly slower during orb attack
