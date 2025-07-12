@@ -457,79 +457,86 @@ namespace SOTS.WorldgenHelpers
                                 {
                                     int i = posX + x;
                                     int j = posY + y;
-                                    Vector2 drawPos = new Vector2(i, j) * 16 + zero - Main.screenPosition;
-                                    Vector3[] slices = new Vector3[9];
-                                    Lighting.GetColor9Slice(i, j, ref slices);
-                                    Vector3 vector = Lighting.GetColor(i, j).ToVector3();
-                                    Vector3 tileLight;
-                                    Vector2 position;
-                                    Color color = new Color();
-                                    Rectangle value = new Rectangle();
-                                    for (int a = 0; a < 9; a++)
+                                    if (!SOTSWorldgenHelper.TrueTileSolid(i, j, true) ||
+                                        !SOTSWorldgenHelper.TrueTileSolid(i - 1, j, true) || 
+                                        !SOTSWorldgenHelper.TrueTileSolid(i + 1, j, true) ||
+                                        !SOTSWorldgenHelper.TrueTileSolid(i, j - 1, true) || 
+                                        !SOTSWorldgenHelper.TrueTileSolid(i, j + 1, true))
                                     {
-                                        value.X = 0;
-                                        value.Y = 0;
-                                        value.Width = 4;
-                                        value.Height = 4;
-                                        switch (a)
+                                        Vector2 drawPos = new Vector2(i, j) * 16 + zero - Main.screenPosition;
+                                        Vector3[] slices = new Vector3[9];
+                                        Lighting.GetColor9Slice(i, j, ref slices);
+                                        Vector3 vector = Lighting.GetColor(i, j).ToVector3();
+                                        Vector3 tileLight;
+                                        Vector2 position;
+                                        Color color = new Color();
+                                        Rectangle value = new Rectangle();
+                                        for (int a = 0; a < 9; a++)
                                         {
-                                            case 1:
-                                                value.Width = 8;
-                                                value.X = 4;
-                                                break;
-                                            case 2:
-                                                value.X = 12;
-                                                break;
-                                            case 3:
-                                                value.Height = 8;
-                                                value.Y = 4;
-                                                break;
-                                            case 4:
-                                                value.Width = 8;
-                                                value.Height = 8;
-                                                value.X = 4;
-                                                value.Y = 4;
-                                                break;
-                                            case 5:
-                                                value.X = 12;
-                                                value.Y = 4;
-                                                value.Height = 8;
-                                                break;
-                                            case 6:
-                                                value.Y = 12;
-                                                break;
-                                            case 7:
-                                                value.Width = 8;
-                                                value.Height = 4;
-                                                value.X = 4;
-                                                value.Y = 12;
-                                                break;
-                                            case 8:
-                                                value.X = 12;
-                                                value.Y = 12;
-                                                break;
+                                            value.X = 0;
+                                            value.Y = 0;
+                                            value.Width = 4;
+                                            value.Height = 4;
+                                            switch (a)
+                                            {
+                                                case 1:
+                                                    value.Width = 8;
+                                                    value.X = 4;
+                                                    break;
+                                                case 2:
+                                                    value.X = 12;
+                                                    break;
+                                                case 3:
+                                                    value.Height = 8;
+                                                    value.Y = 4;
+                                                    break;
+                                                case 4:
+                                                    value.Width = 8;
+                                                    value.Height = 8;
+                                                    value.X = 4;
+                                                    value.Y = 4;
+                                                    break;
+                                                case 5:
+                                                    value.X = 12;
+                                                    value.Y = 4;
+                                                    value.Height = 8;
+                                                    break;
+                                                case 6:
+                                                    value.Y = 12;
+                                                    break;
+                                                case 7:
+                                                    value.Width = 8;
+                                                    value.Height = 4;
+                                                    value.X = 4;
+                                                    value.Y = 12;
+                                                    break;
+                                                case 8:
+                                                    value.X = 12;
+                                                    value.Y = 12;
+                                                    break;
+                                            }
+                                            //value.Y += glowOffset.Y;
+                                            position.X = drawPos.X + value.X;
+                                            position.Y = drawPos.Y + value.Y;
+                                            value.X += x * 16;
+                                            value.Y += y * 16;
+                                            tileLight.X = (slices[a].X + vector.X) * 0.5f;
+                                            tileLight.Y = (slices[a].Y + vector.Y) * 0.5f;
+                                            tileLight.Z = (slices[a].Z + vector.Z) * 0.5f;
+                                            int num = (int)(tileLight.X * 255f);
+                                            int num2 = (int)(tileLight.Y * 255f);
+                                            int num3 = (int)(tileLight.Z * 255f);
+                                            if (num > 255)
+                                                num = 255;
+                                            if (num2 > 255)
+                                                num2 = 255;
+                                            if (num3 > 255)
+                                                num3 = 255;
+                                            num3 <<= 16;
+                                            num2 <<= 8;
+                                            color.PackedValue = (uint)(num | num2 | num3) | 0xFF000000u;
+                                            Main.spriteBatch.Draw(pillarTexture, position, value, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                                         }
-                                        //value.Y += glowOffset.Y;
-                                        position.X = drawPos.X + value.X;
-                                        position.Y = drawPos.Y + value.Y;
-                                        value.X += x * 16;
-                                        value.Y += y * 16;
-                                        tileLight.X = (slices[a].X + vector.X) * 0.5f;
-                                        tileLight.Y = (slices[a].Y + vector.Y) * 0.5f;
-                                        tileLight.Z = (slices[a].Z + vector.Z) * 0.5f;
-                                        int num = (int)(tileLight.X * 255f);
-                                        int num2 = (int)(tileLight.Y * 255f);
-                                        int num3 = (int)(tileLight.Z * 255f);
-                                        if (num > 255)
-                                            num = 255;
-                                        if (num2 > 255)
-                                            num2 = 255;
-                                        if (num3 > 255)
-                                            num3 = 255;
-                                        num3 <<= 16;
-                                        num2 <<= 8;
-                                        color.PackedValue = (uint)(num | num2 | num3) | 0xFF000000u;
-                                        Main.spriteBatch.Draw(pillarTexture, position, value, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
                                     }
                                 }
                             }

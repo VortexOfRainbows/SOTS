@@ -992,7 +992,7 @@ Mods: {
 
 			ConduitChassis: {
 				DisplayName: Conduit Chassis
-				Tooltip: 
+				Tooltip:
 					'''
 					Completes the carapace of a conduit, allowing for energy redirection
 					Can only be placed with an Archaeologist's Toolbelt equipped

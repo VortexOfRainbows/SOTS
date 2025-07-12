@@ -38,11 +38,10 @@ Update Objectives:
 7. Upgrade item to the Hydrokinetic Antennae (Pending)
 8. Item that combines Botanical Symbiote, Bundle of Snakes, Little Woes, and future Butterfly accessory from Planetarium (Pending)
 9. Bridgeburner flight
-10. Adjust Excavator laser orb attack to not get as close to the player
-11. Fix NON-EN localization:
+10. Fix NON-EN localization:
 	1. The information shown in the lower-left corner after using the Planetary Analyzer (this should probably be reworked altogether).
-12. Look into bug with sanctuary pillars being strange/not present
-13. Prevent wormholes near town npcs
+11. Look into bug with sanctuary pillars being strange/not present
+12. Prevent wormholes near town npcs
 
 
 ---WIP List---
@@ -73,6 +72,11 @@ N/A
 N/A
 
 Daily Log:
+
+7/12/25
+1. Sanctuary pillars no longer draw behind tiles, which should make the sanctuary less laggy
+2. Excavator moves slightly slower during orb attack
+3. The search for a pyramid spawn location starts slighly lower on the world to decrease chances of hitting a sand island (also might slighly increase worldgen speed)
 
 7/9/25 to 7/10/25
 1. Add localization support for Electromagnetic Lure

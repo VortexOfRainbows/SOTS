@@ -493,10 +493,12 @@ namespace SOTS.Common.Systems
         {
             foreach (ImportantTile landmark in List)
                 landmark.Position = null;
-            for (int i = 15; i < Main.maxTilesX - 15; i++)
+            for (int i = 25; i < Main.maxTilesX - 25; i++)
             {
-                for(int j = 15; j < Main.maxTilesY - 15; j++)
+                for(int j = 25; j < Main.maxTilesY - 25; j++)
                 {
+                    if (!WorldGen.InWorld(i, j))
+                        continue;
                     Tile tile = Main.tile[i, j];
                     if(tile.HasTile)
                     {

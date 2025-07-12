@@ -1525,6 +1525,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 if (AI1 > 120)
                 {
                     MoveStyle = 2;
+                    NPC.velocity *= 0.985f;
                     if (AI1 >= 150)
                     {
                         if (AI1 == 150)
