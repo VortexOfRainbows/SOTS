@@ -42,6 +42,8 @@ Update Objectives:
 	1. The information shown in the lower-left corner after using the Planetary Analyzer (this should probably be reworked altogether).
 11. Look into bug with sanctuary pillars being strange/not present
 12. Prevent wormholes near town npcs
+13. Strange gilded bladewing animation issue
+14. Fix sanctuary pillars appear in subworld
 
 
 ---WIP List---

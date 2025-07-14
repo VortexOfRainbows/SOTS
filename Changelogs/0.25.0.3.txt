@@ -6,7 +6,7 @@ Changes:
 3. Sanctuary pillars no longer draw behind tiles, which should make the sanctuary less laggy
 
 Nerfs:
-1. Greatly reduce the chance of Earthen Armor set bonus melee shred (about a factor of 1/4), as it is already considerably powerful in conjunction with the higher attack speed
+1. Greatly reduce the chance of Earthen Armor set bonus melee shred (now it's about a factor of 1/4 its original strength), as it is already considerably powerful in conjunction with the higher attack speed
 
 Fixes: 
 1. Fix issue where dissolving umbra still had negative effect when polarized
@@ -19,4 +19,5 @@ Fixes:
 
 Misc:
 1. Add localization support for Electromagnetic Lure text
-2. Some naming or localization consistency
+2. Some naming or localization consistency fixes
+3. Various code refactors
