@@ -43,7 +43,6 @@ Update Objectives:
 11. Look into bug with sanctuary pillars being strange/not present
 12. Prevent wormholes near town npcs
 13. Strange gilded bladewing animation issue
-14. Fix sanctuary pillars appear in subworld
 
 
 ---WIP List---
@@ -74,6 +73,10 @@ N/A
 N/A
 
 Daily Log:
+
+7/15/25
+1. Sanctuary pillars should no longer appear in subworlds
+2. Add Mr. Glorp
 
 
 --- Hotfix 0.25.0.3 ---

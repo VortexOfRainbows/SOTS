@@ -6971,6 +6971,15 @@ Mods: {
 				DisplayName: Music Box (Excavator)
 				Tooltip: ""
 			}
+
+			MrGlorp: {
+				DisplayName: Mr. Glorp
+				Tooltip:
+				'''
+				Increases max void by 100
+				Decreases the potency of Void Shock and Void Recovery
+				'''
+			}
 		}
 
 		ItemTooltip: {

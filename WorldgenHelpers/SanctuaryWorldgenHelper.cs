@@ -431,6 +431,8 @@ namespace SOTS.WorldgenHelpers
         public static readonly int[] PillarPos = [-392, - 339, -286, -176, -119, -62, 62, 119, 176, 286, 339, 392];
         public static void DrawPillars()
         {
+            if (SOTS.InSubworld())
+                return;
             if (pillarTexture == null)
                 pillarTexture = ModContent.Request<Texture2D>("SOTS/Items/Invidia/SanctuaryPillar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Vector2 zero = Main.drawToScreen ? zero = Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
