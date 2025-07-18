@@ -6975,10 +6975,15 @@ Mods: {
 			MrGlorp: {
 				DisplayName: Mr. Glorp
 				Tooltip:
-				'''
-				Increases max void by 100
-				Decreases the potency of Void Shock and Void Recovery
-				'''
+					'''
+					Increases max void by 100
+					Decreases the potency of Void Shock and Void Recovery
+					'''
+			}
+
+			ExperimentalInjection: {
+				DisplayName: Experimental Injection
+				Tooltip: ""
 			}
 		}
 
@@ -8342,6 +8347,13 @@ Mods: {
 			5: Increases max life by 40
 			6: Increases life regeneration by 2
 			7: Increases max void by 40
+		}
+
+		ExperimentalInjectionTextList: {
+			0: First strike applies a permanent bleed for 5 damage per second and increase max life by 20
+			1: First strike is guaranteed to critically strike and increase critical strike damage by 20%
+			2: First strike inflicts poison and steals life
+			3: Increases damage, attack speed, and movement speed by 5%
 		}
 
 		DiamondRingText: Increase damage based on defense, then decreases defense by a third of the damage buff

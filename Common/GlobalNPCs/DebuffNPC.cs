@@ -42,6 +42,8 @@ using SOTS.NPCs.AbandonedVillage;
 using SOTS.Projectiles.Anomaly;
 using MonoMod.Utils;
 using SOTS.Projectiles.AbandonedVillage;
+using SOTS.Projectiles.Base;
+using Terraria.DataStructures;
 
 namespace SOTS.Common.GlobalNPCs
 {
@@ -471,7 +473,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 StackDebuff(npc, player, ref CrystalCurse, 1, 2);
             }
-            if ((projectile.type == ProjectileType<StarshardSlash>() && projectile.ModProjectile is StarshardSlash s && s.thisSlashNumber == 5)
+            else if ((projectile.type == ProjectileType<StarshardSlash>() && projectile.ModProjectile is StarshardSlash s && s.thisSlashNumber == 5)
                 || ((projectile.type == ProjectileType<CrystalExplosionBig>() || projectile.type == ProjectileType<CrystalExplosionSmall>()) && (int)projectile.ai[1] != npc.whoAmI))
             {
                 TriggeredCrystalCurse = true;
@@ -492,13 +494,9 @@ namespace SOTS.Common.GlobalNPCs
             if (Main.myPlayer == player.whoAmI)
             {
                 if (projectile.type == ProjectileType<PlagueBeam>())
-                {
                     StackDebuff(npc, player, ref BlightCurse, 1, 0);
-                }
-                if (projectile.type == ProjectileType<SeleneSlash>() || (projectile.type == ProjectileType<SkipSlash>() && Main.rand.NextBool(5)))
-                {
+                else if (projectile.type == ProjectileType<SeleneSlash>() || (projectile.type == ProjectileType<SkipSlash>() && Main.rand.NextBool(5)))
                     StackDebuff(npc, player, ref AnomalyCurse, 1, 0);
-                }
             }
             if (projectile.type == ProjectileType<Projectiles.Temple.Helios>())
             {
@@ -546,6 +544,27 @@ namespace SOTS.Common.GlobalNPCs
                 if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse * 1.6f))
                     StackDebuff(npc, player, ref BleedingCurse, 1, 0);
             }
+        }
+        public bool HasRecievedFirstStrikeEffect = false;
+        public void ModifyOnFirstHurtBy(Player player, NPC npc, ref NPC.HitModifiers modifiers)
+        {
+            if (Main.myPlayer == player.whoAmI && !HasRecievedFirstStrikeEffect)
+            {
+                int firstStrikeEffect = player.SOTSPlayer().FirstStrikeEffect;
+                if (firstStrikeEffect == 0)
+                    return;
+                if (firstStrikeEffect == 1)
+                    StackDebuff(npc, player, ref BleedingCurse, 1, 0);
+                if (firstStrikeEffect == 2)
+                    modifiers.SetCrit();
+                if(firstStrikeEffect == 3)
+                {
+                    npc.AddBuff(BuffID.Poisoned, 900, false);
+                    Projectile.NewProjectile(new EntitySource_OnHit(player, npc), npc.Center, Vector2.Zero, ProjectileType<HealProj>(), 0, 0, player.whoAmI, 5, 6);
+                }
+                HasRecievedFirstStrikeEffect = true;
+            }
+
         }
         private bool hitByRay = false;
         private bool lastHitWasCrit = false;
@@ -634,6 +653,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 modifiers.FinalDamage *= 1.0f + 0.2f * BlightCurse;
             }
+            ModifyOnFirstHurtBy(player, npc, ref modifiers);
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
         {
@@ -666,6 +686,7 @@ namespace SOTS.Common.GlobalNPCs
             }
             if(player.SOTSPlayer().VoidspaceFlames)
                 ApplyVoidspaceCurse(npc, player);
+            ModifyOnFirstHurtBy(player, npc, ref modifiers);
         }
         public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers)
         {

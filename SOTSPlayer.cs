@@ -52,9 +52,7 @@ using SOTS.Items.Chaos;
 using SOTS.Buffs.Debuffs;
 using SOTS.Helpers;
 using SOTS.Projectiles.AbandonedVillage;
-using System.ComponentModel;
 using SOTS.NPCs.Critters;
-using Humanizer;
 
 namespace SOTS
 {
@@ -117,6 +115,16 @@ namespace SOTS
 		}
 		public const int TotalVisionNumber = 56;
 		public int UniqueVisionNumber = -1;
+		public int FirstTwoChars()
+		{
+			if(Player.name.Length < 2)
+			{
+				if (Player.name.Length == 0)
+					return 0;
+				return Math.Abs(Player.name[0]);
+            }
+			return Math.Abs(Player.name[0] + Player.name[1]);
+		}
 		public static Color VoidMageColor(Player player, bool sourceTimeFreeze = true)
 		{
 			SOTSPlayer sPlayer = ModPlayer(player);
@@ -367,6 +375,7 @@ namespace SOTS
 		public bool WishingStar = false;
 		public bool AcidInject = false, Earthdrive = false, Sunbulb = false, Dreamcatcher = false;
 		public bool Pick3x3 = false, HasPick3x3ThisFrame = false, DrillHand = false, DrillHandVanity = false;
+		public int FirstStrikeEffect = 0;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
 			MachinaBoosterPlayer testPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
@@ -519,7 +528,7 @@ namespace SOTS
 		private int lastAqueductMax = 0;
 		private int lastPlanetMax = 0;
 		private int lastArtifactMax = 0;
-		public void runPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false, float ai0 = 0f, float ai1 = 0f)
+		public void RunPets(ref int Probe, int type, int damage = 0, float knockback = 0, bool skipTimeleftReset = false, float ai0 = 0f, float ai1 = 0f)
 		{
 			if (Main.myPlayer == Player.whoAmI)
 			{
@@ -537,10 +546,10 @@ namespace SOTS
 		}
 		public void PetFluidCurse()
 		{
-			runPets(ref probes[4], ModContent.ProjectileType<FluidFollower>(), 0, 0, true);
-			runPets(ref probes[5], ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, true);
+			RunPets(ref probes[4], ModContent.ProjectileType<FluidFollower>(), 0, 0, true);
+			RunPets(ref probes[5], ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, true);
 		}
-		public void doPlanetAqueduct()
+		public void DoPlanetAqueduct()
 		{
 			if (aqueductNum > 8) aqueductNum = 8;
 			if (tPlanetNum > 8) tPlanetNum = 8;
@@ -552,7 +561,7 @@ namespace SOTS
 			}
 			for (int i = 0; i < aqueductNum; i++)
 			{
-				runPets(ref probesAqueduct[i], ModContent.ProjectileType<Rainbolt>(), aqueductDamage + 1);
+				RunPets(ref probesAqueduct[i], ModContent.ProjectileType<Rainbolt>(), aqueductDamage + 1);
 			}
 			if (lastPlanetMax != tPlanetNum)
 			{
@@ -561,7 +570,7 @@ namespace SOTS
 			}
 			for (int i = 0; i < tPlanetNum; i++)
 			{
-				runPets(ref probesTinyPlanet[i], ModContent.ProjectileType<TinyPlanetTear>(), tPlanetDamage + 1);
+				RunPets(ref probesTinyPlanet[i], ModContent.ProjectileType<TinyPlanetTear>(), tPlanetDamage + 1);
 			}
 			if (lastArtifactMax != artifactProbeNum)
 			{
@@ -577,7 +586,7 @@ namespace SOTS
 				float special = i;
 				if (i >= 8)
 					special += 0.5f;
-				runPets(ref ArtifactProbes[i], ModContent.ProjectileType<BlizzardProbe>(), artifactProbeDamage, 0f, false, special, special / 8f * 90f);
+				RunPets(ref ArtifactProbes[i], ModContent.ProjectileType<BlizzardProbe>(), artifactProbeDamage, 0f, false, special, special / 8f * 90f);
 			}
 			lastArtifactMax = artifactProbeNum;
 			artifactProbeDamage = artifactProbeNum = 0;
@@ -779,30 +788,30 @@ namespace SOTS
 			TrailStuff();
 			DoCurseAura();
 			if (petAdvisor)
-				runPets(ref probes[0], ModContent.ProjectileType<AdvisorPet>());
+				RunPets(ref probes[0], ModContent.ProjectileType<AdvisorPet>());
 			if (petPepper)
-				runPets(ref probes[1], ModContent.ProjectileType<GhostPepper>());
+				RunPets(ref probes[1], ModContent.ProjectileType<GhostPepper>());
 			if (HoloEye)
-				runPets(ref probes[2], ModContent.ProjectileType<HoloEye>(), HoloEyeDamage + 1);
+				RunPets(ref probes[2], ModContent.ProjectileType<HoloEye>(), HoloEyeDamage + 1);
 			if (petPinky >= 0)
-				runPets(ref probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky);
+				RunPets(ref probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky);
 			if (RubyMonolith)
-				runPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
+				RunPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
 			if (petFreeWisp >= 0)
-				runPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
+				RunPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
 			if (VisionVanity)
-				runPets(ref probes[8], ModContent.ProjectileType<VisionWeapon>());
+				RunPets(ref probes[8], ModContent.ProjectileType<VisionWeapon>());
 			if ((!VisionVanity || Player.ItemAnimationActive || !VisionWeapon.VisualActive(Player.HeldItem)) && backUpBowVisual) // || (backUpBow && Player.ItemAnimationActive)))
-				runPets(ref probes[9], ModContent.ProjectileType<BackupBowVisual>());
+				RunPets(ref probes[9], ModContent.ProjectileType<BackupBowVisual>());
 			if (PlasmaShrimp)
 			{
-				runPets(ref probes[10], ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>());
+				RunPets(ref probes[10], ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>());
             }
             if (DrillHandVanity)
             {
-                runPets(ref probes[11], ModContent.ProjectileType<Projectiles.AbandonedVillage.DrillHand>());
+                RunPets(ref probes[11], ModContent.ProjectileType<Projectiles.AbandonedVillage.DrillHand>());
             }
-            doPlanetAqueduct();
+            DoPlanetAqueduct();
 			if (rippleEffect)
 			{
 				float healthPercent = (float)Player.statLife / (float)Player.statLifeMax2;
@@ -1315,8 +1324,8 @@ namespace SOTS
 			else
 				curseVisionCounter = -60;
 			CurseVision = false;
-
-			CritLifesteal = 0;
+			FirstStrikeEffect = 0;
+            CritLifesteal = 0;
 			CritVoidsteal = 0f;
 			CritManasteal = 0f;
 			CritBonusDamage = 0;
@@ -1725,8 +1734,19 @@ namespace SOTS
 			}
 		}
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */
-		{
-			float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
+        {
+            if (SparkleDamage && !target.immortal)
+            {
+                if (Main.myPlayer == Player.whoAmI && (target.lifeMax <= target.life))
+                {
+                    float direction = Player.direction;
+                    for (int i = 0; i < 10; i++)
+                    {
+                        Projectile.NewProjectile(new EntitySource_OnHit(item, target), target.Center, new Vector2(1, 0) * direction, ModContent.ProjectileType<Projectiles.Earth.Glowmoth.IlluminationSparkle>(), 1, 1f, Main.myPlayer, target.whoAmI, 4 + 6 * i);
+                    }
+                }
+            }
+            float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
 			if (item.type == ModContent.ItemType<AncientSteelSword>() || item.type == ModContent.ItemType<AncientSteelGreatPickaxe>())
 			{
 				damageMultiplier += 0.5f;

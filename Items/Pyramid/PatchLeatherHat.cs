@@ -43,7 +43,7 @@ namespace SOTS.Items.Pyramid
                 SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
                 int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, 15);
                 for (int i = 0; i < 3; i++)
-                    sPlayer.runPets(ref SnakeProbes[i], ModContent.ProjectileType<FlyingSnake>(), damage, 1f, false, i);
+                    sPlayer.RunPets(ref SnakeProbes[i], ModContent.ProjectileType<FlyingSnake>(), damage, 1f, false, i);
 			}
 		}
 		public override void UpdateEquip(Player player)

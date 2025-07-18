@@ -57,12 +57,12 @@ namespace SOTS.FakePlayer
             if(servantActive)
             {
                 int type = ModContent.ProjectileType<SubspaceServant>();
-                SOTSPlayer.ModPlayer(Player).runPets(ref Probe, type, 0, 0, false);
+                SOTSPlayer.ModPlayer(Player).RunPets(ref Probe, type, 0, 0, false);
             }
             if (hasHydroFakePlayer)
             {
                 int type = ModContent.ProjectileType<HydroServant>();
-                SOTSPlayer.ModPlayer(Player).runPets(ref Probe2, type, 0, 0, false);
+                SOTSPlayer.ModPlayer(Player).RunPets(ref Probe2, type, 0, 0, false);
                 if(FakePlayer.CheckItemValidityFull(Player, Player.HeldItem, Player.HeldItem, 1))
                 {
                     for (int i = 0; i < Main.projectile.Length; i++)

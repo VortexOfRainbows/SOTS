@@ -34,8 +34,9 @@ namespace SOTS.Items.Slime
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<PutridEye>()));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<VialofAcid>(), 1, 20, 30));
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Wormwood>(), 1, 20, 30));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ExperimentalInjection>(), 5));
 			itemLoot.Add(ItemDropRule.Common(ItemID.PinkGel, 1, 40, 60));
-			itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PutridPinkyMask>(), 7));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<PutridPinkyMask>(), 7));
 			IItemDropRule[] oreTypes = new IItemDropRule[] {
 				ItemDropRule.Common(ModContent.ItemType<GelWings>()),
 				ItemDropRule.Common(ModContent.ItemType<WormWoodParasite>()),

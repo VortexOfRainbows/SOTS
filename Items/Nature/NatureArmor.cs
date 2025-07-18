@@ -44,7 +44,7 @@ namespace SOTS.Items.Nature
 				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);
 				int damage = SOTSPlayer.ApplyDamageClassModWithGeneric(player, DamageClass.Summon, 11);
 				for(int i = 0; i < 3; i++)
-					sPlayer.runPets(ref Probes[i], ModContent.ProjectileType<BloomingHook>(), damage, 1f, false);
+					sPlayer.RunPets(ref Probes[i], ModContent.ProjectileType<BloomingHook>(), damage, 1f, false);
 			}
 		}
 		public override void UpdateEquip(Player player)

@@ -647,7 +647,8 @@ namespace SOTS.NPCs.Boss
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<VialofAcid>(), 1, 20, 30));
 			notExpertRule.OnSuccess(ItemDropRule.Common(ItemID.PinkGel, 1, 40, 60));
 			notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PutridPinkyMask>(), 7));
-			npcLoot.Add(notExpertRule);
+            notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<ExperimentalInjection>(), 5));
+            npcLoot.Add(notExpertRule);
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PutridPinkyTrophy>(), 10));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<PutridPinkyRelic>()));
 		}

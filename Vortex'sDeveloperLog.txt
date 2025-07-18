@@ -74,9 +74,12 @@ N/A
 
 Daily Log:
 
-7/15/25
+7/15/25 ad 7/17/25
 1. Sanctuary pillars should no longer appear in subworlds
 2. Add Mr. Glorp
+3. Guide to Illumination can now be triggered by melee weapons
+4. Add Experimental Injection, an item that has a different effect depending on your character's name's first two characters
+	1. Drops from Putrid Pinky
 
 
 --- Hotfix 0.25.0.3 ---
