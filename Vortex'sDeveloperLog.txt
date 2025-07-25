@@ -58,7 +58,7 @@ If the Abandoned Village particles fail to generate for weaker computers, or pot
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. AV Enemies
 2. +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, +Blongus
-1. +++Challenger's Ring
+1. +++Challenger's Ring, --SCRAP METAL AMMO
 
 ---Visual Upgrade Needed---
 N/A
@@ -74,7 +74,10 @@ N/A
 
 Daily Log:
 
-7/15/25 ad 7/17/25
+7/25/25
+1. Subworld lib dll
+
+7/15/25 and 7/17/25
 1. Sanctuary pillars should no longer appear in subworlds
 2. Add Mr. Glorp
 3. Guide to Illumination can now be triggered by melee weapons

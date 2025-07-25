@@ -896,8 +896,7 @@ namespace SOTS
         }
 		private static void Main_DrawItem(On_Main.orig_DrawItem orig, Main self, Item item, int whoAmI)
         {
-			GlobalEntityItem gen;
-			if (item.TryGetGlobalItem<GlobalEntityItem>(out gen))
+			if (item.TryGetGlobalItem(out GlobalEntityItem gen) && item.whoAmI < Main.maxItems && item.whoAmI >= 0)
             {
 				gen.DrawInWorld(item, Main.spriteBatch);
             }
