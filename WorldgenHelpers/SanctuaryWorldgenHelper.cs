@@ -15,6 +15,7 @@ using SOTS.Items.Furniture.Earthen;
 using Terraria.WorldBuilding;
 using SOTS.Items.Conduit;
 using SOTS.Items.Potions;
+using SOTS.Common.Systems;
 
 namespace SOTS.WorldgenHelpers
 {
@@ -564,7 +565,9 @@ namespace SOTS.WorldgenHelpers
         public static int Ceiling => Main.UnderworldLayer;
         public static int Bottom => Main.maxTilesY - 1;
         public static int UnderworldHeight => Main.UnderworldLayer + 65;
-        public static int SideOfWorld => (SpawnPos <= 0 || SpawnPos > Main.maxTilesX) ? (SpawnPos = DetermineSpawnLocation()) : SpawnPos;
+        public static int SideOfWorld => (SpawnPos <= 0 || SpawnPos > Main.maxTilesX || 
+            (ImportantTilesWorld.InvidiaPortal != null && ImportantTilesWorld.InvidiaPortal.HasValue && SpawnPos != ImportantTilesWorld.InvidiaPortal.Value.X)) 
+            ? (SpawnPos = DetermineSpawnLocation()) : SpawnPos;
         public static int SpawnPos = -1;
         public static void PrepareUnderworldArea(int x, int y, int endX, int endY, int style = 0, int heightCutoff = 0)
         {

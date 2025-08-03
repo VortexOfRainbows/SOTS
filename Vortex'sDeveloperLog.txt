@@ -76,6 +76,10 @@ N/A
 
 Daily Log:
 
+8/3/25
+1. Attempt to fix some issues with Sanctuary walls positioning by making it double check if the coordinates are not the same as the Invidia portal
+	1. Not tested thoroughly :(
+
 8/2/25
 1. Make some walls craftable that previously were not
 2. Ancient steel ammo now has better bleed application scaling (base chance 0.4 -> 0.5, Chance decrease mult 1.6 -> 1.25)
