@@ -41,7 +41,9 @@ Update Objectives:
 10. Fix NON-EN localization:
 	1. The information shown in the lower-left corner after using the Planetary Analyzer (this should probably be reworked altogether).
 11. Look into bug with sanctuary pillars being strange/not present
-12. Prevent wormholes near town npcs
+12. Tiles that repel and attract Anomaly spawns (Anomaly Interceptor and Anomaly Attractor)
+	1. Interceptor -> D.E.F.E Wormhole convert
+	2. Attractor -> Otherworld Unique Tile
 13. Strange gilded bladewing animation issue
 
 
@@ -58,7 +60,7 @@ If the Abandoned Village particles fail to generate for weaker computers, or pot
 4. ++Soot Spewer, +Earth Grinder, --Guardian Greatsword, +Fizzle Star,
 3. AV Enemies
 2. +Icebreaker, +++Plague Spitter, +++Wishing Star/Shattered Dreams, +++Fresh Greeny/Jar of Pineapple, +Blongus
-1. +++Challenger's Ring, --SCRAP METAL AMMO
+1. +++Challenger's Ring
 
 ---Visual Upgrade Needed---
 N/A
@@ -73,6 +75,10 @@ N/A
 N/A
 
 Daily Log:
+
+8/2/25
+1. Make some walls craftable that previously were not
+2. Ancient steel ammo now has better bleed application scaling (base chance 0.4 -> 0.5, Chance decrease mult 1.6 -> 1.25)
 
 7/25/25
 1. Subworld lib dll

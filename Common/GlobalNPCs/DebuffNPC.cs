@@ -534,14 +534,14 @@ namespace SOTS.Common.GlobalNPCs
             if (Main.myPlayer == player.whoAmI && projectile.ModProjectile != null && projectile.ModProjectile is AncientSteelAmmo && hit.Crit)
             {
                 bool worm = npc.realLife != -1;
-                float baseChance = 0.4f;
+                float baseChance = 0.5f;
                 int baseStacks = 1;
                 if (worm)
                 {
                     baseStacks = 2;
                     baseChance = 0.1f;
                 }
-                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse * 1.6f))
+                if (Main.rand.NextFloat(1) < baseChance / (baseStacks + BleedingCurse * 1.25f))
                     StackDebuff(npc, player, ref BleedingCurse, 1, 0);
             }
         }

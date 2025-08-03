@@ -32,8 +32,12 @@ namespace SOTS.Items.AbandonedVillage
 			Item.width = 24;
 			Item.height = 18;
 			Item.createTile = ModContent.TileType<CharredWoodTile>();
-		}
-	}
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient<CharredWoodWall>(4).AddTile(TileID.WorkBenches).Register();
+        }
+    }
 	public class CharredWoodWallTile : ModWall
 	{
 		public override void SetStaticDefaults()
@@ -57,6 +61,10 @@ namespace SOTS.Items.AbandonedVillage
 			Item.height = 28;
 			Item.rare = ItemRarityID.Blue;
 			Item.createWall = ModContent.WallType<CharredWoodWallTile>();
-		}
-	}
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<CharredWood>(1).AddTile(TileID.WorkBenches).Register();
+        }
+    }
 }

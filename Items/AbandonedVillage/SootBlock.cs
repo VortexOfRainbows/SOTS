@@ -91,7 +91,11 @@ namespace SOTS.Items.AbandonedVillage
 					}
 				}
             }
-		}
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(1).AddIngredient<SootWall>(4).AddTile(TileID.WorkBenches).Register();
+        }
     }
 	public class SootWallTile : ModWall
 	{
@@ -112,7 +116,11 @@ namespace SOTS.Items.AbandonedVillage
 			Item.height = 28;
 			Item.rare = ItemRarityID.Blue;
 			Item.createWall = ModContent.WallType<SootWallTile>();
-		}
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient<SootBlock>(1).AddTile(TileID.WorkBenches).Register();
+        }
     }
     public class SootSlabWall : SootWall
     {
