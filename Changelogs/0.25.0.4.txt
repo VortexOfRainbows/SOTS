@@ -1,0 +1,18 @@
+Hotfix 0.25.0.4
+
+Additions:
+1. Added two new accessories, Mr. Glorp and Experimental Injection
+2. Alternative music track for Subspace Serpent by Yuri O
+
+Buffs:
+1. Ancient steel ammo now has better bleed application rates (base chance 0.4 -> 0.5, scaling chance reduction multiplier 1.6 -> 1.25)
+
+Nerfs:
+1. Jar of Pineapple damage 19 -> 16
+
+Fixes: 
+1. Sanctuary Pillars should no longer appear in subworlds and should more reliably render where the are supposed to
+2. Guide to Illumination can now be triggered by melee swing weapons
+
+Misc:
+1. Added some missing wall recipes for Abandoned Village tiles
