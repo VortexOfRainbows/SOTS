@@ -1,8 +1,4 @@
-using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
-using tModPorter;
 
 namespace SOTS.Helpers
 {
