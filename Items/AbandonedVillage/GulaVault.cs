@@ -22,7 +22,7 @@ namespace SOTS.Items.AbandonedVillage
 			Item.rare = ItemRarityID.LightRed;
 			Item.consumable = true;
 			Item.createTile = ModContent.TileType<GulaVaultTile>();
-			Item.placeStyle = 3;
+			Item.placeStyle = 0;
 		}
 	}
 	public class GulaVaultTile : ContainerType

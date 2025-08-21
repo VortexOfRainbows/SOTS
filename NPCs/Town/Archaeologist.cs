@@ -1400,8 +1400,7 @@ namespace SOTS.NPCs.Town
 					NPC npc = Main.npc[i];
 					if (npc.active && !npc.noTileCollide && !npc.boss && !VoidAnomalyIsShattered)
 					{
-						GlobalEntityNPC gen = npc.GetGlobalNPC<GlobalEntityNPC>();
-						if (!gen.RecentlyTeleported)
+						if(npc.TryGetGlobalNPC(out GlobalEntityNPC gen) && !gen.RecentlyTeleported)
 						{
 							if (barrier == -1)
 								AcceptEntity(npc, i);

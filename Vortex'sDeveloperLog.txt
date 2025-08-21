@@ -44,6 +44,7 @@ Update Objectives:
 	1. Interceptor -> D.E.F.E Wormhole convert
 	2. Attractor -> Otherworld Unique Tile
 12. Sanctuary Lanterns (hang from ceiling very cool)
+13. Mr. Glorp has a weird crafting bug where it cannot be crafted manually with the anomaly crafting accessories?
 
 
 ---WIP List---
@@ -73,6 +74,10 @@ N/A
 N/A
 
 Daily Log:
+
+8/20/25
+1. Attempt to fix issue with dragon lens NPC spawning in multiplayer throwing an error with void anomalies (not sure what issue this necessarily causes but it should be fixed now)
+2. Gula Vault should no longer be locked when placed by player
 
 
 --- Hotfix 0.25.0.4 ---
