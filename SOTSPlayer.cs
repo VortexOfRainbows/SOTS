@@ -1329,7 +1329,7 @@ namespace SOTS
 			CritVoidsteal = 0f;
 			CritManasteal = 0f;
 			CritBonusDamage = 0;
-			CritBonusMultiplier = 1f;
+			CritBonusMultiplier = 0f;
 			CritFire = false;
 			CritFrost = false;
 			CritCurseFire = false;
@@ -1746,7 +1746,7 @@ namespace SOTS
                     }
                 }
             }
-            float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
+            float damageMultiplier = 1;
 			if (item.type == ModContent.ItemType<AncientSteelSword>() || item.type == ModContent.ItemType<AncientSteelGreatPickaxe>())
 			{
 				damageMultiplier += 0.5f;
@@ -1766,6 +1766,7 @@ namespace SOTS
 				modifiers.DisableCrit();
 			else
 			{
+				modifiers.CritDamage += CritBonusMultiplier;
 				modifiers.CritDamage.Flat += CritBonusDamage;
 			}
 			if (ScalingArmorPenetration)

@@ -45,6 +45,7 @@ Update Objectives:
 	2. Attractor -> Otherworld Unique Tile
 12. Sanctuary Lanterns (hang from ceiling very cool)
 13. Mr. Glorp has a weird crafting bug where it cannot be crafted manually with the anomaly crafting accessories?
+14. Check doomstick functionality with right click
 
 
 ---WIP List---
@@ -74,6 +75,9 @@ N/A
 N/A
 
 Daily Log:
+
+8/26/25
+1. Fixed issue where bonus critical strike damage was only being applied to melee strikes from items like the Elemental Amulet and Harvester's Scythe
 
 8/20/25
 1. Attempt to fix issue with dragon lens NPC spawning in multiplayer throwing an error with void anomalies (not sure what issue this necessarily causes but it should be fixed now)
