@@ -2859,7 +2859,7 @@ namespace SOTS.WorldgenHelpers
                     if (((t.HasTile && Main.tileSolid[type]) || WallToMoveDown) && !(InvalidTiles.Contains(t.TileType) || t.WallType == WallID.LivingWoodUnsafe || t.WallType == WallID.LivingWoodUnsafe))
                     {
                         int shift = (int)Math.Abs(diff * flattenAmount * 0.9f);
-                        List<Tile> tiles = new List<Tile>();
+                        List<Tile> tiles = [];
                         if(diff > 0 && shift > 0)
                         {
                             for (int k = j; k < j + shift; k++)
@@ -2895,17 +2895,16 @@ namespace SOTS.WorldgenHelpers
                                 tiles.Add(Main.tile[i, k]);
                             }
                             int n = 0;
-                            for (int k = j - shift; k < j - shift + tiles.Count; k++)
+                            for (int k = j; k < j + tiles.Count; k++)
                             {
-                                Tile copyFrom = tiles[n];
-                                Tile s = Main.tile[i, k];
+                                Tile copyFrom = tiles[n++];
+                                Tile s = Framing.GetTileSafely(i, k - shift);
                                 //s.ClearEverything();
                                 s.HasTile = copyFrom.HasTile ? true : s.HasTile;
                                 s.Slope = 0;
                                 s.IsHalfBlock = false;
                                 s.TileType = copyFrom.TileType;
                                 s.WallType = copyFrom.WallType != 0 ? copyFrom.WallType : s.WallType;
-                                n++;
                             }
                             for (int k = j; k < j + shift; k++)
                             {

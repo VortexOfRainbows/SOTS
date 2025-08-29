@@ -76,8 +76,9 @@ N/A
 
 Daily Log:
 
-8/26/25
+8/26/25 and 8/29/25
 1. Fixed issue where bonus critical strike damage was only being applied to melee strikes from items like the Elemental Amulet and Harvester's Scythe
+2. Small adjustments to worldgen code that may fix some issues but probably not :(
 
 8/20/25
 1. Attempt to fix issue with dragon lens NPC spawning in multiplayer throwing an error with void anomalies (not sure what issue this necessarily causes but it should be fixed now)
