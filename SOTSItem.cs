@@ -150,9 +150,7 @@ namespace SOTS
 			writer.Write(voidCostMultiplier);
 			writer.Write(FloatsInWater);
 			if(FloatsInWater)
-			{
 				writer.Write(item.alpha);
-			}
         }
         public override void NetReceive(Item item, BinaryReader reader)
 		{
