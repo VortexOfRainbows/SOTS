@@ -80,6 +80,7 @@ Daily Log:
 	2. Check doomstick functionality with right click (supposedly can only be used up/down)
 2. Some optimizations for Blade Generator and upgrades that should reduce overhead lag (it was previously running 1000 extra checks per frame)
 3. Basic prep for Mod Achievements
+4. WIP Achievement implementation
 
 8/26/25 and 8/29/25
 1. Fixed issue where bonus critical strike damage was only being applied to melee strikes from items like the Elemental Amulet and Harvester's Scythe

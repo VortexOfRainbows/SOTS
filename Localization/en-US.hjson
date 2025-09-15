@@ -9228,5 +9228,12 @@ Mods: {
 				}
 			}
 		}
+
+		Achievements: {
+			GlowmothKill: {
+				FriendlyName: Glowmoth Kill
+				Description: Mods.SOTS.Achievements.GlowmothKill.Description
+			}
+		}
 	}
 }
