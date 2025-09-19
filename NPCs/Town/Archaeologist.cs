@@ -38,6 +38,7 @@ using SOTS.Helpers;
 using Terraria.Enums;
 using SOTS.Items.Invidia.MoonShard;
 using Microsoft.Xna.Framework.Input;
+using SOTS.Achievements;
 
 namespace SOTS.NPCs.Town
 {
@@ -485,8 +486,10 @@ namespace SOTS.NPCs.Town
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue1"));
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue2"), 0.5);
 				hasPlayerChattedBefore = true;
-			}
-			return chat; // chat is implicitly cast to a string.
+            }
+			if(Main.netMode != NetmodeID.Server)
+				ModContent.GetInstance<ArchaeologistTalk>().ArchaeologistTalkedToCondition.Complete();
+            return chat; // chat is implicitly cast to a string.
 		}
 		public override void SetChatButtons(ref string button, ref string button2)
 		{ 

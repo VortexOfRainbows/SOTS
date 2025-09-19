@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using SOTS.Achievements;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -84,6 +85,10 @@ namespace SOTS.FakePlayer
                         }
                     }
                 }
+            }
+            if (tesseractPlayerCount >= 4 && Player.whoAmI == Main.myPlayer)
+            {
+                ModContent.GetInstance<FourthDimension>().FourTesseractsAtOnce.Complete();
             }
         }
         public override bool CanUseItem(Item item)

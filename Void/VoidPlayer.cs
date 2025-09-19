@@ -20,6 +20,7 @@ using SOTS.FakePlayer;
 using SOTS.Projectiles.Laser;
 using SOTS.Helpers;
 using SOTS.Items.Fragments;
+using SOTS.Achievements;
 
 namespace SOTS.Void
 {
@@ -169,24 +170,22 @@ namespace SOTS.Void
 		}
 		public override bool PreKill(double damage, int HitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
-			if (voidShock || voidRecovery)
-			{
-				//damageSource = PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " was consumed by the void.");
-			}
-			if (voidShock)
+            if (voidShock)
 			{
 				genGore = false; //apparently, genGore false doesn't remove almost anygore what-so-ever
 				damageSource = PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1));
 				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
+                GetInstance<VoidDeathHappening>().VoidDeathCondition.Complete(); //This should work!
 				return true;
-			}
+            }
 			if (damage == 10.0 && voidRecovery)
 			{
 				genGore = false;
 				damageSource = PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1 + Main.rand.Next(5)));
 				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
+                GetInstance<VoidDeathHappening>().VoidDeathCondition.Complete(); //This should work!
 				return true;
-			}
+            }
 			return base.PreKill(damage, HitDirection, pvp, ref playSound, ref genGore, ref damageSource);
 		}
 		public List<int> VoidMinions = new List<int>();

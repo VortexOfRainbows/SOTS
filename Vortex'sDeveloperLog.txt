@@ -74,7 +74,7 @@ N/A
 
 Daily Log:
 
-9/14/25
+9/14/25 and 9/19/25
 1. Test out some bugs (neither replicable)
 	1. Mr. Glorp has a weird crafting bug where it cannot be crafted manually with the anomaly crafting accessories?
 	2. Check doomstick functionality with right click (supposedly can only be used up/down)

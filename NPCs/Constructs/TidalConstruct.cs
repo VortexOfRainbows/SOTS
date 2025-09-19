@@ -1,11 +1,8 @@
-using System;
-using System.Diagnostics;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoMod.RuntimeDetour;
+using SOTS.Achievements;
 using SOTS.Items.Fragments;
-using SOTS.Projectiles.Planetarium;
 using SOTS.Projectiles.Tide;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -324,5 +321,12 @@ namespace SOTS.NPCs.Constructs
 			Main.npc[n].velocity.Y = -10f;
 			Main.npc[n].netUpdate = true;
 		}
-	}
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
+        {
+			if(projectile.type == ModContent.ProjectileType<TidalBeam>() && NPC.life <= 0)
+			{
+                ModContent.GetInstance<TidalConstructSuicide>().TidalConstructSuicideCondition.Complete(); //This should work!
+            }
+        }
+    }
 }

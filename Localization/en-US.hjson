@@ -9234,6 +9234,91 @@ Mods: {
 				FriendlyName: Glowmoth Kill
 				Description: Mods.SOTS.Achievements.GlowmothKill.Description
 			}
+
+			AdvisorKill: {
+				FriendlyName: Advisor Kill
+				Description: Mods.SOTS.Achievements.AdvisorKill.Description
+			}
+
+			ArchaeologistTalk: {
+				FriendlyName: Archaeologist Talk
+				Description: Mods.SOTS.Achievements.ArchaeologistTalk.Description
+			}
+
+			ChallengerRings: {
+				FriendlyName: Challenger Rings
+				Description: Mods.SOTS.Achievements.ChallengerRings.Description
+			}
+
+			ColossusObtain: {
+				FriendlyName: Colossus Obtain
+				Description: Mods.SOTS.Achievements.ColossusObtain.Description
+			}
+
+			CurseKill: {
+				FriendlyName: Curse Kill
+				Description: Mods.SOTS.Achievements.CurseKill.Description
+			}
+
+			FourthDimension: {
+				FriendlyName: Fourth Dimension
+				Description: Mods.SOTS.Achievements.FourthDimension.Description
+			}
+
+			IntoThePyramid: {
+				FriendlyName: Into The Pyramid
+				Description: Mods.SOTS.Achievements.IntoThePyramid.Description
+			}
+
+			LuxKill: {
+				FriendlyName: Lux Kill
+				Description: Mods.SOTS.Achievements.LuxKill.Description
+			}
+
+			OneHundredPercentSuperChungus: {
+				FriendlyName: One Hundred Percent Super Chungus
+				Description: Mods.SOTS.Achievements.OneHundredPercentSuperChungus.Description
+			}
+
+			PinkyKill: {
+				FriendlyName: Pinky Kill
+				Description: Mods.SOTS.Achievements.PinkyKill.Description
+			}
+
+			PolarisKill: {
+				FriendlyName: Polaris Kill
+				Description: Mods.SOTS.Achievements.PolarisKill.Description
+			}
+
+			RefractingCrystalCollect: {
+				FriendlyName: Refracting Crystal Collect
+				Description: Mods.SOTS.Achievements.RefractingCrystalCollect.Description
+			}
+
+			Sirius: {
+				FriendlyName: Sirius
+				Description: Mods.SOTS.Achievements.Sirius.Description
+			}
+
+			SubspaceKill: {
+				FriendlyName: Subspace Kill
+				Description: Mods.SOTS.Achievements.SubspaceKill.Description
+			}
+
+			TidalConstructSuicide: {
+				FriendlyName: Tidal Construct Suicide
+				Description: Mods.SOTS.Achievements.TidalConstructSuicide.Description
+			}
+
+			VivaleBaguette: {
+				FriendlyName: Vivale Baguette
+				Description: Mods.SOTS.Achievements.VivaleBaguette.Description
+			}
+
+			VoidDeathHappening: {
+				FriendlyName: Void Death Happening
+				Description: Mods.SOTS.Achievements.VoidDeathHappening.Description
+			}
 		}
 	}
 }

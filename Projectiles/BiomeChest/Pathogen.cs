@@ -10,10 +10,6 @@ namespace SOTS.Projectiles.BiomeChest
 {    
     public class Pathogen : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Pathogen Ball");
-		}
         public override void SetDefaults()
         {
 			Projectile.aiStyle = 0;
@@ -26,7 +22,6 @@ namespace SOTS.Projectiles.BiomeChest
 			Projectile.tileCollide = true;
 			Projectile.ignoreWater = true;
 			Projectile.alpha = 0;
-            Main.projFrames[Projectile.type] = 5;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
 		}

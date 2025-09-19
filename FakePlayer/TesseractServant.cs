@@ -49,7 +49,7 @@ namespace SOTS.FakePlayer
             Player player = Main.player[Projectile.owner];
             FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
             if (Main.myPlayer != Projectile.owner)
-				Projectile.timeLeft = 20;
+                Projectile.timeLeft = 20;
 			if (runOnce)
 			{
                 if (Main.myPlayer == Projectile.owner)
