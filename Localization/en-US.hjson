@@ -9232,92 +9232,92 @@ Mods: {
 		Achievements: {
 			GlowmothKill: {
 				FriendlyName: Who Turned on the Lights?
-				Description: Defeat the Illuminated Abomination of the Fungal Caverns (Eduarrdo)
+				Description: Defeat the Illuminated Abomination of the Fungal Caverns (Credit: EduaRRdo)
 			}
 
 			AdvisorKill: {
 				FriendlyName: Shining Star
-				Description: Defeat the Advisor, the controller of the Planetarium
+				Description: Defeat the Advisor, the controller of the Planetarium (Credit: EduaRRdo)
 			}
 
 			ArchaeologistTalk: {
-				FriendlyName: Archaeologist Talk
-				Description: Mods.SOTS.Achievements.ArchaeologistTalk.Description
+				FriendlyName: Mystery Man
+				Description: Meet the Archaeologist, the otherworldly researcher (Credit: EduaRRdo)
 			}
 
 			ChallengerRings: {
-				FriendlyName: Challenger Rings
-				Description: Mods.SOTS.Achievements.ChallengerRings.Description
+				FriendlyName: One Ring to Rule Them All
+				Description: Craft the Challenger's Ring (Credit: kekcroc)
 			}
 
 			ColossusObtain: {
-				FriendlyName: Colossus Obtain
-				Description: Mods.SOTS.Achievements.ColossusObtain.Description
+				FriendlyName: I Command Thee, Kneel!
+				Description: Convert the Breaker Blade into the Colossus (Credit: kekcroc)
 			}
 
 			CurseKill: {
-				FriendlyName: Curse Kill
-				Description: Mods.SOTS.Achievements.CurseKill.Description
+				FriendlyName: El Dorado
+				Description: Defeat the Pharaoh's Curse, a foreign infection contained in the Pyramid's walls (Credit: EduaRRdo)
 			}
 
 			FourthDimension: {
-				FriendlyName: Fourth Dimension
-				Description: Mods.SOTS.Achievements.FourthDimension.Description
+				FriendlyName: Fourth Dimensional
+				Description: Command four Tesseracts at once (Credit: UnknownAkarii)
 			}
 
 			IntoThePyramid: {
 				FriendlyName: Into The Pyramid
-				Description: Mods.SOTS.Achievements.IntoThePyramid.Description
+				Description: Unlock and enter the Pyramid (Credit: Arian)
 			}
 
 			LuxKill: {
-				FriendlyName: Lux Kill
-				Description: Mods.SOTS.Achievements.LuxKill.Description
+				FriendlyName: Living in the Light
+				Description: Defeat Lux, the strongest of the spirits (Credit: kekcroc)
 			}
 
 			OneHundredPercentSuperChungus: {
 				FriendlyName: One Hundred Percent Super Chungus
-				Description: Mods.SOTS.Achievements.OneHundredPercentSuperChungus.Description
+				Description: Obtain the three long-lost relics of Super Chungus (Credit: kekcroc)
 			}
 
 			PinkyKill: {
-				FriendlyName: Pinky Kill
-				Description: Mods.SOTS.Achievements.PinkyKill.Description
+				FriendlyName: You were Stronger
+				Description: Defeat Putrid Pinky, the horrible experiment gone wrong (Credit: EduaRRdo)
 			}
 
 			PolarisKill: {
-				FriendlyName: Polaris Kill
-				Description: Mods.SOTS.Achievements.PolarisKill.Description
+				FriendlyName: The Fourth Terror
+				Description: Defeat Polaris, the fourth mech and the war machine of the tundra (Credit: EduaRRdo)
 			}
 
 			RefractingCrystalCollect: {
-				FriendlyName: Refracting Crystal Collect
-				Description: Mods.SOTS.Achievements.RefractingCrystalCollect.Description
+				FriendlyName: Sun God
+				Description: Solve the Pyramid's mystery (Credit: kekcroc)
 			}
 
 			Sirius: {
 				FriendlyName: Sirius
-				Description: Mods.SOTS.Achievements.Sirius.Description
+				Description: Discover the Photon Geyser (Credit: kekcroc)
 			}
 
 			SubspaceKill: {
-				FriendlyName: Subspace Kill
-				Description: Mods.SOTS.Achievements.SubspaceKill.Description
+				FriendlyName: Serpent of the Shadows
+				Description: Defeat Subspace Serpent, a being from beyond space (Credit: EduaRRdo)
 			}
 
 			TidalConstructSuicide: {
-				FriendlyName: Tidal Construct Suicide
-				Description: Mods.SOTS.Achievements.TidalConstructSuicide.Description
+				FriendlyName: Well That Was Idiotic
+				Description: Make a Tidal Construct destroy itself (Credit: Exalted Dale and potatoman999)
 			}
 
 			VivaleBaguette: {
-				FriendlyName: Vivale Baguette
-				Description: Mods.SOTS.Achievements.VivaleBaguette.Description
+				FriendlyName: En Garde
+				Description: Make the baguette a length of 20 or higher (Credit: Tortilla)
 			}
 
 			VoidDeathHappening: {
-				FriendlyName: Void Death Happening
-				Description: Mods.SOTS.Achievements.VoidDeathHappening.Description
+				FriendlyName: Dangerous New Power
+				Description: Succumb to the Void (Credit: kekcroc)
 			}
 		}
 	}
