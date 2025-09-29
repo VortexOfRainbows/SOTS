@@ -6991,7 +6991,7 @@ Mods: {
 				Tooltip:
 					'''
 					Attracts wormholes, forcing them to spawn nearby
-					If more than two are active at once, wormholes will be attracted to a random, enabled statue
+					If more than two statues are active at once, wormholes will be attracted to a random, enabled statue
 					Can be turned on and off
 					'''
 			}

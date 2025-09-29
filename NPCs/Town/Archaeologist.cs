@@ -759,35 +759,68 @@ namespace SOTS.NPCs.Town
 		{
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				return;
+
+			List<LightStatueTE> statues = new();
+
+			foreach (TileEntity e in TileEntity.ByID.Values)
+			{
+				if (e is LightStatueTE s)
+				{
+					if (s.Enabled)
+					{
+						statues.Add(s);
+					}
+				}
+			}
+
 			int padding = 50;
 			Vector2 firstPosition = Vector2.Zero;
-			int checks = 0;
-			bool valid = false;
-			int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
-			while (checks < 160 && !valid)
+			if (statues.Count > 0)
 			{
-				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
-				firstPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
-				valid = isThisPlacementValid(new Point(randX, randY));
-				checks++;
+				int i = Main.rand.Next(statues.Count);
+				LightStatueTE s = statues[i];
+				statues.RemoveAt(i);
+                firstPosition = s.Position.ToVector2() * 16 + new Vector2(32, -152);
 			}
+			else
+            {
+                int checks = 0;
+                bool valid = false;
+                int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
+                while (checks < 160 && !valid)
+                {
+                    int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+                    int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
+                    firstPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+                    valid = isThisPlacementValid(new Point(randX, randY));
+                    checks++;
+                }
+            }
 			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), firstPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -1, -60);
 			Vector2 secondPosition = Vector2.Zero;
-			checks = 0;
-			valid = false;
-			AttemptedYLayer = Main.rand.Next(padding, Main.maxTilesY - padding);
-			while (checks < 160 && !valid)
+			if (statues.Count > 0)
 			{
-				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY - padding), Math.Clamp(checks / 120f, 0, 1));
-				secondPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
-				if (Vector2.Distance(secondPosition, firstPosition) < 6400)
-					valid = false; //Not a valid spot unless the distances are far from each other
-				else
-					valid = isThisPlacementValid(new Point(randX, randY));
-				checks++;
+				int i = Main.rand.Next(statues.Count);
+				LightStatueTE s = statues[i];
+				secondPosition = s.Position.ToVector2() * 16 + new Vector2(32, -152);
 			}
+			else
+            {
+                int checks = 0;
+                bool valid = false;
+                int AttemptedYLayer = Main.rand.Next(padding, Main.maxTilesY - padding);
+                while (checks < 160 && !valid)
+                {
+                    int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+                    int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY - padding), Math.Clamp(checks / 120f, 0, 1));
+                    secondPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+                    if (Vector2.Distance(secondPosition, firstPosition) < 6400)
+                        valid = false; //Not a valid spot unless the distances are far from each other
+                    else
+                        valid = isThisPlacementValid(new Point(randX, randY));
+                    checks++;
+                }
+            }
 			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), secondPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -2, -60);
 		}
 		public static bool isThisPlacementValid(Point point)

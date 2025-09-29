@@ -1,6 +1,9 @@
+using Humanizer;
+using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
+using SOTS.Helpers;
 using SOTS.Items.Fragments;
 using SOTS.Items.Gems;
 using SOTS.NPCs.Boss;
@@ -65,11 +68,10 @@ namespace SOTS.Items.Conduit
 			TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16, 16, 16, 16];
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 4, 0);
             TileObjectData.newTile.Origin = new Point16(1, 7);
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<LightStatueTE>().Hook_AfterPlacement, -1, 0, true);
+            TileObjectData.newTile.HookPostPlaceMyPlayer = ModContent.GetInstance<LightStatueTE>().Generic_HookPostPlaceMyPlayer;
             TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(177, 202, 232), name);
-            MinPick = 110;
 			DustType = DustID.Platinum;
             HitSound = SoundID.Tink;
             MineResist = 0.1f;
@@ -92,33 +94,95 @@ namespace SOTS.Items.Conduit
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
-            ModContent.GetInstance<ConduitCounterTE>().Kill(i, j);
+            ModContent.GetInstance<LightStatueTE>().Kill(i, j);
         }
         public sealed override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
+            if (Main.tile[i, j].TileFrameX % 72 == 0 && Main.tile[i, j].TileFrameY == 0)
                 Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
         }
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
-                DrawDiamonds(i, j, spriteBatch);
+            if (Main.tile[i, j].TileFrameX % 72 == 0 && Main.tile[i, j].TileFrameY == 0)
+                DrawDiamonds(i, j, spriteBatch, 1);
         }
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (Main.tile[i, j].TileFrameX == 0 && Main.tile[i, j].TileFrameY == 0)
-                DrawDiamonds(i, j, spriteBatch);
+            if (Main.tile[i, j].TileFrameX % 72 == 0 && Main.tile[i, j].TileFrameY == 0)
+                DrawDiamonds(i, j, spriteBatch, -1);
             return true;
         }
-        public static void DrawDiamonds(int i, int j, SpriteBatch spriteBatch)
+        public static void DrawDiamonds(int i, int j, SpriteBatch spriteBatch, float dirMod = 1)
         {
+            Tile tile = Main.tile[i, j];
+            int left = i - (tile.TileFrameX / 18) % 4;
+            int top = j - (tile.TileFrameY / 18) % 8;
+            int index = ModContent.GetInstance<LightStatueTE>().Find(left, top);
+            if(index == -1)
+                return;
+            LightStatueTE entity = (LightStatueTE)TileEntity.ByID[index];
+            float half = 360f / 14f;
+            if (dirMod == -1)
+            {
+                if (entity.Enabled)
+                    entity.AnimationPercent++;
+                else
+                    entity.AnimationPercent--;
+                entity.AnimationPercent = MathHelper.Clamp(entity.AnimationPercent, 0, 22);
+                if (entity.Enabled)
+                    entity.AnimationCounter++;
+                else
+                    entity.AnimationCounter *= 0.9f;
+                if(entity.AnimationCounter > 360f / 7)
+                {
+                    entity.AnimationCounter -= 360f / 7;
+                    entity.Rotations++;
+                }
+            }
+            float percent = 1 - entity.AnimationPercent / 22f;
+            percent = 1 - percent * percent * percent;
+            Texture2D diamond = TextureAssets.Item[ItemID.Diamond].Value;
+            Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen)
+            {
+                zero = Vector2.Zero;
+            }
 
+            Vector2 position = new(i * 16 + 32, j * 16 + 16);
+            Vector2 origin = new(diamond.Width / 2, diamond.Height / 2);
+            for(int k = 0; k < 7; ++k)
+            {
+                float radians = MathHelper.WrapAngle(MathHelper.ToRadians(k / 7f * 360f + entity.AnimationCounter - half * percent));
+                Vector2 circular = new Vector2(0, -(32 + percent * 12)).RotatedBy(radians);
+                if(circular.Y * dirMod <= 0)
+                {
+                    circular.Y *= 0.5f * percent;
+
+                    Vector2 groundPos = circular + position + new Vector2(0, 107);
+                    Vector2 floatingPos = circular + position;
+                    Vector2 drawPos = Vector2.Lerp(groundPos, floatingPos, percent);
+                    float r = (circular.X * -0.017f * percent);
+                    if(percent > 0)
+                    {
+                        Color gemLockColor = ColorHelper.PastelGradient(MathHelper.ToRadians((k - entity.Rotations) / 7f * 360f), Color.Pink);
+                        gemLockColor.A = 0;
+                        for (int l = 0; l < 6; ++l)
+                        {
+                            Vector2 circular2 = new Vector2(1 + 1 * percent, 0).RotatedBy(l * MathHelper.TwoPi / 6f + MathHelper.ToRadians(SOTSWorld.GlobalCounter));
+                            spriteBatch.Draw(diamond, drawPos + circular2 + zero - Main.screenPosition, null, gemLockColor * percent, r, origin, 1f, SpriteEffects.None, 0f);
+                        }
+                    }
+                    spriteBatch.Draw(diamond, drawPos + zero - Main.screenPosition, null, Lighting.GetColor((groundPos / 16f).ToPoint()), r, origin, 1f, SpriteEffects.None, 0f);
+                }
+            }
         }
         public override bool RightClick(int i, int j)
         {
             int left = i - (Main.tile[i, j].TileFrameX / 18) % 4;
             int top = j - (Main.tile[i, j].TileFrameY / 18) % 8;
             int k = ModContent.GetInstance<LightStatueTE>().Find(left, top);
+            if (k == -1)
+                return true;
             LightStatueTE entity = (LightStatueTE)TileEntity.ByID[k];
             if(entity.Enabled)
             {
@@ -130,7 +194,7 @@ namespace SOTS.Items.Conduit
             }
             if(Main.netMode == NetmodeID.MultiplayerClient)
                 NetMessage.SendTileSquare(Main.myPlayer, left, top, 3);
-            Main.NewText(entity.Enabled);
+            //Main.NewText(entity.Enabled);
             return true;
         }
         public override void MouseOver(int i, int j)
@@ -148,21 +212,24 @@ namespace SOTS.Items.Conduit
     public class LightStatueTE : ModTileEntity //Mostly for keeping track of the position of the light statue an whether or not it is enabled. This could be done with the Important Tile system too, but I figured I ought not to.
     {
         public bool Enabled => Main.tile[Position.X, Position.Y].TileFrameX != 0;
+        public float AnimationPercent;
+        public float AnimationCounter = 0;
+        public float Rotations = 0;
         public override bool IsTileValidForEntity(int x, int y)
         {
             Tile t = Main.tile[x, y];
             return t.HasTile && t.TileType == ModContent.TileType<LightStatueTile>();
         }
-        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
-        {
-            if(Main.netMode != NetmodeID.Server)
-                Main.NewText($"(i, j): ({i}, {j}), type: {type}");
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
-                return -1;
-            }
-            return Place(i, j);
-        }
+        //public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
+        //{
+        //    //if(Main.netMode != NetmodeID.Server)
+        //    //    Main.NewText($"(i, j): ({i}, {j}), type: {type}");
+        //    if (Main.netMode == NetmodeID.MultiplayerClient)
+        //    {
+        //        NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
+        //        return -1;
+        //    }
+        //    return Place(i, j);
+        //}
     }
 }

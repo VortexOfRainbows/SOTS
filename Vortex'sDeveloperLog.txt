@@ -42,7 +42,6 @@ Update Objectives:
 	1. The information shown in the lower-left corner after using the Planetary Analyzer (this should probably be reworked altogether).
 11. Tiles that repel and attract Anomaly spawns (Anomaly Interceptor and Anomaly Attractor)
 	1. Interceptor -> D.E.F.E Wormhole convert
-	2. Attractor -> Otherworld Unique Tile
 12. Sanctuary Lanterns (hang from ceiling very cool)
 13. Implement achievements as the functionality is soon official! Preview Branch!
 14. Make hydrokinetic antennae visual disablable
@@ -76,7 +75,8 @@ N/A
 Daily Log:
 
 9/28/25
-1. Very WIP Lightbringer Statue
+1. Added Lightbringer Statue (works in MP)
+2. No more SOTS Texture-Pack popup
 
 9/27/25
 1. Eduarrdo achievement resprites!

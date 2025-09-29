@@ -69,16 +69,16 @@ namespace SOTS
 				if (LogInMessageTimer == 0)
 				{
 					SOTSTexturePackEnabled = IsSOTSTexturePackEnabled();
-					if (SOTS.SOTSTexturePackEnabled)
-					{
-						LogInMessageTimer = -1;
-						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks"), new Color(255, 150, 255));
-					}
-					else
-					{
-						LogInMessageTimer = -1;
-						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
-					}
+					//if (SOTS.SOTSTexturePackEnabled)
+					//{
+					//    LogInMessageTimer = -1;
+					//    Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks"), new Color(255, 150, 255));
+					//}
+					//else
+					//{
+					//    LogInMessageTimer = -1;
+					//    Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
+					//}
 					ImportantTilesWorld.RequestNewPackets();
 				}
 			}
