@@ -6985,6 +6985,16 @@ Mods: {
 				DisplayName: Experimental Injection
 				Tooltip: ""
 			}
+
+			LightStatue: {
+				DisplayName: Light Statue
+				Tooltip:
+					'''
+					Attracts wormholes, forcing them to spawn nearby
+					If more than two are active at once, wormholes will be attracted to a random, enabled statue
+					Can be turned on and off
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7778,6 +7788,7 @@ Mods: {
 			TideChainTile.MapEntry: Tide Chain
 			IraGatewayTile.MapEntry: Ira Gateway
 			ExcavatorMusicBoxTile.MapEntry: Music Box
+			LightStatueTile.MapEntry: Light Statue Tile
 		}
 
 		WorldGeneration: {
