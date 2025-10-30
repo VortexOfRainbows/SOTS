@@ -2,6 +2,7 @@ using Humanizer;
 using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using SOTS.Dusts;
 using SOTS.Helpers;
 using SOTS.Items.Fragments;
@@ -142,6 +143,8 @@ namespace SOTS.Items.Conduit
             float percent = 1 - entity.AnimationPercent / 22f;
             percent = 1 - percent * percent * percent;
             Texture2D diamond = TextureAssets.Item[ItemID.Diamond].Value;
+            if(!TextureAssets.Item[ItemID.Diamond].IsLoaded)
+                Main.instance.LoadItem(ItemID.Diamond);
             Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
             {

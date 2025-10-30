@@ -9243,12 +9243,12 @@ Mods: {
 		Achievements: {
 			GlowmothKill: {
 				FriendlyName: Who Turned on the Lights?
-				Description: Defeat the Illuminated Abomination of the Fungal Caverns (Credit: EduaRRdo)
+				Description: Defeat Glowmoth, the Illuminated Abomination of the Fungal Caverns (Credit: EduaRRdo)
 			}
 
 			AdvisorKill: {
 				FriendlyName: Shining Star
-				Description: Defeat the Advisor, the controller of the Planetarium (Credit: EduaRRdo)
+				Description: Defeat the Advisor, the puppet master of the Planetarium (Credit: EduaRRdo)
 			}
 
 			ArchaeologistTalk: {
@@ -9272,7 +9272,7 @@ Mods: {
 			}
 
 			FourthDimension: {
-				FriendlyName: Fourth Dimensional
+				FriendlyName: Four Dimensional
 				Description: Command four Tesseracts at once (Credit: UnknownAkarii)
 			}
 
@@ -9313,7 +9313,7 @@ Mods: {
 
 			SubspaceKill: {
 				FriendlyName: Serpent of the Shadows
-				Description: Defeat Subspace Serpent, a being from beyond space (Credit: EduaRRdo)
+				Description: Defeat Subspace Serpent, a being from a space beyond (Credit: EduaRRdo)
 			}
 
 			TidalConstructSuicide: {
@@ -9329,6 +9329,16 @@ Mods: {
 			VoidDeathHappening: {
 				FriendlyName: Dangerous New Power
 				Description: Succumb to the Void (Credit: kekcroc)
+			}
+
+			Burdened: {
+				FriendlyName: Burdened
+				Description: Be debuffed by all dissolving elements simultaneously (Credit: Tortilla)
+			}
+
+			ExcavatorKill: {
+				FriendlyName: Rusty Old Tool
+				Description: Defeat The Excavator, an ancient mining machine (Credit: EduaRRdo)
 			}
 		}
 	}

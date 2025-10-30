@@ -864,6 +864,7 @@ namespace SOTS.Void
             if (dePlayer.DissolvingUmbra != 0)
                 dePlayer.UmbraEffects();
             dePlayer.DissolvingUmbra = 0;
+            dePlayer.OldUmbra = dePlayer.DissolvingUmbra;
             return;
         }
 		public void ResetAllVoidBonuses()

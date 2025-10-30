@@ -8,6 +8,7 @@ using SOTS.Items.Secrets;
 using SOTS.NPCs.Boss;
 using SOTS.NPCs.Boss.Advisor;
 using SOTS.NPCs.Boss.Curse;
+using SOTS.NPCs.Boss.Excavator;
 using SOTS.NPCs.Boss.Glowmoth;
 using SOTS.NPCs.Boss.Lux;
 using SOTS.NPCs.Boss.Polaris.NewPolaris;
@@ -61,6 +62,16 @@ public class CurseKill : SOTSAchievement
     {
         Achievement.SetCategory(AchievementCategory.Slayer);
         AddNPCKilledCondition(ModContent.NPCType<PharaohsCurse>());
+    }
+}
+public class ExcavatorKill : SOTSAchievement
+{
+    public override string TextureName => "SOTS/Achievements/ExcavatorAchievement";
+    public override int Index => 0;
+    public override void SetStaticDefaults()
+    {
+        Achievement.SetCategory(AchievementCategory.Slayer);
+        AddNPCKilledCondition(ModContent.NPCType<Excavator>());
     }
 }
 public class AdvisorKill : SOTSAchievement
@@ -202,5 +213,16 @@ public class FourthDimension : SOTSAchievement
     {
         Achievement.SetCategory(AchievementCategory.Challenger);
         FourTesseractsAtOnce = AddCondition();
+    }
+}
+public class Burdened : SOTSAchievement
+{
+    public CustomFlagCondition BurdenedEntirely { get; private set; }
+    public override string TextureName => "SOTS/Achievements/Tortilla";
+    public override int Index => 1;
+    public override void SetStaticDefaults()
+    {
+        Achievement.SetCategory(AchievementCategory.Collector);
+        BurdenedEntirely = AddCondition();
     }
 }
