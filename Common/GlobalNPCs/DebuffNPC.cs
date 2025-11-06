@@ -500,7 +500,8 @@ namespace SOTS.Common.GlobalNPCs
             }
             if (projectile.type == ProjectileType<Projectiles.Temple.Helios>())
             {
-                StackDebuff(npc, player, ref BlazingCurse, 1, 0);
+                if(BlazingCurse < 5)
+                    StackDebuff(npc, player, ref BlazingCurse, 1, 0);
             }
             if(projectile.CountsAsClass(DamageClass.SummonMeleeSpeed) || projectile.CountsAsClass(DamageClass.Melee))
             {

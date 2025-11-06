@@ -1,10 +1,7 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs;
 using SOTS.Dusts;
 using System;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Temple
@@ -14,10 +11,6 @@ namespace SOTS.Projectiles.Temple
 		public override Color? GetAlpha(Color lightColor)
 		{
 			return Color.White;
-		}
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Helios");
 		}
 		public override void SetDefaults()
 		{
@@ -35,12 +28,6 @@ namespace SOTS.Projectiles.Temple
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
 			Projectile.timeLeft = 300;
-		}
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-		{
-			Projectile.localNPCImmunity[target.whoAmI] = Projectile.localNPCHitCooldown;
-			target.immune[Projectile.owner] = 0;
-			//target.AddBuff(ModContent.BuffType<Shattered>(), 1200);
 		}
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
 		{

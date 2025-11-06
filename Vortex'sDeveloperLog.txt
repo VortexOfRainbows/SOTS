@@ -79,6 +79,7 @@ Daily Log:
 2. Hydrokinetic Antennae's connection visual can now be hidden when vanity is disabled
 3. Fix: Bulwark of the ancients grants stoned immunity now, like the ankh shield
 4. Fix: King Blade's tooltip now shows correct damage multiplier number (100% -> 80%)
+5. Fix: Helios now only stacks up to 5 stacks of scorch, as described in the tooltip
 
 10/30/25
 1. Import some sprites for Excavator Armor!

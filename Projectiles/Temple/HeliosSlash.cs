@@ -1,11 +1,9 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.Dusts;
-using Terraria.Audio;
 
 namespace SOTS.Projectiles.Temple
 {    
