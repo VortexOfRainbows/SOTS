@@ -998,6 +998,8 @@ namespace SOTS
 				new("SOTS:DissolvingElement", ItemType<DissolvingNihility>()),
                 new(ItemID.BubbleWand, ItemType<BWand>()),
                 new(ItemType<MrBurns>(), ItemType<MrGlorp>()),
+                new(ItemType<SharkPog>(), ItemType<HydrokineticAntennae>()),
+                new(ItemType<HydrokineticAntennae>(), ItemType<SharkPog>()),
             };
         }
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)

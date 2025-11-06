@@ -1,6 +1,4 @@
 using SOTS.FakePlayer;
-using SOTS.Items.Fragments;
-using SOTS.Items.Potions;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,11 +23,8 @@ namespace SOTS.Items.Tide
 		{
 			FakeModPlayer modPlayer = FakeModPlayer.ModPlayer(player);
             modPlayer.hasHydroFakePlayer = true;
-			player.SOTSPlayer().StatShareMeleeAndSummon = true;
+            modPlayer.hydroVanityHidden = hideVisual;
+            player.SOTSPlayer().StatShareMeleeAndSummon = true;
         }
-		public override void AddRecipes()
-		{
-			//CreateRecipe(1).AddIngredient(ItemID.LifeCrystal, 1).AddIngredient(ModContent.ItemType<DissolvingDeluge>(), 1).AddIngredient(ModContent.ItemType<RipplePotion>(), 8).AddTile(TileID.TinkerersWorkbench).Register();
-		}
 	}
 }

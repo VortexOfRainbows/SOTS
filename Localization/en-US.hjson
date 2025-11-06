@@ -6890,7 +6890,7 @@ Mods: {
 				DisplayName: King Blade
 				Tooltip:
 					'''
-					Strike with 6 slashes, then toss a spinning blade for 100% damage
+					Strike with 6 slashes, then toss a spinning blade for 80% damage
 					Each slash will additionally call down a blade from the sky
 					'''
 			}
