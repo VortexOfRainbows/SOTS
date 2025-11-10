@@ -45,6 +45,7 @@ Update Objectives:
 12. Sanctuary Lanterns (hang from ceiling very cool)
 13. ItemID.Sets.StaffMinionSlotsRequired[Item.Type] = 0; for void summons
 14. attuned buff may not be applied in multiplayer..?
+15. Pyramid treasure slime doesn't drop the royal magnum
 
 ---WIP List---
 N/A
@@ -73,6 +74,11 @@ N/A
 N/A
 
 Daily Log:
+
+11/10/25
+1. Add Excavator Armor set
+	1. Needs: Multiplayer Testing
+2. Adjust some tooltips
 
 11/6/25
 1. Hydrokinetic Antennae and Pog Shark can be exchanged into each other at a wormhole

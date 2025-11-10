@@ -6795,7 +6795,7 @@ Mods: {
 				DisplayName: Flower Crown
 				Tooltip:
 					'''
-					Increases endurance by 10%
+					Reduces damage taken by 10%
 					Increases void gain and life regen by 4
 					When using void, 30% of the void used is converted into life
 					'''
@@ -6994,6 +6994,25 @@ Mods: {
 					If more than two statues are active at once, wormholes will be attracted to a random, enabled statue
 					Can be turned on and off
 					'''
+			}
+
+			ExcavatorBreastplate: {
+				DisplayName: Drillforge Breastplate
+				Tooltip:
+					'''
+					Gain a Missile Launcher tail that attacks nearby enemies for 1 void
+					Reduces damage taken by 10%
+					'''
+			}
+
+			ExcavatorHelmet: {
+				DisplayName: Drillforge Helmet
+				Tooltip: Increases max void by 25, void gain by 25%, and void regeneration speed by 10%
+			}
+
+			ExcavatorLeggings: {
+				DisplayName: Drillforge Leggings
+				Tooltip: Increases max void by 25, void gain by 25%, and void regeneration speed by 10%
 			}
 		}
 
@@ -7546,6 +7565,11 @@ Mods: {
 				'''
 				Melee strikes have a chance to apply a stacking, permanent shred on enemies, making them take additional damage from all attacks
 				Increases attack speed by 20%
+				'''
+			Excavator:
+				'''
+				Increases Missile Launcher Tail attack speed by 50%
+				Increases void regeneration speed by 30%
 				'''
 		}
 
@@ -9112,6 +9136,8 @@ Mods: {
 			LuxBallProjectile.DisplayName: Spirit Golf Ball
 			DrillHand.DisplayName: Drill Hand
 			Boopy.DisplayName: Boopy
+			MissileLauncher.DisplayName: Missile Launcher
+			Missile.DisplayName: Missile
 		}
 
 		DamageClasses: {

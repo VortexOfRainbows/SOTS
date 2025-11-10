@@ -69,7 +69,7 @@ namespace SOTS
 			On_Main.UpdateTime += Main_UpdateTime;
 
 
-			On_Item.GetPrefixCategory += Item_GetPrefixCategory;
+			On_Item.GetPrefixCategories += Item_GetPrefixCategories;
 			On_PlayerDrawLayers.DrawPlayer_27_HeldItem += On_PlayerDrawLayers_DrawPlayer_27_HeldItem;
             On_PlayerDrawLayers.DrawPlayer_30_BladedGlove += On_PlayerDrawLayers_DrawPlayer_30_BladedGlove;
 			On_Player.ItemCheck_EmitHeldItemLight += On_Player_ItemCheck_EmitHeldItemLight;
@@ -1003,7 +1003,7 @@ namespace SOTS
         {
 			orig(self, projectile);
         }
-		private static PrefixCategory? Item_GetPrefixCategory(On_Item.orig_GetPrefixCategory orig, Item self)
+		private static List<PrefixCategory> Item_GetPrefixCategories(On_Item.orig_GetPrefixCategories orig, Item self)
 		{
 			if(self.IsAPrefixableAccessory())
 			{
@@ -1011,7 +1011,7 @@ namespace SOTS
                 {
                     if (self.ModItem.Mod is SOTS)
                     {
-                        return PrefixCategory.Accessory;
+                        return [ PrefixCategory.Accessory ];
                     }
                 }
 			}
