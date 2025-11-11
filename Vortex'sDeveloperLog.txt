@@ -45,7 +45,6 @@ Update Objectives:
 12. Sanctuary Lanterns (hang from ceiling very cool)
 13. ItemID.Sets.StaffMinionSlotsRequired[Item.Type] = 0; for void summons
 14. attuned buff may not be applied in multiplayer..?
-15. Pyramid treasure slime doesn't drop the royal magnum
 
 ---WIP List---
 N/A
@@ -76,13 +75,15 @@ N/A
 Daily Log:
 
 11/10/25 to 11/11/25
-1. Add Excavator Armor set
-	1. Needs: Multiplayer Testing
+1. Add Excavator Armor set (works in multiplayer)
 2. Adjust some tooltips
 3. A hidden tooltip for Essence of Emptiness appears at 15 UVID instead of 8 UVID
 4. Add 56 Wonder Eggs, which change tooltips and names based on their ID and the player's UVID
 	1. Needs: Obtian method, Multiplayer Testing
 5. Add JUMBO EGGS, which contain random shit, obtained by shimmering wonder eggs
+6. Fixed royal magnum not being dropped by pyramid treasure slimes
+7. Added an animation for when your vision number changes
+8. Add Anomaly Interceptor, which gives more detail about anomalies (works in multiplayer)
 
 11/6/25
 1. Hydrokinetic Antennae and Pog Shark can be exchanged into each other at a wormhole

@@ -62,8 +62,9 @@ namespace SOTS.NPCs.TreasureSlimes
 				new TreasureSlimeItem(ItemType<SandstoneEdge>(), 1, 1, 1f),
 				new TreasureSlimeItem(ItemType<ShiftingSands>(), 1, 1, 1f),
 				new TreasureSlimeItem(ItemType<SunlightAmulet>(), 1, 1, 1f),
+				new TreasureSlimeItem(ItemType<RoyalMagnum>(), 1, 1, 1f),
 				new TreasureSlimeItem(ItemType<ExplosiveKnife>(), 30, 50, 1f),
-				new TreasureSlimeItem(ItemType<FragmentOfEarth>(), 3, 6, 0.2f),
+                new TreasureSlimeItem(ItemType<FragmentOfEarth>(), 3, 6, 0.2f),
 				new TreasureSlimeItem(ItemType<CursedCaviar>(), 5, 5, 0.2f),
 			};
 		}

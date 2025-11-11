@@ -185,7 +185,7 @@ namespace SOTS.Items.Conduit
             if(closest != -1)
             {
                 Player p = Main.player[closest];
-                p.SOTSPlayer().ResetVisionID(MyUniqueID, true);
+                p.SOTSPlayer().ResetVisionID(MyUniqueID, true, true);
             }
         }
     }

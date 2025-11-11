@@ -399,7 +399,8 @@ namespace SOTS
 		public bool hasSoaringInsigniaFake = false;
 		public bool GoldenTrowel = false;
 		public bool AnomalyLocator = false;
-		public bool StatShareMeleeAndSummon = false;
+        public bool BetterAnomalyLocator = false;
+        public bool StatShareMeleeAndSummon = false;
 		public bool StatShareMeleeAndMagic = false;
 		public bool StatShareAll = false;
 		public int BrassWhipDelay = 0;
@@ -760,9 +761,9 @@ namespace SOTS
 			}
 			return base.CanHitNPCWithItem(item, target);
 		}
-		public void ResetVisionID(int newNumber, bool serverCommand = false)
+		public void ResetVisionID(int newNumber, bool serverCommand = false, bool animate = false)
 		{
-			if(newNumber != -1 && Main.netMode != NetmodeID.MultiplayerClient)
+			if(animate && Main.netMode != NetmodeID.MultiplayerClient)
 				Projectile.NewProjectile(Player.GetSource_Misc("SOTS:VisionReset"), Player.Center, new Vector2(0, -5), ModContent.ProjectileType<VisionAmuletSwitchAnimation>(), 0, 0, Main.myPlayer, UniqueVisionNumber, newNumber, Player.whoAmI);
 			UniqueVisionNumber = newNumber;
 			if (NetmodeID.Server == Main.netMode && serverCommand)
@@ -1201,14 +1202,16 @@ namespace SOTS
 			lastPlanetMax = tPlanetNum;
 			tPlanetNum = 0;
 			RubyMonolith = false;
-			RubyMonolithIsNOTVanity = AnomalyLocator = false;
+			RubyMonolithIsNOTVanity = AnomalyLocator = BetterAnomalyLocator = false;
 			int voidspacePiecesWorn = 0, chaosPiecesWorn = 0;
 			for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
 			{
 				Item item = Player.armor[i];
 				if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
 					AnomalyLocator = true;
-				if (item.type == ModContent.ItemType<CursedApple>())
+                else if (item.type == ModContent.ItemType<Items.Conduit.AnomalyInterceptor>())
+                    AnomalyLocator = BetterAnomalyLocator = true;
+                else if (item.type == ModContent.ItemType<CursedApple>())
 					petPepper = true;
 				else if (item.type == ModContent.ItemType<Calculator>())
 					petAdvisor = true;
@@ -1273,9 +1276,11 @@ namespace SOTS
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
 				Item item = Player.armor[i];
-				if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
-					AnomalyLocator = true;
-				else if (item.type == ModContent.ItemType<TheDarkEye>())
+                if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
+                    AnomalyLocator = true;
+                else if (item.type == ModContent.ItemType<Items.Conduit.AnomalyInterceptor>())
+                    AnomalyLocator = BetterAnomalyLocator = true;
+                else if (item.type == ModContent.ItemType<TheDarkEye>())
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
                 else if(item.type == ModContent.ItemType<PlatformGenerator>() || item.type == ModContent.ItemType<FortressGenerator>())
 					platformShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);

@@ -6,6 +6,7 @@ using SOTS.Common;
 using SOTS.Common.GlobalNPCs;
 using SOTS.FakePlayer;
 using SOTS.Items;
+using SOTS.Items.AbandonedVillage;
 using SOTS.Items.Celestial;
 using SOTS.Items.Conduit;
 using SOTS.Items.Furniture;
@@ -22,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Xml;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -778,7 +780,7 @@ namespace SOTS
 			orig(self, spriteBatch, mapTopLeft, mapX2Y2AndOff, mapRect, mapScale, drawScale, ref mouseTextString);
 			DrawSOTSMapIcons(self, spriteBatch, mapTopLeft, mapX2Y2AndOff, mapRect, mapScale, drawScale, ref mouseTextString);
 		}
-		private static void DrawAnomalyIcon(Vector2 archPos, SpriteBatch spriteBatch, Rectangle? mapRect, Vector2 mapX2Y2AndOff, Vector2 mapTopLeft, float mapScale, float drawScale, ref string mouseTextString)
+		private static void DrawAnomalyIcon(Vector2 archPos, SpriteBatch spriteBatch, Rectangle? mapRect, Vector2 mapX2Y2AndOff, Vector2 mapTopLeft, float mapScale, float drawScale, ref string mouseTextString, bool ignoreHover = false)
 		{
             float alphaMult = Archaeologist.FinalAnomalyAlphaMult;
             Vector2 vec = archPos / 16f - mapTopLeft;
@@ -818,26 +820,93 @@ namespace SOTS
                 }
                 spriteBatch.Draw(value, vec, rectangle, Color.White * alphaMult, 0f, rectangle.Size() / 2f, drawScale, 0, 0f);
                 Rectangle rectangle2 = Utils.CenteredRectangle(vec, rectangle.Size() * drawScale);
-                if (rectangle2.Contains(Main.MouseScreen.ToPoint()))
+                if (rectangle2.Contains(Main.MouseScreen.ToPoint()) && !ignoreHover)
                 {
                     mouseTextString = Language.GetTextValue("Mods.SOTS.Common.ArchaeologistMap");
                     //_ = Main.MouseScreen + new Vector2(-28f) + new Vector2(4f, 0f);
                 }
             }
         }
-		private static void DrawSOTSMapIcons(Main self, SpriteBatch spriteBatch, Vector2 mapTopLeft, Vector2 mapX2Y2AndOff, Rectangle? mapRect, float mapScale, float drawScale, ref string mouseTextString)
+        private static void DrawMapItem(Item item, int itemType, bool BetterAnomalyLocator, Vector2 archPos, SpriteBatch spriteBatch, Rectangle? mapRect, Vector2 mapX2Y2AndOff, Vector2 mapTopLeft, float mapScale, float drawScale, ref string mouseTextString, string overrideHoverString = null)
+        {
+			int egg = ModContent.ItemType<WonderEgg>();
+            Vector2 vec = archPos / 16f - mapTopLeft;
+            vec *= mapScale;
+            vec += mapX2Y2AndOff;
+            vec = vec.Floor();
+            bool draw = true;
+            if (mapRect.HasValue)
+            {
+                Rectangle value2 = mapRect.Value;
+                if (!value2.Contains(vec.ToPoint()))
+                {
+                    draw = false;
+                }
+            }
+            if (draw)
+            {
+                if (itemType == egg)
+                    DrawAnomalyIcon(archPos, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString, BetterAnomalyLocator);
+                if (itemType != egg || BetterAnomalyLocator)
+                {
+                    Texture2D texture = TextureAssets.Item[itemType].Value;
+                    int frameCount = 1;
+                    int frame = 0;
+                    DrawAnimation anim = Main.itemAnimations[itemType];
+                    if (anim != null)
+                    {
+                        frameCount = anim.FrameCount;
+                        frame = anim.Frame;
+                    }
+                    Rectangle frameRect = new Rectangle(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount);
+                    if (itemType == egg)
+                    {
+						texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Items/Conduit/WonderEggSheet");
+                        WonderEgg w = item.ModItem as WonderEgg;
+                        int unique = w.MyUniqueID;
+                        frameRect = new(38 * VisionAmulet.GetGem(unique), 42 * VisionAmulet.GetFrame(unique) + 2, 36, 40);
+                    }
+                    spriteBatch.Draw(texture, vec, frameRect, Color.White, 0f, frameRect.Size() / 2f, drawScale, 0, 0f);
+                    Rectangle rectangle2 = Utils.CenteredRectangle(vec, frameRect.Size() * drawScale);
+                    if (rectangle2.Contains(Main.MouseScreen.ToPoint()))
+                    {
+						if(overrideHoverString != null)
+						{
+							mouseTextString = overrideHoverString;
+                        }
+                        else if (itemType == egg)
+                        {
+                            WonderEgg w = item.ModItem as WonderEgg;
+                            mouseTextString = WonderEgg.GetName(w.MyUniqueID);
+                        }
+                        else
+                        {
+                            mouseTextString = Language.GetTextValue("Mods.SOTS.Common.ArchaeologistItemMap") + item.HoverName;
+                        }
+                        //_ = Main.MouseScreen + new Vector2(-28f) + new Vector2(4f, 0f);
+                    }
+                }
+            }
+        }
+        private static void DrawSOTSMapIcons(Main self, SpriteBatch spriteBatch, Vector2 mapTopLeft, Vector2 mapX2Y2AndOff, Rectangle? mapRect, float mapScale, float drawScale, ref string mouseTextString)
 		{
 			if(!SOTSPlayer.ModPlayer(Main.LocalPlayer).AnomalyLocator || Main.gameMenu)
             {
 				return;
             }
-			for(int k = 0; k < 3; k++)
+			bool BetterAnomalyLocator = SOTSPlayer.ModPlayer(Main.LocalPlayer).BetterAnomalyLocator;
+            for (int k = 0; k < 3; k++)
 			{
 				Vector2 archPos = k == 0 ? Archaeologist.AnomalyPosition1 : (k == 1 ? Archaeologist.AnomalyPosition2 : Archaeologist.AnomalyPosition3);
 				if (archPos != Vector2.Zero && archPos != NPCs.Town.VoidAnomaly.finalPositionAfterShatter)
-					DrawAnomalyIcon(archPos, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString);
+				{
+					DrawAnomalyIcon(archPos, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString, k == 2 && BetterAnomalyLocator);
+					if(BetterAnomalyLocator && k == 2)
+                    {
+                        DrawMapItem(null, ModContent.ItemType<AnomalyLocator>(), BetterAnomalyLocator, archPos, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString, Language.GetTextValue("Mods.SOTS.NPCs.Archaeologist.DisplayName"));
+                    }
+                }
 			}
-			int egg = ModContent.ItemType<WonderEgg>();
 			for(int i = 0; i < Main.item.Length; i++)
             {
 				Item item = Main.item[i];
@@ -848,47 +917,8 @@ namespace SOTS
 					{
 						if(gInstance.TeleportCounter > 0)
                         {
-							Vector2 vec = item.Center / 16f - mapTopLeft;
-							vec *= mapScale;
-							vec += mapX2Y2AndOff;
-							vec = vec.Floor();
-							bool draw = true;
-							if (mapRect.HasValue)
-							{
-								Rectangle value2 = mapRect.Value;
-								if (!value2.Contains(vec.ToPoint()))
-								{
-									draw = false;
-								}
-							}
-							if(draw)
-							{
-								if(item.type != egg)
-								{
-                                    Texture2D texture = TextureAssets.Item[item.type].Value;
-                                    int frameCount = 1;
-                                    int frame = 0;
-                                    DrawAnimation anim = Main.itemAnimations[item.type];
-                                    if (anim != null)
-                                    {
-                                        frameCount = anim.FrameCount;
-                                        frame = anim.Frame;
-                                    }
-                                    Rectangle frameRect = new Rectangle(0, texture.Height / frameCount * frame, texture.Width, texture.Height / frameCount);
-                                    spriteBatch.Draw(texture, vec, frameRect, Color.White, 0f, frameRect.Size() / 2f, drawScale, 0, 0f);
-                                    Rectangle rectangle2 = Utils.CenteredRectangle(vec, frameRect.Size() * drawScale);
-                                    if (rectangle2.Contains(Main.MouseScreen.ToPoint()))
-                                    {
-                                        mouseTextString = Language.GetTextValue("Mods.SOTS.Common.ArchaeologistItemMap") + item.HoverName;
-                                        //_ = Main.MouseScreen + new Vector2(-28f) + new Vector2(4f, 0f);
-                                    }
-                                }
-								else
-								{
-                                    DrawAnomalyIcon(item.Center, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString);
-                                }
-                            }
-						}
+							DrawMapItem(item, item.type, BetterAnomalyLocator, item.Center, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString);
+                        }
 					}
 				}
             }

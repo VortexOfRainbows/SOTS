@@ -152,6 +152,8 @@ namespace SOTS.Projectiles.Minions.Tail
 		}
 		public override void AI()
 		{
+            if (Projectile.owner != Main.myPlayer)
+                Projectile.timeLeft = 300;
 			AI0++;
 			float animPercent = AI0 / 100f;
 			float sin = 0.5f + 0.5f * MathF.Sin(animPercent * MathF.PI);

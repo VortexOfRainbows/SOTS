@@ -866,6 +866,10 @@ namespace SOTS.NPCs.Town
                     if (item.TryGetGlobalItem<GlobalEntityItem>(out GlobalEntityItem s))
                     {
                         s.TeleportCounter = 1;
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            s.NetUpdate(item.whoAmI);
+                        }
                     }
                 }
             }

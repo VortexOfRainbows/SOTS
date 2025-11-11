@@ -7016,12 +7016,12 @@ Mods: {
 			}
 
 			WonderEgg: {
-				DisplayName: Wonder Egg
-				Tooltip: 
-				'''
-				It may crack under incredible pressure
-				Temp
-				'''
+				DisplayName: Jewel Egg
+				Tooltip:
+					'''
+					It may crack under incredible pressure
+					Temp
+					'''
 			}
 
 			BrokenJumboSurpriseCapsule: {
@@ -7037,6 +7037,15 @@ Mods: {
 			JumboSurpriseEgg: {
 				DisplayName: Jumbo Surprise Egg
 				Tooltip: Refills 100 void and contains a Jumbo Surprise Capsule
+			}
+
+			AnomalyInterceptor: {
+				DisplayName: Anomaly Interceptor
+				Tooltip:
+					'''
+					Displays the location and description of various anomalies, such as electromagnetic transmissions, wormholes, and teleported items, on the Minimap
+					Functions while in the inventory, equipped as an accessory, or worn as a vanity accessory
+					'''
 			}
 		}
 

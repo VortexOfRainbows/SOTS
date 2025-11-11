@@ -1030,7 +1030,7 @@ namespace SOTS
 							/// The server reaches this exclusively in multiplayer...
                             Player p = Main.player[star.MyPlayer];
 							if(p.SOTSPlayer().UniqueVisionNumber % 8 != 7)
-								p.SOTSPlayer().ResetVisionID(Main.rand.Next(SOTSPlayer.TotalVisionNumber), true);
+								p.SOTSPlayer().ResetVisionID(Main.rand.Next(SOTSPlayer.TotalVisionNumber), true, true);
 						}
                     }
                 }
