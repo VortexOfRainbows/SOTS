@@ -75,7 +75,7 @@ N/A
 Daily Log:
 
 
---- Hotfix 0.25.1.1 ---
+--- Hotfix 0.25.1.2 --- (workshop wouldn't let me do 0.25.1.1)
 
 
 11/11/25

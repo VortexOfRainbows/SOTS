@@ -23,7 +23,7 @@ Misc:
 4. A hidden tooltip for Essence of Emptiness appears at 15 UVN instead of 8 UVN
 5. Adjust some tooltips
 
-Hotfix 0.25.1.1
+Hotfix 0.25.1.2
 
 Fixes: 
 1. Fix bug with Jewel Eggs accidentally not having special names
