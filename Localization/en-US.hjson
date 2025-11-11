@@ -2109,7 +2109,7 @@ Mods: {
 				DisplayName: Hydraulic Press
 				Tooltip:
 					'''
-					Automatically crushes enemies that walk inside
+					Automatically crushes enemies and certain items inside
 					Players are not safe from taking damage
 					'''
 			}
@@ -7014,6 +7014,30 @@ Mods: {
 				DisplayName: Drillforge Leggings
 				Tooltip: Increases max void by 25, void gain by 25%, and void regeneration speed by 10%
 			}
+
+			WonderEgg: {
+				DisplayName: Wonder Egg
+				Tooltip: 
+				'''
+				It may crack under incredible pressure
+				Temp
+				'''
+			}
+
+			BrokenJumboSurpriseCapsule: {
+				DisplayName: Broken Jumbo Surprise Capsule
+				Tooltip: ""
+			}
+
+			JumboSurpriseCapsule: {
+				DisplayName: Jumbo Surprise Capsule
+				Tooltip: Contains a toy!
+			}
+
+			JumboSurpriseEgg: {
+				DisplayName: Jumbo Surprise Egg
+				Tooltip: Refills 100 void and contains a Jumbo Surprise Capsule
+			}
 		}
 
 		ItemTooltip: {
@@ -8391,6 +8415,85 @@ Mods: {
 			3: Increases damage, attack speed, and movement speed by 5%
 		}
 
+		EggName: {
+			0: Contract Egg
+			1: Monopoly Egg
+			2: Market Egg
+			3: Gift Egg
+			4: Exploitation Egg
+			5: Partner Egg
+			6: Dutiful Egg
+			7: Betrayal Egg
+			8: Taxing Egg
+			9: Eternity Egg
+			10: Lost Egg
+			11: Soulmate Egg
+			12: Hell Egg
+			13: Heaven Egg
+			14: Forbidden Egg
+			15: Vanity Egg
+			16: Capitalist Egg
+			17: Kindred Egg
+			18: Freedom Egg
+			19: Romantic Egg
+			20: Violence Egg
+			21: Lawless Egg
+			22: Whimsy Egg
+			23: Imprisoned Egg
+			24: Entrepreneur Egg
+			25: Cosmic Egg
+			26: Liberty Egg
+			27: Binding Egg
+			28: Strategic Egg
+			29: Lawful Egg
+			30: Wisdom Egg
+			31: Naive Egg
+			32: Fairness Egg
+			33: Judgement Egg
+			34: Enforcement Egg
+			35: Loyal Egg
+			36: Revenge Egg
+			37: Justice Egg
+			38: Court Egg
+			39: Chaos Egg
+			40: Alliance Egg
+			41: Hundred Year Egg
+			42: Pillaging Egg
+			43: Cheating Egg
+			44: War Egg
+			45: Vengence Egg
+			46: Tactical Egg
+			47: Peace Egg
+			48: Greedy Egg
+			49: Lustful Egg
+			50: Slothful Egg
+			51: Love Egg
+			52: Wrathful Egg
+			53: Envious Egg
+			54: Prideful Egg
+			55: Melancholy Egg
+		}
+
+		EggDescription: {
+			0: "'This may fetch a good price'"
+			1: "'Perhaps these belong in your collection'"
+			2: "'A good excuse to go on an adventure'"
+			3: "'The way it reflects light is beautiful'"
+			4: "'Looking at it warms your spirits'"
+			5: "'A reminder that the world is your oyster'"
+			6: "'Perhaps there is something to be learned from this egg'"
+			7: "'Maybe you can change your fate'"
+			x0: "'It does not seem very valuable'"
+			x1: "'It does not belong in your collection"
+			x2: "'It was not worth the adventure'"
+			x3: "'It looks dull'"
+			x4: "'It feels awfully cold'"
+			x5: "'It does not belong in your performance'"
+			x6: "'It can't teach your anything'"
+			x7: "'You cannot escape your fate'"
+			x8: "'Like a mirror looking into your soul'"
+		}
+
 		DiamondRingText: Increase damage based on defense, then decreases defense by a third of the damage buff
 		DiamondRingText2:
 			'''
@@ -9138,6 +9241,8 @@ Mods: {
 			Boopy.DisplayName: Boopy
 			MissileLauncher.DisplayName: Missile Launcher
 			Missile.DisplayName: Missile
+			JumboSurpriseCapsuleProj.DisplayName: Jumbo Surprise Capsule Proj
+			VisionAmuletSwitchAnimation.DisplayName: Vision Amulet Switch Animation
 		}
 
 		DamageClasses: {

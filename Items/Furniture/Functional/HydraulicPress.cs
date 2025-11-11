@@ -2,9 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Helpers;
+using SOTS.Items.Conduit;
 using SOTS.Items.Fragments;
-using SOTS.NPCs.Boss;
-using SOTS.Projectiles.Blades;
+using SOTS.Items.Void;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -128,29 +128,35 @@ namespace SOTS.Items.Furniture.Functional
                 }
 			}
         }
-		public static void CheckIfInsideHydraulic(NPC npc)
-		{
-			if (npc.friendly || !npc.active || npc.dontTakeDamage)
-				return;
-			int i = (int)npc.Center.X / 16;
-			int j = (int)npc.Center.Y / 16;
-			if (!WorldGen.InWorld(i, j, 20))
-				return;
-			Tile tile = Main.tile[i, j];
-			if(tile.TileType == ModContent.TileType<HydraulicPressTile>() && tile.HasTile)
+        public static void CheckIfInsideHydraulic(Entity e)
+        {
+            if (!e.active)
+                return;
+            int i = (int)e.Center.X / 16;
+            int j = (int)e.Center.Y / 16;
+            if (!WorldGen.InWorld(i, j, 20))
+                return;
+            Tile tile = Main.tile[i, j];
+            if (tile.TileType == ModContent.TileType<HydraulicPressTile>() && tile.HasTile)
             {
-				if(tile.IsActuated)
+                if (tile.IsActuated)
                 {
-					LaunchHydraulic(npc);
+                    LaunchHydraulic(e);
                 }
             }
+        }
+        public static void CheckIfInsideHydraulic(NPC npc)
+		{
+			if (npc.friendly || npc.dontTakeDamage)
+				return;
+			CheckIfInsideHydraulic(npc as Entity);
 		}
-		public static void LaunchHydraulic(NPC npc)
+		public static void LaunchHydraulic(Entity e)
 		{
 			if (Main.netMode != NetmodeID.MultiplayerClient)
 			{
-				int i = (int)npc.Center.X / 16;
-				int j = (int)npc.Center.Y / 16;
+				int i = (int)e.Center.X / 16;
+				int j = (int)e.Center.Y / 16;
 				Tile tile = Main.tile[i, j];
 				if (tile.TileFrameX < 108)
 				{
@@ -168,7 +174,7 @@ namespace SOTS.Items.Furniture.Functional
 					}
 					NetMessage.SendTileSquare(-1, left + 3, top + 4, 9);
 					Vector2 center = new Vector2(left * 16 + 48, top * 16 + 32);
-					Projectile.NewProjectile(new EntitySource_TileInteraction(npc, i, j, "SOTS:Hydraulic"), center, Vector2.Zero, ModContent.ProjectileType<PressProjectile>(), 200, 0, Main.myPlayer);
+					Projectile.NewProjectile(new EntitySource_TileInteraction(e, i, j, "SOTS:Hydraulic"), center, Vector2.Zero, ModContent.ProjectileType<PressProjectile>(), 200, 0, Main.myPlayer);
 					//spawn hydraulic projectile here
 				}
 			}
@@ -294,8 +300,21 @@ namespace SOTS.Items.Furniture.Functional
 							dust.velocity.X = Math.Abs(dust.velocity.X) * (float)Math.Sqrt(l + 1) * Main.rand.NextFloat(-1f, 1f) * (2f - z);
 							dust.fadeIn = 6;
 						}
-					}
-				}
+                    }
+                    int type = ModContent.ItemType<WonderEgg>();
+                    int type2 = ModContent.ItemType<JumboSurpriseCapsule>();
+                    for (int a = 0; a < Main.item.Length; ++a)
+                    {
+                        Item item = Main.item[a];
+                        if ((item.type == type || item.type == type2) && item.Hitbox.Intersects(Projectile.Hitbox))
+                        {
+                            if (item.ModItem is WonderEgg w)
+                                w.Crush();
+                            else if (item.ModItem is JumboSurpriseCapsule ju)
+                                ju.Crush();
+                        }
+                    }
+                }
 				Projectile.ai[0]++;
             }
 			else

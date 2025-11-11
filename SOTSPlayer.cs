@@ -152,8 +152,38 @@ namespace SOTS
 				}
 			}
 			return Color.White;
-		}
-		public static Color VisionColor(Player player)
+        }
+        public static Color VisionColorFromNumber(int i)
+        {
+            Color DestinationColor = Color.DarkGray;
+            int uniqueGem = i % 8;
+            switch (uniqueGem)
+            {
+                case 0: //geo
+                    DestinationColor = Color.Orange;
+                    break;
+                case 1: //electro
+                    DestinationColor = Color.BlueViolet;
+                    break;
+                case 2: //anemo
+                    DestinationColor = Color.Turquoise;
+                    break;
+                case 3: //cyro
+                    DestinationColor = Color.LightSkyBlue;
+                    break;
+                case 4: //pyro
+                    DestinationColor = Color.OrangeRed;
+                    break;
+                case 5: //hydro
+                    DestinationColor = Color.DodgerBlue;
+                    break;
+                case 6: //dendro
+                    DestinationColor = Color.Green;
+                    break;
+            }
+            return DestinationColor;
+        }
+        public static Color VisionColor(Player player)
 		{
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			Color DestinationColor = Color.DarkGray;
@@ -730,9 +760,11 @@ namespace SOTS
 			}
 			return base.CanHitNPCWithItem(item, target);
 		}
-		public void ResetVisionID(bool serverCommand = false)
+		public void ResetVisionID(int newNumber, bool serverCommand = false)
 		{
-			UniqueVisionNumber = Main.rand.Next(TotalVisionNumber);
+			if(newNumber != -1 && Main.netMode != NetmodeID.MultiplayerClient)
+				Projectile.NewProjectile(Player.GetSource_Misc("SOTS:VisionReset"), Player.Center, new Vector2(0, -5), ModContent.ProjectileType<VisionAmuletSwitchAnimation>(), 0, 0, Main.myPlayer, UniqueVisionNumber, newNumber, Player.whoAmI);
+			UniqueVisionNumber = newNumber;
 			if (NetmodeID.Server == Main.netMode && serverCommand)
 			{
 				var packet = Mod.GetPacket();
@@ -749,7 +781,7 @@ namespace SOTS
 				return;
 			}
 			if (UniqueVisionNumber == -1)
-				ResetVisionID(false);
+				ResetVisionID(Main.rand.Next(SOTSPlayer.TotalVisionNumber));
 			base.PreUpdate();
 		}
 		public static int ApplyDamageClassModWithGeneric(Player player, DamageClass damageClass, int startingDamage)

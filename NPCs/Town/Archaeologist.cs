@@ -39,6 +39,7 @@ using Terraria.Enums;
 using SOTS.Items.Invidia.MoonShard;
 using Microsoft.Xna.Framework.Input;
 using SOTS.Achievements;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SOTS.NPCs.Town
 {
@@ -773,9 +774,10 @@ namespace SOTS.NPCs.Town
 				}
 			}
 
-			int padding = 50;
 			Vector2 firstPosition = Vector2.Zero;
-			if (statues.Count > 0)
+			int padding = 50;
+            firstPosition = Vector2.Zero;
+            if (statues.Count > 0)
 			{
 				int i = Main.rand.Next(statues.Count);
 				LightStatueTE s = statues[i];
@@ -821,7 +823,53 @@ namespace SOTS.NPCs.Town
                     checks++;
                 }
             }
-			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), secondPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -2, -60);
+            if (SOTSWorld.AmberKeySlotted && SOTSWorld.AmethystKeySlotted && SOTSWorld.SapphireKeySlotted && SOTSWorld.RubyKeySlotted && SOTSWorld.EmeraldKeySlotted && SOTSWorld.DiamondKeySlotted && SOTSWorld.TopazKeySlotted)
+            {
+                int eggType = ModContent.ItemType<WonderEgg>();
+                int totalEggs = 0;
+                for (int i = 0; i < Main.item.Length; ++i)
+                {
+                    Item egg = Main.item[i];
+                    if (totalEggs <= 7)
+                    {
+                        if (egg.active && egg.type == eggType && egg.TryGetGlobalItem<GlobalEntityItem>(out GlobalEntityItem s) && s.RecentlyTeleported)
+                        {
+                            totalEggs++;
+                        }
+                    }
+                    else
+                        break;
+                }
+                if (totalEggs <= 7)
+                {
+                    int checks = 0;
+                    bool valid = false;
+					Vector2 eggPosition = Vector2.Zero;
+                    int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
+                    while (checks < 100 && !valid)
+                    {
+						if(checks > 20)
+                        {
+                            int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+                            int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
+                            eggPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+							valid = isThisPlacementValid(new Point(randX, randY));
+                        }
+						else
+						{
+                            eggPosition = secondPosition + Main.rand.NextVector2CircularEdge(160, 160);
+                            valid = isThisPlacementValid(eggPosition.ToTileCoordinates());
+                        }
+                        checks++;
+                    }
+                    Item item = Main.item[Item.NewItem(new EntitySource_Misc("SOTS:ArchaeologistPortals"), eggPosition, eggType, 1, false)];
+                    if (item.TryGetGlobalItem<GlobalEntityItem>(out GlobalEntityItem s))
+                    {
+                        s.TeleportCounter = 1;
+                    }
+                }
+            }
+            Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), secondPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -2, -60);
 		}
 		public static bool isThisPlacementValid(Point point)
 		{
@@ -1494,7 +1542,7 @@ namespace SOTS.NPCs.Town
 			}
 			else
 			{
-				if (entity is Item item && (!isAcceptingATaintedKeystone || item.type == ModContent.ItemType<TaintedKeystone>()))
+				if (entity is Item item && (!isAcceptingATaintedKeystone || item.type == ModContent.ItemType<TaintedKeystone>()) && item.type != ModContent.ItemType<WonderEgg>())
 				{
 					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
 					if (gen.RecentlyTeleported)

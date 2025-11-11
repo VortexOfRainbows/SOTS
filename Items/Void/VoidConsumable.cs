@@ -405,4 +405,28 @@ namespace SOTS.Items.Void
             CreateRecipe(1).AddIngredient<InvidiaPetal>(5).AddTile(TileID.WorkBenches).Register();
         }
     }
+    public class JumboSurpriseEgg : VoidConsumable
+    {
+        public override void SetStaticDefaults()
+        {
+            this.SetResearchCost(20);
+        }
+        public override void SafeSetDefaults()
+        {
+            Item.width = 24;
+            Item.height = 32;
+            Item.value = Item.sellPrice(0, 0, 2, 50);
+            Item.rare = ItemRarityID.Blue;
+            Item.UseSound = SoundID.Item2;
+        }
+        public override void OnActivation(Player player)
+        {
+            RefillEffect(player, 100);
+			player.QuickSpawnItem(Item.GetSource_Misc("SOTS:Jumbo"), ModContent.ItemType<JumboSurpriseCapsule>(), 1);
+        }
+        public override int GetSatiateDuration()
+        {
+            return 5;
+        }
+    }
 }

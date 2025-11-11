@@ -19,7 +19,7 @@ namespace SOTS.Items.Conduit
             {
                 SOTSPlayer sPlayer = Main.LocalPlayer.SOTSPlayer();
                 int uniqueNum = -1;
-                if (sPlayer.UniqueVisionNumber == 8)
+                if (sPlayer.UniqueVisionNumber == 15)
                     uniqueNum = 1;
                 if (sPlayer.UniqueVisionNumber == 42)
                     uniqueNum = 2;
