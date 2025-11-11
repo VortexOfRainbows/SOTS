@@ -188,6 +188,7 @@ Mods: {
 			EP: " Elemental Plating"
 			AS: " Alchemical Seeds"
 			CC: " Circuit Component"
+			EGG: " Jewel Egg"
 		}
 
 		KeyBindName: {
@@ -7036,7 +7037,7 @@ Mods: {
 
 			JumboSurpriseEgg: {
 				DisplayName: Jumbo Surprise Egg
-				Tooltip: Refills 100 void and contains a Jumbo Surprise Capsule
+				Tooltip: Refills 21 void and contains a Jumbo Surprise Capsule
 			}
 
 			AnomalyInterceptor: {
@@ -8470,7 +8471,7 @@ Mods: {
 			42: Pillaging Egg
 			43: Cheating Egg
 			44: War Egg
-			45: Vengence Egg
+			45: Vengeance Egg
 			46: Tactical Egg
 			47: Peace Egg
 			48: Greedy Egg

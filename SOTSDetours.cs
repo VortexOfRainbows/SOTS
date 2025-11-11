@@ -850,6 +850,8 @@ namespace SOTS
                 if (itemType != egg || BetterAnomalyLocator)
                 {
                     Texture2D texture = TextureAssets.Item[itemType].Value;
+                    if (!TextureAssets.Item[itemType].IsLoaded)
+                        Main.instance.LoadItem(itemType);
                     int frameCount = 1;
                     int frame = 0;
                     DrawAnimation anim = Main.itemAnimations[itemType];
@@ -900,8 +902,8 @@ namespace SOTS
 				Vector2 archPos = k == 0 ? Archaeologist.AnomalyPosition1 : (k == 1 ? Archaeologist.AnomalyPosition2 : Archaeologist.AnomalyPosition3);
 				if (archPos != Vector2.Zero && archPos != NPCs.Town.VoidAnomaly.finalPositionAfterShatter)
 				{
-					DrawAnomalyIcon(archPos, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString, k == 2 && BetterAnomalyLocator);
-					if(BetterAnomalyLocator && k == 2)
+					DrawAnomalyIcon(archPos, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString, k == 0 && BetterAnomalyLocator);
+					if(BetterAnomalyLocator && k == 0)
                     {
                         DrawMapItem(null, ModContent.ItemType<AnomalyLocator>(), BetterAnomalyLocator, archPos, spriteBatch, mapRect, mapX2Y2AndOff, mapTopLeft, mapScale, drawScale, ref mouseTextString, Language.GetTextValue("Mods.SOTS.NPCs.Archaeologist.DisplayName"));
                     }

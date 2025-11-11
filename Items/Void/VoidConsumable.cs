@@ -421,7 +421,7 @@ namespace SOTS.Items.Void
         }
         public override void OnActivation(Player player)
         {
-            RefillEffect(player, 100);
+            RefillEffect(player, 21);
 			player.QuickSpawnItem(Item.GetSource_Misc("SOTS:Jumbo"), ModContent.ItemType<JumboSurpriseCapsule>(), 1);
         }
         public override int GetSatiateDuration()

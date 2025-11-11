@@ -105,7 +105,7 @@ namespace SOTS.Items.Conduit
             {
 				if(line.Mod == "Terraria")
                 {
-                    if (line.Name == "ItemName") //checks the name of the tootip line
+                    if (line.Name == "ItemName" && line.Text == Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.EGG")) //checks the name of the tootip line
                     {
 						line.OverrideColor = SOTSPlayer.VisionColorFromNumber(MyUniqueID);
                         line.Text = GetName(MyUniqueID);
@@ -136,9 +136,18 @@ namespace SOTS.Items.Conduit
 				return Language.GetTextValue($"Mods.SOTS.EggDescription.x{ID % 8}");
 			return Language.GetTextValue($"Mods.SOTS.EggDescription.{unique % 8}");
 		}
+        private int UpdateCounter = 0;
         public override void Update(ref float gravity, ref float maxFallSpeed)
         {
-            HydraulicPressTile.CheckIfInsideHydraulic(Item);
+            UpdateCounter++;
+            if(UpdateCounter % 3 == 0)
+            {
+                HydraulicPressTile.CheckIfInsideHydraulic(Item);
+            }
+            if(UpdateCounter % 60 == 0)
+            {
+                NetMessage.SendData(MessageID.SyncItem, -1, -1, null, Item.whoAmI);
+            }
         }
         public void Crush()
         {

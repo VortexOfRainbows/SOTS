@@ -29,7 +29,7 @@ namespace SOTS.Items.Conduit
         {
             CreateRecipe(1)
                 .AddIngredient<AnomalyLocator>(1)
-                .AddIngredient<WonderEgg>(8)
+                .AddRecipeGroup("SOTS:Egg", 8)
                 .AddTile(TileID.TinkerersWorkbench).Register();
         }
     }

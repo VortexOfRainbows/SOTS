@@ -1,0 +1,26 @@
+Hotfix 0.25.1.0
+
+Additions:
+1. Achievements! These were made by our wonderful community in an achievement contest a... while ago. BUT NOW THEY'RE HERE!!!
+2. Some new QoL items, including items that can relocate wormholes, an improved Anomaly Locator, and eggs that change your Vision Number
+3. New armor set dropped by the Excavator, focused on void replenishment
+4. Jumbo Eggs and Jumbo Capsules
+
+Fixes: 
+1. Gula Vault should no longer be locked when placed by player
+2. Tried fixing an issue related to dragon lens NPC spawning crashing the game in multiplayer
+3. Fixed issue where bonus critical strike damage was only being applied to melee strikes from items like the Elemental Amulet and Harvester's Scythe
+4. Small adjustments to worldgen code that may fix some worldgen issues related to the Abandoned Village
+5. Some optimizations for Blade Generator and upgrades that should reduce lag
+6. Fix: Bulwark of the ancients grants stoned immunity now, like the ankh shield
+7. Fix: King Blade's tooltip now shows correct damage multiplier number (100% -> 80%)
+8. Fix: Helios now only stacks up to 5 stacks of scorch, as described in the tooltip
+
+Misc:
+1. The SOTS Texture-Pack popup no longer appears
+2. Hydrokinetic Antennae and Pog Shark can be exchanged into each other at a wormhole
+3. Hydrokinetic Antennae's connection visual can now be hidden when vanity is disabled
+4. A hidden tooltip for Essence of Emptiness appears at 15 UVN instead of 8 UVN
+5. Adjust some tooltips
+
+

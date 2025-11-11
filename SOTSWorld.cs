@@ -1857,7 +1857,14 @@ namespace SOTS
 				ModContent.ItemType<CrushingResistor>()
 			});
 			RecipeGroup.RegisterGroup("SOTS:CrushingComponents", group);
-		}
+
+            group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.EGG"), new int[]
+            {
+                ModContent.ItemType<WonderEgg>(),
+                ModContent.ItemType<JumboSurpriseEgg>(),
+            });
+            RecipeGroup.RegisterGroup("SOTS:Egg", group);
+        }
         public override void PostAddRecipes()
         {
 			if (!SOTS.ServerConfig.AddPlightToVanillaRecipes)
