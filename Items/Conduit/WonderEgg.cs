@@ -97,6 +97,7 @@ namespace SOTS.Items.Conduit
 				return true;
             return false;
         }
+        //public override LocalizedText DisplayName => Language.GetText($"Mods.SOTS.EggName.{MyUniqueID}");
         public override void ModifyTooltips(List<TooltipLine> tooltips)
 		{
 			Player player = Main.LocalPlayer;
@@ -105,12 +106,12 @@ namespace SOTS.Items.Conduit
             {
 				if(line.Mod == "Terraria")
                 {
-                    if (line.Name == "ItemName" && line.Text == Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.EGG")) //checks the name of the tootip line
+                    if (line.Name == "ItemName" && !line.Text.Contains(Language.GetTextValue("LegacyMisc.37"))) //checks the name of the tootip line
                     {
 						line.OverrideColor = SOTSPlayer.VisionColorFromNumber(MyUniqueID);
                         line.Text = GetName(MyUniqueID);
                     }
-                    else if (line.Name == "Tooltip1") //checks the name of the tootip line
+                    else if (line.Name == "Tooltip0") //checks the name of the tootip line
                     {
                         if (MyUniqueID % 8 == unique % 8)
                             line.OverrideColor = SOTSPlayer.VisionColor(player);
@@ -181,7 +182,7 @@ namespace SOTS.Items.Conduit
 
             int closest = -1;
             float dist = float.MaxValue;
-            for(int i =0; i < Main.player.Length; i++)
+            for(int i = 0; i < Main.player.Length; i++)
             {
                 Player p = Main.player[i];
                 float d = p.Distance(Item.Center);

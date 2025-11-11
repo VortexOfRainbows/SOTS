@@ -306,7 +306,7 @@ namespace SOTS.Items.Furniture.Functional
                     for (int a = 0; a < Main.item.Length; ++a)
                     {
                         Item item = Main.item[a];
-                        if ((item.type == type || item.type == type2) && item.Hitbox.Intersects(Projectile.Hitbox))
+                        if ((item.type == type || item.type == type2) && item.Hitbox.Intersects(Projectile.Hitbox) && item.active)
                         {
                             if (item.ModItem is WonderEgg w)
                                 w.Crush();

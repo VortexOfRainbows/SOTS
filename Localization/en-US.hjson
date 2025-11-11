@@ -7018,11 +7018,7 @@ Mods: {
 
 			WonderEgg: {
 				DisplayName: Jewel Egg
-				Tooltip:
-					'''
-					It may crack under incredible pressure
-					Temp
-					'''
+				Tooltip: Temp
 			}
 
 			BrokenJumboSurpriseCapsule: {
@@ -8486,20 +8482,20 @@ Mods: {
 
 		EggDescription: {
 			0: "'This may fetch a good price'"
-			1: "'Perhaps these belong in your collection'"
-			2: "'A good excuse to go on an adventure'"
-			3: "'The way it reflects light is beautiful'"
-			4: "'Looking at it warms your spirits'"
-			5: "'A reminder that the world is your oyster'"
-			6: "'Perhaps there is something to be learned from this egg'"
-			7: "'Maybe you can change your fate'"
+			1: "'This belongs in a collection'"
+			2: "'A reward for adventuring'"
+			3: "'It reflects light beautifully'"
+			4: "'It warms your spirits'"
+			5: "'The world is your oyster'"
+			6: "'There may be something to be learned from this egg'"
+			7: "'Maybe it can change your fate'"
 			x0: "'It does not seem very valuable'"
 			x1: "'It does not belong in your collection"
 			x2: "'It was not worth the adventure'"
 			x3: "'It looks dull'"
 			x4: "'It feels awfully cold'"
 			x5: "'It does not belong in your performance'"
-			x6: "'It can't teach your anything'"
+			x6: "'It cannot teach your anything'"
 			x7: "'You cannot escape your fate'"
 			x8: "'Like a mirror looking into your soul'"
 		}

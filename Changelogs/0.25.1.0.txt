@@ -23,4 +23,9 @@ Misc:
 4. A hidden tooltip for Essence of Emptiness appears at 15 UVN instead of 8 UVN
 5. Adjust some tooltips
 
+Hotfix 0.25.1.1
 
+Fixes: 
+1. Fix bug with Jewel Eggs accidentally not having special names
+2. Change Jewel Egg tooltip to not indicate cracking being an option available, plus change some special tooltips
+3. Fix bug where old Jewel Eggs could be crushed again as ghost items, making it unclear what is happening to your UVN

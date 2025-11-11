@@ -75,6 +75,15 @@ N/A
 Daily Log:
 
 
+--- Hotfix 0.25.1.1 ---
+
+
+11/11/25
+1. Fix bug with Jewel Eggs accidentally not having special names
+2. Change Jewel Egg tooltip to not indicate cracking being an option available, plus change some special tooltips
+3. Fix bug where old Jewel Eggs could be crushed again as ghost items, making it unclear what is happening to your UVN
+
+
 --- Hotfix 0.25.1.0 ---
 
 
