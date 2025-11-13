@@ -46,3 +46,4 @@ Balance:
 Fixes: 
 1. Fixed oversight where debug text was spammed in chat upon burdened achievement completion
 2. Crystal Serpent from the Starcaller Staff now does summon damage
+3. Fix some tooltips
