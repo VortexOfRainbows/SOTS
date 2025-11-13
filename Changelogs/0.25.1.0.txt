@@ -29,3 +29,20 @@ Fixes:
 1. Fix bug with Jewel Eggs accidentally not having special names
 2. Change Jewel Egg tooltip to not indicate cracking being an option available, plus change some special tooltips
 3. Fix bug where old Jewel Eggs could be crushed again as ghost items, making it unclear what is happening to your UVN
+
+Hotfix 0.25.1.3
+
+Balance:
+1. Chaos Spirit Staff damage 54 -> 50, and reduce damage to bosses by 10% and subspace serpent by 50%
+2. Otherworld Spirit Staff damage 24 -> 21
+3. Permafrost Spirit Staff damage 17 -> 15
+4. Nature Spirit Staff damage 12 -> 10
+5. Tidal Spirit Staff damage 33 -> 30
+6. Earthen Spirit Staff damage 14 -> 13
+7. Evil Spirit Staff damage 66 -> 60
+8. Inferno Spirit Staff damage 50 -> 47
+9. Cursed Blade damage 21 -> 19
+
+Fixes: 
+1. Fixed oversight where debug text was spammed in chat upon burdened achievement completion
+2. Crystal Serpent from the Starcaller Staff now does summon damage
