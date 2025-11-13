@@ -40,11 +40,9 @@ Update Objectives:
 9. Bridgeburner flight
 10. Fix NON-EN localization:
 	1. The information shown in the lower-left corner after using the Planetary Analyzer (this should probably be reworked altogether).
-11. Tiles that repel and attract Anomaly spawns (Anomaly Interceptor and Anomaly Attractor)
-	1. Interceptor -> D.E.F.E Wormhole convert
+11. Tiles that repel and attract Anomaly spawns (Anomaly Interference Device)
+	1. Interference -> D.E.F.E Wormhole convert
 12. Sanctuary Lanterns (hang from ceiling very cool)
-13. ItemID.Sets.StaffMinionSlotsRequired[Item.Type] = 0; for void summons
-14. attuned buff may not be applied in multiplayer..? (this should work though, so Ill test it later)
 
 ---WIP List---
 N/A
@@ -73,6 +71,20 @@ N/A
 N/A
 
 Daily Log:
+
+11/12/25
+1. Fixed oversight where debug text was spammed in chat upon burdened achievement completion
+2. Chaos Spirit Staff damage 54 -> 50, and reduce damage to bosses by 10% and subspace serpent by 50%
+3. Otherworld Spirit Staff damage 24 -> 21
+4. Permafrost Spirit Staff damage 17 -> 15
+5. Nature Spirit Staff damage 12 -> 10
+6. Tidal Spirit Staff damage 33 -> 30
+7. Earthen Spirit Staff damage 14 -> 13
+8. Evil Spirit Staff damage 66 -> 60
+9. Inferno Spirit Staff damage 50 -> 47
+10. Cursed Blade damage 21 -> 19
+11. Test out Attuned buff not working in MP... It works, not sure who was getting the bug..?
+12. Crystal Serpent from the Starcaller Staff now does summon damage
 
 
 --- Hotfix 0.25.1.2 --- (workshop wouldn't let me do 0.25.1.1)

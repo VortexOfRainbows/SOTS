@@ -637,7 +637,16 @@ namespace SOTS.Common.GlobalNPCs
                     modifiers.SourceDamage *= 0.8f;
                 }
             }
-            if(isSubspaceSerpent.Contains(npc.type))
+            if (projectile.type == ProjectileType<ChaosBeam>())
+            {
+                if (isSubspaceSerpent.Contains(npc.type))
+                    modifiers.SourceDamage *= 0.5f;
+                else if (npc.boss)
+                {
+                    modifiers.SourceDamage *= 0.9f;
+                }
+            }
+            if (isSubspaceSerpent.Contains(npc.type))
             {
                 if(projectile.type == ProjectileType<ChaosBeam>())
                 {

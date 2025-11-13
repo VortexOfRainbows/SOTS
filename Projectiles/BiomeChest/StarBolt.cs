@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
-using SOTS.NPCs;
 using SOTS.Prim.Trails;
 using System;
 using Terraria;
@@ -12,12 +11,9 @@ namespace SOTS.Projectiles.BiomeChest
 {    
     public class StarBolt : ModProjectile 
     {	
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Starlight Bolt");
-		}
         public override void SetDefaults()
         {
+            Projectile.DamageType = DamageClass.Summon;
             Projectile.width = 54;
             Projectile.height = 54; 
             Projectile.timeLeft = 120;

@@ -118,10 +118,10 @@ namespace SOTS.Projectiles.Minions
 		private int charging = 0;
 		private float wingHeight = 0;
 		private float counter = 0;
-		private float[] nextRotations = new float[2];
-		private float[] nextCompressions = new float[2];
-		private float[] prevRotations = new float[2];
-		private float[] prevCompressions = new float[2];
+		private readonly float[] nextRotations = new float[2];
+		private readonly float[] nextCompressions = new float[2];
+		private readonly float[] prevRotations = new float[2];
+		private readonly float[] prevCompressions = new float[2];
 		public void RingStuff()
 		{
 			if (counter == 0 || charging == -1)

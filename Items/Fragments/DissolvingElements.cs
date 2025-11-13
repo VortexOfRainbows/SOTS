@@ -294,7 +294,7 @@ namespace SOTS.Items.Fragments
 				!PolarizeNature && !PolarizeEarth && !PolarizeAurora && !PolarizeAether &&
 				!PolarizeDeluge && !PolarizeUmbra && !PolarizeNether && !PolarizeBrilliance)
             {
-                Main.NewText(true);
+                //Main.NewText(true);
                 var burden = ModContent.GetInstance<Burdened>();
                 if (!burden.BurdenedEntirely.IsCompleted)
                     burden.BurdenedEntirely.Complete();
