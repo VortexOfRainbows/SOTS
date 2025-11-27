@@ -43,6 +43,12 @@ Update Objectives:
 11. Tiles that repel and attract Anomaly spawns (Anomaly Interference Device)
 	1. Interference -> D.E.F.E Wormhole convert
 12. Sanctuary Lanterns (hang from ceiling very cool)
+13. Fix code corrupter localization
+14. Make tesseract tooltip glow like ender pearl
+15. does anyone else have an issue where the void bar keeps reverting its X-position?
+i.e. I change it to 1435, then on tmod reload it's 1400 again
+16. Fix spirit staff localization using "an" incorrectly
+17. BUG: Illuminant  Axe Right click, then retrieve and hold the attack button while having the Hydrokinetic Antennae
 
 ---WIP List---
 N/A
@@ -71,6 +77,10 @@ N/A
 N/A
 
 Daily Log:
+
+11/27/25
+1. Fix error in ultracap banner place sprite
+2. Adjust some erroroneous tooltips
 
 11/12/25
 1. Fixed oversight where debug text was spammed in chat upon burdened achievement completion

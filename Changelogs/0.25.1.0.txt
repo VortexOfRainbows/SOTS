@@ -34,7 +34,7 @@ Hotfix 0.25.1.3
 
 Balance:
 1. Chaos Spirit Staff damage 54 -> 50, and reduce damage to bosses by 10% and subspace serpent by 50%
-2. Otherworld Spirit Staff damage 24 -> 21
+2. Otherworld Spirit Staff damage 25 -> 21
 3. Permafrost Spirit Staff damage 17 -> 15
 4. Nature Spirit Staff damage 12 -> 10
 5. Tidal Spirit Staff damage 33 -> 30

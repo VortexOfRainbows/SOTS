@@ -781,7 +781,7 @@ Mods: {
 
 			StellarSerpentLauncher: {
 				DisplayName: Stellar Serpent Launcher
-				Tooltip: Launches a Starlight Serpent which homes on enemys and attacks them repeatedly
+				Tooltip: Launches a Starlight Serpent which homes on enemies and attacks them repeatedly
 			}
 
 			StellarShot: {
