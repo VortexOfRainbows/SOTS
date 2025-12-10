@@ -1,11 +1,11 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Localization;
 using Microsoft.Xna.Framework;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using System.Collections.Generic;
 
 namespace SOTS.Items.Pyramid
 {
@@ -41,7 +41,6 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<OvergrownPyramidBlock>();
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
 			HitSound = SoundID.Tink;
@@ -110,12 +109,15 @@ namespace SOTS.Items.Pyramid
 
 			return true;
 		}
-	}
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+			yield return new Item(ModContent.ItemType<OvergrownPyramidBlock>());
+        }
+    }
 	public class OvergrownPyramidTile : ModTile
 	{
 		public override void SetStaticDefaults()
 		{
-			//Main.tileMerge[Type][ModContent.TileType<PyramidSlabTile>()] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.NeedsGrassFramingDirt[Type] = ModContent.TileType<PyramidSlabTile>();
 			Main.tileBrick[Type] = true;
@@ -123,7 +125,6 @@ namespace SOTS.Items.Pyramid
 			Main.tileMergeDirt[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
-			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = Mod.Find<ModItem>("OvergrownPyramidBlock").Type;
 			AddMapEntry(new Color(91, 153, 59));
 			MineResist = 1.5f;
 			MinPick = 180;
@@ -192,8 +193,12 @@ namespace SOTS.Items.Pyramid
 				return true;
 
 			return false;
-		}
-	}
+        }
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            yield return new Item(ModContent.ItemType<OvergrownPyramidBlock>());
+        }
+    }
 	public class CursedGrass : ModTile
 	{
 		public override void SetStaticDefaults()

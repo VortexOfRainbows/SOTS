@@ -8,8 +8,8 @@ namespace SOTS.Items.Pyramid
 	{
 		public override void SetStaticDefaults()
 		{
-			this.SetResearchCost(1);
-		}
+			this.SetResearchCost(100);
+        }
 		public override void SetDefaults()
 		{
 			Item.CloneDefaults(ItemID.StoneBlock);

@@ -71,6 +71,7 @@ namespace SOTS.Items.Permafrost
         public override void AddRecipes()
         {
             CreateRecipe(4).AddIngredient<HardIceBrick>(1).AddTile(TileID.WorkBenches).Register();
+            Recipe.Create(ModContent.ItemType<HardIceBrick>(), 1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
         }
     }
 }

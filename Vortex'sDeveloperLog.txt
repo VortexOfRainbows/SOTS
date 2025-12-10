@@ -78,6 +78,10 @@ N/A
 
 Daily Log:
 
+12/9/25
+1. Fix some wall recipe problems pointed out by gbf
+2. Overgrown Pyramid Tile (UnSafe) now correctly drops the tile
+
 11/27/25
 1. Fix error in ultracap banner place sprite
 2. Adjust some erroroneous tooltips
