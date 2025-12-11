@@ -33,7 +33,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 using static Terraria.HitTile;
 
 namespace SOTS
@@ -47,7 +46,7 @@ namespace SOTS
 		{
 			On_NetMessage.SendData += NetMessage_SendData;
 
-            On_Main.DrawWalls += On_Main_DrawWalls;
+            //On_Main.DrawWalls += On_Main_DrawWalls;
 			On_Main.DrawProjectiles += Main_DrawProjectiles;
 			On_Main.DrawProj += Main_DrawProj;
 			On_Main.DrawCachedProjs += Main_DrawCachedProjs;
@@ -178,11 +177,10 @@ namespace SOTS
 			Main.maxTilesY = oldMaxTilesY;
         }
 
-        private static void On_Main_DrawWalls(On_Main.orig_DrawWalls orig, Main self)
-        {
-			SanctuaryWorldgenHelper.DrawPillars();
-			orig(self);
-        }
+        //private static void On_Main_DrawWalls(On_Main.orig_DrawWalls orig, Main self)
+        //{
+		//		orig(self);
+        //}
         /*public static void Unload() //Apparently unloading Detours is handled automatically now..?
 {
    On_NetMessage.SendData -= NetMessage_SendData;

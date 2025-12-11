@@ -47,8 +47,7 @@ Update Objectives:
 14. Make tesseract tooltip glow like ender pearl
 15. does anyone else have an issue where the void bar keeps reverting its X-position?
 i.e. I change it to 1435, then on tmod reload it's 1400 again
-16. Fix spirit staff localization using "an" incorrectly
-17. BUG: Illuminant  Axe Right click, then retrieve and hold the attack button while having the Hydrokinetic Antennae
+16. BUG: Illuminant Axe Right click, then retrieve and hold the attack button while having the Hydrokinetic Antennae
 
 ---WIP List---
 N/A
@@ -77,6 +76,13 @@ N/A
 N/A
 
 Daily Log:
+
+12/10/25
+1. Fix some localization
+2. Evostone Grand Pillars (Pillars in the Sanctuary) now draw like typical walls instead of a detour
+	1. This means they should be less buggy (no longer disappearing sometimes)
+	2. They should also be less laggy
+	3. This also means they can now be obtained and placed
 
 12/9/25
 1. Fix some wall recipe problems pointed out by gbf

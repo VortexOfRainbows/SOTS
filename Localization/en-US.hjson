@@ -3870,7 +3870,7 @@ Mods: {
 				DisplayName: Nature Spirit Staff
 				Tooltip:
 					'''
-					Summons an Nature Spirit to fight for you
+					Summons a Nature Spirit to fight for you
 					Attacks the closest enemy visible to you
 					Heals health upon dealing damage
 					'''
@@ -3889,14 +3889,14 @@ Mods: {
 				DisplayName: Permafrost Spirit Staff
 				Tooltip:
 					'''
-					Summons an Permafrost Spirit to fight for you
+					Summons a Permafrost Spirit to fight for you
 					Launches 3 permafrost spears downwards at enemies
 					'''
 			}
 
 			TidalSpiritStaff: {
 				DisplayName: Tidal Spirit Staff
-				Tooltip: Summons an Tidal Spirit to fight for you
+				Tooltip: Summons a Tidal Spirit to fight for you
 			}
 
 			Helios: {
