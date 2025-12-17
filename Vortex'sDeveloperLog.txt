@@ -80,6 +80,7 @@ Daily Log:
 
 12/16/25
 1. Fix bug where SOTS was sending, receiving, and requesting WAY too many packets, greatly lagging multiplayer servers
+	1. Also reduced the frequency of timed packet updates 2 seconds -> 3 seconds
 2. Illuminant Axe can no longer be used by the Hydrokinetic Antennae
 3. Tesseract Color cycle is now more purple and cycles slower
 4. Tesseract Tooltip Text now glows and generally looks different
