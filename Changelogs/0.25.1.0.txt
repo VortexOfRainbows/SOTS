@@ -47,3 +47,23 @@ Fixes:
 1. Fixed oversight where debug text was spammed in chat upon burdened achievement completion
 2. Crystal Serpent from the Starcaller Staff now does summon damage
 3. Fix some tooltips
+
+Hotfix 0.25.1.4
+
+Additions:
+1. Evostone Grand Pillars can now be crafted, harvested, and/or placed
+
+Changes:
+1. Tesseract's color cycle is now more purple and cycles slower
+2. Tesseract's Tooltip Text now glows and generally looks different
+	
+Fixes:
+1. Evostone Grand Pillars no longer use a detour to draw, now drawing like normal walls
+	1. This means they should be less buggy in the Sanctuary (no longer sometimes disappearing or not appearing)
+	2. They should also be less laggy
+2. Fix certain wall recipes being incorrect or not existing
+3. Unsafe Overgrown Pyramid Tile should now drop its item correctly
+4. Fix some tooltip grammar
+5. Fix a sprite issue with Ultracap Banner
+6. Fix bug where SOTS was overloading servers and clients with too many packets, causing extreme multiplayer lag
+7. Illuminant Axe can no longer be used by the Hydrokinetic Antennae (tools are supposed to be blacklisted, generally)

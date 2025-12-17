@@ -478,7 +478,7 @@ namespace SOTS
 					}
 					break;
 				case (int)SOTSMessageType.SyncGlobalCounter:
-					SOTSWorld.GlobalCounter = reader.ReadInt32();
+					SOTSWorld.SetGlobalCounter(reader.ReadInt32());
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();

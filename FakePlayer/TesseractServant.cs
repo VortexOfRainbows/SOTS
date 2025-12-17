@@ -623,7 +623,7 @@ namespace SOTS.FakePlayer
                 Projectile.Kill();
             }
         }
-        public Color coreColor => ColorHelper.TesseractColor(MathHelper.TwoPi * (Projectile.ai[2] % 10) / 10f, 0.5f);
+        public Color coreColor => ColorHelper.TesseractColor(MathHelper.TwoPi * (Projectile.ai[2] % 10) / 10f, 0.4f);
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;

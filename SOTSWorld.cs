@@ -81,7 +81,11 @@ namespace SOTS
             }
             return 1 - MathF.Abs(MathF.Sin((-moonPhaseOffset + MoonPhase + progressToTheNextMoon - moonSwitch / 24f) / 8f * MathF.PI));
 		}
-		public static int GlobalCounter = 0;
+		public static int GlobalCounter { get; private set; } = 0;
+		public static void SetGlobalCounter(int i)
+		{
+			GlobalCounter = i;
+		}
 		public const float GlobalFreezeStartup = 30f;
 		public static int GlobalTimeFreeze = 0;
 		public static bool GlobalFrozen = false;

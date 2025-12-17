@@ -393,7 +393,7 @@ namespace SOTS.Void
 			}
 			if (type == (int)VoidMinionID.TesseractServant)
 			{
-				return ColorHelper.TesseractColor(0);
+				return ColorHelper.TesseractColor(0, 0.4f);
 			}
 			return Color.White;
 		}
