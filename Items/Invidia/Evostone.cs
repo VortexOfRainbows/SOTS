@@ -539,8 +539,8 @@ namespace SOTS.Items.Invidia
         }
         public override void AddRecipes()
         {
-            CreateRecipe(4).AddIngredient(ModContent.ItemType<EvostoneBrick>(), 1).AddTile(TileID.DemonAltar).Register();
-            Recipe.Create(ModContent.ItemType<EvostoneBrick>()).AddIngredient(this, 4).AddTile(TileID.DemonAltar).Register();
+            CreateRecipe(4).AddIngredient(ModContent.ItemType<EvostoneBrick>(), 1).AddTile(TileID.HeavyWorkBench).Register();
+            Recipe.Create(ModContent.ItemType<EvostoneBrick>()).AddIngredient(this, 4).AddTile(TileID.HeavyWorkBench).Register();
         }
     }
     public class EvostoneRuneBrickWallTile : EvostoneBrickWallTile

@@ -16,7 +16,7 @@ namespace SOTS.FakePlayer
         {
             if(fakePlayer.FakePlayerType == FakePlayerTypeID.Tesseract)
             {
-                return ColorHelper.TesseractColor(MathHelper.TwoPi * (fakePlayer.OverrideUseSlot % 10) / 10f, 0.5f);
+                return ColorHelper.TesseractColor(MathHelper.TwoPi * (fakePlayer.OverrideUseSlot % 10) / 10f, 0.4f);
             }
             return Color.White;
         }

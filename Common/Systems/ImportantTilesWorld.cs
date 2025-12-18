@@ -75,10 +75,13 @@ namespace SOTS.Common.Systems
             if (Position == null)
             {
                 if (ImportantTilesWorld.DebugChatMessages)
+                {
+                    ModTile mTile = ModContent.GetModTile(TileType);
                     if (Main.netMode == NetmodeID.Server)
-                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(TileType + ": Does not have a location"), Color.Gray);
+                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"(SOTS) {mTile.Name}: Does not have a location"), Color.Gray);
                     else
-                        Main.NewText(TileType + ": Does not have a location");
+                        Main.NewText($"(SOTS) {mTile.Name}: Does not have a location");
+                }
                 return false;
             }
             int x = Position.Value.X;
@@ -372,20 +375,20 @@ namespace SOTS.Common.Systems
                 if ((finishedThreading || (finishedFirstPacketSend && newPlayerRequestingPackets)) && Main.netMode == NetmodeID.Server)
                 {
                     if(DebugChatMessages)
-                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("SyncedData"), Color.Gray);
+                        Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"SyncedData: NewPlayerRequest[{newPlayerRequestingPackets}], Threading:[{finishedThreading}]"), Color.Gray);
                     SyncAllLocations();
                     newPlayerRequestingPackets = false;
                     finishedThreading = false;
                     finishedFirstPacketSend = true;
                 }
-                if ((finishedFirstPacketSend || Main.netMode == NetmodeID.SinglePlayer) && SOTSWorld.GlobalCounter % 120 == 0 && SOTSWorld.GlobalCounter > 600) //this will be checked every 2 second
+                if ((finishedFirstPacketSend || Main.netMode == NetmodeID.SinglePlayer) && SOTSWorld.GlobalCounter % 180 == 0 && SOTSWorld.GlobalCounter > 600) //this will be checked every 3 second
                 {
                     TileLocationJustReset = false;
                     CheckCurrentLocations();
                     if(TileLocationJustReset && Main.netMode == NetmodeID.Server)
                     {
                         if(DebugChatMessages)
-                            Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("SyncedData"), Color.Gray);
+                            Terraria.Chat.ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral("Passive Data Send"), Color.Gray);
                         SyncAllLocations();
                     }
                 }

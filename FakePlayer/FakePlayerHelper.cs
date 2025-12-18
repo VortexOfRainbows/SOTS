@@ -23,6 +23,7 @@ using static Terraria.ModLoader.PlayerDrawLayer;
 using Microsoft.CodeAnalysis;
 using SOTS.Items.Tide;
 using System;
+using SOTS.Items.Earth.Glowmoth;
 
 namespace SOTS.FakePlayer
 {
@@ -144,6 +145,7 @@ namespace SOTS.FakePlayer
             HydroPlayerItemBlacklist = new HashSet<int> {
                 ModContent.ItemType<VorpalKnife>(),
                 ModContent.ItemType<OlympianAxe>(),
+                ModContent.ItemType<IlluminantAxe>(),
                 ItemID.LawnMower
             };
             CloseRangeItemsForFakePlayer = new HashSet<int> {

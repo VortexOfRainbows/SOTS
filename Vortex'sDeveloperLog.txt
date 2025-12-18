@@ -44,10 +44,7 @@ Update Objectives:
 	1. Interference -> D.E.F.E Wormhole convert
 12. Sanctuary Lanterns (hang from ceiling very cool)
 13. Fix code corrupter localization
-14. Make tesseract tooltip glow like ender pearl
-15. does anyone else have an issue where the void bar keeps reverting its X-position?
-i.e. I change it to 1435, then on tmod reload it's 1400 again
-16. BUG: Illuminant Axe Right click, then retrieve and hold the attack button while having the Hydrokinetic Antennae
+14. BUG: "Does anyone else have an issue where the void bar keeps reverting its X-position? I change it to 1435, then on tmod reload it's 1400 again"
 
 ---WIP List---
 N/A
@@ -57,7 +54,7 @@ If any other issues come up with Gilded Blade Wings trail interfering with how o
 Conduit recipe code should be more robust and better!
 
 ---Balance Needed List (by Severity, -weak, +strong)---
-5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Compound Bow, +Lungrot, +Little Woes, +Accretion Disc, -Street Cleaner
+5. +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, +Accretion Disc
 4. ++Soot Spewer
 3. AV Enemies
 2. ++Plague Spitter, +++Wishing Star/Shattered Dreams
@@ -77,11 +74,22 @@ N/A
 
 Daily Log:
 
+
+--- Hotfix 0.25.1.4 ---
+
+
+12/16/25
+1. Fix bug where SOTS was sending, receiving, and requesting WAY too many packets, greatly lagging multiplayer servers
+	1. Also reduced the frequency of timed packet updates 2 seconds -> 3 seconds
+2. Illuminant Axe can no longer be used by the Hydrokinetic Antennae
+3. Tesseract Color cycle is now more purple and cycles slower
+4. Tesseract Tooltip Text now glows and generally looks different
+
 12/10/25
 1. Fix some localization
 2. Evostone Grand Pillars (Pillars in the Sanctuary) now draw like typical walls instead of a detour
 	1. This means they should be less buggy (no longer disappearing sometimes)
-	2. They should also be less laggy
+	2. They should also be less laggy (hopefully)
 	3. This also means they can now be obtained and placed
 
 12/9/25
@@ -91,6 +99,10 @@ Daily Log:
 11/27/25
 1. Fix error in ultracap banner place sprite
 2. Adjust some erroroneous tooltips
+
+
+--- Hotfix 0.25.1.3 ---
+
 
 11/12/25
 1. Fixed oversight where debug text was spammed in chat upon burdened achievement completion
