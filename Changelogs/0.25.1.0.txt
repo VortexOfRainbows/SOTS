@@ -67,3 +67,21 @@ Fixes:
 5. Fix a sprite issue with Ultracap Banner
 6. Fix bug where SOTS was overloading servers and clients with too many packets, causing extreme multiplayer lag
 7. Illuminant Axe can no longer be used by the Hydrokinetic Antennae (tools are supposed to be blacklisted, generally)
+
+Hotfix 0.25.1.5
+
+Additions:
+1. Add Stabilizing Tonic, which does basically nothing right now (seriously)
+
+Changes:
+1. Made various optimization updates to Pharaoh's Curse, which should result in a minor performance improvement, including:	
+	1. Improved the ordering of certain expressions within if statements and for loops to prevent calculating and loading things more than necessary (
+	2. Cached all textures that are used in the fight into static variables, preventing looking up textures multiple times per frame and sometimes per dust particle 
+	3. Cache projectile types that are searched for special drawing, rather than looking up projectile types many times per frame
+	4. Some other minor improvements that aren't too noteworthy but should have a some effect on lag
+	5. Curse Wave Projectile now has optimizations from a few patches ago that was not integrated: Better clearing of dust list, in addition to the other optimizations
+2. As a side effect of Pharaoh's Curse performance improvements, weapons and other sources of curse particles should also be less laggy
+3. Cache other commonly used internal resources that should help overall reduce some of the overhead lag
+
+Fixes:
+1. Fix Code Corrupter localization spelling "destabilize" as "destabalize", "struck" as "striked"
