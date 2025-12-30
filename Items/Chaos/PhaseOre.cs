@@ -164,6 +164,8 @@ namespace SOTS.Items.Chaos
             float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 196f, 0.5f);
             if (Main.LocalPlayer.CanSeeInvisibleBlocks && alphaScale < 0.3f)
 				alphaScale = 0.3f;
+			if (Main.LocalPlayer.SOTSPlayer().Hyperphantasia)
+				alphaScale = 1.0f;
             if (alphaScale > 0.0)
             {
 				if(tile.TileFrameY > 72)

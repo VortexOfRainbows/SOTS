@@ -7044,6 +7044,14 @@ Mods: {
 					Functions while in the inventory, equipped as an accessory, or worn as a vanity accessory
 					'''
 			}
+
+			StabilizingTonic: {
+				DisplayName: Stabilizing Tonic
+				Tooltip: 
+					'''
+					'Tastes like... water?'
+					'''
+			}
 		}
 
 		ItemTooltip: {
@@ -7540,6 +7548,11 @@ Mods: {
 			BeepBoop: {
 				DisplayName: Beep Boop
 				Description: While this construct is just one of many you've encounter in your adventures, you are its entire otherworld!
+			}
+
+			Hyperphantasia: {
+				DisplayName: Hyperphantasia
+				Description: "'I see everything.'"
 			}
 		}
 

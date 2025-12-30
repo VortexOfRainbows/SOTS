@@ -404,7 +404,7 @@ namespace SOTS
 		public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
 		public bool AcidInject = false, Earthdrive = false, Sunbulb = false, Dreamcatcher = false;
-		public bool Pick3x3 = false, HasPick3x3ThisFrame = false, DrillHand = false, DrillHandVanity = false;
+		public bool Pick3x3 = false, HasPick3x3ThisFrame = false, DrillHand = false, DrillHandVanity = false, Hyperphantasia = false;
 		public int FirstStrikeEffect = 0;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -1076,7 +1076,10 @@ namespace SOTS
 			BlazingQuiver = WishingStar = AcidInject = Sunbulb = Dreamcatcher = Embattle = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
-			if (VMincubator)
+			Hyperphantasia = Player.HasBuff<Hyperphantasia>();
+			if (Hyperphantasia)
+                Player.CanSeeInvisibleBlocks = true;
+            if (VMincubator)
 			{
 				if (SOTSWorld.GlobalFrozen)
 				{
