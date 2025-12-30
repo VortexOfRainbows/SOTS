@@ -7047,10 +7047,7 @@ Mods: {
 
 			StabilizingTonic: {
 				DisplayName: Stabilizing Tonic
-				Tooltip: 
-					'''
-					'Tastes like... water?'
-					'''
+				Tooltip: "'Tastes like... water?'"
 			}
 		}
 
