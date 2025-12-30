@@ -21,10 +21,6 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			aiCounter1 = reader.ReadSingle();
 		}
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Curse");
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 24;
@@ -94,7 +90,7 @@ namespace SOTS.Projectiles.Pyramid
 						if(targetHitbox.X != 0 || targetHitbox.Y != 0)
                         {
 							int width = (int)(18 - 9 * percent);
-							Rectangle hitbox = new Rectangle((int)(finalPosition.X - width), (int)(finalPosition.Y - width), width, width);
+							Rectangle hitbox = new((int)(finalPosition.X - width), (int)(finalPosition.Y - width), width, width);
 							if (hitbox.Intersects(targetHitbox))
 								return true;
                         }

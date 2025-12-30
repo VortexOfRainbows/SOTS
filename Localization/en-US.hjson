@@ -2613,8 +2613,8 @@ Mods: {
 				Tooltip:
 					'''
 					Fires a short ranged and a long ranged blast
-					The short ranged blast has a 70% chance to destabilize enemies while the long ranged blast has a 30% chance to destabalize enemies
-					Destabilized enemies gain a 5% flat chance to be critically striked
+					The short ranged blast has a 70% chance to destabilize enemies while the long ranged blast has a 30% chance to destabilize enemies
+					Destabilized enemies gain a 5% flat chance to be critically struck
 					Destabilization is permanent and can stack, but the chance of applying it gets lower with each level already applied
 					'''
 			}

@@ -175,7 +175,7 @@ namespace SOTS.Items.Pyramid
 						tile.HasTile = true;
 						tile.TileColor = Main.tile[i, j].TileColor;
 						WorldGen.SquareTileFrame(num47, num48, true);
-						if (Main.netMode == 2)
+						if (Main.netMode == NetmodeID.Server)
 						{
 							NetMessage.SendTileSquare(-1, num47, num48, 3, TileChangeType.None);
 						}

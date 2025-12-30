@@ -43,8 +43,7 @@ Update Objectives:
 11. Tiles that repel and attract Anomaly spawns (Anomaly Interference Device)
 	1. Interference -> D.E.F.E Wormhole convert
 12. Sanctuary Lanterns (hang from ceiling very cool)
-13. Fix code corrupter localization
-14. BUG: "Does anyone else have an issue where the void bar keeps reverting its X-position? I change it to 1435, then on tmod reload it's 1400 again"
+13. BUG: "Does anyone else have an issue where the void bar keeps reverting its X-position? I change it to 1435, then on tmod reload it's 1400 again"
 
 ---WIP List---
 N/A
@@ -73,6 +72,16 @@ N/A
 N/A
 
 Daily Log:
+
+12/29/25
+1. Fix Code Corrupter localization spelling "destabilize" as "destabalize", "struck" as "striked"
+2. Pharoah's Curse Optimizations:
+	1. Improved the ordering of certain expressions within if statements and for loops to prevent calculating and loading things more than necessary (should be a minor improvement)
+	2. Cached all textures that are used in the fight into static variables, preventing looking up textures multiple times per frame and sometimes per dust particle (should be a minor improvement)
+	3. Cache projectile types that are searched for special drawing, rather than looking up projectile types many times per frame (should be a medium improvement)
+	4. Some other minor improvements that aren't too noteworthy but should have a somewhat non-negligible effect on lag
+	5. Curse Wave Projectile now has optimizations from a few patches ago that was not integrated: Better clearing of dust list (should be medium improvement)
+3. As a side effect of Pharaoh's Curse performance improvements, weapons and other sources of curse particles should also be less laggy
 
 
 --- Hotfix 0.25.1.4 ---
