@@ -166,7 +166,7 @@ namespace SOTS.Common.GlobalNPCs
 					}
 					for (int i = 0; i < 15; i++)
 					{
-						int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y) - new Vector2(5), npc.width, npc.height, ModContent.DustType<CopyDust4>());
+						int num1 = Dust.NewDust(new Vector2(npc.position.X, npc.position.Y) - new Vector2(5), npc.width, npc.height, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust = Main.dust[num1];
 						dust.velocity *= 2f;
 						dust.velocity += npc.velocity * 0.2f;

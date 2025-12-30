@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Inferno
 					}
 					if(Main.rand.NextBool(baseRate - currentCounter))
                     {
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.noGravity = true;
 						dust.velocity *= 0.6f;
 						dust.velocity += circular * 0.15f;

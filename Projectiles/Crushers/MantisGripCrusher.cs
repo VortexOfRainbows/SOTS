@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Crushers
         {
 			//Player player = Main.player[Projectile.owner];
 			Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
-			Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4) + velo * 2, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+			Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4) + velo * 2, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100, default, 1.6f);
 			dust.velocity *= 0.05f;
 			dust.scale = 1.25f;
 			dust.noGravity = true;

@@ -290,7 +290,7 @@ namespace SOTS
 						else if(Main.rand.NextBool(14))
 						{
 							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.5f);
-							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.velocity *= 0.1f;
 							dust.noGravity = true;
 							dust.scale += 0.2f;
@@ -308,7 +308,7 @@ namespace SOTS
 						if(Main.rand.NextBool(2))
 						{
 							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.25f);
-							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.velocity *= 0.33f;
 							dust.noGravity = true;
 							dust.scale *= 0.3f;
@@ -336,7 +336,7 @@ namespace SOTS
 						if (Main.rand.NextBool(14))
 						{
 							Vector2 spawnPos = Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, i * 0.33f);
-							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.velocity *= 0.6f;
 							dust.noGravity = true;
 							dust.scale *= 0.2f;
@@ -360,7 +360,7 @@ namespace SOTS
 							{
 								if(!Main.rand.NextBool(3))
 								{
-									Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>());
+									Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 									dust.velocity *= 1.8f;
 									dust.noGravity = true;
 									dust.scale *= 0.5f - 0.05f * AffixAI0;
@@ -436,7 +436,7 @@ namespace SOTS
 			{
 				if (!Main.rand.NextBool(3))
 				{
-					Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+					Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(116, 125, 238));
 					dust.noGravity = true;
 					dust.scale = 1;
 					dust.velocity = Vector2.Zero;
@@ -449,7 +449,7 @@ namespace SOTS
 				for(float i = 0; i < 1; i += increment)
 				{
 					Vector2 spawnPos = projectile.Center - projectile.velocity * i; //Vector2.Lerp(projectile.Center, projectile.oldPosition + projectile.Size / 2, increment);
-					Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+					Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(116, 125, 238));
 					dust.noGravity = true;
 					dust.scale = 1.2f;
 					dust.velocity = Vector2.Zero;
@@ -460,7 +460,7 @@ namespace SOTS
             {
 				if(Main.rand.NextBool(2))
 				{
-					Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+					Dust dust = Dust.NewDustDirect(projectile.Center + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(116, 125, 238));
 					dust.noGravity = true;
 					dust.scale = dust.scale * 0.5f + (1 + level) * 0.5f;
 					dust.velocity = (dust.velocity * 0.3f + Main.rand.NextVector2Circular(0.6f, 0.6f) + projectile.velocity * 0.5f);
@@ -481,7 +481,8 @@ namespace SOTS
 			float distP = Vector2.Distance(player.Center, projectile.Center);
 			if (!player.active || distP > 2000f)
 				return;
-			if (modPlayer.petAdvisor && counter >= 5 && modPlayer.typhonRange > 0)
+			int AdvisorPet = ModContent.ProjectileType<AdvisorPet>();
+            if (modPlayer.petAdvisor && counter >= 5 && modPlayer.typhonRange > 0)
 			{
 				if (petAdvisorID == -1)
 				{
@@ -489,7 +490,7 @@ namespace SOTS
 					for (int i = 0; i < Main.projectile.Length; i++)
 					{
 						Projectile proj = Main.projectile[i];
-						if (proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>())
+						if (proj.active && proj.owner == projectile.owner && proj.type == AdvisorPet)
 						{
 							petAdvisorID = i;
 							break;
@@ -499,7 +500,7 @@ namespace SOTS
 				else
 				{
 					Projectile proj = Main.projectile[petAdvisorID];
-					if (!(proj.active && proj.owner == projectile.owner && proj.type == ModContent.ProjectileType<AdvisorPet>()))
+					if (!(proj.active && proj.owner == projectile.owner && proj.type == AdvisorPet))
 					{
 						petAdvisorID = -1;
 					}
@@ -745,15 +746,6 @@ namespace SOTS
 					DrawStar(spawnPos, alphaMult, projectile.velocity.ToRotation(), AffixAI0 + MathHelper.ToRadians(30 * i), 6, dist1, dist2, 0.6f);
 				}
 			}
-			/*(if (bloomingHookAssignment != -1)
-			{
-				Projectile hook = Main.projectile[bloomingHookAssignment];
-				if (hook.active && hook.type == ModContent.ProjectileType<BloomingHookMinion>())
-                {
-					BloomingHookMinion minion = hook.ModProjectile as BloomingHookMinion;
-					minion.Draw(spriteBatch, lightColor);
-                }
-			}*/
             return true;
         }
         public static void LaserTo(int advisorId, Projectile projectile, int extraAlpha)
@@ -775,7 +767,7 @@ namespace SOTS
 				remaining--;
 				iterator++;
 				currentPos += newtoProjectile;
-                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha, color);
+                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, alpha, color);
                 dust.velocity *= 0.1f;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;
@@ -790,7 +782,7 @@ namespace SOTS
 						currentFromProjectile = currentFromProjectile.RotatedBy(MathHelper.ToRadians(i));
 						currentFromProjectile += projectile.Center;
 						iterator++;
-						dust = Dust.NewDustDirect(new Vector2(currentFromProjectile.X - 4, currentFromProjectile.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha, color);
+						dust = Dust.NewDustDirect(new Vector2(currentFromProjectile.X - 4, currentFromProjectile.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, alpha, color);
                         dust.velocity *= 0.1f;
 						dust.noGravity = true;
 						dust.fadeIn = 0.2f;
@@ -812,7 +804,7 @@ namespace SOTS
 				newtoProjectile = projectile.velocity.RotatedBy(MathHelper.ToRadians(-160)).SafeNormalize(Vector2.Zero) * 3;
 				currentPos += newtoProjectile;
 				iterator++;
-                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha, color);
+                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, alpha, color);
                 dust.velocity *= 0.1f;
                 dust.noGravity = true;
                 dust.fadeIn = 0.2f;
@@ -825,7 +817,7 @@ namespace SOTS
 				newtoProjectile = projectile.velocity.RotatedBy(MathHelper.ToRadians(160)).SafeNormalize(Vector2.Zero) * 3;
 				currentPos += newtoProjectile;
 				iterator++;
-                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, alpha, color);
+                Dust dust = Dust.NewDustDirect(new Vector2(currentPos.X - 4, currentPos.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, alpha, color);
                 dust.velocity *= 0.1f;
                 dust.noGravity = true;
                 dust.fadeIn = 0.2f;
@@ -908,7 +900,7 @@ namespace SOTS
 				Vector2 circular = new Vector2(x, y).RotatedBy(spin) * mult;
 				circular.X *= xCompress;
 				circular = circular.RotatedBy(rotation);
-				Dust dust = Dust.NewDustDirect(circular + location - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color);
+				Dust dust = Dust.NewDustDirect(circular + location - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color);
 				dust.noGravity = true;
 				dust.scale = (dust.scale * 0.5f + 1) * scaleMult;
 				dust.velocity = dust.velocity * 0.1f + velocity + circular * circularVelocityMult;

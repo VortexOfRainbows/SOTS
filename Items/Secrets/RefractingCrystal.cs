@@ -262,7 +262,7 @@ namespace SOTS.Items.Secrets
 					Vector2 circular = new Vector2(16, 0).RotatedBy(MathHelper.ToRadians(l));
 					for (int u = 1; u < 3; u++)
 					{
-						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + circular, 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + circular, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.fadeIn = 0.2f;
 						dust.noGravity = true;
 						dust.alpha = 50;

@@ -35,7 +35,7 @@ namespace SOTS.Projectiles.Evil
 			for(int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i));
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.noGravity = true;
 				dust.velocity *= 0.75f;
 				dust.scale *= 1.45f;

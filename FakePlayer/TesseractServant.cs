@@ -426,7 +426,7 @@ namespace SOTS.FakePlayer
         }
         public void DrawCrystal(Color color, float degreesOffset, float size = 8f, float innerScale = 2f)
         {
-            Texture2D whitePixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            Texture2D whitePixel = SOTSUtils.WhitePixel;
             Vector2 drawPosition = Projectile.Center - Main.screenPosition;
             float radians = MathHelper.ToRadians(degreesOffset);
             drawPosition += new Vector2(0, -20 - size).RotatedBy(radians);
@@ -489,7 +489,7 @@ namespace SOTS.FakePlayer
             DrawFace(color, 180, 2 * scale, innerScale);
             DrawFace(color, 270, 2 * scale, innerScale);
 
-            Texture2D whitePixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            Texture2D whitePixel = SOTSUtils.WhitePixel;
             int halfWay = outerPoints.Count / 2;
             for (int i = 0; i < outerPoints.Count / 2; i++)
             {
@@ -501,7 +501,7 @@ namespace SOTS.FakePlayer
         }
         public void DrawFace(Color color, float degreesOffset, float size = 8f, float innerScale = 2f)
         {
-            Texture2D whitePixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            Texture2D whitePixel = SOTSUtils.WhitePixel;
             Vector2 drawPosition = Projectile.Center - Main.screenPosition;
             //drawPosition += new Vector2(0, -64);
             float root2 = (float)Math.Sqrt(2);

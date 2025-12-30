@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Crushers
 				{
 					for(int i = 0; i < 12; i++)
 					{
-						Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.fadeIn = 0.2f;
 						dust.noGravity = true;
 						dust.alpha = 100;
@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Crushers
                 }
 				if (Main.rand.NextBool(3))
 				{
-					Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.fadeIn = 0.2f;
 					dust.noGravity = true;
 					dust.alpha = 100;

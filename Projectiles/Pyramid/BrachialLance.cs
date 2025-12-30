@@ -193,7 +193,7 @@ namespace SOTS.Projectiles.Pyramid
 						}
 						if (Main.rand.NextBool(3))
 						{
-							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + 0.5f * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + 0.5f * Projectile.velocity, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.noGravity = true;
 							dust.velocity *= 0.8f * (1 - 0.2f * chargeProgress);
 							dust.scale = 1.5f * (1 + 0.3f * chargeProgress);
@@ -204,7 +204,7 @@ namespace SOTS.Projectiles.Pyramid
 						{
 							if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
 							{
-								Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
+								Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 								dust3.noGravity = true;
 								dust3.velocity *= 1.7f;
 								dust3.scale = 1.4f * (1 + 0.2f * chargeProgress);
@@ -304,7 +304,7 @@ namespace SOTS.Projectiles.Pyramid
 				for (int i = 0; i < (18 + num) * num; i++)
 				{
 					Vector2 circular = new Vector2(3 + num * 3, 0).RotatedBy(MathHelper.ToRadians(360f / (15f * num) * i));
-					int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					Dust dust = Main.dust[num2];
 					dust.color = new Color(255, 80, 80, 40);
 					dust.noGravity = true;

@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.Lightning
 							circular.X *= 0.5f;
 							circular = circular.RotatedBy(nextVelocity.ToRotation());
 
-							Dust dust = Dust.NewDustDirect(addPos + circular, 0, 0, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(addPos + circular, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.noGravity = true;
 							dust.velocity *= 0.25f;
 							dust.velocity += nextVelocity * (0.5f + 0.125f * scaleFactor);

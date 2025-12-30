@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.Blades
                 {
                     float dustScale = 1f;
                     float rand = Main.rand.NextFloat(0.9f, 1.1f);
-                    int type = ModContent.DustType<CopyDust4>();
+                    int type = SOTSUtils.TypeHelper.CopyDust4Type;
                     Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12) - dustAway.SafeNormalize(Vector2.Zero) * 4, 16, 16, type);
                     dust.velocity *= 0.02f / rand;
                     dust.velocity += dustAway.SafeNormalize(Vector2.Zero) * 1.2f * rand;
@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Blades
                     dust.scale *= 0.1f / rand;
                     dust.scale += 1.1f / rand * dustScale;
                     dust.fadeIn = 0.2f;
-                    if (type == ModContent.DustType<CopyDust4>())
+                    if (type == SOTSUtils.TypeHelper.CopyDust4Type)
                         dust.color = Color.Lerp(color1, color2, Main.rand.NextFloat(1f) * Main.rand.NextFloat(1f));
                 }
                 Vector2 toProjectile = Projectile.Center - player.RotatedRelativePoint(player.MountedCenter, true);
@@ -311,7 +311,7 @@ namespace SOTS.Projectiles.Blades
             for(float i = 0; i < 1; i += 0.34f)
             {
                 Vector2 circular = new Vector2(80, 0).RotatedBy(Projectile.rotation + incrementAmount * i) * Main.rand.NextFloat(0.9f, 1.2f);
-                int type = ModContent.DustType<CopyDust4>();
+                int type = SOTSUtils.TypeHelper.CopyDust4Type;
                 Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + circular, 0, 0, type);
                 dust.velocity *= 0.02f;
                 dust.velocity += circular.SafeNormalize(Vector2.Zero) * 1.1f;
@@ -319,7 +319,7 @@ namespace SOTS.Projectiles.Blades
                 dust.scale *= 0.1f;
                 dust.scale += 1.0f;
                 dust.fadeIn = 0.2f;
-                if (type == ModContent.DustType<CopyDust4>())
+                if (type == SOTSUtils.TypeHelper.CopyDust4Type)
                     dust.color = Color.Lerp(KingSlash.Red, KingSlash.Blue, circular.X / 80f * 0.5f + 0.5f);
             }
 

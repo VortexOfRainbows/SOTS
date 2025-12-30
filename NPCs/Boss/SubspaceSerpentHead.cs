@@ -530,7 +530,7 @@ namespace SOTS.NPCs.Boss
                 {
                     for (int i = 0; i < 8; i++)
                     {
-                        int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<CopyDust4>());
+                        int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, SOTSUtils.TypeHelper.CopyDust4Type);
                         Dust dust = Main.dust[dust2];
                         dust.color = new Color(100, 255, 100, 0);
                         dust.noGravity = true;

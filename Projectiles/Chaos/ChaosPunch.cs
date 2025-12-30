@@ -84,7 +84,7 @@ namespace SOTS.Projectiles.Chaos
 			}
 			if(Projectile.ai[0] > 6)
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 0.05f;
 				dust.velocity -= 1 * Projectile.velocity.SafeNormalize(Vector2.Zero);
 				dust.scale = 1.3f;
@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Chaos
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 1.2f;
 				dust.velocity += 5 * Projectile.velocity.SafeNormalize(Vector2.Zero);
 				dust.scale *= 2;

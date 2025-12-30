@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Permafrost
 				SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.4f);
 				for (int i = 20; i > 0; i--)
 				{
-					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, DustColor, 1.4f);
+					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(12, 4), 20, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, DustColor, 1.4f);
 					dust.noGravity = true;
 					dust.velocity *= 1.5f;
 					dust.velocity += Projectile.velocity * Main.rand.NextFloat(1f, 2f);
@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Permafrost
 				{
 					break;
 				}
-                Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, DustColor, 1.0f);
+                Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, DustColor, 1.0f);
                 dust.noGravity = true;
                 dust.velocity *= 1.0f;
                 dust.velocity += Projectile.velocity * Main.rand.NextFloat(4f, 7f);
@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Permafrost
             }
             for (int i = 20; i > 0; i--)
             {
-                Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, DustColor, 1.75f);
+                Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, DustColor, 1.75f);
                 dust.noGravity = true;
                 dust.velocity *= 1.0f;
                 dust.velocity += Projectile.velocity * Main.rand.NextFloat(3f, 5f);

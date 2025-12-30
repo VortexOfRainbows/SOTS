@@ -524,7 +524,7 @@ namespace SOTS.NPCs.Boss.Lux
 							if (ai3 < 80 && ai3 > 0)
 							{
 								NPC.scale -= 0.012f;
-								int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true));
+								int dust3 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true));
 								Dust dust4 = Main.dust[dust3];
 								dust4.velocity *= 2.5f;
 								dust4.noGravity = true;

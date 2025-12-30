@@ -184,16 +184,16 @@ namespace SOTS.Projectiles.Chaos
             {
                 Vector2 pos = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - 24);
                 float rand = Main.rand.NextFloat(MathHelper.Pi);
-                DustStar(pos, Projectile.velocity * 1.65f, ModContent.DustType<CopyDust4>(), 8, 2.4f, 3.5f, 1.0f, 1f, 0.6f, Projectile.velocity.ToRotation(), rand, 0.9f);
-                DustStar(pos, Projectile.velocity * 1.65f, ModContent.DustType<CopyDust4>(), 8, 1.6f, 2.5f, 1.0f, 1f, 0.4f, Projectile.velocity.ToRotation(), rand, 0.6f);
+                DustStar(pos, Projectile.velocity * 1.65f, SOTSUtils.TypeHelper.CopyDust4Type, 8, 2.4f, 3.5f, 1.0f, 1f, 0.6f, Projectile.velocity.ToRotation(), rand, 0.9f);
+                DustStar(pos, Projectile.velocity * 1.65f, SOTSUtils.TypeHelper.CopyDust4Type, 8, 1.6f, 2.5f, 1.0f, 1f, 0.4f, Projectile.velocity.ToRotation(), rand, 0.6f);
 
             }
             if(chargeLevel == 2)
             {
                 Vector2 pos = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist + 12);
                 float rand = Main.rand.NextFloat(MathHelper.Pi);
-                DustStar(pos, Projectile.velocity * 2.5f, ModContent.DustType<CopyDust4>(), 6, 2.0f, 3.5f, 1.0f, 1f, 0.6f, Projectile.velocity.ToRotation(), rand, 0.9f);
-                DustStar(pos, Projectile.velocity * 2.5f, ModContent.DustType<CopyDust4>(), 6, 1.2f, 2.5f,1.0f, 1f, 0.4f, Projectile.velocity.ToRotation(), rand, 0.6f);
+                DustStar(pos, Projectile.velocity * 2.5f, SOTSUtils.TypeHelper.CopyDust4Type, 6, 2.0f, 3.5f, 1.0f, 1f, 0.6f, Projectile.velocity.ToRotation(), rand, 0.9f);
+                DustStar(pos, Projectile.velocity * 2.5f, SOTSUtils.TypeHelper.CopyDust4Type, 6, 1.2f, 2.5f,1.0f, 1f, 0.4f, Projectile.velocity.ToRotation(), rand, 0.6f);
             }
         }
         public Vector2 getTip(float percent)
@@ -247,15 +247,15 @@ namespace SOTS.Projectiles.Chaos
                         {
                             Vector2 pos = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist - 24);
                             float rand = Main.rand.NextFloat(MathHelper.Pi);
-                            DustStar(pos, Vector2.Zero, ModContent.DustType<CopyDust4>(), 8, 2.4f, 3f, 1.0f, 1f, 0.6f, Projectile.velocity.ToRotation(), rand, 0.9f);
-                            DustStar(pos, Vector2.Zero, ModContent.DustType<CopyDust4>(), 8, 1.6f, 2f, 1.0f, 1f, 0.4f, Projectile.velocity.ToRotation(), rand, 0.6f);
+                            DustStar(pos, Vector2.Zero, SOTSUtils.TypeHelper.CopyDust4Type, 8, 2.4f, 3f, 1.0f, 1f, 0.6f, Projectile.velocity.ToRotation(), rand, 0.9f);
+                            DustStar(pos, Vector2.Zero, SOTSUtils.TypeHelper.CopyDust4Type, 8, 1.6f, 2f, 1.0f, 1f, 0.4f, Projectile.velocity.ToRotation(), rand, 0.6f);
                         }
                         else
                         {
                             Vector2 pos = Projectile.Center + Projectile.velocity.SafeNormalize(Vector2.Zero) * (fireFromDist + 12);
                             float rand = Main.rand.NextFloat(MathHelper.Pi);
-                            DustStar(pos, Vector2.Zero, ModContent.DustType<CopyDust4>(), 6, 2.0f, 3f, 1.0f, 1f, 0.6f, Projectile.velocity.ToRotation(), rand, 0.9f);
-                            DustStar(pos, Vector2.Zero, ModContent.DustType<CopyDust4>(), 6, 1.2f, 2f, 1.0f, 1f, 0.4f, Projectile.velocity.ToRotation(), rand, 0.6f);
+                            DustStar(pos, Vector2.Zero, SOTSUtils.TypeHelper.CopyDust4Type, 6, 2.0f, 3f, 1.0f, 1f, 0.6f, Projectile.velocity.ToRotation(), rand, 0.9f);
+                            DustStar(pos, Vector2.Zero, SOTSUtils.TypeHelper.CopyDust4Type, 6, 1.2f, 2f, 1.0f, 1f, 0.4f, Projectile.velocity.ToRotation(), rand, 0.6f);
                         }
                         counter = -(int)Projectile.ai[0] * secondDelay;
                         chargeLevel++;
@@ -280,7 +280,7 @@ namespace SOTS.Projectiles.Chaos
                         circularLocation.Y *= 1.0f;
                         circularLocation.X *= 0.7f;
                         circularLocation = circularLocation.RotatedBy(Projectile.velocity.ToRotation());
-                        Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelper.ChaosPink);
+                        Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, ColorHelper.ChaosPink);
                         dust.noGravity = true;
                         dust.scale = dust.scale * 0.5f + 0.9f;
                         dust.velocity = circularLocation * -0.11f + player.velocity * 0.95f;

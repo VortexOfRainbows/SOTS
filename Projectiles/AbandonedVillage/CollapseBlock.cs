@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             {
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
-                Dust d = Dust.NewDustDirect(center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), newColor: c * perc * 0.5f);
+                Dust d = Dust.NewDustDirect(center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, newColor: c * perc * 0.5f);
                 d.velocity = d.velocity * perc * 0.5f + Projectile.oldVelocity * 0.4f;
                 d.fadeIn = 0.2f;
                 d.noGravity = true;

@@ -187,7 +187,7 @@ namespace SOTS.NPCs.Constructs
 					float overrideRotation = engineRotation(i, j).ToRotation();
 					Vector2 fromBody = center + new Vector2(i * (74 - j * 24), -18 - j * 30).RotatedBy(NPC.rotation) * engineExtendMult(j);
 					Vector2 dustVelo = new Vector2(7.2f, 0).RotatedBy(overrideRotation);
-					int index = Dust.NewDust(fromBody + dustVelo * NPC.scale + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(167, 45, 225));
+					int index = Dust.NewDust(fromBody + dustVelo * NPC.scale + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(167, 45, 225));
 					Dust dust = Main.dust[index];
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
@@ -274,7 +274,7 @@ namespace SOTS.NPCs.Constructs
 							circularLocation += 0.5f * new Vector2(Main.rand.Next(-2, 3), Main.rand.Next(-2, 3));
 							if (Main.rand.NextBool(30))
 							{
-								int index = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 6) + new Vector2(-5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(167, 45, 225));
+								int index = Dust.NewDust(new Vector2(NPC.Center.X + circularLocation.X - 4, NPC.Center.Y + circularLocation.Y - 6) + new Vector2(-5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(167, 45, 225));
 								Dust dust = Main.dust[index];
 								dust.noGravity = true;
 								dust.fadeIn = 0.1f;

@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Permafrost
 					{
 						Vector2 circular = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i * 12f));
 						circular.X *= 0.5f;
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.noGravity = true;
 						dust.velocity *= 0.1f;
 						dust.velocity += circular * 0.3f + Projectile.velocity * 0.35f;
@@ -128,7 +128,7 @@ namespace SOTS.Projectiles.Permafrost
 					}
 					if(Main.rand.NextBool(baseRate))
                     {
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.noGravity = true;
 						dust.velocity *= 0.7f;
 						dust.velocity += circular * 0.2f;

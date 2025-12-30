@@ -53,7 +53,7 @@ namespace SOTS.Projectiles.Inferno
                 Projectile.netUpdate = true;
                 for(int i = 0; i < 20; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.velocity *= 1f;
                     dust.velocity += Projectile.velocity * 0.2f;
                     dust.noGravity = true;
@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Inferno
                         circular.X *= 0.55f;
                         circular = circular.RotatedBy(Projectile.velocity.ToRotation());
                         Vector2 fromCenter = Projectile.velocity.SafeNormalize(Vector2.Zero) * 32 * j;
-                        Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity * j + circular - new Vector2(5) + fromCenter, 0, 0, ModContent.DustType<CopyDust4>());
+                        Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity * j + circular - new Vector2(5) + fromCenter, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                         dust.velocity = 0.5f * circular + fromCenter;
                         dust.noGravity = true;
                         dust.color = new Color(157, 93, 213, 40);
@@ -204,7 +204,7 @@ namespace SOTS.Projectiles.Inferno
             int amt = Projectile.ai[0] == -1 ? 50 : 10;
             for (int i = 0; i < amt; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.velocity *= mult;
                 dust.noGravity = true;
                 dust.color = new Color(157, 93, 213, 40);

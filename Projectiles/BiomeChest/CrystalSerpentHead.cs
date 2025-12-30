@@ -219,7 +219,7 @@ namespace SOTS.Projectiles.BiomeChest
                 {
                     for (int a = 0; a < 3; a++)
                     {
-                        Dust dust = Dust.NewDustDirect(segments[i].position - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                        Dust dust = Dust.NewDustDirect(segments[i].position - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                         dust.velocity *= 1.2f;
                         dust.velocity += 5 * Projectile.velocity.SafeNormalize(Vector2.Zero);
                         dust.scale *= 2;

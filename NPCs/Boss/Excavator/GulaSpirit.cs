@@ -87,7 +87,7 @@ namespace SOTS.NPCs.Boss.Excavator
                 NPC.velocity *= 0.985f;
             }
 
-            Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CopyDust4>());
+            Dust dust = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, SOTSUtils.TypeHelper.CopyDust4Type);
             dust.color = Color.Lerp(ColorHelper.EarthColor, ColorHelper.RedEvilColor, percent);
             dust.noGravity = true;
             dust.fadeIn = 0.1f;

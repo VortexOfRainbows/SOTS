@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Anomaly
 				}
 				else
 				{
-					Dust d = Dust.NewDustDirect(position - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0);
+					Dust d = Dust.NewDustDirect(position - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0);
 					d.velocity *= 0.25f;
 					d.fadeIn = 0.2f;
 					d.noGravity = true;

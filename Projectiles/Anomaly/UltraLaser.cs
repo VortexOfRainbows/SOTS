@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Anomaly
 				SOTSUtils.PlaySound(SoundID.Item92, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.1f, -0.4f);
 				for (int i = 20; i > 0; i--)
 				{
-					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 1.4f);
+					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(12, 4), 20, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color, 1.4f);
 					dust.noGravity = true;
 					dust.velocity *= 1.5f;
 					dust.velocity -= Projectile.velocity * Main.rand.NextFloat(1f, 2f);
@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Anomaly
 				int chance = SOTS.Config.lowFidelityMode ? 100 : 70;
 				if (Main.rand.NextBool(chance) || extra && b > 10)
 				{
-					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 0.8f);
+					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color, 0.8f);
 					dust.noGravity = true;
 					if (!extra)
 					{
@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Anomaly
 			{
 				for (int i = 20; i > 0; i--)
 				{
-					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 1.5f);
+					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color, 1.5f);
 					dust.noGravity = true;
 					dust.velocity *= 1.0f;
 					dust.velocity += Projectile.velocity * Main.rand.NextFloat(4f, 7f);
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Anomaly
 			}
 			else if(!Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color, 1.5f);
+				Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(12, 4), 20, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color, 1.5f);
 				dust.noGravity = true;
 				dust.velocity = dust.velocity * 0.2f + Projectile.velocity * Main.rand.NextFloat(0.1f, 1.0f);
 				dust.fadeIn = 0.2f;

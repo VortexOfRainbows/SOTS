@@ -141,6 +141,7 @@ namespace SOTS
 			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.MFM").ToString(), "C");
             SlowFlightHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.SlowFlight").ToString(), "LeftShift");
             SOTSWorld.LoadUI();
+			SOTSUtils.TypeHelper.Load();
 			SetSubworld();
 			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
 			if (yabhb != null)

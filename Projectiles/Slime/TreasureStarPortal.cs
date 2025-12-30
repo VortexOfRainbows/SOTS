@@ -99,7 +99,7 @@ namespace SOTS.Projectiles.Slime
 				if(Main.rand.NextBool(2))
 				{
 					Vector2 circular = new Vector2(Projectile.width * 0.6f * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					int num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+					int num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					Dust dust = Main.dust[num2];
 					dust.color = Color.Lerp(treasureColor, Color.Black, 0.4f);
 					dust.noGravity = true;
@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Slime
 					dust.velocity *= 0.2f;
 					dust.velocity += circular.RotatedBy(MathHelper.ToRadians(80 * direction)).SafeNormalize(Vector2.Zero) * (1.3f + Projectile.scale * 0.7f);
 					circular = new Vector2(Projectile.width * 0.2f * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-					num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+					num2 = Dust.NewDust(Projectile.Center + circular - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust = Main.dust[num2];
 					dust.color = treasureColor;
 					dust.noGravity = true;
@@ -147,7 +147,7 @@ namespace SOTS.Projectiles.Slime
 				{
 					for (int i = 0; i < 50; i++)
 					{
-						int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust = Main.dust[num2];
 						dust.color = Color.Lerp(treasureColor, Color.Black, 0.4f);
 						dust.noGravity = true;
@@ -174,7 +174,7 @@ namespace SOTS.Projectiles.Slime
 		{
 			for (int i = 0; i < 10; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				int num2 = Dust.NewDust(new Vector2(Projectile.Center.X, Projectile.Center.Y) - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num2];
 				dust.color = Color.Lerp(treasureColor, Color.Black, 0.4f);
 				dust.noGravity = true;

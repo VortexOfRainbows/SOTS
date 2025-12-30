@@ -52,7 +52,7 @@ namespace SOTS.Projectiles.Earth
         {
 			Projectile.spriteDirection = 1;
 			Projectile.rotation = Projectile.velocity.ToRotation();
-			int num1 = Dust.NewDust(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+			int num1 = Dust.NewDust(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 			Dust dust = Main.dust[num1];
 			Color color2 = getColor;
 			dust.color = color2;
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Earth
 		{
 			for(int i = 0; i < 5; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num1];
 				Color color2 = getColor;
 				dust.color = color2;

@@ -140,7 +140,7 @@ namespace SOTS.Projectiles.Pyramid.GhostPepper
 			for (int i = 0; i < 360; i += particlesR)
 			{
 				Vector2 rotationalPos = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5) + rotationalPos, 22, 22, ModContent.DustType<CopyDust4>(), Alpha: Projectile.alpha, newColor: ColorHelper.SoulLootingColor * 0.75f);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y) - new Vector2(5) + rotationalPos, 22, 22, SOTSUtils.TypeHelper.CopyDust4Type, Alpha: Projectile.alpha, newColor: ColorHelper.SoulLootingColor * 0.75f);
 				dust.noGravity = true;
                 dust.velocity = dust.velocity * 0.05f + rotationalPos * 0.4f;
 				dust.scale = dust.scale * 0.5f + 1f;

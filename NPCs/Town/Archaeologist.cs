@@ -1357,7 +1357,7 @@ namespace SOTS.NPCs.Town
 						{
 							float radius = Radius * 16 * alphaMult;
 							Vector2 circular = new Vector2(radius + 12 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
-							Dust dust = Dust.NewDustDirect(Projectile.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(color, Color.Black, Main.rand.NextFloat(0.3f)), 1.1f);
+							Dust dust = Dust.NewDustDirect(Projectile.Center + circular - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, Color.Lerp(color, Color.Black, Main.rand.NextFloat(0.3f)), 1.1f);
 							dust.fadeIn = 1;
 							dust.noGravity = true;
 							dust.velocity *= 0.5f;
@@ -1679,10 +1679,10 @@ namespace SOTS.NPCs.Town
 							int type = ModContent.DustType<PixelDust>();
 							if(Main.rand.NextBool())
                             {
-								type = ModContent.DustType<CopyDust4>();
+								type = SOTSUtils.TypeHelper.CopyDust4Type;
                             }
-							Dust dust = Dust.NewDustDirect(pos - new Vector2(3, 5), entity.width + 3, height, type, 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.3f)), type == ModContent.DustType<CopyDust4>() ? 1.3f : 1.0f);
-							dust.fadeIn = type == ModContent.DustType<CopyDust4>() ? 0.2f : 7;
+							Dust dust = Dust.NewDustDirect(pos - new Vector2(3, 5), entity.width + 3, height, type, 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.3f)), type == SOTSUtils.TypeHelper.CopyDust4Type ? 1.3f : 1.0f);
+							dust.fadeIn = type == SOTSUtils.TypeHelper.CopyDust4Type ? 0.2f : 7;
 							dust.noGravity = true;
 							dust.velocity *= Main.rand.NextFloat(1) * Main.rand.NextFloat(1) * 0.3f;
 							dust.velocity += toCenter.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(4f, 5f) * distancePercent * dist / 120f;
@@ -1721,7 +1721,7 @@ namespace SOTS.NPCs.Town
 			{
 				float radius = Radius * 16 * alphaMult;
 				Vector2 circular = new Vector2(radius + 12 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
-				Dust dust = Dust.NewDustDirect(Projectile.Center + circular * 0.5f - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.5f)), 1.5f);
+				Dust dust = Dust.NewDustDirect(Projectile.Center + circular * 0.5f - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.5f)), 1.5f);
 				dust.fadeIn = 0.4f;
 				dust.noGravity = true;
 				dust.velocity *= 0.5f;
@@ -1755,7 +1755,7 @@ namespace SOTS.NPCs.Town
 			Color color = ColorHelper.VoidAnomaly;
 			for (int j = 0; j < 3; j++)
 			{
-				int type = ModContent.DustType<CopyDust4>();
+				int type = SOTSUtils.TypeHelper.CopyDust4Type;
 				if (j == 1)
 					type = ModContent.DustType<PixelDust>();
 				int count = 10 + (int)Math.Sqrt(radiusX * radiusX + radiusY * radiusY);

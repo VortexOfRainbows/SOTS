@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Earth
                 {
                     startingLocation = new Vector2(i * scale * 0.825f, (20 - Math.Abs(i) * 2) * scale).RotatedBy(MathHelper.ToRadians(j * 360f / numSpikes) + Projectile.rotation + MathHelper.PiOver2 * Projectile.direction);
                     Vector2 velo = offset + startingLocation;
-                    Dust dust = Dust.NewDustPerfect(dustCenter + velo * 1f, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustPerfect(dustCenter + velo * 1f, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.noGravity = true;
                     dust.scale = 1.1f;
                     dust.fadeIn = 0.1f;

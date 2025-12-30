@@ -68,7 +68,7 @@ namespace SOTS.Items.Whips
 					if(Main.rand.NextBool((int)(70 - i * 2.4f)))
 					{
 						Vector2 pos = list[i];
-						Dust dust = Dust.NewDustDirect(pos - new Vector2(6, 6), 4, 4, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(pos - new Vector2(6, 6), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.velocity *= 0.5f;
 						dust.noGravity = true;
 						dust.scale *= 0.1f;

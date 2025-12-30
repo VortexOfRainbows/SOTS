@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Celestial
 			for (int i = 0; i < 360; i += 10)
 			{
 				Vector2 circularLocation = new Vector2(-15, 0).RotatedBy(MathHelper.ToRadians(i));
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.noGravity = true;
 				dust.velocity *= 0.5f;
 				dust.velocity += circularLocation * 0.15f;

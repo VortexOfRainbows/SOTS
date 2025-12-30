@@ -97,7 +97,7 @@ namespace SOTS.Projectiles.Earth
 			SOTSUtils.PlaySound(SoundID.Item28, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f);
 			for (int i = 0; i < 30; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num2];
 				Color color2 = ColorHelper.VibrantColorGradient(0) * 0.75f;
 				dust.color = color2;

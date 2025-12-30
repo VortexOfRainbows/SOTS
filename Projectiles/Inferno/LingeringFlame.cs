@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			for (int i = 0; i < 3; i++)
 			{
-				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[dust2];
 				dust.color = new Color(255, 75, 0, 0);
 				dust.noGravity = true;

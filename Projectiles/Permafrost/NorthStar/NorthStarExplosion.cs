@@ -43,7 +43,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
         {
             Vector2 atLoc = Projectile.Center;
             SOTSUtils.PlaySound(SoundID.Item105, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.8f, -0.15f);
-            DrawStar(atLoc, ModContent.DustType<CopyDust4>(), 4, 6f, 1f, 1.0f, 0.5f, 0.5f, true, 15, 0);
+            DrawStar(atLoc, SOTSUtils.TypeHelper.CopyDust4Type, 4, 6f, 1f, 1.0f, 0.5f, 0.5f, true, 15, 0);
             for (int i = 0; i < 360; i += 6)
             {
                 Vector2 circularLocation = new Vector2(24, 0).RotatedBy(MathHelper.ToRadians(-i));
@@ -68,7 +68,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
                 if(!Main.rand.NextBool(3))
                 {
                     Color colorMan = Color.Lerp(new Color(240, 250, 255, 100), new Color(200, 250, 255, 100), Main.rand.NextFloat(1));
-                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.color = colorMan;
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
                     if (Main.rand.NextBool(4))
                     {
                         Color colorMan = Color.Lerp(new Color(240, 250, 255, 100), new Color(200, 250, 255, 100), Main.rand.NextFloat(1));
-                        Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+                        Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
                         dust.color = colorMan;
                         dust.noGravity = true;
                         dust.velocity *= 0.3f + i * 0.09f;

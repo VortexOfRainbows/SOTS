@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Temple
 			}
 			for(int i = 0; i < 3; i++)
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, SOTSUtils.TypeHelper.CopyDust4Type, Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f);
 				dust.noGravity = true;
 				dust.scale *= 1.6f - 0.1f * i;
 				dust.fadeIn = 0.1f;

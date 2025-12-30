@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Chaos
 			SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f, -0.2f);
 			for (int i = 0; i < 30; i++)
             {
-				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
 				dust2.noGravity = true;
 				dust2.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18));
 				dust2.noGravity = true;
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Chaos
 				runOnce = false;
 				for (int i = 0; i < 15; i++)
 				{
-					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
 					dust.noGravity = true;
 					dust.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18));
 					dust.noGravity = true;
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Chaos
 				for (int i = 0; i < 100; i++)
 				{
 					Vector2 spawnPosition = Vector2.Lerp(start, end, i / 100f);
-					Dust dust = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+					Dust dust = Dust.NewDustDirect(spawnPosition - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
 					dust.velocity *= 0.3f;
 					dust.noGravity = true;
 					dust.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 3.6f) + Main.GameUpdateCount * 2f);
@@ -167,7 +167,7 @@ namespace SOTS.Projectiles.Chaos
 				Projectile.alpha += 1;
 			if(Main.rand.NextBool(3))
 			{
-				Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>(), 0, 0, 100);
+				Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100);
 				dust2.velocity *= 0.4f;
 				dust2.noGravity = true;
 				dust2.color = ColorHelper.PastelRainbow;

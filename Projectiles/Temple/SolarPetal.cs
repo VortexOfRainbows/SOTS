@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Temple
 			for (float i = 40 * Projectile.ai[1]; i > 0; i--)
 			{
 				Vector2 circular = new Vector2(48 * Projectile.ai[1], 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[dust2];
 				dust.color = getDustColor;
 				dust.noGravity = true;
@@ -130,7 +130,7 @@ namespace SOTS.Projectiles.Temple
 				dust.scale *= 2.4f;
 				dust.velocity = dust.velocity * 0.2f - circular * 0.2f * Main.rand.NextFloat(1.5f);
 
-				dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
+				dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust = Main.dust[dust2];
 				dust.color = getDustColor;
 				dust.noGravity = true;
@@ -156,7 +156,7 @@ namespace SOTS.Projectiles.Temple
 			}
             else if(Projectile.ai[1] >= Main.rand.NextFloat(1))
 			{
-				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(24, 24), 40, 40, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(24, 24), 40, 40, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[dust2];
 				dust.color = getDustColor;
 				dust.noGravity = true;

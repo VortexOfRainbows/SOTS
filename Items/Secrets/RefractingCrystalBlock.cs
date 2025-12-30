@@ -107,7 +107,7 @@ namespace SOTS.Items.Secrets
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.position.X - Projectile.width, Projectile.position.Y - Projectile.height) - new Vector2(5), Projectile.width * 3, Projectile.height * 3, ModContent.DustType<CopyDust4>());
+				int num2 = Dust.NewDust(new Vector2(Projectile.position.X - Projectile.width, Projectile.position.Y - Projectile.height) - new Vector2(5), Projectile.width * 3, Projectile.height * 3, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(245, 50, 80, 40);
 				dust.noGravity = true;
@@ -195,7 +195,7 @@ namespace SOTS.Items.Secrets
 								for (int k = 0; k < 3; k++)
 								{
 									Vector2 pos = new Vector2(i + x, j + y) * 16;
-									int num2 = Dust.NewDust(new Vector2(pos.X, pos.Y) - new Vector2(5), 16, 16, ModContent.DustType<CopyDust4>());
+									int num2 = Dust.NewDust(new Vector2(pos.X, pos.Y) - new Vector2(5), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 									Dust dust = Main.dust[num2];
 									dust.color = new Color(245, 50, 80, 40);
 									dust.noGravity = true;

@@ -93,7 +93,7 @@ namespace SOTS.Projectiles.Planetarium
 			{
 				Vector2 circularLocation = new Vector2(12, 0);
 				resetVector2(ref circularLocation, i);
-				int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				int dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 3.5f;
 				Main.dust[dust].scale *= 5f;
@@ -102,7 +102,7 @@ namespace SOTS.Projectiles.Planetarium
 				Main.dust[dust].color = new Color(100, 80, 200);
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 6f;
 				Main.dust[dust].scale *= 4f;
@@ -111,7 +111,7 @@ namespace SOTS.Projectiles.Planetarium
 				Main.dust[dust].color = new Color(100, 80, 200);
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 8f;
 				Main.dust[dust].scale *= 3f;
@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Planetarium
 				Main.dust[dust].color = new Color(100, 80, 200);
 
 				resetVector2(ref circularLocation, i);
-				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, ModContent.DustType<CopyDust4>());
+				dust = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 3), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				Main.dust[dust].velocity = circularLocation;
 				Main.dust[dust].velocity *= 12f;
 				Main.dust[dust].scale *= 2f;

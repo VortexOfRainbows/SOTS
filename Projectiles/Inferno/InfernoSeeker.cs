@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			for (int i = 0; i < 6; i++)
             {
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 0.7f;
 				dust.noGravity = true;
 				dust.scale += 0.1f;
@@ -66,7 +66,7 @@ namespace SOTS.Projectiles.Inferno
 		{
 			if(Main.rand.NextBool(2))
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num1];
 				dust.velocity *= 0.1f;
 				dust.noGravity = true;

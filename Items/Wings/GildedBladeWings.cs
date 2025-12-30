@@ -136,10 +136,10 @@ namespace SOTS.Items.Wings
         }
         private void DrawHalo(SpriteBatch spriteBatch, Vector2 position, float scale, float s_rotation)
         {
-            List<DrawData> drawData0 = new List<DrawData>();
-            List<DrawData> drawData1 = new List<DrawData>();
-            List<DrawData> drawData2 = new List<DrawData>();
-            Texture2D pixel = Mod.Assets.Request<Texture2D>("Items/Secrets/WhitePixel", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            List<DrawData> drawData0 = [];
+            List<DrawData> drawData1 = [];
+            List<DrawData> drawData2 = [];
+            Texture2D pixel = SOTSUtils.WhitePixel;
             int repeats = 40;
             Vector2 center = position;
             Vector2[] points = new Vector2[repeats];

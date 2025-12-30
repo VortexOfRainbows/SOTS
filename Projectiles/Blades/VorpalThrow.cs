@@ -142,7 +142,7 @@ namespace SOTS.Projectiles.Blades
 						if (Main.rand.NextBool(3))
 						{
 							Vector2 circularLocation = new Vector2(13 * Main.rand.NextFloat(1), 0).RotatedBy(MathHelper.ToRadians(i));
-							Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.noGravity = true;
 							dust.velocity *= 0.8f;
 							dust.velocity += circularLocation;
@@ -154,7 +154,7 @@ namespace SOTS.Projectiles.Blades
 						else
 						{
 							Vector2 circularLocation = new Vector2(160 + Main.rand.NextFloat(-12, 12), 0).RotatedBy(MathHelper.ToRadians(i));
-							Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation, 0, 0, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.noGravity = true;
 							dust.velocity *= 0.5f;
 							dust.velocity += circularLocation.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(0.4f, 1.4f);
@@ -192,7 +192,7 @@ namespace SOTS.Projectiles.Blades
 				circular = circular.RotateRandom(Projectile.rotation) * Main.rand.NextFloat(0.9f, 1.2f);
 				float dustScale = 1.0f;
 				float rand = Main.rand.NextFloat(0.9f, 1.1f);
-				int type = ModContent.DustType<CopyDust4>();
+				int type = SOTSUtils.TypeHelper.CopyDust4Type;
 				if (Main.rand.NextBool(5))
 					type = DustID.GreenTorch;
 				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + circular, 0, 0, type);
@@ -202,7 +202,7 @@ namespace SOTS.Projectiles.Blades
 				dust.scale *= 0.2f / rand;
 				dust.scale += 1.2f / rand * dustScale;
 				dust.fadeIn = 0.1f;
-				if (type == ModContent.DustType<CopyDust4>())
+				if (type == SOTSUtils.TypeHelper.CopyDust4Type)
 					dust.color = Color.Lerp(VorpalColor1, VorpalColor2, Main.rand.NextFloat(1f) * Main.rand.NextFloat(1f));
 			}				
 			if (Projectile.timeLeft >= 110)

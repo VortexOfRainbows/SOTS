@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Chaos
         {
 			for(int i = 0; i < 30; i++)
             {
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
 				dust.velocity += Projectile.velocity * 0.2f;
 				dust.noGravity = true;
 				dust.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18));
@@ -62,7 +62,7 @@ namespace SOTS.Projectiles.Chaos
 				runOnce = false;
 				for (int i = 0; i < 15; i++)
 				{
-					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
 					dust.velocity += Projectile.velocity * 0.9f;
 					dust.noGravity = true;
 					dust.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18));
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.2f;
 			if(Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>(), 0, 0, 100);
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100);
 				dust.velocity *= 0.2f;
 				dust.velocity -= Projectile.velocity * 0.3f;
 				dust.noGravity = true;

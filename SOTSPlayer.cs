@@ -663,7 +663,7 @@ namespace SOTS
 							Vector2 circular = new Vector2(hypo / 2f * i, 0).RotatedBy(MathHelper.ToRadians(orbitalCounter * 3f + curseVisionCounter * 1.7f));
 							circular.X *= 0.8f;
 							circular.Y *= 0.3f;
-							Dust dust = Dust.NewDustPerfect(spawnLoc + circular, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustPerfect(spawnLoc + circular, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.noGravity = true;
 							dust.color = new Color(220, 80, 80, 40);
 							dust.velocity += circular * 0.01f;

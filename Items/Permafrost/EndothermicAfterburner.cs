@@ -33,7 +33,7 @@ namespace SOTS.Items.Permafrost
 			if(player.velocity.Length() > 1 && !player.mount.Active)
 			{
 				Vector2 loc = new Vector2(player.Center.X - 16 * player.direction, player.Center.Y + player.gfxOffY) - new Vector2(5);
-				Dust dust = Dust.NewDustDirect(new Vector2(loc.X, loc.Y), 2, 2, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(loc.X, loc.Y), 2, 2, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.noGravity = true;
 				dust.velocity *= 0.02f;
 				dust.scale = 1.0f;

@@ -82,7 +82,9 @@ Daily Log:
 	4. Some other minor improvements that aren't too noteworthy but should have a somewhat non-negligible effect on lag
 	5. Curse Wave Projectile now has optimizations from a few patches ago that was not integrated: Better clearing of dust list (should be medium improvement)
 3. As a side effect of Pharaoh's Curse performance improvements, weapons and other sources of curse particles should also be less laggy
-
+4. The "White Pixel" asset that is used for many spritebatch trails is also cached now, rather than looked up, which should help performance generally with quite a few items
+	1. Some items included are: Gilded Blade Wings, Accretion Disc, Torch Gun Mk2, etc. (This will likely be a minor improvement)
+5. The "CopyDust4" dust type that is used in over 180+ files in the mod is now cached, rather than looked up using DustType<CopyDust4>(), which should generally help with improving performance across the board, since it is commonly used everywhere. (This will likely be a minor improvement)
 
 --- Hotfix 0.25.1.4 ---
 

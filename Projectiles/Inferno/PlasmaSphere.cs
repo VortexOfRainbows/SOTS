@@ -95,7 +95,7 @@ namespace SOTS.Projectiles.Inferno
 			for (int i = 30; i > 0; i--)
 			{
 				Vector2 circular = new Vector2(48, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[dust2];
 				dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(0.5f));
 				dust.noGravity = true;
@@ -177,7 +177,7 @@ namespace SOTS.Projectiles.Inferno
 					if (Main.rand.NextBool((int)chance))
 					{
 						Vector2 circular = new Vector2(48 * destinationScale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-						int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12) + circular, 16, 16, ModContent.DustType<CopyDust4>());
+						int dust2 = Dust.NewDust(Projectile.Center - new Vector2(12, 12) + circular, 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust = Main.dust[dust2];
 						dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(0.7f));
 						dust.noGravity = true;
@@ -198,7 +198,7 @@ namespace SOTS.Projectiles.Inferno
 					if (Main.rand.NextBool((int)chance))
 					{
 						Vector2 circular = new Vector2(12 * destinationScale, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-						int dust2 = Dust.NewDust(Projectile.Center - new Vector2(4, 4) + circular, 0, 0, ModContent.DustType<CopyDust4>());
+						int dust2 = Dust.NewDust(Projectile.Center - new Vector2(4, 4) + circular, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust = Main.dust[dust2];
 						dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(0.7f));
 						dust.noGravity = true;

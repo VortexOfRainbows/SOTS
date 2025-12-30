@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Permafrost
 						{
 							Vector2 circularLocation = new Vector2(0, 8).RotatedBy(MathHelper.ToRadians(k * 12));
 							circularLocation = circularLocation.RotatedBy(manipulateVelo.ToRotation());
-							Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+							Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(116, 125, 238));
 							dust.noGravity = true;
 							dust.scale = dust.scale * 0.5f + 1f;
 							dust.velocity = dust.velocity * 0.3f + circularLocation * 0.2f + manipulateVelo * 0.08f;
@@ -184,7 +184,7 @@ namespace SOTS.Projectiles.Permafrost
 						{
 							if (frostFlake == 1 || (frostFlake == -2 && Main.rand.NextBool(2)))
 							{
-								Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+								Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 								dust.noGravity = true;
 								dust.velocity *= 0.2f;
 								dust.velocity += circular * 0.5f;
@@ -236,7 +236,7 @@ namespace SOTS.Projectiles.Permafrost
 						if(!SOTS.Config.lowFidelityMode || Main.rand.NextBool(4))
 						{
 							Vector2 spawnPos = Vector2.Lerp(Projectile.Center, Projectile.oldPosition + Projectile.Size / 2, i * 0.2f);
-							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
 							dust.noGravity = true;
 							dust.scale = 1.2f;
 							dust.velocity = Vector2.Zero;
@@ -254,7 +254,7 @@ namespace SOTS.Projectiles.Permafrost
 						if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(3))
 						{
 							Vector2 spawnPos = Vector2.Lerp(Projectile.Center, Projectile.oldPosition + Projectile.Size / 2, i * 0.5f);
-							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
+							Dust dust = Dust.NewDustDirect(spawnPos + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, Color.Lerp(blue, blue2, Main.rand.NextFloat(1)));
 							dust.noGravity = true;
 							dust.scale = 1.0f;
 							dust.velocity = Vector2.Zero;
@@ -279,7 +279,7 @@ namespace SOTS.Projectiles.Permafrost
 				{
 					if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
 					{
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.noGravity = true;
 						dust.velocity *= 0.3f + mult * 0.8f;
 						dust.velocity += trueVelocity * 0.3f;
@@ -308,7 +308,7 @@ namespace SOTS.Projectiles.Permafrost
 				float mult = (Math.Abs((rad * (pointAmount / 2) % (float)Math.PI) - (float)Math.PI / 2) * innerDistAdd) + innerDistMin;//triangle wave function
 				Vector2 circular = new Vector2(x, y).RotatedBy(spin) * mult;
 				circular.X *= xCompress;
-				Dust dust = Dust.NewDustDirect(circular + Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+				Dust dust = Dust.NewDustDirect(circular + Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(116, 125, 238));
 				dust.noGravity = true;
 				dust.scale = dust.scale * 0.4f + 1.2f;
 				dust.velocity = dust.velocity * 0.1f + trueVelocity + circular * 0.24f;

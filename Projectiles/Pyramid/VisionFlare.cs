@@ -37,7 +37,7 @@ namespace SOTS.Projectiles.Pyramid
 				{
 					float mult = 0.2f + 0.8f * i / 30f;
 					Vector2 circular = new Vector2(32, 0).RotatedBy(MathHelper.ToRadians(i * 12));
-					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + circular, 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + circular, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.color = new Color(220, 80, 80, 40);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;
@@ -48,7 +48,7 @@ namespace SOTS.Projectiles.Pyramid
 
 					if(i % 2 == 0)
 					{
-						dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.color = new Color(220, 80, 80, 40);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
@@ -60,7 +60,7 @@ namespace SOTS.Projectiles.Pyramid
 					for (int j = 0; j < 2; j++)
 					{
 						int direction = j * 2 - 1;
-						dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.color = new Color(220, 80, 80, 40);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;

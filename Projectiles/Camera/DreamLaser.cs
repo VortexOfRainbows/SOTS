@@ -46,7 +46,7 @@ namespace SOTS.Projectiles.Camera
 				{
 					for(int i = 0; i< 20; i++)
                     {
-						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - Projectile.velocity.SafeNormalize(Vector2.Zero) * 8, 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - Projectile.velocity.SafeNormalize(Vector2.Zero) * 8, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.fadeIn = 0.2f;
 						dust.noGravity = true;
 						dust.alpha = 100;
@@ -96,7 +96,7 @@ namespace SOTS.Projectiles.Camera
 				}
 				if (Main.rand.NextBool(rate))
 				{
-					Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.fadeIn = 0.2f;
 					dust.noGravity = true;
 					dust.alpha = 100;

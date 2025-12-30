@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Tide
 
             if (Projectile.ai[1] > 2)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(12, 12), 14, 14, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(12, 12), 14, 14, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.noGravity = true;
                 dust.velocity *= 0.15f;
                 if (Projectile.ai[1] > 10)
@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Tide
 			for(int i = 0; i < 24; i++)
 			{
 				Vector2 circular = new Vector2(3, 0).RotatedBy(i / 24f * MathHelper.TwoPi);
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + circular * 2, 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + circular * 2, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.noGravity = true;
 				dust.velocity *= 0.15f;
 				dust.velocity += circular * Main.rand.NextFloat(0.4f, 1f);

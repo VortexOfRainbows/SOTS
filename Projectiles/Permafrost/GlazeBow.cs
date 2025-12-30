@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Permafrost
                                 circularLocation.Y *= 1.0f;
                                 circularLocation.X *= 0.6f;
                                 circularLocation = circularLocation.RotatedBy(Projectile.velocity.ToRotation());
-                                Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+                                Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(116, 125, 238));
                                 dust.noGravity = true;
                                 dust.scale = dust.scale * 0.5f + 0.9f;
                                 dust.velocity = dust.velocity * 0.05f + circularLocation * 0.2f + player.velocity * 0.95f;
@@ -171,8 +171,8 @@ namespace SOTS.Projectiles.Permafrost
                         else
                         {
                             float rand = Main.rand.NextFloat(MathHelper.Pi);
-                            DustStar(fireFrom, ModContent.DustType<CopyDust4>(), 6, 1.7f, 2.4f, 1.2f, 1f, 0.8f, Projectile.velocity.ToRotation(), rand, 0.9f);
-                            DustStar(fireFrom, ModContent.DustType<CopyDust4>(), 6, 1.1f, 1.5f, 1.2f, 1f, 0.5f, Projectile.velocity.ToRotation(), rand, 0.6f);
+                            DustStar(fireFrom, SOTSUtils.TypeHelper.CopyDust4Type, 6, 1.7f, 2.4f, 1.2f, 1f, 0.8f, Projectile.velocity.ToRotation(), rand, 0.9f);
+                            DustStar(fireFrom, SOTSUtils.TypeHelper.CopyDust4Type, 6, 1.1f, 1.5f, 1.2f, 1f, 0.5f, Projectile.velocity.ToRotation(), rand, 0.6f);
                         }
                         counter = -(int)Projectile.ai[0] * secondDelay;
                         chargeLevel++;
@@ -190,7 +190,7 @@ namespace SOTS.Projectiles.Permafrost
                         circularLocation.Y *= 1.0f;
                         circularLocation.X *= 0.7f;
                         circularLocation = circularLocation.RotatedBy(Projectile.velocity.ToRotation());
-                        Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+                        Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(116, 125, 238));
                         dust.noGravity = true;
                         dust.scale = dust.scale * 0.5f + 0.9f;
                         dust.velocity = circularLocation * -0.11f + player.velocity * 0.95f;
@@ -203,7 +203,7 @@ namespace SOTS.Projectiles.Permafrost
                     {
                         if (Main.rand.NextBool(4))
                         {
-                            Dust dust = Dust.NewDustDirect(fireFrom + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(116, 125, 238));
+                            Dust dust = Dust.NewDustDirect(fireFrom + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(116, 125, 238));
                             dust.noGravity = true;
                             dust.scale = dust.scale * 0.5f + 0.8f + chargeLevel * 0.2f;
                             dust.velocity = dust.velocity * 0.18f + Projectile.velocity * -0.04f + Main.rand.NextVector2Circular(0.5f, 0.5f) + player.velocity * 0.95f;

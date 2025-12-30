@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Evil
             {
                 if(Main.rand.NextBool(4))
                 {
-                    Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity * Main.rand.NextFloat(1) - new Vector2(5) + Main.rand.NextVector2Circular(12, 12), 0, 0, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity * Main.rand.NextFloat(1) - new Vector2(5) + Main.rand.NextVector2Circular(12, 12), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.velocity *= 0.2f;
                     dust.noGravity = true;
                     dust.fadeIn = 0.2f;

@@ -94,7 +94,7 @@ namespace SOTS.Projectiles.Chaos
                 drawPositionList.Add(position);
                 if (Main.rand.NextBool(30))
                 {
-                    Dust dust2 = Dust.NewDustPerfect(position, ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
+                    Dust dust2 = Dust.NewDustPerfect(position, SOTSUtils.TypeHelper.CopyDust4Type, Main.rand.NextVector2Circular(3, 3), 120);
                     dust2.velocity += Projectile.velocity * 0.1f;
                     dust2.noGravity = true;
                     dust2.color = ColorHelper.Pastel(Main.rand.NextFloat(0, 6.28f), true);
@@ -154,7 +154,7 @@ namespace SOTS.Projectiles.Chaos
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
                     dust.velocity += Projectile.velocity * 0.1f;
                     dust.noGravity = true;
                     dust.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18), true);
@@ -168,7 +168,7 @@ namespace SOTS.Projectiles.Chaos
                 //Terraria.Audio.SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 92, 0.6f, 0.4f);
                 for (int i = 0; i < 4; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
                     dust.velocity += Projectile.velocity * 0.1f;
                     dust.noGravity = true;
                     dust.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18), true);

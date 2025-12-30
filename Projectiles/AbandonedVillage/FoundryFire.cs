@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             {
                 Color color = Color.Lerp(Color.Red, Color.Gold, Main.rand.NextFloat(1));
                 color.A = 0;
-                Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color);
+                Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color);
                 dust.noGravity = true;
                 dust.scale = 1.5f;
                 dust.velocity *= 0.2f;
@@ -121,7 +121,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 Vector2 drawPos = Projectile.oldPos[(int)i] + Projectile.Size / 2 - ((i % 1) * Projectile.oldVelocity);
                 Color color = Color.Lerp(Color.Red, Color.Gold, scale);
                 color.A = 0;
-                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color);
+                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color);
                 dust.noGravity = true;
                 dust.scale = 2.25f * scale;
                 dust.velocity *= 0.3f;
@@ -213,7 +213,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             {
                 Color color = Color.Lerp(Color.Red, Color.Gold, Main.rand.NextFloat(1)) * Projectile.ai[1];
                 color.A = 0;
-                Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color);
+                Dust dust = Dust.NewDustDirect(Projectile.Center + new Vector2(-4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color);
                 dust.noGravity = true;
                 dust.scale = 1.25f;
                 dust.velocity *= 0.15f;
@@ -233,7 +233,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 Vector2 drawPos = Projectile.oldPos[(int)i] + Projectile.Size / 2 - ((i % 1) * Projectile.oldVelocity);
                 Color color = Color.Lerp(Color.Red, Color.Gold, scale) * Projectile.ai[1];
                 color.A = 0;
-                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, color);
+                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color);
                 dust.noGravity = true;
                 dust.scale = 1.5f * scale;
                 dust.velocity *= 0.3f;

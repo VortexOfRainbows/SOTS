@@ -50,7 +50,7 @@ namespace SOTS.Items.Planetarium.FromChests
 		{
 			if (Main.rand.NextBool(10))
 			{
-				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, ModContent.DustType<CopyDust4>(), 0, -2, 200, new Color(), 1f);
+				Dust dust = Dust.NewDustDirect(hitbox.Location.ToVector2() - new Vector2(5f), hitbox.Width, hitbox.Height, SOTSUtils.TypeHelper.CopyDust4Type, 0, -2, 200, new Color(), 1f);
 				dust.velocity *= 0.4f;
 				dust.color = new Color(100, 100, 255, 120);
 				dust.noGravity = true;

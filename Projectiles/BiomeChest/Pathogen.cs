@@ -127,7 +127,7 @@ namespace SOTS.Projectiles.BiomeChest
 					}
 				}
 			}
-			Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+			Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 			dust.velocity *= 0.1f;
 			dust.velocity -= 1f * Projectile.velocity.SafeNormalize(Vector2.Zero);
 			dust.noGravity = true;
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.BiomeChest
 		{
 			for (int i = 0; i < 9; i++)
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 0.3f;
 				dust.velocity += 1 * Projectile.velocity.SafeNormalize(Vector2.Zero);
 				dust.noGravity = true;
@@ -169,7 +169,7 @@ namespace SOTS.Projectiles.BiomeChest
 				Vector2 pos = Projectile.Center + circularPos;
 				if(!Main.rand.NextBool(3))
 				{
-					Dust dust = Dust.NewDustDirect(pos - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(pos - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.velocity *= 0.3f;
 					dust.velocity += 1 * Projectile.velocity.SafeNormalize(Vector2.Zero);
 					dust.noGravity = true;

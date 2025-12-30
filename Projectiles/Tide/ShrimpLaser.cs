@@ -108,7 +108,7 @@ namespace SOTS.Projectiles.Tide
 				{
 					for (int i = 0; i < 6; i++)
 					{
-						int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+						int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust = Main.dust[dust2];
 						dust.color = PurpleShrimpColorAttempt(Main.rand.NextFloat(1)) * 1.0f;
 						dust.noGravity = true;
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Tide
 			}
 			if(Main.rand.NextBool(40) || (hasHit && Main.rand.NextBool(8)))
             {
-				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[dust2];
 				dust.color = ColorHelper.ShrimpColorGradient(Main.rand.NextFloat(1)) * 1.2f;
 				if (Projectile.ai[0] == -1)

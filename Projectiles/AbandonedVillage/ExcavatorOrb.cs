@@ -282,7 +282,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             for (int i = 0; i < 360; i += 12)
             {
                 Vector2 circularLocation = new Vector2(Main.rand.NextFloat(10), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>(), newColor: Color);
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, newColor: Color);
                 dust.velocity += circularLocation * scaleFactor;
                 dust.noGravity = true;
                 dust.alpha = 60;
@@ -395,7 +395,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             }
             for (int i = 2; i > 0; i--)
             {
-                Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(10, 10), 12, 12, ModContent.DustType<CopyDust4>(), 0, 0, 0, color * Percent * Percent * 1.5f, 1.4f);
+                Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(10, 10), 12, 12, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color * Percent * Percent * 1.5f, 1.4f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * 0.2f * (5 - Percent * 4) + Projectile.velocity * Main.rand.NextFloat(0.1f, 2.0f);
                 if (i == 2)

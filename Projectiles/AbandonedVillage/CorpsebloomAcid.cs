@@ -80,7 +80,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 int i = Main.rand.Next(Projectile.oldPos.Length);
                 float scale = (Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length;
                 Vector2 drawPos = Projectile.oldPos[i] + Projectile.Size / 2;
-                Dust dust = Dust.NewDustDirect(drawPos - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelper.ToothAcheLime * scale);
+                Dust dust = Dust.NewDustDirect(drawPos - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, ColorHelper.ToothAcheLime * scale);
                 dust.noGravity = true;
                 dust.scale = 1.5f * scale;
                 dust.velocity *= Main.rand.NextFloat(0.2f);
@@ -134,7 +134,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             {
                 float scale = (Projectile.oldPos.Length - i) / (float)Projectile.oldPos.Length;
                 Vector2 drawPos = Projectile.oldPos[i] + Projectile.Size / 2;
-                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, ColorHelper.ToothAcheLime * scale);
+                Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, ColorHelper.ToothAcheLime * scale);
                 dust.noGravity = true;
                 dust.scale = 2f * scale;
                 dust.velocity *= 0.3f;

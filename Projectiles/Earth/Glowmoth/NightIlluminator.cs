@@ -85,7 +85,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
                 if(Main.rand.NextBool(5))
                 {
                     Color color2 = ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true);
-                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16) + Projectile.velocity.SafeNormalize(Vector2.Zero) * 16, 24, 24, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(16, 16) + Projectile.velocity.SafeNormalize(Vector2.Zero) * 16, 24, 24, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.color = color2;
                     dust.noGravity = true;
                     dust.fadeIn = 0.1f;

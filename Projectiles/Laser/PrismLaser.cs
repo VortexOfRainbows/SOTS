@@ -148,7 +148,7 @@ namespace SOTS.Projectiles.Laser
 				int j = (int)(posList[k].Y / 16);
 				if (!WorldGen.InWorld(i, j, 20) || Main.tile[i, j].HasTile && Main.tileSolidTop[Main.tile[i, j ].TileType] == false && Main.tileSolid[Main.tile[i, j ].TileType] == true)
 				{
-					Dust dust = Dust.NewDustDirect(posList2[k] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(posList2[k] - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.fadeIn = 0.2f;
 					dust.noGravity = true;
 					dust.alpha = alpha;
@@ -164,7 +164,7 @@ namespace SOTS.Projectiles.Laser
 						amt = 1;
 					for (int a = 0; a < amt; a++)
 					{
-						Dust dust = Dust.NewDustDirect(posList2[k] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(posList2[k] - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.fadeIn = 0.2f;
 						dust.noGravity = true;
 						dust.alpha = alpha;

@@ -83,7 +83,7 @@ namespace SOTS.Projectiles.Chaos
 			SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 1.3f, -0.2f);
 			for (int i = 0; i < 30; i++)
             {
-				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+				Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
 				dust2.velocity += Projectile.velocity * 0.2f;
 				dust2.noGravity = true;
 				dust2.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18));
@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Chaos
 				runOnce = false;
 				for (int i = 0; i < 15; i++)
 				{
-					Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+					Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
 					dust2.velocity += Projectile.velocity * 0.9f;
 					dust2.noGravity = true;
 					dust2.color = ColorHelper.Pastel(MathHelper.ToRadians(i * 18));
@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Chaos
 			Projectile.velocity *= 0.96f;
 			if(Main.rand.NextBool(3))
 			{
-				Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, ModContent.DustType<CopyDust4>(), 0, 0, 100);
+				Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(8, 8), 8, 8, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100);
 				dust2.velocity *= 0.2f;
 				dust2.velocity -= Projectile.velocity * 0.3f;
 				dust2.noGravity = true;

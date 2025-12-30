@@ -422,7 +422,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 					degrees += 360f / 28f;
 					startingLocation = new Vector2(i, 10 - Math.Abs(i) * 2).RotatedBy(MathHelper.ToRadians(j * 90) + Projectile.rotation);
 					Vector2 velo = offset + startingLocation;
-					Dust dust = Dust.NewDustPerfect(center + velo * 0.4f, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustPerfect(center + velo * 0.4f, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.noGravity = true;
 					dust.velocity *= 0.3f;
 					dust.scale = 1.4f;

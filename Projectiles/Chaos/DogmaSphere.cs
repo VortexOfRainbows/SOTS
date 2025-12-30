@@ -112,7 +112,7 @@ namespace SOTS.Projectiles.Chaos
 						{
 							Vector2 circularLocation = new Vector2(-70 * Projectile.scale - 26, 0).RotatedBy(MathHelper.ToRadians(k));
 							circularLocation += 0.5f * new Vector2(Main.rand.Next(-1, 2), Main.rand.Next(-1, 2));
-							Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+							Dust dust2 = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust2.velocity = -circularLocation * 0.04f;
 							dust2.color = ColorHelper.Pastel(Main.rand.NextFloat(0, 6.28f), true);
 							dust2.noGravity = true;

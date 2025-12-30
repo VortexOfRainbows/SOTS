@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Celestial
 			}
 			if(endHow == 1 && endHow != 2 && Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.noGravity = true;
 				dust.velocity *= 1.25f;
 				dust.scale *= 1.5f * (trailPos.Length - iterator) / (float)trailPos.Length;

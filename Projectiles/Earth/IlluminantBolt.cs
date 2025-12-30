@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.spriteDirection = 1;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			helixRot ++;
-			int num1 = Dust.NewDust(Projectile.Center + helixPosition() - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+			int num1 = Dust.NewDust(Projectile.Center + helixPosition() - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 			Dust dust = Main.dust[num1];
 			Color color2 = ColorHelper.VibrantColorGradient(Projectile.ai[0], true);
 			dust.color = color2;
@@ -139,7 +139,7 @@ namespace SOTS.Projectiles.Earth
 		{
 			for(int i = 0; i < 8; i++)
 			{
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Color color2 = ColorHelper.VibrantColorGradient(Projectile.ai[0], true);
 				dust.color = color2;
 				dust.noGravity = true;

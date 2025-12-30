@@ -135,7 +135,7 @@ namespace SOTS.Projectiles.BiomeChest
 							for(int i = 0; i < 360; i += 15)
 							{
 								Vector2 circularLocation = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-								Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
+								Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 								dust.velocity *= 0.33f;
 								dust.velocity += circularLocation;
 								dust.scale *= 1.25f;
@@ -236,7 +236,7 @@ namespace SOTS.Projectiles.BiomeChest
 			for (int i = 0; i < 360; i += 10)
 			{
 				Vector2 circularLocation = new Vector2(9, 0).RotatedBy(MathHelper.ToRadians(i));
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 0.45f;
 				dust.velocity += circularLocation;
 				dust.scale *= 1.25f;
@@ -245,7 +245,7 @@ namespace SOTS.Projectiles.BiomeChest
 				dust.alpha = 50;
 				dust.noGravity = true; 
 				circularLocation = new Vector2(6, 0).RotatedBy(MathHelper.ToRadians(i));
-				dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
+				dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 0.45f;
 				dust.velocity += circularLocation;
 				dust.scale *= 1.75f;

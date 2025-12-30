@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Earth
 				{
 					for (int i = 0; i < 10; i++)
 					{
-						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.velocity *= 0.8f;
 						dust.noGravity = true;
 						dust.color = ColorHelper.EarthColor;
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.Earth
 					SOTSUtils.PlaySound(new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/StarLaser"), (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.6f, -0.1f + Main.rand.NextFloat(-0.1f, 0.1f));
 					for (int i = 0; i < 13; i++)
 					{
-						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.velocity *= 0.5f;
 						dust.velocity += Projectile.velocity * 1.2f;
 						dust.noGravity = true;
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Earth
 				}
 				else if (Main.rand.NextBool(4))
 				{
-					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.velocity *= 0.8f;
 					dust.noGravity = true;
 					dust.color = ColorHelper.EarthColor;

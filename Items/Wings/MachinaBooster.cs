@@ -180,7 +180,7 @@ namespace SOTS.Items.Wings
 				if(CreativeFlightTier2)
                 {
                     Color finalColor1 = Color.Lerp(new Color(100, 100, 100, 0), ColorHelper.Pastel(MathHelper.ToRadians(SOTSWorld.GlobalCounter + i), true), 0.7f);
-                    Dust dust = Dust.NewDustDirect(Player.Center + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, finalColor1);
+                    Dust dust = Dust.NewDustDirect(Player.Center + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, finalColor1);
                     dust.noGravity = true;
                     dust.fadeIn = 0.1f;
                     dust.velocity *= 0.5f;

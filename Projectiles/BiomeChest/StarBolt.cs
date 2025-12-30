@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.BiomeChest
                 for(int i = 0; i < 15; i++)
                 {
                     int width = (int)(Projectile.width * Projectile.scale * 1.0f);
-                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(width, width) / 2, width, width, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(width, width) / 2, width, width, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.velocity = dust.velocity * 0.8f + Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f) * (float)Math.Sqrt(Projectile.velocity.Length());
                     dust.noGravity = true;
                     dust.fadeIn = 0.2f;
@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             if(Main.rand.NextBool(2))
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.velocity *= 0.5f;
                 dust.noGravity = true;
                 dust.fadeIn = 0.2f;

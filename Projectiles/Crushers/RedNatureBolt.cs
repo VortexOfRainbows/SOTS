@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Crushers
 			Projectile.velocity *= 1 - mult;
 			Projectile.velocity += goTo;
 			Vector2 center = Projectile.Center;
-			Dust dust = Dust.NewDustDirect(center - new Vector2(5) + Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+			Dust dust = Dust.NewDustDirect(center - new Vector2(5) + Projectile.velocity, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100, default, 1.6f);
 			dust.velocity *= 0.05f;
 			dust.scale = 1.2f + 1.2f * mult;
 			dust.noGravity = true;
