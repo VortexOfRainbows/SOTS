@@ -85,3 +85,6 @@ Changes:
 
 Fixes:
 1. Fix Code Corrupter localization spelling "destabilize" as "destabalize", "struck" as "striked"
+
+Hotfix 0.25.1.6
+1. Add Russian Localization

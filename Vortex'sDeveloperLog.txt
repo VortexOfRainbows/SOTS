@@ -73,6 +73,9 @@ N/A
 
 Daily Log:
 
+--- Hotfix 0.25.1.6 ---
+1. Add Russian Localization by DruSamuel and Team
+
 
 --- Hotfix 0.25.1.5 ---
 
