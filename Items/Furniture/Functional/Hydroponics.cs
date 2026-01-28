@@ -1,7 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using SOTS.Items.Fragments;
 using SOTS.WorldgenHelpers;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -11,6 +14,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SOTS.Items.Furniture.Functional
 {
@@ -149,20 +153,28 @@ namespace SOTS.Items.Furniture.Functional
 					Tile growTile = Main.tile[i + x, j + y];
 					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == ModContent.TileType<Hydroponics>())
 					{
-						SetPlant(i + x, j + y, Main.rand.Next(7));
+						SetPlant(i + x, j + y, Main.rand.Next(HydroponicsHerbSystem.Herbs.Count));
 						NetMessage.SendTileSquare(-1, i + x, j + y, 1, TileChangeType.None);
 					}
 				}
 			}
 		}
-		public static void SetPlant(int i, int j, int type)
+
+        public static void SetPlant(int i, int j, int type)
 		{
 			Tile tile = Main.tile[i, j];
-			//daybloom, moonglow, blinkroot, deathweed, waterleaf, fireblossom, shiverthorn
-			tile.TileFrameX = (short)(18 * (type + 1));
+            int count = HydroponicsHerbSystem.Herbs.Count;
+            if (count <= 0) type = 0;
+            else type = Utils.Clamp(type, 0, count - 1);
+
+            tile.TileFrameX = (short)(18 * (type + 1));
 			tile.TileFrameY = 18;
 		}
-		public static void GrowPlant(int i, int j)
+
+        private static int GetPlantStyle(Tile tile) => tile.TileFrameX / 18 - 1;
+        private static int GetGrowthStage(Tile tile) => tile.TileFrameY / 18 - 1;
+
+        public static void GrowPlant(int i, int j)
 		{
 			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameY < 72)
@@ -170,56 +182,34 @@ namespace SOTS.Items.Furniture.Functional
 		}
 		public static bool DropPlant(int i, int j)
 		{
+
 			Tile tile = Main.tile[i, j];
-			if(tile.TileFrameY == 72)
-			{
-				int type = -1;
-				int DustType = 3;
-				switch (tile.TileFrameX / 18 - 1)
-                {
-					case 0:
-						type = ItemID.Daybloom;
-						DustType = 3;
-						break;
-					case 1:
-						type = ItemID.Moonglow;
-						DustType = 3;
-						break;
-					case 2:
-						type = ItemID.Blinkroot;
-						DustType = 7;
-						break;
-					case 3:
-						type = ItemID.Deathweed;
-						DustType = 17;
-						break;
-					case 4:
-						type = ItemID.Waterleaf;
-						DustType = 3;
-						break;
-					case 5:
-						type = ItemID.Fireblossom;
-						DustType = 6;
-						break;
-					case 6:
-						type = ItemID.Shiverthorn;
-						DustType = 224;
-						break;
-				}
-				if (type == -1)
-					return false;
-				int item = Item.NewItem(new EntitySource_TileInteraction(Main.LocalPlayer, i, j), i * 16, j * 16, 16, 16, type, 1, false, 0, false, false);
-				NetMessage.SendData(MessageID.SyncItem, Main.myPlayer, Main.myPlayer, null, item, 1f, 0.0f, 0.0f, 0, 0, 0);
-				SetPlant(i, j, Main.rand.Next(7));
-				NetMessage.SendTileSquare(Main.myPlayer, i, j, 1, TileChangeType.None);
-				SOTSUtils.PlaySound(SoundID.Grass, i * 16, j * 16, 1f, 0f);
-				for(int a = 0; a < 10; a++)
-                {
-					Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustType);
-                }
-				return true;
-			}
-			return false;
+            if (tile.TileFrameY != 72) // If a herb isn't fully grown...
+                return false;
+
+            int style = GetPlantStyle(tile);
+            if (!HydroponicsHerbSystem.TryGet(style, out var herb))
+                return false;
+
+            int itemType = herb.herbType;
+            if (itemType <= 0)
+                return false;
+
+            int item = Item.NewItem(
+                new EntitySource_TileInteraction(Main.LocalPlayer, i, j),
+                i * 16, j * 16, 16, 16, itemType, 1);
+
+            NetMessage.SendData(MessageID.SyncItem, Main.myPlayer, Main.myPlayer, null, item);
+
+            // Replant a random plant
+            SetPlant(i, j, Main.rand.Next(HydroponicsHerbSystem.Herbs.Count));
+            NetMessage.SendTileSquare(Main.myPlayer, i, j, 1, TileChangeType.None);
+
+            SOTSUtils.PlaySound(SoundID.Grass, i * 16, j * 16, 1f, 0f);
+            for (int a = 0; a < 10; a++)
+                Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, herb.harvestDust);
+
+            return true;
 		}
 		public static void GetTopLeft(ref int i, ref int j)
 		{
@@ -262,7 +252,7 @@ namespace SOTS.Items.Furniture.Functional
 					if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == Type)
 					{
 						if (growTile.TileFrameY > 72)
-							SetPlant(i + x, j + y, Main.rand.Next(7));
+							SetPlant(i + x, j + y, Main.rand.Next(HydroponicsHerbSystem.Herbs.Count));
 						DropPlant(i + x, j + y);
 					}
 				}
@@ -314,22 +304,44 @@ namespace SOTS.Items.Furniture.Functional
 									int growthStage = growTile.TileFrameY / 18 - 1;
 									if (growthStage > 0)
 									{
-										int type = growTile.TileFrameX / 18 - 1;
-										if (!TextureAssets.Tile[81 + growthStage].IsLoaded)
-											Main.instance.LoadTiles(81 + growthStage);
-										Texture2D texture2 = Terraria.GameContent.TextureAssets.Tile[81 + growthStage].Value;
+										int style = GetPlantStyle(growTile);
+
 										int direction = ((i + x) % 2 * 2 - 1);
 										drawPosition.Y -= 6;
-										if (type == 1)
+
+										if (HydroponicsHerbSystem.TryGet(style, out var herb))
 										{
-											drawPosition.X += 4 * direction;
+											if (herb.vanillaDraw) // if it's a vanilla plant...
+											{
+												if (!TextureAssets.Tile[81 + growthStage].IsLoaded)
+													Main.instance.LoadTiles(81 + growthStage);
+
+												Texture2D tex = TextureAssets.Tile[81 + growthStage].Value;
+
+												if (style == 1) drawPosition.X += 4 * direction;
+												if (growthStage == 3) DoDust(i + x, j + y, style, ref lightColor);
+
+												spriteBatch.Draw(
+													tex, drawPosition, new Rectangle(style * 18, 0, 16, 20),
+													lightColor,	0f,	default, 1f,
+													direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+													0f);
+											}
+											else // otherwise, it's a modded plant
+											{
+												Rectangle src = herb.GetSourceRect(growthStage);
+
+												spriteBatch.Draw(
+                                                    TextureAssets.Tile[herb.tileType].Value, drawPosition, src, lightColor, 0f, default, 1f,
+													direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+													0f);
+
+												//herb.ambientDust?.Invoke(i + x, j + y, growthStage);
+											}
 										}
-										if(growthStage == 3)
-											DoDust(i + x, j + y, type, ref lightColor);
-										spriteBatch.Draw(texture2, drawPosition, new Rectangle(type * 18, 0, 16, 20), lightColor, 0f, default(Vector2), 1.0f, direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0f);
 									}
 								}
-							} 
+							}
 						}
 					}
 				}
@@ -430,32 +442,22 @@ namespace SOTS.Items.Furniture.Functional
 			int y = j - top;
 			if (x >= 1 && x <= 4 && y % 2 == 0 && growTile.TileType == Type)
 			{
-				if (growTile.TileFrameY == 72)
-				{
-					switch (growTile.TileFrameX / 18 - 1)
-					{
-						case 2:
-							var num18 = (270 - Main.mouseTextColor) / 800f;
-							if (num18 > 1.0)
-								num18 = 1f;
-							else if (num18 < 0.0)
-								num18 = 0.0f;
-							r = num18 * 0.7f;
-							g = num18;
-							b = num18 * 0.1f;
-							break;
-						case 5:
-							var num25 = 0.9f;
-							r = num25;
-							g = num25 * 0.8f;
-							b = num25 * 0.2f;
-							break;
-						case 6:
-							var num26 = 0.08f;
-							g = num26 * 0.8f;
-							b = num26;
-							break;
-					}
+                if (growTile.TileFrameY == 72)
+                {
+                    int style = GetPlantStyle(growTile);
+
+                    if (HydroponicsHerbSystem.TryGet(style, out var temp) && temp.lightColor != null)
+                    {
+                        var tempCol = temp.lightColor(i, j, 3);
+                        if (tempCol is not null)
+                        {
+                            // Only overwrite a value if it's already present
+                            if (tempCol.Value.i is float rr) r = rr;
+                            if (tempCol.Value.j is float gg) g = gg;
+                            if (tempCol.Value.type is float bb) b = bb;
+                        }
+                        return;
+                    }
 				}
 			}
 			base.ModifyLight(i, j, ref r, ref g, ref b);
@@ -498,8 +500,178 @@ namespace SOTS.Items.Furniture.Functional
 			if (player.cursorItemIconText == "")
 			{
 				player.cursorItemIconEnabled = false;
-				player.cursorItemIconID = 0;
+				player.cursorItemIconID = ItemID.None;
 			}
 		}
 	}
+
+	public class HydroponicsHerbSystem : ModSystem
+	{
+		public sealed class HydroponicsHerb
+		{
+			#region General
+			public string key; // The identifier for a herb, such as "ExampleMod:ExampleHerb"
+			public int tileType = TileID.BloomingHerbs; // The default tile for herbs
+			public int herbType; // The Herb that's dropped upon harvest
+			public int harvestDust = DustID.GrassBlades; // Dust used upon harvest - DustID.GrassBlades is the default
+
+            public Func<int, int, int, (float? i, float? j, float? type)?> lightColor; // For optional light
+            //public Action<int, int, int> ambientDust; // For optional dust and sparkles - currently does nothing
+            #endregion
+
+            #region Draw settings
+            public bool vanillaDraw = false; // If true, this is a vanilla tile and should use TileID._Herbs as a texture
+			public Texture texturePath; // If it's a modded herb, use its asset path
+			public int frameWidth = 18;
+			public int frameHeight = 20;
+			#endregion
+
+			// Map the growthStage to its source frame index along the X cordinate
+			// By default, herbs, both vanilla and modded, have three stages: planted(0), grown(1), and blooming(2)
+			public int[] StageToFrameX = [0, 1, 2];
+
+			public Rectangle GetSourceRect(int growthStage)
+			{
+				int idx = Utils.Clamp(growthStage - 1, 0, StageToFrameX.Length - 1);
+				int frameX = StageToFrameX[idx];
+				return new Rectangle(frameX * frameWidth, 0, 16, frameHeight);
+			}
+        }
+
+		public static readonly List<HydroponicsHerb> Herbs = [];
+
+        public override void OnModLoad()
+        {
+			float tempCol;
+
+            // Register the regular vanilla herbs first
+            RegisterHerb("Terraria:Daybloom", ItemID.Daybloom, DustID.GrassBlades, 0);
+            RegisterHerb("Terraria:Moonglow", ItemID.Moonglow, DustID.GrassBlades, 1);
+            tempCol = MathHelper.Clamp((270 - Main.mouseTextColor) / 800f, 0f, 1f); // tempCol will always be "static" and set to whatever value was used upon loading, and won't oscillate - could be implemented better
+            RegisterHerb("Terraria:Blinkroot", ItemID.Blinkroot, DustID.WoodFurniture, 2, tempCol * 0.7f, tempCol, tempCol * 0.1f);
+            RegisterHerb("Terraria:Deathweed", ItemID.Deathweed, DustID.CorruptPlants, 3);
+            RegisterHerb("Terraria:Waterleaf", ItemID.Waterleaf, DustID.GrassBlades, 4);
+			tempCol = 0.9f;
+            RegisterHerb("Terraria:Fireblossom", ItemID.Fireblossom, DustID.Torch, 5, tempCol, tempCol * 0.8f, tempCol * 0.2f);
+			tempCol = 0.08f;
+            RegisterHerb("Terraria:Shiverthorn", ItemID.Shiverthorn, DustID.Shiverthorn, 6, 0, tempCol * 0.7f, tempCol);
+        }
+
+        public override void OnModUnload()
+        {
+			Herbs.Clear();
+        }
+
+        private static void RegisterHerb(string key, int itemType, int dustType, int vanillaStyle, float r = 0f, float g = 0f, float b = 0f)
+        {
+            while (Herbs.Count <= vanillaStyle)
+                Herbs.Add(null);
+
+            bool hasLight = r != 0f || g != 0f || b != 0f;
+
+            Herbs[vanillaStyle] = new HydroponicsHerb
+            {
+                key = key,
+                herbType = itemType,
+                harvestDust = dustType,
+				vanillaDraw = true,
+
+                lightColor = hasLight ? (i, j, type) => (
+				r == 0f ? null : r,
+				g == 0f ? null : g,
+                b == 0f ? null : b
+				) : null
+            };
+        }
+
+        public static int RegisterHerb(HydroponicsHerb herb)
+        {
+            for (int i = 0; i < Herbs.Count; i++)
+                if (Herbs[i]?.key == herb.key) return i; // If there's a duplicated herb, remove the dupe
+
+            Herbs.Add(herb);
+            return Herbs.Count - 1;
+        }
+
+        public static bool TryGet(int type, out HydroponicsHerb herb)
+        {
+            if (type >= 0 && type < Herbs.Count && Herbs[type] != null)
+            {
+                herb = Herbs[type];
+                return true;
+            }
+            herb = null;
+            return false;
+        }
+
+        /// <summary>
+        /// Registers a new herb that can grow in Hydroponics.
+        /// </summary>
+        /// <param name="args"> The arguments for the mod call. This is seperated into the following:
+        /// <list type="args">
+        /// <item><description><c>herbItem (int)</c> – ItemID of the herb.</description></item>
+        /// <item><description><c>herbTile (int)</c> – TileID of the herb.</description></item>
+        /// <item><description><c>tileOffset (int)</c> – If multiple herb textures are in the same file, use this to offset it. Set to 0 for no offset. (Currently does nothing)</description></item>
+		/// <item><description><c>harvestDust (int)</c> – <c>Optional</c>: DustID used upon harvesting a herb. If set to 0, it'll be set to DustID.GrassBlades by default.</description></item>
+		/// <item><description><c>colorR (float)</c> – <c>Optional</c>: The red hue that the blooming herb emits.</description></item>
+		/// <item><description><c>colorG (float)</c> – <c>Optional</c>: The green hue that the blooming herb emits.</description></item>
+		/// <item><description><c>colorB (float)</c> – <c>Optional</c>: The blue hue that the blooming herb emits.</description></item>
+        /// </list>
+        /// </param>
+        internal static bool ParseNewHerb(params object[] args)
+        {
+            if (args.Length < 3)
+                throw new ArgumentException("ParseNewHerb requires int (herbItem), int (herbTile), int/0 (tileOffset), int/0 (harvestDust), float/0 (colorR), float/0 (colorG), float/0 (colorB)!");
+            if (args[0] is not int)
+                throw new ArgumentException("ParseNewHerb paramater 0 (herbItem) should be an int!");
+            if (args[1] is not int)
+                throw new ArgumentException("ParseNewHerb paramater 1 (herbTile) should be an int!");
+			if (args[2] is not int)
+                throw new ArgumentException("ParseNewHerb paramater 2 (tileOffset) should be an int!");
+            /* if (args[2] is not 0)
+				// Implement code for that here - right now it does nothing*/
+
+            int dustType = DustID.GrassBlades;
+			if (args[3] is not int)
+				throw new ArgumentException("ParseNewHerb paramater 3 (harvestDust) should be an int!");
+			else if (args[3] is not 0) dustType = (int)args[3];
+
+            var r = 0f;
+			var g = 0f;
+			var b = 0f;
+			if (args.Length > 3) {
+				if (args[4] is not float && args[4] is not null)
+					throw new ArgumentException("ParseNewHerb paramater 4 (colorR) should be a float!");
+				else r = (float)args[4];
+
+				if (args[5] is not float && args[5] is not null)
+					throw new ArgumentException("ParseNewHerb paramater 5 (colorG) should be a float!");
+                else g = (float)args[4];
+
+                if (args[6] is not float && args[6] is not null)
+                    throw new ArgumentException("ParseNewHerb paramater 6 (colorB) should be a float!");
+                else b = (float)args[5];
+            }
+
+            bool hasLight = r != 0f || g != 0f || b != 0f;
+
+            var herb = new HydroponicsHerb
+			{
+				key = ItemLoader.GetItem((int)args[0]).FullName,
+				tileType = (int)args[1],
+                herbType = (int)args[0],
+                texturePath = TextureAssets.Tile[(int)args[1]].Value,
+                harvestDust = dustType,
+
+                lightColor = hasLight ? (i, j, type) => (
+                r == 0f ? null : r,
+                g == 0f ? null : g,
+                b == 0f ? null : b
+                ) : null
+            };
+			RegisterHerb(herb);
+
+            return true;
+        }
+    }
 }

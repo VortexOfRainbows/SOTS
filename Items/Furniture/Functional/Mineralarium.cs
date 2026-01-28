@@ -570,152 +570,209 @@ namespace SOTS.Items.Furniture.Functional
 			}
 			return Place(i, j);
 		}
-		public static class OreType
-		{
-			public static int DurationBasedOnType(int oreID)
-			{
-				if (oreID == TileID.Copper)
-					return 1200;  
-				if (oreID == TileID.Tin)
-					return 1230;  
-				if (oreID == TileID.Iron)
-					return 1230;  
-				if (oreID == TileID.Lead)
-					return 1260;  
-				if (oreID == TileID.Silver)
-					return 1260;
-				if (oreID == TileID.Tungsten)
-					return 1300;
-				if (oreID == TileID.Gold)
-					return 1400;
-				if (oreID == TileID.Platinum)
-					return 1450;
-				if (oreID == TileID.Meteorite)
-					return 1900;
-				if (oreID == TileID.Demonite)
-					return 2300;
-				if (oreID == TileID.Crimtane)
-					return 2360;
-				if (oreID == TileID.Obsidian)
-					return 1200;  
-				if (oreID == TileID.Hellstone)
-					return 2700;
-				if (oreID == TileID.Cobalt)
-					return 2700;
-				if (oreID == TileID.Palladium)
-					return 2800;
-				if (oreID == TileID.Mythril)
-					return 3000;
-				if (oreID == TileID.Orichalcum)
-					return 3100;
-				if (oreID == TileID.Adamantite)
-					return 3900;
-				if (oreID == TileID.Titanium)
-					return 4000;
-				if (oreID == TileID.Chlorophyte)
-					return 2100;
-				if (oreID == ModContent.TileType<FrigidIceTile>() || oreID == ModContent.TileType<FrigidIceTileSafe>())
-				{
-					return 1600;
-				}
-				if (oreID == ModContent.TileType<VibrantOreTile>())
-					return 1400;
-				if (oreID == ModContent.TileType<PhaseOreTile>())
-					return 5100;
-				if (oreID == TileID.LunarOre)
-					return 11100;
-				return -1;
-			}
-			public static int GetRandomType()
+        public static class OreType
+        {
+            private static readonly Dictionary<int, int> SpawnDuration = new()
             {
-				WeightedRandom<int> types = new WeightedRandom<int>();
-				types.Add(TileID.Copper, 0.2);
-				types.Add(TileID.Tin, 0.2);
-				types.Add(TileID.Iron, 0.25);
-				types.Add(TileID.Lead, 0.25);
-				types.Add(TileID.Silver, 0.3);
-				types.Add(TileID.Tungsten, 0.3);
-				types.Add(TileID.Gold, 0.35);
-				types.Add(TileID.Platinum, 0.35);
-				if(NPC.downedBoss1)
-				{
-					types.Add(TileID.Demonite, 0.5);
-					types.Add(TileID.Crimtane, 0.5);
-					types.Add(ModContent.TileType<VibrantOreTile>(), 0.6);
-				}
-				if (NPC.downedBoss2)
-				{
-					types.Add(TileID.Obsidian, 0.2);
-					types.Add(TileID.Meteorite, 0.5);
-					types.Add(ModContent.TileType<FrigidIceTileSafe>(), 0.75);
-				}
-				if (NPC.downedBoss3 || SOTSWorld.downedAdvisor)
-				{
-					types.Add(TileID.Hellstone, 1);
-				}
-				if(Main.hardMode)
+                { TileID.Copper, 1200 },
+                { TileID.Tin, 1230 },
+                { TileID.Iron, 1230 },
+                { TileID.Lead, 1260 },
+                { TileID.Silver, 1260 },
+                { TileID.Tungsten, 1300 },
+                { TileID.Gold, 1400 },
+                { TileID.Platinum, 1450 },
+                { TileID.Meteorite, 1900 },
+                { TileID.Demonite, 2300 },
+                { TileID.Crimtane, 2360 },
+				{ TileID.Obsidian, 1200 },
+                { TileID.Hellstone, 2700 },
+                { TileID.Cobalt, 2700 },
+                { TileID.Palladium, 2800 },
+                { TileID.Mythril, 3000 },
+                { TileID.Orichalcum, 3100 },
+                { TileID.Adamantite, 3900 },
+                { TileID.Titanium, 4000 },
+                { TileID.Chlorophyte, 2100 },
+                { TileID.LunarOre, 11100 },
+
+                { ModContent.TileType<FrigidIceTile>(), 1600 },
+                { ModContent.TileType<FrigidIceTileSafe>(), 1600 },
+                { ModContent.TileType<VibrantOreTile>(), 1400 },
+                { ModContent.TileType<PhaseOreTile>(), 5100 }
+            };
+
+            public static int DurationBasedOnType(int oreID) => SpawnDuration.TryGetValue(oreID, out int dur) ? dur : -1;
+
+            private static readonly Dictionary<int, double> OreWeights = new()
+            {
+                { TileID.Copper, 0.2 },
+                { TileID.Tin, 0.2 },
+                { TileID.Iron, 0.25 },
+                { TileID.Lead, 0.25 },
+                { TileID.Silver, 0.3 },
+                { TileID.Tungsten, 0.3 },
+                { TileID.Gold, 0.35 },
+                { TileID.Platinum, 0.35 },
+
+                { TileID.Demonite, 0.5 },
+                { TileID.Crimtane, 0.5 },
+                { ModContent.TileType<VibrantOreTile>(), 0.6 },
+                { TileID.Obsidian, 0.2 },
+                { TileID.Meteorite, 0.5 },
+                { ModContent.TileType<FrigidIceTileSafe>(), 0.75 },
+                { TileID.Hellstone, 1 },
+
+                { TileID.Cobalt, 0.6 },
+                { TileID.Palladium, 0.6 },
+                { TileID.Mythril, 0.65 },
+                { TileID.Orichalcum, 0.65 },
+                { TileID.Adamantite, 0.7 },
+                { TileID.Titanium, 0.7 },
+                { TileID.Chlorophyte, 1.25 },
+                { ModContent.TileType<PhaseOreTile>(), 1.25 },
+                { TileID.LunarOre, 1.25 }
+            };
+
+            public delegate bool SpawnCondition();
+
+            internal static readonly Dictionary<int, SpawnCondition> OreSpawnConditions = new()
+            {
+                { TileID.Demonite, () => NPC.downedBoss1 },
+                { TileID.Crimtane, () => NPC.downedBoss1 },
+                { ModContent.TileType<VibrantOreTile>(), () => NPC.downedBoss1 },
+                { TileID.Obsidian, () => NPC.downedBoss2 },
+                { TileID.Meteorite, () => NPC.downedBoss2 },
+                { ModContent.TileType<FrigidIceTileSafe>(), () => NPC.downedBoss2 },
+                { TileID.Hellstone, () => NPC.downedBoss3 || SOTSWorld.downedAdvisor },
+
+                { TileID.Cobalt, () => Main.hardMode },
+                { TileID.Palladium, () => Main.hardMode },
+                { TileID.Mythril, () => Main.hardMode },
+                { TileID.Orichalcum, () => Main.hardMode },
+                { TileID.Adamantite, () => NPC.downedMechBossAny },
+                { TileID.Titanium, () => NPC.downedMechBossAny },
+                { TileID.Chlorophyte, () => NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3 },
+                { ModContent.TileType<PhaseOreTile>(), () => SOTSWorld.downedLux },
+                { TileID.LunarOre, () => NPC.downedMoonlord }
+            };
+
+            public static int GetRandomType()
+            {
+                WeightedRandom<int> types = new();
+
+                foreach (var orePair in OreWeights)
                 {
-					types.Add(TileID.Cobalt, 0.6);
-					types.Add(TileID.Palladium, 0.6);
-					types.Add(TileID.Mythril, 0.65);
-					types.Add(TileID.Orichalcum, 0.65);
-					if(NPC.downedMechBossAny)
-					{
-						types.Add(TileID.Adamantite, 0.7);
-						types.Add(TileID.Titanium, 0.7);
-					}
-					if(NPC.downedMechBoss1 && NPC.downedMechBoss2 && NPC.downedMechBoss3)
-					{
-						types.Add(TileID.Chlorophyte, 1.25);
-					}
-					if(SOTSWorld.downedLux)
+                    int oreType = orePair.Key;
+                    double weight = orePair.Value;
+
+                    // Check to see if an ore has a spawn condition
+                    if (OreSpawnConditions.TryGetValue(oreType, out SpawnCondition cond))
                     {
-						types.Add(ModContent.TileType<PhaseOreTile>(), 1.25);
-					}
-					if (NPC.downedMoonlord)
-					{
-						types.Add(TileID.LunarOre, 1.25);
-					}
-				}
-				return types.Get();
-            }
-			public static bool CountsAsOre(int t)
-            {
-				return t == TileID.Copper || t == TileID.Tin || t == TileID.Iron || t == TileID.Lead
-					 || t == TileID.Silver || t == TileID.Tungsten || t == TileID.Gold || t == TileID.Platinum || t == TileID.Meteorite || t == TileID.Demonite || t == TileID.Crimtane || t == TileID.Obsidian
-					 || t == TileID.Hellstone || t == TileID.Cobalt || t == TileID.Palladium || t == TileID.Mythril || t == TileID.Orichalcum || t == TileID.Adamantite || t == TileID.Titanium
-					 || t == TileID.Chlorophyte || t == TileID.LunarOre || t == ModContent.TileType<FrigidIceTile>() || t == ModContent.TileType<FrigidIceTileSafe>()
-					 || t == ModContent.TileType<PhaseOreTile>() || t == ModContent.TileType<VibrantOreTile>();
-			}
-			public static Point16? findPositionFrom3x3Square(Point16 center)
-			{
-				int i = center.X;
-				int j = center.Y;
-				WeightedRandom<Point16> availablePositions = new WeightedRandom<Point16>();
-				for (int k = -1; k <= 1; k++)
-				{
-					for (int h = 0; h >= -2; h--)
-					{
-						Point16 tilePos = new Point16(i + k, j + h);
-						Tile tile = Framing.GetTileSafely(tilePos);
-						if (!tile.HasTile)
-						{
-							if(Framing.GetTileSafely(i, j + 1).HasTile)
-                            {
-								availablePositions.Add(new Point16(i + k, j + h), 1.5 + h * 0.65);
-							}
-						}
-					}
-				}
-				if(availablePositions.elements.Count > 0)
-                {
-					return availablePositions.Get();
+                        if (cond != null && cond()) // If it has a condition, is it met? If so, allow the ore to be created
+                            types.Add(oreType, weight);
+                    }
+                    else // Otherwise, this ore can always be created in the Mineralarium
+                        types.Add(oreType, weight);
                 }
-				return null;
-			}
-		}
-	}
-	public class MineralariumProjectile : ModProjectile
+
+                return types.Get();
+            }
+
+            private static readonly HashSet<int> OreTypes =
+            [
+                TileID.Copper, TileID.Tin,
+                TileID.Iron, TileID.Lead,
+                TileID.Silver, TileID.Tungsten,
+                TileID.Gold, TileID.Platinum,
+                TileID.Demonite, TileID.Crimtane, TileID.Meteorite,
+                TileID.Obsidian, TileID.Hellstone,
+                TileID.Cobalt, TileID.Palladium,
+                TileID.Mythril, TileID.Orichalcum,
+                TileID.Adamantite, TileID.Titanium,
+                TileID.Chlorophyte, TileID.LunarOre,
+
+                ModContent.TileType<FrigidIceTile>(), ModContent.TileType<FrigidIceTileSafe>(),
+                ModContent.TileType<PhaseOreTile>(), ModContent.TileType<VibrantOreTile>()
+            ];
+
+            public static bool CountsAsOre(int t)
+            {
+				return OreTypes.Contains(t);
+            }
+
+            public static Point16? findPositionFrom3x3Square(Point16 center)
+            {
+                int i = center.X;
+                int j = center.Y;
+                WeightedRandom<Point16> availablePositions = new WeightedRandom<Point16>();
+                for (int k = -1; k <= 1; k++)
+                {
+                    for (int h = 0; h >= -2; h--)
+                    {
+                        Point16 tilePos = new Point16(i + k, j + h);
+                        Tile tile = Framing.GetTileSafely(tilePos);
+                        if (!tile.HasTile)
+                        {
+                            if (Framing.GetTileSafely(i, j + 1).HasTile)
+                            {
+                                availablePositions.Add(new Point16(i + k, j + h), 1.5 + h * 0.65);
+                            }
+                        }
+                    }
+                }
+                if (availablePositions.elements.Count > 0)
+                    return availablePositions.Get();
+                return null;
+            }
+
+            /// <summary>
+            /// Registers a new ore that can be generated in a Mineralarium.
+            /// </summary>
+            /// <param name="args"> The arguments for the mod call. This is seperated into the following:
+            /// <list type="args">
+            /// <item><description><c>oreType (int)</c> – TileID of the ore.</description></item>
+            /// <item><description><c>generationDuration (int)</c> – Generation duration (in ticks - 60 ticks are in a second).</description></item>
+            /// <item><description><c>spawnWeight (double)</c> – Spawn weight in the weighted random - lower values spawn more frequently.</description></item>
+            /// <item><description><c>spawnCondition (bool/delegate)</c> – <c>Optional</c>: The condition for when this ore can randomly spawn. Note this doesn't change manual spawns.</description></item>
+            /// </list>
+            /// </param>
+            public static bool ParseNewOre(params object[] args)
+            {
+                if (args.Length < 3)
+                    throw new ArgumentException("ParseNewOre requires int (oreType), int (generationDuration), double (spawnWeight), delegate/bool (spawnCondition) arguments!");
+                if (args[0] is not int oreType)
+                    throw new ArgumentException("ParseNewOre paramater 0 (oreType) should be an int!");
+                if (args[1] is not int duration)
+                    throw new ArgumentException("ParseNewOre paramater 1 (generationDuration) should be an int!");
+                if (args[2] is not double weight)
+                    throw new ArgumentException("ParseNewOre paramater 2 (spawnWeight) should be a double!");
+
+                SpawnCondition cond;
+				if (args.Length < 4)
+					cond = () => true;
+				else if (args[3] is not SpawnCondition && args[3] is not bool)
+					throw new ArgumentException("ParseNewOre paramater 3 (spawnCondition) should be either a bool, delegate, or empty!");
+				else
+				{
+					cond = args[3] switch
+					{
+						SpawnCondition spawn => spawn,
+						bool b => () => b,
+						_ => () => true,
+					};
+				}
+                OreTypes.Add(oreType);
+                SpawnDuration[oreType] = duration;
+                OreWeights[oreType] = weight;
+				OreSpawnConditions[oreType] = cond;
+
+                return true;
+            }
+        }
+    }
+
+    public class MineralariumProjectile : ModProjectile
 	{
         public override string Texture => "SOTS/Items/Furniture/Functional/Mineralarium";
         public override void SetDefaults() //Do you enjoy how all my net sycning is done via projectiles?
