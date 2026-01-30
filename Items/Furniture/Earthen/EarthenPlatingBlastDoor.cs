@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Items.Fragments;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace SOTS.Items.Furniture.Earthen
@@ -29,10 +30,6 @@ namespace SOTS.Items.Furniture.Earthen
 	{
 		public override int DoorItemID => ModContent.ItemType<Earthen.EarthenPlatingBlastDoor>();
 		public override int OpenDoorTile => ModContent.TileType<Earthen.EarthenPlatingBlastDoorTileOpen>();
-		public override string GetName()
-		{
-			return this.GetLocalizedValue("MapEntry");
-		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
@@ -43,10 +40,6 @@ namespace SOTS.Items.Furniture.Earthen
 	{
 		public override int DoorItemID => ModContent.ItemType<Earthen.EarthenPlatingBlastDoor>();
 		public override int ClosedDoorTile => ModContent.TileType<Earthen.EarthenPlatingBlastDoorTileClosed>();
-		public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{
 			Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));

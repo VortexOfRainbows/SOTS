@@ -123,9 +123,8 @@ namespace SOTS.Items.Planetarium.Furniture
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(180, 245, 240), name);
-			TileID.Sets.DisableSmartCursor[Type] = true;
+			AddMapEntry(new Color(180, 245, 240), Language.GetText("Mods.SOTS.Items.PotGenerator.DisplayName"));
+            TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustType<AvaritianDust>();
 		}
         public override bool CanKillTile(int i, int j, ref bool blockDamaged)

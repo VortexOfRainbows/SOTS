@@ -55,8 +55,7 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, 1, 0);
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(220, 180, 25), name);
+			AddMapEntry(new Color(220, 180, 25), Language.GetText("Mods.SOTS.Items.PyramidGate.DisplayName"));
 			DustType = DustID.GoldCoin;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)

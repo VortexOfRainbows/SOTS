@@ -101,9 +101,8 @@ namespace SOTS.Items.Planetarium.Furniture
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(255, 255, 255), name);
-			TileID.Sets.DisableSmartCursor[Type] = true;
+			AddMapEntry(new Color(255, 255, 255), Language.GetText("Mods.SOTS.Items.DigitalDisplay.DisplayName"));
+            TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
         public override IEnumerable<Item> GetItemDrops(int i, int j)

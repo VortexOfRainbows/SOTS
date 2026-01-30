@@ -97,8 +97,7 @@ namespace SOTS.Items.Fishing
 			Main.tileTable[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(122, 243, 255), name);
+			AddMapEntry(new Color(122, 243, 255));
             DustType = ModContent.DustType<AvaritianDust>();
 			TileObjectData.addTile(Type);
         }
@@ -167,8 +166,7 @@ namespace SOTS.Items.Fishing
             Main.tileTable[Type] = true;
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16 };
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(191, 95, 208), name);
+            AddMapEntry(new Color(191, 95, 208));
             DustType = ModContent.DustType<AvaritianDust>();
             TileObjectData.addTile(Type);
         }

@@ -126,9 +126,8 @@ namespace SOTS.Items.Pyramid
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			////ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<RoyalRubyShard>();
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(211, 69, 74), name);
-			HitSound = SoundID.Item27;
+			AddMapEntry(new Color(211, 69, 74), Language.GetText("Mods.SOTS.Items.PyramidGate.DisplayName"));
+            HitSound = SoundID.Item27;
 			DustType = 12;
 		}
         public override bool CanExplode(int i, int j)

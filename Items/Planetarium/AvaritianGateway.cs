@@ -57,8 +57,7 @@ namespace SOTS.Items.Planetarium
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 5, 2); 
 			TileObjectData.newTile.Origin = new Point16(4, 8);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(55, 45, 65), name);
+			AddMapEntry(new Color(55, 45, 65), Language.GetText("Mods.SOTS.Tiles.GatewayTile.MapEntry"));
 			DustType = ModContent.DustType<AvaritianDust>();
 		}
         public override bool CanExplode(int i, int j)

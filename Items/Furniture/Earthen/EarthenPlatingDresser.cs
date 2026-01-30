@@ -30,10 +30,10 @@ namespace SOTS.Items.Furniture.Earthen
 			return false;
 		}
 		protected override int DresserDrop => ModContent.ItemType<EarthenPlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.EarthenPlatingDresserTile");
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.Items.EarthenPlatingDresser.DisplayName");
 		public override LocalizedText DefaultContainerName(int frameX, int frameY)
 		{
-			return Language.GetText("Mods.SOTS.ContainerName.EarthenPlatingDresserTile");
+			return Language.GetText("Mods.SOTS.Items.EarthenPlatingDresser.DisplayName");
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {

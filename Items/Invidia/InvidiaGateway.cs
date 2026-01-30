@@ -57,9 +57,8 @@ namespace SOTS.Items.Invidia
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0); 
 			TileObjectData.newTile.Origin = new Point16(14, 26);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(31, 39, 57), name);
-			DustType = ModContent.DustType<EvostoneDust>();
+			AddMapEntry(new Color(31, 39, 57), Language.GetText("Mods.SOTS.Tiles.GatewayTile.MapEntry"));
+            DustType = ModContent.DustType<EvostoneDust>();
 		}
         public override bool CanExplode(int i, int j)
 		{

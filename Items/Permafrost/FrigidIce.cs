@@ -26,8 +26,7 @@ namespace SOTS.Items.Permafrost
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<FrigidIce>();
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(100, 173, 232), name);
+			AddMapEntry(new Color(100, 173, 232), Language.GetText("Mods.SOTS.Items.FrigidIce.DisplayName"));
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 			RegisterItemDrop(ModContent.ItemType<FrigidIce>());
 		}
@@ -72,8 +71,7 @@ namespace SOTS.Items.Permafrost
 			MineResist = 0.5f;
 			DustType = ModContent.DustType<ModIceDust>();
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<FrigidIce>();
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(96, 111, 215), name);
+			AddMapEntry(new Color(96, 111, 215), Language.GetText("Mods.SOTS.Items.FrigidIce.DisplayName"));
 			HitSound = new Terraria.Audio.SoundStyle("SOTS/Sounds/Items/FrigidOre1");
 		}
 		public override bool KillSound(int i, int j, bool fail)

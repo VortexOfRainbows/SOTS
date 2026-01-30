@@ -45,9 +45,8 @@ namespace SOTS.Items.Planetarium.Furniture
 			TileObjectData.newTile.CoordinateHeights = new int[]{18};
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(255, 255, 255), name);
-			TileID.Sets.DisableSmartCursor[Type] = true;
+			AddMapEntry(new Color(255, 255, 255), Language.GetText("Mods.SOTS.Items.SkyChain.DisplayName"));
+            TileID.Sets.DisableSmartCursor[Type] = true;
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<SkyChain>();
 			DustType = ModContent.DustType<AvaritianDust>();
 		}

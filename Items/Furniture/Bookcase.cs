@@ -1,6 +1,7 @@
 ﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -21,6 +22,7 @@ namespace SOTS.Items.Furniture
             t.CoordinateHeights = new int[] { 16, 16, 16, 16 };
             t.Origin = new Point16(1, 3);
             AdjTiles = new int[] { TileID.Bookcases };
+            AddMapEntry(MapColor, Language.GetText("ItemName.Bookcase"));
         }
     }
 }

@@ -57,9 +57,8 @@ namespace SOTS.Items.AbandonedVillage
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 10, 0);
 			TileObjectData.newTile.Origin = new Point16(5, 7);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(75, 57, 86), name);
-			MinPick = 250;
+			AddMapEntry(new Color(75, 57, 86), Language.GetText("Mods.SOTS.Items.PinkyTestTube.DisplayName"));
+            MinPick = 250;
 			DustType = DustID.Lead;
 			HitSound = SoundID.Tink;
 			MineResist = 0.1f;

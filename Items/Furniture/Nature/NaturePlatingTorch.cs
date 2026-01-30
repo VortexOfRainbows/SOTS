@@ -87,8 +87,7 @@ namespace SOTS.Items.Furniture.Nature
 			TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(SOTSTile.NaturePlatingLight * 3), name);
+			AddMapEntry(new Color(SOTSTile.NaturePlatingLight * 3), Language.GetText("ItemName.Torch"));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.GoldCoin;
 			TileID.Sets.DisableSmartCursor[Type] = true;

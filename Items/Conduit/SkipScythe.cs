@@ -16,6 +16,8 @@ using SOTS.Items.ChestItems;
 using System;
 using Terraria.DataStructures;
 using static SOTS.ItemHelpers;
+using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace SOTS.Items.Conduit
 {

@@ -95,14 +95,14 @@ namespace SOTS.Items.Pyramid
 		{
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			modPlayer.CanCurseSwap = true;
-			string theKey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
+			string theKey = Language.GetTextValue("LegacyMenu.195");
 			if(Main.netMode != NetmodeID.Server)
 			{
 				foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys())
 				{
 					theKey = key;
 				}
-				player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Cursed", theKey);
+				player.setBonus = Language.GetTextValue("Mods.SOTS.Items.CursedHood.SetBonus", theKey);
 			}				
 		}
 		public override void AddRecipes()

@@ -29,8 +29,7 @@ namespace SOTS.Items.Invidia
 			TileObjectData.newTile.RandomStyleRange = 9;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(46, 63, 77), name);
+            AddMapEntry(new Color(46, 63, 77), Language.GetText("MapObject.Pot"));
             DustType = ModContent.DustType<EvostoneDust>();
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

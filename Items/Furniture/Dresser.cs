@@ -17,10 +17,11 @@ namespace SOTS.Items.Furniture
         protected virtual Color MapColor => new Color(191, 142, 111, 255);
         protected virtual int DresserDrop => ItemID.Dresser;
         protected virtual int DustType => DustID.Dirt;
-        protected virtual string DresserName => Language.GetTextValue("Mods.SOTS.Common.Dresser");
+        protected virtual string DresserKey => $"Mods.SOTS.Items.{GetType().Name.Replace("Tile", "")}.DisplayName";
+        protected virtual string DresserName => Language.GetTextValue(DresserKey);
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
         {
-            return Language.GetText("Mods.SOTS.Common.Dresser");
+            return Language.GetText(DresserKey);
         }
         public override void SetStaticDefaults()
         {
@@ -53,7 +54,22 @@ namespace SOTS.Items.Furniture
 
             //ModTranslation name = CreateMapEntryName();
             //name.SetDefault(DresserName)s;
-            AddMapEntry(MapColor, LocalizedText.Empty, (s, i, j) => DresserName);
+            AddMapEntry(MapColor, LocalizedText.Empty, (name, i, j) =>
+            {
+                Tile tile = Main.tile[i, j];
+                int left = i - tile.TileFrameX % 54 / 18;
+                int top = j - tile.TileFrameY % 36 / 18;
+
+                int chestIndex = Chest.FindChest(left, top);
+                string dresserName = ((Dresser)ModContent.GetModTile(tile.TileType)).DresserName;
+
+                if (chestIndex < 0)
+                    return Language.GetTextValue("LegacyDresserType.0");
+                if (Main.chest[chestIndex].name == "")
+                    return dresserName;
+
+                return dresserName + ": " + Main.chest[chestIndex].name;
+            });
             AdjTiles = new int[] { TileID.Dressers };
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -145,86 +161,49 @@ namespace SOTS.Items.Furniture
             }
             return true;
         }
-        public override void MouseOverFar(int i, int j)
+        private void MouseOverNearAndFarSharedLogic(Player player)
         {
-            Player player = Main.LocalPlayer;
             Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
-            int left = Player.tileTargetX;
-            int top = Player.tileTargetY;
-            left -= tile.TileFrameX % 54 / 18;
-            if (tile.TileFrameY % 36 != 0)
-            {
-                top--;
-            }
-            int chestIndex = Chest.FindChest(left, top);
+
+            int left = Player.tileTargetX - tile.TileFrameX % 54 / 18;
+            int top = Player.tileTargetY - (tile.TileFrameY % 36 != 0 ? 1 : 0);
+
+            player.noThrow = 2;
+            player.cursorItemIconEnabled = true;
             player.cursorItemIconID = -1;
+            player.cursorItemIconText = "";
+
+            if (tile.TileFrameY > 0)
+            {
+                player.cursorItemIconID = ItemID.FamiliarShirt;
+                return;
+            }
+
+            int chestIndex = Chest.FindChest(left, top);
+
             if (chestIndex < 0)
             {
                 player.cursorItemIconText = Language.GetTextValue("LegacyDresserType.0");
+                return;
             }
-            else
+
+            string name = Main.chest[chestIndex].name;
+
+            if (!string.IsNullOrEmpty(name))
             {
-                if (Main.chest[chestIndex].name != "")
-                {
-                    player.cursorItemIconText = Main.chest[chestIndex].name;
-                }
-                else
-                {
-                    player.cursorItemIconText = DresserName;
-                }
-                if (player.cursorItemIconText == DresserName)
-                {
-                    player.cursorItemIconID = DresserDrop;
-                    player.cursorItemIconText = "";
-                }
+                player.cursorItemIconText = name;
+                return;
             }
-            player.noThrow = 2;
-            player.cursorItemIconEnabled = true;
-            if (player.cursorItemIconText == "")
-            {
-                player.cursorItemIconEnabled = false;
-                player.cursorItemIconID = 0;
-            }
+
+            player.cursorItemIconID = DresserDrop;
         }
         public override void MouseOver(int i, int j)
         {
-            Player player = Main.LocalPlayer;
-            Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
-            int left = Player.tileTargetX;
-            int top = Player.tileTargetY;
-            left -= tile.TileFrameX % 54 / 18;
-            if (tile.TileFrameY % 36 != 0)
-            {
-                top--;
-            }
-            int num138 = Chest.FindChest(left, top);
-            player.cursorItemIconID = -1;
-            if (num138 < 0)
-            {
-                player.cursorItemIconText = Language.GetTextValue("LegacyDresserType.0");
-            }
-            else
-            {
-                if (Main.chest[num138].name != "")
-                {
-                    player.cursorItemIconText = Main.chest[num138].name;
-                }
-                else
-                {
-                    player.cursorItemIconText = DresserName;
-                }
-                if (player.cursorItemIconText == DresserName)
-                {
-                    player.cursorItemIconID = DresserDrop;
-                    player.cursorItemIconText = "";
-                }
-            }
-            player.noThrow = 2;
-            player.cursorItemIconEnabled = true;
-            if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileFrameY > 0)
-            {
-                player.cursorItemIconID = ItemID.FamiliarShirt;
-            }
+            MouseOverNearAndFarSharedLogic(Main.LocalPlayer);
+        }
+        public override void MouseOverFar(int i, int j)
+        {
+            MouseOverNearAndFarSharedLogic(Main.LocalPlayer);
         }
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {

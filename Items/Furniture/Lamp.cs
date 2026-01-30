@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -20,6 +21,7 @@ namespace SOTS.Items.Furniture
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
             TileObjectData.newTile.Height = 3;
+            AddMapEntry(MapColor, Language.GetText("ItemName.FloorLamp"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

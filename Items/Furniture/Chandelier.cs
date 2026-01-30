@@ -3,6 +3,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -31,6 +32,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.LavaDeath = true;
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch); AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             TileID.Sets.DisableSmartCursor[Type] = true;
+            AddMapEntry(MapColor, Language.GetText("MapObject.Chandelier"));
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {

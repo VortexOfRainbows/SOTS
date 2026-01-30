@@ -33,7 +33,7 @@ namespace SOTS.Items.AbandonedVillage
         }
         public override void UpdateArmorSet(Player player)
         {
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Excavator");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.ExcavatorHelmet.SetBonus");
             player.VoidPlayer().voidRegenSpeed += 0.3f;
             player.SOTSPlayer().MissileTailAttackRate = 60;
         }

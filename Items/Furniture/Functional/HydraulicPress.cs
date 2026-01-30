@@ -89,9 +89,8 @@ namespace SOTS.Items.Furniture.Functional
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 6, 0);
 			TileObjectData.newTile.Origin = new Point16(3, 7);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(SOTSTile.EarthenPlatingColor, name);
-			DustType = DustID.Iron;
+			AddMapEntry(SOTSTile.EarthenPlatingColor, Language.GetText("Mods.SOTS.Items.HydraulicPress.DisplayName"));
+            DustType = DustID.Iron;
 			MineResist = 0.1f;
 		}
         public override void NearbyEffects(int i, int j, bool closer)

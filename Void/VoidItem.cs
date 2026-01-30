@@ -95,28 +95,27 @@ namespace SOTS.Void
 			{
 				string[] splitText = tt.Text.Split(' ');
 				string damageValue = splitText.First();
-				string damageWord = Language.GetTextValue("Mods.SOTS.Common.Damage");
 				
-				tt.Text = Language.GetTextValue("Mods.SOTS.Common.Void2", damageValue, damageWord);
+				tt.Text = Language.GetTextValue("Mods.SOTS.Common.Void2", damageValue);
 				
 				if(Item.CountsAsClass(DamageClass.Melee))
-					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidM", damageValue, damageWord);
+					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidM", damageValue);
 				
 				if(Item.CountsAsClass(DamageClass.Ranged))
-					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidR", damageValue, damageWord);
+					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidR", damageValue);
 			
 				if(Item.CountsAsClass(DamageClass.Magic))
-					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidM2", damageValue, damageWord);
+					tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidM2", damageValue);
 
 				if (Item.CountsAsClass(DamageClass.Summon))
 				{
 					if(Item.type == ModContent.ItemType<Tesseract>())
                     {
-                        tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidSPercent", damageWord);
+                        tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidSPercent");
                     }
 					else
                     {
-                        tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidS", damageValue, damageWord);
+                        tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidS", damageValue);
                     }
 					TooltipLine tl = tooltips.FirstOrDefault(x => x.Name == "CritChance" && x.Mod == "Terraria");
 					bool Found = tl != default;

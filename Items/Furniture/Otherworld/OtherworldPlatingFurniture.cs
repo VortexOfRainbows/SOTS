@@ -90,10 +90,6 @@ namespace SOTS.Items.Furniture.Otherworld
     {
         public override int DoorItemID => ModContent.ItemType<Otherworld.OtherworldPlatingBlastDoor>();
         public override int OpenDoorTile => ModContent.TileType<Otherworld.OtherworldPlatingBlastDoorTileOpen>();
-        public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
@@ -104,10 +100,6 @@ namespace SOTS.Items.Furniture.Otherworld
     {
         public override int DoorItemID => ModContent.ItemType<Otherworld.OtherworldPlatingBlastDoor>();
         public override int ClosedDoorTile => ModContent.TileType<Otherworld.OtherworldPlatingBlastDoorTileClosed>();
-        public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
@@ -285,10 +277,10 @@ namespace SOTS.Items.Furniture.Otherworld
             return false;
         }
         protected override int DresserDrop => ModContent.ItemType<OtherworldPlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.OtherworldPlatingDresserTile");
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.Items.OtherworldPlatingDresser.DisplayName");
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
         {
-            return Language.GetText("Mods.SOTS.ContainerName.OtherworldPlatingDresserTile");
+            return Language.GetText("Mods.SOTS.Items.OtherworldPlatingDresser.DisplayName");
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -700,8 +692,7 @@ namespace SOTS.Items.Furniture.Otherworld
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(SOTSTile.OtherworldPlatingLight * 3), name);
+            AddMapEntry(new Color(SOTSTile.OtherworldPlatingLight * 3), Language.GetText("ItemName.Torch"));
             DustType = DustID.GoldCoin;
             AdjTiles = new int[] { TileID.Torches };
             TileID.Sets.DisableSmartCursor[Type] = true;

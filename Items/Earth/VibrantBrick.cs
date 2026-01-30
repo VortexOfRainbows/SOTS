@@ -43,8 +43,7 @@ namespace SOTS.Items.Earth
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<VibrantBrick>();
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(181, 220, 97), name);
+			AddMapEntry(new Color(181, 220, 97));
 			MineResist = 1.0f;
 			HitSound = SoundID.Tink;
 			DustType = ModContent.DustType<VibrantDust>();

@@ -69,8 +69,7 @@ namespace SOTS.Items.MusicBoxes
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(255, 0, 0), name);
+			AddMapEntry(new Color(255, 0, 0), Language.GetText("ItemName.MusicBox"));
 		}
 		public override void MouseOver(int i, int j)
 		{

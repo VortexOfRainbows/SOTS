@@ -18,10 +18,6 @@ namespace SOTS.Items.Furniture
 	{
 		public virtual int DoorItemID => ModContent.ItemType<Nature.NaturePlatingBlastDoor>();
 		public virtual int OpenDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileOpen>();
-		public virtual string GetName()
-		{
-			return Language.GetTextValue("Mods.SOTS.Common.BlastDoor");
-		}
 		public override bool CanExplode(int i, int j)
 		{
 			return false;
@@ -53,10 +49,8 @@ namespace SOTS.Items.Furniture
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-			// name.SetDefault(GetName());
-			AddMapEntry(new Color(191, 142, 111), name);
+			AddMapEntry(new Color(119, 105, 79), Language.GetText("Mods.SOTS.Tiles.BlastDoorTile.MapEntry"));
 			DustType = -1;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.ClosedDoor };
@@ -102,10 +96,6 @@ namespace SOTS.Items.Furniture
 	{
 		public virtual int DoorItemID => ModContent.ItemType<Nature.NaturePlatingBlastDoor>();
 		public virtual int ClosedDoorTile => ModContent.TileType<Nature.NaturePlatingBlastDoorTileClosed>();
-		public virtual string GetName()
-		{
-			return Language.GetTextValue("Mods.SOTS.Common.BlastDoor");
-		}
 		public override bool CanExplode(int i, int j)
 		{
 			return false;
@@ -134,9 +124,8 @@ namespace SOTS.Items.Furniture
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-			AddMapEntry(new Color(191, 142, 111), name);
+			AddMapEntry(new Color(191, 142, 111), Language.GetText("Mods.SOTS.Tiles.BlastDoorTile.MapEntry"));
 			DustType = -1;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			AdjTiles = new int[] { TileID.OpenDoor };

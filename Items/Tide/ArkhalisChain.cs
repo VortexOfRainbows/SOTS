@@ -47,9 +47,8 @@ namespace SOTS.Items.Tide
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(127, 127, 127), name);
-			TileID.Sets.DisableSmartCursor[Type] = true;
+			AddMapEntry(new Color(127, 127, 127), Language.GetText("Mods.SOTS.Items.ArkhalisChain.DisplayName"));
+            TileID.Sets.DisableSmartCursor[Type] = true;
 			////ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<ArkhalisChain>();
 			DustType = ModContent.DustType<AvaritianDust>();
 		}

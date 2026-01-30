@@ -1,4 +1,4 @@
-Order Of Gems (and order of "sins"): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
+﻿Order Of Gems (and order of "sins"): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 The following is my development plans :D
 1. After Void Anomaly is extracted through the tainted keystone, the other portal now leads to a secret area containing the Superbia Portal Base and the Suspicious Stopwatch. The room cannot be entered until it is unlocked from the inside. It is unlocked by breaking the suspicious stopwatch, which can only happen if the Void Anomaly is equipped. The blocks comprising the room appear invisible, similar to Phase Ore. It appears in the Top Right of the sky, opposite the diamond structure, and is not visited by the Archaeologist.
 1a. Suspicious Stopwatch can be powered by the Chaos Conduit, breaking into Time Shards and a Broken Watch; these can be used with the Voidmage Incubator to craft a Timekeeper's Stopwatch 

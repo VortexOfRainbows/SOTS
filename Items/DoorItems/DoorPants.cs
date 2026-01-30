@@ -26,7 +26,7 @@ namespace SOTS.Items.DoorItems
 		}
 		public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.DoorItems");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.DoorPants.SetBonus");
 			DoorPlayer doorPlayer = DoorPlayer.ModPlayer(player);
 			doorPlayer.doorPants++;
 		}

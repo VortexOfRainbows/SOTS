@@ -22,8 +22,7 @@ namespace SOTS.Items.Banners
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(120, 85, 60), name);
+			AddMapEntry(new Color(120, 85, 60), Language.GetText("MapObject.Trophy"));
 		}
         public override bool CreateDust(int i, int j, ref int type)
         {

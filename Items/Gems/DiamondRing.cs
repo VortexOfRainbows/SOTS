@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using Microsoft.Xna.Framework.Input;
 
 namespace SOTS.Items.Gems
 {
@@ -50,21 +51,21 @@ namespace SOTS.Items.Gems
 		{
 			this.SetResearchCost(1);
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			foreach (TooltipLine line in tooltips) //goes through each tooltip line
-			{
-				if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
-				{
-					int defenseStat = SOTSPlayer.ModPlayer(Main.LocalPlayer).previousDefense;
-					line.Text = Language.GetTextValue("Mods.SOTS.DiamondRingText");
-                    line.Text += Language.GetTextValue("Mods.SOTS.DiamondRingText2", Convert.ToString(defenseStat), Convert.ToString(defenseStat / 3));
-					return;
-				}
-			}
-			base.ModifyTooltips(tooltips);
-		}
-		public override void SetDefaults()
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            int defenseStat = SOTSPlayer.ModPlayer(Main.LocalPlayer).previousDefense;
+            int defenseReduction = defenseStat / 3;
+
+            foreach (TooltipLine line in tooltips)
+            {
+                if (line.Mod == "Terraria")
+                {
+                    line.Text = string.Format(line.Text, defenseStat, defenseReduction);
+                }
+            }
+        }
+
+        public override void SetDefaults()
 		{
 			Item.maxStack = 1;
             Item.width = 22;     

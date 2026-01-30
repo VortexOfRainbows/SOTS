@@ -48,8 +48,7 @@ namespace SOTS.Items.Furniture.AncientGold
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16 };
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(255, 220, 100), name);
+			AddMapEntry(new Color(255, 220, 100), Language.GetText("ItemName.Campfire"));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = DustID.GoldCoin;
 			AdjTiles = new int[] { TileID.Furnaces };
