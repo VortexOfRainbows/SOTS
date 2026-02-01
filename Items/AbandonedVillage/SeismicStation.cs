@@ -47,9 +47,8 @@ namespace SOTS.Items.AbandonedVillage
 			TileObjectData.newTile.CoordinateHeights = [18, 16, 16];
 			TileObjectData.addTile(Type);
 			DustType = DustID.Iron; 
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(251, 129, 13), name);
-		}
+			AddMapEntry(new Color(251, 129, 13), Language.GetText("Mods.SOTS.Items.SeismicStation.DisplayName"));
+        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
 			SOTSTile.DrawSlopedGlowMask(i, j, Type, ModContent.Request<Texture2D>("SOTS/Items/AbandonedVillage/SeismicStationTileGlow").Value, Color.White, Vector2.Zero, false);

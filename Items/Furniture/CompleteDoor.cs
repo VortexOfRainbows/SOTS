@@ -5,6 +5,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -12,10 +13,10 @@ namespace SOTS.Items.Furniture
 {
     public abstract class CompleteDoor<TDrop, TOpen> : ModTile where TDrop : ModItem where TOpen : ModTile
     {
-        protected virtual Color MapColor => new Color(191, 142, 111, 255);
+        protected virtual Color MapColor => new Color(119, 105, 79);
         public abstract class OpenVariant<TClosed> : ModTile where TClosed : ModTile
         {
-            protected virtual Color MapColor => new Color(191, 142, 111, 255);
+            protected virtual Color MapColor => new Color(119, 105, 79);
             public override void SetStaticDefaults()
             {
                 TileID.Sets.CloseDoorID[Type] = ModContent.TileType<TClosed>();
@@ -63,7 +64,7 @@ namespace SOTS.Items.Furniture
                 AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
                 TileID.Sets.HousingWalls[Type] = true; //needed for non-solid blocks to count as walls
                 TileID.Sets.HasOutlines[Type] = true;
-                AddMapEntry(MapColor, this.GetLocalization("DisplayName"));
+                AddMapEntry(MapColor, Language.GetText("MapObject.Door"));
                 TileID.Sets.DisableSmartCursor[Type] = true;
                 AdjTiles = new int[] { TileID.OpenDoor };
             }
@@ -116,7 +117,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
-            AddMapEntry(MapColor, this.GetLocalization("DisplayName"));
+            AddMapEntry(MapColor, Language.GetText("MapObject.Door"));
             TileID.Sets.DisableSmartCursor[Type] = true;
             AdjTiles = new int[] { TileID.ClosedDoor };
         }

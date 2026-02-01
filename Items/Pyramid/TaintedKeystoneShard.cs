@@ -116,9 +116,8 @@ namespace SOTS.Items.Pyramid
 			Main.tileNoFail[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(24, 24, 24), name);
-			HitSound = SoundID.Item27;
+			AddMapEntry(new Color(24, 24, 24), Language.GetText("Mods.SOTS.Items.TaintedKeystoneShard.DisplayName"));
+            HitSound = SoundID.Item27;
 			DustType = 195;
 		}
         public override bool CanExplode(int i, int j)

@@ -6,6 +6,7 @@ using SOTS.Items.Planetarium.FromChests;
 using SOTS.Items.Planetarium.Furniture;
 using SOTS.Void;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -27,29 +28,20 @@ namespace SOTS.Items.Wings
 			this.SetResearchCost(1);
 			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(150, 8.2f, 1.4f);
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			foreach (string key in SOTS.MachinaBoosterHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
-			{
-				foreach (TooltipLine line in tooltips) //goes through each tooltip line
-				{
-					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
-					{
-						line.Text = Language.GetTextValue("Mods.SOTS.MachinaBoosterText", key);
-						return;
-					}
-				}
-			}
-			foreach (TooltipLine line in tooltips) //goes through each tooltip line
-			{
-				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
-				{
-					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-					line.Text = Language.GetTextValue("Mods.SOTS.MachinaBoosterText2", Textkey);
-				}
-			}
-			base.ModifyTooltips(tooltips);
-		}
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            string key = SOTS.MachinaBoosterHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195"); //gets the key configured to this hotkey
+
+            foreach (TooltipLine line in tooltips) //goes through each tooltip line
+            {
+                if (line.Mod == "Terraria")
+                {
+                    line.Text = string.Format(line.Text, key);
+                }
+            }
+        }
+
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/MachinaBooster").Value;

@@ -1,15 +1,10 @@
 Secrets of the Shadows is a mod with a focus on exploring dungeons throughout your world! Many secrets can be found hidden in these long forgotten locations of old.
 
-[b]If you find any issues with SOTS, the Discord server is the best place to find help.[/b]
-[url=https://discord.gg/Dd8e9nw]Discord Server Invite Link[/url]
+If you find any issues with SOTS, the Discord server is the best place to find help.
 
-Wiki has been moved to wiki.gg
-[url= https://terrariamods.wiki.gg/wiki/Secrets_Of_The_Shadows]Unfinished Wiki[/url]
-[url=https://steamcommunity.com/sharedfiles/filedetails/?id=2843080273]SOTS Texture Pack[/url]
-
-[b]!! This mod is in development, and will continue to be supported for the foreseeable future !![/b]
-[b]!! A large world is HIGHLY recommended to avoid major structures overlapping !![/b]
-[b]!! Worldgen may not work on special seeds !![/b]
+!! This mod is in development, and will continue to be supported for the foreseeable future !!
+!! A large world is HIGHLY recommended][c/cd0000: to avoid major structures overlapping !!
+!! Worldgen may not work on special seeds !!
 
 This mod contains:
 8 new bosses with unique attacks
@@ -21,7 +16,7 @@ A new damage class, Void, which lets you utilize the power of your soul
 Warriors, Rangers, Mages, and Summoners can all have void weapons at their disposal
 Many new furniture sets to scratch your creative itch
 
-[b]~Developers~[/b]
+~Developers~
 Code, Direction, Art: Vortex
 Direction, Art: Taco
 Code: DylanDoe21, apotofkoolaid
@@ -29,6 +24,6 @@ Art: Astrobit, Petaniks, kekcroc
 Music: BananaLizard, YuriO
 Music, SFX, Art: Heart Plus Up!
 
-[b]~Special Thanks, Testers, and Contributors~[/b]
+~Special Thanks, Testers, and Contributors~
 Blasfah, Mochi, HugeKraken, EduaRRdo, Arcri, Lunatix, Cloud, SpicySpaceSnake, Pokerface, Moonseer, Lacewing, Linnnnnna, 
 ENNWAY, Ramen, Mushnib~, Dreadsoul, Crimsonkeep, Bman, TheorR, Sovergi

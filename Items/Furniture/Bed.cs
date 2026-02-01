@@ -34,6 +34,7 @@ namespace SOTS.Items.Furniture
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2); // this style already takes care of direction for us
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.newTile.CoordinatePaddingFix = new Point16(0, -2);
+            AddMapEntry(MapColor, Language.GetText("ItemName.Bed"));
         }
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
 		{

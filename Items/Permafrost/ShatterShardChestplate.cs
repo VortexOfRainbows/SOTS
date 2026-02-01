@@ -37,7 +37,7 @@ namespace SOTS.Items.Permafrost
 		}
         public override void UpdateArmorSet(Player player)
 		{
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.ShatterShard");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.ShatterShardChestplate.SetBonus");
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			player.lifeRegen += 2;
 			player.buffImmune[BuffID.Chilled] = true;

@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Terraria.Localization;
 using SOTS.Items.Planetarium.FromChests;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SOTS.Items.Chaos
 {
@@ -40,7 +41,7 @@ namespace SOTS.Items.Chaos
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Elemental");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.ElementalHelmet.SetBonus");
 			player.SOTSPlayer().ElementalBlinkBuff = true;
         }
         public override void ArmorSetShadows(Player player)
@@ -122,28 +123,20 @@ namespace SOTS.Items.Chaos
 			ArmorIDs.Body.Sets.showsShouldersWhileJumping[equipSlotBody] = false;
 			ArmorIDs.Body.Sets.HidesArms[equipSlotBody] = true;
         }
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
-            {
-                foreach (TooltipLine line in tooltips) //goes through each tooltip line
-                {
-                    if (line.Mod == "Terraria" && line.Name == "Tooltip0")
-                    {
-                        line.Text = Language.GetTextValue("Mods.SOTS.Items.ElementalBreastplate.TooltipExt", key);
-                        return;
-                    }
-                }
-            }
+            string key = SOTS.ArmorSetHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195"); //gets the key configured to this hotkey
+
             foreach (TooltipLine line in tooltips) //goes through each tooltip line
             {
-                if (line.Mod == "Terraria" && line.Name == "Tooltip0")
+                if (line.Mod == "Terraria")
                 {
-                    string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-                    line.Text = Language.GetTextValue("Mods.SOTS.Items.ElementalBreastplate.TooltipExt", Textkey);
+                    line.Text = string.Format(line.Text, key);
                 }
             }
         }
+
         public override void SetDefaults()
 		{
 			Item.width = 46;

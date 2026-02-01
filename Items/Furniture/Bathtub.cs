@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -16,6 +17,7 @@ namespace SOTS.Items.Furniture
             t.Width = 4;
             t.Height = 2;
             t.CoordinateHeights = new int[] { 16, 16 };
+            AddMapEntry(MapColor, Language.GetText("ItemName.Bathtub"));
         }
     }
 }

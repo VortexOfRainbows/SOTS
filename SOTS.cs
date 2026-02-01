@@ -136,10 +136,10 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-            BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.Blink").ToString(), "V");//TODO: Localize it when 1.4.4 comes
-			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.ArmorSet").ToString(), "F");
-			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.MFM").ToString(), "C");
-            SlowFlightHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.SlowFlight").ToString(), "LeftShift");
+            BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Blink").ToString(), "V");
+			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("ArmorSet").ToString(), "F");
+			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("MFM").ToString(), "C");
+            SlowFlightHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("SlowFlight").ToString(), "LeftShift");
             SOTSWorld.LoadUI();
 			SOTSUtils.TypeHelper.Load();
 			SetSubworld();
@@ -666,6 +666,7 @@ namespace SOTS
 		public override void PostSetupContent()
 		{
             BossChecklistCompatibility();
+            ProjecttRUCompatibility();
         }
 		//Custom Tile Merging
 		public static bool[][] tileMergeTypes;

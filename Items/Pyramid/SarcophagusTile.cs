@@ -23,9 +23,8 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = 10;
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(255, 215, 10), name);
-			Main.tileShine2[Type] = true;
+			AddMapEntry(new Color(255, 215, 10), Language.GetText("Mods.SOTS.Items.Sarcophagus.DisplayName"));
+            Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
 		}
 		public override bool CanExplode(int i, int j)

@@ -36,7 +36,7 @@ namespace SOTS.Items.Permafrost
 		public override void UpdateArmorSet(Player player)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Frigid");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.FrigidRobe.SetBonus");
 			player.GetDamage<VoidGeneric>() -= 0.15f;
 			modPlayer.frigidJavelinNoCost = true;
 		}

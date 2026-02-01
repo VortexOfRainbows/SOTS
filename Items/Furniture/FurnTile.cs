@@ -19,7 +19,7 @@ namespace SOTS.Items.Furniture
             SetStaticDefaults(TileObjectData.newTile);
             TileObjectData.addTile(Type);
             int item = ItemType;
-            AddMapEntry(MapColor, LocalizedText.Empty, (s, i, j) => (string)Lang.GetItemName(item));
+            AddMapEntry(MapColor, LocalizedText.Empty);
         }
         protected abstract void SetStaticDefaults(TileObjectData t);
         public override void NumDust(int i, int j, bool fail, ref int num)

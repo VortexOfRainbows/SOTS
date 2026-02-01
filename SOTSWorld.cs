@@ -700,7 +700,7 @@ namespace SOTS
 		}
 		private void AdjacentDesertGeneration(GenerationProgress progress, GameConfiguration configuration)
 		{
-			progress.Message = Language.GetTextValue("Mods.SOTS.AdjacentDesertGeneration.SEverywhere");
+			progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GenerationAdjacentDesert");
 			int centerX = GenVars.UndergroundDesertLocation.X + GenVars.UndergroundDesertLocation.Width / 2;
 			int widthX = GenVars.UndergroundDesertLocation.Width / 2;
 			int centerY = 0;
@@ -753,7 +753,7 @@ namespace SOTS
 		}
 		private void GenSOTSOres(GenerationProgress progress, GameConfiguration configuration)
         {
-			progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSOres");
+			progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingOres");
 			SOTSWorldgenHelper.GenerateEvostoneInMushroomBiome();
 			float max = 240;
 			if (Main.maxTilesX > 6000) //medium worlds
@@ -774,7 +774,7 @@ namespace SOTS
 		}
 		private void GenSOTSGeodes(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSGeodes");
+            progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingGeodes");
 			int max = 60;
 			if (Main.maxTilesX > 6000) //medium worlds
 				max = 90;

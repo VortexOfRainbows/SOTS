@@ -27,8 +27,7 @@ namespace SOTS.Items.Permafrost
 			TileObjectData.newTile.StyleWrapLimit = 36;
 			TileObjectData.addTile(Type);
 			DustType = DustID.Ice; 
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(135, 150, 170), name);
+			AddMapEntry(new Color(135, 150, 170), Language.GetText("Mods.SOTS.Items.FrostArtifact.DisplayName"));
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
 		}

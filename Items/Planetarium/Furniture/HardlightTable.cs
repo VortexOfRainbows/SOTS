@@ -111,8 +111,7 @@ namespace SOTS.Items.Planetarium.Furniture
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 1, 1);
 			TileObjectData.addTile(Type);
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(55, 55, 55));
+			AddMapEntry(new Color(55, 55, 55), Language.GetText("MapObject.Table"));
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
 			AdjTiles = new int[] { TileID.Tables };

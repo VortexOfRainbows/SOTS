@@ -37,7 +37,7 @@ namespace SOTS.Items.Pyramid
 		private int[] SnakeProbes = new int[] { -1, -1, -1, -1, -1, -1 };
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.PatchLeather");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.PatchLeatherHat.SetBonus");
 			if(Main.myPlayer == player.whoAmI)
             {
                 SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);

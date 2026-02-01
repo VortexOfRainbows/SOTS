@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -23,6 +24,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             TileID.Sets.DisableSmartCursor[Type] = true;
+            AddMapEntry(MapColor, Language.GetText("ItemName.Lantern"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

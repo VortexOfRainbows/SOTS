@@ -26,8 +26,7 @@ namespace SOTS.Items.Secrets
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
             DustType = DustID.Cloud;
-            LocalizedText name = CreateMapEntryName();
-		    AddMapEntry(new Color(255, 255, 239), name);
+		    AddMapEntry(new Color(255, 255, 239), Language.GetText("Mods.SOTS.Items.DreamLamp.DisplayName2"));
         }
         public override bool CreateDust(int i, int j, ref int type)
         {

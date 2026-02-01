@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -21,6 +22,7 @@ namespace SOTS.Items.Furniture
             t.CoordinateHeights = new int[1] { 20 };
             t.LavaDeath = true;
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
+            AddMapEntry(MapColor, Language.GetText("ItemName.Candle"));
         }
         public override void HitWire(int i, int j)
         {

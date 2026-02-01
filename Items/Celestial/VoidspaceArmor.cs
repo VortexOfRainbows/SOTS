@@ -39,7 +39,7 @@ namespace SOTS.Items.Celestial
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Voidspace");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.VoidspaceMask.SetBonus");
             player.SOTSPlayer().VoidspaceFlames = true;
         }
         public override void ArmorSetShadows(Player player)

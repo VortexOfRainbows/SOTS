@@ -30,10 +30,10 @@ namespace SOTS.Items.Furniture.Permafrost
 			return false;
 		}
 		protected override int DresserDrop => ModContent.ItemType<PermafrostPlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.PermafrostPlatingDresserTile");
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.Items.PermafrostPlatingDresser.DisplayName");
 		public override LocalizedText DefaultContainerName(int frameX, int frameY)
 		{
-			return Language.GetText("Mods.SOTS.ContainerName.PermafrostPlatingDresserTile");
+			return Language.GetText("Mods.SOTS.Items.PermafrostPlatingDresser.DisplayName");
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {

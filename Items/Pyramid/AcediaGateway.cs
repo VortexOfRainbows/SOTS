@@ -54,10 +54,9 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 5, 2);
 			TileObjectData.newTile.Origin = new Point16(4, 8);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(44, 12, 62), name);
-			//TileID.Sets.DisableSmartCursor[Type] = true;
-			DustType = ModContent.DustType<Dusts.AcedianDust>();
+			AddMapEntry(new Color(44, 12, 62), Language.GetText("Mods.SOTS.Tiles.GatewayTile.MapEntry"));
+            //TileID.Sets.DisableSmartCursor[Type] = true;
+            DustType = ModContent.DustType<Dusts.AcedianDust>();
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
 		{

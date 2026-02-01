@@ -38,7 +38,7 @@ namespace SOTS.Items.Nature
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.NatureWreath");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.NatureWreath.SetBonus");
 			if (Main.myPlayer == player.whoAmI)
 			{
 				SOTSPlayer sPlayer = SOTSPlayer.ModPlayer(player);

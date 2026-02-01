@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.NPCs.Phase;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
@@ -11,7 +13,16 @@ namespace SOTS.Items.Banners
 {
     public class SOTSBanners : ModBannerTile
 	{
-		public override void NearbyEffects(int i, int j, bool closer)
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+
+            AddMapEntry(
+                new Color(13, 88, 130),
+                Language.GetText("MapObject.Banner")
+            );
+        }
+        public override void NearbyEffects(int i, int j, bool closer)
 		{
             if (closer)
             {
@@ -62,7 +73,21 @@ namespace SOTS.Items.Banners
 			Item.value = Item.buyPrice(0, 0, 10, 0);
 			SafeSetDefaults();
 		}
-		public virtual void SafeSetDefaults()
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            int npcType = NPCLoader.BannerItemToNPC(Item.type);
+            if (npcType <= NPCID.None)
+                return;
+
+            string npcName = Lang.GetNPCNameValue(npcType);
+
+            tooltips.Add(new TooltipLine(
+                Mod,
+                "BannerTooltip",
+                Language.GetText("CommonItemTooltip.BannerBonus") + npcName
+            ));
+        }
+        public virtual void SafeSetDefaults()
 		{
 			Item.createTile = TileType<SOTSBanners>();
 			Item.placeStyle = 0;

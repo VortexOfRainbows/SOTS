@@ -55,8 +55,7 @@ namespace SOTS.Items.Secrets
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
             TileObjectData.addTile(Type);
             DustType = 32;
-            LocalizedText name = CreateMapEntryName();
-		    AddMapEntry(new Color(90, 80, 45), name);
+		    AddMapEntry(new Color(90, 80, 45), Language.GetText("Mods.SOTS.Items.StrangeKeystone.DisplayName"));
         }
 	    public override bool CanExplode(int i, int j)
 		{

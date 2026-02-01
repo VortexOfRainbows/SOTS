@@ -7,6 +7,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Localization;
+using System.Linq;
 
 namespace SOTS.Items.Planetarium.FromChests
 {
@@ -18,29 +19,20 @@ namespace SOTS.Items.Planetarium.FromChests
 			// Tooltip.SetDefault("temp"); //this is needed for the tooltip to be modified later.
 			this.SetResearchCost(1);
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-			foreach (string key in SOTS.BlinkHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
-			{
-				foreach (TooltipLine line in tooltips) //goes through each tooltip line
-				{
-					if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
-					{
-						line.Text = Language.GetTextValue("Mods.SOTS.BlinkPackText", key);
-						return;
-					}
-				}
-			}
-			foreach (TooltipLine line in tooltips) //goes through each tooltip line
-			{
-				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
-				{
-					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-					line.Text = Language.GetTextValue("Mods.SOTS.BlinkPackText2", Textkey);
-				}
-			}
-			base.ModifyTooltips(tooltips);
+            string key = SOTS.BlinkHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195"); //gets the key configured to this hotkey
+
+            foreach (TooltipLine line in tooltips) //goes through each tooltip line
+            {
+                if (line.Mod == "Terraria")
+                {
+                    line.Text = string.Format(line.Text, key);
+                }
+            }
         }
+
         public override void SetDefaults()
 		{
 			Item.DamageType = DamageClass.Melee;

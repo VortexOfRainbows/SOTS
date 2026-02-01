@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -23,6 +24,7 @@ namespace SOTS.Items.Furniture
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
             TileID.Sets.DisableSmartCursor[Type] = true;
             AdjTiles = new int[] { TileID.WorkBenches };
+            AddMapEntry(MapColor, Language.GetText("MapObject.Workbench"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

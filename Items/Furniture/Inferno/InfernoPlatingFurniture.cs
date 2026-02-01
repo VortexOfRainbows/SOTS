@@ -90,10 +90,6 @@ namespace SOTS.Items.Furniture.Inferno
     {
         public override int DoorItemID => ModContent.ItemType<Inferno.InfernoPlatingBlastDoor>();
         public override int OpenDoorTile => ModContent.TileType<Inferno.InfernoPlatingBlastDoorTileOpen>();
-        public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
@@ -104,10 +100,6 @@ namespace SOTS.Items.Furniture.Inferno
     {
         public override int DoorItemID => ModContent.ItemType<Inferno.InfernoPlatingBlastDoor>();
         public override int ClosedDoorTile => ModContent.TileType<Inferno.InfernoPlatingBlastDoorTileClosed>();
-        public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
     }
     public class InfernoPlatingBookcase : ModItem
     {
@@ -280,10 +272,10 @@ namespace SOTS.Items.Furniture.Inferno
             return false;
         }
         protected override int DresserDrop => ModContent.ItemType<InfernoPlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.InfernoPlatingDresserTile");
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.Items.InfernoPlatingDresser.DisplayName");
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
         {
-            return Language.GetText("Mods.SOTS.ContainerName.InfernoPlatingDresserTile");
+            return Language.GetText("Mods.SOTS.Items.InfernoPlatingDresser.DisplayName");
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -696,8 +688,7 @@ namespace SOTS.Items.Furniture.Inferno
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(SOTSTile.InfernoPlatingLight * 3), name);
+            AddMapEntry(new Color(SOTSTile.InfernoPlatingLight * 3), Language.GetText("ItemName.Torch"));
             DustType = DustID.GoldCoin;
             AdjTiles = new int[] { TileID.Torches };
             TileID.Sets.DisableSmartCursor[Type] = true;

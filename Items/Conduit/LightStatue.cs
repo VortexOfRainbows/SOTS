@@ -71,9 +71,8 @@ namespace SOTS.Items.Conduit
             TileObjectData.newTile.Origin = new Point16(1, 7);
             TileObjectData.newTile.HookPostPlaceMyPlayer = ModContent.GetInstance<LightStatueTE>().Generic_HookPostPlaceMyPlayer;
             TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(177, 202, 232), name);
-			DustType = DustID.Platinum;
+			AddMapEntry(new Color(177, 202, 232), Language.GetText("Mods.SOTS.Items.LightStatue.DisplayName"));
+            DustType = DustID.Platinum;
             HitSound = SoundID.Tink;
             MineResist = 0.1f;
 		}

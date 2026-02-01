@@ -25,6 +25,12 @@ using SOTS.NPCs.Boss.Curse;
 using SOTS.Items.Celestial;
 using SOTS.NPCs.Boss.Excavator;
 using SOTS.Items.AbandonedVillage;
+using SOTS.Items.Nature;
+using SOTS.Items.Invidia;
+using SOTS.Items.Earth;
+using SOTS.Items.Planetarium.FromChests;
+using SOTS.Items.Chaos;
+using Terraria.ID;
 
 namespace SOTS
 {
@@ -248,5 +254,215 @@ namespace SOTS
                     }
                 });
         }
+
+        #region Russian localization support
+        private void ProjecttRUCompatibility()
+        {
+            if (!ModLoader.TryGetMod("CalamityRuTranslate", out Mod tru))
+                return;
+
+            tru.Call("AddFeminineItems", this, new[]
+            {
+                "AncientSteelHalberd",
+                "CatalystBomb",
+                "VoidspaceEmblem",
+                "SpiritSymphony",
+                "SpiritInsignia",
+                "BagOfAmmoGathering",
+                "CoconutGun",
+                "PerfectStar",
+                "RebarRifle",
+                "RockCandy",
+                "Sawflake",
+                "SpikedClub",
+                "SyntheticLiver",
+                "TinyPlanet",
+                "SkipScythe",
+                "VoidAnomaly",
+                "BloodstainedCoin",
+                "PutridCoin",
+                "PolishedCoin",
+                "CircuitBoard",
+                "CrabClaw",
+                "MantisGrip",
+                "SpiderCrusher",
+                "TorchGun",
+                "HarvestersScythe",
+                "VibrantCannon",
+                "AbyssalFury",
+                "DeathSpiral",
+                "MidnightPrism",
+                "TomeOfTheReaper",
+                "ToothAche",
+                "NorthStar",
+                "BlazingClub",
+                "BookOfVirtues",
+                "IncineratorGlove",
+                "Sharanga",
+                "VoidTablet",
+                "SporeClub",
+                "GoldBattery",
+                "GoldGlaive",
+                "PlatinumBattery",
+                "PlatinumScythe",
+                "ChainedPlasma",
+                "HardlightGlaive",
+                "LashesOfLightning",
+                "SectionChiefsScythe",
+                "SkywareBattery",
+                "PhaseCannon",
+                "CryoCannon",
+                "HypericeClusterCannon",
+                "IcicleImpale",
+                "ImperialPike",
+                "JeweledGauntlet",
+                "PharaohsCane",
+                "SpiritGlove",
+                "DreamLamp",
+                "Traingun",
+                "Revolution",
+                "PistolShrimp",
+                "AncientSteelGreatPickaxe",
+                "FrigidPickaxe",
+                "MinersPickaxe",
+                "OlympianAegis",
+                "ZombieHand",
+                "SharkPog",
+                "Atlantis",
+                "SupernovaEmblem",
+                "SwallowedPenny",
+                "BundleOfSnakes",
+                "Lockpick",
+                "KeepersBox",
+                "SoulOfTheKeeper",
+                "WishingStar",
+                "JarOfPineapple",
+                "FizzleStar",
+                "AcidicInjection",
+                "LittleWoes",
+                "TorchGunMk2",
+                "RockingHorse",
+                "PintOPunch",
+                "FishBomb",
+                "Sunbulb"
+            });
+
+            tru.Call("AddNeuterItems", this, new[]
+            {
+                "FoggyClairvoyance",
+                "AquaticEclipse",
+                "GuideToIllumination",
+                "WitchHeart",
+                "Shattershine",
+                "AmberRing",
+                "AmethystRing",
+                "DiamondRing",
+                "EmeraldRing",
+                "RubyRing",
+                "SapphireRing",
+                "TopazRing",
+                "ObsidianEruption",
+                "VesperaNanDao",
+                "BiomassBarrage",
+                "NatureSpell",
+                "Poyoyo",
+                "BladeNecklace",
+                "FrigidJavelin",
+                "TwilightBeads",
+                "StormSpell",
+                "BrachialLance",
+                "CursedApple",
+                "HeartInAJar",
+                "HeartOfTheSea",
+                "PrismarineNecklace",
+                "PeanutButter",
+                "RoyalJelly",
+                "GlowJelly",
+                "ChallengerRing",
+                "RotHeart",
+                "GreedierRing"
+            });
+
+            tru.Call("AddPluralItems", this, new[]
+            {
+                "CataclysmSpheres",
+                "SubspaceScissors",
+                "SnakeEyes",
+                "GlowSpores",
+                "BerryBombs",
+                "SporeBombs",
+                "ArclightOrbs",
+                "SkywardBlades",
+                "TerminatorAcorns",
+                "FrigidHourglass",
+                "ShoeIce",
+                "ShiftingSands",
+                "GelWings",
+                "FlashsparkBoots",
+                "SubspaceBoosters",
+                "GildedBladeWings",
+                "SteelerWheeler"
+            });
+
+            var prefixes = new List<string[]>
+            {
+                //Accessories
+                new[] { "Пробуждённый", "Пробуждённая", "Пробуждённое", "Пробуждённые" },
+                new[] { "Всеведущий", "Всеведущая", "Всеведущее", "Всеведущие" },
+                new[] { "Скованный", "Скованная", "Скованное", "Скованные" },
+                new[] { "Душесвязанный", "Душесвязанная", "Душесвязанное", "Душесвязанные" },
+                // Weapons
+                new[] { "Истощённый", "Истощённая", "Истощённое", "Истощённые" },
+                new[] { "Презренный", "Презренная", "Презренное", "Презренные" },
+                new[] { "Могущественный", "Могущественная", "Могущественное", "Могущественные" },
+                new[] { "Всемогущий", "Всемогущая", "Всемогущее", "Всемогущие" },
+                new[] { "Хтонический", "Хтоническая", "Хтоническое", "Хтонические" }
+            };
+            tru.Call("RegisterPrefixes", prefixes);
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<NatureWreath>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.NatureWreath.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<VesperaMask>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.VesperaMask.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<FrigidCrown>(), () =>
+                "Если надета [i:SOTS/FrigidRobe] леденящая мантия:\n" +
+                Language.GetTextValue("Mods.SOTS.Items.FrigidRobe.SetBonus") + "\n" +
+                "Если надет [i:SOTS/ShatterShardChestplate] нагрудник ледяного осколка:\n" +
+                Language.GetTextValue("Mods.SOTS.Items.ShatterShardChestplate.SetBonus"
+            ));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<EarthenHelmet>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.EarthenHelmet.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<PatchLeatherHat>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.PatchLeatherHat.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<CursedHood>(), () =>
+            {
+                string key = ArmorSetHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195");
+                    return Language.GetTextValue("Mods.SOTS.Items.CursedHood.SetBonus",key);
+            });
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<VibrantHelmet>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.VibrantHelmet.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<ExcavatorHelmet>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.ExcavatorHelmet.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<TwilightAssassinsCirclet>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.TwilightAssassinsCirclet.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<VoidspaceMask>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.VoidspaceMask.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<FrostArtifactHelmet>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.FrostArtifactHelmet.SetBonus"));
+
+            tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<ElementalHelmet>(), () =>
+                Language.GetTextValue("Mods.SOTS.Items.ElementalHelmet.SetBonus"));
+        }
+        #endregion
     }
 }

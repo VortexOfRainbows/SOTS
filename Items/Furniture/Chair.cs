@@ -4,6 +4,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -41,6 +42,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
             TileObjectData.addAlternate(1);
+            AddMapEntry(MapColor, Language.GetText("MapObject.Chair"));
         }
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)
         {
