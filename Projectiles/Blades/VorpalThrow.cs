@@ -92,7 +92,7 @@ namespace SOTS.Projectiles.Blades
 				initialCenter = player.Center;
 				Projectile.ai[0] = -180 * initialDirection;
 				Projectile.scale = 1.2f;
-                BladeTrail myTrail = new BladeTrail(Projectile, clockWise: -initialDirection, VorpalColor1.ToVector4(), VorpalColor2.ToVector4(), 108, 2);
+                BladeTrail myTrail = new(Projectile, clockWise: -initialDirection, VorpalColor1.ToVector4(), VorpalColor2.ToVector4(), 108, 2);
                 SOTS.primitives.CreateTrail(myTrail);
 			}
 			else if(soundCounter % 21 == 0)
