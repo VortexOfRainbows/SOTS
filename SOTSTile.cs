@@ -23,9 +23,6 @@ using SOTS.Items.AbandonedVillage;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.WorldgenHelpers;
 using SOTS.Items.Invidia;
-using SOTS.Dusts;
-using System.Net.Security;
-using System.Runtime.InteropServices.Marshalling;
 using SOTS.Items.Temple;
 
 namespace SOTS

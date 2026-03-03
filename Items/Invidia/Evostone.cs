@@ -1,14 +1,9 @@
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Helpers;
-using SOTS.WorldgenHelpers;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ObjectInteractions;
-using Terraria.GameContent.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -160,13 +155,12 @@ namespace SOTS.Items.Invidia
         {
             ModLight(i, j, ref r, ref g, ref b);
         }
-        public static void DrawRune(int i, int j, SpriteBatch spriteBatch, Texture2D runeTex, float colorMult = 1f)
+        public static void DrawRune(int i, int j, Texture2D runeTex, float colorMult = 1f)
         {
             if (runeTex == null)
                 return;
             Tile t = Main.tile[i, j];
-            int Type = ModContent.TileType<RunicEvostoneBrickTile>();
-            bool valid = false;
+            bool valid;
             if (colorMult == 1)
             {
                 int tFrameX = t.TileFrameX / 18;
@@ -185,24 +179,28 @@ namespace SOTS.Items.Invidia
             int x = frame % 4;
             int y = frame / 4;
             Color lC = Lighting.GetColor(i, j);
-            SOTSTile.DrawSlopedGlowMask(i, j, Type, runeTex, lC, Vector2.Zero, 2 + 18 * x, 2 + 18 * y);
+            SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, lC, Vector2.Zero, 2 + 18 * x, 2 + 18 * y);
             float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.9f + 0.1f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
             Color runeColor = Color.Lerp(lC, Color.White, fillPercent) * fillPercent;
             runeColor.A = 0;
             runeColor = Color.Lerp(Color.Black, runeColor, colorMult);
-            int c = SOTS.Config.lowFidelityMode ? 3 : 6;
-            int d = SOTS.Config.lowFidelityMode ? 120 : 60;
-            for (int a = 0; a < c; a++)
+            if(!SOTS.Config.SanctuaryLagReduction)
             {
-                SOTSTile.DrawSlopedGlowMask(i, j, Type, runeTex, runeColor * 0.23f * fillPercent, new Vector2(.4f + 1.8f * SOTSWorld.MoonPhasePercent, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 2 + 18 * (x + 4), 2 + 18 * y);
+                int c = SOTS.Config.lowFidelityMode ? 3 : 6;
+                int d = SOTS.Config.lowFidelityMode ? 120 : 60;
+                for (int a = 0; a < c; a++)
+                {
+                    SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, runeColor * 0.23f * fillPercent, new Vector2(.4f + 1.8f * SOTSWorld.MoonPhasePercent, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 74 + 18 * x, 2 + 18 * y);
+                }
+                SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, runeColor, Vector2.Zero, 74 + 18 * x, 2 + 18 * y);
             }
-            SOTSTile.DrawSlopedGlowMask(i, j, Type, runeTex, runeColor, Vector2.Zero, 2 + 18 * (x + 4), 2 + 18 * y);
+            else
+                SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, runeColor * 1.25f, Vector2.Zero, 74 + 18 * x, 2 + 18 * y);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-			if(rune == null)
-				rune = ModContent.Request<Texture2D>("SOTS/Items/Invidia/Runes", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            DrawRune(i, j, spriteBatch, rune);
+		    rune ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/Runes", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            DrawRune(i, j, rune);
         }
         public override void SetStaticDefaults()
         {
@@ -303,8 +301,8 @@ namespace SOTS.Items.Invidia
             float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.6f + 0.4f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
             Color color = Color.Lerp(lC, Color.White, fillPercent) * fillPercent;
             color.A = 0;
-            int c = SOTS.Config.lowFidelityMode ? 3 : 6;
-            int d = SOTS.Config.lowFidelityMode ? 120 : 60;
+            int c = SOTS.Config.SanctuaryLagReduction || SOTS.Config.lowFidelityMode ? 3 : 6;
+            int d = SOTS.Config.SanctuaryLagReduction || SOTS.Config.lowFidelityMode ? 120 : 60;
 			float moonDist = .4f + 1.8f * SOTSWorld.MoonPhasePercent;
             bool top = ValidTile(i, j - 1) && (Main.tile[i, j - 1].Slope == 0 || Main.tile[i, j - 1].TopSlope);
             bool bot = ValidTile(i, j + 1) && (Main.tile[i, j + 1].Slope == 0 || Main.tile[i, j + 1].BottomSlope);
@@ -388,14 +386,23 @@ namespace SOTS.Items.Invidia
         public override bool CanPlace(int i, int j) => true;
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            int frameX = Main.tile[i, j].WallFrameX / 36;
-            int frameY = Main.tile[i, j].WallFrameY / 36;
+            Tile tile = Main.tile[i, j];
+            TileColorCache colorCache = tile.WallColorAndCoating();
+            if (colorCache.Invisible && !Main.LocalPlayer.CanSeeInvisibleBlocks)
+                return false;
+            Color paint = WorldGen.paintColor(colorCache.Color);
+            int frameX = tile.WallFrameX / 36;
+            int frameY = tile.WallFrameY / 36;
             frameX += frameY * 8;
-            Vector2 zero = Main.drawToScreen ? zero = Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
+            Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
             PillarTexture ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/SanctuaryPillar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Vector2 drawPos = new Vector2(i, j) * 16 + zero - Main.screenPosition;
             Vector3[] slices = new Vector3[9];
-            Lighting.GetColor9Slice(i, j, ref slices);
+            if (colorCache.FullBright)
+                for (int x = 0; x < 9; ++x)
+                    slices[x] = Vector3.One;
+            else
+                Lighting.GetColor9Slice(i, j, ref slices);
             Vector3 vector = Lighting.GetColor(i, j).ToVector3();
             Vector3 tileLight;
             Vector2 position;
@@ -465,7 +472,10 @@ namespace SOTS.Items.Invidia
                 num3 <<= 16;
                 num2 <<= 8;
                 color.PackedValue = (uint)(num | num2 | num3) | 0xFF000000u;
-                Main.spriteBatch.Draw(PillarTexture, position, value, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                Terraria.Graphics.VertexColors c = new(color.MultiplyRGB(paint));
+                //Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, VertexColors colors, Vector2 origin, float scale, SpriteEffects effects)
+                Main.tileBatch.Draw(PillarTexture, position, value, c, Vector2.Zero, 1f, SpriteEffects.None);
+                //spriteBatch.Draw(PillarTexture, position, value, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
             return false;
         }
@@ -563,9 +573,8 @@ namespace SOTS.Items.Invidia
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (rune == null)
-                rune = ModContent.Request<Texture2D>("SOTS/Items/Invidia/RunesWall", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            RunicEvostoneBrickTile.DrawRune(i, j, spriteBatch, rune, 0.9f);
+            rune ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/RunesWall", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            RunicEvostoneBrickTile.DrawRune(i, j, rune, 0.9f);
         }
     }
     public class EvostoneRuneBrickWall : ModItem

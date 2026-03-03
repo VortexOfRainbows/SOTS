@@ -9140,6 +9140,11 @@ Mods: {
 						Если выключено, SOTS будет использовать музыку от Heart Plus Up в доступных местах
 						'''
 				}
+
+				SanctuaryLagReduction: {
+					// Label: Sanctuary Lag Reduction
+					// Tooltip: ""
+				}
 			}
 
 			SOTSServerConfig: {

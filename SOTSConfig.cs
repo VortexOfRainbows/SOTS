@@ -1,9 +1,5 @@
-using Microsoft.Xna.Framework;
-using SOTS.Void;
 using System.ComponentModel;
-using Terraria;
 using Terraria.ModLoader.Config;
-using Terraria.Localization;
 
 namespace SOTS
 {
@@ -57,7 +53,9 @@ namespace SOTS
 
 		[BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
 		public bool lowFidelityMode { get; set; }
-		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
+        [BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
+        public bool SanctuaryLagReduction { get; set; }
+        [BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool coloredTimeFreeze { get; set; }
 
         [BackgroundColor(110, 80, 150, 192), DefaultValue(true)]

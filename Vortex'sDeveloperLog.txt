@@ -21,8 +21,7 @@ Acknowledged But Likely Delayed:
 11. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 12. Ammo Pouch + Infinity Pouch leads to some crazy combos...
 13. Tide structure that catches enemies like a fishing net (kinda like the hydraulic press)
-14. Add Achievements (waiting on ModAchievement)
-15. Fire Spitter rework
+14. Fire Spitter rework
 
 Update Objectives:
 1. Unique Archaeologist tooltips for items, which can give hints related to lore and secrets (Up next)
@@ -44,7 +43,8 @@ Update Objectives:
 	1. Interference -> D.E.F.E Wormhole convert
 12. Sanctuary Lanterns (hang from ceiling very cool)
 13. BUG: "Does anyone else have an issue where the void bar keeps reverting its X-position? I change it to 1435, then on tmod reload it's 1400 again"
-14. Reduce lag in sanctuary
+14. Found a bug with the shattered dreams item when you have no mana and try attacking it just starts calling down the stars insanely fast
+15. Cool Idea: Destroyer summon staff
 
 ---WIP List---
 N/A
@@ -73,6 +73,10 @@ N/A
 N/A
 
 Daily Log:
+
+3/3/26
+1. Added a config option for the Sanctuary that should reduce lag moderately by reducing the amount of draw calls by a substantial amount (~40% reduced calls)
+2. Evostone Grand Pillars can kinda be effected by Paint now, but does not use the shader making it slightly different from how paint normally effects blocks
 
 2/16/26
 1. Fix bug where out of bounds tiles could cause a crash by checking for valid tile above.

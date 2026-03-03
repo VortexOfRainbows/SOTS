@@ -9090,6 +9090,11 @@ Mods: {
 						When off, SOTS will play the soundtrack made by Heart Plus Up where applicable
 						'''
 				}
+
+				SanctuaryLagReduction: {
+					Label: Sanctuary Lag Reduction
+					Tooltip: "When on, reduces the amount of glow blurs used in the Sanctuary, improving performance"
+				}
 			}
 
 			SOTSServerConfig: {
