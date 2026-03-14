@@ -4395,7 +4395,7 @@ Mods: {
 			}
 
 			EarthenPlatingBeam: {
-				DisplayName: Earthen Plating Beam
+				DisplayName: Earthen Plating Beam (Wall)
 				Tooltip: ""
 			}
 
@@ -9093,7 +9093,7 @@ Mods: {
 
 				SanctuaryLagReduction: {
 					Label: Sanctuary Lag Reduction
-					Tooltip: "When on, reduces the amount of glow blurs used in the Sanctuary, improving performance"
+					Tooltip: When on, reduces the amount of glow blurs used in the Sanctuary, improving performance
 				}
 			}
 

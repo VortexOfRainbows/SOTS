@@ -52,7 +52,7 @@ Mods: {
 			T2DD2A: " аксессуар Армии Древних 2 тира"
 			DE: " иссякающий элемент"
 			EF: " элементальный фрагмент"
-			EP: " элементальное покрытие"
+			EP: " элементальная обшивка"
 			AS: " семя цветка"
 			CC: " деталь сдавливания"
 			EGG: " ювелирное яйцо"
@@ -314,7 +314,7 @@ Mods: {
 			}
 
 			LostSoulBanner: {
-				DisplayName: Знамя потерянной души
+				DisplayName: Знамя заблудшей души
 				Tooltip: ""
 			}
 
@@ -535,7 +535,7 @@ Mods: {
 					'''
 					Призывает клетку небытия в месте вашего курсора, стреляющую по всем ближайшим врагам
 					Нахождение в ауре клетки также усиливает ваши характеристики:
-					Получаемое количество пустоты и сопротивление урону на 4%, защиту на 4 ед., скорость регенерации здоровья на 4 (2 ОЗ/сек)
+					Получаемое количество пустоты и сопротивление урону на 4%, защиту на 4 ед., скорость регенерации здоровья на 2 ед./сек
 					Радиус атаки клетки масштабируется с уроном призывателя
 					'''
 			}
@@ -591,7 +591,7 @@ Mods: {
 					Второй уровень заряда клещей с 33% шансом не израсходует пустоту
 					Четвёртый уровень заряда клещей не будет расходовать пустоту
 					Увеличивает количество создаваемых клещами снарядов на 1
-					Увеличивает скорость ближнего боя на 25% и урон ближнего боя на 5%
+					Увеличивает скорость атаки на 25% и урон ближнего боя на 5%
 					Снижает расход пустоты на 10%
 					'''
 			}
@@ -1736,47 +1736,47 @@ Mods: {
 			}
 
 			NaturePlating: {
-				DisplayName: Природное покрытие
+				DisplayName: Природная обшивка
 				Tooltip: ""
 			}
 
 			EarthenPlating: {
-				DisplayName: Земляное покрытие
+				DisplayName: Земляная обшивка
 				Tooltip: ""
 			}
 
 			PermafrostPlating: {
-				DisplayName: Мёрзлое покрытие
+				DisplayName: Мёрзлая обшивка
 				Tooltip: ""
 			}
 
 			OtherworldPlating: {
-				DisplayName: Потустороннее покрытие
+				DisplayName: Потусторонняя обшивка
 				Tooltip: ""
 			}
 
 			TidePlating: {
-				DisplayName: Приливное покрытие
+				DisplayName: Приливная обшивка
 				Tooltip: ""
 			}
 
 			EvilPlating: {
-				DisplayName: Злое покрытие
+				DisplayName: Злая обшивка
 				Tooltip: ""
 			}
 
 			ChaosPlating: {
-				DisplayName: Хаотическое покрытие
+				DisplayName: Хаотическая обшивка
 				Tooltip: ""
 			}
 
 			InfernoPlating: {
-				DisplayName: Инфернальное покрытие
+				DisplayName: Инфернальная обшивка
 				Tooltip: ""
 			}
 
 			UltimatePlating: {
-				DisplayName: Ультимативное покрытие
+				DisplayName: Ультимативная обшивка
 				Tooltip: ""
 			}
 
@@ -1803,7 +1803,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает скорость прыжка получаемое количество пустоты на 2 ед.
-					Увеличивает скорость регенерации здоровья на 2 (1 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 1 ед./сек
 					Изменяет эффект экзотических иссякающих элементов в вашем инвентаре
 					'''
 			}
@@ -1815,7 +1815,7 @@ Mods: {
 					Увеличивает урон, сопротивление урону и скорость передвижения на 2%
 					Увеличивает максимальный запас здоровья, маны и пустоты на 20 ед.
 					Увеличивает скорость прыжка и получаемое количество пустоты на 2 ед.
-					Увеличивает скорость регенерации здоровья на 2 (1 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 1 ед./сек
 					Изменяет эффект всех иссякающих элементов в вашем инвентаре
 					'''
 			}
@@ -1909,45 +1909,45 @@ Mods: {
 
 			EarthenPlatingBlastDoor: {
 				# Earthen
-				DisplayName: Затворная дверь из земляного покрытия
+				DisplayName: Затворная дверь из земляной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingBlastDoor: {
 				# Nature
-				DisplayName: Затворная дверь из природного покрытия
+				DisplayName: Затворная дверь из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingCapsule: {
-				DisplayName: Капсула из природного покрытия
+				DisplayName: Капсула из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingPlatform: {
-				DisplayName: Платформа из природного покрытия
+				DisplayName: Платформа из природной обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingBlastDoor: {
 				# Permafrost
-				DisplayName: Затворная дверь из мёрзлого покрытия
+				DisplayName: Затворная дверь из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingCapsule: {
-				DisplayName: Капсула из мёрзлого покрытия
+				DisplayName: Капсула из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingPlatform: {
-				DisplayName: Платформа из мёрзлого покрытия
+				DisplayName: Платформа из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			NatureHydroponics: {
 				# Functional
-				DisplayName: Гидропоник из природного покрытия
+				DisplayName: Гидропоник из природной обшивки
 				Tooltip:
 					'''
 					Автоматически выращивает различные алхимические травы
@@ -2269,7 +2269,7 @@ Mods: {
 				DisplayName: Ботанический симбиот
 				Tooltip:
 					'''
-					Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек) в дневное время
+					Увеличивает скорость регенерации здоровья на 0,5 ед./сек в дневное время
 					Прикрепляет цветущий крюк ко всем миньонам
 					'''
 			}
@@ -2391,22 +2391,22 @@ Mods: {
 			AvaritianPlating: {
 				# Otherworld
 				# Blocks
-				DisplayName: Покрытие алчности
+				DisplayName: Обшивка алчности
 				Tooltip: ""
 			}
 
 			HologlassWall: {
-				DisplayName: Стена из твёрдосветового покрытия
+				DisplayName: Твёрдосветовая стена
 				Tooltip: ""
 			}
 
 			PortalPlating: {
-				DisplayName: Портальное покрытие алчности
+				DisplayName: Портальная обшивка алчности
 				Tooltip: ""
 			}
 
 			PortalPlatingWall: {
-				DisplayName: Стена из покрытия алчности
+				DisplayName: Стена из обшивки алчности
 				Tooltip: ""
 			}
 
@@ -2644,7 +2644,7 @@ Mods: {
 					'''
 					Увеличивает максимальное количество миньонов на 1
 					Увеличивает шанс пустотного критического удара и шанс критического удара ближнего боя на 10%
-					Увеличивает скорость регенерации здоровья на 2 (1 ОЗ/сек) и скорость восполнения пустоты на 10%
+					Увеличивает скорость регенерации здоровья на 1 ед./сек и скорость восполнения пустоты на 10%
 					'''
 			}
 
@@ -2883,7 +2883,7 @@ Mods: {
 				Tooltip: Окружает вас ледяными осколками при получении урона
 				SetBonus:
 					'''
-					Увеличивает скорость регенерации здоровья на 2 (1 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 1 ед./сек
 					Даёт невосприимчивость к дебаффам «{$BuffName.Chilled}», «{$BuffName.Frozen}» и «{$BuffName.Frostburn}»
 					'''
 			}
@@ -3186,7 +3186,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает скорость атаки на 20%, когда вы неподвижны, и на 5%, когда вы движетесь
-					Увеличивает скорость регенерации здоровья на 4 (2 ОЗ/сек), когда вы неподвижны
+					Увеличивает скорость регенерации здоровья на 2 ед./сек, когда вы неподвижны
 					'''
 			}
 
@@ -3224,7 +3224,7 @@ Mods: {
 			}
 
 			AcediaPlating: {
-				DisplayName: Портальное покрытие уныния
+				DisplayName: Портальная обшивка уныния
 				Tooltip: ""
 			}
 
@@ -3510,7 +3510,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает получаемое количество пустоты на 2 ед. и сопротивление урону на 2%
-					Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 0,5 ед./сек
 					'''
 			}
 
@@ -4184,7 +4184,7 @@ Mods: {
 					'''
 					Даёт невосприимчивость к отбрасыванию, большинству дебаффов и огненным блокам
 					Увеличивает получаемое количество пустоты на 2 ед.
-					Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 0,5 ед./сек
 					Увеличивает сопротивление урону на 5% и шанс критического удара на 4%
 					Вокруг вас будет вращаться 4 снаряда
 					Скройте видимость аксессуара, чтобы скрыть отображение снарядов
@@ -4259,7 +4259,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает максимальное количество миньонов и стражей на 1
-					Увеличивает урон на 10% и скорость регенерации здоровья на 2 (1 ОЗ/сек)
+					Увеличивает урон на 10% и скорость регенерации здоровья на 1 ед./сек
 					Создаёт по 2 платформы слева и справа от вас, на которых можно размещать стражей
 					Вы можете перемещать их с помощью ПКМ, но платформы с другой стороны будут симметрично перемещены
 					Перенаправляет на владельца щита 25% урона, нанесённого игрокам вашей команды, если здоровье владельца выше 25%
@@ -4292,7 +4292,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает получаемое количество пустоты на 2 ед.
-					Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 0,5 ед./сек
 					Увеличивает сопротивление урону на 7% и шанс критического удара на 4%
 					'''
 			}
@@ -4313,7 +4313,7 @@ Mods: {
 					'''
 					Призывает ручного Гнилостного пинки помогать вам в бою
 					Гнилостный пинки цепляется за врагов, замедляя их и заставляя терять здоровье
-					Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 0,5 ед./сек
 					'''
 			}
 
@@ -4334,7 +4334,7 @@ Mods: {
 					С убитых врагов будут выпадать крошки багета
 					Призывает Гнилого пинки помогать вам в бою
 					Гнилостный пинки цепляется за врагов, замедляя их и заставляя терять здоровье
-					Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 0,5 ед./сек
 					'''
 			}
 
@@ -4376,7 +4376,7 @@ Mods: {
 					'''
 					Увеличивает количество исцеления и маны, получаемых от зелий, на 100 ед.
 					Увеличивает длительность баффов на 67%
-					Увеличивает скорость регенерации здоровья на 2 (1 ОЗ/сек) и снижает длительность послезельевой болезни на 25%
+					Увеличивает скорость регенерации здоровья на 1 ед./сек и снижает длительность послезельевой болезни на 25%
 					'''
 			}
 
@@ -4416,17 +4416,17 @@ Mods: {
 			}
 
 			EarthenPlatingBeam: {
-				DisplayName: Колонна из земляного покрытия
+				DisplayName: Балка из земляной обшивки (стена)
 				Tooltip: ""
 			}
 
 			EarthenPlatingPanelWall: {
-				DisplayName: Панельная стена из земляного покрытия
+				DisplayName: Панельная стена из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingWall: {
-				DisplayName: Стена из земляного покрытия
+				DisplayName: Стена из земляной обшивки
 				Tooltip: ""
 			}
 
@@ -4436,12 +4436,12 @@ Mods: {
 			}
 
 			NaturePlatingPanelWall: {
-				DisplayName: Панельная стена из природного покрытия
+				DisplayName: Панельная стена из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingWall: {
-				DisplayName: Стена из природного покрытия
+				DisplayName: Стена из природной обшивки
 				Tooltip: ""
 			}
 
@@ -4456,7 +4456,7 @@ Mods: {
 			}
 
 			PermafrostPlatingWall: {
-				DisplayName: Стена из мёрзлого покрытия
+				DisplayName: Стена из мёрзлой обшивки
 				Tooltip: ""
 			}
 
@@ -4471,97 +4471,97 @@ Mods: {
 			}
 
 			EarthenPlatingBathtub: {
-				DisplayName: Ванна из земляного покрытия
+				DisplayName: Ванна из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingBed: {
-				DisplayName: Кровать из земляного покрытия
+				DisplayName: Кровать из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingBookcase: {
-				DisplayName: Книжный шкаф из земляного покрытия
+				DisplayName: Книжный шкаф из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingBulb: {
-				DisplayName: Свеча из земляного покрытия
+				DisplayName: Свеча из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingChair: {
-				DisplayName: Стул из земляного покрытия
+				DisplayName: Стул из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingChandelier: {
-				DisplayName: Люстра из земляного покрытия
+				DisplayName: Люстра из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingClock: {
-				DisplayName: Напольные часы из земляного покрытия
+				DisplayName: Напольные часы из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingDresser: {
-				DisplayName: Комод из земляного покрытия
+				DisplayName: Комод из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingLamp: {
-				DisplayName: Напольная лампа из земляного покрытия
+				DisplayName: Напольная лампа из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingLantern: {
-				DisplayName: Фонарь из земляного покрытия
+				DisplayName: Фонарь из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingPiano: {
-				DisplayName: Пианино из земляного покрытия
+				DisplayName: Пианино из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingPlatform: {
-				DisplayName: Платформа из земляного покрытия
+				DisplayName: Платформа из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingSink: {
-				DisplayName: Раковина из земляного покрытия
+				DisplayName: Раковина из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingSofa: {
-				DisplayName: Диван из земляного покрытия
+				DisplayName: Диван из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingStorage: {
-				DisplayName: Хранилище из земляного покрытия
+				DisplayName: Хранилище из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingTable: {
-				DisplayName: Стол из земляного покрытия
+				DisplayName: Стол из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingToilet: {
-				DisplayName: Унитаз из земляного покрытия
+				DisplayName: Унитаз из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingTorch: {
-				DisplayName: Факел из земляного покрытия
+				DisplayName: Факел из земляной обшивки
 				Tooltip: ""
 			}
 
 			EarthenPlatingWorkBench: {
-				DisplayName: Верстак из земляного покрытия
+				DisplayName: Верстак из земляной обшивки
 				# Earthen
 				Tooltip: Также функционирует как наковальня
 			}
@@ -4612,173 +4612,173 @@ Mods: {
 			}
 
 			NaturePlatingBathtub: {
-				DisplayName: Ванна из природного покрытия
+				DisplayName: Ванна из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingBed: {
-				DisplayName: Кровать из природного покрытия
+				DisplayName: Кровать из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingBookcase: {
-				DisplayName: Книжный шкаф из природного покрытия
+				DisplayName: Книжный шкаф из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingBulb: {
-				DisplayName: Свеча из природного покрытия
+				DisplayName: Свеча из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingChair: {
-				DisplayName: Стул из природного покрытия
+				DisplayName: Стул из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingChandelier: {
-				DisplayName: Люстра из природного покрытия
+				DisplayName: Люстра из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingClock: {
-				DisplayName: Напольные часы из природного покрытия
+				DisplayName: Напольные часы из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingDresser: {
-				DisplayName: Комод из природного покрытия
+				DisplayName: Комод из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingLamp: {
-				DisplayName: Напольная лампа из природного покрытия
+				DisplayName: Напольная лампа из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingLantern: {
-				DisplayName: Фонарь из природного покрытия
+				DisplayName: Фонарь из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingPiano: {
-				DisplayName: Пианино из природного покрытия
+				DisplayName: Пианино из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingSink: {
-				DisplayName: Раковина из природного покрытия
+				DisplayName: Раковина из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingSofa: {
-				DisplayName: Диван из природного покрытия
+				DisplayName: Диван из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingTable: {
-				DisplayName: Стол из природного покрытия
+				DisplayName: Стол из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingToilet: {
-				DisplayName: Унитаз из природного покрытия
+				DisplayName: Унитаз из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingTorch: {
-				DisplayName: Факел из природного покрытия
+				DisplayName: Факел из природной обшивки
 				Tooltip: ""
 			}
 
 			NaturePlatingWorkBench: {
-				DisplayName: Верстак из природного покрытия
+				DisplayName: Верстак из природной обшивки
 				# Nature
 				Tooltip: Также функционирует как наковальня
 			}
 
 			PermafrostPlatingBathtub: {
-				DisplayName: Ванна из мёрзлого покрытия
+				DisplayName: Ванна из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingBed: {
-				DisplayName: Кровать из мёрзлого покрытия
+				DisplayName: Кровать из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingBench: {
-				DisplayName: Диван из мёрзлого покрытия
+				DisplayName: Диван из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingBookcase: {
-				DisplayName: Книжный шкаф мёрзлого покрытия
+				DisplayName: Книжный шкаф мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingBulb: {
-				DisplayName: Свеча из мёрзлого покрытия
+				DisplayName: Свеча из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingChair: {
-				DisplayName: Стул из мёрзлого покрытия
+				DisplayName: Стул из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingChandelier: {
-				DisplayName: Люстра из мёрзлого покрытия
+				DisplayName: Люстра из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingClock: {
-				DisplayName: Напольные часы из мёрзлого покрытия
+				DisplayName: Напольные часы из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingDresser: {
-				DisplayName: Комод из мёрзлого покрытия
+				DisplayName: Комод из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingLamp: {
-				DisplayName: Напольная лампа из мёзлого покрытия
+				DisplayName: Напольная лампа из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingLantern: {
-				DisplayName: Фонарь из мёрзлого покрытия
+				DisplayName: Фонарь из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingPiano: {
-				DisplayName: Пианино из мёрзлого покрытия
+				DisplayName: Пианино из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingSink: {
-				DisplayName: Раковина из мёрзлого покрытия
+				DisplayName: Раковина из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingTable: {
-				DisplayName: Стол из мёрзлого покрытия
+				DisplayName: Стол из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingToilet: {
-				DisplayName: Унитаз из мёрзлого покрытия
+				DisplayName: Унитаз из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingTorch: {
-				DisplayName: Факел из мёрзлого покрытия
+				DisplayName: Факел из мёрзлой обшивки
 				Tooltip: ""
 			}
 
 			PermafrostPlatingWorkBench: {
-				DisplayName: Верстак из мёрзлого покрытия
+				DisplayName: Верстак из мёрзлой обшивки
 				# Permafrost
 				Tooltip: Также функционирует как наковальня
 			}
@@ -4839,17 +4839,17 @@ Mods: {
 			}
 
 			DullPlating: {
-				DisplayName: Покрытие уныния
+				DisplayName: Обшивка уныния
 				Tooltip: ""
 			}
 
 			DullPlatingWall: {
-				DisplayName: Стена из покрытия уныния
+				DisplayName: Стена из обшивки уныния
 				Tooltip: ""
 			}
 
 			HardlightBlock: {
-				DisplayName: Твёрдосветовое покрытие
+				DisplayName: Твёрдосвет
 				Tooltip: ""
 			}
 
@@ -4914,7 +4914,7 @@ Mods: {
 			}
 
 			AcediaPlatingWall: {
-				DisplayName: Стена из портального покрытия уныния
+				DisplayName: Стена из портальной обшивки уныния
 				Tooltip: ""
 			}
 
@@ -5149,7 +5149,7 @@ Mods: {
 				DisplayName: Нагрудник рейнджера небытия
 				Tooltip:
 					'''
-					15% от полученного урона в пустоту
+					15% от полученного урона конвертируется в пустоту
 					15% от израсходованной пустоты обратно конвертируется в здоровье
 					Снижает расход маны на 15%
 					Увеличивает получаемое количество пустоты на 3 ед. и её максимальный запас на 100 ед.
@@ -5189,7 +5189,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает скорость атаки на 10%
-					Включает автоатаку всему оружию
+					Включает автоиспользование всем предметам
 					'''
 			}
 
@@ -5320,7 +5320,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает урон ближнего боя и призывателя на 30%
-					Увеличивает скорость регенерации здоровья на 4 (2 ОЗ/сек)
+					Увеличивает скорость регенерации здоровья на 2 ед./сек
 					Нажмите клавишу «{$Keybinds.ArmorSet.DisplayName}» ({0}), чтобы телепортироваться в место курсора
 					Телепортация через врагов наносит им урон, равный 200% от вашей защиты
 					Телепортация имеет 15 секунд перезарядки, во время которой скорость ближнего боя увеличивается на 40%
@@ -5440,7 +5440,7 @@ Mods: {
 				DisplayName: Связка змей
 				Tooltip:
 					'''
-					Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек) в ночное время
+					Увеличивает скорость регенерации здоровья на 0,5 ед./сек в ночное время
 					Прикрепляет ядовитую змею ко всем миньонам
 					'''
 			}
@@ -5520,12 +5520,12 @@ Mods: {
 			}
 
 			GulaPlating: {
-				DisplayName: Покрытие чревоугодия
+				DisplayName: Обшивка чревоугодия
 				Tooltip: ""
 			}
 
 			GulaPortalPlating: {
-				DisplayName: Портальное покрытие чревоугодия
+				DisplayName: Портальная обшивка чревоугодия
 				Tooltip: ""
 			}
 
@@ -5535,7 +5535,7 @@ Mods: {
 			}
 
 			GulaPlatingWall: {
-				DisplayName: Стена из покрытия чревоугодия
+				DisplayName: Стена из обшивки чревоугодия
 				Tooltip: ""
 			}
 
@@ -5625,7 +5625,7 @@ Mods: {
 			}
 
 			SootSlab: {
-				DisplayName: Сажная плитка
+				DisplayName: Сажная плита
 				Tooltip: ""
 			}
 
@@ -5720,7 +5720,7 @@ Mods: {
 			}
 
 			SootSlabWall: {
-				DisplayName: Стена из сажной плитки
+				DisplayName: Стена из сажной плиты
 				Tooltip: ""
 			}
 
@@ -5853,107 +5853,107 @@ Mods: {
 			}
 
 			TidalPlatingWall: {
-				DisplayName: Стена из приливного покрытия
+				DisplayName: Стена из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingBathtub: {
-				DisplayName: Ванна из приливного покрытия
+				DisplayName: Ванна из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingBed: {
-				DisplayName: Кровать из приливного покрытия
+				DisplayName: Кровать из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingBlastDoor: {
-				DisplayName: Затворная дверь из приливного покрытия
+				DisplayName: Затворная дверь из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingBookcase: {
-				DisplayName: Книжный шкаф из приливного покрытия
+				DisplayName: Книжный шкаф из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingCandle: {
-				DisplayName: Свеча из приливного покрытия
+				DisplayName: Свеча из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingChair: {
-				DisplayName: Стул из приливного покрытия
+				DisplayName: Стул из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingChandelier: {
-				DisplayName: Люстра из приливного покрытия
+				DisplayName: Люстра из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingChest: {
-				DisplayName: Хранилище из приливного покрытия
+				DisplayName: Хранилище из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingClock: {
-				DisplayName: Напольные часы из приливного покрытия
+				DisplayName: Напольные часы из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingDresser: {
-				DisplayName: Комод из приливного покрытия
+				DisplayName: Комод из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingLamp: {
-				DisplayName: Напольная лампа из приливного покрытия
+				DisplayName: Напольная лампа из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingLantern: {
-				DisplayName: Фонарь из приливного покрытия
+				DisplayName: Фонарь из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingPiano: {
-				DisplayName: Пианино из приливного покрытия
+				DisplayName: Пианино из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingPlatform: {
-				DisplayName: Платформа из приливного покрытия
+				DisplayName: Платформа из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingSink: {
-				DisplayName: Раковина из приливного покрытия
+				DisplayName: Раковина из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingSofa: {
-				DisplayName: Диван из приливного покрытия
+				DisplayName: Диван из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingTable: {
-				DisplayName: Стол из приливного покрытия
+				DisplayName: Стол из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingToilet: {
-				DisplayName: Унитаз из приливного покрытия
+				DisplayName: Унитаз из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingTorch: {
-				DisplayName: Факел из приливного покрытия
+				DisplayName: Факел из приливной обшивки
 				Tooltip: ""
 			}
 
 			TidalPlatingWorkBench: {
-				DisplayName: Верстак из приливного покрытия
+				DisplayName: Верстак из приливной обшивки
 				Tooltip: Также функционирует как наковальня
 			}
 
@@ -6032,7 +6032,7 @@ Mods: {
 			}
 
 			InvidiaPlating: {
-				DisplayName: Покрытие зависти
+				DisplayName: Обшивка зависти
 				Tooltip: ""
 			}
 
@@ -6121,412 +6121,412 @@ Mods: {
 			}
 
 			OtherworldPlatingBathtub: {
-				DisplayName: Ванна из потустороннего покрытия
+				DisplayName: Ванна из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingBed: {
-				DisplayName: Кровать из потустороннего покрытия
+				DisplayName: Кровать из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingBlastDoor: {
-				DisplayName: Затворная дверь из потустороннего покрытия
+				DisplayName: Затворная дверь из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingBookcase: {
-				DisplayName: Книжный шкаф из потустороннего покрытия
+				DisplayName: Книжный шкаф из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingCandle: {
-				DisplayName: Свеча из потустороннего покрытия
+				DisplayName: Свеча из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingChair: {
-				DisplayName: Стул из потустороннего покрытия
+				DisplayName: Стул из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingChandelier: {
-				DisplayName: Люстра из потустороннего покрытия
+				DisplayName: Люстра из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingChest: {
-				DisplayName: Капсула из потустороннего покрытия
+				DisplayName: Капсула из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingClock: {
-				DisplayName: Напольные часы из потустороннего покрытия
+				DisplayName: Напольные часы из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingDresser: {
-				DisplayName: Комод из потустороннего покрытия
+				DisplayName: Комод из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingLamp: {
-				DisplayName: Напольная лампа из потустороннего покрытия
+				DisplayName: Напольная лампа из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingLantern: {
-				DisplayName: Фонарь из потустороннего покрытия
+				DisplayName: Фонарь из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingPiano: {
-				DisplayName: Пианино из потустороннего покрытия
+				DisplayName: Пианино из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingPlatform: {
-				DisplayName: Платформа из потустороннего покрытия
+				DisplayName: Платформа из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingSink: {
-				DisplayName: Раковина из потустороннего покрытия
+				DisplayName: Раковина из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingSofa: {
-				DisplayName: Диван из потустороннего покрытия
+				DisplayName: Диван из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingTable: {
-				DisplayName: Стол из потустороннего покрытия
+				DisplayName: Стол из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingToilet: {
-				DisplayName: Унитаз из потустороннего покрытия
+				DisplayName: Унитаз из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingTorch: {
-				DisplayName: Факел из потустороннего покрытия
+				DisplayName: Факел из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			OtherworldPlatingWorkBench: {
-				DisplayName: Верстак из потустороннего покрытия
+				DisplayName: Верстак из потусторонней обшивки
 				Tooltip: Также функционирует как наковальня
 			}
 
 			OtherworldPlatingWall: {
-				DisplayName: Стена из потустороннего покрытия
+				DisplayName: Стена из потусторонней обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingBathtub: {
-				DisplayName: Ванна из злого покрытия
+				DisplayName: Ванна из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingBed: {
-				DisplayName: Кровать из злого покрытия
+				DisplayName: Кровать из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingBlastDoor: {
-				DisplayName: Затворная дверь из злого покрытия
+				DisplayName: Затворная дверь из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingBookcase: {
-				DisplayName: Книжный шкаф из злого покрытия
+				DisplayName: Книжный шкаф из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingCandle: {
-				DisplayName: Свеча из злого покрытия
+				DisplayName: Свеча из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingChair: {
-				DisplayName: Стул из злого покрытия
+				DisplayName: Стул из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingChandelier: {
-				DisplayName: Люстра из злого покрытия
+				DisplayName: Люстра из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingChest: {
-				DisplayName: Капсула из злого покрытия
+				DisplayName: Капсула из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingClock: {
-				DisplayName: Напольные часы из злого покрытия
+				DisplayName: Напольные часы из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingDresser: {
-				DisplayName: Комод из злого покрытия
+				DisplayName: Комод из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingLamp: {
-				DisplayName: Напольная лампа из злого покрытия
+				DisplayName: Напольная лампа из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingLantern: {
-				DisplayName: Фонарь из злого покрытия
+				DisplayName: Фонарь из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingPiano: {
-				DisplayName: Пианино из злого покрытия
+				DisplayName: Пианино из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingPlatform: {
-				DisplayName: Платформа из злого покрытия
+				DisplayName: Платформа из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingSink: {
-				DisplayName: Раковина из злого покрытия
+				DisplayName: Раковина из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingSofa: {
-				DisplayName: Диван из злого покрытия
+				DisplayName: Диван из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingTable: {
-				DisplayName: Стол из злого покрытия
+				DisplayName: Стол из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingToilet: {
-				DisplayName: Унитаз из злого покрытия
+				DisplayName: Унитаз из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingTorch: {
-				DisplayName: Факел из злого покрытия
+				DisplayName: Факел из злой обшивки
 				Tooltip: ""
 			}
 
 			EvilPlatingWorkBench: {
-				DisplayName: Верстак из злого покрытия
+				DisplayName: Верстак из злой обшивки
 				Tooltip: Также функционирует как наковальня
 			}
 
 			EvilPlatingWall: {
-				DisplayName: Стена из злого покрытия
+				DisplayName: Стена из злой обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingBathtub: {
-				DisplayName: Ванна из инфернального покрытия
+				DisplayName: Ванна из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingBed: {
-				DisplayName: Кровать из инфернального покрытия
+				DisplayName: Кровать из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingBlastDoor: {
-				DisplayName: Затворная дверь из инфернального покрытия
+				DisplayName: Затворная дверь из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingBookcase: {
-				DisplayName: Книжный шкаф из инфернального покрытия
+				DisplayName: Книжный шкаф из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingCandle: {
-				DisplayName: Свеча из инфернального покрытия
+				DisplayName: Свеча из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingChair: {
-				DisplayName: Стул из инфенрального покрытия
+				DisplayName: Стул из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingChandelier: {
-				DisplayName: Люстра из инфенрального покрытия
+				DisplayName: Люстра из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingChest: {
-				DisplayName: Сундук из инфернального покрытия
+				DisplayName: Сундук из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingClock: {
-				DisplayName: Напольные часы из инфернального покрытия
+				DisplayName: Напольные часы из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingDresser: {
-				DisplayName: Комод из инфернального покрытия
+				DisplayName: Комод из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingLamp: {
-				DisplayName: Напольная лампа из инфернального покрытия
+				DisplayName: Напольная лампа из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingLantern: {
-				DisplayName: Фонарь из инфенрального покрытия
+				DisplayName: Фонарь из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingPiano: {
-				DisplayName: Пианино из инфернального покрытия
+				DisplayName: Пианино из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingPlatform: {
-				DisplayName: Платформа из инфернального покрытия
+				DisplayName: Платформа из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingSink: {
-				DisplayName: Раковина из инфернального покрытия
+				DisplayName: Раковина из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingSofa: {
-				DisplayName: Диван из инфернального покрытия
+				DisplayName: Диван из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingTable: {
-				DisplayName: Стол из инфернального покрытия
+				DisplayName: Стол из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingToilet: {
-				DisplayName: Унитаз из инфернального покрытия
+				DisplayName: Унитаз из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingTorch: {
-				DisplayName: Факел из инфернального покрытия
+				DisplayName: Факел из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			InfernoPlatingWorkBench: {
-				DisplayName: Верстак из инфернального покрытия
+				DisplayName: Верстак из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingBathtub: {
-				DisplayName: Ванна из хаотического покрытия
+				DisplayName: Ванна из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingBed: {
-				DisplayName: Кровать из хаотического покрытия
+				DisplayName: Кровать из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingBlastDoor: {
-				DisplayName: Затворная дверь из хаотического покрытия
+				DisplayName: Затворная дверь из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingBookcase: {
-				DisplayName: Книжный шкаф из хаотического покрытия
+				DisplayName: Книжный шкаф из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingCandle: {
-				DisplayName: Свеча из хаотического покрытия
+				DisplayName: Свеча из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingChair: {
-				DisplayName: Стул из хаотического покрытия
+				DisplayName: Стул из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingChandelier: {
-				DisplayName: Люстра из хаотического покрытия
+				DisplayName: Люстра из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingChest: {
-				DisplayName: Сундук из хаотического покрытия
+				DisplayName: Сундук из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingClock: {
-				DisplayName: Напольные часы из хаотического покрытия
+				DisplayName: Напольные часы из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingDresser: {
-				DisplayName: Комод из хаотического покрытия
+				DisplayName: Комод из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingLamp: {
-				DisplayName: Напольная лампа из хаотического покрытия
+				DisplayName: Напольная лампа из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingLantern: {
-				DisplayName: Фонарь из хаотического покрытия
+				DisplayName: Фонарь из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingPiano: {
-				DisplayName: Пианино из хаотического покрытия
+				DisplayName: Пианино из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingPlatform: {
-				DisplayName: Платформа из хаотического покрытия
+				DisplayName: Платформа из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingSink: {
-				DisplayName: Раковина из хаотического покрытия
+				DisplayName: Раковина из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingSofa: {
-				DisplayName: Диван из хаотического покрытия
+				DisplayName: Диван из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingTable: {
-				DisplayName: Стол из хаотического покрытия
+				DisplayName: Стол из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingToilet: {
-				DisplayName: Унитаз из хаотического покрытия
+				DisplayName: Унитаз из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingTorch: {
-				DisplayName: Факел из хаотического покрытия
+				DisplayName: Факел из хаотической обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingWorkBench: {
-				DisplayName: Верстак из хаотического покрытия
+				DisplayName: Верстак из хаотической обшивки
 				Tooltip: ""
 			}
 
@@ -6542,12 +6542,12 @@ Mods: {
 			}
 
 			InfernoPlatingWall: {
-				DisplayName: Стена из инфернального покрытия
+				DisplayName: Стена из инфернальной обшивки
 				Tooltip: ""
 			}
 
 			ChaosPlatingWall: {
-				DisplayName: Стена из хаотического покрытия
+				DisplayName: Стена из хаотической обшивки
 				Tooltip: ""
 			}
 
@@ -6648,7 +6648,7 @@ Mods: {
 			}
 
 			SanctuaryMusicBox: {
-				DisplayName: Музыкальная шкатулка (Святилище)
+				DisplayName: Музыкальная шкатулка (Святыня)
 				Tooltip: ""
 			}
 
@@ -6736,7 +6736,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает сопротивление урону на 10%
-					Увеличивает получаемое количество пустоты на 4 ед. и скорость регенерации здоровья на 4 (2 ОЗ/сек)
+					Увеличивает получаемое количество пустоты на 4 ед. и скорость регенерации здоровья на 2 ед./сек
 					Конвертирует 30% от израсходованной пустоты в здоровье
 					'''
 				ArchTooltip: «Ты бы предпочёл +100% суперчунгуса или +5 защиты?»
@@ -6817,7 +6817,7 @@ Mods: {
 			}
 
 			InvidiaPortalPlating: {
-				DisplayName: Портальное покрытие зависти
+				DisplayName: Портальная обшивка зависти
 				Tooltip: ""
 			}
 
@@ -6999,7 +6999,7 @@ Mods: {
 		ItemTooltip: {
 			DissolvingElements: {
 				DissolvingNatureNormal: Снижает наносимый урон на 10% при нахождении в инвентаре
-				DissolvingNatureFlipped: Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек) за каждый элемент в инвентаре, вплоть до 4
+				DissolvingNatureFlipped: Увеличивает скорость регенерации здоровья на 0,5 ед./сек за каждый элемент в инвентаре, вплоть до 4
 				DissolvingEarthNormal: Снижает сопротивление урону на 10% при нахождении в инвентаре
 				DissolvingEarthFlipped: Увеличивает защиту на 2 ед. за каждый элемент в инвентаре, вплоть до 8 ед.
 				DissolvingAuroraNormal: Снижает скорость передвижения на 20% при нахождении в инвентаре
@@ -7010,7 +7010,7 @@ Mods: {
 				DissolvingAetherFlipped: Увеличивает магический урон на 3% за каждый элемент в инвентаре, вплоть до 12%
 				DissolvingUmbraNormal: Снижает максимальный запас пустоты на 20 ед. при нахождении в инвентаре
 				DissolvingUmbraFlipped: Увеличивает пустотный урон на 3% за каждый элемент в инвентаре, вплоть до 12%
-				DissolvingNetherNormal: Замедляет регенерацию здоровья на 2 (1 ОЗ/сек) при нахождении в инвентаре
+				DissolvingNetherNormal: Замедляет регенерацию здоровья на 1 ед./сек при нахождении в инвентаре
 				DissolvingNetherFlipped: Увеличивает урон ближнего боя на 3% за каждый элемент в инвентаре, вплоть до 12%
 				DissolvingBrillianceNormal: Поглощает 0,5 ед. пустоты в секунду при нахождении в инвентаре
 				DissolvingBrillianceFlipped: Увеличивает урон призывателя на 3% за каждый элемент в инвентаре, вплоть до 12%
@@ -7035,7 +7035,7 @@ Mods: {
 
 			AuraBoost: {
 				DisplayName: Усиление ауры
-				Description: Скорость восполнения пустоты увеличена на 4%, скорость регенерации здоровья на 4 (2 ОЗ/сек), защита на 4 ед. и сопротивление урону на 4%
+				Description: Скорость восполнения пустоты увеличена на 4%, скорость регенерации здоровья на 2 ед./сек, защита на 4 ед. и сопротивление урону на 4%
 			}
 
 			Bluefire: {
@@ -7533,18 +7533,18 @@ Mods: {
 			}
 
 			EarthenPlatingStorageTile: {
-				MapEntry0: Хранилище из земляного покрытия
-				MapEntry1: Запертое хранилище из земляного покрытия
+				MapEntry0: Хранилище из земляной обшивки
+				MapEntry1: Запертое хранилище из земляной обшивки
 			}
 
 			NaturePlatingCapsuleTile: {
-				MapEntry0: Капсула из природного покрытия
-				MapEntry1: Запертая капсула из природного покрытия
+				MapEntry0: Капсула из природной обшивки
+				MapEntry1: Запертая капсула из природной обшивки
 			}
 
 			PermafrostPlatingCapsuleTile: {
-				MapEntry0: Капсула из морозного покрытия
-				MapEntry1: Запертая капсула из морозного покрытия
+				MapEntry0: Капсула из мёрзлой обшивки
+				MapEntry1: Запертая капсула из мёрзлой обшивки
 			}
 
 			LockedMeteoriteChest: {
@@ -7590,28 +7590,28 @@ Mods: {
 			}
 
 			TidalPlatingChestTile: {
-				MapEntry0: Хранилище из приливного покрытия
-				MapEntry1: Запертое хранилище из приливного покрытия
+				MapEntry0: Хранилище из приливной обшивки
+				MapEntry1: Запертое хранилище из приливной обшивки
 			}
 
 			OtherworldPlatingChestTile: {
-				MapEntry0: Капсула из потустороннего покрытия
-				MapEntry1: Запертый капсула из потустороннего покрытия
+				MapEntry0: Капсула из потусторонней обшивки
+				MapEntry1: Запертый капсула из потусторонней обшивки
 			}
 
 			EvilPlatingChestTile: {
-				MapEntry0: Капсула из злого покрытия
-				MapEntry1: Запертая капсула из злого покрытия
+				MapEntry0: Капсула из злой обшивки
+				MapEntry1: Запертая капсула из злой обшивки
 			}
 
 			InfernoPlatingChestTile: {
-				MapEntry0: Сундук из инфернального покрытия
-				MapEntry1: Запертый сундук из инфернального покрытия
+				MapEntry0: Сундук из инфернальной обшивки
+				MapEntry1: Запертый сундук из инфернальной обшивки
 			}
 
 			ChaosPlatingChestTile: {
-				MapEntry1: Сундук из хаотического покрытия
-				MapEntry0: Запертый сундук из хаотического покрытия
+				MapEntry1: Сундук из хаотической обшивки
+				MapEntry0: Запертый сундук из хаотической обшивки
 			}
 
 			PyramidChestTile.MapEntry0: Сундук Пирамиды
@@ -7647,7 +7647,7 @@ Mods: {
 			ArchaeologistDialogueCoconutBroken: Очень умно, путешественник... вполне возможно, что тебя ждёт светлое будущее.
 			ArchaeologistDialogueDamocles: Хм-м... эта комната предназначалась для преступника или для короля?
 			ArchaeologistDialogueIceMonument: Эта замочная скважина обманчива. Сомневаюсь, что эта структура действительно является сосудом для чего-либо.
-			ArchaeologistDialogueInvidia1: Это святилище — одно из моих любимых мест. Здесь всегда так тихо и спокойно.
+			ArchaeologistDialogueInvidia1: Эта святыня — одно из моих любимых мест. Здесь всегда так тихо и спокойно.
 			ArchaeologistDialogueInvidia2: Эта резьба в форме змей невероятно детализирована, согласен?
 			ArchaeologistDialogueInvidia3: Я ощущаю пустоту приливной и инфернальной энергии в этом месте.
 		}
@@ -7814,7 +7814,7 @@ Mods: {
 			HoloEye.DisplayName: Голографический глаз
 			HoloSlime.DisplayName: Голографический слизень
 			knuckles.DisplayName: Наклз
-			LostSoul.DisplayName: Потерянная душа
+			LostSoul.DisplayName: Заблудшая душа
 			Maligmor.DisplayName: Опухолит
 			MaligmorChild.DisplayName: Опухолит
 			NatureSlime.DisplayName: Цветущий слизень
@@ -7885,7 +7885,7 @@ Mods: {
 			SnakePot: Группа змей, которая использует кувшин для защиты. Когда кувшин разбивается, змеи в нём разлетаются во все стороны.
 			WallMimic: Проклятье, поселившееся в Пирамиде, способно искажать даже сильнее, чем мировое зло. Под его влиянием даже стены Пирамиды превращаются в монстров!
 			Teratoma: Раковое образование, порождённое Проклятьем. Клетки тератом способны к крайне быстрому восстановлению, поэтому с их убийством медлить нельзя.
-			Ghast: Потерянные души, искажённые Проклятьем. Теперь они обречены защищать краеугольные камни на протяжении всей своей загробной жизни.
+			Ghast: Заблудшие души, искажённые Проклятьем. Теперь они обречены защищать краеугольные камни на протяжении всей своей загробной жизни.
 			Maligmor: Рождённые из желания Проклятья поглощаться всё и вся, опухолиты — это его проявления, наделённые кристаллами в качестве источника силы. Эти кристаллы также улучшают зрение опухолитов, что полезно для защиты краеугольных камней.
 			ArcticGoblin: Гоблин, сосланный замерзать в безжалостную тундру.
 			Polaris: Забытая машина войны. Построенный задолго до механического трио, Полярис создавался не ради воскрешения Ктулху, а, скорее, для использования в качестве оружия массового уничтожения.
@@ -8093,7 +8093,7 @@ Mods: {
 			5:
 				'''
 				Увеличивает количество исцеления, получаемого от зелий, на 40 ед.
-				Увеличивает скорость регенерации здоровья на 2 (1 ОЗ/сек)
+				Увеличивает скорость регенерации здоровья на 1 ед./сек
 				'''
 			6:
 				'''
@@ -8155,7 +8155,7 @@ Mods: {
 			3: Увеличивает критический урон на 20%
 			4: Увеличивает шанс критического удара на 6%
 			5: Увеличивает максимальный запас здоровья на 40 ед.
-			6: Увеличивает скорость регенерации здоровья на 2 (1 ОЗ/сек)
+			6: Увеличивает скорость регенерации здоровья на 1 ед./сек
 			7: Увеличивает максимальный запас пустоты на 40 ед.
 		}
 
@@ -8255,7 +8255,7 @@ Mods: {
 
 		PrecariousClusterTextList: {
 			0: Снижает наносимый урон на 10%
-			1: Увеличивает скорость регенерации здоровья на 1 (0,5 ОЗ/сек) за каждое скопление в инвентаре, вплоть до 4
+			1: Увеличивает скорость регенерации здоровья на 0,5 ед./сек за каждое скопление в инвентаре, вплоть до 4
 			2: Снижает сопротивление урону на 10%
 			3: Увеличивает защиту на 2 ед. за каждое скопление в инвентаре, вплоть до 8 ед.
 			4: Снижает скорость передвижения на 20%
@@ -8269,7 +8269,7 @@ Mods: {
 			1: Увеличивает стрелковый урон на 3% за каждое скопление в инвентаре, вплоть до 12%
 			2: Снижает максимальный запас пустоты на 20 ед. при нахождении в инвентаре
 			3: Увеличивает пустотный урон на 3% за каждое скопление в инвентаре, вплоть до 12%
-			4: Замедляет регенерацию здоровья на 2 (1 ОЗ/сек)
+			4: Снижает скорость регенерации здоровья на 1 ед./сек
 			5: Увеличивает урон ближнего боя на 3% за каждое скопление в инвентаре, вплоть до 12%
 			6: Поглощает 0,5 ед. пустоты в секунду при нахождении в инвентаре
 			7: Увеличивает урон призывателя на 3% за каждое скопление в инвентаре, вплоть до 12%
@@ -9051,8 +9051,8 @@ Mods: {
 					Label: Расположение шкалы пустоты по координате X
 					Tooltip:
 						'''
-						Горизонтальная позиция шкалы пустоты на экране
-						Измеряется в пикселях от левого края экрана
+						Горизонтальная позиция шкалы пустоты на экране.
+						Измеряется в пикселях от левого края экрана.
 						'''
 				}
 
@@ -9060,8 +9060,8 @@ Mods: {
 					Label: Расположение шкалы пустоты по координате Y
 					Tooltip:
 						'''
-						Вертикальная позиция шкалы пустоты на экране
-						Измеряется в пикселях от верхнего края экрана
+						Вертикальная позиция шкалы пустоты на экране.
+						Измеряется в пикселях от верхнего края экрана.
 						'''
 				}
 
@@ -9069,66 +9069,66 @@ Mods: {
 					Label: Фиксация расположения шкалы пустоты
 					Tooltip:
 						'''
-						Предотвращает перемещение шкалы пустоты курсором
-						Также предотвращает автоматическое изменение позиции шкалы пустоты при использовании стиля шкал здоровья и маны «Шкала»
+						Предотвращает перемещение шкалы пустоты курсором.
+						Также предотвращает автоматическое изменение позиции шкалы пустоты при использовании стиля шкал здоровья и маны «Шкала».
 						'''
 				}
 
 				alternateVoidBarDirection: {
-					Label: Альтернативное направление шкалы пустоты
-					Tooltip: Шкала пустоты будет направлена в обратную сторону
+					Label: Альтернативное направление шкалы пустоты.
+					Tooltip: Шкала пустоты будет направлена в обратную сторону.
 				}
 
 				alternateVoidBarStyle: {
 					Label: Альтернативный стиль шкалы пустоты
-					Tooltip: Немного изменяет вид шкалы пустоты
+					Tooltip: Немного изменяет вид шкалы пустоты.
 				}
 
 				voidBarTextOn: {
 					Label: Текст над шкалой пустоты
-					Tooltip: Включает текст над шкалой пустоты
+					Tooltip: Включает текст над шкалой пустоты.
 				}
 
 				voidBarHoverTextOn: {
 					Label: Текст шкалы пустоты при наведении
-					Tooltip: Включает текст, который появляется, когда вы наводите курсор на шкалу пустоты
+					Tooltip: Включает текст, который появляется, когда вы наводите курсор на шкалу пустоты.
 				}
 
 				simpleVoidText: {
 					Label: Упрощённый текст шкалы пустоты
-					Tooltip: Убирает отображение количества миньонов пустоты со шкалы пустоты
+					Tooltip: Убирает отображение количества миньонов пустоты со шкалы пустоты.
 				}
 
 				simpleVoidFill: {
 					Label: Упрощённое наполнение шкалы пустоты
-					Tooltip: Удаляет полоски на шкале пустоты для лучшего виденья количества пустоты
+					Tooltip: Удаляет полоски на шкале пустоты для лучшего виденья количества пустоты.
 				}
 
 				lowFidelityMode: {
 					Label: Режим производительности
 					Tooltip:
 						'''
-						Уменьшает количество визуальных эффектов для повышения производительности
-						В основном влияет на боссов и послеобразы снарядов
+						Уменьшает количество визуальных эффектов для повышения производительности.
+						В основном влияет на боссов и послеобразы снарядов.
 						'''
 				}
 
 				coloredTimeFreeze: {
 					Label: Цветная остановка времени
-					Tooltip: Определяет, каким будет цвет экрана во время остановки времени: блеклым или чёрно-белым
+					Tooltip: Определяет, каким будет цвет экрана во время остановки времени: блеклым или чёрно-белым.
 				}
 
 				screenShake: {
 					Label: Тряска экрана
-					Tooltip: Влияет только на тряску экрана, вызываемую самим модом
+					Tooltip: Влияет только на тряску экрана, вызываемую самим модом.
 				}
 
 				additionalTexturePackVisuals: {
 					Label: Дополнительные визуальные эффекты
 					Tooltip:
 						'''
-						Добавляет дополнительные эффекты, например пыль, различным блокам
-						Работает только со включённым Secrets of the Shadows Texture Pack
+						Добавляет дополнительные эффекты, например пыль, различным блокам.
+						Работает только со включённым Secrets of the Shadows Texture Pack.
 						'''
 				}
 
@@ -9136,14 +9136,14 @@ Mods: {
 					Label: Альтернативная музыка SOTS
 					Tooltip:
 						'''
-						Если включено, SOTS будет использовать музыку от BananaLizard в доступных местах
-						Если выключено, SOTS будет использовать музыку от Heart Plus Up в доступных местах
+						Если включено, SOTS будет использовать музыку от BananaLizard в доступных местах.
+						Если выключено, SOTS будет использовать музыку от Heart Plus Up в доступных местах.
 						'''
 				}
 
 				SanctuaryLagReduction: {
-					// Label: Sanctuary Lag Reduction
-					// Tooltip: ""
+					Label: Оптимизация Святыни
+					Tooltip: Уменьшает количество эффектов размытого освещения, улучшая производительность.
 				}
 			}
 
@@ -9159,24 +9159,24 @@ Mods: {
 					Label: Ослабленная парящая инсигния до победы над Люкс
 					Tooltip:
 						'''
-						Ослабляет парящую инсигнию, из-за чего она будет давать бесконечный полёт только после победы над Люкс
-						До победы над Люкс инсигния будет удваивать ваше время полёта
+						Ослабляет парящую инсигнию, из-за чего она будет давать бесконечный полёт только после победы над Люкс.
+						До победы над Люкс инсигния будет удваивать ваше время полёта.
 						'''
 				}
 
 				AddPlightToVanillaRecipes: {
 					Label: Эссенция страдания в ванильных рецептах
-					Tooltip: Эссенция страдания будет использоваться в некоторых ванильных рецептах вместе с остальными эссенциями
+					Tooltip: Эссенция страдания будет использоваться в некоторых ванильных рецептах вместе с остальными эссенциями.
 				}
 
 				GeneratePhaseOreAfterDefeatingLux: {
 					Label: Генерация фазовой руды после победы над Люкс
-					Tooltip: Отключите, чтобы предотвратить генерацию фазовой руды в мире после победы над Люкс
+					Tooltip: Отключите, чтобы предотвратить генерацию фазовой руды в мире после победы над Люкс.
 				}
 
 				NaturallySpawningPeanutBushes: {
 					Label: Естественное появление арахисовых кустов
-					Tooltip: Отключите, чтобы предотвратить рост арахисовых кустов на траве
+					Tooltip: Отключите, чтобы предотвратить рост арахисовых кустов на траве.
 				}
 			}
 		}
