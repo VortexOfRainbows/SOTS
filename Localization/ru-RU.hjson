@@ -8345,13 +8345,6 @@ Mods: {
 			PeanutBushesCount: Арахисовых кустов: {0}
 		}
 
-		ClockTime: {
-			12AM: Время: {0}:{1} утра
-			12PM: Время: {0}:{1} вечера
-			# Only used for mods that add support for 24-hour time format. Support for such a mod can be added in Clock.cs
-			24: Время: {0}:{1}
-		}
-
 		Projectiles: {
 			AcornOfJustice.DisplayName: Acorn Of Justice
 			AcornsOfJustice.DisplayName: Acorns Of Justice

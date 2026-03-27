@@ -8295,13 +8295,6 @@ Mods: {
 			PeanutBushesCount: Peanut Bushes: {0}
 		}
 
-		ClockTime: {
-			12AM: Time: {0}:{1} AM
-			12PM: Time: {0}:{1} PM
-			# Only used for mods that add support for 24-hour time format. Support for such a mod can be added in Clock.cs
-			24: Time: {0}:{1}
-		}
-
 		Projectiles: {
 			AcornOfJustice.DisplayName: Acorn Of Justice
 			AcornsOfJustice.DisplayName: Acorns Of Justice
