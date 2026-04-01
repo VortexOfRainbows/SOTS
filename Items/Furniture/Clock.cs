@@ -23,7 +23,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.Origin = new Point16(0, 4);
             TileObjectData.newTile.Height = 5;
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
-            AddMapEntry(MapColor, Language.GetText("ItemName.Clock"));
+            AddMapEntry(MapColor, Language.GetText("ItemName.GrandfatherClock"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -42,27 +42,34 @@ namespace SOTS.Items.Furniture
             if (!Main.dayTime)
                 time += 54000.0;
 
-            const double TimeShift = 7.5 + 12.0;
-            time = (time - TimeShift + 24.0) % 24.0;
+            time = time / 86400.0 * 24.0;
+            time = time - 7.5 - 12.0;
+
+            if (time < 0.0)
+                time += 24.0;
+            if (time >= 24.0)
+                time -= 24.0;
+
             int hours = (int)time;
-            int minutes = (int)Math.Floor((time - hours) * 60.0);
+            int minutes = (int)((time - hours) * 60.0);
             bool use24Hour = ModLoader.TryGetMod("CalamityRuTranslate", out _) && Language.ActiveCulture.Name == "ru-RU";
             string displayText;
 
             if (use24Hour)
             {
-                displayText = Language.GetTextValue("Mods.SOTS.ClockTime.24", hours, minutes);
+                displayText = $"{hours}:{minutes:00}";
             }
             else
             {
-                int displayHour = hours % 12;
-                if (displayHour == 0) displayHour = 12;
+                string period = Language.GetTextValue(hours >= 12 ? "GameUI.TimePastMorning" : "GameUI.TimeAtMorning");
+                int displayHours = hours % 12;
+                if (displayHours == 0)
+                    displayHours = 12;
 
-                string key = hours >= 12 ? "Mods.SOTS.ClockTime.12PM" : "Mods.SOTS.ClockTime.12AM";
-                displayText = Language.GetTextValue(key, displayHour, minutes);
+                displayText = $"{displayHours}:{minutes:00} {period}";
             }
 
-            Main.NewText(displayText, 255, 240, 20);
+            Main.NewText(Language.GetTextValue("CLI.Time", displayText), 255, 240, 20);
             return true;
         }
         public override void NearbyEffects(int i, int j, bool closer)
