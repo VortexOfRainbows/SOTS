@@ -299,7 +299,7 @@ namespace SOTS.NPCs.Constructs
 				NPC.velocity.Y -= 0.014f;
 				NPC.dontTakeDamage = true;
 			}
-			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<CopyDust4>());
+			int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, SOTSUtils.TypeHelper.CopyDust4Type);
 			Dust dust = Main.dust[dust2];
 			dust.color = new Color(255, 191, 0);
 			dust.noGravity = true;

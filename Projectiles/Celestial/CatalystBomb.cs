@@ -131,7 +131,7 @@ namespace SOTS.Projectiles.Celestial
 				for (int i = 0; i < particleList.Count; i++)
 				{
 					FireParticle particle = particleList[i];
-					Dust dust = Dust.NewDustDirect(new Vector2(particle.position.X - 4, particle.position.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(new Vector2(particle.position.X - 4, particle.position.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.noGravity = true;
 					dust.velocity *= 1.25f;
 					dust.scale *= 2.5f;
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Celestial
 					{
 						Vector2 circularLocation = new Vector2(-10, 0).RotatedBy(MathHelper.ToRadians(i));
 						circularLocation.Y *= 1.25f;
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.noGravity = true;
 						dust.velocity *= 0.5f;
 						dust.velocity += circularLocation;
@@ -266,7 +266,7 @@ namespace SOTS.Projectiles.Celestial
 							{
 								Vector2 circularLocation = new Vector2(-12, 0).RotatedBy(MathHelper.ToRadians(i));
 								circularLocation.Y *= 0.5f;
-								Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+								Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 								dust.noGravity = true;
 								dust.velocity *= 0.5f;
 								dust.velocity += circularLocation * 0.35f;

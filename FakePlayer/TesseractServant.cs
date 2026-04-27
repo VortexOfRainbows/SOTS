@@ -49,7 +49,7 @@ namespace SOTS.FakePlayer
             Player player = Main.player[Projectile.owner];
             FakeModPlayer fPlayer = FakeModPlayer.ModPlayer(player);
             if (Main.myPlayer != Projectile.owner)
-				Projectile.timeLeft = 20;
+                Projectile.timeLeft = 20;
 			if (runOnce)
 			{
                 if (Main.myPlayer == Projectile.owner)
@@ -426,7 +426,7 @@ namespace SOTS.FakePlayer
         }
         public void DrawCrystal(Color color, float degreesOffset, float size = 8f, float innerScale = 2f)
         {
-            Texture2D whitePixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            Texture2D whitePixel = SOTSUtils.WhitePixel;
             Vector2 drawPosition = Projectile.Center - Main.screenPosition;
             float radians = MathHelper.ToRadians(degreesOffset);
             drawPosition += new Vector2(0, -20 - size).RotatedBy(radians);
@@ -489,7 +489,7 @@ namespace SOTS.FakePlayer
             DrawFace(color, 180, 2 * scale, innerScale);
             DrawFace(color, 270, 2 * scale, innerScale);
 
-            Texture2D whitePixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            Texture2D whitePixel = SOTSUtils.WhitePixel;
             int halfWay = outerPoints.Count / 2;
             for (int i = 0; i < outerPoints.Count / 2; i++)
             {
@@ -501,7 +501,7 @@ namespace SOTS.FakePlayer
         }
         public void DrawFace(Color color, float degreesOffset, float size = 8f, float innerScale = 2f)
         {
-            Texture2D whitePixel = ModContent.Request<Texture2D>("SOTS/Items/Secrets/WhitePixel").Value;
+            Texture2D whitePixel = SOTSUtils.WhitePixel;
             Vector2 drawPosition = Projectile.Center - Main.screenPosition;
             //drawPosition += new Vector2(0, -64);
             float root2 = (float)Math.Sqrt(2);
@@ -623,7 +623,7 @@ namespace SOTS.FakePlayer
                 Projectile.Kill();
             }
         }
-        public Color coreColor => ColorHelper.TesseractColor(MathHelper.TwoPi * (Projectile.ai[2] % 10) / 10f, 0.5f);
+        public Color coreColor => ColorHelper.TesseractColor(MathHelper.TwoPi * (Projectile.ai[2] % 10) / 10f, 0.4f);
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;

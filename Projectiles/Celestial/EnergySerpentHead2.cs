@@ -188,7 +188,7 @@ namespace SOTS.Projectiles.Celestial
 				{
 					for (int k = 0; k < Main.rand.Next(3) + 1; k++)
 					{
-						int dust2 = Dust.NewDust(new Vector2(pos.X, pos.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						int dust2 = Dust.NewDust(new Vector2(pos.X, pos.Y) - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust = Main.dust[dust2];
 						dust.color = new Color(255, 100, 100, 0);
 						if(Main.rand.NextBool(3))
@@ -214,7 +214,7 @@ namespace SOTS.Projectiles.Celestial
 				{
 					for (int i = 0; i < 8; i++)
 					{
-						int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+						int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust = Main.dust[dust2];
 						dust.color = new Color(255, 100, 100, 0);
 						dust.noGravity = true;

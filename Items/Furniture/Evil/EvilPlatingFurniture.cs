@@ -90,10 +90,6 @@ namespace SOTS.Items.Furniture.Evil
     {
         public override int DoorItemID => ModContent.ItemType<Evil.EvilPlatingBlastDoor>();
         public override int OpenDoorTile => ModContent.TileType<Evil.EvilPlatingBlastDoorTileOpen>();
-        public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
@@ -104,10 +100,6 @@ namespace SOTS.Items.Furniture.Evil
     {
         public override int DoorItemID => ModContent.ItemType<Evil.EvilPlatingBlastDoor>();
         public override int ClosedDoorTile => ModContent.TileType<Evil.EvilPlatingBlastDoorTileClosed>();
-        public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
@@ -285,10 +277,10 @@ namespace SOTS.Items.Furniture.Evil
             return false;
         }
         protected override int DresserDrop => ModContent.ItemType<EvilPlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.EvilPlatingDresserTile");
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.Items.EvilPlatingDresser.DisplayName");
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
         {
-            return Language.GetText("Mods.SOTS.ContainerName.EvilPlatingDresserTile");
+            return Language.GetText("Mods.SOTS.Items.EvilPlatingDresser.DisplayName");
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -705,8 +697,7 @@ namespace SOTS.Items.Furniture.Evil
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(SOTSTile.EvilPlatingLight * 3), name);
+            AddMapEntry(new Color(SOTSTile.EvilPlatingLight * 3), Language.GetText("ItemName.Torch"));
             DustType = DustID.GoldCoin;
             AdjTiles = new int[] { TileID.Torches };
             TileID.Sets.DisableSmartCursor[Type] = true;

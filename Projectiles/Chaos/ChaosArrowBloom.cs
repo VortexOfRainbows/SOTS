@@ -74,7 +74,7 @@ namespace SOTS.Projectiles.Chaos
             {
 				Projectile.ai[1] -= turnFactor;
             }
-			Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100);
+			Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100);
 			dust2.velocity *= 0;
 			dust2.velocity -= Projectile.velocity * 0.1f;
 			dust2.noGravity = true;

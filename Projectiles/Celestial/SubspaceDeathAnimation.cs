@@ -202,7 +202,7 @@ namespace SOTS.Projectiles.Celestial
 				{
 					for (int k = 0; k < Main.rand.Next(3) + 1; k++)
 					{
-						int dust2 = Dust.NewDust(new Vector2(pos.X, pos.Y) - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						int dust2 = Dust.NewDust(new Vector2(pos.X, pos.Y) - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust = Main.dust[dust2];
 						dust.color = new Color(100, 255, 100, 0);
 						if(Main.rand.NextBool(3))
@@ -240,7 +240,7 @@ namespace SOTS.Projectiles.Celestial
 						{
 							Vector2 circularLocation = new Vector2(4 + rand, 0).RotatedBy(MathHelper.ToRadians(i));
 							circularLocation.Y *= 1.25f;
-							Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X - 4, atLoc.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X - 4, atLoc.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.noGravity = true;
 							dust.velocity *= 0.8f;
 							dust.velocity += circularLocation;

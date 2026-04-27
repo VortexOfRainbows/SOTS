@@ -84,7 +84,7 @@ namespace SOTS.Items
 			}
 			if(style == 10)
             {
-				Dust dust2 = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
+				Dust dust2 = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust2.noGravity = true;
 				dust2.velocity *= 0.8f;
 				dust2.scale = 1.4f;

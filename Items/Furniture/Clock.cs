@@ -1,9 +1,12 @@
 using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static SOTS.SOTSUtils;
 
 
 namespace SOTS.Items.Furniture
@@ -20,6 +23,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.Origin = new Point16(0, 4);
             TileObjectData.newTile.Height = 5;
             TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16, 16 };
+            AddMapEntry(MapColor, Language.GetText("ItemName.GrandfatherClock"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
@@ -34,40 +38,38 @@ namespace SOTS.Items.Furniture
         }
         public override bool RightClick(int x, int y)
         {
-            string text = "AM";
             double time = Main.time;
             if (!Main.dayTime)
-            {
                 time += 54000.0;
-            }
+
             time = time / 86400.0 * 24.0;
             time = time - 7.5 - 12.0;
+
             if (time < 0.0)
-            {
                 time += 24.0;
-            }
-            if (time >= 12.0)
+            if (time >= 24.0)
+                time -= 24.0;
+
+            int hours = (int)time;
+            int minutes = (int)((time - hours) * 60.0);
+            bool use24Hour = ModLoader.TryGetMod("CalamityRuTranslate", out _) && Language.ActiveCulture.Name == "ru-RU";
+            string displayText;
+
+            if (use24Hour)
             {
-                text = "PM";
+                displayText = $"{hours}:{minutes:00}";
             }
-            int intTime = (int)time;
-            double deltaTime = time - intTime;
-            deltaTime = (int)(deltaTime * 60.0);
-            string text2 = string.Concat(deltaTime);
-            if (deltaTime < 10.0)
+            else
             {
-                text2 = "0" + text2;
+                string period = Language.GetTextValue(hours >= 12 ? "GameUI.TimePastMorning" : "GameUI.TimeAtMorning");
+                int displayHours = hours % 12;
+                if (displayHours == 0)
+                    displayHours = 12;
+
+                displayText = $"{displayHours}:{minutes:00} {period}";
             }
-            if (intTime > 12)
-            {
-                intTime -= 12;
-            }
-            if (intTime == 0)
-            {
-                intTime = 12;
-            }
-            var newText = string.Concat("Time: ", intTime, ":", text2, " ", text);
-            Main.NewText(newText, 255, 240, 20);
+
+            Main.NewText(Language.GetTextValue("CLI.Time", displayText), 255, 240, 20);
             return true;
         }
         public override void NearbyEffects(int i, int j, bool closer)

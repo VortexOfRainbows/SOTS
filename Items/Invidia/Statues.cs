@@ -55,9 +55,8 @@ namespace SOTS.Items.Invidia
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(57, 46, 76), name);
-			MinPick = 110;
+			AddMapEntry(new Color(57, 46, 76), Language.GetText("Mods.SOTS.Items.RuinedStatue.DisplayName"));
+            MinPick = 110;
 			DustType = ModContent.DustType<EvostoneDust>();
             HitSound = SoundID.Tink;
             MineResist = 0.1f;
@@ -135,8 +134,7 @@ namespace SOTS.Items.Invidia
             TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceRight;
             TileObjectData.addAlternate(1);
             TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(57, 46, 76), name);
+            AddMapEntry(new Color(57, 46, 76), Language.GetText("Mods.SOTS.Items.SerpentStatue.DisplayName"));
             MinPick = 110;
             DustType = ModContent.DustType<EvostoneDust>();
             HitSound = SoundID.Tink;

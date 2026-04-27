@@ -216,7 +216,7 @@ namespace SOTS.Helpers
         }
         public static Color TesseractColor(float radians, float lerp = 0.5f)
         {
-            return Color.Lerp(Pastel(radians + SoulColorCounter * 9 / 130f), AmethystColor, lerp);
+            return Color.Lerp(AmethystColor, Pastel(radians + SoulColorCounter * 9 / 160f, true), lerp);
         }
         public static readonly Color Evostone = new Color(46, 63, 77);
         public static readonly Color PinkPetal = new Color(207, 110, 101, 0);

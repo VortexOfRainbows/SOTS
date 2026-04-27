@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.Earth
 			{
 				for (int i = 0; i < 14; i++)
 				{
-					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					Color color2 = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
 					dust.color = color2;
 					dust.noGravity = true;
@@ -133,7 +133,7 @@ namespace SOTS.Projectiles.Earth
             }
 			if(Projectile.timeLeft < trailLength || Main.rand.NextBool(8))
             {
-				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				Color color2 = Color.Lerp(new Color(175, 218, 118, 0), new Color(74, 186, 54, 0), Main.rand.NextFloat(1));
 				dust.color = color2;
 				dust.noGravity = true;

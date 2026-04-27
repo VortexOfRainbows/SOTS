@@ -84,17 +84,21 @@ namespace SOTS.Items.Planetarium
 	public class BladeItem : GlobalItem
 	{
 		public override bool CanUseItem(Item item, Player player)
-		{
-			BladePlayer modPlayer = player.GetModPlayer<BladePlayer>();
-			if (item.CountsAsClass(DamageClass.Melee))
-				modPlayer.attackNum++;
-			return base.CanUseItem(item, player);
+        {
+            if (player.whoAmI != Main.myPlayer)
+                return base.CanUseItem(item, player);
+            if (item.CountsAsClass(DamageClass.Melee))
+			{
+				BladePlayer modPlayer = player.GetModPlayer<BladePlayer>();
+                modPlayer.attackNum++;
+            }
+            return base.CanUseItem(item, player);
 		}
 	}
 	public class BladePlayer : ModPlayer
 	{
 		public int attackNum = 0;
-
+		public int CurrentBlades { get; set; }
 		public int bladeDamage = 0;
 		public int maxBlades = 0;
 		public int bladeGeneration = 0;
@@ -102,23 +106,21 @@ namespace SOTS.Items.Planetarium
 		public static readonly int bladeGenSpeed = 90;
 		public override void ResetEffects()
 		{
-			int currentBlades = 0;
-
-			for (int i = 0; i < Main.projectile.Length; i++)
-			{
-				Projectile proj = Main.projectile[i];
-				if (ModContent.ProjectileType<TwilightBlade>() == proj.type && proj.active && proj.owner == Player.whoAmI && proj.timeLeft > 748)
-				{
-					currentBlades++;
-				}
-			}
-			if (bladeGenSpeed < bladeGeneration)
+			if (Player.whoAmI != Main.myPlayer)
+            {
+                bladeDamage = 0;
+                maxBlades = 0;
+                CurrentBlades = 0;
+                return;
+            }
+            if (bladeGenSpeed < bladeGeneration)
 			{
 				bladeGeneration -= bladeGenSpeed;
-				if(maxBlades > 0 && currentBlades < maxBlades && attackNum < 10 && Player.whoAmI == Main.myPlayer)
+				if(maxBlades > 0 && CurrentBlades < maxBlades && attackNum < 10)
 					Projectile.NewProjectile(Player.GetSource_Misc("SOTS:BladeGenerator"),Player.Center.X, Player.Center.Y, 0, 0, ModContent.ProjectileType<TwilightBlade>(), bladeDamage, 1f, Player.whoAmI);
 			}
-			if(attackNum >= 10)
+			CurrentBlades = 0;
+            if (attackNum >= 10)
 			{
 				attackNum++;
 				if(attackNum > 12)

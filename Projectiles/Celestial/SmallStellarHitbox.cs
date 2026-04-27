@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Celestial
 					for (float j = 0; j < size; j += iterateBy)
 					{
 						Vector2 direction = -(Projectile.Center - new Vector2(starPosX, starPosY)).SafeNormalize(Vector2.Zero);
-						Dust dust = Dust.NewDustDirect(new Vector2(starPosX, starPosY), 0, 0, ModContent.DustType<CopyDust4>(), 50);
+						Dust dust = Dust.NewDustDirect(new Vector2(starPosX, starPosY), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 50);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;
 						dust.scale = 1.3f;

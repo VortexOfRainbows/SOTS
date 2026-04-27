@@ -114,7 +114,7 @@ namespace SOTS.Projectiles.Planetarium
                     circularLocation.Y *= 1.1f;
                     circularLocation.X *= 0.7f;
                     circularLocation = circularLocation.RotatedBy(Projectile.velocity.ToRotation());
-                    Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(120, 200, 255));
+                    Dust dust = Dust.NewDustDirect(fireFrom + circularLocation + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(120, 200, 255));
                     dust.noGravity = true;
                     dust.scale = 1.5f - 1f * percent;
                     dust.velocity = -circularLocation * 0.1f + player.velocity;
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Planetarium
                     SOTSUtils.PlaySound(SoundID.Item94, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.7f, 0.3f);
                     for (int k = 0; k < 60; k++)
                     {
-                        Dust dust = Dust.NewDustDirect(fireFrom + new Vector2(-4, -4), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, new Color(120, 200, 255));
+                        Dust dust = Dust.NewDustDirect(fireFrom + new Vector2(-4, -4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, new Color(120, 200, 255));
                         dust.noGravity = true;
                         if (k > 20)
                         {

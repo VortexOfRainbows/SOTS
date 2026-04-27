@@ -3,9 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
 using SOTS.NPCs.Boss.Curse;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Items.Pyramid;
 
 namespace SOTS.Projectiles.Pyramid
 {    
@@ -13,7 +11,6 @@ namespace SOTS.Projectiles.Pyramid
     {	          
 		public override void SetStaticDefaults()
 		{
-            // DisplayName.SetDefault("Curse");
 			Main.projFrames[Projectile.type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 16;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 1;
@@ -78,7 +75,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			if(iterationValue == 1)
 				DrawTelegraph(spriteBatch);
-			Vector2 drawOrigin = new Vector2(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
+			Vector2 drawOrigin = new(Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value.Width * 0.5f, Projectile.height * 0.5f);
 			for (int k = 0; k < Projectile.oldPos.Length; k++)
 			{
 				Vector2 drawPos = Projectile.oldPos[k] - Main.screenPosition + drawOrigin;

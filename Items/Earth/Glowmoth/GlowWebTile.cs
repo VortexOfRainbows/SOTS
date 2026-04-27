@@ -27,7 +27,7 @@ namespace SOTS.Items.Earth.Glowmoth
 			Main.tileBrick[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
-			AddMapEntry(new Color(30, 120, 170));
+			AddMapEntry(new Color(30, 120, 170), Language.GetText("Mods.SOTS.Items.GlowSilk.DisplayName"));
 			HitSound = SoundID.Grass;
 			DustType = DustID.Silk;
 		}

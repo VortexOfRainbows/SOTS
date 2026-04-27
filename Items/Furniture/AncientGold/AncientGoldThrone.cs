@@ -46,9 +46,8 @@ namespace SOTS.Items.Furniture.AncientGold
             TileObjectData.newTile.DrawYOffset = 0;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
-            AddMapEntry(new Color(220, 180, 25), name);
+            AddMapEntry(new Color(220, 180, 25), Language.GetText("ItemName.Throne"));
             DustType = DustID.GoldCoin;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

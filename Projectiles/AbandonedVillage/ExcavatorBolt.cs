@@ -225,7 +225,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 Vector2 drawPos = Projectile.oldPos[k] + Projectile.Size / 2;
                 for (float i = 0; i < 1; i += 0.5f)
                 {
-                    Dust dust = Dust.NewDustDirect(Vector2.Lerp(prev, drawPos, i) - new Vector2(4), 0, 0, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(Vector2.Lerp(prev, drawPos, i) - new Vector2(4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.velocity *= 0.2f;
                     dust.velocity += Projectile.oldVelocity * Main.rand.NextFloat(0.5f);
                     dust.noGravity = true;

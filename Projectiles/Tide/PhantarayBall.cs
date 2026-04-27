@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.Tide
             for (int i = 0; i < 360; i += 20)
             {
                 Vector2 circularLocation = new Vector2(7, 0).RotatedBy(MathHelper.ToRadians(i));
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(10, 10), 10, 10, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(10, 10), 10, 10, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.scale *= 0.1f;
                 dust.scale += 1.5f;
                 dust.color = new Color(186, 92, 92);
@@ -78,7 +78,7 @@ namespace SOTS.Projectiles.Tide
             Projectile.velocity *= 1.0175f;
             for(float i = 0.0f; i < 1.0f; i += 0.34f)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity * i - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center + Projectile.velocity * i - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.scale *= 0.1f;
                 dust.scale += 1.2f;
                 dust.color = new Color(186, 92, 92);

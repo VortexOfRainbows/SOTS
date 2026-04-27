@@ -72,7 +72,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 				RunOnce = false;
 				for (int i = 0; i < 16; i++)
 				{
-					int num1 = Dust.NewDust(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+					int num1 = Dust.NewDust(Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					Vector2 circular = new Vector2(6, 0).RotatedBy(MathHelper.TwoPi * i / 16f);
 					Dust dust2 = Main.dust[num1];
 					Color color = getColor;
@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Earth.Glowmoth
 		{
 			for(int i = 0; i < 12; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num1];
 				Color color2 = getColor * 0.75f;
 				dust.color = color2;

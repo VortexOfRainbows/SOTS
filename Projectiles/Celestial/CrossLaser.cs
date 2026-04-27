@@ -157,7 +157,7 @@ namespace SOTS.Projectiles.Celestial
 					from += to;
 					if( i > 6)
 					{
-						int dust3 = Dust.NewDust(from - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						int dust3 = Dust.NewDust(from - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						Dust dust4 = Main.dust[dust3];
 						dust4.velocity *= 0.15f;
 						dust4.color = color;
@@ -170,7 +170,7 @@ namespace SOTS.Projectiles.Celestial
 				for (int i = 0; i < 8; i++)
 				{
 					from += Projectile.velocity.RotatedBy(MathHelper.ToRadians(-160)).SafeNormalize(Vector2.Zero) * 4;
-					int dust3 = Dust.NewDust(from - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					int dust3 = Dust.NewDust(from - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					Dust dust4 = Main.dust[dust3];
 					dust4.velocity *= 0.1f;
 					dust4.color = color;
@@ -182,7 +182,7 @@ namespace SOTS.Projectiles.Celestial
 				for (int i = 0; i < 8; i++)
 				{
 					from += Projectile.velocity.RotatedBy(MathHelper.ToRadians(160)).SafeNormalize(Vector2.Zero) * 4;
-					int dust3 = Dust.NewDust(from - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					int dust3 = Dust.NewDust(from - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					Dust dust4 = Main.dust[dust3];
 					dust4.velocity *= 0.1f;
 					dust4.color = color;

@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Celestial
 			{
 				for (int i = 0; i < 15; i++)
 				{
-					int dust3 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+					int dust3 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 					Dust dust4 = Main.dust[dust3];
 					dust4.velocity *= 0.45f;
 					dust4.velocity += Projectile.velocity.SafeNormalize(Vector2.Zero) * 2f;

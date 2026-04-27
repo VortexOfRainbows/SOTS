@@ -16,7 +16,7 @@ namespace SOTS.FakePlayer
         {
             if(fakePlayer.FakePlayerType == FakePlayerTypeID.Tesseract)
             {
-                return ColorHelper.TesseractColor(MathHelper.TwoPi * (fakePlayer.OverrideUseSlot % 10) / 10f, 0.5f);
+                return ColorHelper.TesseractColor(MathHelper.TwoPi * (fakePlayer.OverrideUseSlot % 10) / 10f, 0.4f);
             }
             return Color.White;
         }
@@ -317,10 +317,13 @@ namespace SOTS.FakePlayer
                             {
                                 Main.spriteBatch.End();
                                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-                                if (drawState == DrawStateID.Border)
-                                    DrawHydroConnection(player, fakePlayer, true);
-                                else
-                                    DrawHydroConnection(player, fakePlayer, false);
+                                if(!FakeModPlayer.ModPlayer(player).hydroVanityHidden)
+                                {
+                                    if (drawState == DrawStateID.Border)
+                                        DrawHydroConnection(player, fakePlayer, true);
+                                    else
+                                        DrawHydroConnection(player, fakePlayer, false);
+                                }
                             }
                         }
                     }

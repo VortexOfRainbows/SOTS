@@ -442,7 +442,7 @@ namespace SOTS.NPCs.Constructs
 				{
 					for (int i = 0; i < 3; i++)
 					{
-						Dust dust = Dust.NewDustDirect(center + trueOffset - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(center + trueOffset - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.color = new Color(ColorHelper.EvilColor.R, ColorHelper.EvilColor.G, ColorHelper.EvilColor.B, 100);
 						dust.alpha = 100;
 						dust.noGravity = true;
@@ -458,7 +458,7 @@ namespace SOTS.NPCs.Constructs
 			{
 				for (int i = 0; i < 5; i++)
 				{
-					Dust dust = Dust.NewDustDirect(center + trueOffset - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(center + trueOffset - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.color = new Color(ColorHelper.EvilColor.R, ColorHelper.EvilColor.G, ColorHelper.EvilColor.B);
 					dust.noGravity = true;
 					dust.fadeIn = 0.1f;

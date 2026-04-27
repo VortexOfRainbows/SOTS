@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
@@ -10,11 +7,14 @@ using SOTS.Helpers;
 using SOTS.Items.Banners;
 using SOTS.Items.Celestial;
 using SOTS.Projectiles.Celestial;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
- 
+
 namespace SOTS.NPCs.Boss
 {
     [AutoloadBossHead]
@@ -31,24 +31,10 @@ namespace SOTS.NPCs.Boss
         {
             return NPC.life < NPC.lifeMax * 0.6f;
         }
-        float ai1 = 240;
-        private float ai2
-        {
-            get => NPC.ai[1];
-            set => NPC.ai[1] = value;
-        }
-
-        private float ai3
-        {
-            get => NPC.ai[2];
-            set => NPC.ai[2] = value;
-        }
-
-        private float ai4
-        {
-            get => NPC.ai[3];
-            set => NPC.ai[3] = value;
-        }
+        float AI1 = 240;
+        private ref float AI2 => ref NPC.ai[1];
+        private ref float AI3 => ref NPC.ai[2];
+        private ref float AI4 => ref NPC.ai[3];
         private int phase = 0;
         private int despawn = 0;
         private Vector2 directVelo;
@@ -301,41 +287,41 @@ namespace SOTS.NPCs.Boss
         {
             if (Tphase == 0)
             {
-                ai1 = 540;
-                ai2 = 0;
-                ai3 = 300;
-                ai4 = -1;
+                AI1 = 540;
+                AI2 = 0;
+                AI3 = 300;
+                AI4 = -1;
             }
             if (Tphase == 1)
             {
                 ResetRotation();
-                ai1 = 720;
-                ai2 = 0;
-                ai3 = 0;
-                ai4 = 0;
+                AI1 = 720;
+                AI2 = 0;
+                AI3 = 0;
+                AI4 = 0;
             }
             if (Tphase == 2)
             {
                 directVelo = directVelo.SafeNormalize(new Vector2(1, 0)) * 30;
-                ai1 = 0;
-                ai2 = 0;
-                ai3 = 1;
-                ai4 = 0;
+                AI1 = 0;
+                AI2 = 0;
+                AI3 = 1;
+                AI4 = 0;
             }
             if (Tphase == 3 || Tphase == 4)
             {
-                ai1 = 2000;
-                ai2 = 0;
-                ai3 = 0;
-                ai4 = 1;
+                AI1 = 2000;
+                AI2 = 0;
+                AI3 = 0;
+                AI4 = 1;
             }
             if (Tphase == 5)
             {
                 ResetRotation();
-                ai1 = 510;
-                ai2 = 0;
-                ai3 = 0;
-                ai4 = 0;
+                AI1 = 510;
+                AI2 = 0;
+                AI3 = 0;
+                AI4 = 0;
             }
             else
             {
@@ -350,7 +336,7 @@ namespace SOTS.NPCs.Boss
             if (directVelo.X < 0)
                 targetFrame = 4;
             int currentFrame = NPC.frame.Y / frameHeight;
-            if(currentFrame != targetFrame || (phase == 4 || (phase == 0 && hasEnteredSecondPhase && ai3 < 250 && ai3 > 160)))
+            if(currentFrame != targetFrame || (phase == 4 || (phase == 0 && hasEnteredSecondPhase && AI3 < 250 && AI3 > 160)))
             {
                 NPC.frameCounter++;
                 if(NPC.frameCounter >= 6)
@@ -397,8 +383,8 @@ namespace SOTS.NPCs.Boss
             }
             if (phase == 0)
             {
-                ai1--;
-                if (ai1 <= 0)
+                AI1--;
+                if (AI1 <= 0)
                 {
                     if (ReadyToEnterPhase2() && !hasEnteredSecondPhase)
                     {
@@ -411,16 +397,16 @@ namespace SOTS.NPCs.Boss
                 if(hasEnteredSecondPhase)
                 {
                     rotate++;
-                    ai3--;
-                    if(ai3 > 190 && ai3 < 250)
+                    AI3--;
+                    if(AI3 > 190 && AI3 < 250)
                     {
                         directVelo *= 0.94f;
                     }
-                    if(ai3 == 200)
+                    if(AI3 == 200)
                     {
                         prevLocation = player.Center;
                     }
-                    if(ai3 == 190)
+                    if(AI3 == 190)
                     {
                         Vector2 goTo = prevLocation - NPC.Center;
                         directVelo = goTo.SafeNormalize(Vector2.Zero) * 24f;
@@ -436,7 +422,7 @@ namespace SOTS.NPCs.Boss
                             }
                         }
                     }
-                    if(ai3 <= 190 && ai3 > 160 && ai3 % 3 == 0)
+                    if(AI3 <= 190 && AI3 > 160 && AI3 % 3 == 0)
                     {
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
@@ -446,8 +432,8 @@ namespace SOTS.NPCs.Boss
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + velocity * 32, velocity * 11.5f + new Vector2(0, -4.5f), ModContent.ProjectileType<SubspaceLingeringFlame>(), (int)(damage2 * 0.75f), 0, Main.myPlayer);
                         }
                     }
-                    if (ai3 < 160)
-                        ai3 = 250;
+                    if (AI3 < 160)
+                        AI3 = 250;
                 }
             }
             if (phase == 1)
@@ -464,14 +450,14 @@ namespace SOTS.NPCs.Boss
                     }
                 }
                 playerCenter = playerCenter /= num;
-                ai1--;
+                AI1--;
                 int numCrosses = 2;
-                if ((Main.expertMode && ai1 <= 240) || (!Main.expertMode && ai1 <= 240))
+                if ((Main.expertMode && AI1 <= 240) || (!Main.expertMode && AI1 <= 240))
                     numCrosses++;
                 if (hasEnteredSecondPhase)
                     numCrosses++;
                 CircularAttack(playerCenter, 30, numCrosses);
-                if (ai1 <= 0 ||(hasEnteredSecondPhase && ai1 < 120))
+                if (AI1 <= 0 ||(hasEnteredSecondPhase && AI1 < 120))
                 {
                     TransitionPhase(2);
                     return;
@@ -479,33 +465,33 @@ namespace SOTS.NPCs.Boss
             }
             if (phase == 2)
             {
-                ai1--;
+                AI1--;
                 int max = 6;
                 if (hasEnteredSecondPhase)
                     max = 4;
-                if (ai1 <= 0)
+                if (AI1 <= 0)
                 {
-                    if (ai4 > max)
+                    if (AI4 > max)
                     {
                         TransitionPhase(3);
                         return;
                     }
                     else // if (dist > 1500)
                     {
-                        ai1 = 250;
+                        AI1 = 250;
                         prevLocation = DoIndicator(Main.rand.Next(-120, 121), Main.rand.Next(-14, 15), Main.rand.Next(-120, 121));
                     }
                 }
-                else if(ai1 == 240 && hasEnteredSecondPhase)
+                else if(AI1 == 240 && hasEnteredSecondPhase)
                 {
-                    DoIndicator(ai3, Main.rand.Next(-14, 15), 0, false, true);
+                    DoIndicator(AI3, Main.rand.Next(-14, 15), 0, false, true);
                 }
-                else if (ai1 == 140)
+                else if (AI1 == 140)
                 {
-                    ai2 = -70;
-                    DoDash((int)ai3, true);
-                    ai3 *= -1;
-                    ai4++;
+                    AI2 = -70;
+                    DoDash((int)AI3, true);
+                    AI3 *= -1;
+                    AI4++;
                     savedir = prevdir;
                     /*
                     #region make sure it is going towards the player lol
@@ -536,15 +522,15 @@ namespace SOTS.NPCs.Boss
                         savedir *= -1;
                     #endregion
                     */
-                    if (ai4 <= max)
-                        ai1 = 0;
+                    if (AI4 <= max)
+                        AI1 = 0;
                 }
-                ai2++;
-                if (ai2 > -54 && ai2 < 0 && ai2 % 2 == 0)
+                AI2++;
+                if (AI2 > -54 && AI2 < 0 && AI2 % 2 == 0)
                 {
                     for (int i = 0; i < 8; i++)
                     {
-                        int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, ModContent.DustType<CopyDust4>());
+                        int dust2 = Dust.NewDust(new Vector2(NPC.position.X, NPC.position.Y), NPC.width, NPC.height, SOTSUtils.TypeHelper.CopyDust4Type);
                         Dust dust = Main.dust[dust2];
                         dust.color = new Color(100, 255, 100, 0);
                         dust.noGravity = true;
@@ -563,30 +549,30 @@ namespace SOTS.NPCs.Boss
             }
             if (phase == 3)
             {
-                ai1--;
+                AI1--;
                 int worldSide = left ? -1 : 1;
-                if (ai1 > 1900)
+                if (AI1 > 1900)
                 {
-                    ai1 = 1900;
+                    AI1 = 1900;
                     prevLocation = player.Center;
-                    prevLocation = DoIndicator(worldSide, 540 + ai2, 0, true, false);
+                    prevLocation = DoIndicator(worldSide, 540 + AI2, 0, true, false);
                 }
-                else if(ai1 <= 1850 && ai1 > 1750 && ai1 % 10 == 0)
+                else if(AI1 <= 1850 && AI1 > 1750 && AI1 % 10 == 0)
                 { 
-                    ai2 += 100;
-                    DoIndicator(worldSide, ai2, 0, true, hasEnteredSecondPhase);
+                    AI2 += 100;
+                    DoIndicator(worldSide, AI2, 0, true, hasEnteredSecondPhase);
                 }
-                if (ai1 == 1760)
+                if (AI1 == 1760)
                 {
                     DoDash(1, true);
                     if(!hasEnteredSecondPhase)
                         SerpentRing();
                 }
-                if (ai1 <= 1710)
+                if (AI1 <= 1710)
                 {
                     directVelo *= 0.5f;
                 }
-                if (ai1 <= 1708)
+                if (AI1 <= 1708)
                 {
                     TransitionPhase(4);
                 }
@@ -594,22 +580,22 @@ namespace SOTS.NPCs.Boss
             if (phase == 4)
             {
                 int worldSide = left ? 1 : -1;
-                if (ai1 <= 2000 && ai1 > 1900 && ai1 % 10 == 0)
+                if (AI1 <= 2000 && AI1 > 1900 && AI1 % 10 == 0)
                 {
-                    if ((int)ai1 == 1980)
+                    if ((int)AI1 == 1980)
                     {
                         if (hasEnteredSecondPhase)
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>(), 0, 0, Main.myPlayer, NPC.whoAmI, -1);
                     }
-                    ai3 += 100;
-                    DoIndicator(-worldSide, ai3, ModContent.ProjectileType<EnergySerpentHead>(), true);
+                    AI3 += 100;
+                    DoIndicator(-worldSide, AI3, ModContent.ProjectileType<EnergySerpentHead>(), true);
                 }
-                if ((int)ai1 == 1900)
+                if ((int)AI1 == 1900)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, NPC.whoAmI, worldSide);
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, (hasEnteredSecondPhase ? 1 : 0), Main.myPlayer, NPC.whoAmI, 1000 * worldSide);
                 }
-                if(ai1 < 1800 && ai2 % 20 <= 1 && Main.netMode != NetmodeID.MultiplayerClient)
+                if(AI1 < 1800 && AI2 % 20 <= 1 && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     for (int i = 0; i < Main.maxPlayers; i++)
                     {
@@ -643,63 +629,63 @@ namespace SOTS.NPCs.Boss
                 }
                 if(hasEnteredSecondPhase)
                 {
-                    if (ai1 > 1880)
-                        ai1--;
-                    else if (ai1 > 0)
+                    if (AI1 > 1880)
+                        AI1--;
+                    else if (AI1 > 0)
                     {
-                        if (ai3 <= 0 || ai3 > 900)
-                            ai3 = 900;
-                        ai1 = -1; 
-                        ai4 = 0;
+                        if (AI3 <= 0 || AI3 > 900)
+                            AI3 = 900;
+                        AI1 = -1; 
+                        AI4 = 0;
                     }
                 }
                 else
                 {
-                    ai1--;
+                    AI1--;
                 }
                 Vector2 toPlayer = player.Center - NPC.Center;
                 float distToPlayer = toPlayer.Length();
-                ai2++;
+                AI2++;
                 float dist = 620;
                 float speed = 20;
                 if (hasEnteredSecondPhase)
                 {
-                    ai2 += 0.5f;
+                    AI2 += 0.5f;
                     dist = 240;
                     speed = 3.5f + distToPlayer * 0.0013f;
                 }
-                SlitherWall(worldSide, ai2, dist, speed);
+                SlitherWall(worldSide, AI2, dist, speed);
                 if(!hasEnteredSecondPhase)
                 {
-                    if(ai1 > 1000)
+                    if(AI1 > 1000)
                     {
-                        if ((Main.expertMode && ai1 % 45 == 0) || (!Main.expertMode && ai1 % 55 == 0))
+                        if ((Main.expertMode && AI1 % 45 == 0) || (!Main.expertMode && AI1 % 55 == 0))
                         {
                             SnakeFromWall(worldSide);
                         }
-                        if (ai1 % 330 == 0)
+                        if (AI1 % 330 == 0)
                         {
                             Vector2 circular = new Vector2(1200, 0).RotatedBy(MathHelper.ToRadians(30 + (rotate * 2 + Main.rand.Next(-30, 31)) % 120));
                             SerpentRing(circular + player.Center);
                         }
                     }
-                    if(ai1 < 935)
-                        ai4 = -1;
-                    if (ai1 < 920)
+                    if(AI1 < 935)
+                        AI4 = -1;
+                    if (AI1 < 920)
                     {
                         TransitionPhase(0);
                         left = !left;
                         return;
                     }
                 }
-                else if(ai1 <= 0)
+                else if(AI1 <= 0)
                 {
-                    ai3--;
-                    if(ai3 >= 650 && ai3 % 50 == 0)
+                    AI3--;
+                    if(AI3 >= 650 && AI3 % 50 == 0)
                     {
-                        if (ai4 <= 10)
+                        if (AI4 <= 10)
                         {
-                            ai4 = player.Center.Y;
+                            AI4 = player.Center.Y;
                         }
                         int num = 3;
                         if (Main.expertMode)
@@ -711,9 +697,9 @@ namespace SOTS.NPCs.Boss
                             counter++;
                             if(counter % num != interval)
                             {
-                                Vector2 spawnPos = new Vector2((900 - ai3) * 1.5f * worldSide, 75 * i);
+                                Vector2 spawnPos = new Vector2((900 - AI3) * 1.5f * worldSide, 75 * i);
                                 spawnPos.X += NPC.Center.X;
-                                spawnPos.Y += ai4;
+                                spawnPos.Y += AI4;
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
                                 {
                                     int damage2 = NPC.GetBaseDamage() / 2;
@@ -722,18 +708,18 @@ namespace SOTS.NPCs.Boss
                             }
                         }
                         if (Main.netMode != NetmodeID.MultiplayerClient)
-                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, 0, Main.myPlayer, NPC.whoAmI, (950 - ai3) * 1.5f * worldSide);
+                            Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Celestial.SubspaceEyeWall>(), 0, 0, Main.myPlayer, NPC.whoAmI, (950 - AI3) * 1.5f * worldSide);
                     }
-                    if (ai3 <= 330)
+                    if (AI3 <= 330)
                     {
-                        ai4 = -1;
+                        AI4 = -1;
                     }
-                    if (ai3 < 300)
+                    if (AI3 < 300)
                     {
-                        ai3 = 900;
-                        ai1--;
+                        AI3 = 900;
+                        AI1--;
                     }
-                    if(ai1 < -2)
+                    if(AI1 < -2)
                     {
                         TransitionPhase(0);
                         left = !left;
@@ -743,7 +729,7 @@ namespace SOTS.NPCs.Boss
             }
             if (phase == 5)
             {
-                if((int)ai3 == 0)
+                if((int)AI3 == 0)
                 {
                     Vector2 playerCenter = player.Center;
                     float num = 1;
@@ -757,40 +743,40 @@ namespace SOTS.NPCs.Boss
                         }
                     }
                     playerCenter = playerCenter /= num;
-                    CircularAttack(playerCenter, 28f, 0, (int)ai1 + 60, 1f);
-                    ai1--;
+                    CircularAttack(playerCenter, 28f, 0, (int)AI1 + 60, 1f);
+                    AI1--;
                     if (NPC.alpha < 0)
                         NPC.alpha = 0;
-                    if ((int)ai1 % 2 == 0)
+                    if ((int)AI1 % 2 == 0)
                     {
                         if(NPC.alpha < 255)
                             NPC.alpha++;
                     }
-                    if ((int)ai1 == 255)
+                    if ((int)AI1 == 255)
                     {
                         NPC.dontTakeDamage = true;
                         if (Main.netMode != NetmodeID.MultiplayerClient)
                         {
-                            ai4 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)playerCenter.X, (int)playerCenter.Y + (int)player.height, ModContent.NPCType<SubspaceEye>());
-                            NPC eye = Main.npc[(int)ai4];
+                            AI4 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)playerCenter.X, (int)playerCenter.Y + (int)player.height, ModContent.NPCType<SubspaceEye>());
+                            NPC eye = Main.npc[(int)AI4];
                             eye.realLife = NPC.whoAmI;
                             prevLocation = playerCenter;
                         }
                     }
-                    if(ai1 < 0)
+                    if(AI1 < 0)
                     {
-                        ai1 = 960;
-                        ai3++;
+                        AI1 = 960;
+                        AI3++;
                     }
                 }
                 else
                 {
-                    ai1--;
-                    NPC eye = Main.npc[(int)ai4];
-                    if ((!eye.active || eye.type != ModContent.NPCType<SubspaceEye>()) && ai3 != 3)
+                    AI1--;
+                    NPC eye = Main.npc[(int)AI4];
+                    if ((!eye.active || eye.type != ModContent.NPCType<SubspaceEye>()) && AI3 != 3)
                     {
-                        ai1 = 510;
-                        ai3 = 3;
+                        AI1 = 510;
+                        AI3 = 3;
                     }
                     else
                     {
@@ -801,14 +787,14 @@ namespace SOTS.NPCs.Boss
                             if(target.active && !target.dead && target.ZoneUnderworldHeight && Vector2.Distance(target.Center, eye.Center) > 660)
                                 target.AddBuff(ModContent.BuffType<SulfurBurn>(), 20);
                         }
-                        if ((int)ai3 == 1)
+                        if ((int)AI3 == 1)
                         {
-                            if (ai1 % 5 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                            if (AI1 % 5 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 for (int i = 0; i < 6; i++)
                                 {
                                     float randEdit = Main.rand.NextFloat(-6, 6);
-                                    Vector2 away = new Vector2(900 + randEdit, 0).RotatedBy(MathHelper.ToRadians(i * 60 + ai1 * 0.72f));
+                                    Vector2 away = new Vector2(900 + randEdit, 0).RotatedBy(MathHelper.ToRadians(i * 60 + AI1 * 0.72f));
                                     Vector2 to = away.SafeNormalize(Vector2.Zero) * -4.5f;
                                     away += eye.Center;
                                     int damage2 = NPC.GetBaseDamage() / 2;
@@ -818,15 +804,15 @@ namespace SOTS.NPCs.Boss
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), away, to, ModContent.ProjectileType<WaveBlast>(), (int)(damage2 * 0.8f), 3, Main.myPlayer, type);
                                 }
                             }
-                            if (ai1 < 0)
+                            if (AI1 < 0)
                             {
-                                ai1 = 510;
-                                ai3++;
+                                AI1 = 510;
+                                AI3++;
                             }
                         }
-                        if((int)ai3 == 2)
+                        if((int)AI3 == 2)
                         {
-                            ai3++;
+                            AI3++;
                             /*
                             SubspaceEye subEye = eye.modNPC as SubspaceEye;
                             Vector2 fromEye = player.Center - eye.Center;
@@ -858,23 +844,23 @@ namespace SOTS.NPCs.Boss
                             }
                             */
                         }
-                        if ((int)ai3 == 3)
+                        if ((int)AI3 == 3)
                         {
                             hasEnteredSecondPhase = true;
                             if (NPC.alpha > 255)
                                 NPC.alpha = 255;
-                            if ((int)ai1 % 2 == 0)
+                            if ((int)AI1 % 2 == 0)
                             {
                                 if(NPC.alpha > 0)
                                     NPC.alpha--;
                             }
-                            if ((int)ai1 == 255)
+                            if ((int)AI1 == 255)
                             {
                                 NPC.dontTakeDamage = false;
                                 eye.ai[3] = -1;
                                 eye.netUpdate = true;
                             }
-                            if(ai1 < 0)
+                            if(AI1 < 0)
                             {
                                 TransitionPhase(2);
                                 return;
@@ -1021,17 +1007,17 @@ namespace SOTS.NPCs.Boss
             toLocation.Y *= verticalMult;
             toLocation += newCenter;
             Vector2 goTo = toLocation - NPC.Center;
-            if (goTo.Length() > 48 && ai2 != 1)
+            if (goTo.Length() > 48 && AI2 != 1)
                 directVelo = goTo.SafeNormalize(Vector2.Zero) * speed;
             else
             {
                 directVelo = goTo.SafeNormalize(Vector2.Zero) * 1;
-                ai2 = 1;
+                AI2 = 1;
                 NPC.Center = toLocation;
             }
             if(phase == 1 && amt > 0)
             {
-                if (ai1 % 120 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                if (AI1 % 120 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                 {
                     if (amt > 8)
                         amt = 8;
@@ -1236,7 +1222,7 @@ namespace SOTS.NPCs.Boss
             writer.Write(hasEnteredSecondPhase);
             writer.Write(left);
             writer.Write(rotate);
-            writer.Write(ai1);
+            writer.Write(AI1);
 			writer.Write(directVelo.X);
 			writer.Write(directVelo.Y);
             writer.Write(prevLocation.X);
@@ -1250,7 +1236,7 @@ namespace SOTS.NPCs.Boss
             hasEnteredSecondPhase = reader.ReadBoolean();
             left = reader.ReadBoolean();
             rotate = reader.ReadSingle();
-            ai1 = reader.ReadSingle();
+            AI1 = reader.ReadSingle();
             directVelo.X = reader.ReadSingle();
             directVelo.Y = reader.ReadSingle();
             prevLocation.X = reader.ReadSingle();

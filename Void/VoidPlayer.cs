@@ -20,6 +20,7 @@ using SOTS.FakePlayer;
 using SOTS.Projectiles.Laser;
 using SOTS.Helpers;
 using SOTS.Items.Fragments;
+using SOTS.Achievements;
 
 namespace SOTS.Void
 {
@@ -50,10 +51,10 @@ namespace SOTS.Void
 		public float GainHealthOnVoidUse = 0f;
 		public float GainVoidOnHurt = 0f;
         public float StoredLifeHeals = 0f;
-        public static string GetVoidDeathMessage(int num)
+        public static string GetVoidDeathMessage(int num, Player player)
         {
-			return Language.GetTextValue(("Mods.SOTS.DeathMessage.VD" + num));
-		}
+            return Language.GetText("Mods.SOTS.DeathMessage.VD" + num).Format(player.name);
+        }
         public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */
 		{
 			tag["voidMeterMax"] = voidMeterMax;
@@ -169,24 +170,22 @@ namespace SOTS.Void
 		}
 		public override bool PreKill(double damage, int HitDirection, bool pvp, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource)
 		{
-			if (voidShock || voidRecovery)
-			{
-				//damageSource = PlayerDeathReason.ByCustomReason(Main.LocalPlayer.name + " was consumed by the void.");
-			}
-			if (voidShock)
+            if (voidShock)
 			{
 				genGore = false; //apparently, genGore false doesn't remove almost anygore what-so-ever
-				damageSource = PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1));
+				damageSource = PlayerDeathReason.ByCustomReason(GetVoidDeathMessage(1, Player));
 				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
+                GetInstance<VoidDeathHappening>().VoidDeathCondition.Complete(); //This should work!
 				return true;
-			}
+            }
 			if (damage == 10.0 && voidRecovery)
 			{
 				genGore = false;
-				damageSource = PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1 + Main.rand.Next(5)));
+				damageSource = PlayerDeathReason.ByCustomReason(GetVoidDeathMessage(1 + Main.rand.Next(5), Player));
 				Projectile.NewProjectile(Player.GetSource_Death(), Player.Center.X, Player.Center.Y, 0, 0, ProjectileType<VoidDeath>(), 0, 0, Player.whoAmI);
+                GetInstance<VoidDeathHappening>().VoidDeathCondition.Complete(); //This should work!
 				return true;
-			}
+            }
 			return base.PreKill(damage, HitDirection, pvp, ref playSound, ref genGore, ref damageSource);
 		}
 		public List<int> VoidMinions = new List<int>();
@@ -211,7 +210,7 @@ namespace SOTS.Void
 					Player.lifeRegen -= 16; // -8 hp * 10 seconds = -80 hp
 				if (Player.statLife <= 0 && Player.whoAmI == Main.myPlayer)
 				{
-					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1 + Main.rand.Next(5))), 10.0, 0, false);
+					Player.KillMe(PlayerDeathReason.ByCustomReason(GetVoidDeathMessage(1 + Main.rand.Next(5), Player)), 10.0, 0, false);
 				}
 			}
 			if (voidRecovery)
@@ -236,7 +235,7 @@ namespace SOTS.Void
                 }
 				if (Player.statLife <= 0 && Player.whoAmI == Main.myPlayer)
 				{
-					Player.KillMe(PlayerDeathReason.ByCustomReason(Player.name + GetVoidDeathMessage(1 + Main.rand.Next(5))), 10.0, 0, false);
+					Player.KillMe(PlayerDeathReason.ByCustomReason(GetVoidDeathMessage(1 + Main.rand.Next(5), Player)), 10.0, 0, false);
 				}
 			}
         }
@@ -394,7 +393,7 @@ namespace SOTS.Void
 			}
 			if (type == (int)VoidMinionID.TesseractServant)
 			{
-				return ColorHelper.TesseractColor(0);
+				return ColorHelper.TesseractColor(0, 0.4f);
 			}
 			return Color.White;
 		}
@@ -865,6 +864,7 @@ namespace SOTS.Void
             if (dePlayer.DissolvingUmbra != 0)
                 dePlayer.UmbraEffects();
             dePlayer.DissolvingUmbra = 0;
+            dePlayer.OldUmbra = dePlayer.DissolvingUmbra;
             return;
         }
 		public void ResetAllVoidBonuses()

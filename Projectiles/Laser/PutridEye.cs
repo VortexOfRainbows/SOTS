@@ -89,7 +89,7 @@ namespace SOTS.Projectiles.Laser
 				else
 				{
 					lightColor = new Color(255, 200, 230);
-					Dust dust = Dust.NewDustDirect(new Vector2(circularLocation.X - 4, circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+					Dust dust = Dust.NewDustDirect(new Vector2(circularLocation.X - 4, circularLocation.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 					dust.noGravity = true;
 					dust.velocity *= 0.6f;
 					dust.velocity += circularVelo.SafeNormalize(Vector2.Zero) * 2.5f;

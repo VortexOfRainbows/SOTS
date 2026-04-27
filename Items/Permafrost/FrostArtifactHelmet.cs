@@ -26,7 +26,7 @@ namespace SOTS.Items.Permafrost
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.FrostArtifact");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.FrostArtifactHelmet.SetBonus");
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			modPlayer.polarCannons += 3;
 		}

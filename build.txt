@@ -1,10 +1,10 @@
 author = Vortex Of Rainbows
-version = 0.25.0.4
+version = 0.25.1.7
 displayName = [c/c694e8:Secrets Of The Shadows]
 hideCode = true
 hideResources = false
 includeSource = true
 buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
 includePDB = true
-homepage = https://forums.Terraria.org/index.php?threads/secrets-of-the-shadows-terraria-mod.94546/
+homepage = https://discord.gg/Dd8e9nw
 modReferences = SubworldLibrary

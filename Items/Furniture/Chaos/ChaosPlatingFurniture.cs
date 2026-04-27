@@ -90,10 +90,6 @@ namespace SOTS.Items.Furniture.Chaos
     {
         public override int DoorItemID => ModContent.ItemType<Chaos.ChaosPlatingBlastDoor>();
         public override int OpenDoorTile => ModContent.TileType<Chaos.ChaosPlatingBlastDoorTileOpen>();
-        public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D glowmask = (Texture2D)ModContent.Request<Texture2D>(this.GetPath("Glow"));
@@ -104,10 +100,6 @@ namespace SOTS.Items.Furniture.Chaos
     {
         public override int DoorItemID => ModContent.ItemType<Chaos.ChaosPlatingBlastDoor>();
         public override int ClosedDoorTile => ModContent.TileType<Chaos.ChaosPlatingBlastDoorTileClosed>();
-        public override string GetName()
-        {
-            return this.GetLocalizedValue("MapEntry");
-        }
     }
     public class ChaosPlatingBookcase : ModItem
     {
@@ -280,10 +272,10 @@ namespace SOTS.Items.Furniture.Chaos
             return false;
         }
         protected override int DresserDrop => ModContent.ItemType<ChaosPlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.ChaosPlatingDresserTile");
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.Items.ChaosPlatingDresser.DisplayName");
         public override LocalizedText DefaultContainerName(int frameX, int frameY)
         {
-            return Language.GetText("Mods.SOTS.ContainerName.ChaosPlatingDresserTile");
+            return Language.GetText("Mods.SOTS.Items.ChaosPlatingDresser.DisplayName");
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
@@ -696,8 +688,7 @@ namespace SOTS.Items.Furniture.Chaos
             TileObjectData.addAlternate(0);
             TileObjectData.addTile(Type);
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(SOTSTile.ChaosPlatingLight * 3), name);
+            AddMapEntry(new Color(SOTSTile.ChaosPlatingLight * 3), Language.GetText("ItemName.Torch"));
             DustType = DustID.GoldCoin;
             AdjTiles = new int[] { TileID.Torches };
             TileID.Sets.DisableSmartCursor[Type] = true;

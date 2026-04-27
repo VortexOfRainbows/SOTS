@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Planetarium
 			SOTSUtils.PlaySound(SoundID.NPCHit53, (int)Projectile.Center.X, (int)Projectile.Center.Y, 0.625f);
 			for (int i = 0; i < 13; i++)
 			{
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0, Projectile.alpha, dustColor, 1.6f);
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, Projectile.alpha, dustColor, 1.6f);
 				dust.velocity += Projectile.velocity * 0.1f;
 				dust.noGravity = true;
 				dust.fadeIn = 0.2f;

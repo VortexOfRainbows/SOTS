@@ -5,6 +5,7 @@ using SOTS.Items.Wings;
 using SOTS.Items.Planetarium.Furniture;
 using SOTS.Void;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -36,29 +37,19 @@ namespace SOTS.Items.Planetarium.FromChests
 			Item.rare = ItemRarityID.LightPurple;
 			Item.defense = 8;
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
-		{
-			foreach (string key in SOTS.ArmorSetHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
-			{
-				foreach (TooltipLine line in tooltips) //goes through each tooltip line
-				{
-					if (line.Mod == "Terraria" && line.Name == "Tooltip0")
-					{
-						line.Text = Language.GetTextValue("Mods.SOTS.TwilightAssassinsCircletText", key);
-						return;
-					}
-				}
-			}
-			foreach (TooltipLine line in tooltips) //goes through each tooltip line
-			{
-				if (line.Mod == "Terraria" && line.Name == "Tooltip0")
-				{
-					string Textkey = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-					line.Text = Language.GetTextValue("Mods.SOTS.TwilightAssassinsCircletText2", Textkey);
-				}
-			}
-			base.ModifyTooltips(tooltips);
-		}
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            string key = SOTS.ArmorSetHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195"); //gets the key configured to this hotkey
+
+            foreach (TooltipLine line in tooltips) //goes through each tooltip line
+            {
+                if (line.Mod == "Terraria")
+                {
+                    line.Text = string.Format(line.Text, key);
+                }
+            }
+        }
+
 		public override bool IsArmorSet(Item head, Item body, Item legs)
         {
             return body.type == Mod.Find<ModItem>("TwilightAssassinsChestplate") .Type&& legs.type == Mod.Find<ModItem>("TwilightAssassinsLeggings").Type;
@@ -66,7 +57,7 @@ namespace SOTS.Items.Planetarium.FromChests
         public override void UpdateArmorSet(Player player)
 		{
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.TwilightAssassins");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.TwilightAssassinsCirclet.SetBonus");
 			modPlayer.HoloEyeAutoAttack = true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)

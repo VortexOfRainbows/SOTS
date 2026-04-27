@@ -172,8 +172,7 @@ namespace SOTS.Items.Fishing
 			Main.tileTable[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(200, 180, 100), name);
+			AddMapEntry(new Color(200, 180, 100));
 			TileObjectData.addTile(Type);
         }
         public override bool CreateDust(int i, int j, ref int type)

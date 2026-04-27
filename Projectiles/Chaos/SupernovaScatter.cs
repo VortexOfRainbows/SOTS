@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Chaos
 			}
 			if(Main.rand.NextBool(40) || (hasHit && Main.rand.NextBool(8)))
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.color = ColorHelper.Pastel(MathHelper.ToRadians(Projectile.ai[1]), true);
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;

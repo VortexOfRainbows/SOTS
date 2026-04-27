@@ -44,8 +44,7 @@ namespace SOTS.Items.Conduit
 		public override Color elementalColor => ColorHelper.NatureColor;
 		public override void SafeSetStaticDefaults()
 		{
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(SOTSTile.NaturePlatingColor, name);
+			AddMapEntry(SOTSTile.NaturePlatingColor, Language.GetText("Mods.SOTS.Items.NatureConduit.DisplayName"));
 			DustType = DustID.Tungsten;
 		}
 	}
@@ -71,8 +70,7 @@ namespace SOTS.Items.Conduit
 		public override Color elementalColor => ColorHelper.EarthColor;
 		public override void SafeSetStaticDefaults()
 		{
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(SOTSTile.EarthenPlatingColor, name);
+			AddMapEntry(SOTSTile.EarthenPlatingColor, Language.GetText("Mods.SOTS.Items.EarthenConduit.DisplayName"));
 			DustType = DustID.Iron;
 		}
     }
@@ -98,8 +96,7 @@ namespace SOTS.Items.Conduit
         public override Color elementalColor => ColorHelper.PermafrostColor;
         public override void SafeSetStaticDefaults()
         {
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(SOTSTile.PermafrostPlatingColor, name);
+            AddMapEntry(SOTSTile.PermafrostPlatingColor, Language.GetText("Mods.SOTS.Items.PermafrostConduit.DisplayName"));
             DustType = DustID.Silver;
         }
     }
@@ -125,8 +122,7 @@ namespace SOTS.Items.Conduit
         public override Color elementalColor => ColorHelper.PurpleOtherworldColor;
         public override void SafeSetStaticDefaults()
         {
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(SOTSTile.OtherworldPlatingColor, name);
+            AddMapEntry(SOTSTile.OtherworldPlatingColor, Language.GetText("Mods.SOTS.Items.OtherworldConduit.DisplayName"));
             DustType = DustID.Lead;
         }
     }
@@ -152,8 +148,7 @@ namespace SOTS.Items.Conduit
         public override Color elementalColor => ColorHelper.TideColor;
         public override void SafeSetStaticDefaults()
         {
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(SOTSTile.TidePlatingColor, name);
+            AddMapEntry(SOTSTile.TidePlatingColor, Language.GetText("Mods.SOTS.Items.TidalConduit.DisplayName"));
             DustType = DustID.Lead;
         }
     }
@@ -179,8 +174,7 @@ namespace SOTS.Items.Conduit
         public override Color elementalColor => ColorHelper.RedEvilColor;
         public override void SafeSetStaticDefaults()
         {
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(SOTSTile.EvilPlatingColor, name);
+            AddMapEntry(SOTSTile.EvilPlatingColor, Language.GetText("Mods.SOTS.Items.EvilConduit.DisplayName"));
             DustType = DustID.Demonite;
         }
     }
@@ -206,8 +200,7 @@ namespace SOTS.Items.Conduit
         public override Color elementalColor => ColorHelper.Inferno1;
         public override void SafeSetStaticDefaults()
         {
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(SOTSTile.InfernoPlatingColor, name);
+            AddMapEntry(SOTSTile.InfernoPlatingColor, Language.GetText("Mods.SOTS.Items.InfernoConduit.DisplayName"));
             DustType = DustID.Iron;
         }
     }
@@ -234,8 +227,7 @@ namespace SOTS.Items.Conduit
         public override Color elementalColor => ColorHelper.ChaosPink;
         public override void SafeSetStaticDefaults()
         {
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(SOTSTile.ChaosPlatingColor, name);
+            AddMapEntry(SOTSTile.ChaosPlatingColor, Language.GetText("Mods.SOTS.Items.ChaosConduit.DisplayName"));
             DustType = DustID.Platinum;
         }
     }

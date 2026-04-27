@@ -32,8 +32,7 @@ namespace SOTS.Items.Pyramid
 			TileObjectData.newTile.RandomStyleRange = 9;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(150, 130, 20), name);
+            AddMapEntry(new Color(150, 130, 20), Language.GetText("MapObject.Pot"));
             DustType = 32;
         }
         public override void NumDust(int i, int j, bool fail, ref int num)

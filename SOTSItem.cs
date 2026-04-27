@@ -43,6 +43,8 @@ using SOTS.Items.Invidia;
 using System.Runtime.CompilerServices;
 using Terraria.GameContent.RGB;
 using SOTS.Items.Invidia.MoonShard;
+using System.Text.RegularExpressions;
+using SOTS.Items.Temple;
 
 namespace SOTS
 {
@@ -98,7 +100,7 @@ namespace SOTS
 				int voidTooltip = extraVoid;
 				if (extraVoid > 0 && (item.prefix == PrefixType<Awakened>() || item.prefix == PrefixType<Omniscient>()))
 				{
-					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + Language.GetTextValue("Mods.SOTS.Prefixes.MaxVoid.DisplayName"))
+					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", Language.GetTextValue("Mods.SOTS.Prefixes.Effects.MaxVoid", voidTooltip))
 					{
 						IsModifier = true
 					};
@@ -107,7 +109,7 @@ namespace SOTS
 				if (extraVoidGain > 0 && (item.prefix == PrefixType<Chained>() || item.prefix == PrefixType<Soulbound>()))
 				{
 					voidTooltip = extraVoidGain;
-					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", "+" + voidTooltip + Language.GetTextValue("Mods.SOTS.Prefixes.RegVoid.DisplayName"))
+					TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", Language.GetTextValue("Mods.SOTS.Prefixes.Effects.RegVoid", voidTooltip))
 					{
 						IsModifier = true
 					};
@@ -121,20 +123,19 @@ namespace SOTS
 						int intMax = (int)(voidCostMultiplier * voidAmt);
 						float mult = intMax / (float)voidAmt;
 						int voidCostTooltip = (int)(100f * (mult - 1f));
-						if (voidCostTooltip != 0 && (item.prefix == PrefixType<Famished>() || item.prefix == PrefixType<Precarious>() || item.prefix == PrefixType<Potent>() || item.prefix == PrefixType<Omnipotent>() || item.prefix == PrefixType<Chthonic>()))
-						{
-							string sign = (voidCostTooltip > 0 ? "+" : "");
-							Color baseColor = (voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120));
-							TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", sign + voidCostTooltip + Language.GetTextValue("Mods.SOTS.Prefixes.CosVoid.DisplayName"))
-							{
-								OverrideColor = baseColor
-							};
-							tooltips.Add(line);
-						}
-					}
+                        if (voidCostTooltip != 0 && (item.prefix == PrefixType<Famished>() || item.prefix == PrefixType<Precarious>() || item.prefix == PrefixType<Potent>() || item.prefix == PrefixType<Omnipotent>() || item.prefix == PrefixType<Chthonic>()))
+                        {
+                            Color baseColor = voidCostTooltip < 0 ? new Color(120, 190, 120) : new Color(190, 120, 120);
+                            TooltipLine line = new TooltipLine(Mod, "PrefixAwakened", Language.GetText("Mods.SOTS.Prefixes.Effects.CosVoid").WithFormatArgs(voidCostTooltip).Value)
+                            {
+                                OverrideColor = baseColor
+                            };
+                            tooltips.Add(line);
+                        }
+                    }
 				}
 			}
-			if(!SOTSWorld.downedLux && SOTS.ServerConfig.NerfInsignia && (item.type == ItemType<SpiritInsignia>() || item.type == ItemID.EmpressFlightBooster || item.type == ItemType<GildedBladeWings>()))
+			if (!SOTSWorld.downedLux && SOTS.ServerConfig.NerfInsignia && (item.type == ItemType<SpiritInsignia>() || item.type == ItemID.EmpressFlightBooster || item.type == ItemType<GildedBladeWings>()))
 			{
 				TooltipLine line = new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.SOTS.Common.InsigniaNerf"))
 				{
@@ -142,7 +143,28 @@ namespace SOTS
 				};
 				tooltips.Add(line);
 			}
-		}
+            int[] validItems = new int[]
+            {
+				ModContent.ItemType<Helios>(),
+				ModContent.ItemType<Pyrocide>(),
+				ModContent.ItemType<SkipScythe>(),
+				ModContent.ItemType<SupernovaScatter>(),
+				ModContent.ItemType<Revolution>()
+            };
+            if (!validItems.Contains(item.type) || NPC.downedPlantBoss)
+                return;
+
+            for (int i = 0; i < tooltips.Count; i++)
+            {
+                TooltipLine line = tooltips[i];
+                if (line.Mod == "Terraria" && line.Name == "Tooltip0")
+                {
+                    line.Text = Language.GetTextValue("Mods.SOTS.Common.CurseTooltip");
+                    tooltips.RemoveRange(i + 1, tooltips.Count - (i + 1));
+                    break;
+                }
+            }
+        }
 		public override void NetSend(Item item, BinaryWriter writer)
 		{
 			writer.Write(extraVoidGain);
@@ -150,9 +172,7 @@ namespace SOTS
 			writer.Write(voidCostMultiplier);
 			writer.Write(FloatsInWater);
 			if(FloatsInWater)
-			{
 				writer.Write(item.alpha);
-			}
         }
         public override void NetReceive(Item item, BinaryReader reader)
 		{
@@ -378,22 +398,22 @@ namespace SOTS
                 {
                     TesseractMinionData data = fPlayer.tesseractData[tesseractDataIBelongIn];
                     Color c = Color.Lerp(ColorHelper.RubyColor, Color.Red, 0.4f);
-                    string aligned = Language.GetTextValue("Mods.SOTS.Common.Solar" + tesseractDataIBelongIn);
+                    string aligned = Language.GetTextValue("Mods.SOTS.TesseractText.ClonesName.Solar" + tesseractDataIBelongIn);
                     string text;
                     if (!data.FoundValidItem)
                     {
-                        text = Language.GetTextValue("Mods.SOTS.Common.TesseractInvalid", aligned);
+                        text = Language.GetTextValue("Mods.SOTS.TesseractText.InvalidItem", aligned);
                     }
                     else if (data.ChargeFrames < 0)
                     {
-                        text = Language.GetTextValue("Mods.SOTS.Common.TesseractAwaiting", aligned);
+                        text = Language.GetTextValue("Mods.SOTS.TesseractText.Awaiting", aligned);
                     }
                     else
                     {
                         c = Color.Lerp(ColorHelper.PastelRainbow, ColorHelper.AmethystColor, 0.9f);
-                        string duration = data.ChargeFrames == 7200 ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsageContinuous") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageDuration", MathF.Round(data.ChargeFrames / 60f, 3));
-                        string primaryOrSecondary = !data.AltFunctionUse ? Language.GetTextValue("Mods.SOTS.Common.TesseractUsagePrimary") : Language.GetTextValue("Mods.SOTS.Common.TesseractUsageSecondary");
-                        text = Language.GetTextValue("Mods.SOTS.Common.TesseractUsage", aligned, primaryOrSecondary, duration);
+                        string duration = data.ChargeFrames == 7200 ? Language.GetTextValue("Mods.SOTS.TesseractText.UsageContinuous") : Language.GetTextValue("Mods.SOTS.TesseractText.UsageDuration", MathF.Round(data.ChargeFrames / 60f, 3));
+                        string primaryOrSecondary = !data.AltFunctionUse ? Language.GetTextValue("Mods.SOTS.TesseractText.UsagePrimary") : Language.GetTextValue("Mods.SOTS.TesseractText.UsageSecondary");
+                        text = Language.GetTextValue("Mods.SOTS.TesseractText.Usage", aligned, primaryOrSecondary, duration);
                     }
                     TooltipLine line = new TooltipLine(Mod, "TesseractInventory", text);
                     line.OverrideColor = c;
@@ -403,21 +423,30 @@ namespace SOTS
                         TooltipLine tt = tooltips.FirstOrDefault(x => x.Name == "Damage" && x.Mod == "Terraria");
                         if (tt != null)
                         {
-                            string[] splitText = tt.Text.Split(' ');
-							string originalType = "";
+                            var m = Regex.Match(tt.Text, @"^\s*(\d+)\s*(.*)$");
+                            if (!m.Success)
+                                return;
+
+                            string damageValue = m.Groups[1].Value;
+                            string originalType = "";
+
                             if (!item.CountsAsClass(DamageClass.Summon))
                             {
-                                if (splitText.Length > 2) //not TRUE damage, must be a damage type
+                                if (item.CountsAsClass<VoidMelee>() || item.CountsAsClass(DamageClass.Melee))
                                 {
-									int index = 1;
-									if (item.CountsAsClass<VoidMelee>() || item.CountsAsClass<VoidRanged>() || item.CountsAsClass<VoidMagic>())
-										index = 3;
-                                    originalType = splitText[index] + " + ";
+                                    originalType = Language.GetTextValue("Mods.SOTS.Common.Melee");
+                                }
+                                else if (item.CountsAsClass<VoidRanged>() || item.CountsAsClass(DamageClass.Ranged))
+                                {
+                                    originalType = Language.GetTextValue("Mods.SOTS.Common.Ranged");
+                                }
+                                else if (item.CountsAsClass<VoidMagic>() || item.CountsAsClass(DamageClass.Magic))
+                                {
+                                    originalType = Language.GetTextValue("Mods.SOTS.Common.Magic");
                                 }
                             }
-                            string damageValue = splitText.First();
-                            string damageWord = Language.GetTextValue("Mods.SOTS.Common.Damage");
-							tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidSDouble", damageValue, originalType, damageWord);
+
+                            tt.Text = Language.GetTextValue("Mods.SOTS.Common.VoidSDouble", damageValue, originalType);
                         }
                     }
                 }
@@ -436,7 +465,7 @@ namespace SOTS
                 ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
                 return false;
             }
-			if((item.rare == RarityType<StrangeWhiteRarity>() || item.rare == RarityType<StrangeGreenRarity>()) && (line.Name == "ItemName" || (line.Name == "Tooltip0" && item.rare == RarityType<StrangeWhiteRarity>())))
+			if((item.rare == RarityType<StrangeWhiteRarity>() || item.rare == RarityType<StrangeGreenRarity>()) && (line.Name == "ItemName" || (line.Name == "Tooltip0" && item.rare == RarityType<StrangeWhiteRarity>() && item.type == ItemType<DissolvingNihility>())))
             {
                 Color outer = line.Color;
                 Color inner = Color.Black;
@@ -1000,6 +1029,8 @@ namespace SOTS
 				new("SOTS:DissolvingElement", ItemType<DissolvingNihility>()),
                 new(ItemID.BubbleWand, ItemType<BWand>()),
                 new(ItemType<MrBurns>(), ItemType<MrGlorp>()),
+                new(ItemType<SharkPog>(), ItemType<HydrokineticAntennae>()),
+                new(ItemType<HydrokineticAntennae>(), ItemType<SharkPog>()),
             };
         }
 		public static void ConvertItemUsingWormholeRecipe(Item item, int whoAmI)
@@ -1030,7 +1061,7 @@ namespace SOTS
 							/// The server reaches this exclusively in multiplayer...
                             Player p = Main.player[star.MyPlayer];
 							if(p.SOTSPlayer().UniqueVisionNumber % 8 != 7)
-								p.SOTSPlayer().ResetVisionID(true);
+								p.SOTSPlayer().ResetVisionID(Main.rand.Next(SOTSPlayer.TotalVisionNumber), true, true);
 						}
                     }
                 }

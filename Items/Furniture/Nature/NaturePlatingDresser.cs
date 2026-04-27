@@ -30,10 +30,10 @@ namespace SOTS.Items.Furniture.Nature
 			return false;
 		}
 		protected override int DresserDrop => ModContent.ItemType<NaturePlatingDresser>();
-        protected override string DresserName => Language.GetTextValue("Mods.SOTS.ContainerName.NaturePlatingDresserTile");
+        protected override string DresserName => Language.GetTextValue("Mods.SOTS.Items.NaturePlatingDresser.DisplayName");
 		public override LocalizedText DefaultContainerName(int frameX, int frameY)
 		{
-			return Language.GetText("Mods.SOTS.ContainerName.NaturePlatingDresserTile");
+			return Language.GetText("Mods.SOTS.Items.NaturePlatingDresser.DisplayName");
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {

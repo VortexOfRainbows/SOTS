@@ -59,7 +59,7 @@ namespace SOTS.Projectiles.Minions
 			for (int i = 0; i < 8; i++)
 			{
 				Vector2 circularLocation = new Vector2(12, 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
-				Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation - new Vector2(4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center + circularLocation - new Vector2(4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.noGravity = true;
 				dust.velocity *= 0.5f;
 				dust.velocity += circularLocation * 0.125f;

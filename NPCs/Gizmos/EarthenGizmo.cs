@@ -108,7 +108,7 @@ namespace SOTS.NPCs.Gizmos
                         {
                             if (Main.rand.NextBool(3))
                             {
-                                Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) + NPC.velocity.SNormalize() * 16 + NPC.velocity * i, 4, 4, ModContent.DustType<CopyDust4>());
+                                Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) + NPC.velocity.SNormalize() * 16 + NPC.velocity * i, 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
                                 dust.color = new Color(255, 191, 0);
                                 dust.noGravity = true;
                                 dust.fadeIn = 0.1f;
@@ -173,7 +173,7 @@ namespace SOTS.NPCs.Gizmos
                             {
                                 if (Main.rand.NextBool(3))
                                 {
-                                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) - NPC.velocity.SNormalize() * 16, 4, 4, ModContent.DustType<CopyDust4>());
+                                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) - NPC.velocity.SNormalize() * 16, 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
                                     dust.color = new Color(255, 191, 0);
                                     dust.noGravity = true;
                                     dust.fadeIn = 0.1f;
@@ -314,7 +314,7 @@ namespace SOTS.NPCs.Gizmos
                             {
                                 if (Main.rand.NextBool(3))
                                 {
-                                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) + NPC.velocity.SNormalize() * 16, 4, 4, ModContent.DustType<CopyDust4>());
+                                    Dust dust = Dust.NewDustDirect(new Vector2(NPC.Center.X - 7, NPC.Center.Y - 7) + NPC.velocity.SNormalize() * 16, 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
                                     dust.color = new Color(255, 191, 0);
                                     dust.noGravity = true;
                                     dust.fadeIn = 0.1f;

@@ -75,7 +75,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                 if(Main.rand.NextBool(3))
                 {
                     Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), Main.rand.NextFloat(1));
-                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.color = colorMan;
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles.Pyramid.Aten
                     if (Main.rand.NextBool(4))
                     {
                         Color colorMan = Color.Lerp(new Color(255, 230, 140), new Color(180, 90, 20), Main.rand.NextFloat(1));
-                        Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+                        Dust dust = Dust.NewDustDirect(new Vector2(atLoc.X + circularLocation.X - 4, atLoc.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
                         dust.color = colorMan;
                         dust.noGravity = true;
                         dust.velocity *= 0.3f + i * 0.09f;

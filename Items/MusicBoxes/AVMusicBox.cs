@@ -45,8 +45,7 @@ namespace SOTS.Items.MusicBoxes
 			TileObjectData.newTile.DrawYOffset = 0;
 			TileObjectData.addTile(Type);
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(191, 142, 111), name);
+			AddMapEntry(new Color(191, 142, 111), Language.GetText("ItemName.MusicBox"));
         }
         public override bool CreateDust(int i, int j, ref int type)
         {
@@ -97,8 +96,7 @@ namespace SOTS.Items.MusicBoxes
             TileObjectData.newTile.DrawYOffset = 0;
             TileObjectData.addTile(Type);
             TileID.Sets.DisableSmartCursor[Type] = true;
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(191, 142, 111), name);
+            AddMapEntry(new Color(191, 142, 111), Language.GetText("ItemName.MusicBox"));
         }
         public override bool CreateDust(int i, int j, ref int type)
         {

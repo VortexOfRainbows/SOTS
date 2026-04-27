@@ -45,7 +45,7 @@ namespace SOTS.Projectiles.Earth
 		{
 			for(int i = 0; i < 5; i++)
 			{
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 12) * 0.66f;
 				dust.color = color2;
 				dust.noGravity = true;
@@ -61,7 +61,7 @@ namespace SOTS.Projectiles.Earth
 			Projectile.alpha -= 30;
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
-            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+            Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 			Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 12);
 			dust.color = color2;
 			dust.noGravity = true;

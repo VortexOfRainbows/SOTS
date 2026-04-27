@@ -53,6 +53,7 @@ using SOTS.Buffs.Debuffs;
 using SOTS.Helpers;
 using SOTS.Projectiles.AbandonedVillage;
 using SOTS.NPCs.Critters;
+using SOTS.Projectiles.Minions.Tail;
 
 namespace SOTS
 {
@@ -69,16 +70,11 @@ namespace SOTS
 				if (LogInMessageTimer == 0)
 				{
 					SOTSTexturePackEnabled = IsSOTSTexturePackEnabled();
-					if (SOTS.SOTSTexturePackEnabled)
-					{
-						LogInMessageTimer = -1;
-						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks"), new Color(255, 150, 255));
-					}
-					else
-					{
-						LogInMessageTimer = -1;
-						Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
-					}
+					//if (SOTS.SOTSTexturePackEnabled)
+					//    Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnterThanks"), new Color(255, 150, 255));
+					//else
+					//    Main.NewText(Language.GetTextValue("Mods.SOTS.Common.worldEnter"), new Color(20, 255, 40));
+					LogInMessageTimer = -1;
 					ImportantTilesWorld.RequestNewPackets();
 				}
 			}
@@ -151,8 +147,38 @@ namespace SOTS
 				}
 			}
 			return Color.White;
-		}
-		public static Color VisionColor(Player player)
+        }
+        public static Color VisionColorFromNumber(int i)
+        {
+            Color DestinationColor = Color.DarkGray;
+            int uniqueGem = i % 8;
+            switch (uniqueGem)
+            {
+                case 0: //geo
+                    DestinationColor = Color.Orange;
+                    break;
+                case 1: //electro
+                    DestinationColor = Color.BlueViolet;
+                    break;
+                case 2: //anemo
+                    DestinationColor = Color.Turquoise;
+                    break;
+                case 3: //cyro
+                    DestinationColor = Color.LightSkyBlue;
+                    break;
+                case 4: //pyro
+                    DestinationColor = Color.OrangeRed;
+                    break;
+                case 5: //hydro
+                    DestinationColor = Color.DodgerBlue;
+                    break;
+                case 6: //dendro
+                    DestinationColor = Color.Green;
+                    break;
+            }
+            return DestinationColor;
+        }
+        public static Color VisionColor(Player player)
 		{
 			SOTSPlayer modPlayer = player.GetModPlayer<SOTSPlayer>();
 			Color DestinationColor = Color.DarkGray;
@@ -246,6 +272,9 @@ namespace SOTS
 		public bool HoloEye = false;
 		public bool HoloEyeAttack = false;
 		public bool HoloEyeAutoAttack = false;
+		public bool MissileTail = false;
+		public bool MissileTailIsVanity = false;
+		public float MissileTailAttackRate = 90f;
 		public float blinkPackMult = 1f;
 		public bool rainbowGlowmasks = false;
 		public int skywardBlades = 0;
@@ -365,7 +394,8 @@ namespace SOTS
 		public bool hasSoaringInsigniaFake = false;
 		public bool GoldenTrowel = false;
 		public bool AnomalyLocator = false;
-		public bool StatShareMeleeAndSummon = false;
+        public bool BetterAnomalyLocator = false;
+        public bool StatShareMeleeAndSummon = false;
 		public bool StatShareMeleeAndMagic = false;
 		public bool StatShareAll = false;
 		public int BrassWhipDelay = 0;
@@ -374,7 +404,7 @@ namespace SOTS
 		public bool PrevKeepersBox = false;
 		public bool WishingStar = false;
 		public bool AcidInject = false, Earthdrive = false, Sunbulb = false, Dreamcatcher = false;
-		public bool Pick3x3 = false, HasPick3x3ThisFrame = false, DrillHand = false, DrillHandVanity = false;
+		public bool Pick3x3 = false, HasPick3x3ThisFrame = false, DrillHand = false, DrillHandVanity = false, Hyperphantasia = false;
 		public int FirstStrikeEffect = 0;
         public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
 		{
@@ -515,10 +545,10 @@ namespace SOTS
 				CreativeFlightButtonPressed = false;
 			}
 		}
-		private int[] probes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
-		private int[] probesAqueduct = [-1, -1, -1, -1, -1, -1, -1, -1];
-		private int[] probesTinyPlanet = [-1, -1, -1, -1, -1, -1, -1, -1];
-		private int[] ArtifactProbes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+		private readonly int[] Probes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
+		private readonly int[] ProbesAqueduct = [-1, -1, -1, -1, -1, -1, -1, -1];
+		private readonly int[] ProbesTinyPlanet = [-1, -1, -1, -1, -1, -1, -1, -1];
+		private readonly int[] ArtifactProbes = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 		public int aqueductNum = 0;
 		public int aqueductDamage = -1;
 		public int artifactProbeDamage = -1;
@@ -546,8 +576,8 @@ namespace SOTS
 		}
 		public void PetFluidCurse()
 		{
-			RunPets(ref probes[4], ModContent.ProjectileType<FluidFollower>(), 0, 0, true);
-			RunPets(ref probes[5], ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, true);
+			RunPets(ref Probes[4], ModContent.ProjectileType<FluidFollower>(), 0, 0, true);
+			RunPets(ref Probes[5], ModContent.ProjectileType<ClairvoyanceShade>(), 0, 0, true);
 		}
 		public void DoPlanetAqueduct()
 		{
@@ -557,20 +587,20 @@ namespace SOTS
 			if (lastAqueductMax != aqueductNum)
 			{
 				for (int i = 0; i < 8; i++)
-					probesAqueduct[i] = -1;
+					ProbesAqueduct[i] = -1;
 			}
 			for (int i = 0; i < aqueductNum; i++)
 			{
-				RunPets(ref probesAqueduct[i], ModContent.ProjectileType<Rainbolt>(), aqueductDamage + 1);
+				RunPets(ref ProbesAqueduct[i], ModContent.ProjectileType<Rainbolt>(), aqueductDamage + 1);
 			}
 			if (lastPlanetMax != tPlanetNum)
 			{
 				for (int i = 0; i < 8; i++)
-					probesTinyPlanet[i] = -1;
+					ProbesTinyPlanet[i] = -1;
 			}
 			for (int i = 0; i < tPlanetNum; i++)
 			{
-				RunPets(ref probesTinyPlanet[i], ModContent.ProjectileType<TinyPlanetTear>(), tPlanetDamage + 1);
+				RunPets(ref ProbesTinyPlanet[i], ModContent.ProjectileType<TinyPlanetTear>(), tPlanetDamage + 1);
 			}
 			if (lastArtifactMax != artifactProbeNum)
 			{
@@ -633,7 +663,7 @@ namespace SOTS
 							Vector2 circular = new Vector2(hypo / 2f * i, 0).RotatedBy(MathHelper.ToRadians(orbitalCounter * 3f + curseVisionCounter * 1.7f));
 							circular.X *= 0.8f;
 							circular.Y *= 0.3f;
-							Dust dust = Dust.NewDustPerfect(spawnLoc + circular, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustPerfect(spawnLoc + circular, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.noGravity = true;
 							dust.color = new Color(220, 80, 80, 40);
 							dust.velocity += circular * 0.01f;
@@ -726,9 +756,11 @@ namespace SOTS
 			}
 			return base.CanHitNPCWithItem(item, target);
 		}
-		public void ResetVisionID(bool serverCommand = false)
+		public void ResetVisionID(int newNumber, bool serverCommand = false, bool animate = false)
 		{
-			UniqueVisionNumber = Main.rand.Next(TotalVisionNumber);
+			if(animate && Main.netMode != NetmodeID.MultiplayerClient)
+				Projectile.NewProjectile(Player.GetSource_Misc("SOTS:VisionReset"), Player.Center, new Vector2(0, -5), ModContent.ProjectileType<VisionAmuletSwitchAnimation>(), 0, 0, Main.myPlayer, UniqueVisionNumber, newNumber, Player.whoAmI);
+			UniqueVisionNumber = newNumber;
 			if (NetmodeID.Server == Main.netMode && serverCommand)
 			{
 				var packet = Mod.GetPacket();
@@ -745,7 +777,7 @@ namespace SOTS
 				return;
 			}
 			if (UniqueVisionNumber == -1)
-				ResetVisionID(false);
+				ResetVisionID(Main.rand.Next(SOTSPlayer.TotalVisionNumber));
 			base.PreUpdate();
 		}
 		public static int ApplyDamageClassModWithGeneric(Player player, DamageClass damageClass, int startingDamage)
@@ -788,29 +820,31 @@ namespace SOTS
 			TrailStuff();
 			DoCurseAura();
 			if (petAdvisor)
-				RunPets(ref probes[0], ModContent.ProjectileType<AdvisorPet>());
+				RunPets(ref Probes[0], ModContent.ProjectileType<AdvisorPet>());
 			if (petPepper)
-				RunPets(ref probes[1], ModContent.ProjectileType<GhostPepper>());
+				RunPets(ref Probes[1], ModContent.ProjectileType<GhostPepper>());
 			if (HoloEye)
-				RunPets(ref probes[2], ModContent.ProjectileType<HoloEye>(), HoloEyeDamage + 1);
-			if (petPinky >= 0)
-				RunPets(ref probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky);
+				RunPets(ref Probes[2], ModContent.ProjectileType<HoloEye>(), HoloEyeDamage + 1);
+            if (petPinky >= 0)
+				RunPets(ref Probes[3], ModContent.ProjectileType<PetPutridPinkyCrystal>(), petPinky);
 			if (RubyMonolith)
-				RunPets(ref probes[6], ModContent.ProjectileType<RubyMonolith>());
+				RunPets(ref Probes[6], ModContent.ProjectileType<RubyMonolith>());
 			if (petFreeWisp >= 0)
-				RunPets(ref probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
+				RunPets(ref Probes[7], ModContent.ProjectileType<WispOrange>(), petFreeWisp + 1);
 			if (VisionVanity)
-				RunPets(ref probes[8], ModContent.ProjectileType<VisionWeapon>());
+				RunPets(ref Probes[8], ModContent.ProjectileType<VisionWeapon>());
 			if ((!VisionVanity || Player.ItemAnimationActive || !VisionWeapon.VisualActive(Player.HeldItem)) && backUpBowVisual) // || (backUpBow && Player.ItemAnimationActive)))
-				RunPets(ref probes[9], ModContent.ProjectileType<BackupBowVisual>());
+				RunPets(ref Probes[9], ModContent.ProjectileType<BackupBowVisual>());
 			if (PlasmaShrimp)
 			{
-				RunPets(ref probes[10], ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>());
+				RunPets(ref Probes[10], ModContent.ProjectileType<Projectiles.Tide.PlasmaShrimp>());
             }
             if (DrillHandVanity)
             {
-                RunPets(ref probes[11], ModContent.ProjectileType<Projectiles.AbandonedVillage.DrillHand>());
+                RunPets(ref Probes[11], ModContent.ProjectileType<Projectiles.AbandonedVillage.DrillHand>());
             }
+            if (MissileTail)
+                RunPets(ref Probes[12], ModContent.ProjectileType<MissileLauncher>(), ApplyDamageClassModWithGeneric(Player, ModContent.GetInstance<VoidSummon>(), 80));
             DoPlanetAqueduct();
 			if (rippleEffect)
 			{
@@ -1042,7 +1076,10 @@ namespace SOTS
 			BlazingQuiver = WishingStar = AcidInject = Sunbulb = Dreamcatcher = Embattle = false;
 			oldTimeFreezeImmune = TimeFreezeImmune;
 			TimeFreezeImmune = true;
-			if (VMincubator)
+			Hyperphantasia = Player.HasBuff<Hyperphantasia>();
+			if (Hyperphantasia)
+                Player.CanSeeInvisibleBlocks = true;
+            if (VMincubator)
 			{
 				if (SOTSWorld.GlobalFrozen)
 				{
@@ -1153,7 +1190,8 @@ namespace SOTS
 			symbioteDamage = BundleSnakeDamage = LittleWoeDamage = -1;
 			petPinky = -1;
 			petFreeWisp = -1;
-			petPepper = petAdvisor = rainbowGlowmasks = HoloEyeIsVanity = HoloEye = false;
+			MissileTailAttackRate = 90f;
+            petPepper = petAdvisor = rainbowGlowmasks = HoloEyeIsVanity = HoloEye = MissileTail = MissileTailIsVanity = false;
 			HoloEyeDamage = darkEyeShader = platformShader = 0;
 			aqueductDamage = -1;
 			lastAqueductMax = aqueductNum;
@@ -1162,30 +1200,24 @@ namespace SOTS
 			lastPlanetMax = tPlanetNum;
 			tPlanetNum = 0;
 			RubyMonolith = false;
-			RubyMonolithIsNOTVanity = AnomalyLocator = false;
+			RubyMonolithIsNOTVanity = AnomalyLocator = BetterAnomalyLocator = false;
 			int voidspacePiecesWorn = 0, chaosPiecesWorn = 0;
 			for (int i = 9 + Player.extraAccessorySlots; i < Player.armor.Length; i++) //checking vanity slots
 			{
 				Item item = Player.armor[i];
 				if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
 					AnomalyLocator = true;
-				if (item.type == ModContent.ItemType<CursedApple>())
-				{
+                else if (item.type == ModContent.ItemType<Items.Conduit.AnomalyInterceptor>())
+                    AnomalyLocator = BetterAnomalyLocator = true;
+                else if (item.type == ModContent.ItemType<CursedApple>())
 					petPepper = true;
-				}
-				if (item.type == ModContent.ItemType<Calculator>())
-				{
+				else if (item.type == ModContent.ItemType<Calculator>())
 					petAdvisor = true;
-				}
-				if (item.type == ModContent.ItemType<PeanutButter>())
-				{
+                else if (item.type == ModContent.ItemType<PeanutButter>())
 					petPinky = 0;
-				}
-				if (item.type == ModContent.ItemType<SkywareBattery>())
-				{
+                else if (item.type == ModContent.ItemType<SkywareBattery>())
 					rainbowGlowmasks = true;
-				}
-				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
+                else if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
 				{
 					if (!HoloEye)
 					{
@@ -1195,27 +1227,30 @@ namespace SOTS
 					}
 					HoloEye = true;
 				}
-				if (item.type == ModContent.ItemType<CursedRobe>())
+                else if (item.type == ModContent.ItemType<CursedRobe>())
 					RubyMonolith = true;
-				if (item.type == ModContent.ItemType<VisionAmulet>())
-				{
+                else if (item.type == ModContent.ItemType<VisionAmulet>())
 					VisionVanity = true;
-				}
-				if (item.type == ModContent.ItemType<BackupBow>())
+                else if (item.type == ModContent.ItemType<BackupBow>())
 					backUpBowVisual = true;
-				if (item.type == ModContent.ItemType<MachinaBooster>())
+                else if (item.type == ModContent.ItemType<MachinaBooster>())
 				{
 					MachinaBoosterPlayer MachinaBoosterPlayer = Player.GetModPlayer<MachinaBoosterPlayer>();
 					if (!MachinaBoosterPlayer.canCreativeFlight)
 					{
 						MachinaBoosterPlayer.HaloDust();
 					}
-				}
-				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
+                }
+                else if (item.type == ModContent.ItemType<ExcavatorBreastplate>())
+                {
+                    MissileTailIsVanity = true;
+					MissileTail = true;
+                }
+                /*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
 				}*/
-			}
+            }
 			for (int i = 0; i < Player.inventory.Length; i++)
 			{
 				Item item = Player.inventory[i];
@@ -1235,44 +1270,41 @@ namespace SOTS
 				}
 			}
 			bool EarthHelmet = false;
+			bool ExacaChest = false;
 			for (int i = 0; i < 10; i++) //iterating through armor + accessories
 			{
 				Item item = Player.armor[i];
-				if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
-					AnomalyLocator = true;
-				if (item.type == ModContent.ItemType<TheDarkEye>())
-				{
+                if (item.type == ModContent.ItemType<Items.Conduit.AnomalyLocator>())
+                    AnomalyLocator = true;
+                else if (item.type == ModContent.ItemType<Items.Conduit.AnomalyInterceptor>())
+                    AnomalyLocator = BetterAnomalyLocator = true;
+                else if (item.type == ModContent.ItemType<TheDarkEye>())
 					darkEyeShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
-				}
-				if (item.type == ModContent.ItemType<PlatformGenerator>() || item.type == ModContent.ItemType<FortressGenerator>())
-				{
+                else if(item.type == ModContent.ItemType<PlatformGenerator>() || item.type == ModContent.ItemType<FortressGenerator>())
 					platformShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
-				}
-				if (item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
-				{
+                else if(item.type == ModContent.ItemType<TwilightAssassinsCirclet>())
 					HoloEyeIsVanity = false;
-				}
-				if (item.type == ModContent.ItemType<VoidspaceLeggings>() ||
+                else if(item.type == ModContent.ItemType<VoidspaceLeggings>() ||
 					item.type == ModContent.ItemType<VoidspaceBreastplate>() ||
 					item.type == ModContent.ItemType<VoidspaceMask>())
-				{
 					voidspacePiecesWorn++;
-				}
-				if (item.type == ModContent.ItemType<ElementalLeggings>() ||
+                else if(item.type == ModContent.ItemType<ElementalLeggings>() ||
 					item.type == ModContent.ItemType<ElementalBreastplate>() ||
 					item.type == ModContent.ItemType<ElementalHelmet>())
-				{
 					chaosPiecesWorn++;
-				}
-				if (item.type == ModContent.ItemType<EarthenHelmet>())
-				{
+                else if(item.type == ModContent.ItemType<EarthenHelmet>())
 					EarthHelmet = true;
-				}
-				/*if (item.type == ModContent.ItemType<SubspaceLocket>())
+                else if (item.type == ModContent.ItemType<ExcavatorBreastplate>())
+				{
+					MissileTailIsVanity = false;
+					MissileTail = true;
+                    ExacaChest = true;
+                }
+                /*if (item.type == ModContent.ItemType<SubspaceLocket>())
 				{
 					SubspacePlayer.ModPlayer(player).subspaceServantShader = GameShaders.Armor.GetShaderIdFromItemId(Player.dye[i].type);
 				}*/
-			}
+            }
 			if (voidspacePiecesWorn > 0)
 			{
 				Lighting.AddLight(Player.Center, new Vector3(0.5f, 0.88f, 0.62f) * voidspacePiecesWorn * 0.3f);
@@ -1285,6 +1317,8 @@ namespace SOTS
 			{
 				Lighting.AddLight(Player.Center, Vector3.One * 1.1f);
 			}
+			if(ExacaChest)
+				Lighting.AddLight(Player.Center, (ColorHelper.Inferno2 * 0.8f).ToVector3());
 			typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
 			assassinateNum = 1;
 			assassinate = VibrantArmor = frigidJavelinNoCost = false;
@@ -1329,7 +1363,7 @@ namespace SOTS
 			CritVoidsteal = 0f;
 			CritManasteal = 0f;
 			CritBonusDamage = 0;
-			CritBonusMultiplier = 1f;
+			CritBonusMultiplier = 0f;
 			CritFire = false;
 			CritFrost = false;
 			CritCurseFire = false;
@@ -1746,7 +1780,7 @@ namespace SOTS
                     }
                 }
             }
-            float damageMultiplier = CritBonusMultiplier; //since this value is 1, and crit damage does 2x damage, a value of 1.2f will increase damage by 40% on the players side (assuming crit damage as 100% base).
+            float damageMultiplier = 1;
 			if (item.type == ModContent.ItemType<AncientSteelSword>() || item.type == ModContent.ItemType<AncientSteelGreatPickaxe>())
 			{
 				damageMultiplier += 0.5f;
@@ -1766,6 +1800,7 @@ namespace SOTS
 				modifiers.DisableCrit();
 			else
 			{
+				modifiers.CritDamage += CritBonusMultiplier;
 				modifiers.CritDamage.Flat += CritBonusDamage;
 			}
 			if (ScalingArmorPenetration)

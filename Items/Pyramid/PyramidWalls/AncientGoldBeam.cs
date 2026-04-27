@@ -27,8 +27,8 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(4).AddIngredient(ModContent.ItemType<PyramidBrick>(), 1).AddTile(TileID.WorkBenches).Register();
-			Recipe.Create(ModContent.ItemType<PyramidBrick>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 1).AddTile(TileID.WorkBenches).Register();
+			Recipe.Create(ModContent.ItemType<RoyalGoldBrick>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class AncientGoldBeamWall : ModWall
@@ -37,7 +37,6 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AncientGoldBeam>();
 			AddMapEntry(new Color(170, 144, 18));
 		}
 	}
@@ -59,8 +58,8 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(4).AddIngredient(ModContent.ItemType<PyramidBrick>(), 1).AddTile(TileID.WorkBenches).Register();
-			Recipe.Create(ModContent.ItemType<PyramidBrick>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
+			CreateRecipe(4).AddIngredient(ModContent.ItemType<RoyalGoldBrick>(), 1).AddTile(TileID.WorkBenches).Register();
+			Recipe.Create(ModContent.ItemType<RoyalGoldBrick>()).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
 		}
 	}
 	public class AncientGoldBrickWallTile : ModWall
@@ -69,7 +68,6 @@ namespace SOTS.Items.Pyramid.PyramidWalls
 		{
 			Main.wallHouse[Type] = true;
 			DustType = DustID.GoldCoin;
-			//ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<AncientGoldBrickWall>();
 			AddMapEntry(new Color(150, 130, 15));
 		}
 	}

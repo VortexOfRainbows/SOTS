@@ -2,15 +2,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
-using SOTS.Items.Invidia;
 using Terraria.ObjectData;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.Utilities;
 using SOTS.Dusts;
 using System.Collections.Generic;
-using SOTS.Biomes;
 using SOTS.WorldgenHelpers;
 
 namespace SOTS.Items.Invidia
@@ -170,15 +167,15 @@ namespace SOTS.Items.Invidia
 		}
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (glow == null)
-                glow = ModContent.Request<Texture2D>("SOTS/Items/Invidia/OvergrowthGrassGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            glow ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/OvergrowthGrassGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             int frameX = Main.tile[i, j].TileFrameX / 18;
             if (frameX >= 5 && frameX <= 8)
             {
-				for(int a = 0; a < 6; a ++)
-				{
-                    SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, new Color(60, 50, 50, 0), new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(a * 60 + SOTSWorld.GlobalCounter)));
-                }
+				if(!SOTS.Config.SanctuaryLagReduction)
+					for(int a = 0; a < 6; a ++)
+					{
+						SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, new Color(60, 50, 50, 0), new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(a * 60 + SOTSWorld.GlobalCounter)));
+					}
 				SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, Color.White, Vector2.Zero);
             }
         }
@@ -260,10 +257,11 @@ namespace SOTS.Items.Invidia
                 glow = ModContent.Request<Texture2D>("SOTS/Items/Invidia/OvergrowthVineGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             if (IsGlowingTile(i, j))
             {
-                for (int a = 0; a < 6; a++)
-                {
-                    SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, new Color(60, 50, 50, 0), new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(a * 60 + SOTSWorld.GlobalCounter)));
-                }
+                if (!SOTS.Config.SanctuaryLagReduction)
+                    for (int a = 0; a < 6; a++)
+					{
+						SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, new Color(60, 50, 50, 0), new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(a * 60 + SOTSWorld.GlobalCounter)));
+					}
 				SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, Color.White, Vector2.Zero);
             }
         }

@@ -177,7 +177,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                         break;
                     Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                     float perc = 1 - i / (float)Projectile.oldPos.Length;
-                    Dust d = Dust.NewDustDirect(center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), newColor: c * perc);
+                    Dust d = Dust.NewDustDirect(center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, newColor: c * perc);
                     d.velocity *= 0.3f * perc;
                     d.velocity += Projectile.oldVelocity * 0.75f;
                     d.noGravity = true;

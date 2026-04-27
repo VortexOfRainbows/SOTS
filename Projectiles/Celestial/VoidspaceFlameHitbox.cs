@@ -71,7 +71,7 @@ namespace SOTS.Projectiles.Celestial
             {
                 Vector2 circular = new Vector2(MathHelper.Lerp(size.X, size.Y, 0.5f), 0).RotatedBy(j / 30f * MathHelper.TwoPi);
                 Vector2 pos = center - new Vector2(4, 4) + circular;
-                Dust dust = Dust.NewDustDirect(pos, 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(pos, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 2.25f;
@@ -82,7 +82,7 @@ namespace SOTS.Projectiles.Celestial
                 circular.X *= Main.rand.NextFloat(0, 1);
                 circular.Y *= Main.rand.NextFloat(0, 2);
                 pos = center - new Vector2(4, 4) + circular;
-                dust = Dust.NewDustDirect(pos, 0, 0, ModContent.DustType<CopyDust4>());
+                dust = Dust.NewDustDirect(pos, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.75f;
@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Celestial
             for (float j = 0; j <= 1; j += step / dist)
             {
                 Vector2 pos = Vector2.Lerp(point1, point2, j) - new Vector2(4, 4);
-                Dust dust = Dust.NewDustDirect(pos, 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(pos, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
                 dust.scale *= 1.75f;

@@ -43,7 +43,7 @@ namespace SOTS.Projectiles
                 SOTSUtils.PlaySound(SoundID.Roar, Projectile.Center, 1.0f, -0.34f);
                 NPC.SpawnOnPlayer(Projectile.owner, ModContent.NPCType<Excavator>()); //should work in multiplayer
                 float dustCount = 90;
-                int type = ModContent.DustType<CopyDust4>();
+                int type = SOTSUtils.TypeHelper.CopyDust4Type;
                 for (int i = 0; i < dustCount; ++i)
                 {
                     float r = MathHelper.TwoPi * i / dustCount;
@@ -70,7 +70,7 @@ namespace SOTS.Projectiles
             }
             for (int i = 0; i < 20; i++)
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 0.8f;
 				dust.noGravity = true;
 				dust.color = Color.Lerp(new Color(0, 192, 255, 100), new Color(0, 90, 136, 100), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Main.rand.NextFloat(360))));
@@ -101,7 +101,7 @@ namespace SOTS.Projectiles
 				}
                 else
                 {
-                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.velocity *= 0.1f + 0.2f * percent;
                     dust.noGravity = true;
                     dust.color = ExcavatorOrb.Color;
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles
             }
 			else
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(4, 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.velocity *= 0.1f;
                 dust.noGravity = true;
                 dust.color = Color.Lerp(new Color(0, 192, 255, 100), new Color(0, 90, 136, 100), 0.5f + 0.5f * (float)Math.Sin(MathHelper.ToRadians(Projectile.ai[0])));

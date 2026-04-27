@@ -500,7 +500,8 @@ namespace SOTS.Common.GlobalNPCs
             }
             if (projectile.type == ProjectileType<Projectiles.Temple.Helios>())
             {
-                StackDebuff(npc, player, ref BlazingCurse, 1, 0);
+                if(BlazingCurse < 5)
+                    StackDebuff(npc, player, ref BlazingCurse, 1, 0);
             }
             if(projectile.CountsAsClass(DamageClass.SummonMeleeSpeed) || projectile.CountsAsClass(DamageClass.Melee))
             {
@@ -636,7 +637,16 @@ namespace SOTS.Common.GlobalNPCs
                     modifiers.SourceDamage *= 0.8f;
                 }
             }
-            if(isSubspaceSerpent.Contains(npc.type))
+            if (projectile.type == ProjectileType<ChaosBeam>())
+            {
+                if (isSubspaceSerpent.Contains(npc.type))
+                    modifiers.SourceDamage *= 0.5f;
+                else if (npc.boss)
+                {
+                    modifiers.SourceDamage *= 0.9f;
+                }
+            }
+            if (isSubspaceSerpent.Contains(npc.type))
             {
                 if(projectile.type == ProjectileType<ChaosBeam>())
                 {
@@ -802,7 +812,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 if(Main.rand.NextBool(20 + i))
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, ModContent.DustType<CopyDust4>(), 0, -2, 200, new Color(), 1f);
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, -2, 200, new Color(), 1f);
                     dust.velocity *= 0.4f;
                     dust.color = new Color(100, 100, 255, 120);
                     dust.noGravity = true;
@@ -833,7 +843,7 @@ namespace SOTS.Common.GlobalNPCs
             {
                 if (Main.rand.NextBool(20 + i * 2))
                 {
-                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, ModContent.DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5f), npc.width, npc.height, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.velocity *= 0.75f;
                     dust.noGravity = true;
                     dust.scale *= 2.25f;
@@ -1081,7 +1091,7 @@ namespace SOTS.Common.GlobalNPCs
                     {
                         for (int i = 12; i > 0; i--)
                         {
-                            Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5, 5), npc.width, npc.height, ModContent.DustType<PixelDust>(), 0, 0, 0, PlagueSpitter.SpitterColor, 1f);
+                            Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5, 5), npc.width, npc.height, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, PlagueSpitter.SpitterColor, 1f);
                             dust.noGravity = true;
                             dust.velocity = dust.velocity * Main.rand.NextFloat() + npc.velocity * Main.rand.NextFloat(0.0f, 1f);
                             dust.fadeIn = 4;
@@ -1097,7 +1107,7 @@ namespace SOTS.Common.GlobalNPCs
                     {
                         if (Main.rand.NextBool(4))
                         {
-                            Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5, 5), npc.width, npc.height, ModContent.DustType<PixelDust>(), 0, 0, 0, PlagueSpitter.SpitterColor, 1f);
+                            Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5, 5), npc.width, npc.height, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, PlagueSpitter.SpitterColor, 1f);
                             dust.noGravity = true;
                             dust.velocity = dust.velocity * Main.rand.NextFloat() + npc.velocity * Main.rand.NextFloat(0.0f, 1f);
                             dust.fadeIn = 4;
@@ -1178,7 +1188,7 @@ namespace SOTS.Common.GlobalNPCs
                 if (Main.rand.NextBool(5))
                 {
                     Vector2 circular = new Vector2(4, 0).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360)));
-                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5), npc.width, npc.height, DustType<CopyDust4>());
+                    Dust dust = Dust.NewDustDirect(npc.position - new Vector2(5), npc.width, npc.height, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust.velocity *= 1.5f;
                     dust.velocity += 1.5f * circular.SafeNormalize(Vector2.Zero);
                     dust.scale = 1.75f;
@@ -1190,6 +1200,7 @@ namespace SOTS.Common.GlobalNPCs
         }
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            int BloomingHook = NPCType<BloomingHook>();
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 Projectile proj = Main.projectile[i];
@@ -1202,13 +1213,13 @@ namespace SOTS.Common.GlobalNPCs
                         if (flower.effected[npc.whoAmI])
                             contains = true;
                     }
-                    if(proj.type == ProjEvilGrowth)
+                    else if(proj.type == ProjEvilGrowth)
                     {
                         EvilGrowth evil = proj.ModProjectile as EvilGrowth;
                         if (evil.effected[npc.whoAmI])
                             contains = true;
                     }
-                    if (contains && npc.type != NPCType<BloomingHook>() && npc.realLife == -1)
+                    if (contains && npc.type != BloomingHook && npc.realLife == -1)
                     {
                         Texture2D texture2 = Mod.Assets.Request<Texture2D>("Projectiles/BiomeChest/TangleGrowthVine").Value;
                         Color color = Color.White;
@@ -1279,10 +1290,11 @@ namespace SOTS.Common.GlobalNPCs
                     SOTSUtils.PlaySound(SoundID.Item14, (int)npc.Center.X, (int)npc.Center.Y, 0.6f);
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
+                    int PathogenType = ProjectileType<Pathogen>();
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 circular = new Vector2(3, 0).RotatedBy(MathHelper.ToRadians(Main.rand.Next(360)));
-                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center.X, npc.Center.Y, circular.X, circular.Y, ProjectileType<Pathogen>(), damage, 0, Main.myPlayer, -1);
+                        Projectile.NewProjectile(npc.GetSource_Misc("SOTS:HurtWhileDebuffed"), npc.Center, circular, PathogenType, damage, 0, Main.myPlayer, -1);
                     }
                 }
             }

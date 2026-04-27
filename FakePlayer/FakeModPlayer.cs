@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using SOTS.Achievements;
+using SOTS.Projectiles.AbandonedVillage;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -43,6 +45,7 @@ namespace SOTS.FakePlayer
         public bool servantActive = false;
         public bool servantIsVanity = false;
         public bool hasHydroFakePlayer = false;
+        public bool hydroVanityHidden = false;
         public static int TesseractPlayerCount(Player player)
         {
             return FakeModPlayer.ModPlayer(player).tesseractPlayerCount;
@@ -85,6 +88,10 @@ namespace SOTS.FakePlayer
                     }
                 }
             }
+            if (tesseractPlayerCount >= 4 && Player.whoAmI == Main.myPlayer)
+            {
+                ModContent.GetInstance<FourthDimension>().FourTesseractsAtOnce.Complete();
+            }
         }
         public override bool CanUseItem(Item item)
         {
@@ -124,6 +131,7 @@ namespace SOTS.FakePlayer
             servantActive = false;
             hasHydroFakePlayer = false;
             foundItem = false;
+            hydroVanityHidden = false;
         }
         public override void PostUpdateMiscEffects()
         {

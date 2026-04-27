@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Chaos
 			for (int i = 0; i < 360; i += 24)
 			{
 				Vector2 circularLocation = new Vector2(Main.rand.NextFloat(10), 0).RotatedBy(MathHelper.ToRadians(i) + Projectile.rotation);
-				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[dust2];
 				dust.velocity += circularLocation;
 				dust.color = ColorHelper.Pastel(Main.rand.NextFloat(6.28f), true);

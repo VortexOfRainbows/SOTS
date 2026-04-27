@@ -36,7 +36,11 @@ namespace SOTS.Items.AbandonedVillage
 				ModContent.ItemType<GuardianGreatsword>(),
 				ModContent.ItemType<FortressCrasher>(),
 				ModContent.ItemType<MagmaBeam>()));
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 1, 1, 4));
+            itemLoot.Add(ItemDropRule.FewFromOptions(2, 1,
+                ModContent.ItemType<ExcavatorBreastplate>(),
+                ModContent.ItemType<ExcavatorHelmet>(),
+                ModContent.ItemType<ExcavatorLeggings>()));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 1, 1, 4));
 			itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Excavator>()));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 10, 20));
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<EarthenPlating>(), 1, 60, 100));

@@ -11,10 +11,6 @@ namespace SOTS.Projectiles.Planetarium
 {    
     public class TwilightBlade : ModProjectile 
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Twilight Blade");
-		}
 		public override void SendExtraAI(BinaryWriter writer)
 		{
 			writer.Write(active);
@@ -55,16 +51,18 @@ namespace SOTS.Projectiles.Planetarium
 				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, color * (1f - (Projectile.alpha / 255f)), Projectile.rotation, drawOrigin, 1f, SpriteEffects.None, 0f);
 			}
 		}
-		Vector2 aimTo = new Vector2(0, 0);
-		int ofTotal2 = 0;
-		float rotate = 0;
-		bool active = false;
+		private Vector2 aimTo = new Vector2(0, 0);
+		private int ofTotal2 = 0;
+		private float rotate = 0;
+		private bool active = false;
 		public override void AI()
 		{
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.65f, 0.75f);
 			Player player  = Main.player[Projectile.owner];
 			BladePlayer bladePlayer = player.GetModPlayer<BladePlayer>();
-			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+            SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
+			if (Projectile.timeLeft > 748)
+				bladePlayer.CurrentBlades += 1;
 			if (player.dead)
 			{
 				Projectile.Kill();

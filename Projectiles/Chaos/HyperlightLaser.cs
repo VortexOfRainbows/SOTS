@@ -64,7 +64,7 @@ namespace SOTS.Projectiles.Chaos
 			int amt = Main.rand.Next(2) + 1;
 			for(int i = 0; i < amt; i++)
 			{
-				Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(12, 12), 16, 16, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(12, 12), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.fadeIn = 0.2f;
 				dust.noGravity = true;
 				dust.alpha = Projectile.alpha;
@@ -126,7 +126,7 @@ namespace SOTS.Projectiles.Chaos
 					}
 				}
 				maxDist--;
-				Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(posList[posList.Count - 1] - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.fadeIn = 0.2f;
 				dust.noGravity = true;
 				dust.alpha = 100;

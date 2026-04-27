@@ -27,7 +27,13 @@ namespace SOTS.Items
 		}
 		public override void AddRecipes()
 		{
-			CreateRecipe(1).AddIngredient<OlympianAegis>(1).AddIngredient<ChiseledBarrier>(1).AddIngredient(ItemID.AnkhShield, 1).AddIngredient<TerminalCluster>(1).AddTile(TileID.TinkerersWorkbench).Register();
+			CreateRecipe(1)
+				.AddIngredient<OlympianAegis>(1)
+				.AddIngredient<ChiseledBarrier>(1)
+				.AddIngredient(ItemID.AnkhShield, 1)
+				.AddIngredient<TerminalCluster>(1)
+				.AddTile(TileID.TinkerersWorkbench)
+				.Register();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual)
 		{
@@ -48,6 +54,7 @@ namespace SOTS.Items
             player.buffImmune[BuffID.Cursed] = true; 
             player.buffImmune[BuffID.Darkness] = true; 
             player.buffImmune[BuffID.Chilled] = true;
+            player.buffImmune[BuffID.Stoned] = true;
 
 			//Increases void gain by 2, life regen by 1, reduces damage taken by 5%, and increases crit chance by 4%
 			voidPlayer.bonusVoidGain += 2f;

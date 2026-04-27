@@ -118,7 +118,7 @@ namespace SOTS.Projectiles.Pyramid
 					circular = circular.RotatedBy(Projectile.rotation);
 					for(int j = 0; j < 2; j++)
 					{
-						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + circular, 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5) + circular, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.color = new Color(220, 80, 80, 40);
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;

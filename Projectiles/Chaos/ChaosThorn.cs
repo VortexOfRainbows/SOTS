@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.Chaos
 			{
 				if (hasHit && Main.rand.NextBool(4))
 				{
-					int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+					int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 					Dust dust = Main.dust[dust2];
 					dust.color = ColorHelper.ChaosPink;
 					dust.noGravity = true;
@@ -219,7 +219,7 @@ namespace SOTS.Projectiles.Chaos
 				if(runOnce)
 					for (int i = 0; i < 4; i++)
 					{
-                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+                        Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.color = ColorHelper.ChaosPink;
 						dust.noGravity = true;
 						dust.fadeIn = 0.1f;

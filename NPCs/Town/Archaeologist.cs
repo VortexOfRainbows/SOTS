@@ -38,6 +38,8 @@ using SOTS.Helpers;
 using Terraria.Enums;
 using SOTS.Items.Invidia.MoonShard;
 using Microsoft.Xna.Framework.Input;
+using SOTS.Achievements;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SOTS.NPCs.Town
 {
@@ -485,8 +487,10 @@ namespace SOTS.NPCs.Town
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue1"));
 				chat.Add(Language.GetTextValue("Mods.SOTS.Dialogue.ArchaeologistDialogue2"), 0.5);
 				hasPlayerChattedBefore = true;
-			}
-			return chat; // chat is implicitly cast to a string.
+            }
+			if(Main.netMode != NetmodeID.Server)
+				ModContent.GetInstance<ArchaeologistTalk>().ArchaeologistTalkedToCondition.Complete();
+            return chat; // chat is implicitly cast to a string.
 		}
 		public override void SetChatButtons(ref string button, ref string button2)
 		{ 
@@ -756,36 +760,120 @@ namespace SOTS.NPCs.Town
 		{
 			if (Main.netMode == NetmodeID.MultiplayerClient)
 				return;
-			int padding = 50;
-			Vector2 firstPosition = Vector2.Zero;
-			int checks = 0;
-			bool valid = false;
-			int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
-			while (checks < 160 && !valid)
+
+			List<LightStatueTE> statues = new();
+
+			foreach (TileEntity e in TileEntity.ByID.Values)
 			{
-				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
-				firstPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
-				valid = isThisPlacementValid(new Point(randX, randY));
-				checks++;
+				if (e is LightStatueTE s)
+				{
+					if (s.Enabled)
+					{
+						statues.Add(s);
+					}
+				}
 			}
+
+			Vector2 firstPosition = Vector2.Zero;
+			int padding = 50;
+            firstPosition = Vector2.Zero;
+            if (statues.Count > 0)
+			{
+				int i = Main.rand.Next(statues.Count);
+				LightStatueTE s = statues[i];
+				statues.RemoveAt(i);
+                firstPosition = s.Position.ToVector2() * 16 + new Vector2(32, -152);
+			}
+			else
+            {
+                int checks = 0;
+                bool valid = false;
+                int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
+                while (checks < 160 && !valid)
+                {
+                    int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+                    int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
+                    firstPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+                    valid = isThisPlacementValid(new Point(randX, randY));
+                    checks++;
+                }
+            }
 			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), firstPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -1, -60);
 			Vector2 secondPosition = Vector2.Zero;
-			checks = 0;
-			valid = false;
-			AttemptedYLayer = Main.rand.Next(padding, Main.maxTilesY - padding);
-			while (checks < 160 && !valid)
+			if (statues.Count > 0)
 			{
-				int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
-				int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY - padding), Math.Clamp(checks / 120f, 0, 1));
-				secondPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
-				if (Vector2.Distance(secondPosition, firstPosition) < 6400)
-					valid = false; //Not a valid spot unless the distances are far from each other
-				else
-					valid = isThisPlacementValid(new Point(randX, randY));
-				checks++;
+				int i = Main.rand.Next(statues.Count);
+				LightStatueTE s = statues[i];
+				secondPosition = s.Position.ToVector2() * 16 + new Vector2(32, -152);
 			}
-			Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), secondPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -2, -60);
+			else
+            {
+                int checks = 0;
+                bool valid = false;
+                int AttemptedYLayer = Main.rand.Next(padding, Main.maxTilesY - padding);
+                while (checks < 160 && !valid)
+                {
+                    int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+                    int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY - padding), Math.Clamp(checks / 120f, 0, 1));
+                    secondPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+                    if (Vector2.Distance(secondPosition, firstPosition) < 6400)
+                        valid = false; //Not a valid spot unless the distances are far from each other
+                    else
+                        valid = isThisPlacementValid(new Point(randX, randY));
+                    checks++;
+                }
+            }
+            if (SOTSWorld.AmberKeySlotted && SOTSWorld.AmethystKeySlotted && SOTSWorld.SapphireKeySlotted && SOTSWorld.RubyKeySlotted && SOTSWorld.EmeraldKeySlotted && SOTSWorld.DiamondKeySlotted && SOTSWorld.TopazKeySlotted)
+            {
+                int eggType = ModContent.ItemType<WonderEgg>();
+                int totalEggs = 0;
+                for (int i = 0; i < Main.item.Length; ++i)
+                {
+                    Item egg = Main.item[i];
+                    if (totalEggs <= 7)
+                    {
+                        if (egg.active && egg.type == eggType && egg.TryGetGlobalItem<GlobalEntityItem>(out GlobalEntityItem s) && s.RecentlyTeleported)
+                        {
+                            totalEggs++;
+                        }
+                    }
+                    else
+                        break;
+                }
+                if (totalEggs <= 7)
+                {
+                    int checks = 0;
+                    bool valid = false;
+					Vector2 eggPosition = Vector2.Zero;
+                    int AttemptedYLayer = padding + (int)(Math.Pow(Main.rand.NextFloat(1), 4) * (Main.maxTilesY - padding)); //Weighted towards the top of the map
+                    while (checks < 100 && !valid)
+                    {
+						if(checks > 20)
+                        {
+                            int randX = Main.rand.Next(padding, Main.maxTilesX - padding);
+                            int randY = (int)MathHelper.Lerp(AttemptedYLayer, Main.rand.Next(padding, Main.maxTilesY / 2), Math.Clamp(checks / 120f, 0, 1));//Weighted towards the top of the map
+                            eggPosition = new Vector2(randX * 16 + 8, randY * 16 + 8);
+							valid = isThisPlacementValid(new Point(randX, randY));
+                        }
+						else
+						{
+                            eggPosition = secondPosition + Main.rand.NextVector2CircularEdge(160, 160);
+                            valid = isThisPlacementValid(eggPosition.ToTileCoordinates());
+                        }
+                        checks++;
+                    }
+                    Item item = Main.item[Item.NewItem(new EntitySource_Misc("SOTS:ArchaeologistPortals"), eggPosition, eggType, 1, false)];
+                    if (item.TryGetGlobalItem<GlobalEntityItem>(out GlobalEntityItem s))
+                    {
+                        s.TeleportCounter = 1;
+                        if (Main.netMode == NetmodeID.Server)
+                        {
+                            s.NetUpdate(item.whoAmI);
+                        }
+                    }
+                }
+            }
+            Projectile.NewProjectile(new EntitySource_Misc("SOTS:ArchaeologistPortals"), secondPosition, Vector2.Zero, ModContent.ProjectileType<VoidAnomaly>(), 0, 0, Main.myPlayer, -2, -60);
 		}
 		public static bool isThisPlacementValid(Point point)
 		{
@@ -1269,7 +1357,7 @@ namespace SOTS.NPCs.Town
 						{
 							float radius = Radius * 16 * alphaMult;
 							Vector2 circular = new Vector2(radius + 12 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
-							Dust dust = Dust.NewDustDirect(Projectile.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(color, Color.Black, Main.rand.NextFloat(0.3f)), 1.1f);
+							Dust dust = Dust.NewDustDirect(Projectile.Center + circular - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, Color.Lerp(color, Color.Black, Main.rand.NextFloat(0.3f)), 1.1f);
 							dust.fadeIn = 1;
 							dust.noGravity = true;
 							dust.velocity *= 0.5f;
@@ -1400,8 +1488,7 @@ namespace SOTS.NPCs.Town
 					NPC npc = Main.npc[i];
 					if (npc.active && !npc.noTileCollide && !npc.boss && !VoidAnomalyIsShattered)
 					{
-						GlobalEntityNPC gen = npc.GetGlobalNPC<GlobalEntityNPC>();
-						if (!gen.RecentlyTeleported)
+						if(npc.TryGetGlobalNPC(out GlobalEntityNPC gen) && !gen.RecentlyTeleported)
 						{
 							if (barrier == -1)
 								AcceptEntity(npc, i);
@@ -1459,7 +1546,7 @@ namespace SOTS.NPCs.Town
 			}
 			else
 			{
-				if (entity is Item item && (!isAcceptingATaintedKeystone || item.type == ModContent.ItemType<TaintedKeystone>()))
+				if (entity is Item item && (!isAcceptingATaintedKeystone || item.type == ModContent.ItemType<TaintedKeystone>()) && item.type != ModContent.ItemType<WonderEgg>())
 				{
 					GlobalEntityItem gen = item.GetGlobalItem<GlobalEntityItem>();
 					if (gen.RecentlyTeleported)
@@ -1592,10 +1679,10 @@ namespace SOTS.NPCs.Town
 							int type = ModContent.DustType<PixelDust>();
 							if(Main.rand.NextBool())
                             {
-								type = ModContent.DustType<CopyDust4>();
+								type = SOTSUtils.TypeHelper.CopyDust4Type;
                             }
-							Dust dust = Dust.NewDustDirect(pos - new Vector2(3, 5), entity.width + 3, height, type, 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.3f)), type == ModContent.DustType<CopyDust4>() ? 1.3f : 1.0f);
-							dust.fadeIn = type == ModContent.DustType<CopyDust4>() ? 0.2f : 7;
+							Dust dust = Dust.NewDustDirect(pos - new Vector2(3, 5), entity.width + 3, height, type, 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.3f)), type == SOTSUtils.TypeHelper.CopyDust4Type ? 1.3f : 1.0f);
+							dust.fadeIn = type == SOTSUtils.TypeHelper.CopyDust4Type ? 0.2f : 7;
 							dust.noGravity = true;
 							dust.velocity *= Main.rand.NextFloat(1) * Main.rand.NextFloat(1) * 0.3f;
 							dust.velocity += toCenter.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(4f, 5f) * distancePercent * dist / 120f;
@@ -1634,7 +1721,7 @@ namespace SOTS.NPCs.Town
 			{
 				float radius = Radius * 16 * alphaMult;
 				Vector2 circular = new Vector2(radius + 12 + Main.rand.NextFloat(8), 0).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi));
-				Dust dust = Dust.NewDustDirect(Projectile.Center + circular * 0.5f - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.5f)), 1.5f);
+				Dust dust = Dust.NewDustDirect(Projectile.Center + circular * 0.5f - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, Color.Lerp(ColorHelper.VoidAnomaly, Color.Black, Main.rand.NextFloat(0.5f)), 1.5f);
 				dust.fadeIn = 0.4f;
 				dust.noGravity = true;
 				dust.velocity *= 0.5f;
@@ -1668,7 +1755,7 @@ namespace SOTS.NPCs.Town
 			Color color = ColorHelper.VoidAnomaly;
 			for (int j = 0; j < 3; j++)
 			{
-				int type = ModContent.DustType<CopyDust4>();
+				int type = SOTSUtils.TypeHelper.CopyDust4Type;
 				if (j == 1)
 					type = ModContent.DustType<PixelDust>();
 				int count = 10 + (int)Math.Sqrt(radiusX * radiusX + radiusY * radiusY);

@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.Nature
 			Vector2 center = Projectile.Center;
 			for(float i = 0; i < 1; i += 0.5f)
 			{
-				Dust dust = Dust.NewDustDirect(center - new Vector2(5) + Projectile.velocity * i, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+				Dust dust = Dust.NewDustDirect(center - new Vector2(5) + Projectile.velocity * i, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100, default, 1.6f);
 				dust.velocity *= 0.05f;
 				dust.scale = 1.2f + 1.2f * mult;
 				dust.noGravity = true;

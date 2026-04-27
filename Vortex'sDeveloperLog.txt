@@ -1,4 +1,4 @@
-Order Of Gems (and order of "sins"): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
+﻿Order Of Gems (and order of "sins"): Amethyst, Ruby, Amber, Topaz, Sapphire, Emerald, Diamond
 The following is my development plans :D
 1. After Void Anomaly is extracted through the tainted keystone, the other portal now leads to a secret area containing the Superbia Portal Base and the Suspicious Stopwatch. The room cannot be entered until it is unlocked from the inside. It is unlocked by breaking the suspicious stopwatch, which can only happen if the Void Anomaly is equipped. The blocks comprising the room appear invisible, similar to Phase Ore. It appears in the Top Right of the sky, opposite the diamond structure, and is not visited by the Archaeologist.
 1a. Suspicious Stopwatch can be powered by the Chaos Conduit, breaking into Time Shards and a Broken Watch; these can be used with the Voidmage Incubator to craft a Timekeeper's Stopwatch 
@@ -21,8 +21,7 @@ Acknowledged But Likely Delayed:
 11. Blades trails are a choppy in multiplayer when used by Fake Players/ Servants. This is probably no big deal and the solution is quite complex (making the servants more smooth in multiplayer in general by changing AI and syncing).
 12. Ammo Pouch + Infinity Pouch leads to some crazy combos...
 13. Tide structure that catches enemies like a fishing net (kinda like the hydraulic press)
-14. Add Achievements (waiting on ModAchievement)
-15. Fire Spitter rework
+14. Fire Spitter rework
 
 Update Objectives:
 1. Unique Archaeologist tooltips for items, which can give hints related to lore and secrets (Up next)
@@ -40,11 +39,12 @@ Update Objectives:
 9. Bridgeburner flight
 10. Fix NON-EN localization:
 	1. The information shown in the lower-left corner after using the Planetary Analyzer (this should probably be reworked altogether).
-11. Tiles that repel and attract Anomaly spawns (Anomaly Interceptor and Anomaly Attractor)
-	1. Interceptor -> D.E.F.E Wormhole convert
-	2. Attractor -> Otherworld Unique Tile
+11. Tiles that repel and attract Anomaly spawns (Anomaly Interference Device)
+	1. Interference -> D.E.F.E Wormhole convert
 12. Sanctuary Lanterns (hang from ceiling very cool)
-
+13. BUG: "Does anyone else have an issue where the void bar keeps reverting its X-position? I change it to 1435, then on tmod reload it's 1400 again"
+14. Found a bug with the shattered dreams item when you have no mana and try attacking it just starts calling down the stars insanely fast
+15. Cool Idea: Destroyer summon staff
 
 ---WIP List---
 N/A
@@ -54,7 +54,7 @@ If any other issues come up with Gilded Blade Wings trail interfering with how o
 Conduit recipe code should be more robust and better!
 
 ---Balance Needed List (by Severity, -weak, +strong)---
-5. +Possibly Blade Wings, +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, -Compound Bow, +Lungrot, +Little Woes, +Accretion Disc, -Street Cleaner
+5. +Voidspace Ranger's Armor, +Elemental Armor, +Earthdrive, +Accretion Disc
 4. ++Soot Spewer
 3. AV Enemies
 2. ++Plague Spitter, +++Wishing Star/Shattered Dreams
@@ -73,6 +73,144 @@ N/A
 N/A
 
 Daily Log:
+
+3/3/26
+1. Added a config option for the Sanctuary that should reduce lag moderately by reducing the amount of draw calls by a substantial amount (~40% reduced calls)
+2. Evostone Grand Pillars can kinda be effected by Paint now, but does not use the shader making it slightly different from how paint normally effects blocks
+
+2/16/26
+1. Fix bug where out of bounds tiles could cause a crash by checking for valid tile above.
+
+--- Hotfix 0.25.1.6 ---
+1. Add Russian Localization by DruSamuel and Team
+
+
+--- Hotfix 0.25.1.5 ---
+
+
+12/29/25
+1. Fix Code Corrupter localization spelling "destabilize" as "destabalize", "struck" as "striked"
+2. Pharoah's Curse Optimizations:
+	1. Improved the ordering of certain expressions within if statements and for loops to prevent calculating and loading things more than necessary (should be a minor improvement)
+	2. Cached all textures that are used in the fight into static variables, preventing looking up textures multiple times per frame and sometimes per dust particle (should be a minor improvement)
+	3. Cache projectile types that are searched for special drawing, rather than looking up projectile types many times per frame (should be a medium improvement)
+	4. Some other minor improvements that aren't too noteworthy but should have a somewhat non-negligible effect on lag
+	5. Curse Wave Projectile now has optimizations from a few patches ago that was not integrated: Better clearing of dust list (should be medium improvement)
+3. As a side effect of Pharaoh's Curse performance improvements, weapons and other sources of curse particles should also be less laggy
+4. The "White Pixel" asset that is used for many spritebatch trails is also cached now, rather than looked up, which should help performance generally with quite a few items
+	1. Some items included are: Gilded Blade Wings, Accretion Disc, Torch Gun Mk2, etc. (This will likely be a minor improvement)
+5. The "CopyDust4" dust type that is used in over 180+ files in the mod is now cached, rather than looked up using DustType<CopyDust4>(), which should generally help with improving performance across the board, since it is commonly used everywhere. (This will likely be a minor improvement)
+6. Add Stabilizing Tonic, which does basically nothing right now (seriously)
+
+
+--- Hotfix 0.25.1.4 ---
+
+
+12/16/25
+1. Fix bug where SOTS was sending, receiving, and requesting WAY too many packets, greatly lagging multiplayer servers
+	1. Also reduced the frequency of timed packet updates 2 seconds -> 3 seconds
+2. Illuminant Axe can no longer be used by the Hydrokinetic Antennae
+3. Tesseract Color cycle is now more purple and cycles slower
+4. Tesseract Tooltip Text now glows and generally looks different
+
+12/10/25
+1. Fix some localization
+2. Evostone Grand Pillars (Pillars in the Sanctuary) now draw like typical walls instead of a detour
+	1. This means they should be less buggy (no longer disappearing sometimes)
+	2. They should also be less laggy (hopefully)
+	3. This also means they can now be obtained and placed
+
+12/9/25
+1. Fix some wall recipe problems pointed out by gbf
+2. Overgrown Pyramid Tile (UnSafe) now correctly drops the tile
+
+11/27/25
+1. Fix error in ultracap banner place sprite
+2. Adjust some erroroneous tooltips
+
+
+--- Hotfix 0.25.1.3 ---
+
+
+11/12/25
+1. Fixed oversight where debug text was spammed in chat upon burdened achievement completion
+2. Chaos Spirit Staff damage 54 -> 50, and reduce damage to bosses by 10% and subspace serpent by 50%
+3. Otherworld Spirit Staff damage 24 -> 21
+4. Permafrost Spirit Staff damage 17 -> 15
+5. Nature Spirit Staff damage 12 -> 10
+6. Tidal Spirit Staff damage 33 -> 30
+7. Earthen Spirit Staff damage 14 -> 13
+8. Evil Spirit Staff damage 66 -> 60
+9. Inferno Spirit Staff damage 50 -> 47
+10. Cursed Blade damage 21 -> 19
+11. Test out Attuned buff not working in MP... It works, not sure who was getting the bug..?
+12. Crystal Serpent from the Starcaller Staff now does summon damage
+
+
+--- Hotfix 0.25.1.2 --- (workshop wouldn't let me do 0.25.1.1)
+
+
+11/11/25
+1. Fix bug with Jewel Eggs accidentally not having special names
+2. Change Jewel Egg tooltip to not indicate cracking being an option available, plus change some special tooltips
+3. Fix bug where old Jewel Eggs could be crushed again as ghost items, making it unclear what is happening to your UVN
+
+
+--- Hotfix 0.25.1.0 ---
+
+
+11/10/25 to 11/11/25
+1. Add Excavator Armor set (works in multiplayer)
+2. Adjust some tooltips
+3. A hidden tooltip for Essence of Emptiness appears at 15 UVID instead of 8 UVID
+4. Add 56 Wonder Eggs, which change tooltips and names based on their ID and the player's UVID (works in MP)
+5. Add JUMBO EGGS, which contain random shit, obtained by shimmering wonder eggs
+6. Fixed royal magnum not being dropped by pyramid treasure slimes
+7. Added an animation for when your vision number changes
+8. Add Anomaly Interceptor, which gives more detail about anomalies (works in multiplayer)
+
+11/6/25
+1. Hydrokinetic Antennae and Pog Shark can be exchanged into each other at a wormhole
+2. Hydrokinetic Antennae's connection visual can now be hidden when vanity is disabled
+3. Fix: Bulwark of the ancients grants stoned immunity now, like the ankh shield
+4. Fix: King Blade's tooltip now shows correct damage multiplier number (100% -> 80%)
+5. Fix: Helios now only stacks up to 5 stacks of scorch, as described in the tooltip
+
+10/30/25
+1. Import some sprites for Excavator Armor!
+2. Add two more achievements, excavator's kill and being burdened
+3. Fix issue where Lightbringer (Statue)'s diamonds wouldn't appear until the texture was loaded
+
+10/6/25
+1. Import some sprites
+
+9/28/25
+1. Added Lightbringer Statue (works in MP)
+2. No more SOTS Texture-Pack popup
+
+9/27/25
+1. Eduarrdo achievement resprites!
+
+9/14/25 and 9/19/25 to 9/20/25
+1. Test out some bugs (neither replicable)
+	1. Mr. Glorp has a weird crafting bug where it cannot be crafted manually with the anomaly crafting accessories?
+	2. Check doomstick functionality with right click (supposedly can only be used up/down)
+2. Some optimizations for Blade Generator and upgrades that should reduce overhead lag (it was previously running 1000 extra checks per frame)
+3. Basic prep for Mod Achievements
+4. WIP Achievement implementation
+5. Achievements tested (works, but not tested in MP) and localization (EN) added
+
+8/26/25 and 8/29/25
+1. Fixed issue where bonus critical strike damage was only being applied to melee strikes from items like the Elemental Amulet and Harvester's Scythe
+2. Small adjustments to worldgen code that may fix some issues but probably not :(
+
+8/20/25
+1. Attempt to fix issue with dragon lens NPC spawning in multiplayer throwing an error with void anomalies (not sure what issue this necessarily causes but it should be fixed now)
+2. Gula Vault should no longer be locked when placed by player
+
+
+--- Hotfix 0.25.0.4 ---
+
 
 8/11/25
 1. Alternative Subspace OST by Yuri O

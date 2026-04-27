@@ -4,6 +4,7 @@ using SOTS.FakePlayer;
 using SOTS.Helpers;
 using SOTS.Items.SpiritStaves;
 using SOTS.Void;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -51,15 +52,31 @@ namespace SOTS.Items
         }
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
         {
-            if (line.Name == "ItemName" || line.Name == "Damage" || line.Name == "Favorite" || line.Name == "FavoriteDesc")
+            bool name = line.Name == "ItemName";
+            if (name || line.Name == "Damage" || line.Name == "Favorite" || line.Name == "FavoriteDesc")
             {
-                Color outer = ColorHelper.TesseractColor(0, 0.5f);
+                Color outer = ColorHelper.TesseractColor(0, 0.4f);
+                outer *= 0.2f;
                 Color inner = Color.Black;
                 TextSnippet[] snippets = ChatManager.ParseMessage(line.Text, inner).ToArray();
                 ChatManager.ConvertNormalSnippets(snippets);
+                for (int i = 0; i < 16; ++i)
+                {
+                    float radians = MathHelper.ToRadians(i / 16f * 360 + Main.GameUpdateCount);
+                    var outer2 = outer * 0.4f;
+                    Vector2 circular = new Vector2(6.5f, 0).RotatedBy(radians);
+                    ChatManager.DrawColorCodedStringShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y) + circular, outer2, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
+                }
+                for (int i = 0; i < 16; ++i)
+                {
+                    float radians = MathHelper.ToRadians(i / 16f * 360 + Main.GameUpdateCount);
+                    var outer2 = ColorHelper.TesseractColor(radians, 0.8f) * 0.09f;
+                    outer2.A = 0;
+                    Vector2 circular = new Vector2(2.5f, 0).RotatedBy(radians);
+                    ChatManager.DrawColorCodedStringShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y) + circular, outer2, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, 0);
+                }
                 ChatManager.DrawColorCodedStringShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y), outer, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
-                int outSnip;
-                ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out outSnip, line.MaxWidth);
+                ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y), inner, line.Rotation, line.Origin, line.BaseScale, out _, line.MaxWidth);
                 return false;
             }
             return true;

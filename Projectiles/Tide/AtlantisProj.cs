@@ -166,7 +166,7 @@ namespace SOTS.Projectiles.Tide
                     {
                         if (Main.rand.NextBool(3))
                         {
-                            Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + Projectile.velocity * i, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 55);
+                            Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + Projectile.velocity * i, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 55);
                             dust.scale = 1.0f;
                             dust.velocity += Projectile.velocity * 0.35f;
                             dust.velocity *= 0.75f;
@@ -184,7 +184,7 @@ namespace SOTS.Projectiles.Tide
                     {
 						if(Main.rand.NextBool(3))
                         {
-                            Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + Projectile.velocity * i, 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 55);
+                            Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + Projectile.velocity * i, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 55);
                             dust.scale = 1.0f;
                             dust.velocity += Projectile.velocity * 0.35f;
                             dust.velocity *= 0.75f;

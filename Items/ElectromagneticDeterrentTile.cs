@@ -61,7 +61,7 @@ namespace SOTS.Items
 					int direction = (int)(Main.tile[i, j].TileFrameX / 18 - 1);
 					for(int l = 0; l < 6; l++)
 					{
-						Dust dust = Dust.NewDustDirect(new Vector2(i * 16 + 4, j * 16 + 13 + direction * 3), 8, 4, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(new Vector2(i * 16 + 4, j * 16 + 13 + direction * 3), 8, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.noGravity = true;
 						dust.velocity.Y *= 0.14f;
 						dust.velocity.X = Math.Abs(dust.velocity.X) * 2.5f * direction + direction;

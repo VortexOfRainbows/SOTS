@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SOTS.Achievements;
 using System;
 using System.IO;
 using Terraria;
@@ -10,10 +11,6 @@ namespace SOTS.Projectiles.Tide
 {
     public class ExtendoBaguette : ModProjectile
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Extendo Baguette");
-        }
         public override void SetDefaults()
         {
             Projectile.width = 20;
@@ -172,6 +169,8 @@ namespace SOTS.Projectiles.Tide
                 length = 4;
                 length += modPlayer.baguetteLength;
                 Projectile.netUpdate = true;
+                if(length >= 20)
+                    ModContent.GetInstance<VivaleBaguette>().LongBaguetteCondition.Complete();
             }
             if (runOnce)
             {

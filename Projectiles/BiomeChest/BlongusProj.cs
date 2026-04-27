@@ -116,7 +116,7 @@ namespace SOTS.Projectiles.BiomeChest
                         }
                         else
                         {
-                            Dust d = Dust.NewDustDirect(Projectile.Center - sVelo * 2 + Projectile.velocity * i - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelper.RedEvilColor * lightIntensity);
+                            Dust d = Dust.NewDustDirect(Projectile.Center - sVelo * 2 + Projectile.velocity * i - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, newColor: ColorHelper.RedEvilColor * lightIntensity);
                             d.fadeIn = 0.2f;
                             d.noGravity = true;
                             d.scale = d.scale * 0.4f + 0.4f;

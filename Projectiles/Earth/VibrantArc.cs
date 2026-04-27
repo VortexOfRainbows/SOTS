@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Earth
 				float radianDir = (float)Math.Atan2((double)Projectile.velocity.Y, (double)Projectile.velocity.X);
 				Vector2 helixPos1 = Projectile.Center + new Vector2(curve.X, 0).RotatedBy(radianDir + direction * MathHelper.ToRadians(90));
 				Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 30);
-                Dust dust = Dust.NewDustDirect(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(new Vector2(helixPos1.X - 4, helixPos1.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.color = color2;
 				dust.noGravity = true;
 				dust.fadeIn = 0.1f;
@@ -113,7 +113,7 @@ namespace SOTS.Projectiles.Earth
 		{
 			for(int i = 0; i < 10; i++)
 			{
-				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num1];
 				Color color2 = ColorHelper.VibrantColorGradient(Projectile.whoAmI * 30);
 				dust.color = color2;

@@ -200,7 +200,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                         d = PixelDust.Spawn(spawnCenter, (int)spawnDimensions.X, (int)spawnDimensions.Y, Main.rand.NextVector2Circular(6f, 6f), c, 3);
                         d.scale = Main.rand.NextFloat(1.5f, 2.5f);
 
-                        d = Dust.NewDustDirect(spawnCenter - new Vector2(4), (int)spawnDimensions.X, (int)spawnDimensions.Y, ModContent.DustType<CopyDust4>(), newColor: Color.Lerp(new Color(191, 20, 61, 0), c, Main.rand.NextFloat(1)));
+                        d = Dust.NewDustDirect(spawnCenter - new Vector2(4), (int)spawnDimensions.X, (int)spawnDimensions.Y, SOTSUtils.TypeHelper.CopyDust4Type, newColor: Color.Lerp(new Color(191, 20, 61, 0), c, Main.rand.NextFloat(1)));
                         d.velocity *= 2.5f; 
                         d.velocity += Projectile.oldVelocity * 0.5f;
                         d.noGravity = true;

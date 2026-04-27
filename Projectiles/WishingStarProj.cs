@@ -223,7 +223,7 @@ namespace SOTS.Projectiles
             }
             for (int i = 0; i < Projectile.oldPos.Length; i++)
             {
-                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), newColor: ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true));
+                Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, newColor: ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true));
                 d.velocity *= 1.5f;
                 d.velocity += Projectile.oldVelocity * 0.5f;
                 d.noGravity = true;
@@ -234,7 +234,7 @@ namespace SOTS.Projectiles
                     break;
                 Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
-                d = Dust.NewDustDirect(center - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), newColor: ColorHelper.VibrantColorGradient(i * 2, false) * perc);
+                d = Dust.NewDustDirect(center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, newColor: ColorHelper.VibrantColorGradient(i * 2, false) * perc);
                 d.velocity *= 0.75f * perc;
                 d.velocity += Projectile.oldVelocity * 0.4f;
                 d.noGravity = true;

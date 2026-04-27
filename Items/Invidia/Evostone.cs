@@ -1,12 +1,9 @@
-using Microsoft.CodeAnalysis;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Dusts;
 using SOTS.Helpers;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.ObjectInteractions;
-using Terraria.GameContent.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -158,13 +155,12 @@ namespace SOTS.Items.Invidia
         {
             ModLight(i, j, ref r, ref g, ref b);
         }
-        public static void DrawRune(int i, int j, SpriteBatch spriteBatch, Texture2D runeTex, float colorMult = 1f)
+        public static void DrawRune(int i, int j, Texture2D runeTex, float colorMult = 1f)
         {
             if (runeTex == null)
                 return;
             Tile t = Main.tile[i, j];
-            int Type = ModContent.TileType<RunicEvostoneBrickTile>();
-            bool valid = false;
+            bool valid;
             if (colorMult == 1)
             {
                 int tFrameX = t.TileFrameX / 18;
@@ -183,24 +179,28 @@ namespace SOTS.Items.Invidia
             int x = frame % 4;
             int y = frame / 4;
             Color lC = Lighting.GetColor(i, j);
-            SOTSTile.DrawSlopedGlowMask(i, j, Type, runeTex, lC, Vector2.Zero, 2 + 18 * x, 2 + 18 * y);
+            SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, lC, Vector2.Zero, 2 + 18 * x, 2 + 18 * y);
             float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.9f + 0.1f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
             Color runeColor = Color.Lerp(lC, Color.White, fillPercent) * fillPercent;
             runeColor.A = 0;
             runeColor = Color.Lerp(Color.Black, runeColor, colorMult);
-            int c = SOTS.Config.lowFidelityMode ? 3 : 6;
-            int d = SOTS.Config.lowFidelityMode ? 120 : 60;
-            for (int a = 0; a < c; a++)
+            if(!SOTS.Config.SanctuaryLagReduction)
             {
-                SOTSTile.DrawSlopedGlowMask(i, j, Type, runeTex, runeColor * 0.23f * fillPercent, new Vector2(.4f + 1.8f * SOTSWorld.MoonPhasePercent, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 2 + 18 * (x + 4), 2 + 18 * y);
+                int c = SOTS.Config.lowFidelityMode ? 3 : 6;
+                int d = SOTS.Config.lowFidelityMode ? 120 : 60;
+                for (int a = 0; a < c; a++)
+                {
+                    SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, runeColor * 0.23f * fillPercent, new Vector2(.4f + 1.8f * SOTSWorld.MoonPhasePercent, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 74 + 18 * x, 2 + 18 * y);
+                }
+                SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, runeColor, Vector2.Zero, 74 + 18 * x, 2 + 18 * y);
             }
-            SOTSTile.DrawSlopedGlowMask(i, j, Type, runeTex, runeColor, Vector2.Zero, 2 + 18 * (x + 4), 2 + 18 * y);
+            else
+                SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, runeColor * 1.25f, Vector2.Zero, 74 + 18 * x, 2 + 18 * y);
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-			if(rune == null)
-				rune = ModContent.Request<Texture2D>("SOTS/Items/Invidia/Runes", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            DrawRune(i, j, spriteBatch, rune);
+		    rune ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/Runes", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            DrawRune(i, j, rune);
         }
         public override void SetStaticDefaults()
         {
@@ -301,8 +301,8 @@ namespace SOTS.Items.Invidia
             float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.6f + 0.4f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;
             Color color = Color.Lerp(lC, Color.White, fillPercent) * fillPercent;
             color.A = 0;
-            int c = SOTS.Config.lowFidelityMode ? 3 : 6;
-            int d = SOTS.Config.lowFidelityMode ? 120 : 60;
+            int c = SOTS.Config.SanctuaryLagReduction || SOTS.Config.lowFidelityMode ? 3 : 6;
+            int d = SOTS.Config.SanctuaryLagReduction || SOTS.Config.lowFidelityMode ? 120 : 60;
 			float moonDist = .4f + 1.8f * SOTSWorld.MoonPhasePercent;
             bool top = ValidTile(i, j - 1) && (Main.tile[i, j - 1].Slope == 0 || Main.tile[i, j - 1].TopSlope);
             bool bot = ValidTile(i, j + 1) && (Main.tile[i, j + 1].Slope == 0 || Main.tile[i, j + 1].BottomSlope);
@@ -372,20 +372,168 @@ namespace SOTS.Items.Invidia
     }
     public class EvostoneGrandPillarWall : ModWall
     {
+        public static Texture2D PillarTexture;
         public override string Texture => "SOTS/Items/Invidia/EvostoneBrickWallTile";
         public override void SetStaticDefaults()
         {
             Main.wallHouse[Type] = false;
             DustType = ModContent.DustType<EvostoneDust>();
             AddMapEntry(new Color(20, 31, 41));
-            HitSound = SoundID.Tink;
+            HitSound = SoundID.Dig;
         }
         public override bool CanExplode(int i, int j) => false;
-        public override void KillWall(int i, int j, ref bool fail) => fail = true;
-        public override bool CanPlace(int i, int j) => false;
+        public override void KillWall(int i, int j, ref bool fail) => fail = false;
+        public override bool CanPlace(int i, int j) => true;
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
+            Tile tile = Main.tile[i, j];
+            TileColorCache colorCache = tile.WallColorAndCoating();
+            if (colorCache.Invisible && !Main.LocalPlayer.CanSeeInvisibleBlocks)
+                return false;
+            Color paint = WorldGen.paintColor(colorCache.Color);
+            int frameX = tile.WallFrameX / 36;
+            int frameY = tile.WallFrameY / 36;
+            frameX += frameY * 8;
+            Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
+            PillarTexture ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/SanctuaryPillar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Vector2 drawPos = new Vector2(i, j) * 16 + zero - Main.screenPosition;
+            Vector3[] slices = new Vector3[9];
+            if (colorCache.FullBright)
+                for (int x = 0; x < 9; ++x)
+                    slices[x] = Vector3.One;
+            else
+                Lighting.GetColor9Slice(i, j, ref slices);
+            Vector3 vector = Lighting.GetColor(i, j).ToVector3();
+            Vector3 tileLight;
+            Vector2 position;
+            Color color = new();
+            Rectangle value = new();
+            for (int a = 0; a < 9; a++)
+            {
+                value.X = 0;
+                value.Y = 0;
+                value.Width = 4;
+                value.Height = 4;
+                switch (a)
+                {
+                    case 1:
+                        value.Width = 8;
+                        value.X = 4;
+                        break;
+                    case 2:
+                        value.X = 12;
+                        break;
+                    case 3:
+                        value.Height = 8;
+                        value.Y = 4;
+                        break;
+                    case 4:
+                        value.Width = 8;
+                        value.Height = 8;
+                        value.X = 4;
+                        value.Y = 4;
+                        break;
+                    case 5:
+                        value.X = 12;
+                        value.Y = 4;
+                        value.Height = 8;
+                        break;
+                    case 6:
+                        value.Y = 12;
+                        break;
+                    case 7:
+                        value.Width = 8;
+                        value.Height = 4;
+                        value.X = 4;
+                        value.Y = 12;
+                        break;
+                    case 8:
+                        value.X = 12;
+                        value.Y = 12;
+                        break;
+                }
+                //value.Y += glowOffset.Y;
+                position.X = drawPos.X + value.X;
+                position.Y = drawPos.Y + value.Y;
+                value.X += frameX * 16;
+                value.Y += (j % 4) * 16;
+                tileLight.X = (slices[a].X + vector.X) * 0.5f;
+                tileLight.Y = (slices[a].Y + vector.Y) * 0.5f;
+                tileLight.Z = (slices[a].Z + vector.Z) * 0.5f;
+                int num = (int)(tileLight.X * 255f);
+                int num2 = (int)(tileLight.Y * 255f);
+                int num3 = (int)(tileLight.Z * 255f);
+                if (num > 255)
+                    num = 255;
+                if (num2 > 255)
+                    num2 = 255;
+                if (num3 > 255)
+                    num3 = 255;
+                num3 <<= 16;
+                num2 <<= 8;
+                color.PackedValue = (uint)(num | num2 | num3) | 0xFF000000u;
+                Terraria.Graphics.VertexColors c = new(color.MultiplyRGB(paint));
+                //Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, VertexColors colors, Vector2 origin, float scale, SpriteEffects effects)
+                Main.tileBatch.Draw(PillarTexture, position, value, c, Vector2.Zero, 1f, SpriteEffects.None);
+                //spriteBatch.Draw(PillarTexture, position, value, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
             return false;
+        }
+        public override bool WallFrame(int i, int j, bool randomizeFrame, ref int style, ref int frameNumber)
+        {
+            FrameWall(i, j, true);
+            return false;
+        }
+        public void FrameWall(int i, int j, bool recursive = false)
+        {
+            Tile t = Main.tile[i, j];
+            t.WallFrameX = 0;
+            t.WallFrameY = 0;
+            int frameNumber = 0;
+            int tilesLeft = 0, tilesRight = 0;
+            int span = 39;
+            bool countR = true, countL = true;
+            int x = 1;
+            for (; x < span; ++x)
+            {
+                Tile tR = Framing.GetTileSafely(i + x, j);
+                Tile tL = Framing.GetTileSafely(i - x, j);
+                if (tR.WallType != t.WallType)
+                    countR = false;
+                if (tL.WallType != t.WallType)
+                    countL = false;
+                if (countR)
+                {
+                    tilesRight++;
+                    if(recursive)
+                        FrameWall(i  + x, j, false);
+                }
+                if (countL)
+                {
+                    tilesLeft++;
+                    if(recursive)
+                        FrameWall(i - x, j, false);
+                }
+                if (!countL && !countR)
+                    break;
+            }
+            if (tilesLeft > tilesRight) //More tiles to the left
+            {
+                int fromRight = span - 1;
+                fromRight -= tilesRight;
+                frameNumber = fromRight;
+            }
+            else
+            {
+                int fromLeft = 0;
+                fromLeft += tilesLeft;
+                frameNumber = fromLeft;
+            }
+            //only 3 bits for both frameX and frameY, meaning the highest value is 7 (* 36 = 252)
+            x = frameNumber % 8;
+            int y = frameNumber / 8;
+            t.WallFrameX = x * 36;
+            t.WallFrameY = y * 36;
         }
     }
     public class EvostoneGrandPillar : ModItem
@@ -396,8 +544,13 @@ namespace SOTS.Items.Invidia
             Item.CloneDefaults(ItemID.StoneWall);
             Item.width = 38;
             Item.height = 34;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Blue;
             Item.createWall = ModContent.WallType<EvostoneGrandPillarWall>();
+        }
+        public override void AddRecipes()
+        {
+            CreateRecipe(4).AddIngredient(ModContent.ItemType<EvostoneBrick>(), 1).AddTile(TileID.HeavyWorkBench).Register();
+            Recipe.Create(ModContent.ItemType<EvostoneBrick>()).AddIngredient(this, 4).AddTile(TileID.HeavyWorkBench).Register();
         }
     }
     public class EvostoneRuneBrickWallTile : EvostoneBrickWallTile
@@ -420,9 +573,8 @@ namespace SOTS.Items.Invidia
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (rune == null)
-                rune = ModContent.Request<Texture2D>("SOTS/Items/Invidia/RunesWall", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
-            RunicEvostoneBrickTile.DrawRune(i, j, spriteBatch, rune, 0.9f);
+            rune ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/RunesWall", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            RunicEvostoneBrickTile.DrawRune(i, j, rune, 0.9f);
         }
     }
     public class EvostoneRuneBrickWall : ModItem

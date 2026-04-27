@@ -104,7 +104,7 @@ namespace SOTS.Items.Potions
                     Vector2 speed = -Player.velocity * Main.rand.NextFloat(0.8f) + Main.rand.NextVector2Circular(1.4f, 1.4f);
                     PixelDust.Spawn(Player.Center - new Vector2(12) + offset, 24, 24, speed, ColorHelper.PinkPetal, Main.rand.Next(9, 11)).scale *= Main.rand.NextFloat(1, 1.7f);
 
-                    Dust d = Dust.NewDustDirect(Player.position + offset + new Vector2(0, Player.height - 4), Player.width, 4, ModContent.DustType<CopyDust4>(), newColor: ColorHelper.PinkPetal);
+                    Dust d = Dust.NewDustDirect(Player.position + offset + new Vector2(0, Player.height - 4), Player.width, 4, SOTSUtils.TypeHelper.CopyDust4Type, newColor: ColorHelper.PinkPetal);
                     d.velocity = speed * 0.4f + d.velocity * 0.1f;
                     d.noGravity = true;
                     d.fadeIn = 0.2f;

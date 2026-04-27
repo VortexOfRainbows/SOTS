@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Inferno
 			}
 			if(Main.rand.NextBool(120))
             {
-				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				int dust2 = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[dust2];
 				dust.color = ColorHelper.InfernoColorGradient(Main.rand.NextFloat(1));
 				dust.noGravity = true;

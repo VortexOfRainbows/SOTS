@@ -155,14 +155,14 @@ namespace SOTS.Projectiles.Permafrost
 					{
 						for(float i = 0; i < 1; i += 0.5f)
 						{
-							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + i * Projectile.velocity, 0, 0, ModContent.DustType<CopyDust4>());
+							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4) + i * Projectile.velocity, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							dust.noGravity = true;
 							dust.velocity *= 0.4f;
 							dust.scale = 1.4f;
 							dust.fadeIn = 0.1f;
 							dust.color = new Color(80, 150, 221, 0) * 0.6f;
 						}
-						Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+						Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust3.noGravity = true;
 						dust3.velocity *= 1.2f;
 						dust3.scale = 1.2f;

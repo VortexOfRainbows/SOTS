@@ -71,7 +71,7 @@ namespace SOTS.Items.Chaos
 			MineResist = 3f;
 			MinPick = 180; //adamantite/chlorophyte level
 			HitSound = SoundID.NPCHit53;
-			DustType = ModContent.DustType<CopyDust4>(); //DustID.PinkFlame
+			DustType = SOTSUtils.TypeHelper.CopyDust4Type; //DustID.PinkFlame
 		}
 		public override bool KillSound(int i, int j, bool fail)
 		{
@@ -87,7 +87,7 @@ namespace SOTS.Items.Chaos
 		}
         public override bool CreateDust(int i, int j, ref int type)
 		{
-			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
+			Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 			dust.noGravity = true;
 			dust.velocity *= 0.8f;
 			dust.scale = 1.4f;
@@ -129,7 +129,7 @@ namespace SOTS.Items.Chaos
 			float currentDistanceAway = 196;
 			if (Main.rand.NextBool(300) && closestPlayer(i, j, ref currentDistanceAway) != -1)
 			{
-				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.noGravity = true;
 				dust.velocity *= 0.6f;
 				dust.scale = 1.3f;
@@ -139,7 +139,7 @@ namespace SOTS.Items.Chaos
 			}
 			else if(Main.rand.NextBool(1800))
 			{
-				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;
 				dust.scale = 1.3f;
@@ -164,13 +164,15 @@ namespace SOTS.Items.Chaos
             float alphaScale = (float)Math.Pow(1.0f - currentDistanceAway / 196f, 0.5f);
             if (Main.LocalPlayer.CanSeeInvisibleBlocks && alphaScale < 0.3f)
 				alphaScale = 0.3f;
+			if (Main.LocalPlayer.SOTSPlayer().Hyperphantasia)
+				alphaScale = 1.0f;
             if (alphaScale > 0.0)
             {
 				if(tile.TileFrameY > 72)
                 {
 					for(int k = 0; k < 2; k++)
                     {
-						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, ModContent.DustType<CopyDust4>());
+						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
 						dust.noGravity = true;
 						dust.velocity *= 0.5f;
 						dust.scale = 1.2f;

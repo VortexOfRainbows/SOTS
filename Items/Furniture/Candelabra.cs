@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Localization;
 
 
 namespace SOTS.Items.Furniture
@@ -23,6 +24,7 @@ namespace SOTS.Items.Furniture
             t.CoordinateHeights = new int[] { 16, 18 };
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);
             TileID.Sets.DisableSmartCursor[Type] = true;
+            AddMapEntry(MapColor, Language.GetText("ItemName.Candelabra"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

@@ -51,7 +51,7 @@ namespace SOTS.Projectiles.Planetarium
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+				int dust = Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
 				Main.dust[dust].velocity *= 1.4f;
 				Main.dust[dust].scale *= 1.75f;
 				Main.dust[dust].velocity += Projectile.velocity;

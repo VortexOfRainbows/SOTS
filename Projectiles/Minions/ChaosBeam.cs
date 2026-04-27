@@ -57,7 +57,7 @@ namespace SOTS.Projectiles.Minions
 				ogPos = Projectile.Center;
 				for (int i = 0; i < 2; i++)
 				{
-					Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+					Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(5) - new Vector2(10, 10), 24, 24, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100, default, 1.6f);
 					dust2.velocity += Projectile.velocity * 0.5f;
 					dust2.noGravity = true;
 					dust2.color = ColorHelper.PastelRainbow;
@@ -114,7 +114,7 @@ namespace SOTS.Projectiles.Minions
 				for (int j = drawPoints.Count - 3; j < drawPoints.Count; j++)
 				{
 					center = drawPoints[j];
-					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+					Dust dust = Dust.NewDustDirect(center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100, default, 1.6f);
 					dust.velocity += Projectile.velocity * 0.3f;
 					dust.noGravity = true;
 					dust.color = ColorHelper.PastelRainbow;

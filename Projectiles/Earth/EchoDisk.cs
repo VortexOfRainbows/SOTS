@@ -34,7 +34,7 @@ namespace SOTS.Projectiles.Earth
 			for (int i = 0; i < 360; i += 10)
 			{
 				Vector2 circularLocation = new Vector2(-9, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num1];
 				dust.color = color;
 				dust.noGravity = true;

@@ -136,43 +136,13 @@ namespace SOTS
 		{
 			//SOTSGlowmasks.LoadGlowmasks();
 			Instance = ModContent.GetInstance<SOTS>();
-            BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.Blink").ToString(), "V");//TODO: Localize it when 1.4.4 comes
-			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.ArmorSet").ToString(), "F");
-			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.MFM").ToString(), "C");
-            SlowFlightHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Mods.SOTS.KeyBindName.SlowFlight").ToString(), "LeftShift");
+            BlinkHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("Blink").ToString(), "V");
+			ArmorSetHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("ArmorSet").ToString(), "F");
+			MachinaBoosterHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("MFM").ToString(), "C");
+            SlowFlightHotKey = KeybindLoader.RegisterKeybind(this, Language.GetOrRegister("SlowFlight").ToString(), "LeftShift");
             SOTSWorld.LoadUI();
+			SOTSUtils.TypeHelper.Load();
 			SetSubworld();
-			/*Mod yabhb = ModLoader.GetMod("FKBossHealthBar");
-			if (yabhb != null)
-			{
-				yabhb.Call("hbStart");
-				yabhb.Call("hbSetTexture",
-					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/PinkyHealthbarLeft"),
-					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/PinkyHealthbarMid"),
-					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/PinkyHealthbarEnd"),
-					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/PinkyHealthbarFill"));
-				yabhb.Call("hbSetMidBarOffset", -36, 12);
-				yabhb.Call("hbSetBossHeadCentre", 16, 30);
-				yabhb.Call("hbSetFillDecoOffset", 10);
-				yabhb.Call("hbLoopMidBar", true);
-				yabhb.Call("hbFinishSingle", ModContent.NPCType<PutridPinkyPhase2>());
-
-				yabhb.Call("hbStart");
-				yabhb.Call("hbSetTexture",
-					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/SubspaceHBLeft"),
-					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/SubspaceHBMid"),
-					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/SubspaceHBEnd"),
-					(Texture2D)ModContent.Request<Texture2D>("SOTS/UI/SubspaceHBFill"));
-				yabhb.Call("hbSetMidBarOffset", -28, 8);
-				yabhb.Call("hbSetBossHeadCentre", 32, 26);
-				yabhb.Call("hbSetFillDecoOffset", 10);
-				yabhb.Call("hbLoopMidBar", true);
-				yabhb.Call("hbSetColours",
-					new Color(155, 255, 150),
-					new Color(1f, 1f, 0f), 
-					new Color(1f, 0f, 0f));
-				yabhb.Call("hbFinishSingle", ModContent.NPCType<SubspaceSerpentHead>());
-			}*/
 			//Music Box Stuff
 			MusicLoader.AddMusicBox(this, MusicHelper.Glowmoth, ModContent.ItemType<MothMusicBox>(), ModContent.TileType<MothMusicBoxTile>());
 			MusicLoader.AddMusicBox(this, MusicHelper.PutridPinky, ModContent.ItemType<PutridPinkyMusicBox>(), ModContent.TileType<PutridPinkyMusicBoxTile>());
@@ -478,7 +448,7 @@ namespace SOTS
 					}
 					break;
 				case (int)SOTSMessageType.SyncGlobalCounter:
-					SOTSWorld.GlobalCounter = reader.ReadInt32();
+					SOTSWorld.SetGlobalCounter(reader.ReadInt32());
 					if (Main.netMode == NetmodeID.Server)
 					{
 						var packet = GetPacket();
@@ -665,6 +635,7 @@ namespace SOTS
 		public override void PostSetupContent()
 		{
             BossChecklistCompatibility();
+            ProjecttRUCompatibility();
         }
 		//Custom Tile Merging
 		public static bool[][] tileMergeTypes;

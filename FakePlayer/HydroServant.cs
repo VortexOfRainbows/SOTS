@@ -1,10 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
-using System.IO;
 using SOTS.Common;
-using SOTS.Projectiles.Pyramid;
 using Terraria.ID;
 
 namespace SOTS.FakePlayer

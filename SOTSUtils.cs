@@ -9,13 +9,24 @@ using SOTS.Void;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.ModPlayers;
 using System.Collections.Generic;
+using SOTS.Dusts;
 
 namespace SOTS
 {
 	public static class SOTSUtils
 	{
-		public static Texture2D WhitePixel => ModContent.Request<Texture2D>("SOTS/Assets/WhitePixel").Value;
-		public static Texture2D inventoryBoxTexture => Terraria.GameContent.TextureAssets.InventoryBack.Value;
+		public static class TypeHelper
+		{
+			public static void Load()
+			{
+				CopyDust4Type = ModContent.DustType<CopyDust4>();
+                PixelDustType = ModContent.DustType<PixelDust>();
+            }
+            public static int CopyDust4Type { get; private set; }
+            public static int PixelDustType { get; private set; }
+        }
+        public static Texture2D WhitePixel { get; set; } = ModContent.Request<Texture2D>("SOTS/Assets/WhitePixel", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+		public static Texture2D InventoryBoxTexture { get; set; } = Terraria.GameContent.TextureAssets.InventoryBack.Value;
 		public static SlotId PlaySound(SoundStyle style, Vector2 position, float volume = 1f, float pitch = 0f, float pitchVariance = 0f)
 		{
 			style = style.WithVolumeScale(volume);

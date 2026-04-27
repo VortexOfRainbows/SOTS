@@ -110,7 +110,7 @@ namespace SOTS.Projectiles.Earth
                 }
                 Projectile.rotation += MathHelper.ToRadians(7 * (float)Math.Sqrt(Projectile.velocity.Length()));
                 Projectile.velocity *= 0.98f;
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.position.X - 4, Projectile.position.Y - 4), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.noGravity = true;
                 dust.velocity *= 0.3f;
                 dust.scale *= 1.2f;
@@ -162,7 +162,7 @@ namespace SOTS.Projectiles.Earth
             for (int i = 0; i < 360; i += 24)
             {
                 Vector2 circularLocation = new Vector2(-4, 0).RotatedBy(MathHelper.ToRadians(i));
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 4, Projectile.Center.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                 dust.noGravity = true;
                 dust.velocity *= 1.5f;
                 dust.velocity += circularLocation * 0.3f;

@@ -148,14 +148,14 @@ namespace SOTS.Projectiles.Chaos
             {
                 for (int i = 0; i < 20; i++)
                 {
-                    Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+                    Dust dust2 = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
                     dust2.velocity += Projectile.velocity * 0.1f;
                     dust2.noGravity = true;
                     dust2.color = ColorHelper.PastelGradient(MathHelper.ToRadians(i * 18), ColorHelper.ChaosPink);
                     dust2.noGravity = true;
                     dust2.fadeIn = 0.2f;
                     dust2.scale *= 2.2f;
-                    dust2 = Dust.NewDustDirect(endPosition - new Vector2(Projectile.width / 2, Projectile.height / 2), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 120);
+                    dust2 = Dust.NewDustDirect(endPosition - new Vector2(Projectile.width / 2, Projectile.height / 2), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 120);
                     dust2.velocity += Projectile.velocity * 0.1f;
                     dust2.noGravity = true;
                     dust2.color = ColorHelper.PastelGradient(MathHelper.ToRadians(i * 18), ColorHelper.ChaosPink);
@@ -168,7 +168,7 @@ namespace SOTS.Projectiles.Chaos
                 {
                     if (Main.rand.NextBool(4))
                     {
-                        Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
+                        Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], SOTSUtils.TypeHelper.CopyDust4Type, Main.rand.NextVector2Circular(3, 3), 120);
                         dust2.velocity += Projectile.velocity * 0.1f;
                         dust2.noGravity = true;
                         dust2.color = ColorHelper.PastelGradient(Main.rand.NextFloat(0, 6.28f), ColorHelper.ChaosPink);
@@ -182,7 +182,7 @@ namespace SOTS.Projectiles.Chaos
             {
                 if (Main.rand.NextBool(1000))
                 {
-                    Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(3, 3), 120);
+                    Dust dust2 = Dust.NewDustPerfect(drawPositionList[i], SOTSUtils.TypeHelper.CopyDust4Type, Main.rand.NextVector2Circular(3, 3), 120);
                     dust2.velocity += Projectile.velocity * 0.1f;
                     dust2.noGravity = true;
                     dust2.color = ColorHelper.PastelGradient(Main.rand.NextFloat(0, 6.28f), ColorHelper.ChaosPink);

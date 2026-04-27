@@ -87,7 +87,7 @@ namespace SOTS.NPCs.Phase
         {
             if(Main.rand.NextBool(50))
             {
-                Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
+                Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
@@ -324,7 +324,7 @@ namespace SOTS.NPCs.Phase
         {
             if (Main.rand.NextBool(50))
             {
-                Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
+                Dust dust = Dust.NewDustDirect(NPC.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
                 dust.velocity *= 0.3f;
                 dust.noGravity = true;
                 dust.fadeIn = 0.1f;
@@ -486,7 +486,7 @@ namespace SOTS.NPCs.Phase
             if (Main.rand.NextBool(3))
             {
                 Vector2 from = NPC.Center + new Vector2(0, 12).RotatedBy(NPC.rotation);
-                Dust dust = Dust.NewDustDirect(from - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>(), 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
+                Dust dust = Dust.NewDustDirect(from - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, NPC.alpha, ColorHelper.ChaosPink, 1.4f);
                 dust.velocity *= 0.3f;
                 dust.velocity += new Vector2(-2, 0).RotatedBy(NPC.rotation);
                 dust.noGravity = true;

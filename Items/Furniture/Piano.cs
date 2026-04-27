@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -22,6 +23,7 @@ namespace SOTS.Items.Furniture
             TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
             TileObjectData.newTile.CoordinateHeights = new int[] { 16, 18 };
             TileID.Sets.DisableSmartCursor[Type] = true;
+            AddMapEntry(MapColor, Language.GetText("ItemName.Piano"));
         }
         public override void NumDust(int i, int j, bool fail, ref int num)
         {

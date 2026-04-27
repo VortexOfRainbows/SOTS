@@ -6,11 +6,11 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static SOTS.SOTS;
 using Terraria.Localization;
 using SOTS.Items.Chaos;
 using System;
 using SOTS.Helpers;
+using System.Linq;
 
 namespace SOTS.Items.Wings
 {
@@ -22,29 +22,20 @@ namespace SOTS.Items.Wings
 			this.SetResearchCost(1);
 			ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new WingStats(300, 9f, 2.5f); //These stats should closely mirror stats from the pillars
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips)
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
+            string key = SOTS.MachinaBoosterHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195");
+            string key2 = SOTS.SlowFlightHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195");
+
             foreach (TooltipLine line in tooltips) //goes through each tooltip line
             {
-                if (line.Mod == "Terraria" && line.Name == "Tooltip0") //checks the name of the tootip line
+                if (line.Mod == "Terraria")
                 {
-                    string Textkey1 = Language.GetTextValue("Mods.SOTS.Common.Unbound");
-                    string Textkey2 = Textkey1;
-                    foreach (string key in MachinaBoosterHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
-					{
-						Textkey1 = key;
-						break;
-                    }
-                    foreach (string key in SlowFlightHotKey.GetAssignedKeys()) //gets the key configured to this hotkey
-                    {
-                        Textkey2 = key;
-                        break;
-                    }
-                    line.Text = Language.GetTextValue("Mods.SOTS.Items.GildedBladeWings.Description", Textkey1, Textkey2);
+                    line.Text = string.Format(line.Text, key, key2);
                 }
             }
-			base.ModifyTooltips(tooltips);
-		}
+        }
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
 		{
 			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Wings/GildedBladeWings").Value;
@@ -136,10 +127,10 @@ namespace SOTS.Items.Wings
         }
         private void DrawHalo(SpriteBatch spriteBatch, Vector2 position, float scale, float s_rotation)
         {
-            List<DrawData> drawData0 = new List<DrawData>();
-            List<DrawData> drawData1 = new List<DrawData>();
-            List<DrawData> drawData2 = new List<DrawData>();
-            Texture2D pixel = Mod.Assets.Request<Texture2D>("Items/Secrets/WhitePixel", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            List<DrawData> drawData0 = [];
+            List<DrawData> drawData1 = [];
+            List<DrawData> drawData2 = [];
+            Texture2D pixel = SOTSUtils.WhitePixel;
             int repeats = 40;
             Vector2 center = position;
             Vector2[] points = new Vector2[repeats];

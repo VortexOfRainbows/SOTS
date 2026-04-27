@@ -28,8 +28,7 @@ namespace SOTS.Items.Planetarium.Furniture
 			TileObjectData.newTile.RandomStyleRange = 9;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.addTile(Type);
-            LocalizedText name = CreateMapEntryName();
-            AddMapEntry(new Color(66, 77, 93), name);
+            AddMapEntry(new Color(66, 77, 93), Language.GetText("MapObject.Pot"));
             DustType = DustType<AvaritianDust>();
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)

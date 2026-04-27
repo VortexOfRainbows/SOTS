@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Planetarium
 			Player player = Main.player[Projectile.owner];
 			for(int i = 0; i < 50; i++)
             {
-				int num2 = Dust.NewDust(new Vector2(Projectile.Center.X - 40, Projectile.Center.Y - 40), 82, 82, ModContent.DustType<CopyDust4>());
+				int num2 = Dust.NewDust(new Vector2(Projectile.Center.X - 40, Projectile.Center.Y - 40), 82, 82, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(20, 40, 250, 40);
 				dust.noGravity = true;
@@ -79,7 +79,7 @@ namespace SOTS.Projectiles.Planetarium
 			}
 			for (int i = 0; i < 30; i++)
 			{
-				int num2 = Dust.NewDust(new Vector2(Projectile.Center.X - 30, Projectile.Center.Y - 30), 62, 62, ModContent.DustType<CopyDust4>());
+				int num2 = Dust.NewDust(new Vector2(Projectile.Center.X - 30, Projectile.Center.Y - 30), 62, 62, SOTSUtils.TypeHelper.CopyDust4Type);
 				Dust dust = Main.dust[num2];
 				dust.color = new Color(255, 255, 255, 40);
 				dust.noGravity = true;
@@ -115,7 +115,7 @@ namespace SOTS.Projectiles.Planetarium
 			Vector2 helixPos4 = new Vector2(40f + curve2.X, 0).RotatedBy(rad - MathHelper.ToRadians(90));
 			helixPos3 *= Projectile.scale;
 			helixPos4 *= Projectile.scale;
-			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+			int num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos3.X - 4, Projectile.Center.Y + helixPos3.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 			Dust dust = Main.dust[num2];
 			dust.color = new Color(20, 40, 250, 40);
 			dust.noGravity = true;
@@ -124,7 +124,7 @@ namespace SOTS.Projectiles.Planetarium
 			dust.velocity = helixPos3 * 0.075f + Projectile.velocity * 0.5f;
 			dust.alpha = Projectile.alpha;
 			
-			num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, ModContent.DustType<CopyDust4>());
+			num2 = Dust.NewDust(new Vector2(Projectile.Center.X + helixPos4.X - 4, Projectile.Center.Y + helixPos4.Y - 4), 4, 4, SOTSUtils.TypeHelper.CopyDust4Type);
 			dust = Main.dust[num2];
 			dust.color = new Color(20, 40, 250, 40);
 			dust.noGravity = true;

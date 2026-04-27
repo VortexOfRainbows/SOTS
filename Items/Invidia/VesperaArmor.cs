@@ -39,7 +39,7 @@ namespace SOTS.Items.Invidia
         }
         public override void UpdateArmorSet(Player player)
         {	
-			player.setBonus = Language.GetTextValue("Mods.SOTS.ArmorSetBonus.Vespera");
+			player.setBonus = Language.GetTextValue("Mods.SOTS.Items.VesperaMask.SetBonus");
 			VoidPlayer voidPlayer = VoidPlayer.ModPlayer(player);
 			voidPlayer.voidMeterMax2 += 25;
 			voidPlayer.voidGainMultiplier += 0.5f;

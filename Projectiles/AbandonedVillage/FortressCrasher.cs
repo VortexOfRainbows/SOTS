@@ -258,7 +258,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     {
                         if (!SOTS.Config.lowFidelityMode || Main.rand.NextBool(2))
                         {
-                            Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, ModContent.DustType<CopyDust4>());
+                            Dust dust3 = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 12, Projectile.Center.Y - 12), 16, 16, SOTSUtils.TypeHelper.CopyDust4Type);
                             dust3.noGravity = true;
                             dust3.velocity *= 1.5f;
                             dust3.scale = 1.4f;
@@ -324,7 +324,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 float perc = 1 - i / (float)Projectile.oldPos.Length;
 				for(float j = 0; j < 1; j+= incre)
 				{
-                    Dust dust3 = Dust.NewDustDirect(Projectile.oldPos[i] - new Vector2(5) + Projectile.Size / 2 - saveVelo * j, 0, 0, ModContent.DustType<CopyDust4>());
+                    Dust dust3 = Dust.NewDustDirect(Projectile.oldPos[i] - new Vector2(5) + Projectile.Size / 2 - saveVelo * j, 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                     dust3.noGravity = true;
                     dust3.velocity = dust3.velocity * 0.1f + saveVelo * 0.4f;
                     dust3.scale = 2f * perc;

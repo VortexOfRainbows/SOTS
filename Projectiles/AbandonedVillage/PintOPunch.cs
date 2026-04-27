@@ -34,9 +34,9 @@ namespace SOTS.Projectiles.AbandonedVillage
             if (Projectile.ai[2] > 0)
             {
                 SOTSUtils.PlaySound(SoundID.Item175, Projectile.Center, 1.0f, -0.1f);
-                int stuff = (int)Projectile.ai[2] % 5;
-                string[] s = ["OH YEAH", "BLAM", "POW", "SLAM", "SMASH"];
-                CombatText.NewText(Projectile.Hitbox, Color.Red, s[stuff], true);
+                int index = (int)Projectile.ai[2] % 5;
+                string text = Language.GetTextValue($"Mods.SOTS.Items.PintOPunch.CombatText.{index}");
+                CombatText.NewText(Projectile.Hitbox, Color.Red, text, true);
             }
             else
             {

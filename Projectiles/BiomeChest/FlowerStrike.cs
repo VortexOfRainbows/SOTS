@@ -38,7 +38,7 @@ namespace SOTS.Projectiles.BiomeChest
 			for(int i = 0; i < 360; i += 30)
 			{
 				Vector2 circularLocation = new Vector2(8, 0).RotatedBy(MathHelper.ToRadians(i));
-				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, ModContent.DustType<CopyDust4>());
+				int num1 = Dust.NewDust(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				Main.dust[num1].noGravity = true;
 				Main.dust[num1].velocity *= 0.75f;
 				Main.dust[num1].scale *= 1.45f;

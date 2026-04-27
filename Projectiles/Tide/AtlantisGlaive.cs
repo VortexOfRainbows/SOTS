@@ -120,7 +120,7 @@ namespace SOTS.Projectiles.Tide
 			}
 			if (Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 30, Scale: 1.2f);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, SOTSUtils.TypeHelper.CopyDust4Type, Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f, 30, Scale: 1.2f);
 				dust.velocity += Projectile.velocity * 0.3f;
 				dust.velocity *= 0.2f;
 				dust.noGravity = true;
@@ -129,7 +129,7 @@ namespace SOTS.Projectiles.Tide
 			}
 			if (Main.rand.NextBool(4))
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, ModContent.DustType<CopyDust4>(), 0, 0, 30, Scale: 0.75f);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.height, Projectile.width, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 30, Scale: 0.75f);
 				dust.velocity += Projectile.velocity * 0.5f;
 				dust.velocity *= 0.25f;
 				dust.noGravity = true;

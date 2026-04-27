@@ -49,9 +49,8 @@ namespace SOTS.Items.Earth
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop, 10, 2);
 			TileObjectData.newTile.Origin = new Point16(7, 13);
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(237, 255, 193), name);
-			MinPick = 250;
+			AddMapEntry(new Color(237, 255, 193), Language.GetText("Mods.SOTS.Items.BigCrystal.DisplayName"));
+            MinPick = 250;
 			DustType = ModContent.DustType<VibrantDust>();
 			HitSound = SoundID.Item27;
 			MineResist = 0.1f;

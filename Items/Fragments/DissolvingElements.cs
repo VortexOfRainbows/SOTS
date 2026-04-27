@@ -8,6 +8,7 @@ using SOTS.Void;
 using System.Collections.Generic;
 using Terraria.Localization;
 using SOTS.Helpers;
+using SOTS.Achievements;
 
 namespace SOTS.Items.Fragments
 {
@@ -278,14 +279,27 @@ namespace SOTS.Items.Fragments
 		public int DissolvingUmbra = 0;
 		public int DissolvingNether = 0;
 		public int DissolvingBrilliance = 0;
+        public int OldUmbra = 0;
+        public int OldNether = 0;
         public override void UpdateBadLifeRegen()
         {
 			NetherEffects();
-			DissolvingNether = 0;
+			OldNether = DissolvingNether;
+            DissolvingNether = 0;
 		}
         public override void ResetEffects()
 		{
-			if (DissolvingAether != 0)
+			if(DissolvingNature > 0 && DissolvingEarth > 0 && DissolvingAurora > 0 && DissolvingAether > 0 &&
+				DissolvingDeluge > 0 && (OldUmbra > 0 || DissolvingUmbra > 0) && (OldNether > 0 || DissolvingNether > 0) && DissolvingBrilliance > 0 &&
+				!PolarizeNature && !PolarizeEarth && !PolarizeAurora && !PolarizeAether &&
+				!PolarizeDeluge && !PolarizeUmbra && !PolarizeNether && !PolarizeBrilliance)
+            {
+                //Main.NewText(true);
+                var burden = ModContent.GetInstance<Burdened>();
+                if (!burden.BurdenedEntirely.IsCompleted)
+                    burden.BurdenedEntirely.Complete();
+            }
+            if (DissolvingAether != 0)
 				AetherEffects();
 			NatureEffects();
 			EarthEffects();
@@ -303,10 +317,12 @@ namespace SOTS.Items.Fragments
 			DissolvingNature = 0;
 			DissolvingEarth = 0;
 			DissolvingAurora = 0;
-			DissolvingDeluge = 0;
 			DissolvingAether = 0;
-			DissolvingBrilliance = 0;
-		}
+
+			DissolvingDeluge = 0;
+            DissolvingBrilliance = 0;
+
+        }
 		public void NatureEffects()
 		{
 			if(PolarizeNature)

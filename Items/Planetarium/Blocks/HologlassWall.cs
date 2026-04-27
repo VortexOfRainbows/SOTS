@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using SOTS.Items.Planetarium.Blocks;
+using SOTS.Items.Permafrost;
 
 namespace SOTS.Items.Planetarium.Blocks
 {
@@ -56,7 +57,8 @@ namespace SOTS.Items.Planetarium.Blocks
 		public override void AddRecipes()
 		{
 			CreateRecipe(4).AddIngredient(ModContent.ItemType<HardlightBlock>(), 1).AddTile(TileID.WorkBenches).Register();
-		}
+            Recipe.Create(ModContent.ItemType<HardlightBlock>(), 1).AddIngredient(this, 4).AddTile(TileID.WorkBenches).Register();
+        }
 	}
 	public class HologlassWallWall : ModWall
 	{

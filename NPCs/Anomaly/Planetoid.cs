@@ -108,14 +108,14 @@ namespace SOTS.NPCs.Anomaly
 			{
 				for (int k = 0; k < 30; k++)
 				{
-					Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
+					Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, SOTSUtils.TypeHelper.CopyDust4Type, (float)(2 * hit.HitDirection), -2f);
 					d.velocity *= 1.0f;
 					d.fadeIn = 0.2f;
 					d.noGravity = true;
 					d.scale *= 1.5f;
 					d.color = ColorHelper.VoidAnomaly;
 					Vector2 circular = new Vector2(32, 0).RotatedBy(k / 30f * MathHelper.TwoPi);
-					d = Dust.NewDustDirect(NPC.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>(), (float)(2 * hit.HitDirection), -2f);
+					d = Dust.NewDustDirect(NPC.Center + circular - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type, (float)(2 * hit.HitDirection), -2f);
 					d.velocity *= 0.4f;
 					d.velocity += circular.SafeNormalize(Vector2.Zero) * 4;
 					d.fadeIn = 0.2f;
@@ -167,7 +167,7 @@ namespace SOTS.NPCs.Anomaly
 				{
 					if (i == 0)
 					{
-						Dust d = Dust.NewDustDirect(NPC.position + new Vector2(5, 5), NPC.width - 10, NPC.height - 10, ModContent.DustType<CopyDust4>(), 0, 0);
+						Dust d = Dust.NewDustDirect(NPC.position + new Vector2(5, 5), NPC.width - 10, NPC.height - 10, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0);
 						d.velocity *= 0.75f;
 						d.velocity += NPC.velocity * 0.335f;
 						d.fadeIn = 0.2f;
@@ -239,7 +239,7 @@ namespace SOTS.NPCs.Anomaly
 						ResetGravityWell(true);
 						for (int k = 0; k < 30; k++)
 						{
-							Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, ModContent.DustType<CopyDust4>(), 0, 0);
+							Dust d = Dust.NewDustDirect(NPC.position, NPC.width, NPC.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0);
 							d.velocity *= 0.85f;
 							d.velocity += NPC.velocity * 0.85f;
 							d.fadeIn = 0.2f;
@@ -247,7 +247,7 @@ namespace SOTS.NPCs.Anomaly
 							d.scale *= 1.5f;
 							d.color = ColorHelper.VoidAnomaly;
 							Vector2 circular = new Vector2(32, 0).RotatedBy(k / 30f * MathHelper.TwoPi);
-							d = Dust.NewDustDirect(NPC.Center + circular - new Vector2(5, 5), 0, 0, ModContent.DustType<CopyDust4>());
+							d = Dust.NewDustDirect(NPC.Center + circular - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 							d.velocity *= 0.35f;
 							d.velocity += circular.SafeNormalize(Vector2.Zero) * 4 + NPC.velocity * 0.75f;
 							d.fadeIn = 0.2f;
@@ -402,7 +402,7 @@ namespace SOTS.NPCs.Anomaly
 				GravityWellLine gwl = GravityWell[i];
 				if(Main.rand.NextBool(3))
 				{
-					Dust d = Dust.NewDustDirect(gwl.Position - new Vector2(17, 17), 24, 24, ModContent.DustType<CopyDust4>(), 0, 0);
+					Dust d = Dust.NewDustDirect(gwl.Position - new Vector2(17, 17), 24, 24, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0);
 					d.velocity *= 1.0f;
 					if(fakeReset)
 					{

@@ -1,0 +1,90 @@
+Hotfix 0.25.1.0
+
+Additions:
+1. Achievements! These were made by our wonderful community in an achievement contest a... while ago. BUT NOW THEY'RE HERE!!!
+2. Some new QoL items, including items that can relocate wormholes, an improved Anomaly Locator, and eggs that change your Vision Number
+3. New armor set dropped by the Excavator, focused on void replenishment
+4. Jumbo Eggs and Jumbo Capsules
+
+Fixes: 
+1. Gula Vault should no longer be locked when placed by player
+2. Tried fixing an issue related to dragon lens NPC spawning crashing the game in multiplayer
+3. Fixed issue where bonus critical strike damage was only being applied to melee strikes from items like the Elemental Amulet and Harvester's Scythe
+4. Small adjustments to worldgen code that may fix some worldgen issues related to the Abandoned Village
+5. Some optimizations for Blade Generator and upgrades that should reduce lag
+6. Fix: Bulwark of the ancients grants stoned immunity now, like the ankh shield
+7. Fix: King Blade's tooltip now shows correct damage multiplier number (100% -> 80%)
+8. Fix: Helios now only stacks up to 5 stacks of scorch, as described in the tooltip
+
+Misc:
+1. The SOTS Texture-Pack popup no longer appears
+2. Hydrokinetic Antennae and Pog Shark can be exchanged into each other at a wormhole
+3. Hydrokinetic Antennae's connection visual can now be hidden when vanity is disabled
+4. A hidden tooltip for Essence of Emptiness appears at 15 UVN instead of 8 UVN
+5. Adjust some tooltips
+
+Hotfix 0.25.1.2
+
+Fixes: 
+1. Fix bug with Jewel Eggs accidentally not having special names
+2. Change Jewel Egg tooltip to not indicate cracking being an option available, plus change some special tooltips
+3. Fix bug where old Jewel Eggs could be crushed again as ghost items, making it unclear what is happening to your UVN
+
+Hotfix 0.25.1.3
+
+Balance:
+1. Chaos Spirit Staff damage 54 -> 50, and reduce damage to bosses by 10% and subspace serpent by 50%
+2. Otherworld Spirit Staff damage 25 -> 21
+3. Permafrost Spirit Staff damage 17 -> 15
+4. Nature Spirit Staff damage 12 -> 10
+5. Tidal Spirit Staff damage 33 -> 30
+6. Earthen Spirit Staff damage 14 -> 13
+7. Evil Spirit Staff damage 66 -> 60
+8. Inferno Spirit Staff damage 50 -> 47
+9. Cursed Blade damage 21 -> 19
+
+Fixes: 
+1. Fixed oversight where debug text was spammed in chat upon burdened achievement completion
+2. Crystal Serpent from the Starcaller Staff now does summon damage
+3. Fix some tooltips
+
+Hotfix 0.25.1.4
+
+Additions:
+1. Evostone Grand Pillars can now be crafted, harvested, and/or placed
+
+Changes:
+1. Tesseract's color cycle is now more purple and cycles slower
+2. Tesseract's Tooltip Text now glows and generally looks different
+	
+Fixes:
+1. Evostone Grand Pillars no longer use a detour to draw, now drawing like normal walls
+	1. This means they should be less buggy in the Sanctuary (no longer sometimes disappearing or not appearing)
+	2. They should also be less laggy
+2. Fix certain wall recipes being incorrect or not existing
+3. Unsafe Overgrown Pyramid Tile should now drop its item correctly
+4. Fix some tooltip grammar
+5. Fix a sprite issue with Ultracap Banner
+6. Fix bug where SOTS was overloading servers and clients with too many packets, causing extreme multiplayer lag
+7. Illuminant Axe can no longer be used by the Hydrokinetic Antennae (tools are supposed to be blacklisted, generally)
+
+Hotfix 0.25.1.5
+
+Additions:
+1. Add Stabilizing Tonic, which does basically nothing right now (seriously)
+
+Changes:
+1. Made various optimization updates to Pharaoh's Curse, which should result in a minor performance improvement, including:	
+	1. Improved the ordering of certain expressions within if statements and for loops to prevent calculating and loading things more than necessary (
+	2. Cached all textures that are used in the fight into static variables, preventing looking up textures multiple times per frame and sometimes per dust particle 
+	3. Cache projectile types that are searched for special drawing, rather than looking up projectile types many times per frame
+	4. Some other minor improvements that aren't too noteworthy but should have a some effect on lag
+	5. Curse Wave Projectile now has optimizations from a few patches ago that was not integrated: Better clearing of dust list, in addition to the other optimizations
+2. As a side effect of Pharaoh's Curse performance improvements, weapons and other sources of curse particles should also be less laggy
+3. Cache other commonly used internal resources that should help overall reduce some of the overhead lag
+
+Fixes:
+1. Fix Code Corrupter localization spelling "destabilize" as "destabalize", "struck" as "striked"
+
+Hotfix 0.25.1.6
+1. Add Russian Localization

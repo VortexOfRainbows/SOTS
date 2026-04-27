@@ -1,9 +1,5 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs;
 using SOTS.Buffs.MinionBuffs;
-using SOTS.Items.Planetarium;
-using SOTS.Items.Planetarium.FromChests;
 using SOTS.Projectiles.Minions;
 using SOTS.Void;
 using Terraria;
@@ -23,7 +19,7 @@ namespace SOTS.Items.SpiritStaves
 		}
 		public override void SafeSetDefaults() 
 		{
-			Item.damage = 33;
+			Item.damage = 30;
 			Item.knockBack = 3f;
 			Item.width = 34;
 			Item.height = 44;

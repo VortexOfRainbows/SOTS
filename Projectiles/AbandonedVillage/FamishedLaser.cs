@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 			}
 			for (int i = 2; i > 0; i--)
 			{
-				Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, ModContent.DustType<CopyDust4>(), 0, 0, 0, color * Percent * Percent, 1.5f);
+				Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 0, color * Percent * Percent, 1.5f);
 				dust.noGravity = true;
 				dust.velocity = dust.velocity * 0.6f * (5 - Percent * 4) + Projectile.velocity * Main.rand.NextFloat(0.1f, 2.0f);
 				if (i == 2)

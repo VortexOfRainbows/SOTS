@@ -216,7 +216,7 @@ namespace SOTS.Projectiles.Permafrost.NorthStar
                     if (Main.rand.NextBool(9))
                     {
                         Color colorMan = Color.Lerp(new Color(240, 250, 255, 100), new Color(200, 250, 255, 100), Main.rand.NextFloat(1));
-                        Dust dust = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<CopyDust4>(), Main.rand.NextVector2Circular(0.5f, 0.5f));
+                        Dust dust = Dust.NewDustPerfect(Projectile.Center, SOTSUtils.TypeHelper.CopyDust4Type, Main.rand.NextVector2Circular(0.5f, 0.5f));
                         dust.color = colorMan;
                         dust.noGravity = true;
                         dust.fadeIn = 0.1f;

@@ -81,7 +81,11 @@ namespace SOTS
             }
             return 1 - MathF.Abs(MathF.Sin((-moonPhaseOffset + MoonPhase + progressToTheNextMoon - moonSwitch / 24f) / 8f * MathF.PI));
 		}
-		public static int GlobalCounter = 0;
+		public static int GlobalCounter { get; private set; } = 0;
+		public static void SetGlobalCounter(int i)
+		{
+			GlobalCounter = i;
+		}
 		public const float GlobalFreezeStartup = 30f;
 		public static int GlobalTimeFreeze = 0;
 		public static bool GlobalFrozen = false;
@@ -696,7 +700,7 @@ namespace SOTS
 		}
 		private void AdjacentDesertGeneration(GenerationProgress progress, GameConfiguration configuration)
 		{
-			progress.Message = Language.GetTextValue("Mods.SOTS.AdjacentDesertGeneration.SEverywhere");
+			progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GenerationAdjacentDesert");
 			int centerX = GenVars.UndergroundDesertLocation.X + GenVars.UndergroundDesertLocation.Width / 2;
 			int widthX = GenVars.UndergroundDesertLocation.Width / 2;
 			int centerY = 0;
@@ -749,7 +753,7 @@ namespace SOTS
 		}
 		private void GenSOTSOres(GenerationProgress progress, GameConfiguration configuration)
         {
-			progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSOres");
+			progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingOres");
 			SOTSWorldgenHelper.GenerateEvostoneInMushroomBiome();
 			float max = 240;
 			if (Main.maxTilesX > 6000) //medium worlds
@@ -770,7 +774,7 @@ namespace SOTS
 		}
 		private void GenSOTSGeodes(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = Language.GetTextValue("Mods.SOTS.Common.GenSOTSGeodes");
+            progress.Message = Language.GetTextValue("Mods.SOTS.ModifyWorldGenTasks.GeneratingGeodes");
 			int max = 60;
 			if (Main.maxTilesX > 6000) //medium worlds
 				max = 90;
@@ -1857,7 +1861,14 @@ namespace SOTS
 				ModContent.ItemType<CrushingResistor>()
 			});
 			RecipeGroup.RegisterGroup("SOTS:CrushingComponents", group);
-		}
+
+            group = new RecipeGroup(() => Language.GetTextValue("LegacyMisc.37") + Language.GetTextValue("Mods.SOTS.AddRecipeGroups.EGG"), new int[]
+            {
+                ModContent.ItemType<WonderEgg>(),
+                ModContent.ItemType<JumboSurpriseEgg>(),
+            });
+            RecipeGroup.RegisterGroup("SOTS:Egg", group);
+        }
         public override void PostAddRecipes()
         {
 			if (!SOTS.ServerConfig.AddPlightToVanillaRecipes)

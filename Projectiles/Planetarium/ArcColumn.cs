@@ -100,7 +100,7 @@ namespace SOTS.Projectiles.Planetarium
 			}
 			if(endHow == 1 && endHow != 2 && Main.rand.NextBool(18))
 			{
-				int dust1 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, ModContent.DustType<CopyDust4>(), 0, 0, 100, default, 1.6f);
+				int dust1 = Dust.NewDust(Projectile.position - new Vector2(5), Projectile.width, Projectile.height, SOTSUtils.TypeHelper.CopyDust4Type, 0, 0, 100, default, 1.6f);
 				Dust dust = Main.dust[dust1];
 				dust.scale *= 1f * (10f - iterator)/10f;
 				dust.velocity += Projectile.velocity * 0.3f;

@@ -13,13 +13,13 @@ namespace SOTS.Items.Conduit
 	public class DissolvingNihility : ModItem
     {
         public string AppropriateNameRightNow => UniqueNumber != -1 ? this.GetLocalizedValue("AltDisplayName") : this.GetLocalizedValue("DisplayName");
-        public int UniqueNumber
+        public static int UniqueNumber
         {
             get
             {
                 SOTSPlayer sPlayer = Main.LocalPlayer.SOTSPlayer();
                 int uniqueNum = -1;
-                if (sPlayer.UniqueVisionNumber == 8)
+                if (sPlayer.UniqueVisionNumber == 15)
                     uniqueNum = 1;
                 if (sPlayer.UniqueVisionNumber == 42)
                     uniqueNum = 2;
@@ -43,19 +43,19 @@ namespace SOTS.Items.Conduit
                 }
             }
         }
-        private Texture2D Atom => ModContent.Request<Texture2D>("SOTS/Items/Conduit/DissolvingNihility").Value;
-        private Texture2D Trail => SOTSUtils.WhitePixel;
+        private static readonly Texture2D Atom = ModContent.Request<Texture2D>("SOTS/Items/Conduit/DissolvingNihility", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+        private static Texture2D Trail => SOTSUtils.WhitePixel;
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            DrawAtom(position, scale * 0.9f, 0f, true);
+            DrawAtom(Item, position, scale * 0.9f, 0f, true);
             return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
 		{
-            DrawAtom(Item.Center - Main.screenPosition, scale, rotation, false);
+            DrawAtom(Item, Item.Center - Main.screenPosition, scale, rotation, false);
 			return false;
 		}
-        private void DrawTrail(Vector2 position, float scale, float rotation, bool Inventory = false, bool front = true)
+        private static void DrawTrail(Vector2 position, float scale, float rotation, bool Inventory = false, bool front = true)
         {
             Vector2 drawOriginTrail = new Vector2(0, Trail.Height * 0.5f);
             int trailCount = 30;
@@ -86,14 +86,14 @@ namespace SOTS.Items.Conduit
                 }
             }
         }
-        private void DrawAtom(Vector2 position, float scale, float rotation, bool Inventory = false)
+        private static void DrawAtom(Item item, Vector2 position, float scale, float rotation, bool Inventory = false)
         {
             float sinusoid = MathF.Sin(MathHelper.ToRadians(Main.GameUpdateCount)) * 15;
             float sinusoid2 = MathF.Sin(MathHelper.ToRadians(Main.GameUpdateCount * 0.67f)) * (Inventory ? 2 : 5);
             Vector2 wave = new Vector2(0, sinusoid2 * scale);
             rotation += MathHelper.ToRadians(sinusoid);
             position += wave;
-            float alpha = 1f - (Item.alpha / 255f);
+            float alpha = 1f - (item.alpha / 255f);
             Vector2 drawOrigin = new Vector2(Atom.Width * 0.5f, Atom.Height * 0.5f);
             DrawTrail(position, scale, rotation, Inventory, false);
             for (int k = 0; k < 20; k++)

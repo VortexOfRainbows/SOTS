@@ -23,9 +23,6 @@ using SOTS.Items.AbandonedVillage;
 using SOTS.NPCs.AbandonedVillage;
 using SOTS.WorldgenHelpers;
 using SOTS.Items.Invidia;
-using SOTS.Dusts;
-using System.Net.Security;
-using System.Runtime.InteropServices.Marshalling;
 using SOTS.Items.Temple;
 
 namespace SOTS
@@ -335,6 +332,8 @@ namespace SOTS
         }
         public static bool IsValidTileAbove(int i, int j)
         {
+            if (j < 5 || i < 5 || j > Main.maxTilesY - 5 || i > Main.maxTilesX - 5)
+                return true;
             Tile tileAbove = Main.tile[i, j - 1];
             int tileAboveType = tileAbove.TileType;
             if (tileAboveType == AvaritianGatewayTile || 

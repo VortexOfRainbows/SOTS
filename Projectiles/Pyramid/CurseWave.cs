@@ -11,10 +11,6 @@ namespace SOTS.Projectiles.Pyramid
 {    
     public class CurseWave : ModProjectile 
     {	          
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Curse");
-		}
         public override void SetDefaults()
         {
 			Projectile.height = 36;
@@ -27,7 +23,6 @@ namespace SOTS.Projectiles.Pyramid
 			Projectile.netImportant = true;
 			Projectile.tileCollide = false;
 			Projectile.hide = true;
-			//Projectile.extraUpdates = 1;
 		}
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
         {
@@ -38,8 +33,8 @@ namespace SOTS.Projectiles.Pyramid
 			int width = (int)(36f * Projectile.scale);
 			hitbox = new Rectangle((int)Projectile.Center.X - width / 2, (int)Projectile.Center.Y - width / 2, width, width);
 		}
-		public List<CurseFoam> foamParticleList1 = new List<CurseFoam>();
-		public void catalogueParticles()
+		public List<CurseFoam> foamParticleList1 = new();
+		public void CatalogueParticles()
 		{
 			for (int i = 0; i < foamParticleList1.Count; i++)
 			{
@@ -47,8 +42,7 @@ namespace SOTS.Projectiles.Pyramid
 				particle.Update();
 				if (!particle.active)
 				{
-					particle = null;
-					foamParticleList1.RemoveAt(i);
+					foamParticleList1.RemoveBySwap(i);
 					i--;
 				}
 				else
@@ -56,8 +50,7 @@ namespace SOTS.Projectiles.Pyramid
 					particle.Update();
 					if (!particle.active)
 					{
-						particle = null;
-						foamParticleList1.RemoveAt(i);
+						foamParticleList1.RemoveBySwap(i);
 						i--;
 					}
 					else if (!particle.noMovement)
@@ -65,7 +58,7 @@ namespace SOTS.Projectiles.Pyramid
 				}
 			}
 		}
-		List<Vector2> trailPos = new List<Vector2>();
+		private readonly List<Vector2> trailPos = new();
 		Vector2 originalCenter;
 		Vector2 originalVelocity;
 		bool runOnce = true;
@@ -135,6 +128,7 @@ namespace SOTS.Projectiles.Pyramid
 			if(trailPos.Count > 1)
 			{
 				Vector2 from = trailPos[0];
+				Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Pyramid/CurseLineIndicator");
 				for (int i = 1; i < trailPos.Count; i++)
 				{
 					float alphaMult = 1.1f - (0.5f * counter / 240f) - ((float)(i - 1) / trailPos.Count);
@@ -144,7 +138,6 @@ namespace SOTS.Projectiles.Pyramid
 					Vector2 toPos = from - to;
 					float rotation = toPos.ToRotation();
 					int length = (int)toPos.Length() + 1;
-					Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Pyramid/CurseLineIndicator");
 					Main.spriteBatch.Draw(texture2, from - Main.screenPosition, new Rectangle(0, 0, length, 2), Color.White * alphaMult, rotation, new Vector2(1, 1), 1f, SpriteEffects.None, 0f);
 					from = to;
 				}
@@ -196,7 +189,7 @@ namespace SOTS.Projectiles.Pyramid
                     foamParticleList1.Add(new CurseFoam(Projectile.Center - Projectile.velocity * i, new Vector2(Main.rand.NextFloat(-0.3f, 0.3f), Main.rand.NextFloat(-0.3f, 0.3f)), 0.4f, true));
                 }
             }
-			catalogueParticles();
+			CatalogueParticles();
 			Projectile.scale *= 0.998f; 
 		}
 	}

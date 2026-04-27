@@ -21,7 +21,7 @@ namespace SOTS.Buffs
                 {
                     Vector2 fromPos = new Vector2(32, 0).RotatedBy(MathHelper.ToRadians(i * 15));
                     Vector2 velo = fromPos.SafeNormalize(Vector2.Zero) * -6f;
-                    int dust3 = Dust.NewDust(player.Center + fromPos - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+                    int dust3 = Dust.NewDust(player.Center + fromPos - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
                     Dust dust4 = Main.dust[dust3];
                     dust4.velocity *= 0.3f;
                     dust4.velocity += velo;

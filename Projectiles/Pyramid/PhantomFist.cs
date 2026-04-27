@@ -105,7 +105,7 @@ namespace SOTS.Projectiles.Pyramid
 			}
 			if(Main.rand.NextBool(3))
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 0.2f;
 				dust.velocity -= 2 * Projectile.velocity.SafeNormalize(Vector2.Zero);
 				dust.scale *= 2;
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Pyramid
 		{
 			for (int i = 0; i < 32; i++)
 			{
-				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<CopyDust4>());
+				Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, SOTSUtils.TypeHelper.CopyDust4Type);
 				dust.velocity *= 1.2f;
 				dust.velocity += 5 * Projectile.velocity.SafeNormalize(Vector2.Zero);
 				dust.scale *= 2;

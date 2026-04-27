@@ -1,9 +1,5 @@
-using Microsoft.Xna.Framework;
-using SOTS.Void;
 using System.ComponentModel;
-using Terraria;
 using Terraria.ModLoader.Config;
-using Terraria.Localization;
 
 namespace SOTS
 {
@@ -19,12 +15,12 @@ namespace SOTS
         }
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-		[Header("$Mods.SOTS.Configuration.Header.GPS")]
+		[Header("GPS")]
 
 		[BackgroundColor(110, 80, 150, 192), Increment(1), Range(-2, 20), DefaultValue(-1)]
 		public int StarterHouseType;
 
-		[Header("$Mods.SOTS.Configuration.Header.UI")]
+		[Header("UI")]
 
 		[BackgroundColor(110, 80, 150, 192), Increment(5), Range(0, 3200), DefaultValue(810)]
 		public int voidBarPointX;
@@ -53,22 +49,24 @@ namespace SOTS
 		[BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
 		public bool simpleVoidFill { get; set; }
 
-		[Header("$Mods.SOTS.Configuration.Header.GS")]
+		[Header("GS")]
 
 		[BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
 		public bool lowFidelityMode { get; set; }
-		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
+        [BackgroundColor(110, 80, 150, 192), DefaultValue(false)]
+        public bool SanctuaryLagReduction { get; set; }
+        [BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool coloredTimeFreeze { get; set; }
 
         [BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
         public bool screenShake { get; set; }
 
-        [Header("$Mods.SOTS.Configuration.Header.MS")]
+        [Header("MS")]
 
         [BackgroundColor(150, 140, 40, 192), DefaultValue(true)]
         public bool alternativeMusic { get; set; }
 
-        [Header("$Mods.SOTS.Configuration.Header.TPS")]
+        [Header("TPS")]
 
 		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool additionalTexturePackVisuals { get; set; }
@@ -84,7 +82,7 @@ namespace SOTS
     {
         public override ConfigScope Mode => ConfigScope.ServerSide;
 
-		[Header("$Mods.SOTS.Configuration.Header.BAL")]
+		[Header("BAL")]
 
 		[BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
 		public bool NerfInsignia;
@@ -92,7 +90,7 @@ namespace SOTS
         [BackgroundColor(110, 80, 150, 192), DefaultValue(true), ReloadRequired]
         public bool AddPlightToVanillaRecipes;
 
-        [Header("$Mods.SOTS.Configuration.Header.GPS")]
+        [Header("GPS")]
 
         [BackgroundColor(110, 80, 150, 192), DefaultValue(true)]
         public bool GeneratePhaseOreAfterDefeatingLux;

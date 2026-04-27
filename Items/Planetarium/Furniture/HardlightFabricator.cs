@@ -87,9 +87,8 @@ namespace SOTS.Items.Planetarium.Furniture
 			TileObjectData.newTile.StyleHorizontal = false;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.addTile(Type);
-			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(55, 55, 55), name);
-			TileID.Sets.DisableSmartCursor[Type] = true;
+			AddMapEntry(new Color(55, 55, 55), Language.GetText("Mods.SOTS.Items.HardlightFabricator.DisplayName"));
+            TileID.Sets.DisableSmartCursor[Type] = true;
 			DustType = ModContent.DustType<AvaritianDust>();
 			AdjTiles = new int[] { TileID.WorkBenches };
 		}

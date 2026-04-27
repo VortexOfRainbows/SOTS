@@ -2017,6 +2017,10 @@ namespace SOTS.NPCs.Boss.Excavator
                 ModContent.ItemType<GuardianGreatsword>(),
                 ModContent.ItemType<Items.AbandonedVillage.FortressCrasher>(),
                 ModContent.ItemType<Items.AbandonedVillage.MagmaBeam>()));
+            notExpertRule.OnSuccess(ItemDropRule.FewFromOptions(2, 1,
+                ModContent.ItemType<ExcavatorBreastplate>(),
+                ModContent.ItemType<ExcavatorHelmet>(),
+                ModContent.ItemType<ExcavatorLeggings>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<OldKey>(), 1, 1, 3));
             notExpertRule.OnSuccess(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Excavator>()));
             notExpertRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<FragmentOfEarth>(), 1, 10, 20));
