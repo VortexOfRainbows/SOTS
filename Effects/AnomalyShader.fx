@@ -34,7 +34,7 @@ float4 AnomalyShader(float2 coords : TEXCOORD0) : COLOR0
     float fromCenter = length * uProgress * 24; //uProgress is a timer variable inserting into this class when the effect triggers
     float strength = (color.r + color.g + color.b) / 3.0; //Finds the average luminosity of the colors
     if(strength < 0.5f) 
-        strength = strength * 0.5; //Make the colors darker to add some contrast, if they are already dark
+        strength = strength * 1; //Make the colors darker to add some contrast, if they are already dark
     float4 color2 = lerp(float4(strength, strength, strength, color.a), uColor2, uIntensity);
     if(fromCenter > 1)
     {
