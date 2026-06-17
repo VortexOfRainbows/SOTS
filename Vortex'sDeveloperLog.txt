@@ -74,6 +74,11 @@ N/A
 
 Daily Log:
 
+--- Hotfix 0.25.1.7 ---
+
+6/17/26
+1. Merge pull request that should fix remix seed generation issues
+
 3/3/26
 1. Added a config option for the Sanctuary that should reduce lag moderately by reducing the amount of draw calls by a substantial amount (~40% reduced calls)
 2. Evostone Grand Pillars can kinda be effected by Paint now, but does not use the shader making it slightly different from how paint normally effects blocks

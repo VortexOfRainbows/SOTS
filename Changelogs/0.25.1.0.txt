@@ -88,3 +88,11 @@ Fixes:
 
 Hotfix 0.25.1.6
 1. Add Russian Localization
+
+Hotfix 0.25.1.7
+1. Remix seed (Zenith) should now be able to generate without hanging world generation (WumbologyMajor)
+	1. Although SOTS was still not designed around it, so expect varying worldgen bugs/jank, like surface structures spawning underground
+2. Added a config option for the Sanctuary that should reduce lag moderately by reducing the amount of draw calls by a substantial amount (~40% reduced calls)
+3. Evostone Grand Pillars can kinda be effected by Paint now, but does not use the shader making it slightly different from how paint normally effects blocks
+4. Fix bug where out of bounds tiles could cause a crash by checking for valid tile above the out-of-bounds area.
+5. Some Russian translation fixes
