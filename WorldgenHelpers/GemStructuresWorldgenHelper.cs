@@ -154,6 +154,7 @@ namespace SOTS.WorldgenHelpers
 		}
 		private static void PlaceAndGenerateAmber()
 		{
+			var isSandLike = (Tile t) => t.HasTile && (t.TileType == TileID.Sand || t.TileType == TileID.Ebonsand || t.TileType == TileID.Crimsand || t.TileType == TileID.Pearlsand);
 			int dungeonSide = -1; //-1 = dungeon on left, 1 = dungeon on right
 			if (Main.dungeonX > (int)(Main.maxTilesX / 2))
 			{
@@ -189,7 +190,7 @@ namespace SOTS.WorldgenHelpers
 				for (int j = 0; j < 1600; j++)
 				{
 					Tile tile = Framing.GetTileSafely(i, j);
-					if(tempWater > 7 && tile.HasTile && tile.TileType == TileID.Sand && Framing.GetTileSafely(i - 1, j).TileType == TileID.Sand && Framing.GetTileSafely(i + 1, j).TileType == TileID.Sand)
+					if(tempWater > 7 && isSandLike(tile) && isSandLike(Framing.GetTileSafely(i - 1, j)) && isSandLike(Framing.GetTileSafely(i + 1, j)))
                     {
 						if (tempY == -1)
 							tempY = j;
