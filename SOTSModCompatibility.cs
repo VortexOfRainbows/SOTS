@@ -258,7 +258,7 @@ namespace SOTS
         #region Russian localization support
         private void ProjecttRUCompatibility()
         {
-            if (!ModLoader.TryGetMod("CalamityRuTranslate", out Mod tru))
+            if (!ModLoader.TryGetMod("CalamityRuTranslate", out Mod tru) || Language.ActiveCulture.Name != "ru-RU")
                 return;
 
             tru.Call("AddFeminineItems", this, new[]
@@ -440,10 +440,7 @@ namespace SOTS
                 Language.GetTextValue("Mods.SOTS.Items.PatchLeatherHat.SetBonus"));
 
             tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<CursedHood>(), () =>
-            {
-                string key = ArmorSetHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195");
-                    return Language.GetTextValue("Mods.SOTS.Items.CursedHood.SetBonus",key);
-            });
+                Language.GetTextValue("Mods.SOTS.Items.CursedHood.SetBonus", ArmorSetHotKey.GetAssignedKeys().FirstOrDefault() ?? Language.GetTextValue("LegacyMenu.195")));
 
             tru.Call("AddArmorSetBonusPreview", ModContent.ItemType<VibrantHelmet>(), () =>
                 Language.GetTextValue("Mods.SOTS.Items.VibrantHelmet.SetBonus"));

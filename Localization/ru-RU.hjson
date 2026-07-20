@@ -533,7 +533,7 @@ Mods: {
 				DisplayName: Посох ауры небытия
 				Tooltip:
 					'''
-					Призывает клетку небытия в месте вашего курсора, стреляющую по всем ближайшим врагам
+					Призывает клетку небытия в точку курсора, стреляющую по всем ближайшим врагам
 					Нахождение в ауре клетки также усиливает ваши характеристики:
 					Получаемое количество пустоты и сопротивление урону на 4%, защиту на 4 ед., скорость регенерации здоровья на 2 ед./сек
 					Радиус атаки клетки масштабируется с уроном призывателя
@@ -668,7 +668,7 @@ Mods: {
 					'''
 					Epic Gamer
 					Увеличивает получаемое количество пустоты на 2 ед.
-					Замораживает время и конвентирует пустоту в здоровье при получении урона
+					Замораживает время и конвертирует пустоту в здоровье при получении урона
 					Увеличивает силу дебаффов «{$Buffs.VoidShock.DisplayName}» и «{$Buffs.VoidRecovery.DisplayName}»
 					Открывает доступ к рецептам червоточины
 					'''
@@ -896,7 +896,7 @@ Mods: {
 				DisplayName: Детектор аномалий
 				Tooltip:
 					'''
-					Отображает расположение различных аномалий, таких как электромагнитные дыры, червоточины и телепортированные предметы, на миникарте
+					Отображает расположение различных аномалий, таких как электромагнитные дыры, червоточины и телепортированные предметы, на мини-карте
 					Работает в инвентаре и при ношении в слотах аксессуара или украшений
 					'''
 			}
@@ -926,7 +926,7 @@ Mods: {
 			}
 
 			SkipBullet: {
-				DisplayName: Патрон червоточины
+				DisplayName: Пуля червоточины
 				Tooltip: Моментально телепортируется во врага, если окажется над ним
 			}
 
@@ -945,7 +945,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает получаемое количество пустоты на 1 ед. и скорость её восполнения на 5%
-					Конвентирует пустоту в здоровье при получении урона
+					Конвертирует пустоту в здоровье при получении урона
 					Увеличивает силу дебаффов «{$Buffs.VoidShock.DisplayName}» и «{$Buffs.VoidRecovery.DisplayName}»
 					Открывает доступ к рецептам червоточины
 					'''
@@ -1166,7 +1166,7 @@ Mods: {
 			}
 
 			DuneSplicer: {
-				DisplayName: Соединитель дюн
+				DisplayName: Дюнный сращиватель
 				Tooltip:
 					'''
 					Выпускает множество самонаводящихся шипов на небольшом расстоянии
@@ -1383,7 +1383,7 @@ Mods: {
 
 			Geostorm: {
 				DisplayName: Геошторм
-				Tooltip: Сбрасывает кристаллы в место курсора
+				Tooltip: Сбрасывает кристаллы в точку курсора
 			}
 
 			GraniteProtector: {
@@ -1427,7 +1427,7 @@ Mods: {
 			}
 
 			VibrantWall: {
-				DisplayName: Небезоспасная вибрантовая стена
+				DisplayName: Опасная вибрантовая стена
 				Tooltip: ""
 			}
 
@@ -2414,7 +2414,7 @@ Mods: {
 				DisplayName: Машинный ускоритель
 				Tooltip:
 					'''
-					Позволяет летать и парить
+					{$CommonItemTooltip.FlightAndSlowfall}
 					Увеличивает получаемое количество пустоты на 1 ед.
 					Нажмите клавишу «{$Keybinds.MFM.DisplayName}» ({0}), чтобы включить свободное перемещение во всех направлениях за 5 ед. пустоты
 					Поглощает 3 ед. пустоты в секунду, пока эффект активен
@@ -2568,7 +2568,7 @@ Mods: {
 				Tooltip:
 					'''
 					Вооружает несколькими смертоносными метательными ножами
-					Попадания по врагам возвращают потраченый нож
+					Попадания по врагам возвращают потраченный нож
 					«Смотрите все!»
 					'''
 			}
@@ -3018,7 +3018,7 @@ Mods: {
 
 			StormSpell: {
 				DisplayName: Штормовое заклинание
-				Tooltip: Создаёт арктический шторм в месте курсора
+				Tooltip: Создаёт арктический шторм в точке курсора
 			}
 
 			AbyssalTonic: {
@@ -3065,8 +3065,8 @@ Mods: {
 			}
 
 			BluefirePotion: {
-				DisplayName: Зелье голубого пламени
-				Tooltip: Убитые враги взорвутся голубым пламенем, наносящим 40% урона от удара, добившего их
+				DisplayName: Зелье синего пламени
+				Tooltip: Убитые враги взорвутся синим пламенем, наносящим 40% урона от удара, добившего их
 			}
 
 			BrittlePotion: {
@@ -3251,14 +3251,14 @@ Mods: {
 					'''
 					Увеличивает магический и пустотный урон на 8%
 					Увеличивает шанс магического и пустотного критического удара на 5%
-					На ближайшего к вам врагу будет наложено проклятье
+					На ближайшего к вам врагу будет наложено проклятие
 					При получении им урона, проклятый враг взрывается огнём, получая дополнительные 140% урона и нанося 140% урона другим ближайшим врагам
 					Эта способность имеет 2 секунды перезарядки
 					'''
 				SetBonus:
 					'''
 					Нажмите клавишу «{$Keybinds.ArmorSet.DisplayName}» ({0}), чтобы перевести рубиновый монолит в режим атаки
-					В режиме атаки, монолит снижает время перезарядки наложения проклятья на 80%
+					В режиме атаки, монолит снижает время перезарядки наложения проклятия на 80%
 					Однако, вместо бонуса к скорости восполнения пустоты монолит будет поглощать 6 ед. пустоты в секунду
 					'''
 			}
@@ -3325,11 +3325,11 @@ Mods: {
 			}
 
 			CurseWard: {
-				DisplayName: Оберег от проклятья
+				DisplayName: Оберег от проклятия
 				Tooltip:
 					'''
 					Ослабляет воздействие Проклятия Пирамиды, пока находится в инвентаре
-					Предмет не нужен после победы над боссом зла, поскольку после него проклятье ослабляется для всех игроков 
+					Предмет не нужен после победы над боссом зла, поскольку после него проклятие ослабляется для всех игроков 
 					'''
 			}
 
@@ -3362,8 +3362,8 @@ Mods: {
 				Tooltip:
 					'''
 					Проклинает ближайших врагов в небольшом радиусе, заставляя их терять по 10 ед. здоровья в секунду
-					Из проклятых врагов после смерти вылетает частица проклятья, самонаводящаяся на других врагов
-					Частица проклятья наносит урон, равный 10% от максимального здоровья поверженного врага, дополнительно прибавляя 10 ед. урона
+					Из проклятых врагов после смерти вылетает частица проклятия, самонаводящаяся на других врагов
+					Частица проклятия наносит урон, равный 10% от максимального здоровья поверженного врага, дополнительно прибавляя 10 ед. урона
 					Увеличивает максимальный запас здоровья на 20 ед.
 					'''
 			}
@@ -3388,7 +3388,7 @@ Mods: {
 			}
 
 			LuckyPurpleBalloon: {
-				DisplayName: Удачливый фиолетовый надувной шарик
+				DisplayName: Счастливый фиолетовый надувной шарик
 				Tooltip:
 					'''
 					Увеличивает количество забрасываемых поплавков удочкой
@@ -3555,7 +3555,7 @@ Mods: {
 
 			TrueSandstoneWall: {
 				DisplayName: Истинная песчаниковая стена
-				Tooltip: «Лишь боги могут создать стену, обладующую столь великой силой»
+				Tooltip: «Лишь боги могут создать стену, обладающую столь великой силой»
 			}
 
 			VoidenBracelet: {
@@ -3607,7 +3607,7 @@ Mods: {
 					Атака ПКМ не расходует пустоту
 					«Каково твоё желание?»
 					'''
-				Tooltip2: Нажмите ПКМ, чтобы запустить туманную сферу, выпускающую самонаводящися и быстро исчезающие выстрелы, которые наносят 50% урона
+				Tooltip2: Нажмите ПКМ, чтобы запустить туманную сферу, выпускающую самонаводящиеся и быстро исчезающие выстрелы, которые наносят 50% урона
 			}
 
 			FireSpitter: {
@@ -3625,7 +3625,7 @@ Mods: {
 				DisplayName: Гелевые крылья
 				Tooltip:
 					'''
-					Позволяют летать и парить
+					{$CommonItemTooltip.FlightAndSlowfall}
 					«Они должны быть совсем не такими крепкими»
 					'''
 			}
@@ -3706,7 +3706,7 @@ Mods: {
 
 			BoreBullet: {
 				# SoldStuff
-				DisplayName: Бурящая пуля
+				DisplayName: Бурящий патрон
 				Tooltip: Пробивает 20% и дополнительно 10 ед. защиты врага
 			}
 
@@ -3836,7 +3836,7 @@ Mods: {
 			}
 
 			SolarBullet: {
-				DisplayName: Солнечная пуля
+				DisplayName: Солнечный патрон
 				Tooltip:
 					'''
 					Игнорирует 50% защиты врага
@@ -3991,7 +3991,7 @@ Mods: {
 				Tooltip:
 					'''
 					Инструмент разработки, НЕ ПРЕДНАЗНАЧЕН ДЛЯ ГЕЙМПЛЕЯ
-					Использование этого предмета шаг за шагом сгенерирует всю Пирамиду под вашим крусором
+					Использование этого предмета шаг за шагом сгенерирует всю Пирамиду под вашим курсором
 					Нажатие ПКМ буквально удалит ваш мир
 					Какой бы ни была причина, лучше его не использовать
 					'''
@@ -4212,7 +4212,7 @@ Mods: {
 			}
 
 			Doomstick: {
-				DisplayName: Doomstick
+				DisplayName: Думстик
 				Tooltip:
 					'''
 					Делает два последовательных выстрела разбросом пуль
@@ -4322,7 +4322,7 @@ Mods: {
 				Tooltip:
 					'''
 					Увеличивает количество исцеления, получаемое от зелий, на 40 ед.
-					«I could make a very, very bad joke right now...»
+					«У меня сейчас на языке одна очень, очень плохая шутка...»
 					'''
 			}
 
@@ -4819,7 +4819,7 @@ Mods: {
 			}
 
 			DarkShingles: {
-				DisplayName: Эвокаменный полированный кирпич
+				DisplayName: Полированный эвокаменный кирпич
 				Tooltip: ""
 			}
 
@@ -4834,7 +4834,7 @@ Mods: {
 			}
 
 			EvostoneBrickWall: {
-				DisplayName: Стена из эвокаменного кипича
+				DisplayName: Стена из эвокаменного кирпича
 				Tooltip: ""
 			}
 
@@ -4857,7 +4857,7 @@ Mods: {
 				DisplayName: Ранец телепортации
 				Tooltip:
 					'''
-					Нажмите клавишу «{$Keybinds.Blink.DisplayName}» ({0}), чтобы телепортироваться в место вашего курсора
+					Нажмите клавишу «{$Keybinds.Blink.DisplayName}» ({0}), чтобы телепортироваться в точку курсора
 					Телепортация через врагов наносит им урон и может отменить перезарядку способности 3 раза подряд
 					Даёт кратковременную неуязвимость после рывка и невосприимчивость к урону от падения
 					'''
@@ -5060,7 +5060,7 @@ Mods: {
 				Tooltip:
 					'''
 					{$CommonItemTooltip.Whips}
-					Атаки миньонов по отмеченым врагам создают искры, временно останавливающие врага и наносящие ему 4 ед. урона
+					Атаки миньонов по отмеченным врагам создают искры, временно останавливающие врага и наносящие ему 4 ед. урона
 					'''
 			}
 
@@ -5213,7 +5213,7 @@ Mods: {
 				DisplayName: Кольцо испытаний
 				Tooltip:
 					'''
-					Нажмите ПКМ по предмету, когда он находится в избранном, чтобы инвентировать эффект выбранного самоцвета
+					Нажмите ПКМ по предмету, когда он находится в избранном, чтобы инвертировать эффект выбранного самоцвета
 					0
 					1
 					2
@@ -5250,8 +5250,8 @@ Mods: {
 				# Opposite of Greed, Charity
 				I2:
 					'''
-					10% от полученного урона конвентируется в пустоту
-					10% от израсходованной пустоты обратно конвентируется в здоровье
+					10% от полученного урона конвертируется в пустоту
+					10% от израсходованной пустоты обратно конвертируется в здоровье
 					'''
 				# Opposite of Envy, Kindness
 				I3:
@@ -5321,7 +5321,7 @@ Mods: {
 					'''
 					Увеличивает урон ближнего боя и призывателя на 30%
 					Увеличивает скорость регенерации здоровья на 2 ед./сек
-					Нажмите клавишу «{$Keybinds.ArmorSet.DisplayName}» ({0}), чтобы телепортироваться в место курсора
+					Нажмите клавишу «{$Keybinds.ArmorSet.DisplayName}» ({0}), чтобы телепортироваться в точку курсора
 					Телепортация через врагов наносит им урон, равный 200% от вашей защиты
 					Телепортация имеет 15 секунд перезарядки, во время которой скорость ближнего боя увеличивается на 40%
 					'''
@@ -5726,7 +5726,7 @@ Mods: {
 
 			MagmaBeam: {
 				DisplayName: Концентратор магмы
-				Tooltip: Создаёт шар горячей магмы на месте вашего курсора
+				Tooltip: Создаёт шар горячей магмы в точке курсора
 			}
 
 			FortressCrasher: {
@@ -5805,7 +5805,7 @@ Mods: {
 				DisplayName: Фонарь из древней стали
 				Tooltip:
 					'''
-					Призывает стальной фонарь в месте вашего курсора, запускающий огни во всех ближайших врагов
+					Призывает стальной фонарь в точке курсора, запускающий огни во всех ближайших врагов
 					Радиус атаки фонаря масштабируется с уроном призывателя
 					'''
 			}
@@ -6022,12 +6022,12 @@ Mods: {
 			}
 
 			RunicEvostoneBrick: {
-				DisplayName: Рунический эвокаменный кирпич
+				DisplayName: Эвокаменный кирпич с рунами
 				Tooltip: ""
 			}
 
 			RunicEvostone: {
-				DisplayName: Рунический эвокамень
+				DisplayName: Эвокамень с рунами
 				Tooltip: ""
 			}
 
@@ -6712,7 +6712,7 @@ Mods: {
 			}
 
 			EvostoneRuneBrickWall: {
-				DisplayName: Эвокаменная руническая кирпичная стена
+				DisplayName: Эвокаменная кирпичная стена с рунами
 				Tooltip: ""
 			}
 
@@ -6851,7 +6851,7 @@ Mods: {
 			}
 
 			AncientSteelBullet: {
-				DisplayName: Пуля из металлолома
+				DisplayName: Патрон из металлолома
 				Tooltip: Критические удары накладывают бессрочное суммирующееся проклятие кровотечения, наносящее по 5 ед. урона в секунду
 			}
 
@@ -6985,7 +6985,7 @@ Mods: {
 				DisplayName: Перехватчик аномалий
 				Tooltip:
 					'''
-					Отображает расположение и описание различных аномалий, таких как электромагнитные дыры, червоточины и телепортированные предметы, на миникарте
+					Отображает расположение и описание различных аномалий, таких как электромагнитные дыры, червоточины и телепортированные предметы, на мини-карте
 					Работает в инвентаре и при ношении в слотах аксессуаров или украшений
 					'''
 			}
@@ -7731,7 +7731,7 @@ Mods: {
 
 				BossChecklistIntegration: {
 					EntryName: Гнилостный пинки
-					SpawnInfo: Используйте [i:SOTS/JarOfPeanuts] в любом биоме.
+					SpawnInfo: Используйте [i:SOTS/JarOfPeanuts].
 					DespawnMessage: Гнилостный пинки больше не преследует вас...
 				}
 			}
@@ -8242,7 +8242,7 @@ Mods: {
 			5: «Напоминание о том, что весь мир — у ваших ног»
 			6: «Возможно, из него можно извлечь какой-то урок»
 			7: «Возможно, оно изменит вашу судьбу»
-			x0: «Врятли стоит и гроша»
+			x0: «Вряд ли стоит и гроша»
 			x1: «Явно не заслуживает места в вашей коллекции»
 			x2: «Явно не повод отправиться в приключение»
 			x3: «Выглядит совершенно неинтересно»
@@ -8346,89 +8346,89 @@ Mods: {
 		}
 
 		Projectiles: {
-			AcornOfJustice.DisplayName: Acorn Of Justice
-			AcornsOfJustice.DisplayName: Acorns Of Justice
-			AdvisorPet.DisplayName: Advisor Pet
-			AncientGoldGateGems.DisplayName: Gems
-			AncientSteelHalberd.DisplayName: Ancient Steel Halberd
-			AncientSteelLongbow.DisplayName: Ancient Steel Bow
-			ArcColumn.DisplayName: Arc Thunder
-			ArclightBomb.DisplayName: Arclight Bomb
-			ArcLightning.DisplayName: Thundershock Lightning
-			ArcLightningDamage.DisplayName: Arc Lightning
-			ArcLightningZap.DisplayName: Arc Lightning
-			ArkBolt.DisplayName: Ark Bolt
-			ArrowMoth.DisplayName: Arrow Moth
-			MothMinion.DisplayName: Lumina Moth
-			AtenProj.DisplayName: Aten
-			AtenStar.DisplayName: Aten Star
-			AtenStarExplosion.DisplayName: Aten Starsplosion
-			AvaritianExplosion.DisplayName: Avaritian Explosion
-			BabyLaser.DisplayName: Green Laser
-			BackupArrow.DisplayName: Backup Arrow
-			BackupBowVisual.DisplayName: Backup Bow Visual
-			BerryBomb.DisplayName: Berry Bomb
-			BlackFlareShot.DisplayName: Black Flare
-			Blaspha.DisplayName: Blaspha
-			BlastDoorProj.DisplayName: Blast Door Proj
-			BlazingArrow.DisplayName: Blazing Arrow
-			BlazingMine.DisplayName: Spike Trap
-			BlazingSpike.DisplayName: Blazing Spike
-			Blink1.DisplayName: Blinding Assault
-			BlinkDamage1.DisplayName: Blinding Assault
-			BlizzardProbe.DisplayName: Blizzard Probe
-			Bloodaxe.DisplayName: Bloody Hammer
-			BloodSpark.DisplayName: Blood Spark
-			BloomingHook.DisplayName: Blooming Hook
-			BloomingHookMinion.DisplayName: Blooming Hook
-			BluefireCrush.DisplayName: Bluefire Crush
-			BlueLightning.DisplayName: Blue Lightning
-			BlueThunderCluster.DisplayName: Thunder Cluster
-			BombFlare.DisplayName: Bomb Flare
-			BoneClapperCrusher.DisplayName: Bone Clapper Crusher
-			BoneCrush.DisplayName: Bone Crush
-			BoreBullet.DisplayName: Bore Bullet
-			BossBabyLaser.DisplayName: Red Laser
-			BrachialLance.DisplayName: Brachial Lance
-			BrachialPortal.DisplayName: Brachial Portal
-			BrightRedLaser.DisplayName: Artifact Laser
-			BubbleCrush.DisplayName: Bubble Crush
-			Bubble.DisplayName: Bubble
-			CactusSpine.DisplayName: Cactus Spine
-			CardiacCollapseCrusher.DisplayName: Cardiac Collapse Arm
-			CataclysmBullet.DisplayName: Cataclysm Bullet
-			CataclysmBulletDamage.DisplayName: Cataclysm Bullet
-			CataclysmDamage.DisplayName: Cataclysm Collapse
-			CataclysmDisc.DisplayName: Cataclysm Disc
-			CataclysmLightning.DisplayName: Cataclysm Lightning
-			CataclysmLightningZap.DisplayName: Cataclysm Bullet
-			CataclysmOrb.DisplayName: Cataclysm Bomb
-			CatalystBomb.DisplayName: Catalyst Bomb
-			CelestialLightning.DisplayName: Subspace Thunder
-			CellBlast.DisplayName: Cursespire
-			ChaosArrow1.DisplayName: Chaos Arrow
-			ChaosArrow2.DisplayName: Chaos Arrow
-			ChaosArrowBloom.DisplayName: Chaos Arrow Bloom
-			ChaosBall.DisplayName: Chaos Ball
-			ChaosBallFriendly.DisplayName: Chaos Ball
-			ChaosBeam.DisplayName: Chaos Beam
-			ChaosBloomExplosion.DisplayName: Chaos Bloom
-			ChaosCircle.DisplayName: Chaos Ring
-			ChaosDart.DisplayName: Chaos Dart
-			ChaosDart2.DisplayName: Chaos Dart
-			ChaosDiamond.DisplayName: Chaos Diamond
-			ChaosDiamondLaser.DisplayName: Shattering Laser
-			ChaosEraser.DisplayName: Hyperlight Eraser
-			ChaosEraser2.DisplayName: Redlight Eraser
-			ChaosHelixLaser.DisplayName: Chaos Helix Laser
-			ChaosPunch.DisplayName: Bizarre Adventure Fist
-			ChaosSnake.DisplayName: Chaos Snake
-			ChaosSphere.DisplayName: Chaos Ring
-			ChaosSpirit.DisplayName: Chaos Spirit
-			ChaosSpiritChain.DisplayName: Chaos Chain
-			ChaosStar.DisplayName: Chaos Star
-			ChaosThorn.DisplayName: Chaos Thorn
-			ChaosWave.DisplayName: Chaos Wave
+			AcornOfJustice.DisplayName: Жёлудь справедливости
+			AcornsOfJustice.DisplayName: Жёлуди справедливости
+			AdvisorPet.DisplayName: Ручной Аналитик
+			AncientGoldGateGems.DisplayName: Самоцветы
+			AncientSteelHalberd.DisplayName: "{$Items.AncientSteelHalberd.DisplayName}"
+			AncientSteelLongbow.DisplayName: "{$Items.AncientSteelLongbow.DisplayName}"
+			ArcColumn.DisplayName: Дуговая молния
+			ArclightBomb.DisplayName: "{$Items.ArclightBomb.DisplayName}"
+			ArcLightning.DisplayName: Громоударная молния
+			ArcLightningDamage.DisplayName: Дуговая молния
+			ArcLightningZap.DisplayName: Дуговая молния
+			ArkBolt.DisplayName: Дуговой заряд
+			ArrowMoth.DisplayName: Светлячковая стрела
+			MothMinion.DisplayName: Лунная моль
+			AtenProj.DisplayName: "{$Items.Aten.DisplayName}"
+			AtenStar.DisplayName: Звезда Атона
+			AtenStarExplosion.DisplayName: Звёздный взрыв Атона
+			AvaritianExplosion.DisplayName: Взрыв алчности
+			BabyLaser.DisplayName: Зелёный лазер
+			BackupArrow.DisplayName: Стрела поддержи
+			BackupBowVisual.DisplayName: "{$Items.BackupBow.DisplayName}"
+			BerryBomb.DisplayName: Бомба-ягода
+			BlackFlareShot.DisplayName: "{$Items.BlackFlare.DisplayName}"
+			Blaspha.DisplayName: "{$Items.Blaspha.DisplayName}"
+			BlastDoorProj.DisplayName: Затворная дверь
+			BlazingArrow.DisplayName: Пылающая стрела
+			BlazingMine.DisplayName: Шипастая мина
+			BlazingSpike.DisplayName: Пылающая колючка
+			Blink1.DisplayName: Эффект телепортации
+			BlinkDamage1.DisplayName: Эффект телепортации
+			BlizzardProbe.DisplayName: Морозный зонд
+			Bloodaxe.DisplayName: Кровавый молот
+			BloodSpark.DisplayName: Кровавая искра
+			BloomingHook.DisplayName: Цветочная лоза
+			BloomingHookMinion.DisplayName: Цветочная лоза
+			BluefireCrush.DisplayName: Взрыв синего пламени
+			BlueLightning.DisplayName: Синяя молния
+			BlueThunderCluster.DisplayName: Шаровая молния
+			BombFlare.DisplayName: Взрывная сигнальная ракета
+			BoneClapperCrusher.DisplayName: "{$Items.BoneClapper.DisplayName}"
+			BoneCrush.DisplayName: Костяное схлопывание
+			BoreBullet.DisplayName: "{$Items.BoreBullet.DisplayName}"
+			BossBabyLaser.DisplayName: Красный лазер
+			BrachialLance.DisplayName: "{$Items.BrachialLance.DisplayName}"
+			BrachialPortal.DisplayName: Проклинающий портал
+			BrightRedLaser.DisplayName: Лазер реликвии
+			BubbleCrush.DisplayName: Взрыв пузыря
+			Bubble.DisplayName: Пузырь
+			CactusSpine.DisplayName: Кактусовая колючка
+			CardiacCollapseCrusher.DisplayName: "{$Items.CardiacCollapse.DisplayName}"
+			CataclysmBullet.DisplayName: Катаклизмическая пуля
+			CataclysmBulletDamage.DisplayName: Катаклизмическая пуля
+			CataclysmDamage.DisplayName: Катаклизмический взрыв
+			CataclysmDisc.DisplayName: Катаклизмический диск
+			CataclysmLightning.DisplayName: Катаклизмическая молния
+			CataclysmLightningZap.DisplayName: Катаклизмическая пуля
+			CataclysmOrb.DisplayName: Катаклизмическая бомба
+			CatalystBomb.DisplayName: "{$Items.CatalystBomb.DisplayName}"
+			CelestialLightning.DisplayName: Субпространственный гром
+			CellBlast.DisplayName: Проклятый осколок
+			ChaosArrow1.DisplayName: Копьё света
+			ChaosArrow2.DisplayName: Копьё света
+			ChaosArrowBloom.DisplayName: Цветущее копьё света
+			ChaosBall.DisplayName: Шар хаоса
+			ChaosBallFriendly.DisplayName: Шар хаоса
+			ChaosBeam.DisplayName: Лук хаоса
+			ChaosBloomExplosion.DisplayName: Цветущий взрыв
+			ChaosCircle.DisplayName: Кольцо хаоса
+			ChaosDart.DisplayName: Игла хаоса
+			ChaosDart2.DisplayName: Игла хаоса
+			ChaosDiamond.DisplayName: Кристалл хаоса
+			ChaosDiamondLaser.DisplayName: Сокрушающий лазер
+			ChaosEraser.DisplayName: Сверхсветовой луч
+			ChaosEraser2.DisplayName: Инфракрасный луч
+			ChaosHelixLaser.DisplayName: Спиральный лазер хаоса
+			ChaosPunch.DisplayName: Биззарный кулак
+			ChaosSnake.DisplayName: Змея хаоса
+			ChaosSphere.DisplayName: Кольцо хаоса
+			ChaosSpirit.DisplayName: Дух хаоса
+			ChaosSpiritChain.DisplayName: Цепь хаоса
+			ChaosStar.DisplayName: Звезда хаоса
+			ChaosThorn.DisplayName: Колючка хаоса
+			ChaosWave.DisplayName: Волна хаоса
 			ChargeBeam.DisplayName: Charge Ball
 			ChargedCataclysmBullet.DisplayName: Charged Cataclysm Bullet
 			ChargedHardlightArrow.DisplayName: Charged Hardlight Arrow
@@ -9185,7 +9185,7 @@ Mods: {
 			}
 
 			AdvisorKill: {
-				FriendlyName: Shining Star
+				FriendlyName: Сухая аналитика
 				Description:
 					'''
 					Одержать победу над Аналитиком — виртуозным кукловодом Планетария
