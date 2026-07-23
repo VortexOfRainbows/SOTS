@@ -9239,7 +9239,7 @@ Mods: {
 			}
 
 			IntoThePyramid: {
-				FriendlyName: Into The Pyramid
+				FriendlyName: Расхититель гробниц
 				Description:
 					'''
 					Открыть вход и зайти в Пирамиду
@@ -9248,7 +9248,7 @@ Mods: {
 			}
 
 			LuxKill: {
-				FriendlyName: Living in the Light
+				FriendlyName: Луч света в тёмном царстве
 				Description:
 					'''
 					Одержать победу над Люкс — сильнейшей из духов
