@@ -1,13 +1,11 @@
 using System;
-using System.IO;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.ID;
+using Terraria.DataStructures;
 
 namespace SOTS.Projectiles.Celestial
 {
@@ -27,9 +25,14 @@ namespace SOTS.Projectiles.Celestial
         {
             overWiresUI.Add(index);
         }
-        private List<Vector3> lightSpots = new List<Vector3>();
+        private List<Vector3> lightSpots = [];
         private int fadeInTimer = 0;
-        int counter = 0;
+        private int counter = 0;
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Main.netMode != NetmodeID.Server)
+                SOTSPlayer.CameraShiftProjectiles.Add(Projectile.whoAmI); //whoami value is not synced in multiplayer, but since camera shift is client-sided, there should be no server issues here
+        }
         public override void AI()
         {
             //Main.NewText(Projectile.timeLeft);
@@ -74,12 +77,12 @@ namespace SOTS.Projectiles.Celestial
         private int height = 0;
         private int width = 0;
         private Color[] defaultdataColors = null;
-        private float scale = 4;
-        private void lightsUpdate(bool dark)
+        private readonly float scale = 4;
+        private void LightsUpdate(bool dark)
         {
             foreach (Vector3 spot in lightSpots)
             {
-                Vector2 spotCoords = new Vector2(spot.X, spot.Y);
+                Vector2 spotCoords = new(spot.X, spot.Y);
                 float size = spot.Z / scale;
                 float sizeX = size;
                 float sizeY = size;
@@ -150,14 +153,14 @@ namespace SOTS.Projectiles.Celestial
             }
             if(counter < 4 || Projectile.timeLeft < 5)
             {
-                lightsUpdate(true); //reset color
-                lightSpots = new List<Vector3>();
+                LightsUpdate(true); //reset color
+                lightSpots = [];
                 if((int)Projectile.ai[1] == 0)
                     lightSpots.Add(new Vector3((drawPlayer.Center.X - Main.screenPosition.X) / scale, (drawPlayer.Center.Y - Main.screenPosition.Y) / scale, 1560f));
                 else if ((int)Projectile.ai[1] == -1)
                     lightSpots.Add(new Vector3((drawPlayer.Center.X - Main.screenPosition.X) / scale, (drawPlayer.Center.Y - Main.screenPosition.Y) / scale, 1280f));
-                lightsUpdate(false); //now that we have lights make them transparent
-                Texture2D TheShadow = new Texture2D(Main.graphics.GraphicsDevice, width, height);
+                LightsUpdate(false); //now that we have lights make them transparent
+                Texture2D TheShadow = new(Main.graphics.GraphicsDevice, width, height);
                 TheShadow.SetData(0, null, defaultdataColors, 0, width * height);
                 ShadowTexture = TheShadow;
             }

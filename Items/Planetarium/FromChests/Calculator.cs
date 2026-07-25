@@ -33,7 +33,7 @@ namespace SOTS.Items.Planetarium.FromChests
         public override void UpdateAccessory(Player player, bool hideVisual)
 		{
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			modPlayer.typhonRange = 96;
+			modPlayer.HomingRange = 96;
 			if(!hideVisual)
 				modPlayer.petAdvisor = true;
 		}

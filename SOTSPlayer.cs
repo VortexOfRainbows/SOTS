@@ -94,20 +94,20 @@ namespace SOTS
 		{
 			return player.GetModPlayer<SOTSPlayer>();
 		}
-		public static int[] typhonBlacklist;
-		public static int[] typhonWhitelist;
-		public static int[] symbioteBlacklist;
-		public static int[] harmonyWhitelist;
+		public static int[] HomingProjectileBlacklist;
+		public static int[] HomingProjectileWhitelist;
+		public static int[] BotanicalSymbioteBlacklist;
+		public static int[] HarmonyBuffsWhitelist;
 		public static bool pyramidBattle = false;
 		public static void LoadArrays()
 		{
 			FakePlayerHelper.Initialize();
-			typhonBlacklist = [ ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(),
+			HomingProjectileBlacklist = [ ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(),
 				ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(),
 				ModContent.ProjectileType<BlazingArrow>(), ModContent.ProjectileType<DimensionShredderLightning>() ];
-			symbioteBlacklist = [ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter, ModContent.ProjectileType<FreshGreenyCounter>()];
-			typhonWhitelist = [ModContent.ProjectileType<HardlightArrow>()];
-			harmonyWhitelist = [BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge];
+			BotanicalSymbioteBlacklist = [ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter, ModContent.ProjectileType<FreshGreenyCounter>()];
+			HomingProjectileWhitelist = [ModContent.ProjectileType<HardlightArrow>()];
+			HarmonyBuffsWhitelist = [BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge];
 		}
 		public const int TotalVisionNumber = 56;
 		public int UniqueVisionNumber = -1;
@@ -284,7 +284,7 @@ namespace SOTS
 		public int BlinkDamage = 0;
 		public bool ElementalBlink = false;
 		public bool ElementalBlinkBuff = false;
-		public int typhonRange = 0;
+		public int HomingRange = 0;
 		public bool weakerCurse = false;
 		public bool VibrantArmor = false;
 		public int brokenFrigidSword = 0;
@@ -1319,7 +1319,7 @@ namespace SOTS
 			}
 			if(ExacaChest)
 				Lighting.AddLight(Player.Center, (ColorHelper.Inferno2 * 0.8f).ToVector3());
-			typhonRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
+			HomingRange = assassinateFlat = shardSpellExtra = frigidJavelinBoost = 0;
 			assassinateNum = 1;
 			assassinate = VibrantArmor = frigidJavelinNoCost = false;
 			brokenFrigidSword = brokenFrigidSword > 0 ? brokenFrigidSword - 1 : brokenFrigidSword;
@@ -1932,57 +1932,73 @@ namespace SOTS
 		{
 			return base.PreItemCheck();
 		}
+		public static List<int> CameraShiftProjectiles = new();
 		public float screenShakeMultiplier = 0f;
 		public override void ModifyScreenPosition()
 		{
 			Vector2 screenDimensions = new Vector2(Main.screenWidth, Main.screenHeight);
-			bool seenSubspace = false;
 			bool seenCamera = false;
-			for (int i = 0; i < 1000; i++)
+			bool seenSubspace = false;
+			float cameraLockinDistSquared = 4000 * 4000;
+			int subspaceEye = ModContent.ProjectileType<SubspaceEye>();
+			int dreamingFrame = ModContent.ProjectileType<DreamingFrame>();
+			int fluidFollower = ModContent.ProjectileType<FluidFollower>();
+            for (int k = CameraShiftProjectiles.Count - 1; k >= 0; --k)
 			{
-				Projectile projectile = Main.projectile[i];
-				if (projectile.type == ModContent.ProjectileType<Projectiles.Celestial.SubspaceEye>() && projectile.active)
+				int i = CameraShiftProjectiles[k];
+				if (i < 0 || i >= Main.maxProjectiles)
 				{
-					seenSubspace = true;
-					int current = projectile.alpha;
-					current -= 50;
-					if (current < 0)
-						current = 0;
-					float percent = current / 205f;
-					if ((int)projectile.ai[1] == -1)
-					{
-						percent *= 0.5f;
-						Vector2 toSubEye = projectile.Center - Player.Center;
-						if (toSubEye.Length() < 4000f)
-							Main.screenPosition.X = (Main.screenPosition.X * (1f - percent)) + ((projectile.Center.X - (screenDimensions.X / 2)) * percent);
-					}
-					else
-					{
-						Vector2 toSubEye = projectile.Center - Player.Center;
-						if (toSubEye.Length() < 4000f)
-							Main.screenPosition = (Main.screenPosition * (1f - percent)) + ((new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2)) * percent);
-					}
-					break;
-				}
-				if (!seenSubspace)
+                    CameraShiftProjectiles.RemoveAt(k);
+					continue;
+                }
+                Projectile projectile = Main.projectile[i];
+				int type = projectile.type;
+				if (!projectile.active || (type != subspaceEye && type != dreamingFrame && type != fluidFollower))
 				{
-					if (projectile.type == ModContent.ProjectileType<DreamingFrame>() && projectile.active && projectile.owner == Main.myPlayer) //need to include a lerp back to normal so the transition isn't jarring (this will be done with a new death projectile)
-					{
-						float percent = projectile.alpha / 255f;
-						percent = Math.Clamp(percent, 0, 1);
-						seenCamera = true;
-						Main.screenPosition = Vector2.Lerp(Main.screenPosition, new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2), 0.25f * (1 - percent));
-						Main.screenPosition.X = (int)Main.screenPosition.X;
-						Main.screenPosition.Y = (int)Main.screenPosition.Y;
-					}
-					else if (!seenCamera && projectile.type == ModContent.ProjectileType<FluidFollower>() && projectile.active && projectile.owner == Main.myPlayer)
-					{
-						Vector2 toSubEye = projectile.Center - Player.Center;
-						if (toSubEye.Length() < 4000f)
-							Main.screenPosition = new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2);
-					}
+					CameraShiftProjectiles.RemoveAt(k);
+					continue;
 				}
-			}
+                if (projectile.type == subspaceEye)
+                {
+                    int current = projectile.alpha;
+                    current -= 50;
+                    if (current < 0)
+                        current = 0;
+                    float percent = current / 205f;
+                    if ((int)projectile.ai[1] == -1)
+                    {
+                        percent *= 0.5f;
+                        Vector2 toSubEye = projectile.Center - Player.Center;
+                        if (toSubEye.LengthSquared() < cameraLockinDistSquared)
+                            Main.screenPosition.X = (Main.screenPosition.X * (1f - percent)) + ((projectile.Center.X - (screenDimensions.X / 2)) * percent);
+                    }
+                    else
+                    {
+                        Vector2 toSubEye = projectile.Center - Player.Center;
+                        if (toSubEye.LengthSquared() < cameraLockinDistSquared)
+                            Main.screenPosition = (Main.screenPosition * (1f - percent)) + ((new Vector2(projectile.Center.X, projectile.Center.Y) - (screenDimensions / 2)) * percent);
+                    }
+                    seenSubspace = true;
+                }
+                else if(!seenSubspace)
+                {
+                    if (projectile.type == dreamingFrame && projectile.owner == Main.myPlayer) //need to include a lerp back to normal so the transition isn't jarring (this will be done with a new death projectile)
+                    {
+                        float percent = projectile.alpha / 255f;
+                        percent = Math.Clamp(percent, 0, 1);
+                        seenCamera = true;
+                        Main.screenPosition = Vector2.Lerp(Main.screenPosition, new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2), 0.25f * (1 - percent));
+                        Main.screenPosition.X = (int)Main.screenPosition.X;
+                        Main.screenPosition.Y = (int)Main.screenPosition.Y;
+                    }
+                    else if (!seenCamera && projectile.type == fluidFollower && projectile.owner == Main.myPlayer)
+                    {
+                        Vector2 toSubEye = projectile.Center - Player.Center;
+                        if (toSubEye.LengthSquared() < cameraLockinDistSquared)
+                            Main.screenPosition = new Vector2((int)projectile.Center.X, (int)projectile.Center.Y) - (screenDimensions / 2);
+                    }
+                }
+            }
 			if (screenShakeMultiplier > 0)
 			{
 				Vector2 offset = new Vector2(0, Main.rand.NextFloat(1f) * screenShakeMultiplier).RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(360f)));
@@ -1991,9 +2007,7 @@ namespace SOTS
 				screenShakeMultiplier *= 0.95f;
 			}
 			else
-			{
 				screenShakeMultiplier = 0;
-			}
 			base.ModifyScreenPosition();
 		}
 		public override void UpdateLifeRegen()
@@ -2079,7 +2093,7 @@ namespace SOTS
 			for (int i = 0; i < player.buffTime.Length; i++)
 			{
 				int type = player.buffType[i];
-				if (!Main.debuff[type] && (((player.buffTime[i] > 1800 || harmonyWhitelist.Contains(type) || allowUnder30Seconds) && type != ModContent.BuffType<Harmony>()) || affectAll))
+				if (!Main.debuff[type] && (((player.buffTime[i] > 1800 || HarmonyBuffsWhitelist.Contains(type) || allowUnder30Seconds) && type != ModContent.BuffType<Harmony>()) || affectAll))
 				{
 					if (type == ModContent.BuffType<Attuned>())
 						continue;

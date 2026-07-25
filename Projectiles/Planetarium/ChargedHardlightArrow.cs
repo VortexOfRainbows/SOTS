@@ -199,7 +199,7 @@ namespace SOTS.Projectiles.Planetarium
 				drawPos.X += laserVelo.X;
 				drawPos.Y += laserVelo.Y;
 				counter++;
-				float enemyMinDist = counter * 0.175f + 20 + SOTSPlayer.ModPlayer(player).typhonRange * 1.2f;
+				float enemyMinDist = counter * 0.175f + 20 + SOTSPlayer.ModPlayer(player).HomingRange * 1.2f;
 				if(stop)
 				{
 					break;

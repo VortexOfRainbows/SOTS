@@ -1,17 +1,20 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
 using System;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Celestial
 {    
-    public class FluidFollower : ModProjectile 
+    public class FluidFollower : ModProjectile
     {
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("my curse behind me");
-		}
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Main.netMode != NetmodeID.Server)
+                SOTSPlayer.CameraShiftProjectiles.Add(Projectile.whoAmI); //whoami value is not synced in multiplayer, but since camera shift is client-sided, there should be no server issues here
+        }
         public override void SetDefaults()
         {
 			Projectile.penetrate = -1;
@@ -23,7 +26,7 @@ namespace SOTS.Projectiles.Celestial
 			Projectile.timeLeft = 20;
 			Projectile.friendly = false;
 		}
-        public override bool PreDraw(ref Color lightColor)
+        public override bool PreDraw(ref Color lightColor) //I was originally trying to draw a shadow clone behind the player, but it did not really work all that well...
 		{
 			/*
 			Player player = Main.player[Projectile.owner];
@@ -54,18 +57,21 @@ namespace SOTS.Projectiles.Celestial
 			player.itemAnimation = tempUseAnimation;
 			return false;
 			*/
-
 			return false;
 		}
+		private static Texture2D tOutline;
+		private static Texture2D tEye;
+		private static Texture2D tFill;
+		private static Texture2D tSpike;
         public override void PostDraw(Color lightColor)
         {
 			Player player = Main.player[Projectile.owner];
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerOutline").Value;
-			Texture2D texture3 = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerEye").Value;
-			Texture2D texture4 = Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerFill").Value;
-			Color color = new Color(100, 100, 100, 0);
-			Vector2 drawOrigin = new Vector2(texture.Width * 0.5f, texture.Height * 0.5f);
-			Vector2 drawOrigin3 = new Vector2(texture3.Width * 0.5f, texture3.Height * 0.5f);
+			tOutline ??= Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerOutline", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			tEye ??= Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerEye", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			tFill ??= Mod.Assets.Request<Texture2D>("Projectiles/Celestial/FluidFollowerFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Color color = new Color(100, 100, 100, 0);
+			Vector2 drawOrigin = new Vector2(tOutline.Width * 0.5f, tOutline.Height * 0.5f);
+			Vector2 drawOrigin3 = new Vector2(tEye.Width * 0.5f, tEye.Height * 0.5f);
 			Vector2 between = player.Center - Projectile.Center;
 			if (between.Length() > 1.1f)
 			{
@@ -76,8 +82,8 @@ namespace SOTS.Projectiles.Celestial
 				between = Vector2.Zero;
 			}
 			DrawSpikes(Main.spriteBatch);
-			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
-			Main.spriteBatch.Draw(texture3, Projectile.Center - Main.screenPosition + between * 5, null, Projectile.GetAlpha(Color.White), 0f, drawOrigin3, Projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(tOutline, Projectile.Center - Main.screenPosition, null, Projectile.GetAlpha(Color.White), 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+			Main.spriteBatch.Draw(tEye, Projectile.Center - Main.screenPosition + between * 5, null, Projectile.GetAlpha(Color.White), 0f, drawOrigin3, Projectile.scale, SpriteEffects.None, 0f);
 			for (int k = 0; k < 5; k++)
 			{
 				float x = Main.rand.Next(-10, 11) * 0.1f;
@@ -86,22 +92,22 @@ namespace SOTS.Projectiles.Celestial
                 {
 					x = 0;
 					y = 0;
-					Main.spriteBatch.Draw(texture4, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X), (float)(Projectile.Center.Y - (int)Main.screenPosition.Y)), null, Projectile.GetAlpha(Color.White.MultiplyRGBA(color)) * 0.5f, 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(tFill, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X), (float)(Projectile.Center.Y - (int)Main.screenPosition.Y)), null, Projectile.GetAlpha(Color.White.MultiplyRGBA(color)) * 0.5f, 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
 				}
-				Main.spriteBatch.Draw(texture, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, Projectile.GetAlpha(Color.White.MultiplyRGBA(color)) * 0.7f, 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
-				Main.spriteBatch.Draw(texture3, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y) + between * 5, null, Projectile.GetAlpha(Color.White.MultiplyRGBA(color)) * 0.7f, 0f, drawOrigin3, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(tOutline, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y), null, Projectile.GetAlpha(Color.White.MultiplyRGBA(color)) * 0.7f, 0f, drawOrigin, Projectile.scale, SpriteEffects.None, 0f);
+				Main.spriteBatch.Draw(tEye, new Vector2((float)(Projectile.Center.X - (int)Main.screenPosition.X) + x, (float)(Projectile.Center.Y - (int)Main.screenPosition.Y) + y) + between * 5, null, Projectile.GetAlpha(Color.White.MultiplyRGBA(color)) * 0.7f, 0f, drawOrigin3, Projectile.scale, SpriteEffects.None, 0f);
 			}
 		}
 		public void DrawSpikes(SpriteBatch spriteBatch)
 		{
 			if (!runOnce)
 			{
-				Color color = new Color(70, 255, 70, 0);
-				Vector2 drawPos = Projectile.Center - Main.screenPosition;
+				tSpike ??= ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/FluidFollowerSpike", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+				Color color = new(70, 255, 70, 0);
+                Vector2 drawPos = Projectile.Center - Main.screenPosition;
 				for (int i = 0; i < 12; i++)
 				{
 					counterArr[i] += randSeed1[i];
-					Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/FluidFollowerSpike");
 					Vector2 circular = new Vector2(16 * Projectile.scale, 0).RotatedBy(MathHelper.ToRadians(i * 30));
 					int frame = 0;
 					float scaleMult = 0.5f;
@@ -126,7 +132,7 @@ namespace SOTS.Projectiles.Celestial
 						counterArr[i] = 0;
 						randSeed1[i] = Main.rand.NextFloat(0.8f, 1.2f);
 					}
-					Rectangle FrameSize = new Rectangle(0, texture.Height / 4 * frame, texture.Width, texture.Height / 4);
+					Rectangle FrameSize = new(0, tSpike.Height / 4 * frame, tSpike.Width, tSpike.Height / 4);
 					for (int k = 0; k < 2; k++)
 					{
 						float x = Main.rand.Next(-10, 11) * 0.1f;
@@ -136,14 +142,14 @@ namespace SOTS.Projectiles.Celestial
 							x = 0;
 							y = 0;
 						}
-						spriteBatch.Draw(texture, drawPos + circular + new Vector2(x + 0.25f, y + 0.25f), FrameSize, Projectile.GetAlpha(color) * 1f, MathHelper.ToRadians(i * 30), new Vector2(0, 10.0f), Projectile.scale * scaleMult, SpriteEffects.None, 0f);
+						spriteBatch.Draw(tSpike, drawPos + circular + new Vector2(x + 0.25f, y + 0.25f), FrameSize, Projectile.GetAlpha(color) * 1f, MathHelper.ToRadians(i * 30), new Vector2(0, 10.0f), Projectile.scale * scaleMult, SpriteEffects.None, 0f);
 					}
 				}
 			}
 		}
 		bool runOnce = true;
-		float[] counterArr = new float[12];
-		float[] randSeed1 = new float[12];
+        private readonly float[] counterArr = new float[12];
+        private readonly float[] randSeed1 = new float[12];
 		public override void AI()
 		{
 			if (runOnce)

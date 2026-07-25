@@ -1,19 +1,23 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.ModLoader;
-using Terraria.ID;
 using SOTS.Buffs.Debuffs;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace SOTS.Projectiles.Camera
 {    
-    public class DreamingFrame : ModProjectile 
+    public class DreamingFrame : ModProjectile
     {
+        public override void OnSpawn(IEntitySource source)
+        {
+            if (Main.netMode != NetmodeID.Server)
+                SOTSPlayer.CameraShiftProjectiles.Add(Projectile.whoAmI); //whoami value is not synced in multiplayer, but since camera shift is client-sided, there should be no server issues here
+        }
         public override void SendExtraAI(BinaryWriter writer)
         {
 			writer.Write(mousePosition.X);
@@ -25,7 +29,7 @@ namespace SOTS.Projectiles.Camera
 			mousePosition.Y = reader.ReadSingle();
 		}
         public Vector2 mousePosition = Vector2.Zero;
-		public static Color Green1 => new Color(86, 226, 100, 0);
+		public static Color Green1 => new(86, 226, 100, 0);
 		public override void SetStaticDefaults()
 		{
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 5;  
@@ -61,6 +65,10 @@ namespace SOTS.Projectiles.Camera
         {
 			overWiresUI.Add(index);
         }
+		private static Texture2D texture;
+		private static Texture2D textureGradient;
+		private static Texture2D borderTexture;
+		private static Texture2D frameTexture;
         public override bool PreDraw(ref Color lightColor)
 		{
 			DrawAllGrabReticle();
@@ -68,10 +76,10 @@ namespace SOTS.Projectiles.Camera
 			float scaleMult = 1f;
 			float windUpProgress = windUp / windUpTime;
 			Color color = Green1;
-			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Camera/CameraCenterCross");
-			Texture2D textureGradient = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/LongGradient");
-			Texture2D borderTexture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Camera/CameraBorder");
-			Texture2D frameTexture = Terraria.GameContent.TextureAssets.Projectile[Type].Value;
+			texture ??= ModContent.Request<Texture2D>("SOTS/Projectiles/Camera/CameraCenterCross", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			textureGradient ??= ModContent.Request<Texture2D>("SOTS/Assets/LongGradient", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			borderTexture ??= ModContent.Request<Texture2D>("SOTS/Projectiles/Camera/CameraBorder", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			frameTexture ??= Terraria.GameContent.TextureAssets.Projectile[Type].Value;
 			Vector2 center = Projectile.Center - Main.screenPosition;
 			float squareRadius = 60;
 			if(Projectile.timeLeft < 20)
@@ -295,7 +303,7 @@ namespace SOTS.Projectiles.Camera
 			Vector2 playerToProjectile = Projectile.Center + new Vector2(0, Projectile.gfxOffY) - player.MountedCenter;
 			Vector2 offset = player.MountedCenter + new Vector2(28, -4.5f * player.direction).RotatedBy(playerToProjectile.ToRotation());
 			Color color = Green1;
-			Texture2D textureGradient = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/LongGradient");
+			textureGradient ??= ModContent.Request<Texture2D>("SOTS/Assets/LongGradient", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
 			for (int i = 0; i < itemVectors.Count; i++)
             {
 				Item item = Main.item[(int)itemVectors[i].X];
@@ -309,7 +317,7 @@ namespace SOTS.Projectiles.Camera
 					Vector2 itemToPlayer = item.Center - new Vector2(0, 2) - offset;
 					Main.spriteBatch.Draw(textureGradient, offset - Main.screenPosition, null, color * (0.1f + 0.1f * scaleMult), itemToPlayer.ToRotation(), new Vector2(1, 1), new Vector2(1f / (textureGradient.Width - 32) * itemToPlayer.Length() * (float)Math.Sqrt(alternateProgress), 1 + 0.4f * scaleMult), SpriteEffects.None, 0);
 				}
-				DrawGrabReticle(item.Center + new Vector2(0, -2), progress, 0.75f);
+                DrawGrabReticle(item.Center + new Vector2(0, -2), progress, 0.75f);
 			}
 			for (int i = 0; i < npcVectors.Count; i++)
 			{
@@ -319,11 +327,11 @@ namespace SOTS.Projectiles.Camera
 					progress *= (Projectile.timeLeft - 10f) / 10f;
 				if (progress < 0)
 					progress = 0;
-				DrawGrabReticle(npc.Center + new Vector2(0, -2), progress, 1.0f);
+                DrawGrabReticle(npc.Center + new Vector2(0, -2), progress, 1.0f);
 			}
 		}
 		public static int timeToGrabVisual = 18;
-		public void DrawGrabReticle(Vector2 position, float progress, float sizeMult = 1f)
+		public static void DrawGrabReticle(Vector2 position, float progress, float sizeMult = 1f)
 		{
 			Color color = Green1;
 			float scaleMult = sizeMult;
@@ -414,7 +422,8 @@ namespace SOTS.Projectiles.Camera
 				{
 					if (Projectile.timeLeft == 15)
 					{
-						for (int i = 0; i < npcVectors.Count; i++)
+						int buffType = ModContent.BuffType<DendroChain>();
+                        for (int i = 0; i < npcVectors.Count; i++)
 						{
 							NPC target = Main.npc[(int)npcVectors[i].X];
 							if (isNPCValidTarget(target))
@@ -424,7 +433,7 @@ namespace SOTS.Projectiles.Camera
 									NPC.CheckCatchNPC(target, target.Hitbox, player.HeldItem, player, true);
 								}
 								else
-									target.AddBuff(ModContent.BuffType<DendroChain>(), DendroChainNPCOperators.DendroChainStandardDuration + Projectile.damage);
+									target.AddBuff(buffType, DendroChainNPCOperators.DendroChainStandardDuration + Projectile.damage);
 								SOTSProjectile.DustStar(target.Center, Vector2.Zero, Green1 * 0.5f, 0f, 40, 0, 4, 12f, 9f, 1f, 0.9f, 0.08f);
 							}
 						}
@@ -467,10 +476,11 @@ namespace SOTS.Projectiles.Camera
 						Vector2 velo = Main.rand.NextVector2Circular(1, 1) + FlowerVe.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 3f);
 						SOTSProjectile.DustStar(Projectile.Center + FlowerVe, addedVelocity + velo * scaleMult, Green1 * scaleMult, 0f, 40, 0, 4, 8f, 5f, 1f, 1f * (0.2f + 0.8f * scaleMult));
 					}
-					for (int i = 0; i < 60; i++)
+					int dustType = ModContent.DustType<Dusts.AlphaDrainDust>();
+                    for (int i = 0; i < 60; i++)
 					{
 						Vector2 circular = new Vector2(Main.rand.NextFloat(10f, 15f), 0).RotatedBy(MathHelper.ToRadians(i * 6f + Main.rand.NextFloat(-3f, 3f)));
-						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, ModContent.DustType<Dusts.AlphaDrainDust>());
+						Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5), 0, 0, dustType);
 						dust.color = Green1;
 						dust.velocity = dust.velocity * 0.2f + circular + addedVelocity;
 						dust.noGravity = true;
@@ -513,7 +523,7 @@ namespace SOTS.Projectiles.Camera
 		public void ManageHitbox()
         {
 			int width = 120;
-			Rectangle hitbox = new Rectangle((int)Projectile.Center.X - width/2, (int)Projectile.Center.Y - width / 2, width, width);
+			Rectangle hitbox = new((int)Projectile.Center.X - width/2, (int)Projectile.Center.Y - width / 2, width, width);
 			if(npcVectors.Count < 10)
 			{
 				for (int i = 0; i < 200; i++)

@@ -74,6 +74,17 @@ N/A
 
 Daily Log:
 
+
+
+7/25/26
+1. Some targeted optimizations:
+	1. Removed huge overhead in ModifyScreenPosition() which was searching the projectile array every frame (1000 iterations) for target projectiles
+	2. Now the projectiles that are affected add themselves to their own buffer (this was tested in and should work in multiplayer, since it is a client sided feature)
+	3. The aforementioned projectiles now lazy load important textures, which should also reduce overhead.
+	4. Some other content such, such as some universal assets in SOTSProjectile, now are also loaded with coalescing assignment (lazy loaded), which should further reduce some lag for related interactions
+	5. Some adjustments in a handful of places removing unnecessary square root calculations
+
+
 --- Hotfix 0.25.1.7 ---
 
 6/17/26

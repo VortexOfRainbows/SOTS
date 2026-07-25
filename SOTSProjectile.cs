@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Common.GlobalNPCs;
-using SOTS.Dusts;
 using SOTS.Items.Planetarium.FromChests;
 using SOTS.Projectiles;
 using SOTS.Projectiles.Blades;
@@ -33,13 +32,13 @@ namespace SOTS
 	public class SOTSProjectile : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
-        public static int[] immuneToTimeFreeze;
-		public static int[] isChargeWeapon;
+        public static int[] ImmuneToTimeFreeze { get; private set; }
+        public static int[] IsChargeWeapon { get; private set; }
 		public static void LoadArrays()
 		{
-			immuneToTimeFreeze = new int[]
-			{
-				ModContent.ProjectileType<VisionWeapon>(),
+			ImmuneToTimeFreeze =
+            [
+                ModContent.ProjectileType<VisionWeapon>(),
 				ModContent.ProjectileType<ChaosThorn>(),
 				ModContent.ProjectileType<DigitalSlash>(),
 				ModContent.ProjectileType<PyrocideSlash>(),
@@ -48,15 +47,15 @@ namespace SOTS
 				ModContent.ProjectileType<Projectiles.Celestial.ClairvoyanceShade>(),
 				ModContent.ProjectileType<PixelLaser>(),
 				ModContent.ProjectileType<PlasmaShrimp>(),
-			};
-			isChargeWeapon = new int[]
-			{
-				ProjectileID.LastPrismLaser,
+			];
+			IsChargeWeapon =
+            [
+                ProjectileID.LastPrismLaser,
 				ModContent.ProjectileType<PrismOrb>(),
 				ModContent.ProjectileType<Starshot>(),
 				ModContent.ProjectileType<EarthshakerPickaxe>(),
 				ModContent.ProjectileType<HyperlightOrb>(),
-			};
+			];
 		}
 		public static bool CanBeTimeFrozen(Projectile proj)
         {
@@ -70,9 +69,9 @@ namespace SOTS
                     {
 						return false;
                     }
-					if (proj.aiStyle == 7) //grappling hook
+					if (proj.aiStyle == ProjAIStyleID.Hook) //grappling hook
 						return false;
-					if(immuneToTimeFreeze.Contains(proj.type) || isChargeWeapon.Contains(proj.type))
+					if(ImmuneToTimeFreeze.Contains(proj.type) || IsChargeWeapon.Contains(proj.type))
                     {
 						return false;
 					}
@@ -474,15 +473,16 @@ namespace SOTS
         }
         public void HomingUnit(Projectile projectile)
 		{
-			if (hasHitYet || !projectile.active || projectile.damage <= 0 || counter > 900f || SOTSPlayer.typhonBlacklist.Contains(projectile.type))
+			if (hasHitYet || !projectile.active || projectile.damage <= 0 || counter > 900f || SOTSPlayer.HomingProjectileBlacklist.Contains(projectile.type))
 				return;
 			Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-			float distP = Vector2.Distance(player.Center, projectile.Center);
-			if (!player.active || distP > 2000f)
+			float distP = Vector2.DistanceSquared(player.Center, projectile.Center);
+			float minimimDistToPlayerSq = 2000f * 2000f;
+			if (!player.active || distP > minimimDistToPlayerSq)
 				return;
 			int AdvisorPet = ModContent.ProjectileType<AdvisorPet>();
-            if (modPlayer.petAdvisor && counter >= 5 && modPlayer.typhonRange > 0)
+            if (modPlayer.petAdvisor && counter >= 5 && modPlayer.HomingRange > 0)
 			{
 				if (petAdvisorID == -1)
 				{
@@ -508,13 +508,13 @@ namespace SOTS
 			}
 			if (counter >= 5)
 			{
-				if (modPlayer.typhonRange > 0)
+				if (modPlayer.HomingRange > 0)
 				{
-					float minDist = modPlayer.typhonRange * 2;
+					float minDist = modPlayer.HomingRange * 2;
 					int target2 = -1;
 					float speed = projectile.velocity.Length();
 					bool capable = speed > 1f && (projectile.CountsAsClass(DamageClass.Ranged) || projectile.CountsAsClass(DamageClass.Melee) || projectile.CountsAsClass(DamageClass.Magic) || projectile.CountsAsClass(DamageClass.Throwing) || (!projectile.sentry && !projectile.minion)) && (projectile.ModProjectile == null || projectile.ModProjectile.ShouldUpdatePosition()) && (projectile.ModProjectile == null || projectile.ModProjectile.CanDamage() == null || (bool)projectile.ModProjectile.CanDamage() == true);
-					if (projectile.friendly && !projectile.hostile && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.typhonWhitelist.Contains(projectile.type)))
+					if (projectile.friendly && !projectile.hostile && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.HomingProjectileWhitelist.Contains(projectile.type)))
 					{
 						//Main.NewText("past Check " + projectile.whoAmI);
 						for (int i = 0; i < Main.npc.Length; i++)
@@ -525,7 +525,7 @@ namespace SOTS
 								float distance = Vector2.Distance(projectile.Center, target.Center);
 								if (distance < minDist)
 								{
-									Rectangle increasedHitbox = new Rectangle(projectile.Hitbox.X - modPlayer.typhonRange, projectile.Hitbox.Y - modPlayer.typhonRange, projectile.width + 2 * modPlayer.typhonRange, projectile.height + 2 * modPlayer.typhonRange);
+									Rectangle increasedHitbox = new Rectangle(projectile.Hitbox.X - modPlayer.HomingRange, projectile.Hitbox.Y - modPlayer.HomingRange, projectile.width + 2 * modPlayer.HomingRange, projectile.height + 2 * modPlayer.HomingRange);
 									if (target.Hitbox.Intersects(increasedHitbox))
 									{
 										if (Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
@@ -578,10 +578,10 @@ namespace SOTS
 		public static bool IsValidForCoMinions(Player player, Projectile projectile)
 		{
 			return player.active && (projectile.minion || projectile.type == ModContent.ProjectileType<CrystalSerpentHead>()) 
-				&& projectile.active && !SOTSPlayer.symbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) 
+				&& projectile.active && !SOTSPlayer.BotanicalSymbioteBlacklist.Contains(projectile.type) && !VoidPlayer.isVoidMinion(projectile.type) 
 				&& projectile.damage > 0 && projectile.owner == Main.myPlayer;
         }
-		public void CoMinion(Projectile proj, int damage, int type, ref int minionIndexVar)
+		public static void CoMinion(Projectile proj, int damage, int type, ref int minionIndexVar)
         {
             if (damage > 0)
             {
@@ -616,7 +616,7 @@ namespace SOTS
 			if (IsValidForCoMinions(player, projectile))
 			{
 				SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
-				CoMinion(projectile, modPlayer.symbioteDamage, ModContent.ProjectileType<BloomingHookMinion>(), ref bloomingHookAssignment);
+                CoMinion(projectile, modPlayer.symbioteDamage, ModContent.ProjectileType<BloomingHookMinion>(), ref bloomingHookAssignment);
                 CoMinion(projectile, modPlayer.BundleSnakeDamage, ModContent.ProjectileType<BundleSnakeMinion>(), ref SnakeAssignment);
                 CoMinion(projectile, modPlayer.LittleWoeDamage, ModContent.ProjectileType<WoeBall>(), ref WoeAssignment);
             }
@@ -689,10 +689,11 @@ namespace SOTS
 			if((affixID == 5 && AffixAI0 == 0))
 			{
 				Vector2 velo = new Vector2(0, -18);
-				for (int i = 0; i < 3; i++)
+				int shrapType = ModContent.ProjectileType<BigEvostonePebble>();
+                for (int i = 0; i < 3; i++)
 				{
 					float randAmt = 12 + 12 * i;
-					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<BigEvostonePebble>(), (int)(projectile.damage * 0.7f), projectile.knockBack, Main.myPlayer, Main.rand.Next(60));
+					Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, velo.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-randAmt, randAmt))) * Main.rand.NextFloat(0.2f, 0.3f), shrapType, (int)(projectile.damage * 0.7f), projectile.knockBack, Main.myPlayer, Main.rand.Next(60));
 				}
 				AffixAI0 = 1;
 			}
@@ -700,10 +701,9 @@ namespace SOTS
 			{
 				if (Main.myPlayer == projectile.owner)
 				{
-					for (int i = 0; i < 6; i++)
-					{
-						Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-180, 180f))) * Main.rand.NextFloat(0.2f, 0.3f), ModContent.ProjectileType<SteelShrapnel>(), (int)(projectile.damage), projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
-					}
+					int shrapType = ModContent.ProjectileType<SteelShrapnel>();
+                    for (int i = 0; i < 6; i++)
+						Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, projectile.velocity.RotatedBy(MathHelper.ToRadians(Main.rand.NextFloat(-180, 180f))) * Main.rand.NextFloat(0.2f, 0.3f), shrapType, projectile.damage, projectile.knockBack, Main.myPlayer, Main.rand.Next(3));
 				}
 			}
 			return base.OnTileCollide(projectile, oldVelocity);
@@ -829,13 +829,17 @@ namespace SOTS
 		{
 			DrawStar(location, new Color(116, 125, 238, 0), alphaMult, rotation, spin, pointAmount, innerDistAdd, innerDistMin, xCompress, density);
 		}
+		private static Texture2D gradientTexture;
+		private static Texture2D darkerGradientTexture;
 		public static void DrawStar(Vector2 location, Color color, float alphaMult, float rotation, float spin = 0, int pointAmount = 6, float innerDistAdd = 10, float innerDistMin = 8, float xCompress = 0.6f, int density = 180, float forceInward = 0f, int textureType = 0, bool halfStar = false)
 		{
-			Vector2 fireFrom = location; 
-			Texture2D texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradient");
-			if(textureType == 1)
-				texture = (Texture2D)ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradientDarker");
-			float offset = 0f;
+			Vector2 fireFrom = location;
+            gradientTexture ??= ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradient", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            darkerGradientTexture ??= ModContent.Request<Texture2D>("SOTS/Assets/StrangeGradientDarker", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Texture2D texture = gradientTexture;
+			if (textureType == 1)
+				texture = darkerGradientTexture;
+            float offset = 0f;
 			float maxFloat = 360f;
 			if (halfStar)
 			{
@@ -878,7 +882,7 @@ namespace SOTS
 				{
 					circular = circular.RotatedBy(spin);
 					circular.X *= xCompress;
-					Vector2 scale = new Vector2(circular.Length() / length, 0.5f);
+					Vector2 scale = new(circular.Length() / length, 0.5f);
 					circular = circular.RotatedBy(rotation);
 					Main.spriteBatch.Draw(texture, fireFrom + circular - Main.screenPosition, null, color * otherAlphaMult * alphaMult * (1 / (circular.Length() / length)), circular.ToRotation(), new Vector2(texture.Width / 2, texture.Height / 2), scale * 1.25f, SpriteEffects.None, 0f);
 				}
