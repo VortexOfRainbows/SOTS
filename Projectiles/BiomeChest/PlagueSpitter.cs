@@ -211,7 +211,7 @@ namespace SOTS.Projectiles.BiomeChest
                         Vector2 circular = new Vector2(1 + Projectile.ai[2] / 9f, 0).RotatedBy(Main.rand.NextFloat(6.28f));
                         circular.Y *= 0.5f;
                         circular = circular.RotatedBy(Projectile.rotation - MathHelper.PiOver2);
-                        Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 18, 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, SpitterColor);
+                        Dust dust = Dust.NewDustDirect(Barrel + new Vector2(-5) + circular * 18, 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, SpitterColor);
                         dust.noGravity = true;
                         dust.scale = 1.0f;
                         dust.velocity *= 0.2f;
@@ -235,7 +235,7 @@ namespace SOTS.Projectiles.BiomeChest
                     {
                         Vector2 away = PlagueBallPosition((int)i, 0);
                         Vector2 ballPosition = away + Barrel;
-                        Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, SpitterColor);
+                        Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, SpitterColor);
                         dust.noGravity = true;
                         dust.scale = 1.5f;
                         dust.velocity *= 0.2f;
@@ -270,7 +270,7 @@ namespace SOTS.Projectiles.BiomeChest
                 {
                     Vector2 away = PlagueBallPosition((int)Projectile.ai[2], i);
                     Vector2 ballPosition = away + Barrel;
-                    Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, SpitterColor);
+                    Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, SpitterColor);
                     dust.noGravity = true;
                     dust.scale = 2f - (i != 0 ? 1f : 0);
                     dust.velocity *= 0.0f;
@@ -300,7 +300,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             for (int i = 0; i < 12; i++)
             {
-                Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, SpitterColor);
+                Dust dust = Dust.NewDustDirect(ballPosition + new Vector2(-5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, SpitterColor);
                 dust.noGravity = true;
                 if(i < 5)
                 {
@@ -399,7 +399,7 @@ namespace SOTS.Projectiles.BiomeChest
                 int chance = SOTS.Config.lowFidelityMode ? 20 : 5;
                 if (Main.rand.NextBool(chance))
                 {
-                    Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color);
+                    Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color);
                     dust.scale = 1.0f;
                     dust.velocity *= 0.33f;
                     dust.velocity += Projectile.velocity * Main.rand.NextFloat(1f, 4f);
@@ -408,7 +408,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             for (int i = 10; i > 0; i--)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color, 1f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * Main.rand.NextFloat() * 0.5f + Projectile.velocity * Main.rand.NextFloat(0f, 8f);
                 dust.fadeIn = 8;
@@ -416,7 +416,7 @@ namespace SOTS.Projectiles.BiomeChest
             }
             for (int i = 15; i > 0; i--)
             {
-                Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1f);
+                Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color, 1f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * Main.rand.NextFloat() + Projectile.velocity * Main.rand.NextFloat(0.0f, 4f);
                 dust.fadeIn = 4;

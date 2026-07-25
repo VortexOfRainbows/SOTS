@@ -46,7 +46,7 @@ namespace SOTS.Items.Tools
         {
             if (Main.rand.NextBool(3))
             {
-                Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, ModContent.DustType<PixelDust>(), player.direction * 2, 0f);
+                Dust dust = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, SOTSUtils.TypeHelper.PixelDustType, player.direction * 2, 0f);
                 dust.velocity *= 0.3f;
                 dust.scale = 1f;
                 dust.fadeIn = 10f;

@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.Earth
 				int chance = SOTS.Config.lowFidelityMode ? 36 : 12;
 				if(Main.rand.NextBool(chance) || extra)
 				{
-					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 0.75f);
+					Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color, 0.75f);
 					dust.noGravity = true;
 					if (!extra)
 					{
@@ -122,7 +122,7 @@ namespace SOTS.Projectiles.Earth
 			}
 			for (int i = 3; i > 0; i--)
 			{
-				Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1f);
+				Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color, 1f);
 				dust.noGravity = true;
 				dust.velocity = dust.velocity * 0.2f + Projectile.velocity * Main.rand.NextFloat(0.1f, 1.0f);
 				if (i == 2)

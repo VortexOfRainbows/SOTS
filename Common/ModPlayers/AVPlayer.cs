@@ -62,7 +62,7 @@ namespace SOTS.Common.ModPlayers
             float w = Main.screenWidth;
             float h = Main.screenHeight;
             Vector2 center = Main.screenPosition + new Vector2(w * 0.5f, h * 0.5f);
-            float targetParticleCount = 10 / Main.GameZoomTarget * (SOTS.Config.lowFidelityMode ? 0.5f : 1f) * percent;
+            float targetParticleCount = 2 / Main.GameZoomTarget * (SOTS.Config.lowFidelityMode ? 0.1f : 1f) * percent;
             Vector2 windDirection = new Vector2(Main.windSpeedCurrent * (InUnderground ? 0.25f : 1f), 0) * 2.4f;
             for(int a = 0; a < targetParticleCount; a++)
             {
@@ -74,7 +74,6 @@ namespace SOTS.Common.ModPlayers
                 {
                     Vector2 awayFromBlockSurface = (dustPosition.Value - position).SNormalize() * Main.rand.NextFloat(1f);
                     PixelDust.Spawn(dustPosition.Value, 0, 0, windDirection + Main.rand.NextVector2Circular(0.5f, 0.5f) + awayFromBlockSurface, ColorHelper.AVDustColor * Main.rand.NextFloat(0.65f, 0.85f), 2).scale = 1;
-
                 }
             }
             //Gore.NewGoreDirect(new EntitySource_Misc("SOTS:AVAmbience"), Player.Center, Vector2.Zero, Main.rand.Next(GoreID.AmbientFloorCloud1, GoreID.AmbientAirborneCloud3 + 1), 1);

@@ -177,7 +177,7 @@ namespace SOTS.NPCs.Anomaly
 					}
 					else
 					{
-						Dust d = Dust.NewDustDirect(NPC.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0);
+						Dust d = Dust.NewDustDirect(NPC.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0);
 						d.velocity *= 0.25f;
 						d.velocity += NPC.velocity * 0.25f;
 						d.fadeIn = 8f;

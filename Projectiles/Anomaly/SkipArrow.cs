@@ -41,7 +41,7 @@ namespace SOTS.Projectiles.Anomaly
 		{
 			for(int i = 0; i < 20; i++)
 			{
-				Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(9, 9), 8, 8, ModContent.DustType<PixelDust>(), 0, 0);
+				Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(9, 9), 8, 8, SOTSUtils.TypeHelper.PixelDustType, 0, 0);
 				d.velocity *= 1.5f;
 				d.velocity += Projectile.velocity * 0.4f;
 				d.fadeIn = 8f;
@@ -58,7 +58,7 @@ namespace SOTS.Projectiles.Anomaly
 			Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
 			for(float i = 0; i < 1; i += 0.2f)
 			{
-				Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + Projectile.velocity * i, 0, 0, ModContent.DustType<PixelDust>(), 0, 0);
+				Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) + Projectile.velocity * i, 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0);
 				d.velocity *= 0.05f;
 				d.fadeIn = 12f;
 				d.noGravity = true;
@@ -87,7 +87,7 @@ namespace SOTS.Projectiles.Anomaly
 		{
 			for (int i = 0; i < 20; i++)
 			{
-				Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(9, 9), 8, 8, ModContent.DustType<PixelDust>(), 0, 0);
+				Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(9, 9), 8, 8, SOTSUtils.TypeHelper.PixelDustType, 0, 0);
 				d.velocity *= 2.0f;
 				d.fadeIn = 8f;
 				d.noGravity = true;
@@ -103,7 +103,7 @@ namespace SOTS.Projectiles.Anomaly
 				Vector2 position = Vector2.Lerp(Projectile.Center, targetPos, percent);
 				if(!Main.rand.NextBool(3))
 				{
-					Dust d = Dust.NewDustDirect(position - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0);
+					Dust d = Dust.NewDustDirect(position - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0);
 					d.velocity *= 0.25f;
 					d.fadeIn = 8f;
 					d.noGravity = true;

@@ -107,7 +107,7 @@ namespace SOTS.Projectiles.Earth
                 for (int i = 0; i < 12; i++)
                 {
                     Vector2 circular = new Vector2(8, 0).RotatedBy(i / 12f * MathHelper.TwoPi);
-                    Dust dust = Dust.NewDustDirect(gunTip - new Vector2(5, 5) + circular * 4, 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 0.8f);
+                    Dust dust = Dust.NewDustDirect(gunTip - new Vector2(5, 5) + circular * 4, 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color, 0.8f);
                     dust.fadeIn = 9;
                     dust.velocity *= 0.2f;
                     dust.velocity += circular * -0.5f * Main.rand.NextFloat(0.8f, 1.1f) + player.velocity * 1.15f + Projectile.velocity * 0.04f;
@@ -119,7 +119,7 @@ namespace SOTS.Projectiles.Earth
                 for (int i = 0; i < 20; i++)
                 {
                     Vector2 circular = new Vector2(12, 0).RotatedBy(i / 20f * MathHelper.TwoPi);
-                    Dust dust = Dust.NewDustDirect(gunTip - new Vector2(5, 5) + circular * 3, 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1f);
+                    Dust dust = Dust.NewDustDirect(gunTip - new Vector2(5, 5) + circular * 3, 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color, 1f);
                     dust.fadeIn = 9;
                     dust.velocity *= 0.2f;
                     dust.velocity += circular * -0.45f * Main.rand.NextFloat(0.8f, 1.1f) * Main.rand.NextFloat(0.8f, 1.1f) + player.velocity * 1.15f + Projectile.velocity * 0.04f;
@@ -133,7 +133,7 @@ namespace SOTS.Projectiles.Earth
                     for (int i = 0; i < 24; i++)
                     {
                         Vector2 circular = new Vector2(9, 0).RotatedBy(i / 24f * MathHelper.TwoPi);
-                        Dust dust = Dust.NewDustDirect(gunTip - new Vector2(5, 5) + circular * 1 * Main.rand.NextFloat(0.1f, 1.0f), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1.25f);
+                        Dust dust = Dust.NewDustDirect(gunTip - new Vector2(5, 5) + circular * 1 * Main.rand.NextFloat(0.1f, 1.0f), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color, 1.25f);
                         dust.fadeIn = 9;
                         dust.velocity *= 0.2f;
                         dust.velocity += circular * 0.6f * Main.rand.NextFloat(0.1f, 1.0f) + player.velocity * 1.15f + Projectile.velocity * Main.rand.NextFloat(0.2f, 0.8f);

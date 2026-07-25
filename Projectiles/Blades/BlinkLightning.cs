@@ -73,7 +73,7 @@ namespace SOTS.Projectiles.Blades
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<PixelDust>(), newColor: FizzleColor * 0.75f);
+                    Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.PixelDustType, newColor: FizzleColor * 0.75f);
                     d.velocity *= 1.2f;
                     d.velocity += Projectile.velocity * 0.4f;
                     d.noGravity = true;
@@ -98,7 +98,7 @@ namespace SOTS.Projectiles.Blades
             if (Main.rand.NextBool(3))
             {
                 float veloMult = Projectile.timeLeft > 40f ? 1 : Projectile.timeLeft / 40f;
-                Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), newColor: c);
+                Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, newColor: c);
                 d.velocity *= 0.25f + 0.75f * veloMult;
                 d.velocity += Projectile.oldVelocity * Main.rand.NextFloat(1, 1 + 2f * veloMult);
                 d.noGravity = true;

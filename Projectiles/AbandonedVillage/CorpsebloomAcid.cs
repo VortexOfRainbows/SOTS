@@ -55,7 +55,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     circular.X *= 0.5f;
                     circular = circular.RotatedBy(r);
                     Vector2 drawPos = Projectile.Center;
-                    Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelper.ToothAcheLime);
+                    Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, ColorHelper.ToothAcheLime);
                     dust.noGravity = true;
                     dust.scale = 1.5f;
                     dust.velocity *= 0.05f;
@@ -91,7 +91,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             }
             else if(Main.rand.NextBool(4))
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelper.ToothAcheLime, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, ColorHelper.ToothAcheLime, 1f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * Main.rand.NextFloat(0.2f) + Projectile.velocity * Main.rand.NextFloat(.3f);
                 dust.fadeIn = 7;
@@ -144,7 +144,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             }
             for (int i = 12; i > 0; i--)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, ColorHelper.ToothAcheLime, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, ColorHelper.ToothAcheLime, 1f);
                 dust.noGravity = true;
                 dust.velocity = dust.velocity * Main.rand.NextFloat(0.75f) + Projectile.velocity * Main.rand.NextFloat(1f);
                 dust.fadeIn = 4;

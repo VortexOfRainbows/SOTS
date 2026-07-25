@@ -359,7 +359,7 @@ namespace SOTS.Projectiles.Anomaly
             {
                 float rand = Main.rand.NextFloat();
                 Vector2 circularLocation = new Vector2(Main.rand.NextFloat(4) + Main.rand.NextFloat(4 * rand) + 8 * rand, 0).RotatedBy(MathHelper.ToRadians(i));
-                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, ModContent.DustType<PixelDust>());
+                Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - 5, Projectile.Center.Y - 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType);
                 dust.velocity = circularLocation;
                 dust.color = Color.Lerp(ColorHelper.VoidAnomalyPink, ColorHelper.VoidAnomalyBlue, Main.rand.NextFloat());
                 dust.color.A = (byte)Main.rand.Next(100);

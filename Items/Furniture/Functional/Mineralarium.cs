@@ -300,14 +300,14 @@ namespace SOTS.Items.Furniture.Functional
 					{
 						if(Main.rand.NextBool(7))
 						{
-							Dust dust = Dust.NewDustDirect(center - new Vector2(5 * direction, 0) - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, lightVisuals, Main.rand.NextFloat(0.7f, 0.9f));
+							Dust dust = Dust.NewDustDirect(center - new Vector2(5 * direction, 0) - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, lightVisuals, Main.rand.NextFloat(0.7f, 0.9f));
 							dust.noGravity = true;
 							dust.velocity = new Vector2(direction * Main.rand.NextFloat(-0.5f, 1.5f), Main.rand.NextFloat(-1, 1) * 0.7f) * 0.25f;
 							dust.fadeIn = 10;
 						}
 						if(Main.rand.NextBool(4))
 						{
-							Dust dust = Dust.NewDustDirect(blockPosition - new Vector2((size / 2 + 5) * direction, 0) - new Vector2(5, 5 + Main.rand.NextFloat(-1, 1) * size / 2), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, lightVisuals, Main.rand.NextFloat(0.8f, 1f + size / 30f));
+							Dust dust = Dust.NewDustDirect(blockPosition - new Vector2((size / 2 + 5) * direction, 0) - new Vector2(5, 5 + Main.rand.NextFloat(-1, 1) * size / 2), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, lightVisuals, Main.rand.NextFloat(0.8f, 1f + size / 30f));
 							dust.noGravity = true;
 							dust.velocity = new Vector2(direction * (0.5f + size / 24f), Main.rand.NextFloat(-1, 1) * 0.35f);
 							dust.fadeIn = 8;
@@ -812,7 +812,7 @@ namespace SOTS.Items.Furniture.Functional
 			{
 				Vector2 circularLocation = new Vector2(-3.25f * Main.rand.NextFloat(0.2f, 1.0f), 0).RotatedBy(MathHelper.ToRadians(k));
 				circularLocation += new Vector2(Main.rand.NextFloat(-1, 1), Main.rand.NextFloat(-1, 1)) * 0.8f;
-				int type = ModContent.DustType<PixelDust>();
+				int type = SOTSUtils.TypeHelper.PixelDustType;
 				Dust dust = Dust.NewDustDirect(new Vector2(position.X + circularLocation.X - 12, position.Y + circularLocation.Y - 12), 16, 16, type, 0, 0, 0, color);
 				dust.noGravity = true;
 				dust.velocity = circularLocation;

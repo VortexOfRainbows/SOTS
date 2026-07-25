@@ -1932,11 +1932,11 @@ namespace SOTS
 		{
 			return base.PreItemCheck();
 		}
-		public static List<int> CameraShiftProjectiles = new();
+		public static readonly List<int> CameraShiftProjectiles = new();
 		public float screenShakeMultiplier = 0f;
 		public override void ModifyScreenPosition()
 		{
-			Vector2 screenDimensions = new Vector2(Main.screenWidth, Main.screenHeight);
+			Vector2 screenDimensions = new(Main.screenWidth, Main.screenHeight);
 			bool seenCamera = false;
 			bool seenSubspace = false;
 			float cameraLockinDistSquared = 4000 * 4000;

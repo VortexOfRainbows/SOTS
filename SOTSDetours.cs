@@ -946,9 +946,7 @@ namespace SOTS
 		private static Vector3 LightingEngine_GetColor(On_LightingEngine.orig_GetColor orig, LightingEngine self, int x, int y)
 		{
 			if (FakePlayerProjectile.FullBrightThisDrawCycle)
-			{
-                return new Vector3(1, 1, 1);
-            }
+                return Vector3.One;
 			return orig(self, x, y);
 		}
 		private static void Player_ItemCheck_ManageRightClickFeatures_ShieldRaise(On_Player.orig_ItemCheck_ManageRightClickFeatures_ShieldRaise orig, Player self, bool generalCheck)

@@ -127,7 +127,7 @@ namespace SOTS.Projectiles.Permafrost
 					dust.alpha = Projectile.alpha;
 					if(Main.rand.NextBool(2))
 					{
-						dust.type = ModContent.DustType<PixelDust>();
+						dust.type = SOTSUtils.TypeHelper.PixelDustType;
 						dust.fadeIn = 7;
 						dust.scale = 2;
 					}

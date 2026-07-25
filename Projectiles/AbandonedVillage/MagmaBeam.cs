@@ -109,7 +109,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     Vector2 circular = new Vector2(1, 0).RotatedBy(i / 10f * MathF.PI);
                     circular.X *= 0.6f;
                     circular = circular.RotatedBy(r);
-                    Dust dust2 = Dust.NewDustDirect(Barrel - new Vector2(5, 5) + circular * 32, 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color);
+                    Dust dust2 = Dust.NewDustDirect(Barrel - new Vector2(5, 5) + circular * 32, 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color);
                     dust2.scale = Main.rand.NextFloat(1f, 2f);
                     dust2.noGravity = true;
                     dust2.velocity *= 0.1f;
@@ -313,7 +313,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 destination = newDestination;
                 for(int i = 0; i < 50; i++)
                 {
-                    Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(11, 11), 12, 12, ModContent.DustType<PixelDust>(), 0, 0, 0, color);
+                    Dust dust2 = Dust.NewDustDirect(Projectile.Center - new Vector2(11, 11), 12, 12, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color);
                     dust2.scale = Main.rand.NextFloat(1f, 2f);
                     dust2.noGravity = true;
                     dust2.velocity += Projectile.velocity.SNormalize() * Main.rand.NextFloat(1, 20);
@@ -401,7 +401,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 int chance = SOTS.Config.lowFidelityMode ? 50 : 33;
                 if(Main.rand.NextBool(chance))
                 {
-                    Dust dust2 = Dust.NewDustDirect(finalPosition - new Vector2(11, 11), 12, 12, ModContent.DustType<PixelDust>(), 0, 0, 0, color * TimeLeftPercent);
+                    Dust dust2 = Dust.NewDustDirect(finalPosition - new Vector2(11, 11), 12, 12, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color * TimeLeftPercent);
                     dust2.scale = Main.rand.NextFloat(0.75f, 1.25f);
                     dust2.noGravity = true;
                     dust2.velocity = (dust2.velocity * 0.55f + velo * 2.75f * Main.rand.NextFloat(1.0f)) * TimeLeftPercent;
@@ -409,7 +409,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 }
             }
             points.Add(finalPosition);
-            Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(37, 37), 64, 64, ModContent.DustType<PixelDust>(), 0, 0, 0, color * TimeLeftPercent, Main.rand.NextFloat(1, 2f));
+            Dust dust = Dust.NewDustDirect(finalPosition - new Vector2(37, 37), 64, 64, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color * TimeLeftPercent, Main.rand.NextFloat(1, 2f));
             dust.noGravity = true;
             dust.velocity = dust.velocity * 0.1f + velo * Main.rand.NextFloat(1.0f) + Main.rand.NextVector2Circular(8, 8) * TimeLeftPercent;
             dust.fadeIn = 7;

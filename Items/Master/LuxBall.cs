@@ -97,7 +97,7 @@ namespace SOTS.Items.Master
                     Color color = ColorHelper.Pastel(percent * MathF.PI * 4, true);
                     color.A = 0;
                     float perc = 1 - (i + j) / (float)Projectile.oldPos.Length;
-                    Dust d = Dust.NewDustDirect(Vector2.Lerp(center, previous, j) - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), newColor: color);
+                    Dust d = Dust.NewDustDirect(Vector2.Lerp(center, previous, j) - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, newColor: color);
                     d.velocity *= 0.1f * perc;
                     d.noGravity = true;
                     d.fadeIn = 7f;

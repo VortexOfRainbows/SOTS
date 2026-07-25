@@ -397,59 +397,33 @@ namespace SOTS.Items.Invidia
             Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
             PillarTexture ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/SanctuaryPillar", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Vector2 drawPos = new Vector2(i, j) * 16 + zero - Main.screenPosition;
-            Vector3[] slices = new Vector3[9];
+            Vector3[] slices = new Vector3[4];
             if (colorCache.FullBright)
-                for (int x = 0; x < 9; ++x)
+                for (int x = 0; x < 4; ++x)
                     slices[x] = Vector3.One;
             else
-                Lighting.GetColor9Slice(i, j, ref slices);
+                Lighting.GetColor4Slice(i, j, ref slices);
             Vector3 vector = Lighting.GetColor(i, j).ToVector3();
             Vector3 tileLight;
             Vector2 position;
             Color color = new();
             Rectangle value = new();
-            for (int a = 0; a < 9; a++)
+            for (int a = 0; a < 4; a++)
             {
                 value.X = 0;
                 value.Y = 0;
-                value.Width = 4;
-                value.Height = 4;
+                value.Width = 8;
+                value.Height = 8;
                 switch (a)
                 {
                     case 1:
-                        value.Width = 8;
-                        value.X = 4;
+                        value.X = 8;
                         break;
                     case 2:
-                        value.X = 12;
+                        value.Y = 8;
                         break;
                     case 3:
-                        value.Height = 8;
-                        value.Y = 4;
-                        break;
-                    case 4:
-                        value.Width = 8;
-                        value.Height = 8;
-                        value.X = 4;
-                        value.Y = 4;
-                        break;
-                    case 5:
-                        value.X = 12;
-                        value.Y = 4;
-                        value.Height = 8;
-                        break;
-                    case 6:
-                        value.Y = 12;
-                        break;
-                    case 7:
-                        value.Width = 8;
-                        value.Height = 4;
-                        value.X = 4;
-                        value.Y = 12;
-                        break;
-                    case 8:
-                        value.X = 12;
-                        value.Y = 12;
+                        value.Y = value.X = 8;
                         break;
                 }
                 //value.Y += glowOffset.Y;

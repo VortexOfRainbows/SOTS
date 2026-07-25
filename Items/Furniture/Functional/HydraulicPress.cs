@@ -292,7 +292,7 @@ namespace SOTS.Items.Furniture.Functional
 					{
 						for(int z = 0; z <= 1; z++)
 						{
-							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - Projectile.width / 4, Projectile.position.Y + Projectile.height - 2) - new Vector2(5, 5), Projectile.width / 2, 4, ModContent.DustType<PixelDust>(),
+							Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X - Projectile.width / 4, Projectile.position.Y + Projectile.height - 2) - new Vector2(5, 5), Projectile.width / 2, 4, SOTSUtils.TypeHelper.PixelDustType,
 								0, -z * Main.rand.NextFloat(0.4f, 2.5f), 0, color, Main.rand.NextFloat(0.8f, 1.2f));
 							dust.noGravity = true;
 							dust.velocity.Y *= 0.2f;

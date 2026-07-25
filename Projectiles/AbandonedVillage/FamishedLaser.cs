@@ -47,7 +47,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 				if (this is BridgeburnerLaser)
                     for (int i = 0; i < 15; i++)
                     {
-                        Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(11, 11), 12, 12, ModContent.DustType<PixelDust>(), 0, 0, 0, color, 1.75f);
+                        Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(11, 11), 12, 12, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color, 1.75f);
                         dust.noGravity = true;
                         dust.velocity *= 1.25f;
                         dust.velocity += Projectile.velocity * Main.rand.NextFloat(2f, 8f);
@@ -77,7 +77,7 @@ namespace SOTS.Projectiles.AbandonedVillage
 				int chance = SOTS.Config.lowFidelityMode ? 50 : 25;
 				if(Main.rand.NextBool(chance) || extra)
 				{
-					Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, ModContent.DustType<PixelDust>(), 0, 0, 0, color * Percent, 0.75f * dustScaleMult);
+					Dust dust = Dust.NewDustDirect(FinalPosition - new Vector2(11, 11), 17, 17, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color * Percent, 0.75f * dustScaleMult);
 					dust.noGravity = true;
                     dust.velocity *= 1.25f * Percent * dustScaleMult;
                     dust.velocity += Projectile.velocity * Main.rand.NextFloat(6f, 8f) * Percent;

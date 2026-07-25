@@ -69,7 +69,7 @@ namespace SOTS.Projectiles.Blades
 						Vector2 circularLocation = new Vector2(-6, 0).RotatedBy(MathHelper.ToRadians(i));
 						circularLocation.Y *= 0.4f;
 						circularLocation = circularLocation.RotatedBy(Projectile.rotation - MathHelper.PiOver4);
-						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, ModContent.DustType<PixelDust>());
+						Dust dust = Dust.NewDustDirect(new Vector2(Projectile.Center.X + circularLocation.X - 4, Projectile.Center.Y + circularLocation.Y - 4), 4, 4, SOTSUtils.TypeHelper.PixelDustType);
 						dust.noGravity = true;
 						dust.velocity *= 0.1f;
 						dust.velocity += circularLocation * 0.1f + trueVelocity * 0.4f;
@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.Blades
 			{
 				for (float i = 0; i < 1.0f; i += 0.5f)
 				{
-					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) - trueVelocity * i, 0, 0, ModContent.DustType<PixelDust>(), Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f);
+					Dust dust = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5) - trueVelocity * i, 0, 0, SOTSUtils.TypeHelper.PixelDustType, Projectile.velocity.X * .2f, Projectile.velocity.Y * .2f);
 					dust.noGravity = true;
 					dust.scale = Main.rand.Next(1, 3);
 					dust.fadeIn = 12f;

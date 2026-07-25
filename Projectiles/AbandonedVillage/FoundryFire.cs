@@ -86,7 +86,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                         circular.X *= 0.5f;
                         circular = circular.RotatedBy(r);
                         Vector2 drawPos = Projectile.Center;
-                        Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color);
+                        Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color);
                         dust.noGravity = true;
                         dust.scale = 2f;
                         dust.velocity *= 0.1f;
@@ -198,7 +198,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                         circular.X *= 0.5f;
                         circular = circular.RotatedBy(r);
                         Vector2 drawPos = Projectile.Center;
-                        Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, ModContent.DustType<PixelDust>(), 0, 0, 0, color);
+                        Dust dust = Dust.NewDustDirect(drawPos + new Vector2(-5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, 0, 0, 0, color);
                         dust.noGravity = true;
                         dust.scale = 1.5f;
                         dust.velocity *= 0.1f;

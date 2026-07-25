@@ -104,7 +104,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                     SOTSUtils.PlaySound(SoundID.Item110, Projectile.Center, 1.2f, 0.2f);
                     for(int i = 0; i < 5; i++)
                     {
-                        Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, ModContent.DustType<PixelDust>(), newColor: FizzleColor * 0.75f);
+                        Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, SOTSUtils.TypeHelper.PixelDustType, newColor: FizzleColor * 0.75f);
                         d.velocity *= 1.2f;
                         d.velocity += Projectile.velocity * 0.4f;
                         d.noGravity = true;
@@ -123,7 +123,7 @@ namespace SOTS.Projectiles.AbandonedVillage
             Color c = Projectile.ai[2] >= 0 ? ColorHelper.VibrantColorGradient(Main.rand.NextFloat(180), true) : FizzleColor * 0.75f;
             if (Main.rand.NextBool(6))
             {
-                Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), newColor: c);
+                Dust d = Dust.NewDustDirect(Projectile.Center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, newColor: c);
                 d.velocity *= 0.1f;
                 d.velocity += Projectile.oldVelocity * 0.4f;
                 d.noGravity = true;
@@ -193,7 +193,7 @@ namespace SOTS.Projectiles.AbandonedVillage
                 {
                     Vector2 center = Projectile.oldPos[i] + Projectile.Size / 2;
                     float perc = 1 - i / (float)Projectile.oldPos.Length;
-                    Dust d = Dust.NewDustDirect(center - new Vector2(5, 5), 0, 0, ModContent.DustType<PixelDust>(), newColor: c * perc);
+                    Dust d = Dust.NewDustDirect(center - new Vector2(5, 5), 0, 0, SOTSUtils.TypeHelper.PixelDustType, newColor: c * perc);
                     d.velocity *= 0.2f * perc;
                     d.velocity += Projectile.oldVelocity * 0.75f;
                     d.noGravity = true;

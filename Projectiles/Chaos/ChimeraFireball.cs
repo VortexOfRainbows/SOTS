@@ -81,7 +81,7 @@ namespace SOTS.Projectiles.Chaos
             }
             for (int i = 0; i < 36; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, i % 2 == 0 ? SOTSUtils.TypeHelper.CopyDust4Type : ModContent.DustType<PixelDust>());
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, i % 2 == 0 ? SOTSUtils.TypeHelper.CopyDust4Type : SOTSUtils.TypeHelper.PixelDustType);
                 dust.noGravity = true;
                 dust.velocity *= 1.5f;
                 dust.velocity += Projectile.velocity;
@@ -125,7 +125,7 @@ namespace SOTS.Projectiles.Chaos
                 int rand = Main.rand.Next(6);
                 if (rand <= 1)
                 {
-                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, rand == 0 ? SOTSUtils.TypeHelper.CopyDust4Type : ModContent.DustType<PixelDust>());
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, rand == 0 ? SOTSUtils.TypeHelper.CopyDust4Type : SOTSUtils.TypeHelper.PixelDustType);
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
                     dust.scale = 2.0f;
@@ -226,7 +226,7 @@ namespace SOTS.Projectiles.Chaos
                     Decay();
                 for(int i = 0; i < 2; i++)
                 {
-                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, i == 0 ? SOTSUtils.TypeHelper.CopyDust4Type : ModContent.DustType<PixelDust>());
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, i == 0 ? SOTSUtils.TypeHelper.CopyDust4Type : SOTSUtils.TypeHelper.PixelDustType);
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
                     dust.velocity.Y += -Main.rand.NextFloat(1.5f);
@@ -240,7 +240,7 @@ namespace SOTS.Projectiles.Chaos
                 int rand = Main.rand.Next(7);
                 if(rand <= 1)
                 {
-                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, rand == 0 ? SOTSUtils.TypeHelper.CopyDust4Type : ModContent.DustType<PixelDust>());
+                    Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, rand == 0 ? SOTSUtils.TypeHelper.CopyDust4Type : SOTSUtils.TypeHelper.PixelDustType);
                     dust.noGravity = true;
                     dust.velocity *= 0.5f;
                     dust.scale = 1.5f;

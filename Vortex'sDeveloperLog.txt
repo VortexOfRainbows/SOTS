@@ -75,6 +75,7 @@ N/A
 Daily Log:
 
 
+--- Hotfix 0.25.1.8 --- (NOT YET RELEASED TO WORKSHOP)
 
 7/25/26
 1. Some targeted optimizations:
@@ -83,7 +84,13 @@ Daily Log:
 	3. The aforementioned projectiles now lazy load important textures, which should also reduce overhead.
 	4. Some other content such, such as some universal assets in SOTSProjectile, now are also loaded with coalescing assignment (lazy loaded), which should further reduce some lag for related interactions
 	5. Some adjustments in a handful of places removing unnecessary square root calculations
-
+2. AV optimizations:
+	1. Reduce the default number of particles spawned by 80%
+	2. The decrease from low fidelity mode 50% less particles -> 90% less particles (compounds with the other reduction)
+3. Remove small overhead from lighting detour (profiler was reporting this a lot)
+4. Sanctuary Pillars now draw with 4-slice lighting instead of 9-slice lighting (profiler was reporting this a lot)
+	1. 4-slice lighting is standard for tiles...
+	2. This should make them less than half as laggy as before
 
 --- Hotfix 0.25.1.7 ---
 
