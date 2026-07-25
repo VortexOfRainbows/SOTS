@@ -89,7 +89,7 @@ Daily Log:
 	2. The decrease from low fidelity mode 50% less particles -> 90% less particles (compounds with the other reduction)
 3. Remove small overhead from lighting detour (profiler was reporting this a lot)
 4. Sanctuary Pillars now draw with 4-slice lighting instead of 9-slice lighting (profiler was reporting this a lot)
-	1. 4-slice lighting is standard for tiles...
+	1. 4-slice lighting is standard for walls...
 	2. This should make them less than half as laggy as before
 
 --- Hotfix 0.25.1.7 ---
