@@ -57,17 +57,17 @@ namespace SOTS.Common.GlobalNPCs
         private static int ProjEvilGrowth;
         private static int HydroBubble;
         private static int AccretionSingularity;
-        public static int[] nerfBeeNPC;
-        public static int[] nerfBeeBoss;
-        public static int[] nerfBeeProj;
-        public static int[] isSubspaceSerpent;
-        public static int[] vanillaNPCHasVoidDamage;
-        public static int[] miniBosses;
-        public static int[] intimidating;
-        public static int[] vanillaBoss;
-        public static int[] spirits;
-        public static int[] Constructs;
-        public static int[] Zombies;
+        public static HashSet<int> nerfBeeNPC { get; private set; }
+        public static HashSet<int> nerfBeeBoss { get; private set; }
+        public static HashSet<int> nerfBeeProj { get; private set; }
+        public static HashSet<int> isSubspaceSerpent { get; private set; }
+        public static HashSet<int> vanillaNPCHasVoidDamage { get; private set; }
+        public static HashSet<int> miniBosses { get; private set; }
+        public static HashSet<int> intimidating { get; private set; }
+        public static HashSet<int> vanillaBoss { get; private set; }
+        public static HashSet<int> spirits { get; private set; }
+        public static HashSet<int> Constructs { get; private set; }
+        public static HashSet<int> Zombies { get; private set; }
         public static void LoadArrays()
         {
             vanillaNPCHasVoidDamage = [ NPCID.BigCrimera, NPCID.LittleCrimera, NPCID.HeavySkeleton, NPCID.BigEater, NPCID.LittleEater, NPCID.BlackSlime, NPCID.BabySlime, NPCID.Slimer2, NPCID.Slimeling, NPCID.EaterofSouls, NPCID.DevourerHead, NPCID.EaterofWorldsHead, NPCID.MotherSlime, NPCID.ChaosBall, NPCID.ArmoredSkeleton, NPCID.DarkMummy, NPCID.Wraith, NPCID.Corruptor, NPCID.SeekerHead,

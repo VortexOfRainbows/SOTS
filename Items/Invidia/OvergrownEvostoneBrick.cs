@@ -253,15 +253,12 @@ namespace SOTS.Items.Invidia
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
-            if (glow == null)
-                glow = ModContent.Request<Texture2D>("SOTS/Items/Invidia/OvergrowthVineGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            glow ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/OvergrowthVineGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             if (IsGlowingTile(i, j))
             {
                 if (!SOTS.Config.SanctuaryLagReduction)
-                    for (int a = 0; a < 6; a++)
-					{
-						SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, new Color(60, 50, 50, 0), new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(a * 60 + SOTSWorld.GlobalCounter)));
-					}
+                    for (int a = 0; a < 3; a++)
+						SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, new Color(120, 100, 100, 0), new Vector2(2, 0).RotatedBy(MathHelper.ToRadians(a * 120 + SOTSWorld.GlobalCounter)));
 				SOTSTile.DrawSlopedGlowMask(i, j, Type, glow, Color.White, Vector2.Zero);
             }
         }

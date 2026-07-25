@@ -237,9 +237,7 @@ namespace SOTS.Common.GlobalNPCs
         public static void SetDebuffImmunities(NPC npc)
         {
 			if(npc.type == NPCID.BlackRecluse || npc.type == NPCID.WallCreeper || npc.type == NPCID.WallCreeperWall || npc.type == NPCID.BlackRecluseWall || npc.type == NPCID.JungleCreeperWall || npc.type == NPCID.JungleCreeper)
-            {
 				npc.buffImmune[ModContent.BuffType<WebbedNPC>()] = true;
-            }
         }
         public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
 		{

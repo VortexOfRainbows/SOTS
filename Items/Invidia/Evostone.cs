@@ -170,9 +170,7 @@ namespace SOTS.Items.Invidia
                     (tFrameY >= 0 && tFrameY <= 2 && (tFrameX == 10 || tFrameX == 11));
             }
             else
-            {
                 valid = true;
-            }
             if (!valid)
                 return;
             int frame = (i * 3 + j * 11) % 20;
@@ -189,9 +187,7 @@ namespace SOTS.Items.Invidia
                 int c = SOTS.Config.lowFidelityMode ? 3 : 6;
                 int d = SOTS.Config.lowFidelityMode ? 120 : 60;
                 for (int a = 0; a < c; a++)
-                {
                     SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, runeColor * 0.23f * fillPercent, new Vector2(.4f + 1.8f * SOTSWorld.MoonPhasePercent, 0).RotatedBy(MathHelper.ToRadians(SOTSWorld.GlobalCounter + a * d)), 74 + 18 * x, 2 + 18 * y);
-                }
                 SOTSTile.DrawSlopedGlowMask(i, j, t.TileType, runeTex, runeColor, Vector2.Zero, 74 + 18 * x, 2 + 18 * y);
             }
             else
@@ -294,8 +290,7 @@ namespace SOTS.Items.Invidia
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Texture2D tileTexture = TextureAssets.Tile[Type].Value;
-            if (glow == null)
-                glow = ModContent.Request<Texture2D>("SOTS/Items/Invidia/InvidiaPlatingTileGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            glow ??= ModContent.Request<Texture2D>("SOTS/Items/Invidia/InvidiaPlatingTileGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             Tile t = Main.tile[i, j];
             Color lC = Lighting.GetColor(i, j);
             float fillPercent = SOTSWorld.MoonPhasePercent * SOTSWorld.MoonPhasePercent * 0.6f + 0.4f * SOTSTile.PlanetariumLightingColorMultiplier(i, j) * SOTSWorld.MoonPhasePercent;

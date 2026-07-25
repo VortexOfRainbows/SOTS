@@ -94,20 +94,21 @@ namespace SOTS
 		{
 			return player.GetModPlayer<SOTSPlayer>();
 		}
-		public static int[] HomingProjectileBlacklist;
-		public static int[] HomingProjectileWhitelist;
-		public static int[] BotanicalSymbioteBlacklist;
-		public static int[] HarmonyBuffsWhitelist;
-		public static bool pyramidBattle = false;
+		public static readonly HashSet<int> HomingProjectileBlacklist = [];
+		public static readonly HashSet<int> HomingProjectileWhitelist = [];
+        public static readonly HashSet<int> BotanicalSymbioteBlacklist = [];
+        public static readonly HashSet<int> HarmonyBuffsWhitelist = [];
+
+        public static bool pyramidBattle = false;
 		public static void LoadArrays()
 		{
 			FakePlayerHelper.Initialize();
-			HomingProjectileBlacklist = [ ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(),
+			HomingProjectileBlacklist.UnionWith( [ ModContent.ProjectileType<ArcColumn>(), ModContent.ProjectileType<PhaseColumn>(), ModContent.ProjectileType<MacaroniBeam>(),
 				ModContent.ProjectileType<GenesisArc>(), ModContent.ProjectileType<GenesisCore>(), ModContent.ProjectileType<Projectiles.Earth.VibrantShard>(),
-				ModContent.ProjectileType<BlazingArrow>(), ModContent.ProjectileType<DimensionShredderLightning>() ];
-			BotanicalSymbioteBlacklist = [ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter, ModContent.ProjectileType<FreshGreenyCounter>()];
-			HomingProjectileWhitelist = [ModContent.ProjectileType<HardlightArrow>()];
-			HarmonyBuffsWhitelist = [BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge];
+				ModContent.ProjectileType<BlazingArrow>(), ModContent.ProjectileType<DimensionShredderLightning>() ]);
+            BotanicalSymbioteBlacklist.UnionWith([ModContent.ProjectileType<BloomingHook>(), ModContent.ProjectileType<BloomingHookMinion>(), ModContent.ProjectileType<CrystalSerpentBody>(), ProjectileID.AbigailCounter, ModContent.ProjectileType<FreshGreenyCounter>()]);
+            HomingProjectileWhitelist.UnionWith([ModContent.ProjectileType<HardlightArrow>()]);
+			HarmonyBuffsWhitelist.UnionWith([BuffID.Honey, ModContent.BuffType<Frenzy>(), BuffID.Panic, BuffID.ParryDamageBuff, BuffID.ShadowDodge]);
 		}
 		public const int TotalVisionNumber = 56;
 		public int UniqueVisionNumber = -1;
@@ -2263,5 +2264,34 @@ namespace SOTS
 				proj.netUpdate = true;
 			}
 		}
+		public int AdvisorPetIDMultiplayerSafe = -1;
+		/// <summary>
+		/// Returns the projectile.whoAmI value of the advisor pet by searching through the projectile array. Once found, the value is stored and only reset when the advisor disappears
+		/// </summary>
+		/// <param name="projectile"></param>
+		/// <returns></returns>
+		public int GetAdvisorPetID(Projectile projectile)
+		{
+			int AdvisorPet = ModContent.ProjectileType<AdvisorPet>();
+            if (AdvisorPetIDMultiplayerSafe != -1)
+            {
+                Projectile proj = Main.projectile[AdvisorPetIDMultiplayerSafe];
+                if (!proj.active || proj.owner != projectile.owner || proj.type != AdvisorPet)
+                    AdvisorPetIDMultiplayerSafe = -1;
+            }
+            if (AdvisorPetIDMultiplayerSafe == -1)
+            {
+                for (int i = 0; i < Main.projectile.Length; i++)
+                {
+                    Projectile proj = Main.projectile[i];
+                    if (proj.active && proj.owner == projectile.owner && proj.type == AdvisorPet)
+                    {
+                        AdvisorPetIDMultiplayerSafe = i;
+                        break;
+                    }
+                }
+            }
+			return AdvisorPetIDMultiplayerSafe;
+        }
 	}
 }

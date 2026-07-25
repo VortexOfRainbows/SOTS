@@ -74,8 +74,17 @@ N/A
 
 Daily Log:
 
+--- Hotfix 0.25.1.9 --- (NOT YET RELEASED)
 
---- Hotfix 0.25.1.8 --- (NOT YET RELEASED TO WORKSHOP)
+7/26/26
+1. Sanctuary Optimizations:
+	1. Reduced the number of liquid particle checks 150 -> 90, further reduced to 30 when Sanctuary Lag Reduction or Low Fidelity Mode config setting is on
+	2. Reduced the glow of the petals in the sanctuary 6 -> 3 (this should reduce the lag caused by the petals)
+2. Replaced quite a few int array datastructures in the mod with hashsets
+	1. This should reduce the overhead lag by noticeable amount, as these arrays were often searched every frame in O(n) time, often by every single projectile or npc for the related datastructure, now should be O(1) time
+	2. The main culprits should be the arrays that check for projectile homing and npc intimidation (whether they give intimidating presence debuff)
+
+--- Hotfix 0.25.1.8 ---
 
 7/25/26
 1. Some targeted optimizations:

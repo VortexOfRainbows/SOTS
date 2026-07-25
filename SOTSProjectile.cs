@@ -26,14 +26,15 @@ using static SOTS.SOTS;
 using SOTS.Projectiles.BiomeChest;
 using SOTS.Projectiles.AbandonedVillage;
 using SOTS.Helpers;
+using System.Collections.Generic;
 
 namespace SOTS
 {
 	public class SOTSProjectile : GlobalProjectile
     {
         public override bool InstancePerEntity => true;
-        public static int[] ImmuneToTimeFreeze { get; private set; }
-        public static int[] IsChargeWeapon { get; private set; }
+        public static HashSet<int> ImmuneToTimeFreeze { get; private set; }
+        public static HashSet<int> IsChargeWeapon { get; private set; }
 		public static void LoadArrays()
 		{
 			ImmuneToTimeFreeze =
@@ -66,23 +67,15 @@ namespace SOTS
 				if (sPlayer.oldTimeFreezeImmune || sPlayer.TimeFreezeImmune)
                 {
 					if((ProjectileID.Sets.LightPet[proj.type] || Main.projPet[proj.type]) && !proj.minion)
-                    {
 						return false;
-                    }
 					if (proj.aiStyle == ProjAIStyleID.Hook) //grappling hook
 						return false;
 					if(ImmuneToTimeFreeze.Contains(proj.type) || IsChargeWeapon.Contains(proj.type))
-                    {
 						return false;
-					}
 					if (sPlayer.oldHeldProj == proj.whoAmI || player.heldProj == proj.whoAmI)
-                    {
 						return false;
-                    }
 					if(proj.ModProjectile is SOTSBlade)
-                    {
 						return false;
-                    }
 				}
 			}
 			return true;
@@ -124,7 +117,6 @@ namespace SOTS
 		public bool hasHitYet = false;
 		public bool effect = true;
 		public int counter = 0;
-		public int petAdvisorID = -1;
 		private float AffixAI0 = 0;
 		public bool hasFrostBloomed = false;
 		public int bloomingHookAssignment = -1, SnakeAssignment = -1, WoeAssignment = -1;
@@ -139,7 +131,7 @@ namespace SOTS
 		}
 		public static bool GlobalFreezeSlowdown(Projectile proj)
         {
-            bool success = proj.TryGetGlobalProjectile<SOTSProjectile>(out SOTSProjectile instancedProjectile);
+            bool success = proj.TryGetGlobalProjectile(out SOTSProjectile instancedProjectile);
             if (!success)
                 return true;
             float percent = 1 - instancedProjectile.counter / GlobalFreezeSlowdownDuration;
@@ -471,110 +463,91 @@ namespace SOTS
 			if(projectile.velocity.X == initialVelo.X && projectile.velocity.Y != initialVelo.Y)
 				projectile.velocity = initialVelo;
         }
+		private bool? PartOfHomingBlacklist;
+		private bool? PartOfHomingWhitelist;
         public void HomingUnit(Projectile projectile)
 		{
-			if (hasHitYet || !projectile.active || projectile.damage <= 0 || counter > 900f || SOTSPlayer.HomingProjectileBlacklist.Contains(projectile.type))
+            if (hasHitYet || !projectile.active || projectile.damage <= 0 || counter > 900f)
 				return;
-			Player player = Main.player[projectile.owner];
+            PartOfHomingBlacklist ??= SOTSPlayer.HomingProjectileBlacklist.Contains(projectile.type);
+			if (PartOfHomingBlacklist.Value)
+				return;
+            PartOfHomingWhitelist ??= SOTSPlayer.HomingProjectileWhitelist.Contains(projectile.type);
+            Player player = Main.player[projectile.owner];
 			SOTSPlayer modPlayer = SOTSPlayer.ModPlayer(player);
 			float distP = Vector2.DistanceSquared(player.Center, projectile.Center);
 			float minimimDistToPlayerSq = 2000f * 2000f;
 			if (!player.active || distP > minimimDistToPlayerSq)
 				return;
-			int AdvisorPet = ModContent.ProjectileType<AdvisorPet>();
+			int petAdvisorID = -1;
             if (modPlayer.petAdvisor && counter >= 5 && modPlayer.HomingRange > 0)
-			{
-				if (petAdvisorID == -1)
-				{
-					//Main.NewText("Advisor Check " + projectile.whoAmI);
-					for (int i = 0; i < Main.projectile.Length; i++)
-					{
-						Projectile proj = Main.projectile[i];
-						if (proj.active && proj.owner == projectile.owner && proj.type == AdvisorPet)
-						{
-							petAdvisorID = i;
-							break;
-						}
-					}
-				}
-				else
-				{
-					Projectile proj = Main.projectile[petAdvisorID];
-					if (!(proj.active && proj.owner == projectile.owner && proj.type == AdvisorPet))
-					{
-						petAdvisorID = -1;
-					}
-				}
-			}
-			if (counter >= 5)
-			{
-				if (modPlayer.HomingRange > 0)
-				{
-					float minDist = modPlayer.HomingRange * 2;
-					int target2 = -1;
-					float speed = projectile.velocity.Length();
-					bool capable = speed > 1f && (projectile.CountsAsClass(DamageClass.Ranged) || projectile.CountsAsClass(DamageClass.Melee) || projectile.CountsAsClass(DamageClass.Magic) || projectile.CountsAsClass(DamageClass.Throwing) || (!projectile.sentry && !projectile.minion)) && (projectile.ModProjectile == null || projectile.ModProjectile.ShouldUpdatePosition()) && (projectile.ModProjectile == null || projectile.ModProjectile.CanDamage() == null || (bool)projectile.ModProjectile.CanDamage() == true);
-					if (projectile.friendly && !projectile.hostile && player.heldProj != projectile.whoAmI && (capable || SOTSPlayer.HomingProjectileWhitelist.Contains(projectile.type)))
-					{
-						//Main.NewText("past Check " + projectile.whoAmI);
-						for (int i = 0; i < Main.npc.Length; i++)
-						{
-							NPC target = Main.npc[i];
-							if (target.CanBeChasedBy())
-							{
-								float distance = Vector2.Distance(projectile.Center, target.Center);
-								if (distance < minDist)
-								{
-									Rectangle increasedHitbox = new Rectangle(projectile.Hitbox.X - modPlayer.HomingRange, projectile.Hitbox.Y - modPlayer.HomingRange, projectile.width + 2 * modPlayer.HomingRange, projectile.height + 2 * modPlayer.HomingRange);
-									if (target.Hitbox.Intersects(increasedHitbox))
-									{
-										if (Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
-										{
-											minDist = distance;
-											target2 = i;
-										}
-									}
-								}
-							}
-						}
-						if (target2 != -1)
-						{
-							NPC toHit = Main.npc[target2];
-							if (toHit.active)
-							{
-								Vector2 goTo = (toHit.Center - projectile.Center).SafeNormalize(Vector2.Zero) * speed;
-								Vector2 velocity1 = projectile.velocity.SafeNormalize(Vector2.Zero);
-								Vector2 velocity2 = goTo.SafeNormalize(Vector2.Zero);
-								float close = (velocity1 - velocity2).Length() * 40f;
-								projectile.velocity = goTo;
-								if(projectile.ModProjectile is FortressCrasher crasher)
-								{
-									crasher.SetVelo(goTo);
-								}
-								if (petAdvisorID != -1 && effect)
-								{
-									Projectile proj = Main.projectile[petAdvisorID];
-									if ((int)((90 - (int)close) * 2.5 + 45) < 255)
-									{
-										LaserTo(petAdvisorID, projectile, 90 - (int)close);
-										float recalc = (close - 40) / 40f; //1 max, -1 min
-										AdvisorPet pet = (AdvisorPet)proj.ModProjectile;
-										float num = -1f * recalc;
-										pet.eyeReset = num - 1.5f;
-										pet.fireToX = projectile.Center.X;
-										pet.fireToY = projectile.Center.Y;
-										pet.glow = 11.5f + 3.5f * recalc;
-										SOTSUtils.PlaySound(SoundID.Item8, (int)proj.Center.X, (int)proj.Center.Y, 1.35f * (0.75f + 0.5f * recalc));
-									}
-									effect = false;
-								}
-								hasHitYet = true;
-							}
-						}
-					}
-				}
-			}
-		}
+				petAdvisorID = modPlayer.GetAdvisorPetID(projectile);
+			if (counter >= 5 && modPlayer.HomingRange > 0)
+            {
+                float minDist = modPlayer.HomingRange * 2;
+                int target2 = -1;
+                float speed = projectile.velocity.Length();
+                bool capable = speed > 1f && (projectile.CountsAsClass(DamageClass.Ranged) || projectile.CountsAsClass(DamageClass.Melee) || projectile.CountsAsClass(DamageClass.Magic) || projectile.CountsAsClass(DamageClass.Throwing) || (!projectile.sentry && !projectile.minion)) && (projectile.ModProjectile == null || projectile.ModProjectile.ShouldUpdatePosition()) && (projectile.ModProjectile == null || projectile.ModProjectile.CanDamage() == null || (bool)projectile.ModProjectile.CanDamage() == true);
+                if (projectile.friendly && !projectile.hostile && player.heldProj != projectile.whoAmI && (capable || PartOfHomingWhitelist.Value))
+                {
+                    //Main.NewText("past Check " + projectile.whoAmI);
+                    for (int i = 0; i < Main.npc.Length; i++)
+                    {
+                        NPC target = Main.npc[i];
+                        if (target.CanBeChasedBy())
+                        {
+                            float distance = Vector2.Distance(projectile.Center, target.Center);
+                            if (distance < minDist)
+                            {
+                                Rectangle increasedHitbox = new(projectile.Hitbox.X - modPlayer.HomingRange, projectile.Hitbox.Y - modPlayer.HomingRange, projectile.width + 2 * modPlayer.HomingRange, projectile.height + 2 * modPlayer.HomingRange);
+                                if (target.Hitbox.Intersects(increasedHitbox))
+                                {
+                                    if (Collision.CanHitLine(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height))
+                                    {
+                                        minDist = distance;
+                                        target2 = i;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (target2 != -1)
+                    {
+                        NPC toHit = Main.npc[target2];
+                        if (toHit.active)
+                        {
+                            Vector2 goTo = (toHit.Center - projectile.Center).SafeNormalize(Vector2.Zero) * speed;
+                            Vector2 velocity1 = projectile.velocity.SafeNormalize(Vector2.Zero);
+                            Vector2 velocity2 = goTo.SafeNormalize(Vector2.Zero);
+                            float close = (velocity1 - velocity2).Length() * 40f;
+                            projectile.velocity = goTo;
+                            if (projectile.ModProjectile is FortressCrasher crasher)
+                                crasher.SetVelo(goTo);
+                            if (petAdvisorID != -1 && effect)
+                            {
+                                Projectile proj = Main.projectile[petAdvisorID];
+                                if ((int)((90 - (int)close) * 2.5 + 45) < 255)
+                                {
+                                    LaserTo(petAdvisorID, projectile, 90 - (int)close);
+                                    float recalc = (close - 40) / 40f; //1 max, -1 min
+                                    if (proj.ModProjectile is AdvisorPet pet)
+                                    {
+                                        float num = -1f * recalc;
+                                        pet.eyeReset = num - 1.5f;
+                                        pet.fireToX = projectile.Center.X;
+                                        pet.fireToY = projectile.Center.Y;
+                                        pet.glow = 11.5f + 3.5f * recalc;
+                                    }
+                                    SOTSUtils.PlaySound(SoundID.Item8, (int)proj.Center.X, (int)proj.Center.Y, 1.35f * (0.75f + 0.5f * recalc));
+                                }
+                                effect = false;
+                            }
+                            hasHitYet = true;
+                        }
+                    }
+                }
+            }
+        }
 		public static bool IsValidForCoMinions(Player player, Projectile projectile)
 		{
 			return player.active && (projectile.minion || projectile.type == ModContent.ProjectileType<CrystalSerpentHead>()) 
