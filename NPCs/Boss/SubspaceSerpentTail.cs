@@ -143,10 +143,13 @@ namespace SOTS.NPCs.Boss
                 current = previousPosition;
             }
         }
+        private static Texture2D TextureFill;
+        private static Texture2D TextureGlow;
+        private static Texture2D TextureTrail;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailFill").Value;
-            Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
+            TextureFill ??= Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Vector2 origin = new Vector2(TextureFill.Width * 0.5f, NPC.height * 0.5f);
             if(NPC.realLife > -1)
             {
                 NPC head = Main.npc[NPC.realLife];
@@ -159,15 +162,15 @@ namespace SOTS.NPCs.Boss
                     {
                         int direction = i * 2 - 1;
                         Vector2 toTheSide = new Vector2(2 * direction, 0).RotatedBy(NPC.rotation);
-                        spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                        spriteBatch.Draw(TextureFill, NPC.Center - screenPos + toTheSide, NPC.frame, color * ((255f - NPC.alpha) / 255f) * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1f, SpriteEffects.None, 0);
                     }
                 }
             }
             DrawTrail(spriteBatch, screenPos);
-            texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+            Texture2D texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
-            texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailGlow").Value;
+            texture = TextureGlow ??= Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentTailGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
             origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, Color.White * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             counter++;
@@ -186,11 +189,11 @@ namespace SOTS.NPCs.Boss
         {
             if (runOnce)
                 return;
-            Texture2D texture2 = Mod.Assets.Request<Texture2D>("NPCs/Boss/SerpentTailTrail").Value;
-            Vector2 drawOrigin2 = new Vector2(texture2.Width * 0.5f, texture2.Height * 0.5f);
+            TextureTrail ??= Mod.Assets.Request<Texture2D>("NPCs/Boss/SerpentTailTrail", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Vector2 drawOrigin2 = new(TextureTrail.Width * 0.5f, TextureTrail.Height * 0.5f);
             Vector2 current = NPC.Center + new Vector2(0, 20).RotatedBy(NPC.rotation);
             Vector2 previousPosition = current;
-            Color color = new Color(90, 120, 90, 0);
+            Color color = new(90, 120, 90, 0);
             for (int k = 0; k < trailPos.Length; k++)
             {
                 float scale = NPC.scale * (trailPos.Length - k) / (float)trailPos.Length;
@@ -220,7 +223,7 @@ namespace SOTS.NPCs.Boss
                             x = 0;
                             y = 0;
                         }
-                        spriteBatch.Draw(texture2, drawPos + new Vector2(x, y), null, color * ((255f - NPC.alpha) / 255f), NPC.rotation, drawOrigin2, scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f); ;
+                        spriteBatch.Draw(TextureTrail, drawPos + new Vector2(x, y), null, color * ((255f - NPC.alpha) / 255f), NPC.rotation, drawOrigin2, scale, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f); ;
                     }
                 }
                 previousPosition = currentPos;

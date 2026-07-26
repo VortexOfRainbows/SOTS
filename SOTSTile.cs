@@ -433,8 +433,8 @@ namespace SOTS
             }
             int width = 16;
             int height = 16;
-            Vector2 location = new Vector2(i * 16, j * 16);
-            Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+            Vector2 location = new(i * 16, j * 16);
+            Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
             if (Main.drawToScreen)
             {
                 zero = Vector2.Zero;

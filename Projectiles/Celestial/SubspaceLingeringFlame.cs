@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SOTS.Buffs;
-using SOTS.Dusts;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -12,10 +10,6 @@ namespace SOTS.Projectiles.Celestial
 {
 	public class SubspaceLingeringFlame : ModProjectile
 	{
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Fire Bolt");
-		}
 		public override void SetDefaults()
 		{
 			Projectile.width = 20;

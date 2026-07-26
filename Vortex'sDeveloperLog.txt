@@ -83,6 +83,11 @@ Daily Log:
 2. Replaced quite a few int array datastructures in the mod with hashsets
 	1. This should reduce the overhead lag by noticeable amount, as these arrays were often searched every frame in O(n) time, often by every single projectile or npc for the related datastructure, now should be O(1) time
 	2. The main culprits should be the arrays that check for projectile homing and npc intimidation (whether they give intimidating presence debuff)
+3. Lazy Loading a few more textures
+	1. Tainted Prism Dye
+	2. Subspace Serpent Head, Body, Tail, Cell Blast projectile
+4. Adjustments to how Calculator accessory works (tested in Multiplayer, should still work)
+	1. For some reason I had made this so horribly that it always caused a lot of overhead lag. It should no longer do this, and I also optimized some other aspects of it.
 
 --- Hotfix 0.25.1.8 ---
 

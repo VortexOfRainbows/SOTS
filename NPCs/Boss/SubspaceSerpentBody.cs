@@ -136,10 +136,11 @@ namespace SOTS.NPCs.Boss
             }
             return false;
         }
+        private static Texture2D TextureFill;
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyFill").Value;
-            Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
+            TextureFill = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyFill", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Vector2 origin = new Vector2(TextureFill.Width * 0.5f, NPC.height * 0.5f);
             float percentShield = (maxDPS - currentDPS) / maxDPS;
             if (NPC.realLife > -1)
             {
@@ -156,20 +157,21 @@ namespace SOTS.NPCs.Boss
                     {
                         int direction = i * 2 - 1;
                         Vector2 toTheSide = new Vector2(6 * percentShield * direction, 0).RotatedBy(NPC.rotation);
-                        spriteBatch.Draw(texture, NPC.Center - screenPos + toTheSide, NPC.frame, color * alpha * alpha * 0.5f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
+                        spriteBatch.Draw(TextureFill, NPC.Center - screenPos + toTheSide, NPC.frame, color * alpha * alpha * 0.5f, NPC.rotation, origin, 1f, SpriteEffects.None, 0);
                     }
                 }
             }
-            texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
+            Texture2D  texture = Terraria.GameContent.TextureAssets.Npc[NPC.type].Value;
             spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, drawColor * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             return false;
         }
         int counter = 0;
+        private static Texture2D TextureGlow;
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D texture = Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyGlow").Value;
-            Vector2 origin = new Vector2(texture.Width * 0.5f, NPC.height * 0.5f);
-            spriteBatch.Draw(texture, NPC.Center - screenPos, NPC.frame, Color.White * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
+            TextureGlow ??= Mod.Assets.Request<Texture2D>("NPCs/Boss/SubspaceSerpentBodyGlow", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+            Vector2 origin = new Vector2(TextureGlow.Width * 0.5f, NPC.height * 0.5f);
+            spriteBatch.Draw(TextureGlow, NPC.Center - screenPos, NPC.frame, Color.White * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0);
             counter++;
             if (counter > 12)
                 counter = 0;
@@ -178,7 +180,7 @@ namespace SOTS.NPCs.Boss
                 float bonusAlphaMult = 1 - 1 * (counter / 12f);
                 float dir = j * 2 - 1;
                 Vector2 offset = new Vector2(counter * 0.8f * dir, 0).RotatedBy(NPC.rotation);
-                spriteBatch.Draw(texture, NPC.Center - screenPos + offset, NPC.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
+                spriteBatch.Draw(TextureGlow, NPC.Center - screenPos + offset, NPC.frame, new Color(100, 100, 100, 0) * bonusAlphaMult * ((255f - NPC.alpha) / 255f), NPC.rotation, origin, 1.00f, SpriteEffects.None, 0.0f);
             }
         }
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
