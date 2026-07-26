@@ -1,27 +1,22 @@
-using System;
-using System.IO;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ModLoader;
 using SOTS.Buffs;
-using SOTS.Dusts;
 using Terraria.ID;
 
 namespace SOTS.Projectiles.Celestial
 {    
     public class GreaterCellBlast : ModProjectile
 	{
-		public override bool PreDraw(ref Color lightColor)
+		private static Texture2D texture2;
+        public override bool PreDraw(ref Color lightColor)
 		{
 			Texture2D texture = Terraria.GameContent.TextureAssets.Projectile[Projectile.type].Value;
-			Texture2D texture2 = (Texture2D)ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/CrossLaserIndicator");
-			Vector2 origin = new Vector2(texture.Width / 2, texture.Height / 2);
-			Vector2 origin2 = new Vector2(texture2.Width / 2, texture2.Height / 2);
-			Color color = new Color(255, 69, 0, 0);
+			texture2 ??= ModContent.Request<Texture2D>("SOTS/Projectiles/Celestial/CrossLaserIndicator", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value;
+			Vector2 origin = new(texture.Width / 2, texture.Height / 2);
+			Vector2 origin2 = new(texture2.Width / 2, texture2.Height / 2);
+			Color color = new(255, 69, 0, 0);
 			if (scaleIndicator > 0)
 			{
 				Vector2 velo = Projectile.velocity.SafeNormalize(Vector2.Zero);
@@ -48,10 +43,6 @@ namespace SOTS.Projectiles.Celestial
 			color = new Color(235, 35, 50);
 			Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, origin, Projectile.scale, SpriteEffects.None, 0.0f);
 			return false;
-		}
-		public override void SetStaticDefaults()
-		{
-			// DisplayName.SetDefault("Firespire");
 		}
         public override void SetDefaults()
         {

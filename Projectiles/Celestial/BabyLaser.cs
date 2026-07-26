@@ -1,8 +1,6 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SOTS.Buffs;
-using SOTS.Dusts;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -10,10 +8,6 @@ namespace SOTS.Projectiles.Celestial
 {
 	public class BabyLaser : ModProjectile
 	{
-		public override void SetStaticDefaults() 
-		{
-			// DisplayName.SetDefault("Green Laser");
-		}
 		public override void SetDefaults()
 		{
 			Projectile.width = 12;
