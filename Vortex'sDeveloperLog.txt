@@ -74,7 +74,7 @@ N/A
 
 Daily Log:
 
---- Hotfix 0.25.1.9 --- (NOT YET RELEASED)
+--- Hotfix 0.25.1.9 ---
 
 7/26/26
 1. Sanctuary Optimizations:
